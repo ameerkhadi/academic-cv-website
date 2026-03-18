@@ -7,6 +7,15 @@ const academicData = {
         name: "Dr. Ameer Kadhim Hadi",
         title: "Assistant Professor",
         subtitle: "Cloud Computing, IoT & AI Expert",
+
+        // ══════════════════════════════════════════════════
+        //  PHOTO — كيفية إضافة صورتك الشخصية:
+        //  1. ارفع صورتك في مجلد images/ على GitHub
+        //     باسم profile.jpg
+        //  2. غيّر "" أدناه إلى "images/profile.jpg"
+        // ══════════════════════════════════════════════════
+        photo: "",   // ← ضع رابط صورتك هنا
+
         bio: "Dedicated Assistant Professor with over 15 years of experience in tertiary education, specializing in Computer Science and Mathematics at the University of Babylon, Iraq. Proven track record in developing and delivering curriculum for undergraduate and postgraduate levels in Cloud Computing, IoT, Network Security, and Programming. Strong background in academic research with recent publications in AI and Blockchain technology. Committed to pedagogical excellence, student mentorship, and contributing to the academic mission through continuous professional development and collaborative research.",
         email: "ameer@itnet.uobabylon.edu.iq",
         phone: "+964 7801696272",
@@ -336,6 +345,34 @@ const academicData = {
             title: "Fulbright Scholarship",
             issuer: "U.S. Department of State",
             year: 2012
+        }
+    ],
+
+    // ══════════════════════════════════════════════════════════
+    //  MEDIA & NEWS — منشورات الجامعات ووسائل التواصل عنك
+    //
+    //  كيفية إضافة منشور جديد — انسخ هذا القالب:
+    //
+    //  {
+    //      title      : "عنوان المنشور",
+    //      source     : "اسم الجهة (مثل: University of Babylon)",
+    //      platform   : "Instagram",   ← Instagram / Facebook / Twitter / Website
+    //      description: "وصف قصير للمنشور",
+    //      image      : "images/media1.jpg",  ← صورة المنشور أو ""
+    //      link       : "https://رابط-المنشور",
+    //      date       : "March 2025"
+    //  },
+    //
+    // ══════════════════════════════════════════════════════════
+    media: [
+        {
+            title: "AI Innovation Award — Hydroponic Agriculture Device",
+            source: "University of Babylon — Faculty of IT",
+            platform: "Instagram",
+            description: "Dr. Ameer Kadhim Hadi receives the AI Innovation Award for developing an intelligent hydroponic agriculture monitoring device using AI and IoT technologies.",
+            image: "",
+            link: "https://www.instagram.com/p/DRP3aLCiO8q/",
+            date: "2024"
         }
     ],
 
