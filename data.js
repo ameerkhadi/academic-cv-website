@@ -17,8 +17,7 @@ const academicData = {
         photo: "images/profile.jpg",   // ← ضع رابط صورتك هنا
 
         bio: "Dedicated Assistant Professor with over 15 years of experience in tertiary education, specializing in Computer Science and Mathematics at the University of Babylon, Iraq. Proven track record in developing and delivering curriculum for undergraduate and postgraduate levels in Cloud Computing, IoT, Network Security, and Programming. Strong background in academic research with recent publications in AI and Blockchain technology. Committed to pedagogical excellence, student mentorship, and contributing to the academic mission through continuous professional development and collaborative research.",
-        email: "ameer@itnet.uobabylon.edu.iq",
-        phone: "+964 7801696272",
+        email: "ameer.hadi@uobabylon.edu.iq",
         linkedin: "https://linkedin.com/in/ameer-hadi",
         googleScholar: "https://scholar.google.com/citations?user=YOURUSER",
         researchGate: "https://www.researchgate.net/profile/Ameer-Kadhim-Hadi",
