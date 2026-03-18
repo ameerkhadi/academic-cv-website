@@ -43,45 +43,155 @@ const academicData = {
         }
     ],
 
-    // Publications - Real publications from CV
+    // ══════════════════════════════════════════════════════════
+    //  PUBLICATIONS — كيفية إضافة بحث جديد:
+    //
+    //  انسخ هذا القالب وأضفه داخل المصفوفة:
+    //
+    //  {
+    //      title    : "عنوان البحث",
+    //      authors  : "أسماء المؤلفين",
+    //      venue    : "اسم المجلة أو المؤتمر",
+    //      year     : 2025,           ← رقم السنة بدون علامات اقتباس
+    //      citations: 0,              ← عدد الاقتباسات، رقم
+    //      type     : "journal",      ← "journal" أو "conference"
+    //      link     : "#"             ← رابط البحث أو "#"
+    //  },
+    //
+    // ══════════════════════════════════════════════════════════
     publications: [
         {
             title: "Optimizing Blockchain Network Performance Using Blake3 Hash Function in POS Consensus Algorithm",
-            authors: "Jasim, Z. A., & Hadi, A. K.",
-            venue: "IEEE Access, 2025",
+            authors: "ZA Jasim, AK Hadi",
+            venue: "IEEE Access, vol. 13, pp. 44760–44774",
             year: 2025,
+            citations: 7,
             type: "journal",
             link: "#"
         },
         {
-            title: "Hybrid Deep Learning Approach for Enhancing Network Security",
-            authors: "Jassim, M. A., & Hadi, A. K.",
-            venue: "International Conference on Business Analytics and Technology Strategy (ICBATS), 2025",
+            title: "Deep Learning System for Network Anomaly Detection based Attention Mechanism and Sparse Autoencoder",
+            authors: "FH Jassim, AK Hadi",
+            venue: "2025 5th International Conference of Science and Information Technology in Smart Administration (ICITSA)",
             year: 2025,
+            citations: 0,
+            type: "conference",
+            link: "#"
+        },
+        {
+            title: "Hybrid Deep Learning Approach for Enhancing Network Security and Traffic Management",
+            authors: "FH Jassim, AK Hadi",
+            venue: "2025 3rd International Conference on Business Analytics for Technology and Security (ICBATS)",
+            year: 2025,
+            citations: 0,
             type: "conference",
             link: "#"
         },
         {
             title: "Study on Blockchain Scalability Methods Limitation and Solution",
-            authors: "Hadi, A. K., & Jasim, A. D.",
-            venue: "International Conference on Engineering, Science and Advanced Technology (ICESAT), 2023",
+            authors: "AK Hadi, ZA Jasim",
+            venue: "2023 International Conference on Engineering, Science and Advanced Technology (ICESAT)",
             year: 2023,
+            citations: 2,
             type: "conference",
             link: "#"
         },
         {
-            title: "Classifying Quality of Web Services Using Machine Learning",
-            authors: "Olewy, M. H., & Hadi, A. K.",
-            venue: "IEEE ITELA, 2021",
+            title: "The Effectiveness of Teaching with Augmented Reality Technology on Developing Visual Intelligence Skills among College of Basic Education Students",
+            authors: "AA Alwan AL-Qaraghooli, MM Abbas AL-Khateeb, AK Hadi",
+            venue: "Journal of Babylon Center for Humanities Studies, vol. 12, no. 4",
+            year: 2022,
+            citations: 0,
+            type: "journal",
+            link: "#"
+        },
+        {
+            title: "The Impact of An Instructional Program Based on Augmented Reality Technology on Basic Education College Students' Achievement in Reading Comprehension Course",
+            authors: "AAA AL-Qaraghooli, MMA AL-Khateeb, AK Hadi",
+            venue: "Basic Education College Magazine For Educational and Humanities Sciences, vol. 14, no. 55",
+            year: 2022,
+            citations: 0,
+            type: "journal",
+            link: "#"
+        },
+        {
+            title: "A Proposed Methodology to Use a Blockchain in Supply Chain Traceability",
+            authors: "AK Hadi, S Salem",
+            venue: "2021 4th International Iraqi Conference on Engineering Technology and Their Applications (IICETA)",
             year: 2021,
+            citations: 7,
             type: "conference",
             link: "#"
         },
         {
-            title: "IoT Based on Smart Farm Monitoring",
-            authors: "Hassan, A. H., & Hadi, A. K.",
-            venue: "Turkish Journal of Computer and Mathematics Education, 2021",
+            title: "Classifying Quality of Web Services Using Machine Learning Classification and Cross Validation Techniques",
+            authors: "NAHH Olewy, AK Hadi",
+            venue: "2021 2nd Information Technology To Enhance e-Learning and Other Application (IT-ELA)",
             year: 2021,
+            citations: 4,
+            type: "conference",
+            link: "#"
+        },
+        {
+            title: "IoT Based Covered Agriculture Monitoring and Control System with Smart Sensing and Forwarding Algorithm",
+            authors: "HS Hassan, AK Hadi",
+            venue: "Turkish Journal of Computer and Mathematics Education, vol. 12, no. 11, pp. 6311–6316",
+            year: 2021,
+            citations: 2,
+            type: "journal",
+            link: "#"
+        },
+        {
+            title: "Multiclass Model for Quality of Service Using Machine Learning and Cloud Computing",
+            authors: "NAHH Olewy, AK Hadi",
+            venue: "2021 7th International Conference on Contemporary Information Technology and Mathematics (ICCITM)",
+            year: 2021,
+            citations: 0,
+            type: "conference",
+            link: "#"
+        },
+        {
+            title: "Design a Tracing System for a Seed Supply Chain Based on Blockchain",
+            authors: "AB Abdulhussein, AK Hadi, M Ilyas",
+            venue: "2020 3rd International Conference on Engineering Technology and its Applications (IICETA)",
+            year: 2020,
+            citations: 21,
+            type: "conference",
+            link: "#"
+        },
+        {
+            title: "Secure Multi Functional Robot Based on Cloud Computing",
+            authors: "AK Hadi",
+            venue: "Journal of Computational and Theoretical Nanoscience, vol. 16, no. 3, pp. 880–888",
+            year: 2019,
+            citations: 1,
+            type: "journal",
+            link: "#"
+        },
+        {
+            title: "Toward Trust and More Characters of Arabic Short Message Service using Encryption",
+            authors: "AK Hadi",
+            venue: "Journal of Engineering and Applied Sciences, vol. 12, no. 21, pp. 5384–5387",
+            year: 2017,
+            citations: 2,
+            type: "journal",
+            link: "#"
+        },
+        {
+            title: "Collaborative Computer Aid Diagnosis Framework in Cloud Environment based on Multi Agents Systems",
+            authors: "AM Al-Bakry, AK Hadi",
+            venue: "International Journal of Advanced Engineering Technology, vol. 7, no. 1, p. 21",
+            year: 2014,
+            citations: 1,
+            type: "journal",
+            link: "#"
+        },
+        {
+            title: "Building the Primes P&Q (Of the Public Key Algorithm) by Using Function of Reals",
+            authors: "F Al Mamory, AK Hadi, ALS Ahmed",
+            venue: "Journal (details to be added)",
+            year: 2014,
+            citations: 0,
             type: "journal",
             link: "#"
         }
@@ -229,7 +339,7 @@ const academicData = {
         }
     ],
 
-    // Gallery Images - Add your images here
+    // Gallery Images
     gallery: [
         {
             src: "images/conference1.jpg",
