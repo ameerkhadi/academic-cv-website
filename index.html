@@ -10,7 +10,6 @@
 </head>
 <body>
 
-<!-- TOP BAR -->
 <div class="topbar">
     <span class="topbar-path">
         <span class="topbar-crumb">University of Babylon</span>
@@ -19,10 +18,9 @@
         <span class="topbar-sep">›</span>
         <span class="topbar-crumb active">Dr. Ameer Kadhim Hadi</span>
     </span>
-    <span class="topbar-right">Updated: <span id="last-updated"></span></span>
+    <span style="font-family:var(--mono);font-size:.65rem">Updated: <span id="last-updated"></span></span>
 </div>
 
-<!-- NAVBAR -->
 <nav id="navbar">
     <div class="nav-inner">
         <a href="#hero" class="nav-logo">
@@ -35,6 +33,7 @@
             <li><a href="#publications">Publications</a></li>
             <li><a href="#projects">Projects</a></li>
             <li><a href="#courses">Teaching</a></li>
+            <li><a href="#media">Media</a></li>
             <li><a href="#awards">Awards</a></li>
             <li><a href="#contact" class="nav-btn">Contact</a></li>
         </ul>
@@ -49,6 +48,7 @@
         <li><a href="#publications">Publications</a></li>
         <li><a href="#projects">Projects</a></li>
         <li><a href="#courses">Teaching</a></li>
+        <li><a href="#media">Media</a></li>
         <li><a href="#awards">Awards</a></li>
         <li><a href="#contact">Contact</a></li>
     </ul>
@@ -58,9 +58,15 @@
 <section id="hero">
     <div class="hero-inner">
         <div class="hero-left">
-            <div class="hero-badge"><span class="bdot green"></span>Assistant Professor · University of Babylon, Iraq</div>
-            <h1 class="hero-name">Dr. Ameer Kadhim Hadi</h1>
-            <p class="hero-sub">Faculty of Information Technology · Information Network Department</p>
+            <div class="hero-profile-row">
+                <!-- Photo — auto-loads from data.js personal.photo -->
+                <div id="hero-avatar-wrap"></div>
+                <div class="hero-name-block">
+                    <div class="hero-badge"><span class="bdot green"></span>Assistant Professor · University of Babylon</div>
+                    <h1 class="hero-name" id="hero-name-text"></h1>
+                    <p class="hero-sub">Faculty of Information Technology · Information Network Dept.</p>
+                </div>
+            </div>
             <div class="hero-tags">
                 <span class="htag">☁️ Cloud Computing</span>
                 <span class="htag">🤖 Artificial Intelligence</span>
@@ -105,9 +111,7 @@
                         <span class="svc-tag">🎓 PhD CS</span>
                         <span class="svc-tag">🌿 Fulbright</span>
                     </div>
-                    <div class="aws-info-box">
-                        ℹ️ &nbsp;Open to research collaborations, student supervision, and academic partnerships.
-                    </div>
+                    <div class="aws-info-box">ℹ️ &nbsp;Open to research collaborations, student supervision, and academic partnerships.</div>
                 </div>
             </div>
         </div>
@@ -115,18 +119,11 @@
 </section>
 
 <!-- ABOUT -->
-<section id="about">
+<section id="about" class="alt">
     <div class="container">
-        <div class="sec-header">
-            <span class="sec-num">01</span>
-            <div><div class="sec-eye">About</div><h2 class="sec-h2">Professional Summary</h2></div>
-        </div>
+        <div class="sec-header"><span class="sec-num">01</span><div><div class="sec-eye">About</div><h2 class="sec-h2">Professional Summary</h2></div></div>
         <div class="about-grid">
-            <div class="panel">
-                <div class="panel-hdr">📋 &nbsp;Bio</div>
-                <p id="about-bio" class="bio-text"></p>
-                <div id="about-links" class="about-links-row"></div>
-            </div>
+            <div class="panel"><div class="panel-hdr">📋 &nbsp;Bio</div><p id="about-bio" class="bio-text"></p><div id="about-links" class="about-links-row"></div></div>
             <div>
                 <div class="panel"><div class="panel-hdr">🛠 &nbsp;Technical Skills</div><div id="skills-technical" class="chips"></div></div>
                 <div class="panel mt1"><div class="panel-hdr">🔬 &nbsp;Research Skills</div><div id="skills-research" class="chips"></div></div>
@@ -137,23 +134,17 @@
 </section>
 
 <!-- EDUCATION -->
-<section id="education" class="alt">
+<section id="education">
     <div class="container">
-        <div class="sec-header">
-            <span class="sec-num">02</span>
-            <div><div class="sec-eye">Education</div><h2 class="sec-h2">Academic Background</h2></div>
-        </div>
+        <div class="sec-header"><span class="sec-num">02</span><div><div class="sec-eye">Education</div><h2 class="sec-h2">Academic Background</h2></div></div>
         <div class="edu-grid" id="education-list"></div>
     </div>
 </section>
 
 <!-- PUBLICATIONS -->
-<section id="publications">
+<section id="publications" class="alt">
     <div class="container">
-        <div class="sec-header">
-            <span class="sec-num">03</span>
-            <div><div class="sec-eye">Research</div><h2 class="sec-h2">Publications</h2></div>
-        </div>
+        <div class="sec-header"><span class="sec-num">03</span><div><div class="sec-eye">Research</div><h2 class="sec-h2">Publications</h2></div></div>
         <div class="pub-toolbar">
             <div class="filter-row">
                 <button class="pill active" data-filter="all">All</button>
@@ -171,34 +162,33 @@
 </section>
 
 <!-- PROJECTS -->
-<section id="projects" class="alt">
+<section id="projects">
     <div class="container">
-        <div class="sec-header">
-            <span class="sec-num">04</span>
-            <div><div class="sec-eye">Projects</div><h2 class="sec-h2">Research Projects</h2></div>
-        </div>
+        <div class="sec-header"><span class="sec-num">04</span><div><div class="sec-eye">Projects</div><h2 class="sec-h2">Research Projects</h2></div></div>
         <div class="projects-grid" id="projects-list"></div>
     </div>
 </section>
 
 <!-- COURSES -->
-<section id="courses">
+<section id="courses" class="alt">
     <div class="container">
-        <div class="sec-header">
-            <span class="sec-num">05</span>
-            <div><div class="sec-eye">Teaching</div><h2 class="sec-h2">Courses Taught</h2></div>
-        </div>
+        <div class="sec-header"><span class="sec-num">05</span><div><div class="sec-eye">Teaching</div><h2 class="sec-h2">Courses Taught</h2></div></div>
         <div class="courses-grid" id="courses-list"></div>
+    </div>
+</section>
+
+<!-- MEDIA & NEWS ← NEW SECTION -->
+<section id="media">
+    <div class="container">
+        <div class="sec-header"><span class="sec-num">06</span><div><div class="sec-eye">Media & News</div><h2 class="sec-h2">Universities & Media Posts</h2></div></div>
+        <div class="media-grid" id="media-list"></div>
     </div>
 </section>
 
 <!-- CERTIFICATIONS -->
 <section id="certifications" class="alt">
     <div class="container">
-        <div class="sec-header">
-            <span class="sec-num">06</span>
-            <div><div class="sec-eye">Credentials</div><h2 class="sec-h2">Certifications & Training</h2></div>
-        </div>
+        <div class="sec-header"><span class="sec-num">07</span><div><div class="sec-eye">Credentials</div><h2 class="sec-h2">Certifications</h2></div></div>
         <div class="certs-grid" id="certs-list"></div>
     </div>
 </section>
@@ -206,10 +196,7 @@
 <!-- AWARDS -->
 <section id="awards">
     <div class="container">
-        <div class="sec-header">
-            <span class="sec-num">07</span>
-            <div><div class="sec-eye">Recognition</div><h2 class="sec-h2">Awards & Honors</h2></div>
-        </div>
+        <div class="sec-header"><span class="sec-num">08</span><div><div class="sec-eye">Recognition</div><h2 class="sec-h2">Awards & Honors</h2></div></div>
         <div class="awards-grid" id="awards-list"></div>
     </div>
 </section>
@@ -217,10 +204,7 @@
 <!-- GALLERY -->
 <section id="gallery" class="alt">
     <div class="container">
-        <div class="sec-header">
-            <span class="sec-num">08</span>
-            <div><div class="sec-eye">Gallery</div><h2 class="sec-h2">Photo Gallery</h2></div>
-        </div>
+        <div class="sec-header"><span class="sec-num">09</span><div><div class="sec-eye">Gallery</div><h2 class="sec-h2">Photo Gallery</h2></div></div>
         <div class="gallery-grid" id="gallery-grid"></div>
     </div>
 </section>
@@ -228,34 +212,22 @@
 <!-- CONTACT -->
 <section id="contact">
     <div class="container">
-        <div class="sec-header">
-            <span class="sec-num">09</span>
-            <div><div class="sec-eye">Contact</div><h2 class="sec-h2">Get in Touch</h2></div>
-        </div>
+        <div class="sec-header"><span class="sec-num">10</span><div><div class="sec-eye">Contact</div><h2 class="sec-h2">Get in Touch</h2></div></div>
         <div class="contact-grid">
             <div class="panel"><div class="panel-hdr">📬 &nbsp;Contact Information</div><div id="contact-items"></div></div>
             <div>
-                <div class="panel"><div class="panel-hdr">🏛 &nbsp;Affiliation</div>
-                    <div class="affil"><div id="c-name" class="affil-name"></div><div id="c-title" class="affil-title"></div><div class="affil-uni">Faculty of Information Technology<br>University of Babylon, Iraq</div></div>
-                </div>
-                <div class="panel mt1"><div class="panel-hdr">🔗 &nbsp;Online Profiles</div><div id="contact-profiles"></div></div>
+                <div class="panel"><div class="panel-hdr">🏛 &nbsp;Affiliation</div><div class="affil"><div id="c-name" class="affil-name"></div><div id="c-title" class="affil-title"></div><div class="affil-uni">Faculty of Information Technology<br>University of Babylon, Iraq</div></div></div>
+                <div class="panel mt1"><div class="panel-hdr">🔗 &nbsp;Online Profiles</div><div id="contact-profiles" class="profile-links"></div></div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
     <div class="container">
         <div class="footer-row">
-            <div>
-                <div class="footer-name">Dr. Ameer Kadhim Hadi</div>
-                <div class="footer-sub">Assistant Professor · University of Babylon, Iraq</div>
-            </div>
-            <div class="footer-right">
-                <span>© <span id="footer-year"></span> All rights reserved.</span>
-                <a href="#hero">↑ Top</a>
-            </div>
+            <div><div class="footer-name">Dr. Ameer Kadhim Hadi</div><div class="footer-sub">Assistant Professor · University of Babylon, Iraq</div></div>
+            <div class="footer-right"><span>© <span id="footer-year"></span> All rights reserved.</span><a href="#hero">↑ Top</a></div>
         </div>
     </div>
 </footer>
