@@ -21,7 +21,7 @@ const academicData = {
         linkedin: "https://linkedin.com/in/ameer-hadi",
         googleScholar: "https://scholar.google.com/citations?user=YOURUSER",
         researchGate: "https://www.researchgate.net/profile/Ameer-Kadhim-Hadi",
-        orcid: "https://orcid.org/0000-0000-0000-0000"
+        orcid: "https://orcid.org/0000-0001-7234-8346"
     },
 
     // Education
@@ -363,18 +363,7 @@ const academicData = {
     //  },
     //
     // ══════════════════════════════════════════════════════════
-    media: [
-        {
-            title: "AI Innovation Award — Hydroponic Agriculture Device",
-            source: "University of Babylon — Faculty of IT",
-            platform: "Instagram",
-            description: "Dr. Ameer Kadhim Hadi receives the AI Innovation Award for developing an intelligent hydroponic agriculture monitoring device using AI and IoT technologies.",
-            image: "",
-            link: "https://www.instagram.com/p/DRP3aLCiO8q/",
-            date: "2024"
-        }
-    ],
-
+   
     // Gallery Images
     gallery: [
         {
