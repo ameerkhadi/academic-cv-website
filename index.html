@@ -3,83 +3,265 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ameer Khadi - Academic Profile</title>
+    <title>Dr. Ameer Kadhim Hadi — Assistant Professor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&family=Fira+Code:wght@300;400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <div class="container">
-            <h1>Dr. Ameer Khadi</h1>
-            <p>Assistant Professor | AI, IoT & Cloud Expert</p>
-            <nav>
-                <ul>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#publications">Publications</a></li>
-                    <li><a href="#projects">Projects</a></li>
-                    <li><a href="#courses">Courses</a></li>
-                    <li><a href="#gallery">Gallery</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </nav>
+
+<!-- PRELOADER -->
+<div class="preloader" id="preloader">
+    <div class="preloader-inner">
+        <div class="preloader-line"></div>
+        <span class="preloader-text">Loading</span>
+    </div>
+</div>
+
+<!-- NAVIGATION -->
+<nav id="navbar">
+    <div class="nav-container">
+        <a href="#hero" class="nav-logo">Dr. A. K. Hadi</a>
+        <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#education">Education</a></li>
+            <li><a href="#publications">Research</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#courses">Teaching</a></li>
+            <li><a href="#awards">Awards</a></li>
+            <li><a href="#contact" class="nav-cta">Contact</a></li>
+        </ul>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+    <ul>
+        <li><a href="#about" class="mobile-link">About</a></li>
+        <li><a href="#education" class="mobile-link">Education</a></li>
+        <li><a href="#publications" class="mobile-link">Research</a></li>
+        <li><a href="#projects" class="mobile-link">Projects</a></li>
+        <li><a href="#courses" class="mobile-link">Teaching</a></li>
+        <li><a href="#awards" class="mobile-link">Awards</a></li>
+        <li><a href="#contact" class="mobile-link">Contact</a></li>
+    </ul>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+    <div class="hero-bg">
+        <div class="hero-grid"></div>
+        <div class="hero-orb hero-orb-1"></div>
+        <div class="hero-orb hero-orb-2"></div>
+    </div>
+    <div class="hero-content">
+        <div class="hero-badge reveal-up">Faculty of Information Technology · University of Babylon</div>
+        <h1 class="hero-name reveal-up delay-1">
+            <span class="hero-name-dr">Dr.</span>
+            <span class="hero-name-first">Ameer Kadhim</span>
+            <span class="hero-name-last">Hadi</span>
+        </h1>
+        <div class="hero-title reveal-up delay-2">Assistant Professor</div>
+        <div class="hero-tags reveal-up delay-3">
+            <span class="tag">Cloud Computing</span>
+            <span class="tag">Artificial Intelligence</span>
+            <span class="tag">IoT</span>
+            <span class="tag">Blockchain</span>
+            <span class="tag">Network Security</span>
         </div>
-    </header>
-
-    <main class="container">
-        <section id="about" class="card">
-            <h2>About Me</h2>
-            <p>Highly motivated Assistant Professor with expertise in Artificial Intelligence, Internet of Things, and Cloud Computing. Dedicated to advancing research and education in these fields, with a strong focus on interdisciplinary applications and real-world problem solving.</p>
-            <!-- Placeholder for more detailed bio -->
-        </section>
-
-        <section id="publications" class="card">
-            <h2>Publications</h2>
-            <div id="publications-list">
-                <!-- Publications will be loaded here by JavaScript -->
-                <p>Loading publications...</p>
+        <div class="hero-stats reveal-up delay-4">
+            <div class="hero-stat">
+                <span class="stat-num" data-target="15">0</span><span class="stat-plus">+</span>
+                <span class="stat-label">Years Experience</span>
             </div>
-        </section>
-
-        <section id="projects" class="card">
-            <h2>Projects</h2>
-            <div id="projects-list">
-                <!-- Projects will be loaded here by JavaScript -->
-                <p>Loading projects...</p>
+            <div class="hero-stat-divider"></div>
+            <div class="hero-stat">
+                <span class="stat-num" data-target="5">0</span>
+                <span class="stat-label">Publications</span>
             </div>
-        </section>
-
-        <section id="courses" class="card">
-            <h2>Courses Taught</h2>
-            <div id="courses-list">
-                <!-- Courses will be loaded here by JavaScript -->
-                <p>Loading courses...</p>
+            <div class="hero-stat-divider"></div>
+            <div class="hero-stat">
+                <span class="stat-num" data-target="4">0</span>
+                <span class="stat-label">Awards & Honors</span>
             </div>
-        </section>
-
-        <section id="gallery" class="card">
-            <h2>Gallery</h2>
-            <div class="gallery-grid">
-                <!-- Gallery images will be loaded here by JavaScript -->
-                <p>Loading gallery images...</p>
-            </div>
-        </section>
-
-        <section id="contact" class="card">
-            <h2>Contact</h2>
-            <p>Email: <a href="mailto:your.email@example.com">your.email@example.com</a></p>
-            <p>LinkedIn: <a href="#" target="_blank">Your LinkedIn Profile</a></p>
-            <p>Google Scholar: <a href="#" target="_blank">Your Google Scholar Profile</a></p>
-            <!-- Placeholder for more contact info -->
-        </section>
-    </main>
-
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 Dr. Ameer Khadi. All rights reserved.</p>
         </div>
-    </footer>
+        <div class="hero-actions reveal-up delay-5">
+            <a href="#publications" class="btn btn-primary">View Research</a>
+            <a href="#contact" class="btn btn-outline">Get in Touch</a>
+        </div>
+    </div>
+    <div class="hero-scroll">
+        <div class="scroll-line"></div>
+        <span>Scroll</span>
+    </div>
+</section>
 
-    <script src="script.js"></script>
+<!-- ABOUT -->
+<section id="about">
+    <div class="container">
+        <div class="about-grid">
+            <div class="about-left reveal-left">
+                <div class="section-label">01 — About</div>
+                <h2 class="section-title">Bridging Research<br><em>& Education</em></h2>
+                <div class="about-divider"></div>
+                <p class="about-bio" id="about-bio-text"></p>
+                <div class="about-contact-quick">
+                    <a href="#" id="about-email-link" class="quick-link">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                        <span id="about-email-text"></span>
+                    </a>
+                    <a href="#" id="about-linkedin" class="quick-link" target="_blank">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+                        LinkedIn Profile
+                    </a>
+                </div>
+            </div>
+            <div class="about-right reveal-right">
+                <div class="skills-block">
+                    <h3 class="skills-title">Technical Expertise</h3>
+                    <div class="skills-grid" id="skills-technical"></div>
+                </div>
+                <div class="skills-block">
+                    <h3 class="skills-title">Research Skills</h3>
+                    <div class="skills-grid" id="skills-research"></div>
+                </div>
+                <div class="skills-block">
+                    <h3 class="skills-title">Teaching Skills</h3>
+                    <div class="skills-grid" id="skills-teaching"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education" class="section-dark">
+    <div class="container">
+        <div class="section-header reveal-up">
+            <div class="section-label light">02 — Education</div>
+            <h2 class="section-title light">Academic <em>Background</em></h2>
+        </div>
+        <div class="timeline" id="education-timeline"></div>
+    </div>
+</section>
+
+<!-- PUBLICATIONS -->
+<section id="publications">
+    <div class="container">
+        <div class="section-header reveal-up">
+            <div class="section-label">03 — Research</div>
+            <h2 class="section-title">Selected <em>Publications</em></h2>
+        </div>
+        <div class="pub-filter reveal-up">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="journal">Journals</button>
+            <button class="filter-btn" data-filter="conference">Conferences</button>
+        </div>
+        <div class="publications-list" id="publications-list"></div>
+    </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" class="section-tinted">
+    <div class="container">
+        <div class="section-header reveal-up">
+            <div class="section-label">04 — Projects</div>
+            <h2 class="section-title">Research <em>Projects</em></h2>
+        </div>
+        <div class="projects-grid" id="projects-list"></div>
+    </div>
+</section>
+
+<!-- COURSES -->
+<section id="courses">
+    <div class="container">
+        <div class="section-header reveal-up">
+            <div class="section-label">05 — Teaching</div>
+            <h2 class="section-title">Courses <em>Taught</em></h2>
+        </div>
+        <div class="courses-grid" id="courses-list"></div>
+    </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications" class="section-dark">
+    <div class="container">
+        <div class="section-header reveal-up">
+            <div class="section-label light">06 — Credentials</div>
+            <h2 class="section-title light">Certifications <em>& Training</em></h2>
+        </div>
+        <div class="certs-grid" id="certs-list"></div>
+    </div>
+</section>
+
+<!-- AWARDS -->
+<section id="awards">
+    <div class="container">
+        <div class="section-header reveal-up">
+            <div class="section-label">07 — Recognition</div>
+            <h2 class="section-title">Awards <em>& Honors</em></h2>
+        </div>
+        <div class="awards-list" id="awards-list"></div>
+    </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery" class="section-tinted">
+    <div class="container">
+        <div class="section-header reveal-up">
+            <div class="section-label">08 — Gallery</div>
+            <h2 class="section-title">Photo <em>Gallery</em></h2>
+        </div>
+        <div class="gallery-grid" id="gallery-grid"></div>
+    </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="section-dark">
+    <div class="container">
+        <div class="contact-grid">
+            <div class="contact-left reveal-left">
+                <div class="section-label light">09 — Contact</div>
+                <h2 class="section-title light">Get in <em>Touch</em></h2>
+                <p class="contact-intro">Open to research collaborations, academic partnerships, and student inquiries.</p>
+                <div class="contact-items" id="contact-items"></div>
+            </div>
+            <div class="contact-right reveal-right">
+                <div class="contact-card">
+                    <div class="contact-card-header">
+                        <span class="contact-card-dot"></span>
+                        <span class="contact-card-dot"></span>
+                        <span class="contact-card-dot"></span>
+                    </div>
+                    <div class="contact-card-body">
+                        <div class="contact-card-name" id="card-name"></div>
+                        <div class="contact-card-title" id="card-title"></div>
+                        <div class="contact-card-uni">University of Babylon<br>Faculty of Information Technology</div>
+                        <div class="contact-card-links" id="card-links"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-name" id="footer-name"></div>
+            <div class="footer-copy">© <span id="footer-year"></span> All rights reserved.</div>
+            <div class="footer-links">
+                <a href="#hero">Back to Top ↑</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="data.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
-
-
