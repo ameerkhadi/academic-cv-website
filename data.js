@@ -14,7 +14,7 @@ const academicData = {
         //     باسم profile.jpg
         //  2. غيّر "" أدناه إلى "images/profile.jpg"
         // ══════════════════════════════════════════════════
-        photo: "",   // ← ضع رابط صورتك هنا
+        photo: "images/profile.jpg",   // ← ضع رابط صورتك هنا
 
         bio: "Dedicated Assistant Professor with over 15 years of experience in tertiary education, specializing in Computer Science and Mathematics at the University of Babylon, Iraq. Proven track record in developing and delivering curriculum for undergraduate and postgraduate levels in Cloud Computing, IoT, Network Security, and Programming. Strong background in academic research with recent publications in AI and Blockchain technology. Committed to pedagogical excellence, student mentorship, and contributing to the academic mission through continuous professional development and collaborative research.",
         email: "ameer@itnet.uobabylon.edu.iq",
