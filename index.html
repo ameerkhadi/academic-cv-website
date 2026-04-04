@@ -7,92 +7,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <style>
-        /* ── Lectures Section ── */
-        .lectures-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1.5rem;
-        }
-        .lecture-card {
-            background: var(--surface, #1e2d4d);
-            border: 1px solid var(--border, #2d3f5e);
-            border-radius: 16px;
-            padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            transition: transform .25s, box-shadow .25s;
-            text-decoration: none;
-            color: inherit;
-        }
-        .lecture-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 40px rgba(0,0,0,.3);
-            border-color: #ff9900;
-        }
-        .lecture-card-icon {
-            font-size: 2rem;
-            width: 56px; height: 56px;
-            background: rgba(255,153,0,0.12);
-            border: 1px solid rgba(255,153,0,0.35);
-            border-radius: 12px;
-            display: flex; align-items: center; justify-content: center;
-        }
-        .lecture-card-badge {
-            display: inline-block;
-            font-size: .7rem;
-            font-weight: 700;
-            letter-spacing: .07em;
-            text-transform: uppercase;
-            padding: .2rem .65rem;
-            border-radius: 50px;
-            background: rgba(255,153,0,0.12);
-            border: 1px solid rgba(255,153,0,0.4);
-            color: #ff9900;
-            width: fit-content;
-        }
-        .lecture-card h3 {
-            font-size: 1rem;
-            font-weight: 700;
-            color: #fff;
-            margin: 0;
-        }
-        .lecture-card p {
-            font-size: .85rem;
-            color: var(--muted, #94a3b8);
-            line-height: 1.6;
-            margin: 0;
-            flex: 1;
-        }
-        .lecture-card-footer {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding-top: .75rem;
-            border-top: 1px solid var(--border, #2d3f5e);
-            font-size: .78rem;
-            color: var(--muted, #94a3b8);
-        }
-        .lecture-open-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: .4rem;
-            background: #ff9900;
-            color: #000;
-            font-weight: 700;
-            font-size: .78rem;
-            padding: .35rem .85rem;
-            border-radius: 8px;
-            text-decoration: none;
-            transition: background .2s;
-        }
-        .lecture-open-btn:hover { background: #e68900; }
-    </style>
 </head>
 <body>
 
+<!-- ── Topbar ── -->
 <div class="topbar">
     <span class="topbar-path">
         <span class="topbar-crumb">University of Babylon</span>
@@ -104,6 +22,7 @@
     <span style="font-family:var(--mono);font-size:.65rem">Updated: <span id="last-updated"></span></span>
 </div>
 
+<!-- ── Navbar ── -->
 <nav id="navbar">
     <div class="nav-inner">
         <a href="#hero" class="nav-logo">
@@ -121,10 +40,13 @@
             <li><a href="#awards">Awards</a></li>
             <li><a href="#contact" class="nav-btn">Contact</a></li>
         </ul>
-        <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+        <button class="hamburger" id="hamburger">
+            <span></span><span></span><span></span>
+        </button>
     </div>
 </nav>
 
+<!-- ── Mobile Menu ── -->
 <div class="mobile-menu" id="mobileMenu">
     <ul>
         <li><a href="#about">About</a></li>
@@ -139,14 +61,17 @@
     </ul>
 </div>
 
-<!-- HERO -->
+<!-- ══ HERO ══ -->
 <section id="hero">
     <div class="hero-inner">
         <div class="hero-left">
             <div class="hero-profile-row">
                 <div id="hero-avatar-wrap"></div>
                 <div class="hero-name-block">
-                    <div class="hero-badge"><span class="bdot green"></span>Assistant Professor · University of Babylon</div>
+                    <div class="hero-badge">
+                        <span class="bdot green"></span>
+                        Assistant Professor · University of Babylon
+                    </div>
                     <h1 class="hero-name" id="hero-name-text"></h1>
                     <p class="hero-sub">Faculty of Information Technology · Information Network Dept.</p>
                 </div>
@@ -202,12 +127,19 @@
     </div>
 </section>
 
-<!-- ABOUT -->
+<!-- ══ ABOUT ══ -->
 <section id="about" class="alt">
     <div class="container">
-        <div class="sec-header"><span class="sec-num">01</span><div><div class="sec-eye">About</div><h2 class="sec-h2">Professional Summary</h2></div></div>
+        <div class="sec-header">
+            <span class="sec-num">01</span>
+            <div><div class="sec-eye">About</div><h2 class="sec-h2">Professional Summary</h2></div>
+        </div>
         <div class="about-grid">
-            <div class="panel"><div class="panel-hdr">📋 &nbsp;Bio</div><p id="about-bio" class="bio-text"></p><div id="about-links" class="about-links-row"></div></div>
+            <div class="panel">
+                <div class="panel-hdr">📋 &nbsp;Bio</div>
+                <p id="about-bio" class="bio-text"></p>
+                <div id="about-links" class="about-links-row"></div>
+            </div>
             <div>
                 <div class="panel"><div class="panel-hdr">🛠 &nbsp;Technical Skills</div><div id="skills-technical" class="chips"></div></div>
                 <div class="panel mt1"><div class="panel-hdr">🔬 &nbsp;Research Skills</div><div id="skills-research" class="chips"></div></div>
@@ -217,18 +149,24 @@
     </div>
 </section>
 
-<!-- EDUCATION -->
+<!-- ══ EDUCATION ══ -->
 <section id="education">
     <div class="container">
-        <div class="sec-header"><span class="sec-num">02</span><div><div class="sec-eye">Education</div><h2 class="sec-h2">Academic Background</h2></div></div>
+        <div class="sec-header">
+            <span class="sec-num">02</span>
+            <div><div class="sec-eye">Education</div><h2 class="sec-h2">Academic Background</h2></div>
+        </div>
         <div class="edu-grid" id="education-list"></div>
     </div>
 </section>
 
-<!-- PUBLICATIONS -->
+<!-- ══ PUBLICATIONS ══ -->
 <section id="publications" class="alt">
     <div class="container">
-        <div class="sec-header"><span class="sec-num">03</span><div><div class="sec-eye">Research</div><h2 class="sec-h2">Publications</h2></div></div>
+        <div class="sec-header">
+            <span class="sec-num">03</span>
+            <div><div class="sec-eye">Research</div><h2 class="sec-h2">Publications</h2></div>
+        </div>
         <div class="pub-toolbar">
             <div class="filter-row">
                 <button class="pill active" data-filter="all">All</button>
@@ -245,109 +183,351 @@
     </div>
 </section>
 
-<!-- PROJECTS -->
+<!-- ══ PROJECTS ══ -->
 <section id="projects">
     <div class="container">
-        <div class="sec-header"><span class="sec-num">04</span><div><div class="sec-eye">Projects</div><h2 class="sec-h2">Research Projects</h2></div></div>
+        <div class="sec-header">
+            <span class="sec-num">04</span>
+            <div><div class="sec-eye">Projects</div><h2 class="sec-h2">Research Projects</h2></div>
+        </div>
         <div class="projects-grid" id="projects-list"></div>
     </div>
 </section>
 
-<!-- COURSES -->
+<!-- ══ COURSES ══ -->
 <section id="courses" class="alt">
     <div class="container">
-        <div class="sec-header"><span class="sec-num">05</span><div><div class="sec-eye">Teaching</div><h2 class="sec-h2">Courses Taught</h2></div></div>
+        <div class="sec-header">
+            <span class="sec-num">05</span>
+            <div><div class="sec-eye">Teaching</div><h2 class="sec-h2">Courses Taught</h2></div>
+        </div>
         <div class="courses-grid" id="courses-list"></div>
     </div>
 </section>
 
-<!-- ══════════════ LECTURES (NEW) ══════════════ -->
+<!-- ══════════════ LECTURES ══════════════ -->
 <section id="lectures">
     <div class="container">
         <div class="sec-header">
             <span class="sec-num">06</span>
-            <div>
-                <div class="sec-eye">Lectures</div>
-                <h2 class="sec-h2">Interactive Lecture Materials</h2>
-            </div>
+            <div><div class="sec-eye">Lectures</div><h2 class="sec-h2">Interactive Lecture Materials</h2></div>
         </div>
-        <div class="lectures-grid">
 
-            <!-- ── Lecture Card 1 – AWS VPC Scenarios ── -->
-            <div class="lecture-card">
-                <div class="lecture-card-icon">☁️</div>
-                <div>
-                    <span class="lecture-card-badge">Module 5 · AWS</span>
-                    <h3 style="margin-top:.5rem">AWS VPC Scenarios</h3>
+        <!-- ══ CATEGORY 1: Cyber Security 2026 ══ -->
+        <div class="lec-category">
+            <div class="lec-cat-header" onclick="toggleCategory(this)">
+                <div class="lec-cat-left">
+                    <span class="lec-cat-icon">🔐</span>
+                    <div>
+                        <div class="lec-cat-title">Cyber Security</div>
+                        <div class="lec-cat-sub">2025 – 2026 · Undergraduate · 3 Lectures</div>
+                    </div>
                 </div>
-                <p>
-                    10 interactive real-world scenarios covering Internet Gateway, NAT Gateway, CIDR design, Route Tables, Elastic IPs, and ENI — with bilingual Arabic/English answers.
-                </p>
-                <div class="lecture-card-footer">
-                    <span>📋 10 Scenarios &nbsp;·&nbsp; 🌐 AR / EN</span>
-                    <a class="lecture-open-btn"
-                       href="https://YOUR-USERNAME.github.io/YOUR-REPO/vpc-scenarios.html"
-                       target="_blank" rel="noopener">
-                        Open ↗
-                    </a>
+                <div class="lec-cat-right">
+                    <span class="lec-cat-count">3</span>
+                    <span class="lec-cat-arrow">▼</span>
                 </div>
             </div>
+            <div class="lec-cat-body active">
+                <div class="lec-tabs">
+                    <button class="lec-tab active" onclick="openLecTab(this,'cyber-vpc')">☁️ AWS VPC Scenarios</button>
+                    <button class="lec-tab" onclick="openLecTab(this,'cyber-pdf1')">📄 Lecture 1 Slides</button>
+                    <button class="lec-tab" onclick="openLecTab(this,'cyber-ppt1')">📊 Lecture 2 PowerPoint</button>
+                </div>
+                <div class="lec-panels">
 
-            <!-- ── Add more lecture cards below as needed ── -->
+                    <div class="lec-panel active" id="lec-cyber-vpc">
+                        <div class="lec-panel-header">
+                            <div>
+                                <span class="lec-badge">Module 5 · AWS Networking</span>
+                                <h3>AWS VPC Scenarios</h3>
+                                <p>10 interactive bilingual scenarios — Internet Gateway, NAT, CIDR, Route Tables, Elastic IP, ENI</p>
+                            </div>
+                            <a href="vpc-scenarios.html" target="_blank" class="lec-open-new">⛶ Full Screen</a>
+                        </div>
+                        <iframe src="vpc-scenarios.html" class="lec-iframe" title="AWS VPC Scenarios" loading="lazy"></iframe>
+                    </div>
 
+                    <div class="lec-panel" id="lec-cyber-pdf1">
+                        <div class="lec-panel-header">
+                            <div>
+                                <span class="lec-badge">Cyber Security · PDF</span>
+                                <h3>Lecture 1 — Introduction to Cyber Security</h3>
+                                <p>Full lecture slides viewable directly in browser</p>
+                            </div>
+                            <a href="lectures/cyber/lecture1.pdf" target="_blank" class="lec-open-new">⛶ Full Screen</a>
+                        </div>
+                        <iframe src="lectures/cyber/lecture1.pdf" class="lec-pdf-viewer" title="Lecture 1 PDF"></iframe>
+                    </div>
+
+                    <div class="lec-panel" id="lec-cyber-ppt1">
+                        <div class="lec-panel-header">
+                            <div>
+                                <span class="lec-badge">Cyber Security · PPT</span>
+                                <h3>Lecture 2 — Network Threats & Attacks</h3>
+                                <p>View online via Microsoft Office or download</p>
+                            </div>
+                        </div>
+                        <div class="lec-ppt-box">
+                            <div class="ppt-icon">📊</div>
+                            <h4>Lecture 2 — Network Threats & Attacks.pptx</h4>
+                            <p>View directly in your browser — no PowerPoint installation needed.</p>
+                            <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+                                <a class="lec-ppt-btn"
+                                   href="https://view.officeapps.live.com/op/view.aspx?src=YOUR-GITHUB-RAW-LINK/lectures/cyber/lecture2.pptx"
+                                   target="_blank">👁️ View Online</a>
+                                <a class="lec-ppt-btn"
+                                   href="lectures/cyber/lecture2.pptx" download
+                                   style="background:var(--blue2);color:#fff">⬇️ Download</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </div>
+        <!-- ══ END CATEGORY 1 ══ -->
+
+        <!-- ══ CATEGORY 2: Master Students 2026 ══ -->
+        <div class="lec-category">
+            <div class="lec-cat-header" onclick="toggleCategory(this)">
+                <div class="lec-cat-left">
+                    <span class="lec-cat-icon">🎓</span>
+                    <div>
+                        <div class="lec-cat-title">Master Students</div>
+                        <div class="lec-cat-sub">2025 – 2026 · Postgraduate · 2 Lectures</div>
+                    </div>
+                </div>
+                <div class="lec-cat-right">
+                    <span class="lec-cat-count">2</span>
+                    <span class="lec-cat-arrow">▼</span>
+                </div>
+            </div>
+            <div class="lec-cat-body">
+                <div class="lec-tabs">
+                    <button class="lec-tab active" onclick="openLecTab(this,'master-pdf1')">📄 Research Methods</button>
+                    <button class="lec-tab" onclick="openLecTab(this,'master-ppt1')">📊 Advanced AI Slides</button>
+                </div>
+                <div class="lec-panels">
+
+                    <div class="lec-panel active" id="lec-master-pdf1">
+                        <div class="lec-panel-header">
+                            <div>
+                                <span class="lec-badge">Master · PDF</span>
+                                <h3>Research Methods in Computer Science</h3>
+                                <p>Graduate-level research methodology and academic writing</p>
+                            </div>
+                            <a href="lectures/master/research-methods.pdf" target="_blank" class="lec-open-new">⛶ Full Screen</a>
+                        </div>
+                        <iframe src="lectures/master/research-methods.pdf" class="lec-pdf-viewer" title="Research Methods PDF"></iframe>
+                    </div>
+
+                    <div class="lec-panel" id="lec-master-ppt1">
+                        <div class="lec-panel-header">
+                            <div>
+                                <span class="lec-badge">Master · PPT</span>
+                                <h3>Advanced AI — Deep Learning Architectures</h3>
+                                <p>View online or download the PowerPoint file</p>
+                            </div>
+                        </div>
+                        <div class="lec-ppt-box">
+                            <div class="ppt-icon">📊</div>
+                            <h4>Advanced AI — Deep Learning Architectures.pptx</h4>
+                            <p>View directly in your browser — no PowerPoint installation needed.</p>
+                            <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+                                <a class="lec-ppt-btn"
+                                   href="https://view.officeapps.live.com/op/view.aspx?src=YOUR-GITHUB-RAW-LINK/lectures/master/advanced-ai.pptx"
+                                   target="_blank">👁️ View Online</a>
+                                <a class="lec-ppt-btn"
+                                   href="lectures/master/advanced-ai.pptx" download
+                                   style="background:var(--blue2);color:#fff">⬇️ Download</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- ══ END CATEGORY 2 ══ -->
+
+        <!-- ══ CATEGORY 3: Cloud Computing 2026 ══ -->
+        <div class="lec-category">
+            <div class="lec-cat-header" onclick="toggleCategory(this)">
+                <div class="lec-cat-left">
+                    <span class="lec-cat-icon">☁️</span>
+                    <div>
+                        <div class="lec-cat-title">Cloud Computing</div>
+                        <div class="lec-cat-sub">2025 – 2026 · Undergraduate · 1 Lecture</div>
+                    </div>
+                </div>
+                <div class="lec-cat-right">
+                    <span class="lec-cat-count">1</span>
+                    <span class="lec-cat-arrow">▼</span>
+                </div>
+            </div>
+            <div class="lec-cat-body">
+                <div class="lec-tabs">
+                    <button class="lec-tab active" onclick="openLecTab(this,'cloud-html1')">🌐 Module 1 Interactive</button>
+                </div>
+                <div class="lec-panels">
+                    <div class="lec-panel active" id="lec-cloud-html1">
+                        <div class="lec-panel-header">
+                            <div>
+                                <span class="lec-badge">Cloud Computing · HTML</span>
+                                <h3>Module 1 — Introduction to Cloud Computing</h3>
+                                <p>Interactive scenarios and exercises for cloud fundamentals</p>
+                            </div>
+                            <a href="lectures/cloud/module1.html" target="_blank" class="lec-open-new">⛶ Full Screen</a>
+                        </div>
+                        <iframe src="lectures/cloud/module1.html" class="lec-iframe" title="Cloud Module 1" loading="lazy"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ══ END CATEGORY 3 ══ -->
+
+        <!--
+        ➕ TEMPLATE — Copy this to add a new category:
+        ════════════════════════════════════════════════
+        <div class="lec-category">
+            <div class="lec-cat-header" onclick="toggleCategory(this)">
+                <div class="lec-cat-left">
+                    <span class="lec-cat-icon">📘</span>
+                    <div>
+                        <div class="lec-cat-title">CATEGORY NAME</div>
+                        <div class="lec-cat-sub">2025 – 2026 · Level · X Lectures</div>
+                    </div>
+                </div>
+                <div class="lec-cat-right">
+                    <span class="lec-cat-count">X</span>
+                    <span class="lec-cat-arrow">▼</span>
+                </div>
+            </div>
+            <div class="lec-cat-body">
+                <div class="lec-tabs">
+                    <button class="lec-tab active" onclick="openLecTab(this,'CATID-lec1')">📄 Lecture 1</button>
+                </div>
+                <div class="lec-panels">
+                    <div class="lec-panel active" id="lec-CATID-lec1">
+                        <div class="lec-panel-header">
+                            <div>
+                                <span class="lec-badge">Category · Type</span>
+                                <h3>Lecture Title</h3>
+                                <p>Description</p>
+                            </div>
+                            <a href="your-file.html" target="_blank" class="lec-open-new">⛶ Full Screen</a>
+                        </div>
+                        <iframe src="your-file.html" class="lec-iframe" title="Lecture" loading="lazy"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+        ════════════════════════════════════════════════
+        -->
+
     </div>
 </section>
 <!-- ══════════════ END LECTURES ══════════════ -->
 
-<!-- CERTIFICATIONS -->
+<!-- ══ CERTIFICATIONS ══ -->
 <section id="certifications" class="alt">
     <div class="container">
-        <div class="sec-header"><span class="sec-num">07</span><div><div class="sec-eye">Credentials</div><h2 class="sec-h2">Certifications</h2></div></div>
+        <div class="sec-header">
+            <span class="sec-num">07</span>
+            <div><div class="sec-eye">Credentials</div><h2 class="sec-h2">Certifications</h2></div>
+        </div>
         <div class="certs-grid" id="certs-list"></div>
     </div>
 </section>
 
-<!-- AWARDS -->
+<!-- ══ AWARDS ══ -->
 <section id="awards">
     <div class="container">
-        <div class="sec-header"><span class="sec-num">08</span><div><div class="sec-eye">Recognition</div><h2 class="sec-h2">Awards & Honors</h2></div></div>
+        <div class="sec-header">
+            <span class="sec-num">08</span>
+            <div><div class="sec-eye">Recognition</div><h2 class="sec-h2">Awards & Honors</h2></div>
+        </div>
         <div class="awards-grid" id="awards-list"></div>
     </div>
 </section>
 
-<!-- GALLERY -->
+<!-- ══ GALLERY ══ -->
 <section id="gallery" class="alt">
     <div class="container">
-        <div class="sec-header"><span class="sec-num">09</span><div><div class="sec-eye">Gallery</div><h2 class="sec-h2">Photo Gallery</h2></div></div>
+        <div class="sec-header">
+            <span class="sec-num">09</span>
+            <div><div class="sec-eye">Gallery</div><h2 class="sec-h2">Photo Gallery</h2></div>
+        </div>
         <div class="gallery-grid" id="gallery-grid"></div>
     </div>
 </section>
 
-<!-- CONTACT -->
+<!-- ══ CONTACT ══ -->
 <section id="contact">
     <div class="container">
-        <div class="sec-header"><span class="sec-num">10</span><div><div class="sec-eye">Contact</div><h2 class="sec-h2">Get in Touch</h2></div></div>
+        <div class="sec-header">
+            <span class="sec-num">10</span>
+            <div><div class="sec-eye">Contact</div><h2 class="sec-h2">Get in Touch</h2></div>
+        </div>
         <div class="contact-grid">
-            <div class="panel"><div class="panel-hdr">📬 &nbsp;Contact Information</div><div id="contact-items"></div></div>
+            <div class="panel">
+                <div class="panel-hdr">📬 &nbsp;Contact Information</div>
+                <div id="contact-items"></div>
+            </div>
             <div>
-                <div class="panel"><div class="panel-hdr">🏛 &nbsp;Affiliation</div><div class="affil"><div id="c-name" class="affil-name"></div><div id="c-title" class="affil-title"></div><div class="affil-uni">Faculty of Information Technology<br>University of Babylon, Iraq</div></div></div>
-                <div class="panel mt1"><div class="panel-hdr">🔗 &nbsp;Online Profiles</div><div id="contact-profiles" class="profile-links"></div></div>
+                <div class="panel">
+                    <div class="panel-hdr">🏛 &nbsp;Affiliation</div>
+                    <div class="affil">
+                        <div id="c-name" class="affil-name"></div>
+                        <div id="c-title" class="affil-title"></div>
+                        <div class="affil-uni">Faculty of Information Technology<br>University of Babylon, Iraq</div>
+                    </div>
+                </div>
+                <div class="panel mt1">
+                    <div class="panel-hdr">🔗 &nbsp;Online Profiles</div>
+                    <div id="contact-profiles" class="profile-links"></div>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
+<!-- ══ FOOTER ══ -->
 <footer>
     <div class="container">
         <div class="footer-row">
-            <div><div class="footer-name">Dr. Ameer Kadhim Hadi</div><div class="footer-sub">Assistant Professor · University of Babylon, Iraq</div></div>
-            <div class="footer-right"><span>© <span id="footer-year"></span> All rights reserved.</span><a href="#hero">↑ Top</a></div>
+            <div>
+                <div class="footer-name">Dr. Ameer Kadhim Hadi</div>
+                <div class="footer-sub">Assistant Professor · University of Babylon, Iraq</div>
+            </div>
+            <div class="footer-right">
+                <span>© <span id="footer-year"></span> All rights reserved.</span>
+                <a href="#hero">↑ Top</a>
+            </div>
         </div>
     </div>
 </footer>
 
 <script src="data.js"></script>
 <script src="script.js"></script>
+<script>
+    // ══ Lecture: Toggle Category open/close ══
+    function toggleCategory(header) {
+        const body = header.nextElementSibling;
+        const isOpen = body.classList.contains('active');
+        body.classList.toggle('active', !isOpen);
+        header.classList.toggle('collapsed', isOpen);
+    }
+
+    // ══ Lecture: Switch tab inside a category ══
+    function openLecTab(btn, id) {
+        const categoryBody = btn.closest('.lec-cat-body');
+        categoryBody.querySelectorAll('.lec-panel').forEach(p => p.classList.remove('active'));
+        categoryBody.querySelectorAll('.lec-tab').forEach(t => t.classList.remove('active'));
+        document.getElementById('lec-' + id).classList.add('active');
+        btn.classList.add('active');
+    }
+</script>
+
 </body>
 </html>
