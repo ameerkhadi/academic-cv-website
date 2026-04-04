@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AWS VPC Scenarios – Module 5</title>
+  <style>
+    :root {
+      --primary: #0f1f3d;
+      --accent: #ff9900;
+      --accent2: #1a73e8;
+      --easy: #22c55e;
+      --medium: #f59e0b;
+      --hard: #ef4444;
+      --card-bg: #1e2d4d;
+      --body-bg: #0a1628;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --border: #2d3f5e;
+      --answer-bg: #0f2340;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background: var(--body-bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 2rem 1rem;
+    }
+
+    /* ── Header ── */
+    .hero {
+      text-align: center;
+      margin-bottom: 3rem;
+      padding: 2.5rem 1rem;
+      background: linear-gradient(135deg, #0f1f3d 0%, #1a3a6b 100%);
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at top right, rgba(255,153,0,0.12), transparent 60%);
+    }
+    .hero .badge {
+      display: inline-block;
+      background: rgba(255,153,0,0.15);
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      border-radius: 50px;
+      padding: .35rem 1.1rem;
+      font-size: .8rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .hero h1 {
+      font-size: clamp(1.6rem, 4vw, 2.6rem);
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.25;
+    }
+    .hero h1 span { color: var(--accent); }
+    .hero p {
+      margin-top: .8rem;
+      color: var(--muted);
+      font-size: 1rem;
+      direction: rtl;
+    }
+
+    /* ── Grid ── */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 1.6rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* ── Card ── */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform .25s, box-shadow .25s;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,.4);
+    }
+
+    /* ── Card Header ── */
+    .card-header {
+      padding: 1.1rem 1.4rem;
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .scenario-num {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: .9rem; flex-shrink: 0;
+      background: rgba(255,153,0,0.15);
+      border: 1px solid var(--accent);
+      color: var(--accent);
+    }
+    .card-header-info { flex: 1; }
+    .card-header-info h3 {
+      font-size: .95rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .card-header-info .en-title {
+      direction: ltr;
+      text-align: left;
+      font-size: .78rem;
+      color: var(--muted);
+      margin-top: .15rem;
+    }
+    .difficulty {
+      font-size: .72rem;
+      font-weight: 700;
+      padding: .25rem .7rem;
+      border-radius: 50px;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      flex-shrink: 0;
+    }
+    .easy   { background: rgba(34,197,94,.15);  color: var(--easy);   border: 1px solid var(--easy); }
+    .medium { background: rgba(245,158,11,.15); color: var(--medium); border: 1px solid var(--medium); }
+    .hard   { background: rgba(239,68,68,.15);  color: var(--hard);   border: 1px solid var(--hard); }
+
+    /* ── Card Body ── */
+    .card-body { padding: 1.2rem 1.4rem; flex: 1; }
+
+    .scenario-text {
+      font-size: .9rem;
+      line-height: 1.7;
+      color: var(--text);
+      margin-bottom: .9rem;
+      direction: rtl;
+    }
+    .scenario-en {
+      font-size: .82rem;
+      line-height: 1.6;
+      color: var(--muted);
+      direction: ltr;
+      text-align: left;
+      padding: .7rem;
+      border-left: 3px solid var(--border);
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 1rem;
+      background: rgba(255,255,255,.03);
+    }
+
+    .question-box {
+      background: rgba(26,115,232,.08);
+      border: 1px solid rgba(26,115,232,.3);
+      border-radius: 10px;
+      padding: .9rem 1rem;
+      margin-bottom: .9rem;
+    }
+    .question-box p {
+      font-size: .88rem;
+      line-height: 1.6;
+      direction: rtl;
+    }
+    .question-box p.en {
+      direction: ltr;
+      text-align: left;
+      color: var(--muted);
+      font-size: .82rem;
+      margin-top: .4rem;
+    }
+    .question-box p::before { content: '❓ '; }
+    .question-box p.en::before { content: '❓ '; }
+
+    /* ── Toggle Button ── */
+    .toggle-btn {
+      width: 100%;
+      padding: .75rem;
+      background: rgba(255,153,0,.08);
+      border: 1px solid rgba(255,153,0,.3);
+      border-radius: 10px;
+      color: var(--accent);
+      font-size: .85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .5rem;
+    }
+    .toggle-btn:hover { background: rgba(255,153,0,.15); }
+    .toggle-btn .arrow { transition: transform .3s; display: inline-block; }
+    .toggle-btn.open .arrow { transform: rotate(180deg); }
+
+    /* ── Answer Box ── */
+    .answer-box {
+      display: none;
+      margin-top: 1rem;
+      background: var(--answer-bg);
+      border: 1px solid rgba(34,197,94,.25);
+      border-radius: 10px;
+      padding: 1rem 1.1rem;
+    }
+    .answer-box.visible { display: block; }
+    .answer-label {
+      font-size: .75rem;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--easy);
+      margin-bottom: .6rem;
+      font-weight: 700;
+    }
+    .answer-text {
+      font-size: .88rem;
+      line-height: 1.75;
+      direction: rtl;
+      color: var(--text);
+    }
+    .answer-text-en {
+      font-size: .82rem;
+      line-height: 1.65;
+      direction: ltr;
+      text-align: left;
+      color: var(--muted);
+      margin-top: .6rem;
+      padding-top: .6rem;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: 1rem; }
+    .tag {
+      font-size: .7rem;
+      padding: .2rem .55rem;
+      background: rgba(255,255,255,.06);
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      color: var(--muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      margin-top: 3rem;
+      color: var(--muted);
+      font-size: .8rem;
+      padding: 1.5rem;
+    }
+    footer span { color: var(--accent); }
+
+    @media (max-width: 500px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════ HERO ══════════════ -->
+<div class="hero">
+  <div class="badge">Module 5 – AWS Networking</div>
+  <h1>AWS <span>VPC</span> Scenarios</h1>
+  <p>سيناريوهات تدريبية تفاعلية – Amazon Virtual Private Cloud</p>
+</div>
+
+<!-- ══════════════ GRID ══════════════ -->
+<div class="grid">
+
+
+  <!-- ═══ SCENARIO 1 ═══ -->
+  <div class="card">
+    <div class="card-header">
+      <div class="scenario-num">1</div>
+      <div class="card-header-info">
+        <h3>بوابة الإنترنت</h3>
+        <div class="en-title">Internet Gateway</div>
+      </div>
+      <span class="difficulty easy">سهل</span>
+    </div>
+    <div class="card-body">
+      <p class="scenario-text">
+        شركة ناشئة تبني موقع تجارة إلكترونية على AWS. أنشأت VPC بـ CIDR 10.0.0.0/16 وشبكة فرعية 10.0.1.0/24 وأطلقت خادم الويب EC2 فيها. عندما يحاول العملاء الوصول إلى الموقع، لا يصلهم أي رد.
+      </p>
+      <p class="scenario-en">
+        A startup built a public e-commerce site on AWS. They created a VPC (10.0.0.0/16) and a subnet (10.0.1.0/24) with an EC2 web server. Customers can't reach the site.
+      </p>
+      <div class="question-box">
+        <p>ما الأرجح أنه ناقص، وما الخطوتان اللازمتان للإصلاح؟</p>
+        <p class="en">What is most likely missing, and what are the two steps needed to fix it?</p>
+      </div>
+      <button class="toggle-btn" onclick="toggle(this)">
+        إظهار الإجابة / Show Answer <span class="arrow">▼</span>
+      </button>
+      <div class="answer-box">
+        <div class="answer-label">✔ الإجابة</div>
+        <p class="answer-text">
+          الناقص هو <strong>Internet Gateway</strong>. الخطوات: <br>
+          (١) أنشئ Internet Gateway وقم بإرفاقه بالـ VPC.<br>
+          (٢) أضف مساراً في جدول توجيه الشبكة الفرعية: الوجهة 0.0.0.0/0، الهدف = الـ IGW.<br>
+          هذا يجعل الشبكة الفرعية عامة ويتيح حركة مرور الإنترنت الواردة والصادرة.
+        </p>
+        <p class="answer-text-en">
+          An Internet Gateway is missing. Steps: (1) Create and attach an Internet Gateway to the VPC. (2) Add a route in the subnet's route table: destination 0.0.0.0/0, target = IGW. This makes the subnet public and allows internet traffic.
+        </p>
+      </div>
+      <div class="tags">
+        <span class="tag">Internet Gateway</span>
+        <span class="tag">Route Table</span>
+        <span class="tag">Public Subnet</span>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══ SCENARIO 2 ═══ -->
+  <div class="card">
+    <div class="card-header">
+      <div class="scenario-num">2</div>
+      <div class="card-header-info">
+        <h3>بوابة NAT</h3>
+        <div class="en-title">NAT Gateway</div>
+      </div>
+      <span class="difficulty medium">متوسط</span>
+    </div>
+    <div class="card-body">
+      <p class="scenario-text">
+        شركة تُشغّل تطبيقاً مصرفياً على AWS. خوادم قواعد البيانات موضوعة في شبكة فرعية خاصة لأسباب أمنية. يحتاج الفريق إلى تنزيل التحديثات والتصحيحات الأمنية من الإنترنت، لكن يجب ألا يتمكن أحد من الوصول إلى الخوادم من الخارج.
+      </p>
+      <p class="scenario-en">
+        A banking app runs on AWS with DB servers in a private subnet. The team needs those servers to download updates from the internet — but the servers must NOT be reachable from outside.
+      </p>
+      <div class="question-box">
+        <p>ما المكوِّن الذي يجب على الفريق تهيئته، وأين يجب وضعه؟</p>
+        <p class="en">What AWS component should the team configure, and where should it be placed?</p>
+      </div>
+      <button class="toggle-btn" onclick="toggle(this)">
+        إظهار الإجابة / Show Answer <span class="arrow">▼</span>
+      </button>
+      <div class="answer-box">
+        <div class="answer-label">✔ الإجابة</div>
+        <p class="answer-text">
+          يجب استخدام <strong>NAT Gateway</strong> ووضعه في <strong>الشبكة الفرعية العامة (Public Subnet)</strong>، ثم تحديث جدول توجيه الشبكة الخاصة لتوجيه حركة الإنترنت (0.0.0.0/0) إلى الـ NAT Gateway. هذا يتيح الحركة الصادرة فقط، دون السماح بأي اتصال وارد من الإنترنت.
+        </p>
+        <p class="answer-text-en">
+          Use a NAT Gateway placed in the public subnet. Update the private subnet's route table to send 0.0.0.0/0 traffic to the NAT Gateway. This allows outbound-only internet access — no inbound connections from the internet are permitted.
+        </p>
+      </div>
+      <div class="tags">
+        <span class="tag">NAT Gateway</span>
+        <span class="tag">Private Subnet</span>
+        <span class="tag">Security</span>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══ SCENARIO 3 ═══ -->
+  <div class="card">
+    <div class="card-header">
+      <div class="scenario-num">3</div>
+      <div class="card-header-info">
+        <h3>CIDR والعناوين المحجوزة</h3>
+        <div class="en-title">CIDR & Reserved IPs</div>
+      </div>
+      <span class="difficulty hard">صعب</span>
+    </div>
+    <div class="card-body">
+      <p class="scenario-text">
+        مهندسة حلول تصمم VPC لنظام جامعي. أنشأت VPC بـ CIDR 172.16.0.0/16 وتريد تقسيمها إلى ٤ شبكات فرعية متساوية. تحتاج كل شبكة فرعية إلى دعم ما لا يقل عن ٢٥٠ عنوان IP قابلاً للاستخدام لأجهزة الطلاب.
+      </p>
+      <p class="scenario-en">
+        A solutions architect designs a VPC (172.16.0.0/16) split into 4 equal subnets, each needing at least 250 usable IP addresses for student devices.
+      </p>
+      <div class="question-box">
+        <p>ما الحجم الأدنى للشبكة الفرعية (CIDR prefix)، وكم عنوان IP قابل للاستخدام ستحتوي كل شبكة؟</p>
+        <p class="en">What is the minimum subnet size (CIDR prefix), and how many usable IPs will each subnet have?</p>
+      </div>
+      <button class="toggle-btn" onclick="toggle(this)">
+        إظهار الإجابة / Show Answer <span class="arrow">▼</span>
+      </button>
+      <div class="answer-box">
+        <div class="answer-label">✔ الإجابة</div>
+        <p class="answer-text">
+          يجب استخدام شبكات فرعية بـ <strong>/24</strong> (مثال: 172.16.0.0/24). الـ /24 يعطي ٢٥٦ عنوان IP إجمالاً. تحجز AWS ٥ عناوين لكل شبكة فرعية، مما يترك <strong>٢٥١ عنواناً قابلاً للاستخدام</strong> — وهذا يستوفي متطلب الـ ٢٥٠. الـ /25 يعطي فقط ١٢٣ قابلاً للاستخدام وهو غير كافٍ.
+        </p>
+        <p class="answer-text-en">
+          Use /24 subnets (e.g. 172.16.0.0/24). A /24 gives 256 total IPs. AWS reserves 5 per subnet → 251 usable IPs, meeting the 250 requirement. A /25 gives only 123 usable IPs — insufficient.
+        </p>
+      </div>
+      <div class="tags">
+        <span class="tag">CIDR</span>
+        <span class="tag">Subnet Sizing</span>
+        <span class="tag">Reserved IPs</span>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══ SCENARIO 4 ═══ -->
+  <div class="card">
+    <div class="card-header">
+      <div class="scenario-num">4</div>
+      <div class="card-header-info">
+        <h3>جداول التوجيه</h3>
+        <div class="en-title">Route Tables Misconfiguration</div>
+      </div>
+      <span class="difficulty medium">متوسط</span>
+    </div>
+    <div class="card-body">
+      <p class="scenario-text">
+        مطورة في شركة اتصالات لديها شبكتان فرعيتان: شبكة عامة (10.0.1.0/24) بها خادم ويب، وشبكة خاصة (10.0.2.0/24) بها قاعدة بيانات. لاحظت أن قاعدة البيانات يمكن الوصول إليها من الإنترنت — وهذا انتهاك أمني خطير.
+      </p>
+      <p class="scenario-en">
+        A developer has a public subnet (web server) and a private subnet (database). She notices the database is reachable from the internet — a serious security violation.
+      </p>
+      <div class="question-box">
+        <p>ما الخطأ في الإعداد الذي يتسبب في هذه المشكلة؟</p>
+        <p class="en">What is most likely the misconfiguration causing this issue?</p>
+      </div>
+      <button class="toggle-btn" onclick="toggle(this)">
+        إظهار الإجابة / Show Answer <span class="arrow">▼</span>
+      </button>
+      <div class="answer-box">
+        <div class="answer-label">✔ الإجابة</div>
+        <p class="answer-text">
+          على الأرجح أن جدول توجيه الشبكة الخاصة يحتوي على مسار يوجّه 0.0.0.0/0 إلى الـ Internet Gateway، مما يجعلها تتصرف كشبكة عامة. الحل: احذف ذلك المسار من جدول توجيه الشبكة الخاصة. يجب أن تحتوي الشبكات الخاصة فقط على المسار المحلي (10.0.0.0/16 → local).
+        </p>
+        <p class="answer-text-en">
+          The private subnet's route table likely has a route 0.0.0.0/0 → IGW, making it behave like a public subnet. Fix: remove that route. Private subnets should only have the local route (10.0.0.0/16 → local).
+        </p>
+      </div>
+      <div class="tags">
+        <span class="tag">Route Table</span>
+        <span class="tag">Private Subnet</span>
+        <span class="tag">Security</span>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══ SCENARIO 5 ═══ -->
+  <div class="card">
+    <div class="card-header">
+      <div class="scenario-num">5</div>
+      <div class="card-header-info">
+        <h3>عنوان IP مرن وواجهة الشبكة</h3>
+        <div class="en-title">Elastic IP & ENI</div>
+      </div>
+      <span class="difficulty hard">صعب</span>
+    </div>
+    <div class="card-body">
+      <p class="scenario-text">
+        شركة تقنية مالية تُشغّل خادم معالجة مدفوعات حيوياً على EC2. للخادم عنوان IP عام محدد مُدرج في القائمة البيضاء لدى عدة بنوك شريكة. تعطّل الـ EC2 instance ويجب إطلاق instance جديد فوراً. الفريق قلق من فقدان عنوان الـ IP المُدرج.
+      </p>
+      <p class="scenario-en">
+        A fintech server has a whitelisted public IP used by partner banks. The EC2 instance crashes and a new one must be launched. The team fears losing the whitelisted IP.
+      </p>
+      <div class="question-box">
+        <p>ما ميزة AWS التي كان ينبغي استخدامها لمنع هذه المشكلة، وكيف تعمل؟</p>
+        <p class="en">What AWS feature should they have used to prevent this, and how does it work?</p>
+      </div>
+      <button class="toggle-btn" onclick="toggle(this)">
+        إظهار الإجابة / Show Answer <span class="arrow">▼</span>
+      </button>
+      <div class="answer-box">
+        <div class="answer-label">✔ الإجابة</div>
+        <p class="answer-text">
+          يجب استخدام <strong>Elastic IP Address</strong>. إنه عنوان IPv4 عام ثابت مرتبط بحساب AWS وليس بالـ instance. عند تعطّل instance، يُعاد ربط نفس الـ Elastic IP بالـ instance الجديد — ولن تلاحظ البنوك الشريكة أي تغيير. ملاحظة: الـ Elastic IPs غير المستخدمة تُكبّد رسوماً، لذا يجب تحريرها عند انتهاء الحاجة.
+        </p>
+        <p class="answer-text-en">
+          Use an Elastic IP Address — a static public IPv4 tied to the AWS account, not the instance. When the instance fails, re-associate the same Elastic IP to the new instance. Partner banks see no IP change. Note: unused Elastic IPs incur charges — release them when done.
+        </p>
+      </div>
+      <div class="tags">
+        <span class="tag">Elastic IP</span>
+        <span class="tag">ENI</span>
+        <span class="tag">High Availability</span>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══ SCENARIO 6 ═══ -->
+  <div class="card">
+    <div class="card-header">
+      <div class="scenario-num">6</div>
+      <div class="card-header-info">
+        <h3>الـ VPC والمناطق</h3>
+        <div class="en-title">VPC Scope & Availability Zones</div>
+      </div>
+      <span class="difficulty easy">سهل</span>
+    </div>
+    <div class="card-body">
+      <p class="scenario-text">
+        طالب يتعلم AWS سأل: "هل يمكنني إنشاء VPC واحدة تمتد عبر منطقتين مختلفتين (Regions)؟ وهل يمكن للشبكات الفرعية أن تمتد عبر مناطق توافر (Availability Zones) متعددة؟"
+      </p>
+      <p class="scenario-en">
+        A student asks: "Can I create a single VPC that spans two different AWS Regions? Can subnets span multiple Availability Zones?"
+      </p>
+      <div class="question-box">
+        <p>ما الإجابة الصحيحة لكلا السؤالين؟</p>
+        <p class="en">What is the correct answer to both questions?</p>
+      </div>
+      <button class="toggle-btn" onclick="toggle(this)">
+        إظهار الإجابة / Show Answer <span class="arrow">▼</span>
+      </button>
+      <div class="answer-box">
+        <div class="answer-label">✔ الإجابة</div>
+        <p class="answer-text">
+          <strong>لا</strong> في كلتا الحالتين. الـ VPC مرتبطة بمنطقة (Region) واحدة فقط ولا يمكنها الامتداد عبر مناطق متعددة. كذلك، كل شبكة فرعية (Subnet) مرتبطة بمنطقة توافر (Availability Zone) واحدة فقط. لتحقيق التوافر العالي، يُنشئ المهندسون شبكات فرعية متعددة في مناطق توافر مختلفة داخل نفس الـ VPC.
+        </p>
+        <p class="answer-text-en">
+          No to both. A VPC belongs to one Region only and cannot span multiple Regions. A subnet belongs to one Availability Zone only. For high availability, architects create multiple subnets across different AZs within the same VPC.
+        </p>
+      </div>
+      <div class="tags">
+        <span class="tag">VPC</span>
+        <span class="tag">Region</span>
+        <span class="tag">Availability Zone</span>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══ SCENARIO 7 ═══ -->
+  <div class="card">
+    <div class="card-header">
+      <div class="scenario-num">7</div>
+      <div class="card-header-info">
+        <h3>نطاقات CIDR المتداخلة</h3>
+        <div class="en-title">Overlapping CIDR Blocks</div>
+      </div>
+      <span class="difficulty hard">صعب</span>
+    </div>
+    <div class="card-body">
+      <p class="scenario-text">
+        مهندس شبكات أنشأ VPC بـ CIDR 10.0.0.0/16، ثم حاول إنشاء ثلاث شبكات فرعية بالنطاقات التالية: 10.0.0.0/24 و10.0.0.128/25 و10.0.1.0/24. رفض AWS إنشاء الشبكة الثانية. لماذا؟
+      </p>
+      <p class="scenario-en">
+        A network engineer created a VPC (10.0.0.0/16) and tried to create three subnets: 10.0.0.0/24, 10.0.0.128/25, and 10.0.1.0/24. AWS rejected the second subnet. Why?
+      </p>
+      <div class="question-box">
+        <p>ما سبب الرفض، وكيف يمكن إصلاحه؟</p>
+        <p class="en">Why was the second subnet rejected, and how can it be fixed?</p>
+      </div>
+      <button class="toggle-btn" onclick="toggle(this)">
+        إظهار الإجابة / Show Answer <span class="arrow">▼</span>
+      </button>
+      <div class="answer-box">
+        <div class="answer-label">✔ الإجابة</div>
+        <p class="answer-text">
+          الشبكة الثانية 10.0.0.128/25 تتداخل مع الأولى 10.0.0.0/24 — كلاهما يشملان عناوين 10.0.0.128 إلى 10.0.0.255. لا تسمح AWS بتداخل نطاقات CIDR بين الشبكات الفرعية داخل نفس الـ VPC. الحل: استخدام نطاق لا يتداخل مثل 10.0.2.0/25.
+        </p>
+        <p class="answer-text-en">
+          10.0.0.128/25 overlaps with 10.0.0.0/24 — both include addresses 10.0.0.128–10.0.0.255. AWS does not allow overlapping CIDR blocks within the same VPC. Fix: use a non-overlapping range like 10.0.2.0/25.
+        </p>
+      </div>
+      <div class="tags">
+        <span class="tag">CIDR</span>
+        <span class="tag">Overlapping</span>
+        <span class="tag">VPC Design</span>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══ SCENARIO 8 ═══ -->
+  <div class="card">
+    <div class="card-header">
+      <div class="scenario-num">8</div>
+      <div class="card-header-info">
+        <h3>واجهة الشبكة المرنة</h3>
+        <div class="en-title">Elastic Network Interface (ENI)</div>
+      </div>
+      <span class="difficulty medium">متوسط</span>
+    </div>
+    <div class="card-body">
+      <p class="scenario-text">
+        شركة تشغّل تطبيقاً يتطلب شبكتين منفصلتين: واحدة للمستخدمين (10.0.1.0/24) وأخرى للإدارة (10.0.2.0/24). يريد الفريق خادماً واحداً EC2 يمكنه التواصل مع كلتا الشبكتين في آنٍ واحد.
+      </p>
+      <p class="scenario-en">
+        A company needs one EC2 server to communicate with two separate subnets simultaneously: a user-facing subnet (10.0.1.0/24) and a management subnet (10.0.2.0/24).
+      </p>
+      <div class="question-box">
+        <p>كيف يمكن تحقيق ذلك في AWS؟</p>
+        <p class="en">How can this be achieved in AWS?</p>
+      </div>
+      <button class="toggle-btn" onclick="toggle(this)">
+        إظهار الإجابة / Show Answer <span class="arrow">▼</span>
+      </button>
+      <div class="answer-box">
+        <div class="answer-label">✔ الإجابة</div>
+        <p class="answer-text">
+          يمكن إرفاق <strong>Elastic Network Interface (ENI)</strong> إضافية بالـ instance. الـ instance لديه بالفعل واجهة شبكة أساسية (Primary ENI) في الشبكة الأولى. يُنشئ الفريق ENI ثانية في الشبكة الثانية ويرفقها بنفس الـ instance. يصبح الخادم قادراً على الاتصال بكلتا الشبكتين. عدد الـ ENIs التي يمكن إرفاقها يعتمد على نوع الـ instance.
+        </p>
+        <p class="answer-text-en">
+          Attach an additional Elastic Network Interface (ENI) to the EC2 instance. The instance already has a primary ENI in the first subnet. Create a second ENI in the management subnet and attach it to the same instance. The number of ENIs supported depends on the instance type.
+        </p>
+      </div>
+      <div class="tags">
+        <span class="tag">ENI</span>
+        <span class="tag">Multi-homed</span>
+        <span class="tag">EC2</span>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══ SCENARIO 9 ═══ -->
+  <div class="card">
+    <div class="card-header">
+      <div class="scenario-num">9</div>
+      <div class="card-header-info">
+        <h3>NAT Instance مقابل NAT Gateway</h3>
+        <div class="en-title">NAT Instance vs NAT Gateway</div>
+      </div>
+      <span class="difficulty medium">متوسط</span>
+    </div>
+    <div class="card-body">
+      <p class="scenario-text">
+        مدير تقنية معلومات في شركة ناشئة يناقش مع فريقه خياري NAT Instance وNAT Gateway لتمكين الخوادم الخاصة من الوصول إلى الإنترنت. يريد الحل الأقل تعقيداً إدارياً مع أداء أفضل.
+      </p>
+      <p class="scenario-en">
+        A CTO is comparing NAT Instance vs NAT Gateway to allow private servers to access the internet. He wants the option with less admin overhead and better performance.
+      </p>
+      <div class="question-box">
+        <p>أي الخيارين توصي به AWS، وما الفرق الجوهري بينهما؟</p>
+        <p class="en">Which option does AWS recommend, and what is the key difference?</p>
+      </div>
+      <button class="toggle-btn" onclick="toggle(this)">
+        إظهار الإجابة / Show Answer <span class="arrow">▼</span>
+      </button>
+      <div class="answer-box">
+        <div class="answer-label">✔ الإجابة</div>
+        <p class="answer-text">
+          توصي AWS باستخدام <strong>NAT Gateway</strong> في معظم الحالات. فهو خدمة مُدارة بالكامل توفر توافراً أعلى وعرض نطاق ترددي أكبر وجهداً إدارياً أقل مقارنةً بـ NAT Instance الذي يتطلب إدارة يدوية وتحديثات وإعداد أمني. الـ NAT Gateway هو الخيار الأفضل للإنتاج.
+        </p>
+        <p class="answer-text-en">
+          AWS recommends NAT Gateway. It is fully managed, offers better availability, higher bandwidth, and requires less administrative effort than a NAT Instance, which needs manual management, patching, and security configuration.
+        </p>
+      </div>
+      <div class="tags">
+        <span class="tag">NAT Gateway</span>
+        <span class="tag">NAT Instance</span>
+        <span class="tag">Managed Service</span>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══ SCENARIO 10 ═══ -->
+  <div class="card">
+    <div class="card-header">
+      <div class="scenario-num">10</div>
+      <div class="card-header-info">
+        <h3>المسار المحلي في جدول التوجيه</h3>
+        <div class="en-title">Local Route in Route Table</div>
+      </div>
+      <span class="difficulty easy">سهل</span>
+    </div>
+    <div class="card-body">
+      <p class="scenario-text">
+        أثناء مراجعة إعدادات الشبكة، حاول مهندس حذف المسار المحلي (local route) من جدول توجيه الـ VPC الخاص بـ CIDR 10.0.0.0/16. رفض AWS طلبه. لماذا؟ وما أهمية هذا المسار؟
+      </p>
+      <p class="scenario-en">
+        During a network review, an engineer tried to delete the local route from a VPC route table (10.0.0.0/16). AWS refused. Why, and what is the purpose of this route?
+      </p>
+      <div class="question-box">
+        <p>لماذا لا يمكن حذف المسار المحلي، وما وظيفته؟</p>
+        <p class="en">Why can't the local route be deleted, and what does it do?</p>
+      </div>
+      <button class="toggle-btn" onclick="toggle(this)">
+        إظهار الإجابة / Show Answer <span class="arrow">▼</span>
+      </button>
+      <div class="answer-box">
+        <div class="answer-label">✔ الإجابة</div>
+        <p class="answer-text">
+          المسار المحلي هو مسار افتراضي يُضاف تلقائياً إلى كل جدول توجيه في الـ VPC، ولا يمكن حذفه أبداً. وظيفته هي تمكين الاتصال الداخلي بين جميع الموارد داخل نفس الـ VPC (10.0.0.0/16 → local). بدونه، لن تتمكن الموارد داخل الـ VPC من التواصل مع بعضها.
+        </p>
+        <p class="answer-text-en">
+          The local route is automatically added to every VPC route table and cannot be deleted. It enables internal communication between all resources within the same VPC (10.0.0.0/16 → local). Without it, resources inside the VPC cannot communicate with each other.
+        </p>
+      </div>
+      <div class="tags">
+        <span class="tag">Route Table</span>
+        <span class="tag">Local Route</span>
+        <span class="tag">VPC Basics</span>
+      </div>
+    </div>
+  </div>
+
+
+</div><!-- end grid -->
+
+<footer>
+  <p>Module 5 · AWS Networking &amp; Content Delivery · <span>Amazon VPC</span></p>
+  <p style="margin-top:.4rem; font-size:.75rem;">Based on AWS Academy Cloud Foundations</p>
+</footer>
+
+<script>
+  function toggle(btn) {
+    const answerBox = btn.nextElementSibling;
+    const isOpen = answerBox.classList.contains('visible');
+    answerBox.classList.toggle('visible', !isOpen);
+    btn.classList.toggle('open', !isOpen);
+    btn.innerHTML = isOpen
+      ? 'إظهار الإجابة / Show Answer <span class="arrow">▼</span>'
+      : 'إخفاء الإجابة / Hide Answer <span class="arrow">▼</span>';
+  }
+</script>
+
+</body>
+</html>
