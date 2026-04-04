@@ -35,7 +35,6 @@
             <li><a href="#publications">Publications</a></li>
             <li><a href="#projects">Projects</a></li>
             <li><a href="#courses">Teaching</a></li>
-            <li><a href="#lectures">Lectures</a></li>
             <li><a href="#media">Media</a></li>
             <li><a href="#awards">Awards</a></li>
             <li><a href="#contact" class="nav-btn">Contact</a></li>
@@ -54,7 +53,6 @@
         <li><a href="#publications">Publications</a></li>
         <li><a href="#projects">Projects</a></li>
         <li><a href="#courses">Teaching</a></li>
-        <li><a href="#lectures">Lectures</a></li>
         <li><a href="#media">Media</a></li>
         <li><a href="#awards">Awards</a></li>
         <li><a href="#contact">Contact</a></li>
@@ -205,229 +203,16 @@
     </div>
 </section>
 
-<!-- ══════════════ LECTURES ══════════════ -->
-<section id="lectures">
+<!-- ══ MEDIA ══ -->
+<section id="media">
     <div class="container">
         <div class="sec-header">
             <span class="sec-num">06</span>
-            <div><div class="sec-eye">Lectures</div><h2 class="sec-h2">Interactive Lecture Materials</h2></div>
+            <div><div class="sec-eye">Media</div><h2 class="sec-h2">News & Media</h2></div>
         </div>
-
-        <!-- ══ CATEGORY 1: Cyber Security 2026 ══ -->
-        <div class="lec-category">
-            <div class="lec-cat-header" onclick="toggleCategory(this)">
-                <div class="lec-cat-left">
-                    <span class="lec-cat-icon">🔐</span>
-                    <div>
-                        <div class="lec-cat-title">Cyber Security</div>
-                        <div class="lec-cat-sub">2025 – 2026 · Undergraduate · 3 Lectures</div>
-                    </div>
-                </div>
-                <div class="lec-cat-right">
-                    <span class="lec-cat-count">3</span>
-                    <span class="lec-cat-arrow">▼</span>
-                </div>
-            </div>
-            <div class="lec-cat-body active">
-                <div class="lec-tabs">
-                    <button class="lec-tab active" onclick="openLecTab(this,'cyber-vpc')">☁️ AWS VPC Scenarios</button>
-                    <button class="lec-tab" onclick="openLecTab(this,'cyber-pdf1')">📄 Lecture 1 Slides</button>
-                    <button class="lec-tab" onclick="openLecTab(this,'cyber-ppt1')">📊 Lecture 2 PowerPoint</button>
-                </div>
-                <div class="lec-panels">
-
-                    <div class="lec-panel active" id="lec-cyber-vpc">
-                        <div class="lec-panel-header">
-                            <div>
-                                <span class="lec-badge">Module 5 · AWS Networking</span>
-                                <h3>AWS VPC Scenarios</h3>
-                                <p>10 interactive bilingual scenarios — Internet Gateway, NAT, CIDR, Route Tables, Elastic IP, ENI</p>
-                            </div>
-                            <a href="vpc-scenarios.html" target="_blank" class="lec-open-new">⛶ Full Screen</a>
-                        </div>
-                        <iframe src="vpc-scenarios.html" class="lec-iframe" title="AWS VPC Scenarios" loading="lazy"></iframe>
-                    </div>
-
-                    <div class="lec-panel" id="lec-cyber-pdf1">
-                        <div class="lec-panel-header">
-                            <div>
-                                <span class="lec-badge">Cyber Security · PDF</span>
-                                <h3>Lecture 1 — Introduction to Cyber Security</h3>
-                                <p>Full lecture slides viewable directly in browser</p>
-                            </div>
-                            <a href="lectures/cyber/lecture1.pdf" target="_blank" class="lec-open-new">⛶ Full Screen</a>
-                        </div>
-                        <iframe src="lectures/cyber/lecture1.pdf" class="lec-pdf-viewer" title="Lecture 1 PDF"></iframe>
-                    </div>
-
-                    <div class="lec-panel" id="lec-cyber-ppt1">
-                        <div class="lec-panel-header">
-                            <div>
-                                <span class="lec-badge">Cyber Security · PPT</span>
-                                <h3>Lecture 2 — Network Threats & Attacks</h3>
-                                <p>View online via Microsoft Office or download</p>
-                            </div>
-                        </div>
-                        <div class="lec-ppt-box">
-                            <div class="ppt-icon">📊</div>
-                            <h4>Lecture 2 — Network Threats & Attacks.pptx</h4>
-                            <p>View directly in your browser — no PowerPoint installation needed.</p>
-                            <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
-                                <a class="lec-ppt-btn"
-                                   href="https://view.officeapps.live.com/op/view.aspx?src=YOUR-GITHUB-RAW-LINK/lectures/cyber/lecture2.pptx"
-                                   target="_blank">👁️ View Online</a>
-                                <a class="lec-ppt-btn"
-                                   href="lectures/cyber/lecture2.pptx" download
-                                   style="background:var(--blue2);color:#fff">⬇️ Download</a>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-        <!-- ══ END CATEGORY 1 ══ -->
-
-        <!-- ══ CATEGORY 2: Master Students 2026 ══ -->
-        <div class="lec-category">
-            <div class="lec-cat-header" onclick="toggleCategory(this)">
-                <div class="lec-cat-left">
-                    <span class="lec-cat-icon">🎓</span>
-                    <div>
-                        <div class="lec-cat-title">Master Students</div>
-                        <div class="lec-cat-sub">2025 – 2026 · Postgraduate · 2 Lectures</div>
-                    </div>
-                </div>
-                <div class="lec-cat-right">
-                    <span class="lec-cat-count">2</span>
-                    <span class="lec-cat-arrow">▼</span>
-                </div>
-            </div>
-            <div class="lec-cat-body">
-                <div class="lec-tabs">
-                    <button class="lec-tab active" onclick="openLecTab(this,'master-pdf1')">📄 Research Methods</button>
-                    <button class="lec-tab" onclick="openLecTab(this,'master-ppt1')">📊 Advanced AI Slides</button>
-                </div>
-                <div class="lec-panels">
-
-                    <div class="lec-panel active" id="lec-master-pdf1">
-                        <div class="lec-panel-header">
-                            <div>
-                                <span class="lec-badge">Master · PDF</span>
-                                <h3>Research Methods in Computer Science</h3>
-                                <p>Graduate-level research methodology and academic writing</p>
-                            </div>
-                            <a href="lectures/master/research-methods.pdf" target="_blank" class="lec-open-new">⛶ Full Screen</a>
-                        </div>
-                        <iframe src="lectures/master/research-methods.pdf" class="lec-pdf-viewer" title="Research Methods PDF"></iframe>
-                    </div>
-
-                    <div class="lec-panel" id="lec-master-ppt1">
-                        <div class="lec-panel-header">
-                            <div>
-                                <span class="lec-badge">Master · PPT</span>
-                                <h3>Advanced AI — Deep Learning Architectures</h3>
-                                <p>View online or download the PowerPoint file</p>
-                            </div>
-                        </div>
-                        <div class="lec-ppt-box">
-                            <div class="ppt-icon">📊</div>
-                            <h4>Advanced AI — Deep Learning Architectures.pptx</h4>
-                            <p>View directly in your browser — no PowerPoint installation needed.</p>
-                            <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
-                                <a class="lec-ppt-btn"
-                                   href="https://view.officeapps.live.com/op/view.aspx?src=YOUR-GITHUB-RAW-LINK/lectures/master/advanced-ai.pptx"
-                                   target="_blank">👁️ View Online</a>
-                                <a class="lec-ppt-btn"
-                                   href="lectures/master/advanced-ai.pptx" download
-                                   style="background:var(--blue2);color:#fff">⬇️ Download</a>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-        <!-- ══ END CATEGORY 2 ══ -->
-
-        <!-- ══ CATEGORY 3: Cloud Computing 2026 ══ -->
-        <div class="lec-category">
-            <div class="lec-cat-header" onclick="toggleCategory(this)">
-                <div class="lec-cat-left">
-                    <span class="lec-cat-icon">☁️</span>
-                    <div>
-                        <div class="lec-cat-title">Cloud Computing</div>
-                        <div class="lec-cat-sub">2025 – 2026 · Undergraduate · 1 Lecture</div>
-                    </div>
-                </div>
-                <div class="lec-cat-right">
-                    <span class="lec-cat-count">1</span>
-                    <span class="lec-cat-arrow">▼</span>
-                </div>
-            </div>
-            <div class="lec-cat-body">
-                <div class="lec-tabs">
-                    <button class="lec-tab active" onclick="openLecTab(this,'cloud-html1')">🌐 Module 1 Interactive</button>
-                </div>
-                <div class="lec-panels">
-                    <div class="lec-panel active" id="lec-cloud-html1">
-                        <div class="lec-panel-header">
-                            <div>
-                                <span class="lec-badge">Cloud Computing · HTML</span>
-                                <h3>Module 1 — Introduction to Cloud Computing</h3>
-                                <p>Interactive scenarios and exercises for cloud fundamentals</p>
-                            </div>
-                            <a href="lectures/cloud/module1.html" target="_blank" class="lec-open-new">⛶ Full Screen</a>
-                        </div>
-                        <iframe src="lectures/cloud/module1.html" class="lec-iframe" title="Cloud Module 1" loading="lazy"></iframe>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- ══ END CATEGORY 3 ══ -->
-
-        <!--
-        ➕ TEMPLATE — Copy this to add a new category:
-        ════════════════════════════════════════════════
-        <div class="lec-category">
-            <div class="lec-cat-header" onclick="toggleCategory(this)">
-                <div class="lec-cat-left">
-                    <span class="lec-cat-icon">📘</span>
-                    <div>
-                        <div class="lec-cat-title">CATEGORY NAME</div>
-                        <div class="lec-cat-sub">2025 – 2026 · Level · X Lectures</div>
-                    </div>
-                </div>
-                <div class="lec-cat-right">
-                    <span class="lec-cat-count">X</span>
-                    <span class="lec-cat-arrow">▼</span>
-                </div>
-            </div>
-            <div class="lec-cat-body">
-                <div class="lec-tabs">
-                    <button class="lec-tab active" onclick="openLecTab(this,'CATID-lec1')">📄 Lecture 1</button>
-                </div>
-                <div class="lec-panels">
-                    <div class="lec-panel active" id="lec-CATID-lec1">
-                        <div class="lec-panel-header">
-                            <div>
-                                <span class="lec-badge">Category · Type</span>
-                                <h3>Lecture Title</h3>
-                                <p>Description</p>
-                            </div>
-                            <a href="your-file.html" target="_blank" class="lec-open-new">⛶ Full Screen</a>
-                        </div>
-                        <iframe src="your-file.html" class="lec-iframe" title="Lecture" loading="lazy"></iframe>
-                    </div>
-                </div>
-            </div>
-        </div>
-        ════════════════════════════════════════════════
-        -->
-
+        <div class="media-grid" id="media-list"></div>
     </div>
 </section>
-<!-- ══════════════ END LECTURES ══════════════ -->
 
 <!-- ══ CERTIFICATIONS ══ -->
 <section id="certifications" class="alt">
@@ -510,24 +295,5 @@
 
 <script src="data.js"></script>
 <script src="script.js"></script>
-<script>
-    // ══ Lecture: Toggle Category open/close ══
-    function toggleCategory(header) {
-        const body = header.nextElementSibling;
-        const isOpen = body.classList.contains('active');
-        body.classList.toggle('active', !isOpen);
-        header.classList.toggle('collapsed', isOpen);
-    }
-
-    // ══ Lecture: Switch tab inside a category ══
-    function openLecTab(btn, id) {
-        const categoryBody = btn.closest('.lec-cat-body');
-        categoryBody.querySelectorAll('.lec-panel').forEach(p => p.classList.remove('active'));
-        categoryBody.querySelectorAll('.lec-tab').forEach(t => t.classList.remove('active'));
-        document.getElementById('lec-' + id).classList.add('active');
-        btn.classList.add('active');
-    }
-</script>
-
 </body>
 </html>
