@@ -7,6 +7,89 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* ── Lectures Section ── */
+        .lectures-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        .lecture-card {
+            background: var(--surface, #1e2d4d);
+            border: 1px solid var(--border, #2d3f5e);
+            border-radius: 16px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            transition: transform .25s, box-shadow .25s;
+            text-decoration: none;
+            color: inherit;
+        }
+        .lecture-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0,0,0,.3);
+            border-color: #ff9900;
+        }
+        .lecture-card-icon {
+            font-size: 2rem;
+            width: 56px; height: 56px;
+            background: rgba(255,153,0,0.12);
+            border: 1px solid rgba(255,153,0,0.35);
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .lecture-card-badge {
+            display: inline-block;
+            font-size: .7rem;
+            font-weight: 700;
+            letter-spacing: .07em;
+            text-transform: uppercase;
+            padding: .2rem .65rem;
+            border-radius: 50px;
+            background: rgba(255,153,0,0.12);
+            border: 1px solid rgba(255,153,0,0.4);
+            color: #ff9900;
+            width: fit-content;
+        }
+        .lecture-card h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 0;
+        }
+        .lecture-card p {
+            font-size: .85rem;
+            color: var(--muted, #94a3b8);
+            line-height: 1.6;
+            margin: 0;
+            flex: 1;
+        }
+        .lecture-card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: .75rem;
+            border-top: 1px solid var(--border, #2d3f5e);
+            font-size: .78rem;
+            color: var(--muted, #94a3b8);
+        }
+        .lecture-open-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: .4rem;
+            background: #ff9900;
+            color: #000;
+            font-weight: 700;
+            font-size: .78rem;
+            padding: .35rem .85rem;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background .2s;
+        }
+        .lecture-open-btn:hover { background: #e68900; }
+    </style>
 </head>
 <body>
 
@@ -33,6 +116,7 @@
             <li><a href="#publications">Publications</a></li>
             <li><a href="#projects">Projects</a></li>
             <li><a href="#courses">Teaching</a></li>
+            <li><a href="#lectures">Lectures</a></li>
             <li><a href="#media">Media</a></li>
             <li><a href="#awards">Awards</a></li>
             <li><a href="#contact" class="nav-btn">Contact</a></li>
@@ -48,6 +132,7 @@
         <li><a href="#publications">Publications</a></li>
         <li><a href="#projects">Projects</a></li>
         <li><a href="#courses">Teaching</a></li>
+        <li><a href="#lectures">Lectures</a></li>
         <li><a href="#media">Media</a></li>
         <li><a href="#awards">Awards</a></li>
         <li><a href="#contact">Contact</a></li>
@@ -59,7 +144,6 @@
     <div class="hero-inner">
         <div class="hero-left">
             <div class="hero-profile-row">
-                <!-- Photo — auto-loads from data.js personal.photo -->
                 <div id="hero-avatar-wrap"></div>
                 <div class="hero-name-block">
                     <div class="hero-badge"><span class="bdot green"></span>Assistant Professor · University of Babylon</div>
@@ -177,7 +261,44 @@
     </div>
 </section>
 
+<!-- ══════════════ LECTURES (NEW) ══════════════ -->
+<section id="lectures">
+    <div class="container">
+        <div class="sec-header">
+            <span class="sec-num">06</span>
+            <div>
+                <div class="sec-eye">Lectures</div>
+                <h2 class="sec-h2">Interactive Lecture Materials</h2>
+            </div>
+        </div>
+        <div class="lectures-grid">
 
+            <!-- ── Lecture Card 1 – AWS VPC Scenarios ── -->
+            <div class="lecture-card">
+                <div class="lecture-card-icon">☁️</div>
+                <div>
+                    <span class="lecture-card-badge">Module 5 · AWS</span>
+                    <h3 style="margin-top:.5rem">AWS VPC Scenarios</h3>
+                </div>
+                <p>
+                    10 interactive real-world scenarios covering Internet Gateway, NAT Gateway, CIDR design, Route Tables, Elastic IPs, and ENI — with bilingual Arabic/English answers.
+                </p>
+                <div class="lecture-card-footer">
+                    <span>📋 10 Scenarios &nbsp;·&nbsp; 🌐 AR / EN</span>
+                    <a class="lecture-open-btn"
+                       href="https://YOUR-USERNAME.github.io/YOUR-REPO/vpc-scenarios.html"
+                       target="_blank" rel="noopener">
+                        Open ↗
+                    </a>
+                </div>
+            </div>
+
+            <!-- ── Add more lecture cards below as needed ── -->
+
+        </div>
+    </div>
+</section>
+<!-- ══════════════ END LECTURES ══════════════ -->
 
 <!-- CERTIFICATIONS -->
 <section id="certifications" class="alt">
