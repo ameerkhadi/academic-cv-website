@@ -1,1207 +1,613 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أكاديمية القيادة الرقمية - أساسيات تكنولوجيا المعلومات</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        :root {
-            --primary: #232F3E;
-            --secondary: #FF9900;
-            --accent: #146EB4;
-            --light-blue: #E8F4FD;
-            --success: #1E8449;
-            --light-gray: #F5F5F5;
-            --border: #D5D9D9;
-            --text-dark: #0F1111;
-            --text-gray: #565959;
-            --white: #FFFFFF;
-            --card-shadow: 0 2px 8px rgba(0,0,0,0.12);
-            --hover-shadow: 0 8px 24px rgba(0,0,0,0.18);
-        }
-
-        body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background: #F0F2F5;
-            color: var(--text-dark);
-            line-height: 1.7;
-        }
-
-        /* HEADER */
-        header {
-            background: linear-gradient(135deg, var(--primary) 0%, #1a2535 100%);
-            color: var(--white);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-        }
-
-        .header-top {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 12px 40px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .logo-section { display: flex; align-items: center; gap: 14px; }
-
-        .logo-icon {
-            width: 48px; height: 48px;
-            background: var(--secondary);
-            border-radius: 10px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 24px; font-weight: bold; color: var(--primary);
-        }
-
-        .logo-text h1 { font-size: 1.2rem; font-weight: 700; color: var(--white); }
-        .logo-text span { font-size: 0.75rem; color: var(--secondary); display: block; }
-
-        .header-badge {
-            background: var(--secondary); color: var(--primary);
-            padding: 6px 16px; border-radius: 20px;
-            font-size: 0.8rem; font-weight: 700;
-        }
-
-        .header-nav {
-            background: rgba(255,255,255,0.05);
-            padding: 8px 40px;
-            display: flex; gap: 8px; align-items: center; overflow-x: auto;
-        }
-
-        .nav-item {
-            color: rgba(255,255,255,0.75); text-decoration: none;
-            font-size: 0.82rem; padding: 5px 12px; border-radius: 4px;
-            cursor: pointer; white-space: nowrap; transition: all 0.2s;
-            border: none; background: none;
-        }
-
-        .nav-item:hover, .nav-item.active {
-            color: var(--white);
-            background: rgba(255,153,0,0.2);
-        }
-
-        /* HERO */
-        .hero {
-            background: linear-gradient(135deg, #146EB4 0%, #0D5A9A 50%, #232F3E 100%);
-            color: var(--white);
-            padding: 60px 40px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute; top: -50%; left: -50%;
-            width: 200%; height: 200%;
-            background: radial-gradient(circle, rgba(255,153,0,0.08) 0%, transparent 60%);
-            animation: pulse 6s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 0.5; }
-            50% { transform: scale(1.1); opacity: 1; }
-        }
-
-        .hero-badge {
-            display: inline-block;
-            background: rgba(255,153,0,0.2);
-            border: 1px solid var(--secondary);
-            color: var(--secondary);
-            padding: 6px 20px; border-radius: 20px;
-            font-size: 0.85rem; margin-bottom: 20px; position: relative;
-        }
-
-        .hero h2 {
-            font-size: 2.5rem; font-weight: 800;
-            margin-bottom: 16px; position: relative;
-        }
-
-        .hero h2 span { color: var(--secondary); }
-
-        .hero p {
-            font-size: 1.1rem; opacity: 0.9;
-            max-width: 700px; margin: 0 auto 30px; position: relative;
-        }
-
-        .hero-stats {
-            display: flex; justify-content: center;
-            gap: 40px; position: relative; flex-wrap: wrap;
-        }
-
-        .stat-item { text-align: center; }
-        .stat-number { font-size: 2rem; font-weight: 800; color: var(--secondary); display: block; }
-        .stat-label { font-size: 0.85rem; opacity: 0.8; }
-
-        /* PROGRESS */
-        .progress-section {
-            background: var(--white);
-            padding: 18px 40px;
-            border-bottom: 1px solid var(--border);
-            display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
-        }
-
-        .progress-label { font-size: 0.9rem; font-weight: 600; white-space: nowrap; }
-
-        .progress-bar-container {
-            flex: 1; min-width: 200px;
-            background: #E0E0E0; border-radius: 10px; height: 10px; overflow: hidden;
-        }
-
-        .progress-bar-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--secondary), #FFC300);
-            border-radius: 10px; width: 0%; transition: width 0.8s ease;
-        }
-
-        .progress-percent { font-size: 0.9rem; font-weight: 700; color: var(--secondary); min-width: 45px; }
-
-        /* LAYOUT */
-        .main-container {
-            max-width: 1350px; margin: 0 auto;
-            padding: 30px 20px;
-            display: grid;
-            grid-template-columns: 290px 1fr;
-            gap: 24px; align-items: start;
-        }
-
-        /* SIDEBAR */
-        .sidebar { position: sticky; top: 120px; }
-
-        .sidebar-card {
-            background: var(--white); border-radius: 12px;
-            box-shadow: var(--card-shadow); overflow: hidden; margin-bottom: 16px;
-        }
-
-        .sidebar-header {
-            background: var(--primary); color: var(--white);
-            padding: 13px 18px; font-size: 0.88rem; font-weight: 700;
-            display: flex; align-items: center; gap: 8px;
-        }
-
-        .module-list { padding: 6px 0; max-height: 540px; overflow-y: auto; }
-
-        .module-list::-webkit-scrollbar { width: 4px; }
-        .module-list::-webkit-scrollbar-track { background: #f1f1f1; }
-        .module-list::-webkit-scrollbar-thumb { background: var(--secondary); border-radius: 2px; }
-
-        .module-item {
-            padding: 10px 16px;
-            display: flex; align-items: center; gap: 10px;
-            cursor: pointer; transition: all 0.2s;
-            border-right: 3px solid transparent;
-            border-bottom: 1px solid rgba(0,0,0,0.04);
-        }
-
-        .module-item:hover { background: var(--light-blue); border-right-color: var(--accent); }
-        .module-item.active { background: var(--light-blue); border-right-color: var(--secondary); }
-
-        .module-num {
-            width: 26px; height: 26px; border-radius: 50%;
-            background: var(--light-gray);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 0.72rem; font-weight: 700; color: var(--text-gray);
-            flex-shrink: 0; transition: all 0.2s;
-        }
-
-        .module-item.active .module-num,
-        .module-item:hover .module-num { background: var(--secondary); color: var(--primary); }
-        .module-item.completed .module-num { background: var(--success); color: var(--white); }
-
-        .module-info { flex: 1; }
-        .module-title { font-size: 0.78rem; font-weight: 600; color: var(--text-dark); line-height: 1.3; }
-        .module-meta { font-size: 0.68rem; color: var(--text-gray); margin-top: 1px; }
-
-        .info-grid { padding: 14px 18px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .info-item { text-align: center; }
-        .info-icon { font-size: 1.3rem; display: block; margin-bottom: 3px; }
-        .info-value { font-size: 0.95rem; font-weight: 700; color: var(--accent); display: block; }
-        .info-label { font-size: 0.68rem; color: var(--text-gray); }
-
-        /* CONTENT */
-        .content-area { display: flex; flex-direction: column; gap: 20px; }
-
-        /* OVERVIEW */
-        .overview-card {
-            background: var(--white); border-radius: 12px;
-            box-shadow: var(--card-shadow); overflow: hidden;
-        }
-
-        .overview-header {
-            background: linear-gradient(135deg, var(--accent), #0D5A9A);
-            color: var(--white); padding: 20px 24px;
-            display: flex; align-items: center; gap: 14px;
-        }
-
-        .overview-header-icon {
-            width: 44px; height: 44px;
-            background: rgba(255,255,255,0.2); border-radius: 10px;
-            display: flex; align-items: center; justify-content: center; font-size: 1.4rem;
-        }
-
-        .overview-header h3 { font-size: 1.15rem; font-weight: 700; }
-        .overview-header p { font-size: 0.83rem; opacity: 0.85; margin-top: 2px; }
-
-        .overview-body { padding: 22px 24px; }
-        .overview-body p { color: var(--text-gray); font-size: 0.93rem; line-height: 1.8; margin-bottom: 14px; }
-
-        .objectives-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
-
-        .objective-item {
-            background: var(--light-blue); border: 1px solid #BDE0F5;
-            border-radius: 8px; padding: 10px 12px;
-            display: flex; align-items: flex-start; gap: 8px;
-            font-size: 0.83rem; color: var(--text-dark);
-        }
-
-        .objective-item .obj-icon { color: var(--accent); font-size: 0.95rem; margin-top: 1px; flex-shrink: 0; }
-
-        /* MODULE CARDS */
-        .module-card {
-            background: var(--white); border-radius: 12px;
-            box-shadow: var(--card-shadow); overflow: hidden;
-            transition: box-shadow 0.3s;
-        }
-
-        .module-card:hover { box-shadow: var(--hover-shadow); }
-
-        .module-card-header {
-            padding: 18px 22px;
-            display: flex; align-items: center; gap: 14px;
-            cursor: pointer; user-select: none;
-        }
-
-        .module-card-icon {
-            width: 50px; height: 50px; border-radius: 12px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.5rem; flex-shrink: 0;
-        }
-
-        .module-card-info { flex: 1; }
-
-        .module-card-badge {
-            display: inline-block; font-size: 0.7rem; font-weight: 700;
-            padding: 3px 10px; border-radius: 12px;
-            margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px;
-        }
-
-        .module-card-title { font-size: 1.05rem; font-weight: 700; color: var(--text-dark); margin-bottom: 3px; }
-        .module-card-subtitle { font-size: 0.8rem; color: var(--text-gray); }
-
-        .module-card-meta { display: flex; align-items: center; gap: 10px; }
-
-        .meta-tag {
-            background: var(--light-gray); border: 1px solid var(--border);
-            border-radius: 6px; padding: 4px 10px; font-size: 0.75rem;
-            color: var(--text-gray); display: flex; align-items: center; gap: 4px;
-        }
-
-        .expand-btn {
-            width: 32px; height: 32px; border-radius: 50%;
-            border: 2px solid var(--border); background: var(--white);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 0.9rem; color: var(--text-gray);
-            cursor: pointer; transition: all 0.25s; flex-shrink: 0;
-        }
-
-        .expand-btn:hover { border-color: var(--accent); color: var(--accent); }
-        .expand-btn.open { transform: rotate(180deg); border-color: var(--accent); color: var(--accent); }
-
-        .module-divider { height: 3px; margin: 0 22px; }
-
-        .module-body {
-            display: none; padding: 22px;
-            border-top: 1px solid var(--border);
-            animation: fadeIn 0.3s ease;
-        }
-
-        .module-body.open { display: block; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* POINTS */
-        .points-section { margin-bottom: 22px; }
-
-        .points-section-title {
-            font-size: 0.98rem; font-weight: 700;
-            margin-bottom: 12px; padding-bottom: 8px;
-            border-bottom: 2px solid var(--light-gray);
-            display: flex; align-items: center; gap: 8px;
-        }
-
-        .points-list { display: flex; flex-direction: column; gap: 10px; }
-
-        .point-item {
-            display: flex; align-items: flex-start; gap: 12px;
-            padding: 14px 16px; border-radius: 10px;
-            border: 1px solid var(--border);
-            transition: all 0.2s; cursor: pointer; background: var(--white);
-        }
-
-        .point-item:hover {
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            transform: translateX(-4px);
-        }
-
-        .point-number {
-            width: 30px; height: 30px; border-radius: 8px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 0.82rem; font-weight: 800;
-            flex-shrink: 0; color: var(--white);
-        }
-
-        .point-content { flex: 1; }
-        .point-title { font-size: 0.92rem; font-weight: 700; color: var(--text-dark); margin-bottom: 3px; }
-        .point-description { font-size: 0.82rem; color: var(--text-gray); line-height: 1.6; }
-        .point-icon { font-size: 1.1rem; flex-shrink: 0; opacity: 0.55; }
-
-        /* ACTIVITY */
-        .activity-section {
-            background: linear-gradient(135deg, #FFF8E7, #FFFBF0);
-            border: 1px solid #FFE0A0; border-radius: 12px;
-            padding: 18px; margin-top: 18px;
-        }
-
-        .activity-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
-
-        .activity-badge {
-            background: var(--secondary); color: var(--primary);
-            padding: 4px 12px; border-radius: 12px;
-            font-size: 0.75rem; font-weight: 700;
-        }
-
-        .activity-title { font-size: 0.92rem; font-weight: 700; color: var(--text-dark); }
-
-        .activity-description {
-            font-size: 0.85rem; color: var(--text-gray);
-            line-height: 1.7; margin-bottom: 12px;
-        }
-
-        .activity-steps { display: flex; flex-direction: column; gap: 7px; }
-
-        .activity-step {
-            display: flex; align-items: center; gap: 10px;
-            font-size: 0.83rem; color: var(--text-dark);
-        }
-
-        .step-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--secondary); flex-shrink: 0; }
-
-        /* FOOTER */
-        .module-footer {
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 12px 22px; background: var(--light-gray);
-            border-top: 1px solid var(--border); flex-wrap: wrap; gap: 8px;
-        }
-
-        .footer-info { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
-
-        .footer-tag {
-            font-size: 0.78rem; color: var(--text-gray);
-            display: flex; align-items: center; gap: 4px;
-        }
-
-        .complete-btn {
-            background: var(--success); color: var(--white);
-            border: none; padding: 8px 18px; border-radius: 6px;
-            font-size: 0.82rem; font-weight: 600;
-            cursor: pointer; transition: all 0.2s;
-            display: flex; align-items: center; gap: 6px;
-            font-family: inherit;
-        }
-
-        .complete-btn:hover { background: #166838; transform: translateY(-1px); }
-        .complete-btn:disabled { background: #888; cursor: default; transform: none; }
-
-        /* COLOR THEMES — 15 themes */
-        .t1 .module-card-icon { background: #E8F4FD; }
-        .t1 .module-card-badge { background: #D0EAF8; color: #0D5A9A; }
-        .t1 .module-divider { background: linear-gradient(90deg,#146EB4,transparent); }
-        .t1 .point-number { background: #146EB4; }
-        .t1 .point-item:hover { border-color: #146EB4; }
-        .t1 .points-section-title { color: #146EB4; }
-
-        .t2 .module-card-icon { background: #FFF3E0; }
-        .t2 .module-card-badge { background: #FFE0B2; color: #E65100; }
-        .t2 .module-divider { background: linear-gradient(90deg,#FF9900,transparent); }
-        .t2 .point-number { background: #FF9900; color: #222; }
-        .t2 .point-item:hover { border-color: #FF9900; }
-        .t2 .points-section-title { color: #E65100; }
-
-        .t3 .module-card-icon { background: #E8F5E9; }
-        .t3 .module-card-badge { background: #C8E6C9; color: #1B5E20; }
-        .t3 .module-divider { background: linear-gradient(90deg,#2E7D32,transparent); }
-        .t3 .point-number { background: #2E7D32; }
-        .t3 .point-item:hover { border-color: #2E7D32; }
-        .t3 .points-section-title { color: #2E7D32; }
-
-        .t4 .module-card-icon { background: #F3E5F5; }
-        .t4 .module-card-badge { background: #E1BEE7; color: #4A148C; }
-        .t4 .module-divider { background: linear-gradient(90deg,#7B1FA2,transparent); }
-        .t4 .point-number { background: #7B1FA2; }
-        .t4 .point-item:hover { border-color: #7B1FA2; }
-        .t4 .points-section-title { color: #7B1FA2; }
-
-        .t5 .module-card-icon { background: #FFEBEE; }
-        .t5 .module-card-badge { background: #FFCDD2; color: #B71C1C; }
-        .t5 .module-divider { background: linear-gradient(90deg,#C62828,transparent); }
-        .t5 .point-number { background: #C62828; }
-        .t5 .point-item:hover { border-color: #C62828; }
-        .t5 .points-section-title { color: #C62828; }
-
-        .t6 .module-card-icon { background: #E0F2F1; }
-        .t6 .module-card-badge { background: #B2DFDB; color: #004D40; }
-        .t6 .module-divider { background: linear-gradient(90deg,#00796B,transparent); }
-        .t6 .point-number { background: #00796B; }
-        .t6 .point-item:hover { border-color: #00796B; }
-        .t6 .points-section-title { color: #00796B; }
-
-        .t7 .module-card-icon { background: #E8EAF6; }
-        .t7 .module-card-badge { background: #C5CAE9; color: #1A237E; }
-        .t7 .module-divider { background: linear-gradient(90deg,#283593,transparent); }
-        .t7 .point-number { background: #283593; }
-        .t7 .point-item:hover { border-color: #283593; }
-        .t7 .points-section-title { color: #283593; }
-
-        .t8 .module-card-icon { background: #FCE4EC; }
-        .t8 .module-card-badge { background: #F8BBD0; color: #880E4F; }
-        .t8 .module-divider { background: linear-gradient(90deg,#AD1457,transparent); }
-        .t8 .point-number { background: #AD1457; }
-        .t8 .point-item:hover { border-color: #AD1457; }
-        .t8 .points-section-title { color: #AD1457; }
-
-        .t9 .module-card-icon { background: #E0F7FA; }
-        .t9 .module-card-badge { background: #B2EBF2; color: #006064; }
-        .t9 .module-divider { background: linear-gradient(90deg,#00838F,transparent); }
-        .t9 .point-number { background: #00838F; }
-        .t9 .point-item:hover { border-color: #00838F; }
-        .t9 .points-section-title { color: #00838F; }
-
-        .t10 .module-card-icon { background: #FFF8E1; }
-        .t10 .module-card-badge { background: #FFECB3; color: #FF6F00; }
-        .t10 .module-divider { background: linear-gradient(90deg,#F57F17,transparent); }
-        .t10 .point-number { background: #F57F17; }
-        .t10 .point-item:hover { border-color: #F57F17; }
-        .t10 .points-section-title { color: #F57F17; }
-
-        .t11 .module-card-icon { background: #F1F8E9; }
-        .t11 .module-card-badge { background: #DCEDC8; color: #33691E; }
-        .t11 .module-divider { background: linear-gradient(90deg,#558B2F,transparent); }
-        .t11 .point-number { background: #558B2F; }
-        .t11 .point-item:hover { border-color: #558B2F; }
-        .t11 .points-section-title { color: #558B2F; }
-
-        .t12 .module-card-icon { background: #EDE7F6; }
-        .t12 .module-card-badge { background: #D1C4E9; color: #311B92; }
-        .t12 .module-divider { background: linear-gradient(90deg,#4527A0,transparent); }
-        .t12 .point-number { background: #4527A0; }
-        .t12 .point-item:hover { border-color: #4527A0; }
-        .t12 .points-section-title { color: #4527A0; }
-
-        .t13 .module-card-icon { background: #FBE9E7; }
-        .t13 .module-card-badge { background: #FFCCBC; color: #BF360C; }
-        .t13 .module-divider { background: linear-gradient(90deg,#D84315,transparent); }
-        .t13 .point-number { background: #D84315; }
-        .t13 .point-item:hover { border-color: #D84315; }
-        .t13 .points-section-title { color: #D84315; }
-
-        .t14 .module-card-icon { background: #E3F2FD; }
-        .t14 .module-card-badge { background: #BBDEFB; color: #0D47A1; }
-        .t14 .module-divider { background: linear-gradient(90deg,#1565C0,transparent); }
-        .t14 .point-number { background: #1565C0; }
-        .t14 .point-item:hover { border-color: #1565C0; }
-        .t14 .points-section-title { color: #1565C0; }
-
-        .t15 .module-card-icon { background: #EFEBE9; }
-        .t15 .module-card-badge { background: #D7CCC8; color: #3E2723; }
-        .t15 .module-divider { background: linear-gradient(90deg,#4E342E,transparent); }
-        .t15 .point-number { background: #4E342E; }
-        .t15 .point-item:hover { border-color: #4E342E; }
-        .t15 .points-section-title { color: #4E342E; }
-
-        /* MAIN FOOTER */
-        footer {
-            background: var(--primary); color: rgba(255,255,255,0.8);
-            text-align: center; padding: 28px 20px; margin-top: 40px;
-        }
-
-        footer .footer-logo { font-size: 1.2rem; font-weight: 800; color: var(--secondary); margin-bottom: 6px; }
-        footer p { font-size: 0.83rem; opacity: 0.7; }
-
-        /* RESPONSIVE */
-        @media (max-width: 960px) {
-            .main-container { grid-template-columns: 1fr; }
-            .sidebar { position: static; }
-            .hero h2 { font-size: 1.8rem; }
-            .objectives-grid { grid-template-columns: 1fr; }
-            .header-top, .header-nav { padding: 10px 16px; }
-            .hero { padding: 36px 16px; }
-            .progress-section { padding: 14px 16px; }
-        }
-
-        @media (max-width: 580px) {
-            .module-card-header { flex-wrap: wrap; }
-            .module-card-meta { flex-wrap: wrap; }
-            .hero-stats { gap: 18px; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>أساسيات تكنولوجيا المعلومات - الدبلوم العالي</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f2f5;color:#111;direction:rtl;}
+
+/* HEADER */
+.hdr{background:#232F3E;color:#fff;padding:14px 30px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:999;box-shadow:0 2px 8px rgba(0,0,0,.4);}
+.hdr-logo{display:flex;align-items:center;gap:12px;}
+.hdr-logo .ico{width:44px;height:44px;background:#FF9900;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;color:#232F3E;}
+.hdr-logo h1{font-size:1.1rem;color:#fff;}
+.hdr-logo span{font-size:.72rem;color:#FF9900;display:block;}
+.hdr-badge{background:#FF9900;color:#232F3E;padding:6px 16px;border-radius:20px;font-size:.8rem;font-weight:700;}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#146EB4,#0D5A9A,#232F3E);color:#fff;padding:50px 30px;text-align:center;}
+.hero-badge{display:inline-block;border:1px solid #FF9900;color:#FF9900;background:rgba(255,153,0,.15);padding:5px 18px;border-radius:20px;font-size:.83rem;margin-bottom:16px;}
+.hero h2{font-size:2.2rem;font-weight:800;margin-bottom:12px;}
+.hero h2 span{color:#FF9900;}
+.hero p{font-size:1rem;opacity:.88;max-width:680px;margin:0 auto 28px;}
+.hero-stats{display:flex;justify-content:center;gap:40px;flex-wrap:wrap;}
+.stat{text-align:center;}
+.stat b{font-size:1.9rem;font-weight:800;color:#FF9900;display:block;}
+.stat small{font-size:.82rem;opacity:.8;}
+
+/* PROGRESS */
+.prog-bar{background:#fff;padding:14px 30px;display:flex;align-items:center;gap:14px;border-bottom:1px solid #ddd;}
+.prog-bar label{font-size:.88rem;font-weight:600;white-space:nowrap;}
+.prog-track{flex:1;height:10px;background:#e0e0e0;border-radius:10px;overflow:hidden;min-width:120px;}
+.prog-fill{height:100%;background:linear-gradient(90deg,#FF9900,#FFC300);border-radius:10px;width:0%;transition:width .7s;}
+.prog-pct{font-size:.88rem;font-weight:700;color:#FF9900;min-width:40px;}
+.prog-count{font-size:.8rem;color:#666;}
+
+/* LAYOUT */
+.layout{max-width:1320px;margin:0 auto;padding:24px 16px;display:grid;grid-template-columns:280px 1fr;gap:20px;align-items:start;}
+
+/* SIDEBAR */
+.sidebar{position:sticky;top:80px;}
+.sb-card{background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.1);overflow:hidden;margin-bottom:14px;}
+.sb-head{background:#232F3E;color:#fff;padding:12px 16px;font-size:.87rem;font-weight:700;display:flex;align-items:center;gap:8px;}
+.sb-list{max-height:520px;overflow-y:auto;}
+.sb-list::-webkit-scrollbar{width:4px;}
+.sb-list::-webkit-scrollbar-thumb{background:#FF9900;border-radius:2px;}
+.sb-item{padding:10px 14px;display:flex;align-items:center;gap:10px;cursor:pointer;border-right:3px solid transparent;border-bottom:1px solid #f0f0f0;transition:all .2s;}
+.sb-item:hover{background:#E8F4FD;border-right-color:#146EB4;}
+.sb-item.active{background:#FFF8E7;border-right-color:#FF9900;}
+.sb-item.done{background:#f0fff4;}
+.sb-num{width:26px;height:26px;border-radius:50%;background:#eee;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;color:#555;flex-shrink:0;transition:all .2s;}
+.sb-item.active .sb-num{background:#FF9900;color:#232F3E;}
+.sb-item.done .sb-num{background:#1E8449;color:#fff;}
+.sb-info{flex:1;}
+.sb-title{font-size:.77rem;font-weight:600;color:#111;line-height:1.35;}
+.sb-meta{font-size:.68rem;color:#777;margin-top:1px;}
+
+.info-grid{padding:14px 16px;display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.info-item{text-align:center;}
+.info-icon{font-size:1.3rem;display:block;margin-bottom:3px;}
+.info-val{font-size:.95rem;font-weight:700;color:#146EB4;display:block;}
+.info-lbl{font-size:.68rem;color:#777;}
+
+/* CONTENT */
+.content{display:flex;flex-direction:column;gap:18px;}
+
+/* OVERVIEW */
+.overview{background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.1);overflow:hidden;}
+.ov-head{background:linear-gradient(135deg,#146EB4,#0D5A9A);color:#fff;padding:18px 22px;display:flex;align-items:center;gap:12px;}
+.ov-ico{width:42px;height:42px;background:rgba(255,255,255,.2);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;}
+.ov-head h3{font-size:1.1rem;font-weight:700;}
+.ov-head p{font-size:.8rem;opacity:.85;margin-top:2px;}
+.ov-body{padding:20px 22px;}
+.ov-body p{font-size:.9rem;color:#555;line-height:1.8;margin-bottom:14px;}
+.obj-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.obj-item{background:#E8F4FD;border:1px solid #BDE0F5;border-radius:8px;padding:10px 12px;display:flex;align-items:flex-start;gap:8px;font-size:.82rem;color:#111;}
+.obj-ico{color:#146EB4;flex-shrink:0;margin-top:1px;}
+
+/* MODULE CARD */
+.mod-card{background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.1);overflow:hidden;}
+.mod-head{padding:16px 20px;display:flex;align-items:center;gap:14px;cursor:pointer;user-select:none;transition:background .2s;}
+.mod-head:hover{background:#fafafa;}
+.mod-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.45rem;flex-shrink:0;}
+.mod-info{flex:1;min-width:0;}
+.mod-badge{display:inline-block;font-size:.68rem;font-weight:700;padding:2px 10px;border-radius:12px;margin-bottom:5px;text-transform:uppercase;letter-spacing:.4px;}
+.mod-title{font-size:1rem;font-weight:700;color:#111;margin-bottom:2px;}
+.mod-sub{font-size:.78rem;color:#666;}
+.mod-tags{display:flex;gap:8px;flex-wrap:wrap;}
+.mod-tag{background:#f5f5f5;border:1px solid #ddd;border-radius:6px;padding:3px 10px;font-size:.73rem;color:#555;}
+.mod-arrow{font-size:1rem;color:#999;transition:transform .3s;flex-shrink:0;}
+.mod-arrow.open{transform:rotate(180deg);}
+.mod-divider{height:3px;margin:0 20px;}
+
+/* BODY */
+.mod-body{display:none;padding:20px;border-top:1px solid #eee;}
+.pts-title{font-size:.95rem;font-weight:700;margin-bottom:12px;padding-bottom:7px;border-bottom:2px solid #f0f0f0;display:flex;align-items:center;gap:7px;}
+.pts-list{display:flex;flex-direction:column;gap:10px;margin-bottom:20px;}
+.pt-item{display:flex;align-items:flex-start;gap:12px;padding:13px 15px;border-radius:10px;border:1px solid #e8e8e8;transition:all .2s;background:#fff;}
+.pt-item:hover{box-shadow:0 2px 8px rgba(0,0,0,.08);transform:translateX(-3px);}
+.pt-num{width:29px;height:29px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:800;flex-shrink:0;color:#fff;}
+.pt-content{flex:1;}
+.pt-title{font-size:.9rem;font-weight:700;color:#111;margin-bottom:3px;}
+.pt-desc{font-size:.8rem;color:#666;line-height:1.6;}
+.pt-icon{font-size:1.1rem;opacity:.5;flex-shrink:0;}
+
+/* ACTIVITY */
+.act-box{background:linear-gradient(135deg,#FFF8E7,#FFFBF0);border:1px solid #FFE0A0;border-radius:12px;padding:18px;}
+.act-head{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap;}
+.act-badge{background:#FF9900;color:#232F3E;padding:3px 12px;border-radius:12px;font-size:.73rem;font-weight:700;}
+.act-title{font-size:.9rem;font-weight:700;color:#111;}
+.act-desc{font-size:.83rem;color:#555;line-height:1.7;margin-bottom:12px;}
+.act-steps{display:flex;flex-direction:column;gap:7px;}
+.act-step{display:flex;align-items:center;gap:9px;font-size:.82rem;color:#111;}
+.act-dot{width:7px;height:7px;border-radius:50%;background:#FF9900;flex-shrink:0;}
+
+/* FOOTER */
+.mod-footer{display:flex;align-items:center;justify-content:space-between;padding:12px 20px;background:#f8f8f8;border-top:1px solid #eee;flex-wrap:wrap;gap:8px;}
+.foot-tags{display:flex;gap:12px;flex-wrap:wrap;}
+.foot-tag{font-size:.76rem;color:#666;}
+.done-btn{background:#1E8449;color:#fff;border:none;padding:8px 18px;border-radius:7px;font-size:.82rem;font-weight:600;cursor:pointer;font-family:inherit;transition:all .2s;display:flex;align-items:center;gap:6px;}
+.done-btn:hover:not(:disabled){background:#166838;transform:translateY(-1px);}
+.done-btn:disabled{background:#999;cursor:default;transform:none;}
+
+/* PAGE FOOTER */
+footer{background:#232F3E;color:rgba(255,255,255,.75);text-align:center;padding:26px 16px;margin-top:36px;}
+footer .fl{font-size:1.1rem;font-weight:800;color:#FF9900;margin-bottom:6px;}
+footer p{font-size:.8rem;opacity:.65;}
+
+/* RESPONSIVE */
+@media(max-width:900px){.layout{grid-template-columns:1fr;}.sidebar{position:static;}}
+@media(max-width:560px){.hero h2{font-size:1.6rem;}.hero-stats{gap:20px;}.obj-grid{grid-template-columns:1fr;}}
+</style>
 </head>
 <body>
 
-<!-- HEADER -->
-<header>
-    <div class="header-top">
-        <div class="logo-section">
-            <div class="logo-icon">🎓</div>
-            <div class="logo-text">
-                <h1>أكاديمية القيادة الرقمية</h1>
-                <span>برنامج الدبلوم العالي في القيادة الرقمية المهنية</span>
-            </div>
-        </div>
-        <div class="header-badge">🏆 الفصل الأول</div>
+<header class="hdr">
+  <div class="hdr-logo">
+    <div class="ico">🎓</div>
+    <div>
+      <h1>أكاديمية القيادة الرقمية</h1>
+      <span>برنامج الدبلوم العالي في القيادة الرقمية المهنية</span>
     </div>
-    <nav class="header-nav">
-        <span class="nav-item active">📘 أساسيات تكنولوجيا المعلومات</span>
-        <span class="nav-item">🏠 الرئيسية</span>
-        <span class="nav-item">📋 جميع المواد</span>
-        <span class="nav-item">📊 تقدمي</span>
-        <span class="nav-item">📝 التقييمات</span>
-        <span class="nav-item">🎯 المشروع التطبيقي</span>
-    </nav>
+  </div>
+  <div class="hdr-badge">🏆 الفصل الأول</div>
 </header>
 
-<!-- HERO -->
 <section class="hero">
-    <div class="hero-badge">📘 المادة الثالثة — الفصل الأول</div>
-    <h2>أساسيات <span>تكنولوجيا المعلومات</span></h2>
-    <p>يفهم الطالب البنية التقنية للتحول الرقمي دون الحاجة للتخصص التقني — تمكين القيادات الحكومية من اتخاذ قرارات رقمية استراتيجية مستنيرة</p>
-    <div class="hero-stats">
-        <div class="stat-item"><span class="stat-number">15</span><span class="stat-label">وحدة تعليمية</span></div>
-        <div class="stat-item"><span class="stat-number">105</span><span class="stat-label">نقطة تعليمية</span></div>
-        <div class="stat-item"><span class="stat-number">15</span><span class="stat-label">نشاطاً تطبيقياً</span></div>
-        <div class="stat-item"><span class="stat-number">45</span><span class="stat-label">ساعة دراسية</span></div>
-    </div>
+  <div class="hero-badge">📘 المادة الثالثة — الفصل الأول</div>
+  <h2>أساسيات <span>تكنولوجيا المعلومات</span></h2>
+  <p>تمكين القيادات الحكومية من فهم البنية التقنية للتحول الرقمي واتخاذ قرارات استراتيجية مستنيرة دون الحاجة للتخصص التقني</p>
+  <div class="hero-stats">
+    <div class="stat"><b>15</b><small>وحدة تعليمية</small></div>
+    <div class="stat"><b>105</b><small>نقطة تعليمية</small></div>
+    <div class="stat"><b>15</b><small>نشاطاً تطبيقياً</small></div>
+    <div class="stat"><b>45</b><small>ساعة دراسية</small></div>
+  </div>
 </section>
 
-<!-- PROGRESS -->
-<div class="progress-section">
-    <span class="progress-label">📈 تقدم المادة:</span>
-    <div class="progress-bar-container">
-        <div class="progress-bar-fill" id="progressBar"></div>
-    </div>
-    <span class="progress-percent" id="progressPercent">0%</span>
-    <span id="progressCount" style="font-size:0.82rem;color:var(--text-gray);">0 / 15 وحدة مكتملة</span>
+<div class="prog-bar">
+  <label>📈 التقدم:</label>
+  <div class="prog-track"><div class="prog-fill" id="PB"></div></div>
+  <span class="prog-pct" id="PP">0%</span>
+  <span class="prog-count" id="PC">0 / 15 وحدة</span>
 </div>
 
-<!-- MAIN -->
-<div class="main-container">
+<div class="layout">
 
-    <!-- SIDEBAR -->
-    <aside class="sidebar">
-        <div class="sidebar-card">
-            <div class="sidebar-header">📑 فهرس الوحدات الخمس عشرة</div>
-            <div class="module-list" id="sidebarList">
-                <!-- generated by JS -->
-            </div>
-        </div>
-        <div class="sidebar-card">
-            <div class="sidebar-header">ℹ️ معلومات المادة</div>
-            <div class="info-grid">
-                <div class="info-item"><span class="info-icon">⏱️</span><span class="info-value">45 ساعة</span><span class="info-label">إجمالي الدراسة</span></div>
-                <div class="info-item"><span class="info-icon">🌐</span><span class="info-value">عربي</span><span class="info-label">لغة التدريس</span></div>
-                <div class="info-item"><span class="info-icon">📊</span><span class="info-value">متقدم</span><span class="info-label">المستوى</span></div>
-                <div class="info-item"><span class="info-icon">🏅</span><span class="info-value">شهادة</span><span class="info-label">عند الإتمام</span></div>
-            </div>
-        </div>
-    </aside>
-
-    <!-- CONTENT -->
-    <div class="content-area">
-
-        <!-- OVERVIEW -->
-        <div class="overview-card">
-            <div class="overview-header">
-                <div class="overview-header-icon">💡</div>
-                <div>
-                    <h3>نظرة عامة على المادة</h3>
-                    <p>أساسيات تكنولوجيا المعلومات — 15 وحدة | الفصل الأول</p>
-                </div>
-            </div>
-            <div class="overview-body">
-                <p>تُعنى هذه المادة بتمكين القيادات الحكومية من فهم البنية التقنية للتحول الرقمي دون الحاجة إلى تخصص تقني عميق. تتضمن خمس عشرة وحدة تغطي نظم المعلومات الحكومية والحوسبة السحابية وإدارة البيانات وتكامل الأنظمة والمنصات الرقمية والأمن السيبراني، مُركِّزةً على بناء وعي قيادي يُمكِّن من الإشراف الفعّال على مشاريع التحول الرقمي.</p>
-                <div class="objectives-grid">
-                    <div class="objective-item"><span class="obj-icon">✅</span>فهم البنية التحتية الرقمية للتحول الحكومي</div>
-                    <div class="objective-item"><span class="obj-icon">✅</span>إدارة نظم المعلومات والبيانات الحكومية</div>
-                    <div class="objective-item"><span class="obj-icon">✅</span>تقييم الحلول السحابية وتكامل الأنظمة</div>
-                    <div class="objective-item"><span class="obj-icon">✅</span>اتخاذ قرارات تقنية استراتيجية مستنيرة</div>
-                    <div class="objective-item"><span class="obj-icon">✅</span>إدارة مخاطر التقنية في المؤسسات الحكومية</div>
-                    <div class="objective-item"><span class="obj-icon">✅</span>الاطلاع على التجارب الدولية الرائدة</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- MODULES CONTAINER -->
-        <div id="modulesContainer"></div>
-
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sb-card">
+      <div class="sb-head">📑 فهرس الوحدات الخمس عشرة</div>
+      <div class="sb-list" id="SBLIST"></div>
     </div>
+    <div class="sb-card">
+      <div class="sb-head">ℹ️ معلومات المادة</div>
+      <div class="info-grid">
+        <div class="info-item"><span class="info-icon">⏱️</span><span class="info-val">45 ساعة</span><span class="info-lbl">إجمالي الدراسة</span></div>
+        <div class="info-item"><span class="info-icon">🌐</span><span class="info-val">عربي</span><span class="info-lbl">لغة التدريس</span></div>
+        <div class="info-item"><span class="info-icon">📊</span><span class="info-val">متقدم</span><span class="info-lbl">المستوى</span></div>
+        <div class="info-item"><span class="info-icon">🏅</span><span class="info-val">شهادة</span><span class="info-lbl">عند الإتمام</span></div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- OVERVIEW -->
+    <div class="overview">
+      <div class="ov-head">
+        <div class="ov-ico">💡</div>
+        <div>
+          <h3>نظرة عامة على المادة</h3>
+          <p>أساسيات تكنولوجيا المعلومات — 15 وحدة | الفصل الأول</p>
+        </div>
+      </div>
+      <div class="ov-body">
+        <p>تُعنى هذه المادة بتمكين القيادات الحكومية من فهم البنية التقنية للتحول الرقمي دون الحاجة إلى تخصص تقني عميق. تتضمن خمس عشرة وحدة تغطي نظم المعلومات والحوسبة السحابية وإدارة البيانات وتكامل الأنظمة والمنصات الرقمية والأمن السيبراني والذكاء الاصطناعي.</p>
+        <div class="obj-grid">
+          <div class="obj-item"><span class="obj-ico">✅</span>فهم البنية التحتية الرقمية للتحول الحكومي</div>
+          <div class="obj-item"><span class="obj-ico">✅</span>إدارة نظم المعلومات والبيانات الحكومية</div>
+          <div class="obj-item"><span class="obj-ico">✅</span>تقييم الحلول السحابية وتكامل الأنظمة</div>
+          <div class="obj-item"><span class="obj-ico">✅</span>اتخاذ قرارات تقنية استراتيجية مستنيرة</div>
+          <div class="obj-item"><span class="obj-ico">✅</span>إدارة المخاطر التقنية في المؤسسات الحكومية</div>
+          <div class="obj-item"><span class="obj-ico">✅</span>الاطلاع على التجارب الدولية الرائدة</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODULES -->
+    <div id="MODS"></div>
+
+  </div>
 </div>
 
 <footer>
-    <div class="footer-logo">🎓 أكاديمية القيادة الرقمية</div>
-    <p>برنامج الدبلوم العالي في القيادة الرقمية المهنية | مادة أساسيات تكنولوجيا المعلومات</p>
-    <p style="margin-top:5px;font-size:0.76rem;">الفصل الأول — السنة الأكاديمية 2025 / 2026</p>
+  <div class="fl">🎓 أكاديمية القيادة الرقمية</div>
+  <p>برنامج الدبلوم العالي في القيادة الرقمية المهنية | مادة أساسيات تكنولوجيا المعلومات</p>
+  <p style="margin-top:4px;font-size:.73rem;">الفصل الأول — السنة الأكاديمية 2025/2026</p>
 </footer>
 
 <script>
-// =====================================================================
-// DATA — 15 UNITS × 7 POINTS
-// =====================================================================
-const modules = [
-  {
-    id: 1, theme: "t1", icon: "🏗️",
-    title: "التحول الرقمي والبنية التحتية التقنية",
-    subtitle: "المفردة: البنية التحتية الرقمية وارتباطها بالتحول الرقمي",
-    hours: 3,
-    points: [
-      { icon: "🌐", title: "مفهوم البنية التحتية الرقمية وعناصرها",
-        desc: "يُعرِّف البنية التحتية الرقمية ويُحدد عناصرها الجوهرية من شبكات واتصالات ومراكز بيانات وأجهزة وبرمجيات، ويُبيّن أثرها المباشر في تحديد قدرة المؤسسة الحكومية على تبني التحول الرقمي وإنجاح مبادراته." },
-      { icon: "🔗", title: "الفرق بين الرقمنة والرقمية والتحول الرقمي",
-        desc: "يُميّز بين المفاهيم الثلاثة ويُوضح التسلسل المنطقي بينها، إذ تمثل الرقمنة تحويل الوثائق إلكترونياً، فيما الرقمية تعني اعتماد العمليات الرقمية، بينما يشمل التحول الرقمي إعادة تصميم النماذج المؤسسية الكاملة." },
-      { icon: "🏛️", title: "مكونات البنية التحتية للحكومة الرقمية",
-        desc: "يُفصّل مكونات البنية التحتية الحكومية من شبكات الإنترنت الحكومية الآمنة وبوابات الخدمات الإلكترونية الموحدة ومراكز البيانات الوطنية وأنظمة الهوية الرقمية ومنصات الدفع الإلكتروني." },
-      { icon: "📏", title: "معايير تقييم جاهزية البنية التحتية",
-        desc: "يُقدم أطر تقييم جاهزية البنية التحتية التقنية كنموذج نضج القدرات CMM ومؤشر الحكومة الإلكترونية للأمم المتحدة، ويُوضح كيف تُوظَّف هذه الأطر في رسم خطط التطوير التقني." },
-      { icon: "🚀", title: "التقنيات الناشئة وأثرها في البنية التحتية",
-        desc: "يستعرض شبكات الجيل الخامس 5G وإنترنت الأشياء IoT وتقنية البلوك تشين وكيف تُعيد رسم متطلبات البنية التحتية الحكومية وتفتح أفقاً جديدة لتقديم الخدمات وجمع البيانات." },
-      { icon: "📋", title: "إدارة مشاريع البنية التحتية الرقمية",
-        desc: "يُوضح أسس الإشراف القيادي على مشاريع البنية التحتية من تخطيط وميزنة وإدارة عقود الموردين وضمان الجودة، مع التركيز على دور القيادة في اتخاذ القرارات التقنية الاستراتيجية." },
-      { icon: "🌍", title: "تجارب دولية رائدة في تحديث البنية التحتية",
-        desc: "يقارن تجارب كوريا الجنوبية وإستونيا والإمارات في بناء البنية التحتية الرقمية الحكومية، مستخلصاً دروساً عملية قابلة للتكييف مع السياق العراقي وخصوصياته." }
-    ],
-    activity: {
-      title: "تحليل مشروع تحول رقمي في مؤسسة حكومية",
-      desc: "يُحلل الطالب مشروع تحول رقمي حكومي حقيقي ويدرس مكونات بنيته التحتية التقنية، ويُقيّم مدى كفاءتها في تحقيق أهداف المشروع مع تقديم توصيات تطويرية.",
-      steps: ["اختيار مشروع حكومي رقمي عراقي أو إقليمي للتحليل","تحديد مكونات البنية التحتية المستخدمة وتوثيقها","تقييم الكفاءة التقنية وتحديد جوانب القصور","صياغة توصيات تطوير مبنية على نتائج التحليل"]
-    }
-  },
-  {
-    id: 2, theme: "t2", icon: "🖥️",
-    title: "نظم المعلومات الحكومية",
-    subtitle: "المفردة: نظم المعلومات الحكومية وتطبيقاتها في المؤسسات العامة",
-    hours: 3,
-    points: [
-      { icon: "💡", title: "مفهوم نظم المعلومات وأنواعها في القطاع الحكومي",
-        desc: "يُصنّف أنواع نظم المعلومات في السياق الحكومي كنظم دعم القرار DSS ونظم تخطيط الموارد ERP الحكومية ونظم إدارة علاقات المواطنين CiRM، محدداً الغرض الوظيفي والمستخدمين المستهدفين لكل نوع." },
-      { icon: "🔄", title: "دورة حياة نظم المعلومات الحكومية",
-        desc: "يتتبع مراحل دورة حياة النظام من التخطيط والتحليل والتصميم والتطوير والاختبار والتشغيل حتى التقاعد، موضحاً دور القيادة الحكومية في اتخاذ القرار في كل مرحلة." },
-      { icon: "✅", title: "عوامل نجاح تطبيق نظم المعلومات",
-        desc: "يُحدد العوامل الحاسمة لنجاح تطبيق نظم المعلومات كدعم القيادة العليا وإدارة التغيير وبرامج التدريب والتهيئة والبنية التحتية الملائمة، ويستعرض أسباب الفشل الشائعة وسبل تجنبها." },
-      { icon: "📊", title: "تقييم كفاءة نظم المعلومات الحكومية",
-        desc: "يُقدم مؤشرات الأداء الرئيسية KPIs لقياس كفاءة نظم المعلومات الحكومية كمعدلات الاستخدام ورضا المستخدمين وأوقات الاستجابة وأثر النظام على جودة الخدمات المقدمة." },
-      { icon: "🔗", title: "التكامل بين نظم المعلومات الحكومية المختلفة",
-        desc: "يُعالج مشكلة صوامع البيانات بين الوزارات ويُقدم نماذج التكامل المناسبة كتبادل الملفات والربط المباشر وحافلة الخدمات المؤسسية ESB لتحقيق الربط الفعّال." },
-      { icon: "🔒", title: "أمن نظم المعلومات الحكومية",
-        desc: "يُناقش المتطلبات الأمنية الخاصة بنظم المعلومات الحكومية من تحكم بالوصول وتشفير وحماية من الاختراق، والإطار القانوني والتنظيمي لحماية المعلومات الحكومية." },
-      { icon: "🔮", title: "مستقبل نظم المعلومات في ظل الذكاء الاصطناعي",
-        desc: "يستشرف كيف ستُحوّل تقنيات الذكاء الاصطناعي والتعلم الآلي والمعالجة الطبيعية للغة نظم المعلومات الحكومية، وتطبيقاتها في الأتمتة وتحسين جودة القرارات الإدارية." }
-    ],
-    activity: {
-      title: "تحليل نظام معلومات حكومي قائم",
-      desc: "يقوم الطالب بتحليل نظام معلومات حكومي موجود وتقييم مدى كفاءته وفاعليته، مقدماً تقريراً تحليلياً يتضمن نقاط القوة والضعف والتوصيات.",
-      steps: ["اختيار نظام معلومات حكومي وجمع المعلومات حوله","تصنيفه وفق أطر نظم المعلومات المعتمدة","قياس مؤشرات الأداء الرئيسية وتحليلها","كتابة تقرير تحليلي شامل مع توصيات التطوير"]
-    }
-  },
-  {
-    id: 3, theme: "t3", icon: "🗄️",
-    title: "إدارة البيانات الحكومية",
-    subtitle: "المفردة: إدارة البيانات الحكومية وقواعد البيانات في المؤسسات العامة",
-    hours: 3,
-    points: [
-      { icon: "📁", title: "أسس إدارة البيانات الحكومية",
-        desc: "يُقدم المبادئ الجوهرية لإدارة البيانات الحكومية من تعريف وجمع وتخزين وصون وتوزيع، مع التمييز بين أنواع البيانات ومستويات حساسيتها والإجراءات الملائمة للتعامل مع كل فئة." },
-      { icon: "🗃️", title: "قواعد البيانات العلائقية وغير العلائقية",
-        desc: "يشرح مفهوم قواعد البيانات العلائقية وأنظمة SQL وقواعد البيانات غير العلائقية NoSQL، ويُقدم معايير الاختيار بين النوعين بحسب طبيعة البيانات الحكومية واحتياجات الأداء." },
-      { icon: "🔄", title: "دورة حياة البيانات الحكومية",
-        desc: "يتتبع دورة حياة البيانات من الإنشاء والمعالجة والتخزين إلى الاسترجاع والأرشفة والإتلاف الآمن، مُبيّناً المتطلبات التنظيمية والقانونية في كل مرحلة بما يضمن الامتثال." },
-      { icon: "✨", title: "جودة البيانات الحكومية وضمانها",
-        desc: "يُناقش أبعاد جودة البيانات الستة: الدقة والاكتمال والاتساق والتوقيت والفريدية والصحة، ويُقدم أدوات منهجية لرصد الجودة وتحسينها وأثر انخفاضها على فاعلية القرارات." },
-      { icon: "🔓", title: "البيانات الحكومية المفتوحة ومعاييرها",
-        desc: "يستعرض مفهوم البيانات المفتوحة وفوائدها في تعزيز الشفافية والابتكار وتنمية الاقتصاد الرقمي، ومعايير نشر البيانات الحكومية المفتوحة وأطرها التنظيمية الدولية." },
-      { icon: "🛡️", title: "أمن البيانات وخصوصية المواطنين",
-        desc: "يُعالج إشكاليات أمن البيانات وحماية خصوصية المواطنين في ظل التحول الرقمي، مع الأطر التقنية والتنظيمية لحماية البيانات الحساسة والامتثال للتشريعات ذات الصلة." },
-      { icon: "💎", title: "البيانات كمورد استراتيجي للدولة",
-        desc: "يُقدّم البيانات الحكومية باعتبارها موردًا استراتيجيًا يمكن استثماره في رسم السياسات وتحسين الخدمات وتعزيز القدرة التنافسية الوطنية، مع نماذج عملية لتحقيق ذلك." }
-    ],
-    activity: {
-      title: "تحليل دورة حياة البيانات وتقييم نظام إدارة بيانات حكومي",
-      desc: "يُحلل الطالب نظام إدارة بيانات في مؤسسة حكومية ويُقيّم كفاءته في إدارة دورة حياة البيانات، مقدماً خطة لتحسين جودة البيانات وحمايتها.",
-      steps: ["اختيار مؤسسة حكومية وتحليل نظام بياناتها الراهن","رسم دورة حياة البيانات الكاملة في المؤسسة","تقييم أبعاد جودة البيانات وتحديد الفجوات","اقتراح خطة تحسين شاملة ومدعومة بالأدلة"]
-    }
-  },
-  {
-    id: 4, theme: "t4", icon: "☁️",
-    title: "الحوسبة السحابية الحكومية",
-    subtitle: "المفردة: الحوسبة السحابية الحكومية وتطبيقاتها في المؤسسات العامة",
-    hours: 3,
-    points: [
-      { icon: "☁️", title: "مفهوم الحوسبة السحابية ونماذجها الثلاثة",
-        desc: "يُعرّف الحوسبة السحابية ويُصنّف نماذج الخدمة IaaS وPaaS وSaaS، ويُبيّن الفرق بين السحابة العامة والخاصة والهجينة ومجتمعية، محدداً الأنسب لكل استخدام حكومي." },
-      { icon: "💰", title: "فوائد الحوسبة السحابية للقطاع الحكومي",
-        desc: "يستعرض الفوائد الاستراتيجية والتشغيلية كخفض التكاليف الرأسمالية CAPEX وتحويلها لتشغيلية OPEX ومرونة التوسع ورفع مستوى استمرارية الأعمال وتحسين أمن البيانات." },
-      { icon: "⚠️", title: "تحديات انتقال الجهات الحكومية للسحابة",
-        desc: "يُناقش التحديات الجوهرية كسيادة البيانات والامتثال التنظيمي والمخاوف الأمنية والاعتماد على موردٍ واحد Vendor Lock-in، وكيفية التغلب على مقاومة التغيير المؤسسي الداخلي." },
-      { icon: "🗺️", title: "استراتيجية الانتقال إلى السحابة الحكومية",
-        desc: "يُقدم إطاراً استراتيجياً مرحلياً للانتقال يشمل تقييم الأنظمة القائمة وتحديد الأولويات وإدارة التغيير وضمان استمرارية الخدمات خلال مرحلة الانتقال الحرجة." },
-      { icon: "⚖️", title: "حوكمة السحابة الحكومية",
-        desc: "يُعرض أطر حوكمة السحابة الحكومية التي تشمل سياسات وضوابط وآليات مراقبة، مع تحديد مسؤوليات الجهات الحكومية ومزودي الخدمة ضمن نموذج المسؤولية المشتركة." },
-      { icon: "🔐", title: "أمن الحوسبة السحابية في البيئة الحكومية",
-        desc: "يُفصّل متطلبات أمن السحابة الحكومية ومعايير الامتثال الدولية، وأفضل الممارسات في تشفير البيانات وإدارة الهويات والوصول وضمان أمن البيانات في السحابة." },
-      { icon: "🌏", title: "تجارب دولية ناجحة في السحابة الحكومية",
-        desc: "يُقارن تجارب المملكة المتحدة G-Cloud وسنغافورة Government on Commercial Cloud والإمارات في تبني السحابة الحكومية، مستخلصاً دروساً قابلة للتطبيق في العراق." }
-    ],
-    activity: {
-      title: "تقييم جدوى نقل خدمة حكومية إلى السحابة",
-      desc: "يُقيّم الطالب خدمة حكومية قائمة ويدرس جدوى نقلها إلى السحابة من حيث التكاليف والفوائد والمخاطر، مقدماً توصية استراتيجية معللة.",
-      steps: ["اختيار خدمة حكومية وتحليل وضعها التقني الراهن","دراسة جدوى الانتقال من حيث التكلفة والعائد","تحديد المخاطر الأمنية والتنظيمية وسبل التخفيف","صياغة توصية استراتيجية بالانتقال أو الإبقاء مع مبررات"]
-    }
-  },
-  {
-    id: 5, theme: "t5", icon: "🔄",
-    title: "تكامل الأنظمة والحكومة الإلكترونية",
-    subtitle: "المفردة: تكامل الأنظمة الحكومية والحكومة الإلكترونية",
-    hours: 3,
-    points: [
-      { icon: "🔗", title: "مفهوم تكامل الأنظمة الحكومية وأهميته",
-        desc: "يُعرّف تكامل الأنظمة ويُبيّن أثره الجوهري في تحسين كفاءة الخدمات وخفض التكرار ومنع تضارب البيانات، موضحاً الفرق بين التكامل الأفقي والرأسي في السياق الحكومي." },
-      { icon: "🏗️", title: "معماريات التكامل الحكومية الحديثة",
-        desc: "يستعرض معماريات التكامل كـ SOA وESB وAPI Gateway ومعمارية الخدمات المصغرة Microservices، ويُوضح كيف تُمكِّن من ربط الأنظمة الحكومية المتباينة بكفاءة." },
-      { icon: "📈", title: "مراحل تطور الحكومة الإلكترونية",
-        desc: "يتتبع المراحل الأربع للحكومة الإلكترونية من الحضور والتفاعل والمعاملات الكاملة إلى التحول الشامل، موضحاً المتطلبات التقنية والمؤسسية لكل مرحلة." },
-      { icon: "👤", title: "تصميم الخدمات الإلكترونية المتمحورة حول المواطن",
-        desc: "يُقدم منهجيات التصميم المتمحور حول المستخدم User-centered Design في خدمات الحكومة الإلكترونية، بما يشمل بحوث المستخدمين ورسم رحلة المواطن وأسس إمكانية الوصول الشاملة." },
-      { icon: "📊", title: "مؤشرات قياس أداء الحكومة الإلكترونية",
-        desc: "يُعرض مؤشرات قياس أداء الحكومة الإلكترونية المعتمدة من الأمم المتحدة ومنظمة OECD، وكيفية توظيفها في تتبع التقدم وصياغة خطط التحسين المستمر." },
-      { icon: "🪪", title: "الهوية الرقمية وخدمات المصادقة",
-        desc: "يُناقش أنظمة الهوية الرقمية الوطنية وتقنيات المصادقة المتعددة MFA، وأثر توحيد الهوية الرقمية في تبسيط الخدمات الحكومية وتعزيز الأمن والثقة الرقمية." },
-      { icon: "⭐", title: "تقييم جودة الخدمات الإلكترونية الحكومية",
-        desc: "يُقدم أطر تقييم جودة الخدمات الإلكترونية الحكومية وقياس رضا المواطنين، مع منهجيات التحسين المستمر القائم على البيانات وملاحظات المستخدمين الفعليين." }
-    ],
-    activity: {
-      title: "تقييم خدمة حكومية إلكترونية وتحليل تكامل أنظمتها",
-      desc: "يُجري الطالب تقييماً شاملاً لخدمة حكومية إلكترونية قائمة من حيث تكامل الأنظمة وجودة التجربة ومؤشرات الأداء، مع تقديم مقترحات تطويرية عملية.",
-      steps: ["اختيار خدمة حكومية إلكترونية للتقييم","رسم خريطة الأنظمة المتكاملة وتدفق البيانات","قياس جودة التجربة ومؤشرات الأداء الرئيسية","تقديم مقترح تطوير مبني على نتائج التقييم"]
-    }
-  },
-  {
-    id: 6, theme: "t6", icon: "📊",
-    title: "المنصات الحكومية الرقمية",
-    subtitle: "المفردة: المنصات الحكومية الرقمية وتطبيقاتها في تقديم الخدمات",
-    hours: 3,
-    points: [
-      { icon: "🖥️", title: "مفهوم المنصات الحكومية الرقمية وأنواعها",
-        desc: "يُعرّف المنصات الحكومية الرقمية ويُصنّف أنواعها من بوابات خدمة موحدة ومنصات تفاعل مع المواطنين ومنصات بيانات مفتوحة ومنصات مدفوعات حكومية، مستعرضاً نماذج ناجحة عالمياً." },
-      { icon: "🛠️", title: "تصميم وتطوير منصات الخدمات الحكومية",
-        desc: "يُقدم مبادئ تصميم منصات الخدمات الحكومية الفعّالة من حيث تجربة المستخدم وأداء النظام وقابلية التوسع والتكامل مع الأنظمة الخلفية Back-end وضمان الأمن." },
-      { icon: "📱", title: "الخدمات الحكومية عبر الأجهزة المتنقلة",
-        desc: "يستعرض نماذج تقديم الخدمات الحكومية عبر تطبيقات الهاتف المحمول وتقنية Mobile-first Design، وكيفية رفع معدلات التبني لدى المواطنين وتحقيق الشمولية الرقمية." },
-      { icon: "⚙️", title: "إدارة المنصات الحكومية وصيانتها",
-        desc: "يُناقش جوانب الحوكمة التشغيلية للمنصات الحكومية من إدارة المحتوى والتحديثات وإدارة الحوادث وضمان مستويات الخدمة SLA مع الموردين والمستخدمين." },
-      { icon: "🔍", title: "تحليل بيانات استخدام المنصات الحكومية",
-        desc: "يُعرض كيفية استخدام بيانات الاستخدام Analytics لفهم سلوك المواطنين وتحسين تصميم المنصات وتحديد نقاط الاحتكاك في رحلة المستخدم وزيادة فاعلية الخدمات." },
-      { icon: "🌐", title: "قياس الأثر وتقييم عوائد المنصات الحكومية",
-        desc: "يُقدم أطر قياس العوائد والأثر الاجتماعي والاقتصادي للمنصات الحكومية، وكيفية حساب العائد على الاستثمار ROI وتقديم نتائج مقنعة لصانعي القرار." },
-      { icon: "🏆", title: "أفضل الممارسات العالمية في منصات الخدمات الحكومية",
-        desc: "يُقارن منصات الخدمات الحكومية الرائدة عالمياً كـ GOV.UK وبوابة الإمارات الحكومية وبوابة سنغافورة الواحدة، مستخلصاً مبادئ التميز القابلة للتطبيق." }
-    ],
-    activity: {
-      title: "تحليل منصة حكومية رقمية وتقديم مقترح تطويري",
-      desc: "يُحلّل الطالب منصة خدمات حكومية قائمة ويُقيّم أداءها وتجربة مستخدميها، ويُعد مقترحاً تطوير يعالج نقاط الضعف المُحددة.",
-      steps: ["اختيار منصة حكومية وجمع بيانات الاستخدام","تحليل تجربة المستخدم وتحديد نقاط الاحتكاك","مقارنة الأداء بمعايير ومنصات مماثلة ناجحة","صياغة مقترح تطوير أولويات مدعوم بالبيانات"]
-    }
-  },
-  {
-    id: 7, theme: "t7", icon: "🌊",
-    title: "البيانات الضخمة في الإدارة الحكومية",
-    subtitle: "المفردة: البيانات الضخمة وتطبيقاتها في الإدارة العامة الحكومية",
-    hours: 3,
-    points: [
-      { icon: "🌊", title: "مفهوم البيانات الضخمة وخصائصها الخمسة",
-        desc: "يشرح مفهوم البيانات الضخمة ويُفصّل خصائصها الخمس Volume الحجم وVelocity السرعة وVariety التنوع وVeracity الدقة وValue القيمة، موضحاً كيف تختلف عن البيانات التقليدية في معالجتها." },
-      { icon: "🏙️", title: "تطبيقات البيانات الضخمة في القطاع الحكومي",
-        desc: "يستعرض تطبيقات فعلية في الرعاية الصحية والأمن والتخطيط العمراني والخدمات الاجتماعية وإدارة الطوارئ، موضحاً كيف تحوّل هذه التطبيقات جودة القرارات الحكومية." },
-      { icon: "🛠️", title: "أدوات ومنصات معالجة البيانات الضخمة",
-        desc: "يُقدم نظرة مبسطة للمديرين على أدوات البيانات الضخمة كـ Hadoop وSpark وHive، مُركّزاً على فهم القدرات وليس التفاصيل التقنية، لتمكين القيادة من اتخاذ قرارات التبني الصحيحة." },
-      { icon: "🔍", title: "تحليلات البيانات الضخمة لدعم القرار الحكومي",
-        desc: "يُوضح مستويات التحليل الأربعة: الوصفي والتشخيصي والتنبؤي والوصفي، وكيف يُعظّم كل مستوى قيمة البيانات في صياغة السياسات العامة وتحسين الأداء الحكومي." },
-      { icon: "⚖️", title: "الاعتبارات الأخلاقية والقانونية للبيانات الضخمة",
-        desc: "يُناقش إشكاليات الخصوصية والتحيز الخوارزمي والشفافية المرتبطة باستخدام البيانات الضخمة في القرارات الحكومية، ومبادئ الحوكمة المسؤولة للبيانات." },
-      { icon: "💡", title: "بناء كفاءات البيانات الضخمة في الجهات الحكومية",
-        desc: "يُقدم إطاراً لبناء القدرات المؤسسية اللازمة للاستفادة من البيانات الضخمة، يشمل توصيف الكفاءات المطلوبة وبرامج تأهيل الكوادر وهيكل الفريق المثالي." },
-      { icon: "🌐", title: "تجارب حكومية رائدة في البيانات الضخمة",
-        desc: "يُقارن تجارب سنغافورة Smart Nation وكوريا الجنوبية والإمارات في استثمار البيانات الضخمة حكومياً، مستخلصاً دروساً ونماذج قابلة للتكييف مع الواقع العراقي." }
-    ],
-    activity: {
-      title: "تحليل مجموعة بيانات حكومية مفتوحة وتقديم رؤى قابلة للتطبيق",
-      desc: "يُحلّل الطالب مجموعة بيانات حكومية مفتوحة ويستخلص رؤى ذات قيمة تدعم اتخاذ قرارات سياساتية باستخدام أدوات رقمية مناسبة.",
-      steps: ["اختيار مجموعة بيانات حكومية مفتوحة وتنظيفها","تطبيق أدوات تحليل البيانات المناسبة","استخلاص أنماط ورؤى ذات دلالة إحصائية","تقديم توصيات سياساتية مدعومة بالبيانات والمرئيات"]
-    }
-  },
-  {
-    id: 8, theme: "t8", icon: "🔐",
-    title: "الأمن السيبراني للحكومة الرقمية",
-    subtitle: "المفردة: الأمن السيبراني وحماية المعلومات في بيئة الحكومة الرقمية",
-    hours: 3,
-    points: [
-      { icon: "🔐", title: "مفهوم الأمن السيبراني في السياق الحكومي",
-        desc: "يُعرّف الأمن السيبراني ويُحدد أبعاده الثلاثة: السرية والنزاهة والتوافر CIA Triad، ويستعرض أبرز التهديدات السيبرانية التي تستهدف الجهات الحكومية وتداعياتها على الأمن الوطني." },
-      { icon: "⚠️", title: "أنواع التهديدات السيبرانية التي تواجه الحكومات",
-        desc: "يُصنّف التهديدات السيبرانية الحكومية كالتجسس الإلكتروني وهجمات الفدية Ransomware والهجمات الإيرانية المُوجَّهة APT والاختراقات الداخلية، ويستعرض حالات واقعية بارزة." },
-      { icon: "🛡️", title: "أطر إدارة الأمن السيبراني الحكومية",
-        desc: "يُقدم الأطر الدولية لإدارة الأمن السيبراني كـ NIST Cybersecurity Framework وISO 27001، ويوضح كيف تُوظفها الجهات الحكومية في بناء برامج أمن متكاملة ومستدامة." },
-      { icon: "📋", title: "سياسات وحوكمة الأمن السيبراني الحكومي",
-        desc: "يستعرض عناصر السياسة الوطنية للأمن السيبراني وهياكل الحوكمة والأدوار والمسؤوليات على مستوى الوزارات والجهات الحكومية، ودور القيادة في صون الأمن الرقمي." },
-      { icon: "🔄", title: "استمرارية الأعمال والتعافي من الكوارث",
-        desc: "يُقدم مفاهيم استمرارية الأعمال BCP والتعافي من الكوارث DRP في السياق الحكومي، ومنهجية التخطيط واختبار الخطط وضمان قدرة الجهات الحكومية على الاستمرار رغم الحوادث." },
-      { icon: "🤝", title: "التعاون الدولي في مجال الأمن السيبراني",
-        desc: "يستعرض أطر التعاون الدولي في الأمن السيبراني والمنظمات المعنية كـ ITU وINTERPOL، وكيف تُعزز الشراكات الإقليمية والدولية قدرة العراق على مواجهة التهديدات السيبرانية." },
-      { icon: "📚", title: "بناء الوعي الأمني في المؤسسات الحكومية",
-        desc: "يُقدم منهجية بناء ثقافة الوعي الأمني في الجهات الحكومية عبر برامج التدريب والتوعية وتمارين المحاكاة، موضحاً كيف يُقلّل الوعي البشري من مخاطر الخطأ الأمني." }
-    ],
-    activity: {
-      title: "تحليل حادثة أمنية سيبرانية حكومية وتقييم الاستجابة",
-      desc: "يُحلّل الطالب حادثة أمنية سيبرانية حكومية موثقة ويُقيّم كيفية الاستجابة لها، مستخلصاً دروساً مستفادة وتوصيات لتعزيز المرونة الأمنية.",
-      steps: ["اختيار حادثة أمنية حكومية موثقة للدراسة","تحليل نوع التهديد وأسلوب الاختراق وتداعياته","تقييم كفاءة الاستجابة وفق الأطر المعتمدة","تقديم دروس مستفادة وخطة تعزيز الأمن"]
-    }
-  },
-  {
-    id: 9, theme: "t9", icon: "🤖",
-    title: "الذكاء الاصطناعي في الحكومة الرقمية",
-    subtitle: "المفردة: تطبيقات الذكاء الاصطناعي في تعزيز الأداء الحكومي",
-    hours: 3,
-    points: [
-      { icon: "🤖", title: "مفهوم الذكاء الاصطناعي ومكوناته الرئيسية",
-        desc: "يُعرّف الذكاء الاصطناعي ويُصنّف مكوناته من تعلم الآلة والتعلم العميق ومعالجة اللغة الطبيعية والرؤية الحاسوبية، مُقدِّماً هذه المفاهيم بلغة مناسبة للقيادة غير التقنية." },
-      { icon: "🏛️", title: "تطبيقات الذكاء الاصطناعي في الخدمات الحكومية",
-        desc: "يستعرض تطبيقات فعلية كالمساعدين الافتراضيين الحكوميين وأنظمة معالجة الطلبات الآلية وتحليل المشاعر العامة وتحسين إدارة حركة المرور والكشف عن الاحتيال المالي." },
-      { icon: "📜", title: "الإطار التنظيمي والأخلاقي لاستخدام الذكاء الاصطناعي",
-        desc: "يُناقش مبادئ الذكاء الاصطناعي المسؤول كالشفافية والعدالة والمساءلة والخصوصية، والأطر التنظيمية الدولية ودور القيادة الحكومية في ضمان الاستخدام المسؤول والأخلاقي." },
-      { icon: "⚙️", title: "إدارة مشاريع الذكاء الاصطناعي الحكومية",
-        desc: "يُقدم منهجية إدارة مشاريع الذكاء الاصطناعي في القطاع الحكومي من إثبات المفهوم PoC إلى التوسع الكامل، مع تحديد العوامل الحاسمة لنجاح هذه المشاريع وتجنب الأخطاء الشائعة." },
-      { icon: "💼", title: "قيادة التحول الذكي في المؤسسات الحكومية",
-        desc: "يُطوّر مهارات القيادة المطلوبة لإدارة التحول نحو الذكاء الاصطناعي من إدارة التغيير وتأهيل الكوادر وإدارة مخاوف المحل الوظيفي وبناء ثقة المواطن بالقرارات الذكية." },
-      { icon: "🔮", title: "مستقبل الذكاء الاصطناعي في الحكومات",
-        desc: "يستشرف اتجاهات الذكاء الاصطناعي في الحوكمة خلال العقد القادم كالحكومة التنبؤية وصياغة السياسات بمساعدة الذكاء الاصطناعي وأتمتة الخدمات الحكومية المعقدة." },
-      { icon: "🌍", title: "تجارب دولية رائدة في تبني الذكاء الاصطناعي الحكومي",
-        desc: "يُقارن استراتيجيات الذكاء الاصطناعي الحكومي في الإمارات والصين وكندا وسنغافورة، مستعرضاً كيف تُرجمت هذه الاستراتيجيات إلى مبادرات ملموسة وما يمكن العراق استلهامه." }
-    ],
-    activity: {
-      title: "تصميم مقترح تطبيق ذكاء اصطناعي في خدمة حكومية",
-      desc: "يُصمّم الطالب مقترحاً لتطبيق حل ذكاء اصطناعي في خدمة أو عملية حكومية، شاملاً التحليل والجدوى والاعتبارات الأخلاقية وخطة التنفيذ.",
-      steps: ["تحديد مشكلة أو خدمة حكومية تستفيد من الذكاء الاصطناعي","تصميم الحل واختيار نوع الذكاء الاصطناعي المناسب","تقييم الجدوى والمخاطر الأخلاقية والتنظيمية","وضع خطة تنفيذ مرحلية مع مؤشرات نجاح واضحة"]
-    }
-  },
-  {
-    id: 10, theme: "t10", icon: "🏙️",
-    title: "المدينة الذكية والتقنيات الحكومية الناشئة",
-    subtitle: "المفردة: مفهوم المدينة الذكية وتكنولوجيا إنترنت الأشياء في الخدمات العامة",
-    hours: 3,
-    points: [
-      { icon: "🏙️", title: "مفهوم المدينة الذكية ومكوناتها",
-        desc: "يُعرّف المدينة الذكية ويُحدد مكوناتها الجوهرية من بنية تحتية ذكية وإدارة ذكية وخدمات ذكية واقتصاد ذكي وسكان ذكيون، ويستعرض أبرز نماذج المدن الذكية عالمياً." },
-      { icon: "📡", title: "إنترنت الأشياء IoT وتطبيقاته في الحكومة",
-        desc: "يشرح مفهوم إنترنت الأشياء وكيف يُمكّن الجهات الحكومية من جمع البيانات في الزمن الفعلي، ويستعرض تطبيقات كالإضاءة الذكية وإدارة النفايات والمرور وشبكات المياه." },
-      { icon: "🔋", title: "إدارة الطاقة والبيئة في المدينة الذكية",
-        desc: "يستعرض تقنيات الشبكة الذكية Smart Grid وإدارة استهلاك الطاقة والرصد البيئي المرتبطة بالمدينة الذكية، وكيف تُسهم في تحقيق أهداف الاستدامة والكفاءة الحكومية." },
-      { icon: "🚌", title: "التنقل الذكي وإدارة البنية التحتية",
-        desc: "يُقدم تطبيقات التنقل الذكي كإدارة حركة المرور بالذكاء الاصطناعي والمواصلات العامة الذكية وصيانة البنية التحتية التنبؤية، موضحاً منهجية تخطيطها وقياس أثرها." },
-      { icon: "💡", title: "تحديات تطبيق المدينة الذكية في دول نامية",
-        desc: "يُناقش التحديات الخاصة بتطبيق مفهوم المدينة الذكية في السياق العراقي والدول النامية كمحدودية الموارد وضعف البنية التحتية والكفاءات البشرية والمتطلبات القانونية." },
-      { icon: "🤝", title: "الشراكة بين القطاعين العام والخاص في المدينة الذكية",
-        desc: "يستعرض نماذج الشراكة PPP لتمويل وإدارة مشاريع المدينة الذكية، ويُحلل مزايا وعيوب النماذج المختلفة ويُقدم أطر إدارة العقود وحوكمة الشراكات الحكومية الخاصة." },
-      { icon: "🌐", title: "تجارب دولية رائدة في المدن الذكية",
-        desc: "يُقارن تجارب سنغافورة Smart Nation وأبوظبي Masdar وبرشلونة وسيول في بناء المدينة الذكية، مستخلصاً معايير النجاح وعوامل الاستدامة ودروس التطبيق." }
-    ],
-    activity: {
-      title: "تصميم تصور أولي لمدينة ذكية أو حي ذكي في العراق",
-      desc: "يُصمّم الطالب تصوراً أولياً لتطبيق مبادئ المدينة الذكية في مدينة أو حي عراقي، محدداً الأولويات والبنية التحتية المطلوبة والتكاليف التقديرية.",
-      steps: ["اختيار مدينة أو منطقة عراقية للتطبيق","تحليل الواقع الراهن وتحديد الأولويات الذكية","تصميم رؤية المدينة الذكية بمكوناتها الرئيسية","وضع خارطة طريق تنفيذية مرحلية مع التكاليف"]
-    }
-  },
-  {
-    id: 11, theme: "t11", icon: "⚙️",
-    title: "إدارة مشاريع الرقمنة التقنية الحكومية",
-    subtitle: "المفردة: إدارة مشاريع التقنية الحكومية ومنهجياتها الحديثة",
-    hours: 3,
-    points: [
-      { icon: "📋", title: "منهجيات إدارة مشاريع التقنية الحكومية",
-        desc: "يُقدم المنهجيات الرئيسية لإدارة مشاريع التقنية كـ PMBOK وPRINCE2 والمنهجيات الرشيقة Agile Scrum، ويُحدد ملاءمة كل منهجية لطبيعة المشاريع الحكومية المختلفة." },
-      { icon: "🗺️", title: "مراحل مشروع الرقمنة التقنية",
-        desc: "يتتبع مراحل مشروع الرقمنة الحكومية من دراسة الجدوى والتخطيط والتصميم والتطوير والاختبار والإطلاق والمراجعة، موضحاً المخرجات والمقاييس المطلوبة في كل مرحلة." },
-      { icon: "💰", title: "إدارة ميزانيات مشاريع التقنية الحكومية",
-        desc: "يُقدم أسس تخطيط ميزانية مشاريع التقنية الحكومية ومتابعتها ومعالجة انحرافاتها، مع التركيز على التعامل مع القيود المالية الحكومية والشفافية في الإنفاق." },
-      { icon: "👥", title: "إدارة أصحاب المصلحة في المشاريع التقنية",
-        desc: "يُعرض أسلوب تحليل وإدارة أصحاب المصلحة Stakeholders في المشاريع التقنية الحكومية، وكيفية التعامل مع التوقعات المتباينة وبناء التحالفات لضمان نجاح المشروع." },
-      { icon: "⚠️", title: "إدارة مخاطر المشاريع التقنية الحكومية",
-        desc: "يُقدم منهجية شاملة لتحديد وتقييم واستجابة مخاطر المشاريع التقنية الحكومية، مع التركيز على المخاطر الخاصة بالبيئة الحكومية كتغيير الأولويات السياسية والقيود التنظيمية." },
-      { icon: "📊", title: "قياس أداء مشاريع الرقمنة الحكومية",
-        desc: "يُعرض مؤشرات الأداء الرئيسية لقياس نجاح مشاريع الرقمنة من الالتزام بالوقت والميزانية والجودة والرضا، ولوحات المعلومات Dashboard لمتابعة تقدم المشروع." },
-      { icon: "🏁", title: "إغلاق المشاريع التقنية واستدامة مخرجاتها",
-        desc: "يُناقش مرحلة إغلاق المشروع والدروس المستفادة وضمان استدامة مخرجاته، وكيفية إدارة الانتقال من مرحلة المشروع إلى التشغيل الاعتيادي المستدام." }
-    ],
-    activity: {
-      title: "إعداد خطة مشروع رقمنة تقنية لمؤسسة حكومية",
-      desc: "يُعدّ الطالب خطة إدارة مشروع رقمنة تقنية شاملة لمؤسسة حكومية، تتضمن جميع عناصر إدارة المشروع من النطاق والجدول والميزانية والمخاطر.",
-      steps: ["تحديد نطاق مشروع الرقمنة وأهدافه الذكية","وضع جدول زمني مفصّل بمعالم المشروع","إعداد ميزانية تقديرية وخطة إدارة المخاطر","تصميم لوحة متابعة لقياس أداء المشروع"]
-    }
-  },
-  {
-    id: 12, theme: "t12", icon: "🌐",
-    title: "البنية التقنية الوطنية للتحول الرقمي في العراق",
-    subtitle: "المفردة: البنية الرقمية الوطنية وتحديات التحول الرقمي في العراق",
-    hours: 3,
-    points: [
-      { icon: "🇮🇶", title: "واقع البنية التقنية الرقمية في العراق",
-        desc: "يُحلل الوضع الراهن للبنية التقنية الرقمية الحكومية في العراق من حيث الشبكات والاتصالات والأنظمة القائمة، مُستعيناً بمؤشرات دولية لتحديد الموقع وفجوات التطوير." },
-      { icon: "🗺️", title: "استراتيجية التحول الرقمي الحكومي في العراق",
-        desc: "يستعرض الاستراتيجيات والخطط الوطنية للتحول الرقمي الحكومي في العراق ومدى اتساقها مع الأطر الدولية، ويُحدد أولويات التطوير في ضوء الموارد المتاحة والاحتياجات الفعلية." },
-      { icon: "⚠️", title: "التحديات الخاصة بالتحول الرقمي في العراق",
-        desc: "يُحلل التحديات البيئية الخاصة بالعراق كانقطاع الكهرباء وضعف الاتصالات في المناطق النائية وشُح الكوادر التقنية المتخصصة وتعقيدات البيئة التشريعية والإدارية." },
-      { icon: "💡", title: "فرص الاقتصاد الرقمي في العراق",
-        desc: "يُحدد الفرص الواعدة للاقتصاد الرقمي في العراق كالتجارة الإلكترونية والمدفوعات الرقمية والخدمات المالية الرقمية وريادة الأعمال التقنية، ودور الحكومة في تهيئة البيئة الممكِّنة." },
-      { icon: "🤝", title: "دور الشراكات الدولية في دعم التحول الرقمي العراقي",
-        desc: "يستعرض الشراكات والتعاون الدولي المتاح للعراق في مجال التحول الرقمي من منظمات أممية ومبادرات إقليمية واتفاقيات تعاون ثنائية، وكيفية الاستفادة القصوى منها." },
-      { icon: "📜", title: "الإطار التشريعي والتنظيمي للتحول الرقمي في العراق",
-        desc: "يُحلل الإطار القانوني الحالي المنظّم للتحول الرقمي في العراق ويُحدد الفجوات التشريعية، ويُقدم توصيات للتطوير التشريعي اللازم لتمكين التحول الرقمي الحكومي الشامل." },
-      { icon: "🏆", title: "نماذج التحول الرقمي الإقليمية القابلة للتكييف",
-        desc: "يستعرض تجارب دول إقليمية قريبة من السياق العراقي كالأردن والمغرب وتونس في التحول الرقمي الحكومي، ويُحدد النماذج الأكثر قابلية للتكييف والتطبيق." }
-    ],
-    activity: {
-      title: "تحليل البنية الرقمية الوطنية العراقية وتحديد أولويات التطوير",
-      desc: "يُجري الطالب تحليلاً للبنية الرقمية الوطنية العراقية مستخدماً أطر تحليل متخصصة، ويُحدد أولويات التطوير ويُقدم توصيات استراتيجية مبنية على الأدلة.",
-      steps: ["جمع البيانات حول البنية التقنية الرقمية الحكومية العراقية","تطبيق أطر التحليل الاستراتيجي على البيئة الرقمية","تحديد الفجوات والأولويات الاستراتيجية للتطوير","صياغة توصيات مرحلية قابلة للتطبيق الفعلي"]
-    }
-  },
-  {
-    id: 13, theme: "t13", icon: "⚖️",
-    title: "المخاطر التقنية في المؤسسات الحكومية",
-    subtitle: "المفردة: إدارة المخاطر التقنية وعطل الأنظمة في المؤسسات الحكومية",
-    hours: 3,
-    points: [
-      { icon: "⚠️", title: "إطار إدارة المخاطر التقنية الحكومية",
-        desc: "يُقدم الإطار المنهجي لإدارة المخاطر التقنية في المؤسسات الحكومية من تحديد وتصنيف وتقييم وعلاج ومراقبة، مُستخدماً أطر ISO 31000 ونماذج إدارة المخاطر الحكومية الدولية." },
-      { icon: "🖥️", title: "أنواع المخاطر التقنية الحكومية",
-        desc: "يُصنّف المخاطر التقنية الحكومية كمخاطر البنية التحتية والبيانات والأمن السيبراني والاعتماد على الموردين وعدم توافق الأنظمة وتقادم التقنية، موضحاً خصائص وتداعيات كل نوع." },
-      { icon: "📉", title: "تحليل أثر عطل الأنظمة الحكومية",
-        desc: "يُقدم منهجية تحليل أثر الأعمال BIA على عطل الأنظمة الحكومية وتقييم التكاليف المباشرة وغير المباشرة لانقطاع الخدمات وكيفية ترتيب الأولويات في استعادة الخدمات." },
-      { icon: "🔄", title: "استمرارية الخدمات الحكومية وخطط التعافي",
-        desc: "يُعرض منهجية بناء خطط استمرارية الخدمات الحكومية وخطط التعافي من الكوارث DRP، محدداً أهداف وقت الاسترداد RTO وأهداف نقطة الاسترداد RPO لكل خدمة حكومية." },
-      { icon: "🛡️", title: "المرونة التقنية للمؤسسات الحكومية",
-        desc: "يُقدم مفهوم المرونة التقنية Cyber Resilience ويُعرض كيفية بناء قدرة المؤسسة الحكومية على امتصاص الصدمات التقنية والتكيف السريع والاستمرار في تقديم الخدمات." },
-      { icon: "📋", title: "حوكمة المخاطر التقنية الحكومية",
-        desc: "يستعرض هياكل حوكمة المخاطر التقنية الحكومية من مجالس مخاطر وكُتيّبات سياسات وآليات تقارير، ودور القيادة الحكومية في الإشراف على منظومة إدارة المخاطر." },
-      { icon: "🌐", title: "تجارب دولية في إدارة المخاطر التقنية الحكومية",
-        desc: "يُقارن كيف تدير الحكومات المتقدمة كأستراليا وهولندا والمملكة المتحدة مخاطرها التقنية، مستخلصاً نماذج إدارة المخاطر القابلة للتكييف مع السياق العراقي." }
-    ],
-    activity: {
-      title: "تحليل حالة عطل نظام حكومي وبناء خطة استمرارية",
-      desc: "يُحلّل الطالب حالة عطل نظام حكومي موثق ويُقيّم كيفية إدارته، ثم يبني خطة استمرارية لمؤسسة حكومية تُعالج المخاطر المُحددة.",
-      steps: ["تحليل حالة عطل نظام حكومي موثقة وتقييمها","تحديد المخاطر التقنية وتصنيفها حسب الأولوية","بناء خطة استمرارية أعمال مرحلية للمؤسسة","تحديد أهداف RTO وRPO لكل خدمة حيوية"]
-    }
-  },
-  {
-    id: 14, theme: "t14", icon: "🌍",
-    title: "الاتجاهات العالمية في التقنية الحكومية",
-    subtitle: "المفردة: الاتجاهات العالمية في تكنولوجيا الحكومة والتجارب الدولية الرائدة",
-    hours: 3,
-    points: [
-      { icon: "🌍", title: "خارطة التحول الرقمي الحكومي عالمياً",
-        desc: "يُقدم خارطة شاملة للتحول الرقمي الحكومي العالمي مستعيناً بمؤشرات الحكومة الإلكترونية للأمم المتحدة EGDI، ويُحدد مجموعات الدول حسب مستوى النضج الرقمي ودروس كل مجموعة." },
-      { icon: "🇪🇪", title: "تجربة إستونيا النموذجية في الحكومة الرقمية",
-        desc: "يُحلّل تجربة إستونيا الاستثنائية كأكثر دول العالم رقمياً، من نظام X-Road للتكامل والهوية الرقمية الوطنية والتصويت الإلكتروني والإقامة الإلكترونية e-Residency ودروسها للدول النامية." },
-      { icon: "🇸🇬", title: "نموذج سنغافورة Smart Nation في القيادة الرقمية",
-        desc: "يستعرض نموذج سنغافورة Smart Nation ورؤيتها الاستراتيجية وكيف أدارت القيادة السياسية التحول الرقمي الشامل، والمؤسسات والأطر التي أتاحت لها هذا النجاح الاستثنائي." },
-      { icon: "🇦🇪", title: "تجربة الإمارات في الحكومة الرقمية",
-        desc: "يُقدم التجربة الإماراتية في الحكومة الرقمية من حكومة بلا ورق ومجلس مستقبل الذكاء الاصطناعي وبوابة الإمارات الموحدة، وكيف جعلتها من أعلى الحكومات كفاءة في منطقة الشرق الأوسط." },
-      { icon: "🔮", title: "الاتجاهات التقنية الناشئة في الحكومات المستقبلية",
-        desc: "يستشرف الاتجاهات التقنية المُشكِّلة لحكومات المستقبل كالحوسبة الكمية وسلاسل الكتل وميتافيرس الحكومة والذكاء الاصطناعي التوليدي وتداعياتها على الجهات الحكومية." },
-      { icon: "📊", title: "مقارنة مستوى التحول الرقمي الإقليمي",
-        desc: "يُقدم تحليلاً مقارناً لمستوى التحول الرقمي في الدول العربية والإقليمية مستخدماً مؤشرات متعددة، ويُحدد المجالات التي يمكن للعراق فيها التعلم من الدول الإقليمية الأقرب سياقاً." },
-      { icon: "🎯", title: "استلهام التجارب الدولية وتكييفها مع السياق العراقي",
-        desc: "يُقدم منهجية علمية لاستلهام التجارب الدولية الناجحة وتكييفها مع السياق العراقي الخاص، تجنباً لأخطاء النقل الأعمى وضماناً لاستدامة التدخلات التقنية الحكومية." }
-    ],
-    activity: {
-      title: "دراسة مقارنة لتجربتين دوليتين في الحكومة الرقمية",
-      desc: "يُجري الطالب دراسة مقارنة لتجربتين دوليتين ناجحتين في الحكومة الرقمية، مستخلصاً دروساً عملية قابلة للتطبيق في السياق العراقي.",
-      steps: ["اختيار تجربتين دوليتين للمقارنة بمعايير محددة","تحليل عوامل النجاح والسياق المُمكِّن لكل تجربة","استخلاص الدروس القابلة للتكييف مع العراق","تقديم توصيات مُدعمة بدروس التجربتين"]
-    }
-  },
-  {
-    id: 15, theme: "t15", icon: "🎯",
-    title: "المشروع التطبيقي الختامي — تصميم البنية الرقمية لمؤسسة حكومية",
-    subtitle: "المفردة: المشروع التطبيقي الختامي — تصميم تصور للبنية الرقمية لمؤسسة حكومية عراقية",
-    hours: 3,
-    points: [
-      { icon: "🔍", title: "تحليل الوضع التقني الراهن للمؤسسة المختارة",
-        desc: "يُجري الطالب تحليلاً شاملاً للوضع التقني الراهن للمؤسسة الحكومية المختارة يشمل البنية التحتية والأنظمة القائمة والفجوات الرقمية والتحديات التشغيلية، مُوثِّقاً نتائجه بمنهجية علمية." },
-      { icon: "🏗️", title: "تصميم البنية التقنية الرقمية المتكاملة",
-        desc: "يُصمّم الطالب بنية تقنية رقمية متكاملة تشمل البنية التحتية الشبكية والسحابية ونظم المعلومات وإدارة البيانات والمنصات الرقمية والأمن السيبراني، موضحاً كيف تتكامل هذه العناصر." },
-      { icon: "🗺️", title: "خارطة طريق التنفيذ المرحلية",
-        desc: "يُعدّ خارطة طريق تفصيلية تُحدد مراحل التنفيذ وأولوياتها والجداول الزمنية والموارد المطلوبة ومؤشرات النجاح لكل مرحلة، مبنيةً على التحليل الاستراتيجي للبيئة الداخلية والخارجية." },
-      { icon: "💰", title: "دراسة الجدوى الاقتصادية للتحول التقني",
-        desc: "يُجري دراسة جدوى اقتصادية شاملة تتضمن تقدير التكاليف الإجمالية وتحليل العوائد المتوقعة وحساب فترة الاسترداد وصافي القيمة الحالية، موثقاً الافتراضات المستخدمة." },
-      { icon: "⚠️", title: "إطار إدارة مخاطر التحول التقني",
-        desc: "يُطوّر إطاراً شاملاً لإدارة المخاطر التقنية والمؤسسية يشمل تحديد المخاطر وتقييمها وخطط المعالجة والتخفيف، مُميّزاً بين المخاطر الحرجة والثانوية وفق منهجية مُنظَّمة." },
-      { icon: "🔄", title: "استراتيجية إدارة التغيير والتبني التقني",
-        desc: "يُصمّم استراتيجية متكاملة لإدارة التغيير التقني تشمل تأهيل الكوادر البشرية وبناء قدرات التبني وآليات مكافحة مقاومة التغيير وضمان استدامة التحول بعد مرحلة المشروع." },
-      { icon: "🎤", title: "العرض التقديمي والدفاع عن المشروع الختامي",
-        desc: "يُقدّم الطالب مشروعه أمام لجنة متخصصة بعرض تقديمي احترافي يعكس عمق الفهم وتماسك الرؤية، ويتفاعل بثقة مع أسئلة المُقيِّمين مُدافعاً عن خياراته بحجج منطقية ومدعومة بالأدلة." }
-    ],
-    activity: {
-      title: "تقديم المشروع التطبيقي الختامي أمام لجنة التقييم",
-      desc: "يُقدّم الطالب مشروعه الختامي الشامل أمام لجنة متخصصة، مُوظِّفاً جميع المعارف والمهارات المكتسبة طوال المادة في تصميم رؤية تقنية رقمية متكاملة ومستدامة.",
-      steps: ["إعداد وثيقة المشروع الشاملة بجميع عناصرها","تصميم عرض تقديمي احترافي ومُقنع","تحضير الردود على الأسئلة المحتملة من اللجنة","تقديم المشروع والدفاع عنه بثقة واقتدار"]
-    }
-  }
+// ═══════════════════════════════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════════════════════════════
+var MODS = [
+{
+  id:1, icon:"🏗️", color:"#146EB4",
+  title:"التحول الرقمي والبنية التحتية التقنية",
+  sub:"المفردة: البنية التحتية الرقمية وارتباطها بالتحول الرقمي",
+  hrs:3,
+  pts:[
+    {i:"🌐",t:"مفهوم البنية التحتية الرقمية وعناصرها",d:"يُعرِّف البنية التحتية الرقمية ويُحدد عناصرها الجوهرية من شبكات واتصالات ومراكز بيانات وأجهزة وبرمجيات، ويُبيّن أثرها المباشر في تحديد قدرة المؤسسة الحكومية على تبني التحول الرقمي وإنجاح مبادراته."},
+    {i:"🔗",t:"الفرق بين الرقمنة والرقمية والتحول الرقمي",d:"يُميّز بين المفاهيم الثلاثة ويوضح التسلسل المنطقي بينها؛ الرقمنة تحويل الوثائق إلكترونياً، والرقمية اعتماد العمليات الرقمية، والتحول الرقمي إعادة تصميم النماذج المؤسسية الكاملة."},
+    {i:"🏛️",t:"مكونات البنية التحتية للحكومة الرقمية",d:"يُفصّل مكونات البنية التحتية الحكومية من شبكات إنترنت آمنة وبوابات خدمات موحدة ومراكز بيانات وطنية وأنظمة هوية رقمية ومنصات دفع إلكتروني."},
+    {i:"📏",t:"معايير تقييم جاهزية البنية التحتية",d:"يُقدم أطر تقييم الجاهزية كنموذج نضج القدرات CMM ومؤشر الحكومة الإلكترونية للأمم المتحدة، ويوضح كيف توظّف في رسم خطط التطوير التقني."},
+    {i:"🚀",t:"التقنيات الناشئة وأثرها في البنية التحتية",d:"يستعرض شبكات الجيل الخامس 5G وإنترنت الأشياء IoT وتقنية البلوك تشين وكيف تُعيد رسم متطلبات البنية التحتية الحكومية وتفتح آفاقاً لتقديم الخدمات."},
+    {i:"📋",t:"إدارة مشاريع البنية التحتية الرقمية",d:"يوضح أسس الإشراف القيادي على مشاريع البنية التحتية من تخطيط وميزنة وإدارة عقود وضمان جودة، مع التركيز على دور القيادة في القرارات التقنية الاستراتيجية."},
+    {i:"🌍",t:"تجارب دولية رائدة في تحديث البنية التحتية",d:"يقارن تجارب كوريا الجنوبية وإستونيا والإمارات في بناء البنية التحتية الرقمية الحكومية، مستخلصاً دروساً عملية قابلة للتكييف مع السياق العراقي."}
+  ],
+  act:{t:"تحليل مشروع تحول رقمي في مؤسسة حكومية",d:"يُحلل الطالب مشروع تحول رقمي حكومي حقيقي ويدرس مكونات بنيته التحتية التقنية، ويقيّم مدى كفاءتها في تحقيق الأهداف.",s:["اختيار مشروع حكومي رقمي عراقي أو إقليمي","تحديد مكونات البنية التحتية المستخدمة وتوثيقها","تقييم الكفاءة التقنية وتحديد جوانب القصور","صياغة توصيات تطوير مبنية على نتائج التحليل"]}
+},
+{
+  id:2, icon:"🖥️", color:"#E65100",
+  title:"نظم المعلومات الحكومية",
+  sub:"المفردة: نظم المعلومات الحكومية وتطبيقاتها في المؤسسات العامة",
+  hrs:3,
+  pts:[
+    {i:"💡",t:"مفهوم نظم المعلومات وأنواعها في القطاع الحكومي",d:"يصنّف أنواع نظم المعلومات الحكومية كنظم دعم القرار DSS ونظم تخطيط الموارد ERP الحكومية ونظم إدارة علاقات المواطنين CiRM، محدداً الغرض الوظيفي لكل نوع."},
+    {i:"🔄",t:"دورة حياة نظم المعلومات الحكومية",d:"يتتبع مراحل دورة حياة النظام من التخطيط والتحليل والتصميم والتطوير والاختبار والتشغيل حتى التقاعد، موضحاً دور القيادة في اتخاذ القرار في كل مرحلة."},
+    {i:"✅",t:"عوامل نجاح تطبيق نظم المعلومات",d:"يحدد العوامل الحاسمة للنجاح كدعم القيادة العليا وإدارة التغيير وبرامج التدريب والبنية التحتية الملائمة، ويستعرض أسباب الفشل الشائعة وسبل تجنبها."},
+    {i:"📊",t:"تقييم كفاءة نظم المعلومات الحكومية",d:"يقدم مؤشرات الأداء الرئيسية KPIs لقياس كفاءة نظم المعلومات الحكومية كمعدلات الاستخدام ورضا المستخدمين وأوقات الاستجابة وأثر النظام على الخدمات."},
+    {i:"🔗",t:"التكامل بين نظم المعلومات الحكومية المختلفة",d:"يعالج مشكلة صوامع البيانات بين الوزارات ويقدم نماذج التكامل المناسبة كتبادل الملفات والربط المباشر وحافلة الخدمات المؤسسية ESB."},
+    {i:"🔒",t:"أمن نظم المعلومات الحكومية",d:"يناقش المتطلبات الأمنية من تحكم بالوصول وتشفير وحماية من الاختراق، والإطار القانوني والتنظيمي لحماية المعلومات الحكومية."},
+    {i:"🔮",t:"مستقبل نظم المعلومات في ظل الذكاء الاصطناعي",d:"يستشرف كيف ستحوّل تقنيات الذكاء الاصطناعي والتعلم الآلي نظم المعلومات الحكومية، وتطبيقاتها في الأتمتة وتحسين جودة القرارات الإدارية."}
+  ],
+  act:{t:"تحليل نظام معلومات حكومي قائم",d:"يقوم الطالب بتحليل نظام معلومات حكومي موجود وتقييم كفاءته وفاعليته، مقدماً تقريراً تحليلياً يتضمن نقاط القوة والضعف والتوصيات.",s:["اختيار نظام معلومات حكومي وجمع المعلومات حوله","تصنيفه وفق أطر نظم المعلومات المعتمدة","قياس مؤشرات الأداء الرئيسية وتحليلها","كتابة تقرير تحليلي شامل مع توصيات التطوير"]}
+},
+{
+  id:3, icon:"🗄️", color:"#2E7D32",
+  title:"إدارة البيانات الحكومية",
+  sub:"المفردة: إدارة البيانات الحكومية وقواعد البيانات في المؤسسات العامة",
+  hrs:3,
+  pts:[
+    {i:"📁",t:"أسس إدارة البيانات الحكومية",d:"يقدم المبادئ الجوهرية لإدارة البيانات الحكومية من تعريف وجمع وتخزين وصون وتوزيع، مع التمييز بين أنواع البيانات ومستويات حساسيتها وإجراءات التعامل مع كل فئة."},
+    {i:"🗃️",t:"قواعد البيانات العلائقية وغير العلائقية",d:"يشرح مفهوم قواعد البيانات العلائقية SQL وغير العلائقية NoSQL، ويقدم معايير الاختيار بين النوعين بحسب طبيعة البيانات الحكومية واحتياجات الأداء."},
+    {i:"🔄",t:"دورة حياة البيانات الحكومية",d:"يتتبع دورة حياة البيانات من الإنشاء والمعالجة والتخزين إلى الاسترجاع والأرشفة والإتلاف الآمن، مبيّناً المتطلبات التنظيمية في كل مرحلة."},
+    {i:"✨",t:"جودة البيانات الحكومية وضمانها",d:"يناقش أبعاد جودة البيانات الستة: الدقة والاكتمال والاتساق والتوقيت والفريدية والصحة، ويقدم أدوات لرصد الجودة وتحسينها."},
+    {i:"🔓",t:"البيانات الحكومية المفتوحة ومعاييرها",d:"يستعرض مفهوم البيانات المفتوحة وفوائدها في تعزيز الشفافية والابتكار وتنمية الاقتصاد الرقمي، ومعايير نشر البيانات الحكومية وأطرها التنظيمية الدولية."},
+    {i:"🛡️",t:"أمن البيانات وخصوصية المواطنين",d:"يعالج إشكاليات أمن البيانات وحماية خصوصية المواطنين في ظل التحول الرقمي، مع الأطر التقنية والتنظيمية لحماية البيانات الحساسة."},
+    {i:"💎",t:"البيانات كمورد استراتيجي للدولة",d:"يقدّم البيانات الحكومية باعتبارها موردًا استراتيجيًا يمكن استثماره في رسم السياسات وتحسين الخدمات وتعزيز القدرة التنافسية الوطنية."}
+  ],
+  act:{t:"تحليل دورة حياة البيانات وتقييم نظام إدارة بيانات حكومي",d:"يحلّل الطالب نظام إدارة بيانات في مؤسسة حكومية ويقيّم كفاءته في إدارة دورة حياة البيانات، مقدماً خطة لتحسين الجودة والحماية.",s:["اختيار مؤسسة حكومية وتحليل نظام بياناتها الراهن","رسم دورة حياة البيانات الكاملة في المؤسسة","تقييم أبعاد جودة البيانات وتحديد الفجوات","اقتراح خطة تحسين شاملة ومدعومة بالأدلة"]}
+},
+{
+  id:4, icon:"☁️", color:"#7B1FA2",
+  title:"الحوسبة السحابية الحكومية",
+  sub:"المفردة: الحوسبة السحابية الحكومية وتطبيقاتها في المؤسسات العامة",
+  hrs:3,
+  pts:[
+    {i:"☁️",t:"مفهوم الحوسبة السحابية ونماذجها الثلاثة",d:"يعرّف الحوسبة السحابية ويصنّف نماذج الخدمة IaaS وPaaS وSaaS، ويبيّن الفرق بين السحابة العامة والخاصة والهجينة، محدداً الأنسب لكل استخدام حكومي."},
+    {i:"💰",t:"فوائد الحوسبة السحابية للقطاع الحكومي",d:"يستعرض الفوائد الاستراتيجية والتشغيلية كخفض التكاليف الرأسمالية وتحويلها لتشغيلية ومرونة التوسع ورفع مستوى استمرارية الأعمال."},
+    {i:"⚠️",t:"تحديات انتقال الجهات الحكومية للسحابة",d:"يناقش تحديات سيادة البيانات والامتثال التنظيمي والمخاوف الأمنية والاعتماد على موردٍ واحد Vendor Lock-in وكيفية التغلب على مقاومة التغيير."},
+    {i:"🗺️",t:"استراتيجية الانتقال إلى السحابة الحكومية",d:"يقدم إطاراً استراتيجياً مرحلياً للانتقال يشمل تقييم الأنظمة القائمة وتحديد الأولويات وإدارة التغيير وضمان استمرارية الخدمات."},
+    {i:"⚖️",t:"حوكمة السحابة الحكومية",d:"يعرض أطر حوكمة السحابة الحكومية بما تشمله من سياسات وضوابط وآليات مراقبة، وتحديد مسؤوليات الجهات الحكومية ومزودي الخدمة."},
+    {i:"🔐",t:"أمن الحوسبة السحابية في البيئة الحكومية",d:"يفصّل متطلبات أمن السحابة الحكومية ومعايير الامتثال، وأفضل الممارسات في التشفير وإدارة الهويات والوصول."},
+    {i:"🌏",t:"تجارب دولية ناجحة في السحابة الحكومية",d:"يقارن تجارب المملكة المتحدة G-Cloud وسنغافورة والإمارات، مستخلصاً دروساً قابلة للتطبيق في العراق."}
+  ],
+  act:{t:"تقييم جدوى نقل خدمة حكومية إلى السحابة",d:"يقيّم الطالب خدمة حكومية قائمة ويدرس جدوى نقلها إلى السحابة من حيث التكاليف والفوائد والمخاطر.",s:["اختيار خدمة حكومية وتحليل وضعها التقني الراهن","دراسة جدوى الانتقال من حيث التكلفة والعائد","تحديد المخاطر الأمنية والتنظيمية وسبل التخفيف","صياغة توصية استراتيجية بالانتقال أو الإبقاء مع مبررات"]}
+},
+{
+  id:5, icon:"🔄", color:"#C62828",
+  title:"تكامل الأنظمة والحكومة الإلكترونية",
+  sub:"المفردة: تكامل الأنظمة الحكومية والحكومة الإلكترونية",
+  hrs:3,
+  pts:[
+    {i:"🔗",t:"مفهوم تكامل الأنظمة الحكومية وأهميته",d:"يعرّف تكامل الأنظمة ويبيّن أثره في تحسين كفاءة الخدمات وخفض التكرار ومنع تضارب البيانات، موضحاً الفرق بين التكامل الأفقي والرأسي."},
+    {i:"🏗️",t:"معماريات التكامل الحكومية الحديثة",d:"يستعرض معماريات التكامل كـ SOA وESB وAPI Gateway ومعمارية الخدمات المصغرة Microservices ويوضح كيف تمكّن من ربط الأنظمة المتباينة."},
+    {i:"📈",t:"مراحل تطور الحكومة الإلكترونية",d:"يتتبع المراحل الأربع للحكومة الإلكترونية من الحضور والتفاعل والمعاملات إلى التحول الشامل، موضحاً المتطلبات التقنية والمؤسسية لكل مرحلة."},
+    {i:"👤",t:"تصميم الخدمات المتمحورة حول المواطن",d:"يقدم منهجيات التصميم المتمحور حول المستخدم في خدمات الحكومة الإلكترونية بما يشمل بحوث المستخدمين ورسم رحلة المواطن وإمكانية الوصول الشاملة."},
+    {i:"📊",t:"مؤشرات قياس أداء الحكومة الإلكترونية",d:"يعرض مؤشرات قياس أداء الحكومة الإلكترونية المعتمدة من الأمم المتحدة وكيفية توظيفها في تتبع التقدم وصياغة خطط التحسين المستمر."},
+    {i:"🪪",t:"الهوية الرقمية وخدمات المصادقة",d:"يناقش أنظمة الهوية الرقمية الوطنية وتقنيات المصادقة المتعددة MFA وأثر توحيد الهوية الرقمية في تبسيط الخدمات وتعزيز الأمن."},
+    {i:"⭐",t:"تقييم جودة الخدمات الإلكترونية الحكومية",d:"يقدم أطر تقييم جودة الخدمات الإلكترونية الحكومية وقياس رضا المواطنين، مع منهجيات التحسين المستمر القائم على البيانات."}
+  ],
+  act:{t:"تقييم خدمة حكومية إلكترونية وتحليل تكامل أنظمتها",d:"يجري الطالب تقييماً شاملاً لخدمة حكومية إلكترونية من حيث تكامل الأنظمة وجودة التجربة ومؤشرات الأداء.",s:["اختيار خدمة حكومية إلكترونية للتقييم","رسم خريطة الأنظمة المتكاملة وتدفق البيانات","قياس جودة التجربة ومؤشرات الأداء الرئيسية","تقديم مقترح تطوير مبني على نتائج التقييم"]}
+},
+{
+  id:6, icon:"📊", color:"#00796B",
+  title:"المنصات الحكومية الرقمية",
+  sub:"المفردة: المنصات الحكومية الرقمية وتطبيقاتها في تقديم الخدمات",
+  hrs:3,
+  pts:[
+    {i:"🖥️",t:"مفهوم المنصات الحكومية الرقمية وأنواعها",d:"يعرّف المنصات الحكومية الرقمية ويصنّف أنواعها من بوابات خدمة موحدة ومنصات تفاعل ومنصات بيانات مفتوحة ومنصات مدفوعات، مستعرضاً نماذج ناجحة عالمياً."},
+    {i:"🛠️",t:"تصميم وتطوير منصات الخدمات الحكومية",d:"يقدم مبادئ تصميم منصات الخدمات الحكومية الفعّالة من حيث تجربة المستخدم وأداء النظام وقابلية التوسع والتكامل مع الأنظمة الخلفية."},
+    {i:"📱",t:"الخدمات الحكومية عبر الأجهزة المتنقلة",d:"يستعرض نماذج تقديم الخدمات عبر تطبيقات الهاتف المحمول وتقنية Mobile-first Design وكيفية رفع معدلات التبني لدى المواطنين."},
+    {i:"⚙️",t:"إدارة المنصات الحكومية وصيانتها",d:"يناقش جوانب الحوكمة التشغيلية من إدارة المحتوى والتحديثات وإدارة الحوادث وضمان مستويات الخدمة SLA مع الموردين."},
+    {i:"🔍",t:"تحليل بيانات استخدام المنصات الحكومية",d:"يعرض كيف تُستخدم بيانات الاستخدام Analytics لفهم سلوك المواطنين وتحسين تصميم المنصات وتحديد نقاط الاحتكاك في رحلة المستخدم."},
+    {i:"🌐",t:"قياس الأثر وتقييم عوائد المنصات الحكومية",d:"يقدم أطر قياس العوائد والأثر الاجتماعي والاقتصادي للمنصات الحكومية وكيفية حساب العائد على الاستثمار ROI."},
+    {i:"🏆",t:"أفضل الممارسات العالمية في منصات الخدمات",d:"يقارن منصات الخدمات الحكومية الرائدة كـ GOV.UK وبوابة الإمارات وبوابة سنغافورة، مستخلصاً مبادئ التميز القابلة للتطبيق."}
+  ],
+  act:{t:"تحليل منصة حكومية رقمية وتقديم مقترح تطويري",d:"يحلّل الطالب منصة خدمات حكومية قائمة ويقيّم أداءها وتجربة مستخدميها، ويعد مقترح تطوير يعالج نقاط الضعف.",s:["اختيار منصة حكومية وجمع بيانات الاستخدام","تحليل تجربة المستخدم وتحديد نقاط الاحتكاك","مقارنة الأداء بمعايير ومنصات مماثلة ناجحة","صياغة مقترح تطوير مدعوم بالبيانات والأولويات"]}
+},
+{
+  id:7, icon:"🌊", color:"#283593",
+  title:"البيانات الضخمة في الإدارة الحكومية",
+  sub:"المفردة: البيانات الضخمة وتطبيقاتها في الإدارة العامة الحكومية",
+  hrs:3,
+  pts:[
+    {i:"🌊",t:"مفهوم البيانات الضخمة وخصائصها الخمسة",d:"يشرح مفهوم البيانات الضخمة ويفصّل خصائصها الخمس Volume الحجم وVelocity السرعة وVariety التنوع وVeracity الدقة وValue القيمة."},
+    {i:"🏙️",t:"تطبيقات البيانات الضخمة في القطاع الحكومي",d:"يستعرض تطبيقات فعلية في الرعاية الصحية والأمن والتخطيط العمراني وإدارة الطوارئ والخدمات الاجتماعية، موضحاً كيف تحوّل جودة القرارات الحكومية."},
+    {i:"🛠️",t:"أدوات ومنصات معالجة البيانات الضخمة",d:"يقدم نظرة مبسطة على أدوات البيانات الضخمة كـ Hadoop وSpark مركّزاً على فهم القدرات وليس التفاصيل التقنية لتمكين القيادة من اتخاذ قرارات التبني الصحيحة."},
+    {i:"🔍",t:"تحليلات البيانات الضخمة لدعم القرار",d:"يوضح مستويات التحليل الأربعة: الوصفي والتشخيصي والتنبؤي والتوجيهي، وكيف يعظّم كل مستوى قيمة البيانات في صياغة السياسات العامة."},
+    {i:"⚖️",t:"الاعتبارات الأخلاقية والقانونية للبيانات الضخمة",d:"يناقش إشكاليات الخصوصية والتحيز الخوارزمي والشفافية المرتبطة باستخدام البيانات الضخمة في القرارات الحكومية."},
+    {i:"💡",t:"بناء كفاءات البيانات الضخمة في الجهات الحكومية",d:"يقدم إطاراً لبناء القدرات المؤسسية اللازمة للاستفادة من البيانات الضخمة، يشمل توصيف الكفاءات وبرامج التأهيل وهيكل الفريق المثالي."},
+    {i:"🌐",t:"تجارب حكومية رائدة في البيانات الضخمة",d:"يقارن تجارب سنغافورة Smart Nation وكوريا الجنوبية والإمارات في استثمار البيانات الضخمة حكومياً، مستخلصاً دروساً ونماذج قابلة للتكييف."}
+  ],
+  act:{t:"تحليل مجموعة بيانات حكومية مفتوحة وتقديم رؤى قابلة للتطبيق",d:"يحلّل الطالب مجموعة بيانات حكومية مفتوحة ويستخلص رؤى ذات قيمة تدعم اتخاذ قرارات سياساتية باستخدام أدوات رقمية.",s:["اختيار مجموعة بيانات حكومية مفتوحة وتنظيفها","تطبيق أدوات تحليل البيانات المناسبة","استخلاص أنماط ورؤى ذات دلالة إحصائية","تقديم توصيات سياساتية مدعومة بالبيانات والمرئيات"]}
+},
+{
+  id:8, icon:"🔐", color:"#AD1457",
+  title:"الأمن السيبراني للحكومة الرقمية",
+  sub:"المفردة: الأمن السيبراني وحماية المعلومات في بيئة الحكومة الرقمية",
+  hrs:3,
+  pts:[
+    {i:"🔐",t:"مفهوم الأمن السيبراني في السياق الحكومي",d:"يعرّف الأمن السيبراني ويحدد أبعاده الثلاثة السرية والنزاهة والتوافر CIA Triad، ويستعرض أبرز التهديدات التي تستهدف الجهات الحكومية وتداعياتها على الأمن الوطني."},
+    {i:"⚠️",t:"أنواع التهديدات السيبرانية التي تواجه الحكومات",d:"يصنّف التهديدات السيبرانية الحكومية كالتجسس الإلكتروني وهجمات الفدية Ransomware والهجمات الموجّهة APT والاختراقات الداخلية، مستعرضاً حالات واقعية بارزة."},
+    {i:"🛡️",t:"أطر إدارة الأمن السيبراني الحكومية",d:"يقدم الأطر الدولية لإدارة الأمن كـ NIST Cybersecurity Framework وISO 27001، ويوضح كيف توظفها الجهات الحكومية في بناء برامج أمن متكاملة ومستدامة."},
+    {i:"📋",t:"سياسات وحوكمة الأمن السيبراني الحكومي",d:"يستعرض عناصر السياسة الوطنية للأمن السيبراني وهياكل الحوكمة والأدوار والمسؤوليات على مستوى الوزارات، ودور القيادة في صون الأمن الرقمي."},
+    {i:"🔄",t:"استمرارية الأعمال والتعافي من الكوارث",d:"يقدم مفاهيم استمرارية الأعمال BCP والتعافي من الكوارث DRP في السياق الحكومي، ومنهجية التخطيط واختبار الخطط وضمان الاستمرار رغم الحوادث."},
+    {i:"🤝",t:"التعاون الدولي في مجال الأمن السيبراني",d:"يستعرض أطر التعاون الدولي في الأمن السيبراني والمنظمات المعنية كـ ITU وINTERPOL وكيف تعزز الشراكات قدرة العراق على مواجهة التهديدات."},
+    {i:"📚",t:"بناء الوعي الأمني في المؤسسات الحكومية",d:"يقدم منهجية بناء ثقافة الوعي الأمني في الجهات الحكومية عبر برامج التدريب والتوعية وتمارين المحاكاة، موضحاً كيف يقلل الوعي من مخاطر الخطأ البشري."}
+  ],
+  act:{t:"تحليل حادثة أمنية سيبرانية حكومية وتقييم الاستجابة",d:"يحلّل الطالب حادثة أمنية سيبرانية حكومية موثقة ويقيّم كيفية الاستجابة لها، مستخلصاً دروساً مستفادة وتوصيات لتعزيز المرونة الأمنية.",s:["اختيار حادثة أمنية حكومية موثقة للدراسة","تحليل نوع التهديد وأسلوب الاختراق وتداعياته","تقييم كفاءة الاستجابة وفق الأطر المعتمدة","تقديم دروس مستفادة وخطة تعزيز الأمن"]}
+},
+{
+  id:9, icon:"🤖", color:"#00838F",
+  title:"الذكاء الاصطناعي في الحكومة الرقمية",
+  sub:"المفردة: تطبيقات الذكاء الاصطناعي في تعزيز الأداء الحكومي",
+  hrs:3,
+  pts:[
+    {i:"🤖",t:"مفهوم الذكاء الاصطناعي ومكوناته الرئيسية",d:"يعرّف الذكاء الاصطناعي ويصنّف مكوناته من تعلم الآلة والتعلم العميق ومعالجة اللغة الطبيعية والرؤية الحاسوبية، مقدّماً هذه المفاهيم بلغة مناسبة للقيادة غير التقنية."},
+    {i:"🏛️",t:"تطبيقات الذكاء الاصطناعي في الخدمات الحكومية",d:"يستعرض تطبيقات فعلية كالمساعدين الافتراضيين وأنظمة معالجة الطلبات الآلية وتحليل المشاعر العامة وتحسين إدارة المرور والكشف عن الاحتيال المالي."},
+    {i:"📜",t:"الإطار التنظيمي والأخلاقي للذكاء الاصطناعي",d:"يناقش مبادئ الذكاء الاصطناعي المسؤول كالشفافية والعدالة والمساءلة والخصوصية، والأطر التنظيمية الدولية ودور القيادة في ضمان الاستخدام الأخلاقي."},
+    {i:"⚙️",t:"إدارة مشاريع الذكاء الاصطناعي الحكومية",d:"يقدم منهجية إدارة مشاريع الذكاء الاصطناعي في القطاع الحكومي من إثبات المفهوم PoC إلى التوسع الكامل، مع تحديد العوامل الحاسمة للنجاح."},
+    {i:"💼",t:"قيادة التحول الذكي في المؤسسات الحكومية",d:"يطوّر مهارات القيادة اللازمة لإدارة التحول نحو الذكاء الاصطناعي من إدارة تغيير وتأهيل كوادر وإدارة مخاوف المحل الوظيفي وبناء ثقة المواطن."},
+    {i:"🔮",t:"مستقبل الذكاء الاصطناعي في الحكومات",d:"يستشرف اتجاهات الذكاء الاصطناعي في الحوكمة كالحكومة التنبؤية وصياغة السياسات بمساعدة الذكاء الاصطناعي وأتمتة الخدمات المعقدة."},
+    {i:"🌍",t:"تجارب دولية رائدة في تبني الذكاء الاصطناعي الحكومي",d:"يقارن استراتيجيات الذكاء الاصطناعي الحكومي في الإمارات والصين وكندا وسنغافورة، ويستعرض كيف ترجمت هذه الاستراتيجيات إلى مبادرات ملموسة."}
+  ],
+  act:{t:"تصميم مقترح تطبيق ذكاء اصطناعي في خدمة حكومية",d:"يصمّم الطالب مقترحاً لتطبيق حل ذكاء اصطناعي في خدمة حكومية، شاملاً التحليل والجدوى والاعتبارات الأخلاقية وخطة التنفيذ.",s:["تحديد مشكلة أو خدمة حكومية تستفيد من الذكاء الاصطناعي","تصميم الحل واختيار نوع الذكاء الاصطناعي المناسب","تقييم الجدوى والمخاطر الأخلاقية والتنظيمية","وضع خطة تنفيذ مرحلية مع مؤشرات نجاح واضحة"]}
+},
+{
+  id:10, icon:"🏙️", color:"#F57F17",
+  title:"المدينة الذكية والتقنيات الحكومية الناشئة",
+  sub:"المفردة: مفهوم المدينة الذكية وتكنولوجيا إنترنت الأشياء في الخدمات العامة",
+  hrs:3,
+  pts:[
+    {i:"🏙️",t:"مفهوم المدينة الذكية ومكوناتها",d:"يعرّف المدينة الذكية ويحدد مكوناتها الجوهرية من بنية تحتية ذكية وإدارة ذكية وخدمات ذكية واقتصاد ذكي، ويستعرض أبرز نماذج المدن الذكية عالمياً."},
+    {i:"📡",t:"إنترنت الأشياء IoT وتطبيقاته في الحكومة",d:"يشرح مفهوم إنترنت الأشياء وكيف يمكّن الجهات الحكومية من جمع البيانات في الزمن الفعلي، ويستعرض تطبيقات الإضاءة الذكية وإدارة النفايات والمرور وشبكات المياه."},
+    {i:"🔋",t:"إدارة الطاقة والبيئة في المدينة الذكية",d:"يستعرض تقنيات الشبكة الذكية Smart Grid وإدارة استهلاك الطاقة والرصد البيئي، وكيف تسهم في تحقيق أهداف الاستدامة والكفاءة الحكومية."},
+    {i:"🚌",t:"التنقل الذكي وإدارة البنية التحتية",d:"يقدم تطبيقات التنقل الذكي كإدارة حركة المرور والمواصلات العامة الذكية وصيانة البنية التحتية التنبؤية، موضحاً منهجية تخطيطها وقياس أثرها."},
+    {i:"💡",t:"تحديات تطبيق المدينة الذكية في دول نامية",d:"يناقش التحديات الخاصة بتطبيق مفهوم المدينة الذكية في العراق والدول النامية كمحدودية الموارد وضعف البنية التحتية والكفاءات البشرية."},
+    {i:"🤝",t:"الشراكة بين القطاعين العام والخاص",d:"يستعرض نماذج الشراكة PPP لتمويل وإدارة مشاريع المدينة الذكية، ويحلل مزايا وعيوب النماذج ويقدم أطر إدارة العقود والحوكمة."},
+    {i:"🌐",t:"تجارب دولية رائدة في المدن الذكية",d:"يقارن تجارب سنغافورة وأبوظبي وبرشلونة وسيول في بناء المدينة الذكية، مستخلصاً معايير النجاح وعوامل الاستدامة ودروس التطبيق."}
+  ],
+  act:{t:"تصميم تصور أولي لمدينة ذكية أو حي ذكي في العراق",d:"يصمّم الطالب تصوراً أولياً لتطبيق مبادئ المدينة الذكية في مدينة أو حي عراقي، محدداً الأولويات والبنية التحتية المطلوبة.",s:["اختيار مدينة أو منطقة عراقية للتطبيق","تحليل الواقع الراهن وتحديد الأولويات الذكية","تصميم رؤية المدينة الذكية بمكوناتها الرئيسية","وضع خارطة طريق تنفيذية مرحلية مع التكاليف"]}
+},
+{
+  id:11, icon:"⚙️", color:"#558B2F",
+  title:"إدارة مشاريع الرقمنة التقنية الحكومية",
+  sub:"المفردة: إدارة مشاريع التقنية الحكومية ومنهجياتها الحديثة",
+  hrs:3,
+  pts:[
+    {i:"📋",t:"منهجيات إدارة مشاريع التقنية الحكومية",d:"يقدم المنهجيات الرئيسية كـ PMBOK وPRINCE2 والمنهجيات الرشيقة Agile Scrum، ويحدد ملاءمة كل منهجية لطبيعة المشاريع الحكومية المختلفة."},
+    {i:"🗺️",t:"مراحل مشروع الرقمنة التقنية",d:"يتتبع مراحل مشروع الرقمنة الحكومية من دراسة الجدوى والتخطيط والتصميم والتطوير والاختبار والإطلاق والمراجعة، موضحاً المخرجات المطلوبة في كل مرحلة."},
+    {i:"💰",t:"إدارة ميزانيات مشاريع التقنية الحكومية",d:"يقدم أسس تخطيط ميزانية مشاريع التقنية الحكومية ومتابعتها ومعالجة انحرافاتها، مع التركيز على الشفافية في الإنفاق والقيود المالية الحكومية."},
+    {i:"👥",t:"إدارة أصحاب المصلحة في المشاريع التقنية",d:"يعرض أسلوب تحليل وإدارة أصحاب المصلحة Stakeholders وكيفية التعامل مع التوقعات المتباينة وبناء التحالفات لضمان نجاح المشروع."},
+    {i:"⚠️",t:"إدارة مخاطر المشاريع التقنية الحكومية",d:"يقدم منهجية شاملة لتحديد وتقييم والاستجابة لمخاطر المشاريع التقنية الحكومية، مع التركيز على المخاطر الخاصة بالبيئة الحكومية."},
+    {i:"📊",t:"قياس أداء مشاريع الرقمنة الحكومية",d:"يعرض مؤشرات الأداء الرئيسية لقياس نجاح مشاريع الرقمنة من التزام بالوقت والميزانية والجودة والرضا، ولوحات المعلومات لمتابعة التقدم."},
+    {i:"🏁",t:"إغلاق المشاريع التقنية واستدامة مخرجاتها",d:"يناقش مرحلة إغلاق المشروع والدروس المستفادة وضمان استدامة مخرجاته، وكيفية إدارة الانتقال من مرحلة المشروع إلى التشغيل المستدام."}
+  ],
+  act:{t:"إعداد خطة مشروع رقمنة تقنية لمؤسسة حكومية",d:"يعدّ الطالب خطة إدارة مشروع رقمنة تقنية شاملة لمؤسسة حكومية تتضمن النطاق والجدول والميزانية والمخاطر.",s:["تحديد نطاق مشروع الرقمنة وأهدافه الذكية","وضع جدول زمني مفصّل بمعالم المشروع","إعداد ميزانية تقديرية وخطة إدارة المخاطر","تصميم لوحة متابعة لقياس أداء المشروع"]}
+},
+{
+  id:12, icon:"🌐", color:"#4527A0",
+  title:"البنية التقنية الوطنية للتحول الرقمي في العراق",
+  sub:"المفردة: البنية الرقمية الوطنية وتحديات التحول الرقمي في العراق",
+  hrs:3,
+  pts:[
+    {i:"🇮🇶",t:"واقع البنية التقنية الرقمية في العراق",d:"يحلل الوضع الراهن للبنية التقنية الرقمية الحكومية في العراق من حيث الشبكات والاتصالات والأنظمة القائمة، مستعيناً بمؤشرات دولية لتحديد الموقع وفجوات التطوير."},
+    {i:"🗺️",t:"استراتيجية التحول الرقمي الحكومي في العراق",d:"يستعرض الاستراتيجيات الوطنية للتحول الرقمي في العراق ومدى اتساقها مع الأطر الدولية، ويحدد أولويات التطوير في ضوء الموارد المتاحة والاحتياجات الفعلية."},
+    {i:"⚠️",t:"التحديات الخاصة بالتحول الرقمي في العراق",d:"يحلل التحديات البيئية الخاصة بالعراق كانقطاع الكهرباء وضعف الاتصالات في المناطق النائية وشح الكوادر التقنية وتعقيدات البيئة التشريعية."},
+    {i:"💡",t:"فرص الاقتصاد الرقمي في العراق",d:"يحدد الفرص الواعدة كالتجارة الإلكترونية والمدفوعات الرقمية والخدمات المالية الرقمية وريادة الأعمال التقنية، ودور الحكومة في تهيئة البيئة الممكِّنة."},
+    {i:"🤝",t:"دور الشراكات الدولية في دعم التحول الرقمي",d:"يستعرض الشراكات والتعاون الدولي المتاح للعراق من منظمات أممية ومبادرات إقليمية واتفاقيات ثنائية، وكيفية الاستفادة القصوى منها."},
+    {i:"📜",t:"الإطار التشريعي والتنظيمي للتحول الرقمي",d:"يحلل الإطار القانوني الحالي المنظّم للتحول الرقمي في العراق ويحدد الفجوات التشريعية، ويقدم توصيات للتطوير اللازم لتمكين التحول الرقمي الشامل."},
+    {i:"🏆",t:"نماذج التحول الرقمي الإقليمية القابلة للتكييف",d:"يستعرض تجارب دول إقليمية كالأردن والمغرب وتونس في التحول الرقمي الحكومي، ويحدد النماذج الأكثر قابلية للتكييف والتطبيق في العراق."}
+  ],
+  act:{t:"تحليل البنية الرقمية الوطنية العراقية وتحديد أولويات التطوير",d:"يجري الطالب تحليلاً للبنية الرقمية الوطنية العراقية مستخدماً أطر تحليل متخصصة، ويحدد أولويات التطوير ويقدم توصيات استراتيجية.",s:["جمع البيانات حول البنية التقنية الرقمية الحكومية العراقية","تطبيق أطر التحليل الاستراتيجي على البيئة الرقمية","تحديد الفجوات والأولويات الاستراتيجية للتطوير","صياغة توصيات مرحلية قابلة للتطبيق الفعلي"]}
+},
+{
+  id:13, icon:"⚖️", color:"#D84315",
+  title:"المخاطر التقنية في المؤسسات الحكومية",
+  sub:"المفردة: إدارة المخاطر التقنية وعطل الأنظمة في المؤسسات الحكومية",
+  hrs:3,
+  pts:[
+    {i:"⚠️",t:"إطار إدارة المخاطر التقنية الحكومية",d:"يقدم الإطار المنهجي لإدارة المخاطر التقنية من تحديد وتصنيف وتقييم وعلاج ومراقبة، مستخدماً أطر ISO 31000 ونماذج إدارة المخاطر الحكومية الدولية."},
+    {i:"🖥️",t:"أنواع المخاطر التقنية الحكومية",d:"يصنّف المخاطر التقنية الحكومية كمخاطر البنية التحتية والبيانات والأمن السيبراني والاعتماد على الموردين وعدم توافق الأنظمة وتقادم التقنية."},
+    {i:"📉",t:"تحليل أثر عطل الأنظمة الحكومية",d:"يقدم منهجية تحليل أثر الأعمال BIA على عطل الأنظمة الحكومية وتقييم التكاليف المباشرة وغير المباشرة لانقطاع الخدمات."},
+    {i:"🔄",t:"استمرارية الخدمات الحكومية وخطط التعافي",d:"يعرض منهجية بناء خطط استمرارية الخدمات وخطط التعافي من الكوارث DRP، محدداً أهداف وقت الاسترداد RTO وأهداف نقطة الاسترداد RPO."},
+    {i:"🛡️",t:"المرونة التقنية للمؤسسات الحكومية",d:"يقدم مفهوم المرونة التقنية Cyber Resilience وكيفية بناء قدرة المؤسسة الحكومية على امتصاص الصدمات التقنية والتكيف السريع."},
+    {i:"📋",t:"حوكمة المخاطر التقنية الحكومية",d:"يستعرض هياكل حوكمة المخاطر التقنية من مجالس مخاطر وكُتيّبات سياسات وآليات تقارير، ودور القيادة الحكومية في الإشراف على منظومة إدارة المخاطر."},
+    {i:"🌐",t:"تجارب دولية في إدارة المخاطر التقنية",d:"يقارن كيف تدير الحكومات المتقدمة كأستراليا وهولندا والمملكة المتحدة مخاطرها التقنية، مستخلصاً نماذج قابلة للتكييف مع السياق العراقي."}
+  ],
+  act:{t:"تحليل حالة عطل نظام حكومي وبناء خطة استمرارية",d:"يحلّل الطالب حالة عطل نظام حكومي موثق ويقيّم كيفية إدارته، ثم يبني خطة استمرارية لمؤسسة حكومية.",s:["تحليل حالة عطل نظام حكومي موثقة وتقييمها","تحديد المخاطر التقنية وتصنيفها حسب الأولوية","بناء خطة استمرارية أعمال مرحلية للمؤسسة","تحديد أهداف RTO وRPO لكل خدمة حيوية"]}
+},
+{
+  id:14, icon:"🌍", color:"#1565C0",
+  title:"الاتجاهات العالمية في التقنية الحكومية",
+  sub:"المفردة: الاتجاهات العالمية في تكنولوجيا الحكومة والتجارب الدولية الرائدة",
+  hrs:3,
+  pts:[
+    {i:"🌍",t:"خارطة التحول الرقمي الحكومي عالمياً",d:"يقدم خارطة شاملة للتحول الرقمي الحكومي العالمي مستعيناً بمؤشرات الحكومة الإلكترونية للأمم المتحدة EGDI، ويحدد مجموعات الدول حسب مستوى النضج الرقمي."},
+    {i:"🇪🇪",t:"تجربة إستونيا النموذجية في الحكومة الرقمية",d:"يحلّل تجربة إستونيا الاستثنائية كأكثر دول العالم رقمياً، من نظام X-Road والهوية الرقمية والتصويت الإلكتروني وdروسها للدول النامية."},
+    {i:"🇸🇬",t:"نموذج سنغافورة Smart Nation في القيادة الرقمية",d:"يستعرض نموذج سنغافورة ورؤيتها الاستراتيجية وكيف أدارت القيادة السياسية التحول الرقمي الشامل والمؤسسات التي أتاحت هذا النجاح الاستثنائي."},
+    {i:"🇦🇪",t:"تجربة الإمارات في الحكومة الرقمية",d:"يقدم التجربة الإماراتية من حكومة بلا ورق ومجلس مستقبل الذكاء الاصطناعي وبوابة الإمارات الموحدة، وما جعلها من أعلى الحكومات كفاءة في المنطقة."},
+    {i:"🔮",t:"الاتجاهات التقنية الناشئة في حكومات المستقبل",d:"يستشرف الاتجاهات المشكِّلة لحكومات المستقبل كالحوسبة الكمية وسلاسل الكتل والذكاء الاصطناعي التوليدي وتداعياتها على الجهات الحكومية."},
+    {i:"📊",t:"مقارنة مستوى التحول الرقمي الإقليمي",d:"يقدم تحليلاً مقارناً لمستوى التحول الرقمي في الدول العربية والإقليمية مستخدماً مؤشرات متعددة، ويحدد المجالات التي يمكن للعراق التعلم منها."},
+    {i:"🎯",t:"استلهام التجارب الدولية وتكييفها مع العراق",d:"يقدم منهجية علمية لاستلهام التجارب الدولية الناجحة وتكييفها مع السياق العراقي الخاص، تجنباً لأخطاء النقل الأعمى وضماناً للاستدامة."}
+  ],
+  act:{t:"دراسة مقارنة لتجربتين دوليتين في الحكومة الرقمية",d:"يجري الطالب دراسة مقارنة لتجربتين دوليتين ناجحتين في الحكومة الرقمية، مستخلصاً دروساً عملية قابلة للتطبيق في السياق العراقي.",s:["اختيار تجربتين دوليتين بمعايير محددة للمقارنة","تحليل عوامل النجاح والسياق المُمكِّن لكل تجربة","استخلاص الدروس القابلة للتكييف مع العراق","تقديم توصيات مدعمة بدروس التجربتين"]}
+},
+{
+  id:15, icon:"🎯", color:"#4E342E",
+  title:"المشروع التطبيقي الختامي",
+  sub:"المفردة: تصميم تصور للبنية الرقمية لمؤسسة حكومية عراقية",
+  hrs:3,
+  pts:[
+    {i:"🔍",t:"تحليل الوضع التقني الراهن للمؤسسة المختارة",d:"يجري الطالب تحليلاً شاملاً للوضع التقني الراهن يشمل البنية التحتية والأنظمة القائمة والفجوات الرقمية والتحديات التشغيلية، موثّقاً نتائجه بمنهجية علمية."},
+    {i:"🏗️",t:"تصميم البنية التقنية الرقمية المتكاملة",d:"يصمّم بنية تقنية رقمية متكاملة تشمل البنية التحتية الشبكية والسحابية ونظم المعلومات وإدارة البيانات والمنصات الرقمية والأمن السيبراني."},
+    {i:"🗺️",t:"خارطة طريق التنفيذ المرحلية",d:"يعدّ خارطة طريق تفصيلية تحدد مراحل التنفيذ وأولوياتها والجداول الزمنية والموارد المطلوبة ومؤشرات النجاح لكل مرحلة."},
+    {i:"💰",t:"دراسة الجدوى الاقتصادية للتحول التقني",d:"يجري دراسة جدوى اقتصادية شاملة تتضمن تقدير التكاليف وتحليل العوائد المتوقعة وحساب فترة الاسترداد وصافي القيمة الحالية."},
+    {i:"⚠️",t:"إطار إدارة مخاطر التحول التقني",d:"يطوّر إطاراً شاملاً لإدارة المخاطر يشمل تحديدها وتقييمها وخطط المعالجة والتخفيف، مميّزاً بين المخاطر الحرجة والثانوية."},
+    {i:"🔄",t:"استراتيجية إدارة التغيير والتبني التقني",d:"يصمّم استراتيجية متكاملة لإدارة التغيير التقني تشمل تأهيل الكوادر وبناء قدرات التبني وآليات مكافحة مقاومة التغيير وضمان الاستدامة."},
+    {i:"🎤",t:"العرض التقديمي والدفاع عن المشروع الختامي",d:"يقدّم الطالب مشروعه أمام لجنة متخصصة بعرض احترافي يعكس عمق الفهم وتماسك الرؤية، ويتفاعل بثقة مع أسئلة المقيّمين."}
+  ],
+  act:{t:"تقديم المشروع التطبيقي الختامي أمام لجنة التقييم",d:"يقدّم الطالب مشروعه الختامي الشامل أمام لجنة متخصصة، موظّفاً جميع المعارف والمهارات المكتسبة طوال المادة.",s:["إعداد وثيقة المشروع الشاملة بجميع عناصرها","تصميم عرض تقديمي احترافي ومقنع","تحضير الردود على الأسئلة المحتملة من اللجنة","تقديم المشروع والدفاع عنه بثقة واقتدار"]}
+}
 ];
 
-// =====================================================================
-// BUILD SIDEBAR
-// =====================================================================
-function buildSidebar() {
-  const container = document.getElementById('sidebarList');
-  modules.forEach((mod, i) => {
-    const div = document.createElement('div');
-    div.className = 'module-item' + (i === 0 ? ' active' : '');
-    div.id = 'sb-' + mod.id;
-    div.onclick = () => {
-      document.querySelectorAll('.module-item').forEach(el => el.classList.remove('active'));
-      div.classList.add('active');
-      document.getElementById('mod-' + mod.id).scrollIntoView({ behavior: 'smooth', block: 'start' });
-    };
-    div.innerHTML = `
-      <div class="module-num" id="sbn-${mod.id}">${mod.id}</div>
-      <div class="module-info">
-        <div class="module-title">${mod.title}</div>
-        <div class="module-meta">7 نقاط • نشاط تطبيقي • ${mod.hours} ساعات</div>
-      </div>`;
-    container.appendChild(div);
+// ═══════════════════════════════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════════════════════════════
+var done = {};
+
+function render(){
+  var sbEl = document.getElementById('SBLIST');
+  var modsEl = document.getElementById('MODS');
+  sbEl.innerHTML='';
+  modsEl.innerHTML='';
+
+  MODS.forEach(function(m, idx){
+
+    // --- sidebar item ---
+    var si = document.createElement('div');
+    si.className='sb-item'+(idx===0?' active':'');
+    si.id='SI'+m.id;
+    si.innerHTML=
+      '<div class="sb-num" id="SN'+m.id+'">'+m.id+'</div>'+
+      '<div class="sb-info">'+
+        '<div class="sb-title">'+m.title+'</div>'+
+        '<div class="sb-meta">7 نقاط • '+m.hrs+' ساعات</div>'+
+      '</div>';
+    si.onclick=(function(mid){
+      return function(){
+        document.querySelectorAll('.sb-item').forEach(function(x){x.classList.remove('active');});
+        document.getElementById('SI'+mid).classList.add('active');
+        var card=document.getElementById('MC'+mid);
+        card.scrollIntoView({behavior:'smooth',block:'start'});
+      };
+    })(m.id);
+    sbEl.appendChild(si);
+
+    // --- module card ---
+    var card=document.createElement('div');
+    card.className='mod-card';
+    card.id='MC'+m.id;
+
+    // points html
+    var ptsHtml='';
+    m.pts.forEach(function(p,i){
+      ptsHtml+=
+        '<div class="pt-item">'+
+          '<div class="pt-num" style="background:'+m.color+';">'+(i+1)+'</div>'+
+          '<div class="pt-content">'+
+            '<div class="pt-title">'+p.t+'</div>'+
+            '<div class="pt-desc">'+p.d+'</div>'+
+          '</div>'+
+          '<span class="pt-icon">'+p.i+'</span>'+
+        '</div>';
+    });
+
+    // steps html
+    var stepsHtml='';
+    m.act.s.forEach(function(s){
+      stepsHtml+='<div class="act-step"><div class="act-dot"></div>'+s+'</div>';
+    });
+
+    card.innerHTML=
+      '<div class="mod-head" id="MH'+m.id+'" onclick="toggle('+m.id+')">'+
+        '<div class="mod-icon" style="background:'+m.color+'22;">'+m.icon+'</div>'+
+        '<div class="mod-info">'+
+          '<span class="mod-badge" style="background:'+m.color+'22;color:'+m.color+';">الوحدة '+m.id+'</span>'+
+          '<div class="mod-title">'+m.title+'</div>'+
+          '<div class="mod-sub">'+m.sub+'</div>'+
+        '</div>'+
+        '<div class="mod-tags">'+
+          '<span class="mod-tag">⏱️ '+m.hrs+' ساعات</span>'+
+          '<span class="mod-tag">📌 7 نقاط</span>'+
+        '</div>'+
+        '<div class="mod-arrow" id="MA'+m.id+'">▼</div>'+
+      '</div>'+
+      '<div class="mod-divider" style="background:linear-gradient(90deg,'+m.color+',transparent);"></div>'+
+      '<div class="mod-body" id="MB'+m.id+'">'+
+        '<div class="pts-title" style="color:'+m.color+';">🎯 النقاط التعليمية الأساسية السبع</div>'+
+        '<div class="pts-list">'+ptsHtml+'</div>'+
+        '<div class="act-box">'+
+          '<div class="act-head">'+
+            '<span class="act-badge">🔬 نشاط تطبيقي</span>'+
+            '<span class="act-title">'+m.act.t+'</span>'+
+          '</div>'+
+          '<div class="act-desc">'+m.act.d+'</div>'+
+          '<div class="act-steps">'+stepsHtml+'</div>'+
+        '</div>'+
+      '</div>'+
+      '<div class="mod-footer">'+
+        '<div class="foot-tags">'+
+          '<span class="foot-tag">📖 دراسة ذاتية</span>'+
+          '<span class="foot-tag">🔬 تطبيق عملي</span>'+
+          '<span class="foot-tag">⏱️ '+m.hrs+' ساعات</span>'+
+        '</div>'+
+        '<button class="done-btn" id="DB'+m.id+'" onclick="markDone('+m.id+',event)">✔ إتمام الوحدة</button>'+
+      '</div>';
+
+    modsEl.appendChild(card);
   });
+
+  // open first by default
+  toggle(1);
 }
 
-// =====================================================================
-// BUILD MODULE CARDS
-// =====================================================================
-function buildModules() {
-  const container = document.getElementById('modulesContainer');
-  modules.forEach(mod => {
-    const card = document.createElement('div');
-    card.className = `module-card ${mod.theme}`;
-    card.id = `mod-${mod.id}`;
-
-    const pointsHTML = mod.points.map((p, i) => `
-      <div class="point-item">
-        <div class="point-number">${i + 1}</div>
-        <div class="point-content">
-          <div class="point-title">${p.title}</div>
-          <div class="point-description">${p.desc}</div>
-        </div>
-        <span class="point-icon">${p.icon}</span>
-      </div>`).join('');
-
-    const stepsHTML = mod.activity.steps.map(s => `
-      <div class="activity-step"><div class="step-dot"></div>${s}</div>`).join('');
-
-    card.innerHTML = `
-      <div class="module-card-header" onclick="toggleMod(${mod.id})">
-        <div class="module-card-icon">${mod.icon}</div>
-        <div class="module-card-info">
-          <span class="module-card-badge">الوحدة ${mod.id}</span>
-          <div class="module-card-title">${mod.title}</div>
-          <div class="module-card-subtitle">${mod.subtitle}</div>
-        </div>
-        <div class="module-card-meta">
-          <span class="meta-tag">⏱️ ${mod.hours} ساعات</span>
-          <span class="meta-tag">📌 7 نقاط</span>
-        </div>
-        <button class="expand-btn" id="ebtn-${mod.id}">▼</button>
-      </div>
-      <div class="module-divider"></div>
-      <div class="module-body" id="body-${mod.id}">
-        <div class="points-section">
-          <div class="points-section-title">🎯 النقاط التعليمية الأساسية السبع</div>
-          <div class="points-list">${pointsHTML}</div>
-        </div>
-        <div class="activity-section">
-          <div class="activity-header">
-            <span class="activity-badge">🔬 نشاط تطبيقي</span>
-            <span class="activity-title">${mod.activity.title}</span>
-          </div>
-          <div class="activity-description">${mod.activity.desc}</div>
-          <div class="activity-steps">${stepsHTML}</div>
-        </div>
-      </div>
-      <div class="module-footer">
-        <div class="footer-info">
-          <span class="footer-tag">📖 دراسة ذاتية</span>
-          <span class="footer-tag">🔬 تطبيق عملي</span>
-          <span class="footer-tag">⏱️ ${mod.hours} ساعات</span>
-        </div>
-        <button class="complete-btn" id="cbtn-${mod.id}" onclick="markComplete(${mod.id})">✔ إتمام الوحدة</button>
-      </div>`;
-
-    container.appendChild(card);
-  });
-}
-
-// =====================================================================
+// ═══════════════════════════════════════════════════════════════
 // TOGGLE
-// =====================================================================
-function toggleMod(id) {
-  const body = document.getElementById('body-' + id);
-  const btn  = document.getElementById('ebtn-' + id);
-  body.classList.toggle('open');
-  btn.classList.toggle('open');
+// ═══════════════════════════════════════════════════════════════
+function toggle(id){
+  var body=document.getElementById('MB'+id);
+  var arrow=document.getElementById('MA'+id);
+  if(!body||!arrow) return;
+  var isOpen=body.style.display==='block';
+  body.style.display=isOpen?'none':'block';
+  arrow.classList.toggle('open',!isOpen);
 }
 
-// =====================================================================
-// PROGRESS
-// =====================================================================
-const completed = new Set();
+// ═══════════════════════════════════════════════════════════════
+// MARK DONE
+// ═══════════════════════════════════════════════════════════════
+function markDone(id, e){
+  e.stopPropagation();
+  if(done[id]) return;
+  done[id]=true;
 
-function markComplete(id) {
-  if (completed.has(id)) return;
-  completed.add(id);
+  var btn=document.getElementById('DB'+id);
+  if(btn){btn.textContent='✓ تم الإتمام';btn.disabled=true;}
 
-  const cbtn = document.getElementById('cbtn-' + id);
-  if (cbtn) { cbtn.textContent = '✓ تم الإتمام'; cbtn.style.background = '#666'; cbtn.disabled = true; }
+  var sn=document.getElementById('SN'+id);
+  if(sn){sn.textContent='✓';sn.style.background='#1E8449';sn.style.color='#fff';}
 
-  const sbn = document.getElementById('sbn-' + id);
-  if (sbn) { sbn.textContent = '✓'; sbn.style.background = '#1E8449'; sbn.style.color = '#fff'; }
+  var si=document.getElementById('SI'+id);
+  if(si){si.classList.add('done');}
 
-  const sb = document.getElementById('sb-' + id);
-  if (sb) sb.classList.add('completed');
-
-  const pct = Math.round((completed.size / modules.length) * 100);
-  document.getElementById('progressBar').style.width = pct + '%';
-  document.getElementById('progressPercent').textContent = pct + '%';
-  document.getElementById('progressCount').textContent = completed.size + ' / ' + modules.length + ' وحدة مكتملة';`
+  var count=Object.keys(done).length;
+  var pct=Math.round(count/15*100);
+  document.getElementById('PB').style.width=pct+'%';
+  document.getElementById('PP').textContent=pct+'%';
+  document.getElementById('PC').textContent=count+' / 15 وحدة مكتملة';
 }
 
-// =====================================================================
+// ═══════════════════════════════════════════════════════════════
 // INIT
-// =====================================================================
-document.addEventListener('DOMContentLoaded', () => {
-  buildSidebar();
-  buildModules();
-  // Open first module
-  setTimeout(() => toggleMod(1), 300);
-});
+// ═══════════════════════════════════════════════════════════════
+window.onload=function(){render();};
 </script>
 </body>
 </html>
