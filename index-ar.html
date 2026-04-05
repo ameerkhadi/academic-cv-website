@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>د. عامر كاظم هادي — السيرة الأكاديمية</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* ── RTL Overrides ── */
+        body { font-family: 'Cairo', -apple-system, sans-serif; }
+
+        /* Flip border-left accents to border-right */
+        .edu-card  { border-left: none; border-right: 3px solid var(--orange); }
+        .aws-info-box { border-left: none; border-right: 3px solid var(--blue); }
+
+        /* Nav links direction */
+        .nav-links { flex-direction: row-reverse; }
+
+        /* Publication bar side */
+        .pub-item  { flex-direction: row-reverse; }
+        .pub-num   { margin-left: 0; margin-right: auto; }
+
+        /* Contact item direction */
+        .contact-item { flex-direction: row; }
+
+        /* Profile links */
+        .profile-link:hover { padding-left: 0; padding-right: .4rem; }
+
+        /* Footer arrows */
+        .footer-right a[href="#hero"]::before { content: "↑ "; }
+
+        /* Lang toggle button */
+        .lang-toggle {
+            position: fixed;
+            bottom: 28px;
+            left: 28px;
+            background: var(--orange);
+            color: #000;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 700;
+            font-size: .82rem;
+            padding: .55rem 1.1rem;
+            border-radius: 100px;
+            text-decoration: none;
+            z-index: 9999;
+            border: 1px solid var(--orange2);
+            box-shadow: 0 4px 18px rgba(255,153,0,.35);
+            transition: var(--trans);
+            display: flex;
+            align-items: center;
+            gap: .4rem;
+        }
+        .lang-toggle:hover {
+            background: var(--orange2);
+            color: #000;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 22px rgba(255,153,0,.45);
+        }
+
+        /* Section number badge stays LTR */
+        .sec-num { direction: ltr; }
+
+        /* Topbar path stays readable */
+        .topbar-path { direction: ltr; }
+
+        /* Chips alignment */
+        .chips { justify-content: flex-end; }
+
+        /* pub-top-row wrap fix */
+        .pub-top-row { flex-direction: row-reverse; justify-content: flex-end; }
+
+        /* Hero actions */
+        .hero-actions { flex-direction: row-reverse; }
+
+        /* Filter/sort rows */
+        .filter-row, .sort-row { flex-direction: row-reverse; }
+        .pub-toolbar { flex-direction: row-reverse; }
+
+        /* Awards center stays centered */
+        .award-card { text-align: center; }
+    </style>
+</head>
+<body>
+
+<!-- زر تبديل اللغة -->
+<a href="index.html" class="lang-toggle">🌐 English</a>
+
+<!-- ── الشريط العلوي ── -->
+<div class="topbar">
+    <span class="topbar-path">
+        <span class="topbar-crumb">University of Babylon</span>
+        <span class="topbar-sep">›</span>
+        <span class="topbar-crumb">Faculty of IT</span>
+        <span class="topbar-sep">›</span>
+        <span class="topbar-crumb active">Dr. Ameer Kadhim Hadi</span>
+    </span>
+    <span style="font-family:var(--mono);font-size:.65rem">آخر تحديث: <span id="last-updated"></span></span>
+</div>
+
+<!-- ── شريط التنقل ── -->
+<nav id="navbar">
+    <div class="nav-inner">
+        <a href="#hero" class="nav-logo">
+            <div class="nav-logo-icon">عك</div>
+            <span>د. عامر هادي</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="#about">نبذة</a></li>
+            <li><a href="#education">التعليم</a></li>
+            <li><a href="#publications">المنشورات</a></li>
+            <li><a href="#projects">المشاريع</a></li>
+            <li><a href="#courses">التدريس</a></li>
+            <li><a href="#media">الإعلام</a></li>
+            <li><a href="#awards">الجوائز</a></li>
+            <li><a href="#contact" class="nav-btn">تواصل</a></li>
+        </ul>
+        <button class="hamburger" id="hamburger">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</nav>
+
+<!-- ── القائمة للجوال ── -->
+<div class="mobile-menu" id="mobileMenu">
+    <ul>
+        <li><a href="#about">نبذة عني</a></li>
+        <li><a href="#education">التعليم</a></li>
+        <li><a href="#publications">المنشورات</a></li>
+        <li><a href="#projects">المشاريع</a></li>
+        <li><a href="#courses">التدريس</a></li>
+        <li><a href="#media">الإعلام</a></li>
+        <li><a href="#awards">الجوائز</a></li>
+        <li><a href="#contact">تواصل معي</a></li>
+    </ul>
+</div>
+
+<!-- ══ الواجهة الرئيسية ══ -->
+<section id="hero">
+    <div class="hero-inner">
+        <div class="hero-left">
+            <div class="hero-profile-row">
+                <div id="hero-avatar-wrap"></div>
+                <div class="hero-name-block">
+                    <div class="hero-badge">
+                        <span class="bdot green"></span>
+                        أستاذ مساعد · جامعة بابل
+                    </div>
+                    <h1 class="hero-name" id="hero-name-text"></h1>
+                    <p class="hero-sub">كلية تقنية المعلومات · قسم شبكات المعلومات</p>
+                </div>
+            </div>
+            <div class="hero-tags">
+                <span class="htag">☁️ الحوسبة السحابية</span>
+                <span class="htag">🤖 الذكاء الاصطناعي</span>
+                <span class="htag">📡 إنترنت الأشياء</span>
+                <span class="htag">🔗 البلوك تشين</span>
+                <span class="htag">🔐 أمن الشبكات</span>
+            </div>
+            <div class="hero-stats-row">
+                <div class="hstat"><span class="hstat-num">15+</span><span class="hstat-label">⏱️ سنة خبرة</span></div>
+                <div class="hstat-div"></div>
+                <div class="hstat"><span class="hstat-num">15</span><span class="hstat-label">📄 بحث</span></div>
+                <div class="hstat-div"></div>
+                <div class="hstat"><span class="hstat-num" id="total-cit">—</span><span class="hstat-label">🔖 اقتباس</span></div>
+                <div class="hstat-div"></div>
+                <div class="hstat"><span class="hstat-num">4</span><span class="hstat-label">🏆 جائزة</span></div>
+            </div>
+            <div class="hero-actions">
+                <a href="#publications" class="btn-primary">📄 المنشورات</a>
+                <a href="#contact" class="btn-outline">✉️ تواصل معي</a>
+            </div>
+        </div>
+        <div class="hero-right">
+            <div class="aws-card">
+                <div class="aws-card-top">
+                    <span class="card-dot red"></span>
+                    <span class="card-dot yellow"></span>
+                    <span class="card-dot green"></span>
+                    <span class="card-title-bar">🎯 نظرة عامة على الملف</span>
+                </div>
+                <div class="aws-card-body">
+                    <div class="aws-check-list">
+                        <div class="aws-chk">✓ &nbsp;بحوث الذكاء الاصطناعي والتعلم العميق</div>
+                        <div class="aws-chk">✓ &nbsp;البلوك تشين وتحسين الشبكات</div>
+                        <div class="aws-chk">✓ &nbsp;أنظمة إنترنت الأشياء الذكية</div>
+                        <div class="aws-chk">✓ &nbsp;الحوسبة السحابية (معتمد AWS)</div>
+                        <div class="aws-chk">✓ &nbsp;أكثر من 15 عامًا في تدريس CS والرياضيات</div>
+                        <div class="aws-chk">✓ &nbsp;باحث فولبرايت — وزارة الخارجية الأمريكية</div>
+                    </div>
+                    <div class="aws-services-row">
+                        <span class="svc-tag">🖥 IEEE Access</span>
+                        <span class="svc-tag">☁️ AWS Academy</span>
+                        <span class="svc-tag">🎓 PhD CS</span>
+                        <span class="svc-tag">🌿 Fulbright</span>
+                    </div>
+                    <div class="aws-info-box">ℹ️ &nbsp;متاح للتعاون البحثي والإشراف على الطلاب والشراكات الأكاديمية.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══ نبذة عني ══ -->
+<section id="about" class="alt">
+    <div class="container">
+        <div class="sec-header">
+            <span class="sec-num">01</span>
+            <div>
+                <div class="sec-eye">About</div>
+                <h2 class="sec-h2">الملخص المهني</h2>
+            </div>
+        </div>
+        <div class="about-grid">
+            <div class="panel">
+                <div class="panel-hdr">📋 &nbsp;نبذة شخصية</div>
+                <p id="about-bio" class="bio-text"></p>
+                <div id="about-links" class="about-links-row"></div>
+            </div>
+            <div>
+                <div class="panel">
+                    <div class="panel-hdr">🛠 &nbsp;المهارات التقنية</div>
+                    <div id="skills-technical" class="chips"></div>
+                </div>
+                <div class="panel mt1">
+                    <div class="panel-hdr">🔬 &nbsp;مهارات البحث العلمي</div>
+                    <div id="skills-research" class="chips"></div>
+                </div>
+                <div class="panel mt1">
+                    <div class="panel-hdr">📚 &nbsp;مهارات التدريس</div>
+                    <div id="skills-teaching" class="chips"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══ التعليم ══ -->
+<section id="education">
+    <div class="container">
+        <div class="sec-header">
+            <span class="sec-num">02</span>
+            <div>
+                <div class="sec-eye">Education</div>
+                <h2 class="sec-h2">المؤهلات الأكاديمية</h2>
+            </div>
+        </div>
+        <div class="edu-grid" id="education-list"></div>
+    </div>
+</section>
+
+<!-- ══ المنشورات ══ -->
+<section id="publications" class="alt">
+    <div class="container">
+        <div class="sec-header">
+            <span class="sec-num">03</span>
+            <div>
+                <div class="sec-eye">Research</div>
+                <h2 class="sec-h2">الأبحاث والمنشورات</h2>
+            </div>
+        </div>
+        <div class="pub-toolbar">
+            <div class="filter-row">
+                <button class="pill active" data-filter="all">الكل</button>
+                <button class="pill" data-filter="journal">📘 مجلات</button>
+                <button class="pill" data-filter="conference">🎤 مؤتمرات</button>
+            </div>
+            <div class="sort-row">
+                <span class="sort-lbl">ترتيب:</span>
+                <button class="sort-btn active" data-sort="year">السنة ↓</button>
+                <button class="sort-btn" data-sort="citations">الاقتباسات ↓</button>
+            </div>
+        </div>
+        <div id="publications-list"></div>
+    </div>
+</section>
+
+<!-- ══ المشاريع ══ -->
+<section id="projects">
+    <div class="container">
+        <div class="sec-header">
+            <span class="sec-num">04</span>
+            <div>
+                <div class="sec-eye">Projects</div>
+                <h2 class="sec-h2">المشاريع البحثية</h2>
+            </div>
+        </div>
+        <div class="projects-grid" id="projects-list"></div>
+    </div>
+</section>
+
+<!-- ══ التدريس ══ -->
+<section id="courses" class="alt">
+    <div class="container">
+        <div class="sec-header">
+            <span class="sec-num">05</span>
+            <div>
+                <div class="sec-eye">Teaching</div>
+                <h2 class="sec-h2">المقررات الدراسية</h2>
+            </div>
+        </div>
+        <div class="courses-grid" id="courses-list"></div>
+    </div>
+</section>
+
+<!-- ══ الإعلام ══ -->
+<section id="media">
+    <div class="container">
+        <div class="sec-header">
+            <span class="sec-num">06</span>
+            <div>
+                <div class="sec-eye">Media</div>
+                <h2 class="sec-h2">الأخبار والإعلام</h2>
+            </div>
+        </div>
+        <div class="media-grid" id="media-list"></div>
+    </div>
+</section>
+
+<!-- ══ الشهادات ══ -->
+<section id="certifications" class="alt">
+    <div class="container">
+        <div class="sec-header">
+            <span class="sec-num">07</span>
+            <div>
+                <div class="sec-eye">Credentials</div>
+                <h2 class="sec-h2">الشهادات والاعتمادات</h2>
+            </div>
+        </div>
+        <div class="certs-grid" id="certs-list"></div>
+    </div>
+</section>
+
+<!-- ══ الجوائز ══ -->
+<section id="awards">
+    <div class="container">
+        <div class="sec-header">
+            <span class="sec-num">08</span>
+            <div>
+                <div class="sec-eye">Recognition</div>
+                <h2 class="sec-h2">الجوائز والتكريمات</h2>
+            </div>
+        </div>
+        <div class="awards-grid" id="awards-list"></div>
+    </div>
+</section>
+
+<!-- ══ معرض الصور ══ -->
+<section id="gallery" class="alt">
+    <div class="container">
+        <div class="sec-header">
+            <span class="sec-num">09</span>
+            <div>
+                <div class="sec-eye">Gallery</div>
+                <h2 class="sec-h2">معرض الصور</h2>
+            </div>
+        </div>
+        <div class="gallery-grid" id="gallery-grid"></div>
+    </div>
+</section>
+
+<!-- ══ تواصل معي ══ -->
+<section id="contact">
+    <div class="container">
+        <div class="sec-header">
+            <span class="sec-num">10</span>
+            <div>
+                <div class="sec-eye">Contact</div>
+                <h2 class="sec-h2">تواصل معي</h2>
+            </div>
+        </div>
+        <div class="contact-grid">
+            <div class="panel">
+                <div class="panel-hdr">📬 &nbsp;معلومات التواصل</div>
+                <div id="contact-items"></div>
+            </div>
+            <div>
+                <div class="panel">
+                    <div class="panel-hdr">🏛 &nbsp;الانتساب الأكاديمي</div>
+                    <div class="affil">
+                        <div id="c-name" class="affil-name"></div>
+                        <div id="c-title" class="affil-title"></div>
+                        <div class="affil-uni">كلية تقنية المعلومات<br>جامعة بابل، العراق</div>
+                    </div>
+                </div>
+                <div class="panel mt1">
+                    <div class="panel-hdr">🔗 &nbsp;الملفات الأكاديمية</div>
+                    <div id="contact-profiles" class="profile-links"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══ التذييل ══ -->
+<footer>
+    <div class="container">
+        <div class="footer-row">
+            <div>
+                <div class="footer-name">د. عامر كاظم هادي</div>
+                <div class="footer-sub">أستاذ مساعد · جامعة بابل، العراق</div>
+            </div>
+            <div class="footer-right">
+                <span>© <span id="footer-year"></span> جميع الحقوق محفوظة.</span>
+                <a href="#hero">↑ أعلى الصفحة</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="data-ar.js"></script>
+<script>
+// ════════════════════════════════════════════════
+//  script-ar.js — inlined (Arabic version)
+// ════════════════════════════════════════════════
+const D = academicDataAr;
+
+/* ── Dates ── */
+document.getElementById('footer-year').textContent = new Date().getFullYear();
+document.getElementById('last-updated').textContent =
+    new Date().toLocaleDateString('ar-IQ', { year:'numeric', month:'long', day:'numeric' });
+
+/* ── Citations total ── */
+const totalCit = D.publications.reduce((s,p)=>s+(p.citations||0),0);
+document.getElementById('total-cit').textContent = totalCit;
+
+/* ── Hero avatar ── */
+const avatarWrap = document.getElementById('hero-avatar-wrap');
+if (D.personal.photo) {
+    const img = document.createElement('img');
+    img.src = D.personal.photo;
+    img.alt = D.personal.name;
+    img.className = 'hero-avatar';
+    img.onerror = () => { avatarWrap.innerHTML = '<div class="hero-avatar-placeholder">👤</div>'; };
+    avatarWrap.appendChild(img);
+} else {
+    avatarWrap.innerHTML = '<div class="hero-avatar-placeholder">👤</div>';
+}
+document.getElementById('hero-name-text').textContent = D.personal.name;
+
+/* ── About bio ── */
+document.getElementById('about-bio').textContent = D.personal.bio;
+
+/* ── About links ── */
+const linksMap = [
+    { key:'email',        icon:'📧', label:'البريد الإلكتروني', href: e => 'mailto:'+e },
+    { key:'linkedin',     icon:'💼', label:'LinkedIn',           href: e => e },
+    { key:'googleScholar',icon:'🎓', label:'Google Scholar',     href: e => e },
+    { key:'researchGate', icon:'🔬', label:'ResearchGate',       href: e => e },
+    { key:'orcid',        icon:'🆔', label:'ORCID',              href: e => e }
+];
+const linksContainer = document.getElementById('about-links');
+linksMap.forEach(l => {
+    if (!D.personal[l.key]) return;
+    const a = document.createElement('a');
+    a.href = l.href(D.personal[l.key]);
+    a.className = 'about-link';
+    a.target = '_blank';
+    a.rel = 'noopener';
+    a.innerHTML = `${l.icon} ${l.label}`;
+    linksContainer.appendChild(a);
+});
+
+/* ── Skills ── */
+['technical','research','teaching'].forEach(cat => {
+    const el = document.getElementById('skills-'+cat);
+    (D.skills[cat]||[]).forEach(s => {
+        const span = document.createElement('span');
+        span.className = 'chip';
+        span.textContent = s;
+        el.appendChild(span);
+    });
+});
+
+/* ── Education ── */
+const eduGrid = document.getElementById('education-list');
+D.education.forEach(e => {
+    const card = document.createElement('div');
+    card.className = 'edu-card fade-in';
+    let extra = '';
+    if (e.dissertation) extra = `<div class="edu-note">📌 ${e.dissertation}</div>`;
+    else if (e.specialization) extra = `<div class="edu-note">🎯 التخصص: ${e.specialization}</div>`;
+    card.innerHTML = `
+        <div class="edu-year">${e.year}</div>
+        <div class="edu-degree">${e.degree}</div>
+        <div class="edu-inst">${e.institution}</div>
+        ${extra}`;
+    eduGrid.appendChild(card);
+});
+
+/* ── Publications ── */
+let currentFilter = 'all';
+let currentSort   = 'year';
+const pubList = document.getElementById('publications-list');
+
+function renderPubs() {
+    pubList.innerHTML = '';
+    let pubs = [...D.publications];
+    if (currentFilter !== 'all') pubs = pubs.filter(p => p.type === currentFilter);
+    if (currentSort === 'year')      pubs.sort((a,b)=>b.year-a.year);
+    else if (currentSort==='citations') pubs.sort((a,b)=>(b.citations||0)-(a.citations||0));
+    pubs.forEach((p,i)=>{
+        const typeLabel = p.type==='journal' ? 'مجلة' : 'مؤتمر';
+        const div = document.createElement('div');
+        div.className = 'pub-item fade-in';
+        div.innerHTML = `
+            <div class="pub-bar ${p.type}"></div>
+            <div class="pub-body">
+                <div class="pub-top-row">
+                    <span class="pub-type-pill ${p.type}">${typeLabel}</span>
+                    <span class="pub-year-pill">${p.year}</span>
+                    ${p.citations ? `<span class="pub-cite-pill">🔖 ${p.citations} اقتباس</span>` : ''}
+                    <span class="pub-num">#${i+1}</span>
+                </div>
+                <div class="pub-title">${p.link && p.link!=='#'
+                    ? `<a href="${p.link}" target="_blank" rel="noopener">${p.title}</a>`
+                    : p.title}</div>
+                <div class="pub-authors">${p.authors}</div>
+                <div class="pub-venue">${p.venue}</div>
+            </div>`;
+        pubList.appendChild(div);
+    });
+    observeFadeIns();
+}
+renderPubs();
+
+document.querySelectorAll('.pill').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.pill').forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.dataset.filter;
+        renderPubs();
+    });
+});
+document.querySelectorAll('.sort-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.sort-btn').forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        currentSort = btn.dataset.sort;
+        renderPubs();
+    });
+});
+
+/* ── Projects ── */
+const projGrid = document.getElementById('projects-list');
+D.projects.forEach(p=>{
+    const statusClass = p.status==='مكتمل'||p.status==='Completed' ? 'completed' : 'ongoing';
+    const card = document.createElement('div');
+    card.className='proj-card fade-in';
+    card.innerHTML=`
+        <div class="proj-card-hdr">
+            <span>🔬 مشروع بحثي</span>
+            <span class="proj-status ${statusClass}">${p.status}</span>
+        </div>
+        <div class="proj-card-body">
+            <div class="proj-title">${p.title}</div>
+            <div class="proj-desc">${p.description}</div>
+            <div class="proj-meta">
+                📅 المدة: <span>${p.duration}</span><br>
+                💰 التمويل: <span>${p.funding}</span>
+            </div>
+            <div class="proj-tech-wrap">
+                ${p.technologies.map(t=>`<span class="proj-tech">${t}</span>`).join('')}
+            </div>
+        </div>`;
+    projGrid.appendChild(card);
+});
+
+/* ── Courses ── */
+const coursesGrid = document.getElementById('courses-list');
+D.courses.forEach(c=>{
+    const card = document.createElement('div');
+    card.className='course-card fade-in';
+    card.innerHTML=`
+        <div class="course-card-top">
+            <span class="course-level-tag">${c.level}</span>
+            <span style="font-family:var(--mono);font-size:.62rem;color:var(--green)">● ${c.semester}</span>
+        </div>
+        <div class="course-body">
+            <div class="course-title">${c.title}</div>
+            <div class="course-desc">${c.description}</div>
+        </div>`;
+    coursesGrid.appendChild(card);
+});
+
+/* ── Media ── */
+const mediaGrid = document.getElementById('media-list');
+if (!D.media || D.media.length === 0) {
+    mediaGrid.innerHTML=`<p style="color:var(--text-muted);font-size:.85rem;grid-column:1/-1;text-align:center;padding:2rem">
+        لا توجد منشورات إعلامية حاليًا. أضف بياناتك في <code>data-ar.js</code> ضمن خاصية <code>media</code>.
+    </p>`;
+}
+
+/* ── Certifications ── */
+const certsGrid = document.getElementById('certs-list');
+D.certifications.forEach(c=>{
+    const card=document.createElement('div');
+    card.className='cert-card fade-in';
+    card.innerHTML=`
+        <div class="cert-icon-box">🏅</div>
+        <div>
+            <div class="cert-title">${c.title}</div>
+            <div class="cert-issuer">${c.issuer}</div>
+            <div class="cert-year">${c.year}</div>
+        </div>`;
+    certsGrid.appendChild(card);
+});
+
+/* ── Awards ── */
+const awardsGrid=document.getElementById('awards-list');
+const awardIcons=['🏆','🥇','🎖️','🌟','🎗️'];
+D.awards.forEach((a,i)=>{
+    const card=document.createElement('div');
+    card.className='award-card fade-in';
+    card.innerHTML=`
+        <div class="award-icon">${awardIcons[i%awardIcons.length]}</div>
+        <div class="award-title">${a.title}</div>
+        <div class="award-meta">
+            ${a.issuer?`${a.issuer} · `:''}
+            <span>${a.year}</span>
+        </div>`;
+    awardsGrid.appendChild(card);
+});
+
+/* ── Gallery ── */
+const galGrid=document.getElementById('gallery-grid');
+D.gallery.forEach(g=>{
+    const item=document.createElement('div');
+    item.className='gal-item fade-in';
+    item.innerHTML=`
+        <img src="${g.src}" alt="${g.alt}"
+             onerror="this.parentElement.innerHTML='<div class=\\'gal-placeholder\\'>🖼️<br>${g.caption}</div>'">
+        <div class="gal-caption">${g.caption}</div>`;
+    galGrid.appendChild(item);
+});
+
+/* ── Contact ── */
+const contactItems=document.getElementById('contact-items');
+[
+    { icon:'📧', label:'البريد الإلكتروني', val:`<a href="mailto:${D.personal.email}">${D.personal.email}</a>` },
+    { icon:'🏛', label:'الجامعة', val:'جامعة بابل، العراق' },
+    { icon:'🏢', label:'الكلية', val:'كلية تقنية المعلومات' },
+    { icon:'🌐', label:'الموقع', val:`<a href="https://ameerkhadi.github.io/academic-cv-website/" target="_blank">academic-cv-website</a>` }
+].forEach(item=>{
+    const div=document.createElement('div');
+    div.className='contact-item';
+    div.innerHTML=`
+        <div class="c-icon">${item.icon}</div>
+        <div><div class="c-label">${item.label}</div><div class="c-value">${item.val}</div></div>`;
+    contactItems.appendChild(div);
+});
+
+document.getElementById('c-name').textContent  = D.personal.name;
+document.getElementById('c-title').textContent = D.personal.title;
+
+const profileLinks=document.getElementById('contact-profiles');
+[
+    { href:D.personal.linkedin,      icon:'💼', label:'LinkedIn' },
+    { href:D.personal.googleScholar, icon:'🎓', label:'Google Scholar' },
+    { href:D.personal.researchGate,  icon:'🔬', label:'ResearchGate' },
+    { href:D.personal.orcid,         icon:'🆔', label:'ORCID' }
+].forEach(l=>{
+    if(!l.href) return;
+    const a=document.createElement('a');
+    a.href=l.href; a.target='_blank'; a.rel='noopener';
+    a.className='profile-link';
+    a.innerHTML=`${l.icon} ${l.label} <span style="margin-right:auto;color:var(--text-dim)">↗</span>`;
+    profileLinks.appendChild(a);
+});
+
+/* ── Navbar scroll ── */
+const navbar=document.getElementById('navbar');
+window.addEventListener('scroll',()=>{
+    navbar.classList.toggle('scrolled', window.scrollY>60);
+});
+
+/* ── Hamburger ── */
+const hamburger=document.getElementById('hamburger');
+const mobileMenu=document.getElementById('mobileMenu');
+hamburger.addEventListener('click',()=>{
+    mobileMenu.classList.toggle('open');
+    hamburger.classList.toggle('active');
+});
+mobileMenu.querySelectorAll('a').forEach(a=>{
+    a.addEventListener('click',()=>{
+        mobileMenu.classList.remove('open');
+        hamburger.classList.remove('active');
+    });
+});
+
+/* ── Fade-in observer ── */
+function observeFadeIns(){
+    const io=new IntersectionObserver(entries=>{
+        entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
+    },{threshold:.08});
+    document.querySelectorAll('.fade-in:not(.visible)').forEach(el=>io.observe(el));
+}
+observeFadeIns();
+</script>
+</body>
+</html>
