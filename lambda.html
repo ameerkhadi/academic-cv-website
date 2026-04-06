@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Module 6 – Section 5: AWS Lambda</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=IBM+Plex+Mono:wght@400;600&family=Cairo:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#050D1A;--bg2:#071320;--bg3:#0A1929;--bg4:#0D2137;
+  --teal:#00D4AA;--tdim:rgba(0,212,170,.13);
+  --orange:#FF9900;--odim:rgba(255,153,0,.12);
+  --blue:#4FC3F7;--red:#FF6B6B;--green:#69F0AE;--purple:#A78BFA;--yellow:#FFD166;
+  --tx:#E8F4FD;--tx2:#A8C8E8;--tx3:#5A8AAA;
+  --bdr:rgba(0,212,170,.18);--bdr2:rgba(255,153,0,.18);
+}
+body{background:var(--bg);color:var(--tx);font-family:'Outfit',sans-serif;font-size:17px;line-height:1.7;min-height:100vh}
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:var(--teal);border-radius:3px}
+button{font-family:'Outfit',sans-serif;cursor:pointer;transition:all .2s}
+textarea{font-family:'Outfit',sans-serif}
+code,pre{font-family:'IBM Plex Mono',monospace}
+input[type=range]{accent-color:var(--teal);width:100%}
+
+.header{background:var(--bg2);border-bottom:1px solid var(--bdr);padding:18px 24px}
+.header-inner{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.mod-label{color:var(--teal);font-size:13px;font-weight:600}
+.mod-title{color:var(--tx);font-weight:900;font-size:24px}
+.mod-ar{font-family:'Cairo',sans-serif;color:var(--orange);font-size:15px;direction:rtl}
+
+.nav{background:var(--bg2);border-bottom:1px solid var(--bdr);display:flex;gap:4px;padding:8px 16px;overflow-x:auto;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nav-btn{background:transparent;border:1px solid var(--bdr);border-radius:20px;padding:6px 16px;color:var(--tx2);font-size:13px;white-space:nowrap;flex-shrink:0}
+.nav-btn.active{background:var(--tdim);border-color:var(--teal);color:var(--teal);font-weight:700}
+
+.content{max-width:960px;margin:0 auto;padding:32px 24px 80px}
+
+.card{background:var(--bg3);border:1px solid var(--bdr);border-radius:12px;padding:18px 20px;margin:14px 0}
+.card2{background:var(--bg4);border:1px solid var(--bdr);border-radius:8px;padding:12px 14px;margin:6px 0}
+.ar{font-family:'Cairo',sans-serif;direction:rtl;text-align:right;color:var(--teal);font-size:17px;background:var(--tdim);border:1px solid var(--bdr);border-radius:8px;padding:10px 16px;margin:10px 0}
+.ib{border-radius:10px;padding:14px 18px;margin:16px 0;font-size:15px;color:var(--tx2);display:flex;gap:12px;align-items:flex-start}
+.ib-icon{font-size:20px;flex-shrink:0}
+.kt{background:rgba(0,212,170,.07);border:1px solid var(--bdr);border-radius:12px;padding:18px 22px;margin:24px 0}
+.kt-title{color:var(--teal);font-weight:700;font-size:18px;margin-bottom:12px}
+.kt-row{display:flex;gap:10px;margin-bottom:8px;color:var(--tx2);font-size:16px;align-items:flex-start}
+.kt-check{color:var(--teal);font-weight:700;flex-shrink:0}
+
+.badge{display:inline-block;border-radius:20px;padding:2px 12px;font-size:13px;font-weight:600;margin:0 4px 4px 0}
+.sec-num{color:var(--teal);font-weight:900;font-size:36px;margin-bottom:4px}
+.sec-title{color:var(--tx);font-weight:700;font-size:28px;margin-bottom:8px}
+.sub-title{color:var(--tx);font-weight:700;font-size:24px;margin-bottom:6px}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.auto-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+
+.step-btns{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:12px}
+.step-btn{background:transparent;border:1px solid var(--bdr);border-radius:20px;padding:6px 14px;color:var(--tx2);font-size:13px}
+.step-btn.active{background:var(--tdim);border-color:var(--teal);color:var(--teal)}
+.auto-btn{border-radius:20px;padding:6px 14px;font-size:13px;border:1px solid var(--bdr);color:var(--tx2);background:transparent}
+.auto-btn.on{background:var(--odim);border-color:var(--orange);color:var(--orange)}
+
+.step-desc{background:var(--bg4);border:1px solid var(--bdr);border-radius:10px;padding:14px 18px;margin-top:12px;display:none}
+.step-desc.show{display:block}
+.step-desc-title{color:var(--teal);font-weight:700;font-size:16px;margin-bottom:4px}
+.step-desc-body{color:var(--tx2);font-size:15px;margin-bottom:6px}
+.step-desc-code{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--orange);background:var(--bg2);padding:5px 10px;border-radius:6px;display:block}
+
+.legend{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-top:10px;font-size:12px;color:var(--tx3)}
+
+.flip-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin:14px 0}
+.flip-card{cursor:pointer;perspective:600px;height:126px}
+.flip-inner{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform .5s}
+.flip-inner.flipped{transform:rotateY(180deg)}
+.flip-front,.flip-back{position:absolute;inset:0;backface-visibility:hidden;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px;text-align:center}
+.flip-back{transform:rotateY(180deg)}
+.flip-hint{color:var(--tx3);font-size:12px;margin-top:6px}
+
+.quiz-opt{border-radius:8px;padding:9px 14px;margin-bottom:7px;cursor:pointer;font-size:15px;display:flex;gap:10px;align-items:center;transition:all .2s;border:1px solid var(--bdr);background:var(--bg4);color:var(--tx2)}
+.quiz-opt:hover{border-color:var(--teal);color:var(--teal)}
+.quiz-opt.picked{background:var(--tdim);border-color:var(--teal);color:var(--teal)}
+.quiz-opt.correct{background:rgba(105,240,174,.15);border-color:var(--green);color:var(--green)}
+.quiz-opt.wrong{background:rgba(255,107,107,.15);border-color:var(--red);color:var(--red)}
+.quiz-exp{background:rgba(79,195,247,.1);border:1px solid rgba(79,195,247,.3);border-radius:8px;padding:10px 14px;margin-top:8px;color:var(--tx2);font-size:14px;display:none}
+.quiz-exp.show{display:block}
+
+.match-item{border:1px solid var(--bdr);border-radius:8px;padding:10px 14px;margin-bottom:8px;cursor:pointer;font-size:15px;font-weight:600;color:var(--tx2);transition:all .2s;background:var(--bg4);display:flex;gap:8px;align-items:center}
+.match-item.sel{background:var(--tdim);border-color:var(--teal);color:var(--teal)}
+.match-item.done{background:rgba(255,153,0,.1);border-color:var(--orange)}
+.match-item.correct{background:rgba(105,240,174,.15);border-color:var(--green);color:var(--green)}
+.match-item.wrong{background:rgba(255,107,107,.15);border-color:var(--red);color:var(--red)}
+.match-def{border:1px solid var(--bdr);border-radius:8px;padding:10px 14px;margin-bottom:8px;cursor:pointer;font-size:13px;color:var(--tx2);transition:all .2s;background:var(--bg4)}
+.match-def.used{background:rgba(79,195,247,.1);border-color:var(--blue);opacity:.5}
+.match-def:hover:not(.used){border-color:var(--teal)}
+
+table{width:100%;border-collapse:collapse}
+th{padding:8px 12px;color:var(--teal);font-weight:700;text-align:left;border-bottom:1px solid var(--bdr)}
+td{padding:9px 12px;border-bottom:1px solid var(--bdr)}
+tr:nth-child(even){background:var(--bg4)}
+
+.pricebox{background:var(--bg4);border-radius:10px;padding:12px 14px;border-width:1px;border-style:solid}
+.price-val{font-weight:700;font-size:20px;margin-top:4px}
+.price-label{font-size:11px;color:var(--tx3)}
+
+@media(max-width:660px){.grid2,.grid3{grid-template-columns:1fr}.header-inner{flex-direction:column;align-items:flex-start}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div>
+      <div class="mod-label">AWS Academy · Module 6</div>
+      <div class="mod-title">Section 5: Introduction to AWS Lambda</div>
+      <div class="mod-ar">مقدمة إلى AWS Lambda — الحوسبة بدون خوادم</div>
+    </div>
+    <div style="margin-left:auto;display:flex;gap:6px;flex-wrap:wrap">
+      <span class="badge" style="background:rgba(0,212,170,.15);border:1px solid rgba(0,212,170,.4);color:#00D4AA">Serverless</span>
+      <span class="badge" style="background:rgba(255,153,0,.15);border:1px solid rgba(255,153,0,.4);color:#FF9900">Event-Driven</span>
+      <span class="badge" style="background:rgba(167,139,250,.15);border:1px solid rgba(167,139,250,.4);color:#A78BFA">Pay-per-use</span>
+      <span class="badge" style="background:rgba(79,195,247,.15);border:1px solid rgba(79,195,247,.4);color:#4FC3F7">Auto-scaling</span>
+    </div>
+  </div>
+</div>
+
+<nav class="nav" id="main-nav">
+  <button class="nav-btn active" data-tab="overview">⚡ Overview</button>
+  <button class="nav-btn" data-tab="howit">⚙️ How It Works</button>
+  <button class="nav-btn" data-tab="events">🔔 Event Sources</button>
+  <button class="nav-btn" data-tab="usecases">💡 Use Cases</button>
+  <button class="nav-btn" data-tab="limits">📊 Quotas</button>
+  <button class="nav-btn" data-tab="lab">🧪 Labs</button>
+  <button class="nav-btn" data-tab="quiz">📝 Quiz</button>
+</nav>
+
+<div class="content" id="page-content"></div>
+
+<script>
+const S={bg:"#050D1A",bg2:"#071320",bg3:"#0A1929",bg4:"#0D2137",
+  teal:"#00D4AA",tdim:"rgba(0,212,170,.13)",orange:"#FF9900",odim:"rgba(255,153,0,.12)",
+  blue:"#4FC3F7",red:"#FF6B6B",green:"#69F0AE",purple:"#A78BFA",yellow:"#FFD166",
+  tx:"#E8F4FD",tx2:"#A8C8E8",tx3:"#5A8AAA",bdr:"rgba(0,212,170,.18)",bdr2:"rgba(255,153,0,.18)"};
+
+/* ── util ── */
+function el(tag,attrs,children){
+  const e=document.createElement(tag);
+  if(attrs)for(const[k,v]of Object.entries(attrs)){
+    if(k==="style"&&typeof v==="object")Object.assign(e.style,v);
+    else if(k.startsWith("on"))e.addEventListener(k.slice(2).toLowerCase(),v);
+    else if(k==="class")e.className=v;
+    else e.setAttribute(k,v);
+  }
+  if(children){const arr=Array.isArray(children)?children:[children];for(const c of arr.flat(9)){if(c==null)continue;e.appendChild(typeof c==="string"?document.createTextNode(c):c);}}
+  return e;
+}
+function svgEl(tag,attrs,children){
+  const e=document.createElementNS("http://www.w3.org/2000/svg",tag);
+  if(attrs)for(const[k,v]of Object.entries(attrs))e.setAttribute(k,v);
+  if(children){const arr=Array.isArray(children)?children:[children];for(const c of arr.flat(9)){if(c&&typeof c==="object")e.appendChild(c);}}
+  return e;
+}
+function svgTxt(x,y,fill,size,weight,text){
+  const t=svgEl("text",{x,y,"text-anchor":"middle","dominant-baseline":"central",fill,"font-size":size,"font-family":"Outfit,sans-serif","font-weight":weight||400});
+  t.textContent=text;return t;
+}
+function svgRect(x,y,w,h,rx,fill,stroke,sw){
+  return svgEl("rect",{x,y,width:w,height:h,rx:rx||0,fill:fill||"none",stroke:stroke||"none","stroke-width":sw||1});
+}
+function svgPath(d,stroke,sw,dash,markerEnd){
+  const a={d,stroke:stroke||S.teal,fill:"none","stroke-width":sw||1.5};
+  if(dash)a["stroke-dasharray"]=dash;
+  if(markerEnd)a["marker-end"]=markerEnd;
+  return svgEl("path",a);
+}
+function arrowMarker(id,color){
+  const mk=svgEl("marker",{id,viewBox:"0 0 10 10",refX:"8",refY:"5",markerWidth:"5",markerHeight:"5",orient:"auto"});
+  mk.appendChild(svgEl("path",{d:"M2 1L8 5L2 9",fill:"none",stroke:color||S.teal,"stroke-width":"1.8","stroke-linecap":"round"}));
+  return mk;
+}
+function card(children,borderColor,extraStyle){
+  const d=el("div",{class:"card"});
+  if(borderColor)d.style.border=`1px solid ${borderColor}`;
+  if(extraStyle)Object.assign(d.style,extraStyle);
+  [children].flat(9).forEach(c=>{if(c)d.appendChild(typeof c==="string"?document.createTextNode(c):c);});
+  return d;
+}
+function infoBox(type,html){
+  const col=type==="tip"?S.teal:type==="warn"?S.orange:S.purple;
+  const icon=type==="tip"?"💡":type==="warn"?"⚠️":"🔑";
+  const d=el("div",{class:"ib",style:{background:`${col}11`,border:`1px solid ${col}33`}});
+  d.appendChild(el("span",{class:"ib-icon"},icon));
+  const inner=el("div",{});inner.innerHTML=html;d.appendChild(inner);return d;
+}
+function arDiv(text){const d=el("div",{class:"ar"});d.textContent=text;return d;}
+function ktBox(points){
+  const d=el("div",{class:"kt"});
+  d.appendChild(el("div",{class:"kt-title"},"📌 Key Takeaways"));
+  points.forEach(p=>{const r=el("div",{class:"kt-row"});r.appendChild(el("span",{class:"kt-check"},"✓"));r.appendChild(el("span",{},p));d.appendChild(r);});
+  return d;
+}
+function stepBtn(label,i,state,onClick){
+  const b=el("button",{class:`step-btn${state.step===i?" active":""}`,onClick});
+  b.textContent=label;return b;
+}
+function resetBtn(onClick){const b=el("button",{class:"step-btn",onClick});b.textContent="↺ Reset";return b;}
+
+/* ══════════════════════════════════════
+   DIAGRAM 1 — Serverless vs Traditional
+══════════════════════════════════════ */
+function buildDiagServerless(){
+  const steps=[
+    {title:"Traditional Server — Always Running",desc:"A server runs 24/7. You pay even when idle. You provision, patch, and scale it yourself.",hl:["vm0","vm1","vm2"]},
+    {title:"Lambda — Event Triggered",desc:"Lambda runs ONLY when an event fires. No trigger = no code running = no charge.",hl:["trigger","lambda"]},
+    {title:"Lambda Auto-Scales",desc:"Automatically scales to 1,000 concurrent executions. AWS manages all infrastructure.",hl:["lambda","e0","e1","e2"]},
+    {title:"CloudWatch Auto-Monitors",desc:"Every invocation is automatically logged to CloudWatch Logs. No setup required.",hl:["cw","lambda"]},
+  ];
+  const state={step:-1,auto:false,timer:null};
+
+  const ROOT=svgEl("svg",{width:"100%",viewBox:"0 0 840 300",style:"display:block"});
+  const defs=svgEl("defs",{});defs.appendChild(arrowMarker("arSL",S.teal));ROOT.appendChild(defs);
+
+  // static labels
+  ROOT.appendChild(svgTxt(185,14,S.tx2,13,700,"Traditional Server"));
+  ROOT.appendChild(svgTxt(185,28,S.red,10,400,"Always running — always paying"));
+  ROOT.appendChild(svgEl("line",{x1:425,y1:8,x2:425,y2:292,stroke:S.bdr,"stroke-width":1,"stroke-dasharray":"4 4"}));
+  ROOT.appendChild(svgTxt(425,152,S.tx3,16,900,"VS"));
+  ROOT.appendChild(svgTxt(635,14,S.tx2,13,700,"AWS Lambda"));
+  ROOT.appendChild(svgTxt(635,28,S.teal,10,400,"Runs only when triggered — pay per 100ms"));
+
+  // VMs
+  const vmGroups=[];
+  [0,1,2].forEach(i=>{
+    const g=svgEl("g",{"data-id":`vm${i}`});
+    const x=20+i*118;
+    g.appendChild(svgRect(x,42,106,210,8,S.bg4,`${S.red}55`));
+    g.appendChild(svgRect(x+8,50,90,50,4,S.bg2,`${S.red}33`));
+    g.appendChild(svgTxt(x+53,68,S.tx3,8,400,"OS running"));
+    g.appendChild(svgTxt(x+53,82,S.tx3,8,400,"patches needed"));
+    g.appendChild(svgTxt(x+53,118,S.tx3,10,400,"CPU: running"));
+    g.appendChild(svgTxt(x+53,132,S.tx3,10,400,"RAM: allocated"));
+    g.appendChild(svgTxt(x+53,150,S.red,11,600,"$0.10/hr"));
+    g.appendChild(svgTxt(x+53,164,S.red,9,400,"even when idle"));
+    g.appendChild(svgRect(x+8,176,90,18,9,`${S.red}22`,`${S.red}44`));
+    g.appendChild(svgTxt(x+53,185,S.red,9,600,"IDLE 70%"));
+    g.appendChild(svgTxt(x+53,236,S.tx3,9,400,`Server ${i+1}`));
+    ROOT.appendChild(g);vmGroups.push(g);
+  });
+
+  // Trigger
+  const trigG=svgEl("g",{"data-id":"trigger"});
+  trigG.appendChild(svgRect(448,70,116,56,8,S.bg4,`${S.orange}55`));
+  trigG.appendChild(svgTxt(506,93,S.orange,11,700,"🔔 Event Trigger"));
+  trigG.appendChild(svgTxt(506,112,S.tx3,10,400,"S3 / API / Schedule"));
+  ROOT.appendChild(trigG);
+
+  ROOT.appendChild(svgPath("M564 98 L600 98",S.teal,1.5,null,"url(#arSL)"));
+  ROOT.appendChild(svgTxt(582,90,S.teal,10,400,"invoke"));
+
+  // Lambda
+  const lambdaG=svgEl("g",{"data-id":"lambda"});
+  lambdaG.appendChild(svgRect(600,56,130,90,10,S.bg3,S.bdr,1.5));
+  lambdaG.appendChild(svgTxt(665,86,S.teal,26,700,"λ"));
+  lambdaG.appendChild(svgTxt(665,112,S.teal,12,700,"Lambda Function"));
+  lambdaG.appendChild(svgTxt(665,128,S.tx3,10,400,"128 MB – 10,240 MB"));
+  lambdaG.appendChild(svgTxt(665,141,S.tx3,10,400,"1s – 15 min timeout"));
+  ROOT.appendChild(lambdaG);
+
+  const execGs=[];
+  [0,1,2].forEach(i=>{
+    const g=svgEl("g",{"data-id":`e${i}`});
+    g.appendChild(svgRect(604+i*46,162,38,32,6,`${S.teal}22`,S.bdr));
+    g.appendChild(svgTxt(623+i*46,174,S.teal,16,400,"λ"));
+    g.appendChild(svgTxt(623+i*46,187,S.tx3,8,400,`exec ${i+1}`));
+    ROOT.appendChild(g);execGs.push(g);
+  });
+  ROOT.appendChild(svgTxt(665,212,S.tx3,10,400,"scales to 1,000 concurrent"));
+
+  const cwG=svgEl("g",{"data-id":"cw"});
+  cwG.appendChild(svgRect(600,224,130,46,8,S.bg4,`${S.blue}44`));
+  cwG.appendChild(svgTxt(665,244,S.blue,11,700,"📊 CloudWatch"));
+  cwG.appendChild(svgTxt(665,260,S.tx3,10,400,"auto-logs every invocation"));
+  ROOT.appendChild(cwG);
+
+  ROOT.appendChild(svgPath("M665 148 L665 160",S.teal,1,null,"url(#arSL)"));
+  ROOT.appendChild(svgPath("M665 196 L665 222",S.blue,1,"3 2"));
+
+  const payG=svgEl("g",{});
+  payG.appendChild(svgRect(448,196,128,34,8,`${S.teal}15`,S.bdr));
+  payG.appendChild(svgTxt(512,209,S.teal,11,700,"Pay per 100ms"));
+  payG.appendChild(svgTxt(512,223,S.tx3,10,400,"$0 when not running"));
+  ROOT.appendChild(payG);
+
+  function applyState(){
+    const allIds=["vm0","vm1","vm2","trigger","lambda","e0","e1","e2","cw"];
+    allIds.forEach(id=>{
+      const gs=ROOT.querySelectorAll(`[data-id="${id}"]`);
+      gs.forEach(g=>{
+        if(state.step<0){g.style.opacity=1;g.style.filter="none";}
+        else{
+          const isHl=steps[state.step].hl.includes(id);
+          g.style.opacity=isHl?1:0.18;
+          g.style.filter=isHl?`drop-shadow(0 0 9px ${S.teal}99)`:"none";
+        }
+        g.style.transition="all .4s";
+      });
+    });
+  }
+
+  const descBox=el("div",{class:"step-desc"});
+  const descTitle=el("div",{class:"step-desc-title"});
+  const descBody=el("div",{class:"step-desc-body"});
+  descBox.append(descTitle,descBody);
+
+  const btnRow=el("div",{class:"step-btns"});
+  steps.forEach((s,i)=>{
+    const b=el("button",{class:"step-btn",onClick(){
+      state.step=state.step===i?-1:i;state.auto=false;clearInterval(state.timer);
+      autoB.className="auto-btn";autoB.textContent="▶ Auto";
+      updateBtns();applyState();
+      if(state.step>=0){descTitle.textContent=`Step ${state.step+1}: ${steps[state.step].title}`;
+        descBody.textContent=steps[state.step].desc;descBox.classList.add("show");}
+      else descBox.classList.remove("show");
+    }});b.textContent=`Step ${i+1}`;btnRow.appendChild(b);
+  });
+  const autoB=el("button",{class:"auto-btn",onClick(){
+    state.auto=!state.auto;
+    if(state.auto){autoB.className="auto-btn on";autoB.textContent="⏹ Stop";
+      state.timer=setInterval(()=>{state.step=(state.step+1)%steps.length;updateBtns();applyState();
+        descTitle.textContent=`Step ${state.step+1}: ${steps[state.step].title}`;
+        descBody.textContent=steps[state.step].desc;descBox.classList.add("show");},2200);
+    }else{clearInterval(state.timer);autoB.className="auto-btn";autoB.textContent="▶ Auto";}
+  }});autoB.textContent="▶ Auto";btnRow.appendChild(autoB);
+  const rstB=el("button",{class:"step-btn",onClick(){
+    state.step=-1;state.auto=false;clearInterval(state.timer);
+    autoB.className="auto-btn";autoB.textContent="▶ Auto";updateBtns();applyState();descBox.classList.remove("show");
+  }});rstB.textContent="↺";btnRow.appendChild(rstB);
+
+  function updateBtns(){btnRow.querySelectorAll(".step-btn").forEach((b,i)=>{if(i<steps.length)b.className=`step-btn${state.step===i?" active":""}`});}
+
+  const lgd=el("div",{class:"legend"},[
+    el("span",{},[el("span",{style:{color:S.red}},"■")," Traditional Server"]),
+    el("span",{},[el("span",{style:{color:S.teal}},"λ")," Lambda"]),
+    el("span",{},[el("span",{style:{color:S.orange}},"■")," Trigger"]),
+    el("span",{},[el("span",{style:{color:S.blue}},"■")," CloudWatch"]),
+  ]);
+
+  const wrap=card([
+    el("div",{style:{color:S.teal,fontWeight:700,fontSize:17,marginBottom:14,textAlign:"center"}},"⚡ Serverless vs Traditional Server"),
+    ROOT,btnRow,descBox,lgd
+  ]);
+  return wrap;
+}
+
+/* ══════════════════════════════
+   DIAGRAM 2 — Event Sources
+══════════════════════════════ */
+function buildDiagEvents(){
+  const sources=[
+    {id:"s3",icon:"🪣",name:"Amazon S3",type:"Push (async)",col:S.orange,x:30,y:40,ex:"Object uploaded → thumbnail created"},
+    {id:"sns",icon:"📣",name:"Amazon SNS",type:"Push (async)",col:S.orange,x:30,y:130,ex:"Notification published → function processes"},
+    {id:"cw",icon:"⏰",name:"CloudWatch Events",type:"Schedule",col:S.yellow,x:30,y:220,ex:"Every night 22:00 → stop EC2 instances"},
+    {id:"sqs",icon:"📨",name:"Amazon SQS",type:"Pull (poll)",col:S.blue,x:330,y:40,ex:"Lambda polls queue → processes each message"},
+    {id:"ddb",icon:"🗃️",name:"DynamoDB Streams",type:"Pull (poll)",col:S.blue,x:330,y:130,ex:"Table change → Lambda reacts to stream"},
+    {id:"alb",icon:"⚖️",name:"App Load Balancer",type:"Sync (direct)",col:S.purple,x:330,y:220,ex:"HTTP request → Lambda responds synchronously"},
+    {id:"apigw",icon:"🌐",name:"API Gateway",type:"Sync (direct)",col:S.purple,x:620,y:40,ex:"REST API call → Lambda handles request"},
+    {id:"sdk",icon:"💻",name:"CLI / SDK",type:"Direct invoke",col:S.teal,x:620,y:130,ex:"Developer / mobile app → call function"},
+  ];
+  const typeCols={"Push (async)":S.orange,"Schedule":S.yellow,"Pull (poll)":S.blue,"Sync (direct)":S.purple,"Direct invoke":S.teal};
+  let activeId=null;
+
+  const ROOT=svgEl("svg",{width:"100%",viewBox:"0 0 810 320",style:"display:block"});
+  const defs=svgEl("defs",{});defs.appendChild(arrowMarker("arEV",S.teal));ROOT.appendChild(defs);
+
+  // Lambda center
+  const lambdaBox=svgEl("g",{});
+  const lambdaRect=svgRect(330,110,150,100,14,S.bg3,S.bdr,1.5);
+  lambdaBox.appendChild(lambdaRect);
+  lambdaBox.appendChild(svgTxt(405,148,S.teal,30,400,"λ"));
+  lambdaBox.appendChild(svgTxt(405,172,S.teal,12,700,"Lambda"));
+  lambdaBox.appendChild(svgTxt(405,188,S.tx3,10,400,"Function"));
+  lambdaBox.appendChild(svgTxt(405,203,S.tx3,10,400,"your code"));
+  ROOT.appendChild(lambdaBox);
+
+  // lines first (behind nodes)
+  const lineMap={};
+  sources.forEach(src=>{
+    const cx=src.x+72,cy=src.y+36;
+    const lx=src.x>300?480:330,ly=160;
+    const ln=svgEl("path",{d:`M${cx} ${cy} Q${(cx+lx)/2} ${(cy+ly)/2} ${lx} ${ly}`,
+      stroke:`${src.col}33`,fill:"none","stroke-width":"1"});
+    ROOT.appendChild(ln);lineMap[src.id]=ln;
+  });
+
+  // source nodes
+  const nodeMap={};
+  sources.forEach(src=>{
+    const g=svgEl("g",{style:"cursor:pointer"});
+    const rect=svgRect(src.x,src.y,144,72,10,S.bg4,`${src.col}44`);
+    g.appendChild(rect);
+    const iconTxt=svgEl("text",{x:src.x+72,y:src.y+24,"text-anchor":"middle","font-size":"16"});iconTxt.textContent=src.icon;
+    g.appendChild(iconTxt);
+    g.appendChild(svgTxt(src.x+72,src.y+42,src.col,11,700,src.name));
+    g.appendChild(svgTxt(src.x+72,src.y+58,S.tx3,10,400,src.type));
+    g.addEventListener("click",()=>{
+      activeId=activeId===src.id?null:src.id;
+      updateEvtState();updateDesc();
+    });
+    ROOT.appendChild(g);nodeMap[src.id]=g;
+  });
+
+  function updateEvtState(){
+    sources.forEach(src=>{
+      const isActive=activeId===src.id;
+      const r=nodeMap[src.id].querySelector("rect");
+      r.setAttribute("fill",isActive?`${src.col}22`:S.bg4);
+      r.setAttribute("stroke",isActive?src.col:`${src.col}44`);
+      r.setAttribute("stroke-width",isActive?2:1);
+      nodeMap[src.id].style.filter=isActive?`drop-shadow(0 0 8px ${src.col}66)`:"none";
+      const ln=lineMap[src.id];
+      ln.setAttribute("stroke",isActive?src.col:`${src.col}33`);
+      ln.setAttribute("stroke-width",isActive?2:1);
+      if(isActive)ln.setAttribute("marker-end","url(#arEV)");else ln.removeAttribute("marker-end");
+      if(src.type.includes("Pull"))ln.setAttribute("stroke-dasharray","5 3");else ln.removeAttribute("stroke-dasharray");
+      lambdaRect.setAttribute("stroke",activeId?S.teal:S.bdr);
+      lambdaRect.setAttribute("stroke-width",activeId?2:1.5);
+    });
+  }
+
+  const descBox=el("div",{class:"step-desc"});
+  function updateDesc(){
+    if(!activeId){descBox.classList.remove("show");return;}
+    const src=sources.find(s=>s.id===activeId);
+    const tc=typeCols[src.type];
+    descBox.innerHTML=`<div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+      <span style="font-size:22px">${src.icon}</span>
+      <span style="color:${src.col};font-weight:700;font-size:16px">${src.name}</span>
+      <span style="background:${tc}22;border:1px solid ${tc}55;border-radius:20px;padding:2px 10px;font-size:12px;color:${tc}">${src.type}</span>
+    </div>
+    <div style="color:${S.tx2};font-size:15px">📌 Example: <em>${src.ex}</em></div>`;
+    descBox.classList.add("show");
+  }
+
+  const lgd=el("div",{class:"legend"});
+  Object.entries(typeCols).forEach(([t,c])=>{
+    const s=el("span",{},[el("span",{style:{color:c}},"■"),` ${t}`]);lgd.appendChild(s);
+  });
+
+  const wrap=card([
+    el("div",{style:{color:S.orange,fontWeight:700,fontSize:17,marginBottom:14,textAlign:"center"}},"🔔 Lambda Event Sources — Click Any Source"),
+    ROOT,
+    el("div",{style:{color:S.tx3,textAlign:"center",fontSize:13,marginTop:4}},"Click a source to see how it triggers Lambda"),
+    descBox,lgd
+  ]);
+  return wrap;
+}
+
+/* ══════════════════════════════
+   DIAGRAM 3 — S3 Thumbnail
+══════════════════════════════ */
+function buildDiagS3(){
+  const steps=[
+    {title:"User Uploads Image to S3",desc:"User uploads a .jpg or .png to the source S3 bucket — fires an object-created event.",hl:["user","srcbucket"],tech:"aws s3 cp photo.jpg s3://source-bucket/"},
+    {title:"S3 Detects Object-Created Event",desc:"S3 automatically detects the object-created event — no polling required.",hl:["srcbucket","evtarrow"],tech:'Event: { "bucket": "source-bucket", "key": "photo.jpg" }'},
+    {title:"S3 Invokes Lambda Function",desc:"S3 publishes the event to Lambda asynchronously, passing bucket + key.",hl:["evtarrow","lambda"],tech:"Lambda receives: bucket name + object key in event payload"},
+    {title:"Lambda Assumes Execution Role",desc:"Lambda runs with the IAM execution role — grants read from source, write to target bucket.",hl:["lambda","iam"],tech:"IAM Role: s3:GetObject (source) + s3:PutObject (target)"},
+    {title:"Thumbnail Created & Saved",desc:"Function reads image, resizes using graphics library, saves thumbnail to target bucket.",hl:["lambda","dstbucket"],tech:"PIL: img.thumbnail((128,128)); s3.put_object(Bucket='target', ...)"},
+  ];
+  const state={step:-1,auto:false,timer:null};
+
+  const ROOT=svgEl("svg",{width:"100%",viewBox:"0 0 820 210",style:"display:block"});
+  const defs=svgEl("defs",{});defs.appendChild(arrowMarker("arS3",S.teal));ROOT.appendChild(defs);
+
+  function mk(id,children){const g=svgEl("g",{"data-id":id});children.forEach(c=>g.appendChild(c));ROOT.appendChild(g);return g;}
+
+  mk("user",[svgRect(10,65,110,80,10,S.bg4,`${S.blue}55`),svgTxt(65,96,S.blue,22,400,"👤"),svgTxt(65,118,S.blue,11,700,"User"),svgTxt(65,133,S.tx3,10,400,"uploads .jpg/.png")]);
+  ROOT.appendChild(svgPath("M120 105 L158 105",S.teal,1.5,null,"url(#arS3)"));
+  ROOT.appendChild(svgTxt(139,99,S.teal,10,400,"PUT"));
+  ROOT.appendChild(svgTxt(65,60,S.teal,14,700,"①"));
+
+  mk("srcbucket",[svgRect(158,55,120,100,10,S.bg4,`${S.orange}55`),svgTxt(218,86,S.orange,20,400,"🪣"),svgTxt(218,107,S.orange,11,700,"Source Bucket"),svgTxt(218,123,S.tx3,10,400,"photo.jpg stored"),svgTxt(218,139,S.tx3,10,400,"event detected")]);
+  ROOT.appendChild(svgTxt(218,50,S.teal,14,700,"②"));
+
+  const evtG=mk("evtarrow",[svgPath("M278 105 L318 105",S.orange,1.5,null,"url(#arS3)"),svgRect(280,84,38,18,4,`${S.orange}22`,"none"),svgTxt(299,93,S.orange,10,600,"EVENT")]);
+  ROOT.appendChild(svgTxt(298,78,S.teal,14,700,"③"));
+
+  mk("lambda",[svgRect(318,44,148,122,12,S.bg3,S.bdr,1.5),svgTxt(392,82,S.teal,28,400,"λ"),svgTxt(392,104,S.teal,12,700,"Lambda Function"),svgTxt(392,120,S.tx3,10,400,"resize_image(event)"),svgTxt(392,136,S.tx3,10,400,"Python + PIL layer"),svgTxt(392,152,S.tx3,10,400,"memory: 128 MB")]);
+  ROOT.appendChild(svgTxt(392,40,S.teal,14,700,"④"));
+
+  mk("iam",[svgRect(326,178,132,28,6,`${S.purple}20`,`${S.purple}55`),svgTxt(392,192,S.purple,10,600,"🔑 IAM Execution Role")]);
+  ROOT.appendChild(svgPath("M392 166 L392 176",S.purple,1,"3 2"));
+
+  ROOT.appendChild(svgPath("M466 105 L506 105",S.teal,1.5,null,"url(#arS3)"));
+  ROOT.appendChild(svgTxt(486,99,S.teal,10,400,"PUT"));
+
+  mk("dstbucket",[svgRect(506,55,130,100,10,S.bg4,`${S.teal}55`),svgTxt(571,84,S.teal,20,400,"🪣"),svgTxt(571,104,S.teal,11,700,"Target Bucket"),svgTxt(571,120,S.tx3,10,400,"thumb_photo.jpg"),svgTxt(571,136,S.tx3,10,400,"128×128 px saved"),svgTxt(571,148,S.green,10,400,"✓ Done")]);
+  ROOT.appendChild(svgTxt(571,50,S.teal,14,700,"⑤"));
+
+  function applyState(){
+    ["user","srcbucket","evtarrow","lambda","iam","dstbucket"].forEach(id=>{
+      const g=ROOT.querySelector(`[data-id="${id}"]`);if(!g)return;
+      if(state.step<0){g.style.opacity=1;g.style.filter="none";}
+      else{const hl=steps[state.step].hl.includes(id);g.style.opacity=hl?1:0.18;g.style.filter=hl?`drop-shadow(0 0 10px ${S.teal}99)`:"none";}
+      g.style.transition="all .4s";
+    });
+  }
+
+  const descBox=el("div",{class:"step-desc"});
+  const dTitle=el("div",{class:"step-desc-title"});
+  const dBody=el("div",{class:"step-desc-body"});
+  const dCode=el("code",{class:"step-desc-code"});
+  descBox.append(dTitle,dBody,dCode);
+
+  const btnRow=el("div",{class:"step-btns"});
+  steps.forEach((s,i)=>{
+    const b=el("button",{class:"step-btn",onClick(){
+      state.step=state.step===i?-1:i;state.auto=false;clearInterval(state.timer);autoB.className="auto-btn";autoB.textContent="▶ Auto";
+      updateBtns2();applyState();
+      if(state.step>=0){dTitle.textContent=`Step ${state.step+1}: ${steps[state.step].title}`;dBody.textContent=steps[state.step].desc;dCode.textContent=steps[state.step].tech;descBox.classList.add("show");}
+      else descBox.classList.remove("show");
+    }});b.textContent=`Step ${i+1}`;btnRow.appendChild(b);
+  });
+  const autoB=el("button",{class:"auto-btn",onClick(){
+    state.auto=!state.auto;
+    if(state.auto){autoB.className="auto-btn on";autoB.textContent="⏹ Stop";
+      state.timer=setInterval(()=>{state.step=(state.step+1)%steps.length;updateBtns2();applyState();dTitle.textContent=`Step ${state.step+1}: ${steps[state.step].title}`;dBody.textContent=steps[state.step].desc;dCode.textContent=steps[state.step].tech;descBox.classList.add("show");},2400);
+    }else{clearInterval(state.timer);autoB.className="auto-btn";autoB.textContent="▶ Auto";}
+  }});autoB.textContent="▶ Auto";btnRow.appendChild(autoB);
+  const rstB=el("button",{class:"step-btn",onClick(){state.step=-1;state.auto=false;clearInterval(state.timer);autoB.className="auto-btn";autoB.textContent="▶ Auto";updateBtns2();applyState();descBox.classList.remove("show");}});rstB.textContent="↺";btnRow.appendChild(rstB);
+  function updateBtns2(){btnRow.querySelectorAll(".step-btn").forEach((b,i)=>{if(i<steps.length)b.className=`step-btn${state.step===i?" active":""}`});}
+
+  return card([
+    el("div",{style:{color:S.orange,fontWeight:700,fontSize:17,marginBottom:14,textAlign:"center"}},"🖼️ Use Case: S3 Image Thumbnail — Event-Based Lambda"),
+    ROOT,btnRow,descBox
+  ],S.bdr2);
+}
+
+/* ══════════════════════════════
+   DIAGRAM 4 — Scheduled EC2
+══════════════════════════════ */
+function buildDiagScheduled(){
+  const steps=[
+    {title:"22:00 GMT — CloudWatch Fires Stop Rule",desc:"CloudWatch Events rule scheduled for 22:00 GMT invokes the Stop Lambda function.",hl:["cw","stopfn"]},
+    {title:"Lambda Stops EC2 Instances",desc:"Stop function runs with its IAM role (ec2:StopInstances). Instances enter STOPPED state.",hl:["stopfn","iam","ec2"]},
+    {title:"EC2 Stopped — Zero Compute Cost",desc:"Stopped instances incur no compute charges. Saves ~65% of dev/test runtime costs.",hl:["ec2"]},
+    {title:"05:00 GMT — CloudWatch Fires Start Rule",desc:"A second rule fires at 05:00 GMT, invoking the Start Lambda before business hours.",hl:["cw","startfn"]},
+    {title:"Lambda Starts EC2 Instances",desc:"Start function runs with IAM role (ec2:StartInstances). Instances enter RUNNING state.",hl:["startfn","iam","ec2"]},
+  ];
+  const state={step:-1};
+
+  const ROOT=svgEl("svg",{width:"100%",viewBox:"0 0 780 200",style:"display:block"});
+  const defs=svgEl("defs",{});defs.appendChild(arrowMarker("arSC",S.teal));ROOT.appendChild(defs);
+
+  function mk(id,children){const g=svgEl("g",{"data-id":id});children.forEach(c=>g.appendChild(c));ROOT.appendChild(g);return g;}
+
+  mk("cw",[svgRect(14,62,150,80,10,S.bg4,`${S.yellow}55`),svgTxt(89,89,S.yellow,18,400,"⏰"),svgTxt(89,108,S.yellow,11,700,"CloudWatch Events"),svgTxt(89,122,S.tx3,10,400,"22:00 GMT → STOP"),svgTxt(89,136,S.tx3,10,400,"05:00 GMT → START")]);
+  const arStop=svgPath("M164 88 L224 88",S.red,1.5,null,"url(#arSC)");ROOT.appendChild(arStop);
+  ROOT.appendChild(svgTxt(194,82,S.red,10,400,"22:00"));
+  mk("stopfn",[svgRect(224,44,118,82,10,S.bg3,`${S.red}55`),svgTxt(283,72,S.red,22,400,"λ"),svgTxt(283,91,S.red,11,700,"Stop Function"),svgTxt(283,106,S.tx3,10,400,"ec2.stop_instances()"),svgTxt(283,120,S.tx3,9,400,"Python runtime")]);
+  const arStart=svgPath("M164 116 L224 136",S.teal,1.5,null,"url(#arSC)");ROOT.appendChild(arStart);
+  ROOT.appendChild(svgTxt(190,138,S.teal,10,400,"05:00"));
+  mk("startfn",[svgRect(224,134,118,56,10,S.bg3,S.bdr),svgTxt(283,156,S.teal,18,400,"λ"),svgTxt(283,173,S.teal,11,700,"Start Function"),svgTxt(283,185,S.tx3,9,400,"ec2.start_instances()")]);
+  ROOT.appendChild(svgPath("M342 85 L378 103",S.purple,1,null,"url(#arSC)"));
+  ROOT.appendChild(svgPath("M342 158 L378 114",S.purple,1,null,"url(#arSC)"));
+  mk("iam",[svgRect(380,88,134,38,8,`${S.purple}20`,`${S.purple}55`),svgTxt(447,103,S.purple,10,700,"🔑 IAM Role"),svgTxt(447,118,S.tx3,9,400,"ec2:StopInstances / StartInstances")]);
+  ROOT.appendChild(svgPath("M514 107 L554 107",S.teal,1.5,null,"url(#arSC)"));
+
+  const ec2G=svgEl("g",{"data-id":"ec2"});
+  [0,1,2].forEach(i=>{
+    ec2G.appendChild(svgRect(554+i*70,62,60,80,8,S.bg4,S.bdr));
+    ec2G.appendChild(svgRect(560+i*70,68,48,28,3,S.bg2,"none"));
+    ec2G.appendChild(svgTxt(584+i*70,78,S.tx3,7,400,"EC2"));
+    ec2G.appendChild(svgTxt(584+i*70,89,S.tx3,7,400,`inst ${i+1}`));
+    ec2G.appendChild(svgRect(564+i*70,102,40,14,7,`${S.teal}22`,"none"));
+  });
+  ec2G.appendChild(svgRect(554,158,210,24,6,`${S.green}15`,`${S.green}33`));
+  ec2G.appendChild(svgTxt(659,170,S.green,10,600,"Saves ~65% dev/test compute costs"));
+  ROOT.appendChild(ec2G);
+
+  function applyState(){
+    ["cw","stopfn","startfn","iam","ec2"].forEach(id=>{
+      const g=ROOT.querySelector(`[data-id="${id}"]`);if(!g)return;
+      if(state.step<0){g.style.opacity=1;g.style.filter="none";}
+      else{const hl=steps[state.step].hl.includes(id);g.style.opacity=hl?1:0.18;g.style.filter=hl?`drop-shadow(0 0 10px ${S.teal}88)`:"none";}
+      g.style.transition="all .4s";
+    });
+  }
+
+  const descBox=el("div",{class:"step-desc"});
+  const dTitle=el("div",{class:"step-desc-title"});
+  const dBody=el("div",{class:"step-desc-body"});
+  descBox.append(dTitle,dBody);
+
+  const btnRow=el("div",{class:"step-btns"});
+  steps.forEach((s,i)=>{
+    const b=el("button",{class:"step-btn",onClick(){
+      state.step=state.step===i?-1:i;updateBtns();applyState();
+      if(state.step>=0){dTitle.textContent=`Step ${state.step+1}: ${steps[state.step].title}`;dBody.textContent=steps[state.step].desc;descBox.classList.add("show");}
+      else descBox.classList.remove("show");
+    }});b.textContent=`Step ${i+1}`;btnRow.appendChild(b);
+  });
+  const rstB=el("button",{class:"step-btn",onClick(){state.step=-1;updateBtns();applyState();descBox.classList.remove("show");}});rstB.textContent="↺";btnRow.appendChild(rstB);
+  function updateBtns(){btnRow.querySelectorAll(".step-btn").forEach((b,i)=>{if(i<steps.length)b.className=`step-btn${state.step===i?" active":""}`});}
+
+  return card([
+    el("div",{style:{color:S.yellow,fontWeight:700,fontSize:17,marginBottom:14,textAlign:"center"}},"⏰ Use Case: Scheduled Lambda — Auto Stop/Start EC2"),
+    ROOT,btnRow,descBox
+  ]);
+}
+
+/* ══════════════════════════════
+   FLIP CARDS
+══════════════════════════════ */
+function buildFlipCards(){
+  const cards=[
+    {t:"AWS Lambda",d:"Event-driven serverless compute. Run code without servers. Pay per 100ms.",c:S.teal},
+    {t:"Serverless Computing",d:"Build apps without provisioning or managing servers. AWS handles all infrastructure.",c:S.blue},
+    {t:"Lambda Function",d:"Custom code you upload. Triggered by events. Supports Python, Node.js, Java, Go, C#, Ruby, PowerShell.",c:S.orange},
+    {t:"Event Source",d:"AWS service or app producing events that trigger Lambda — S3, SNS, SQS, API Gateway, CloudWatch.",c:S.purple},
+    {t:"Execution Role",d:"IAM role granting Lambda permission to call other AWS services during execution.",c:S.purple},
+    {t:"Lambda Layer",d:"Shared ZIP of libraries/runtime. Attach to multiple functions. Avoids 250 MB deployment limit.",c:S.orange},
+    {t:"Step Functions",d:"Orchestrates multiple Lambda functions with sequential, parallel, branching, and error-handling steps.",c:S.blue},
+    {t:"Lambda Quotas",d:"Max memory: 10,240 MB. Max timeout: 15 min (hard). Concurrent: 1,000/Region (soft). Package: 250 MB.",c:S.red},
+  ];
+  const grid=el("div",{class:"flip-grid"});
+  cards.forEach(c=>{
+    const inner=el("div",{class:"flip-inner"});
+    const front=el("div",{class:"flip-front",style:{background:S.bg3,border:`1px solid ${c.c}55`}});
+    front.appendChild(el("div",{style:{color:c.c,fontWeight:700,fontSize:15}},c.t));
+    front.appendChild(el("div",{class:"flip-hint"},"Click to reveal"));
+    const back=el("div",{class:"flip-back",style:{background:`${c.c}18`,border:`1px solid ${c.c}55`}});
+    back.appendChild(el("div",{style:{color:S.tx2,fontSize:12,lineHeight:1.5}},c.d));
+    inner.append(front,back);
+    const wrap=el("div",{class:"flip-card",onClick(){inner.classList.toggle("flipped");}});
+    wrap.appendChild(inner);grid.appendChild(wrap);
+  });
+  return el("div",{},[
+    el("div",{style:{color:S.tx2,fontWeight:700,fontSize:17,marginBottom:14}},"🃏 Flip Cards — Click to Reveal"),
+    grid
+  ]);
+}
+
+/* ══════════════════════════════
+   PRICING CALCULATOR
+══════════════════════════════ */
+function buildPricingCalc(){
+  const state={reqs:1000000,ms:200,mem:512};
+  const wrap=card([],S.teal);
+  wrap.appendChild(el("div",{style:{color:S.teal,fontWeight:700,fontSize:17,marginBottom:6}},"💰 Lab: Lambda Pricing Calculator"));
+  wrap.appendChild(arDiv("احسب كلفة Lambda بناءً على عدد الطلبات والذاكرة ومدة التنفيذ"));
+
+  const sliderGrid=el("div",{style:{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:16,margin:"14px 0"}});
+  const valLabels={};
+  [
+    {key:"reqs",label:"Monthly Requests",min:100000,max:100000000,step:100000,fmt:v=>(v/1000000).toFixed(1)+"M",col:S.orange},
+    {key:"ms",label:"Avg Duration (ms)",min:1,max:15000,step:10,fmt:v=>v+"ms",col:S.blue},
+    {key:"mem",label:"Memory (MB)",min:128,max:10240,step:128,fmt:v=>v+" MB",col:S.purple},
+  ].forEach(({key,label,min,max,step,fmt,col})=>{
+    const box=el("div",{});
+    box.appendChild(el("div",{style:{color:S.tx2,fontSize:13,marginBottom:6}},label));
+    const slider=el("input",{type:"range",min,max,step,value:state[key],style:{accentColor:col}});
+    const valLbl=el("div",{style:{color:col,fontWeight:700,fontSize:18,marginTop:4,textAlign:"center"}},fmt(state[key]));
+    valLabels[key]={lbl:valLbl,fmt};
+    slider.addEventListener("input",e=>{state[key]=+e.target.value;valLbl.textContent=fmt(state[key]);updatePrice();});
+    box.append(slider,valLbl);sliderGrid.appendChild(box);
+  });
+  wrap.appendChild(sliderGrid);
+
+  const resultGrid=el("div",{style:{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(150px,1fr))",gap:10}});
+  const boxes={};
+  [
+    {key:"gbs",label:"GB-seconds used",col:S.blue},
+    {key:"free",label:"Free tier left",col:S.green},
+    {key:"reqcost",label:"Request cost",col:S.orange},
+    {key:"compcost",label:"Compute cost",col:S.blue},
+    {key:"total",label:"Total monthly",col:S.teal,big:true},
+  ].forEach(({key,label,col,big})=>{
+    const b=el("div",{class:"pricebox",style:{borderColor:`${col}33`}});
+    b.appendChild(el("div",{class:"price-label"},label));
+    const v=el("div",{class:"price-val",style:{color:col,fontSize:big?"22px":"18px"}},"...");
+    b.appendChild(v);resultGrid.appendChild(b);boxes[key]=v;
+  });
+  wrap.appendChild(resultGrid);
+
+  function updatePrice(){
+    const freeReqs=1000000,freeGB=400000,priceReq=0.20,priceGBs=0.0000166667;
+    const gbSec=state.reqs*(state.ms/1000)*(state.mem/1024);
+    const billReq=Math.max(0,state.reqs-freeReqs);
+    const billGB=Math.max(0,gbSec-freeGB);
+    const costReq=(billReq/1000000)*priceReq;
+    const costComp=billGB*priceGBs;
+    const total=costReq+costComp;
+    const fmt=n=>n<0.01?"< $0.01":`$${n.toFixed(4)}`;
+    boxes.gbs.textContent=(gbSec/1000).toFixed(1)+"K";
+    boxes.free.textContent=Math.max(0,(freeGB-gbSec)/1000).toFixed(1)+"K GB-s";
+    boxes.reqcost.textContent=fmt(costReq);
+    boxes.compcost.textContent=fmt(costComp);
+    boxes.total.textContent=total<0.01?"< $0.01 (Free)":fmt(total);
+  }
+  updatePrice();
+
+  const note=el("div",{style:{background:`${S.green}15`,border:`1px solid ${S.green}33`,borderRadius:8,padding:"12px 16px",marginTop:12}});
+  note.appendChild(el("div",{style:{color:S.green,fontWeight:700,fontSize:14,marginBottom:3}},"🎁 Lambda Free Tier (always free, every month):"));
+  note.appendChild(el("div",{style:{color:S.tx2,fontSize:13}},"1,000,000 free requests + 400,000 GB-seconds compute. Great for prototyping."));
+  wrap.appendChild(note);
+  return wrap;
+}
+
+/* ══════════════════════════════
+   MATCH LAB
+══════════════════════════════ */
+function buildMatchLab(){
+  const items=["AWS Lambda","Event Source","Execution Role","Lambda Layer","Step Functions"];
+  const defs2=["Event-driven serverless compute — runs code without managing servers",
+    "AWS service or app producing events that trigger Lambda (e.g. S3, SNS, SQS)",
+    "IAM role granting Lambda permission to call other AWS services",
+    "ZIP of shared libraries/runtime — avoids 250 MB deployment package limit",
+    "Orchestrates multiple Lambda functions with sequential, parallel, or branching workflows"];
+  const state={answers:{},sel:null,checked:false};
+  const wrap=card([]);
+  wrap.appendChild(el("div",{style:{color:S.teal,fontWeight:700,fontSize:17,marginBottom:6}},"🧪 Lab: Match Concept → Definition"));
+  wrap.appendChild(el("div",{style:{color:S.tx3,fontSize:13,marginBottom:14}},"① Click a concept → ② Click its correct definition"));
+
+  const grid=el("div",{style:{display:"grid",gridTemplateColumns:"1fr 1fr",gap:16}});
+  const leftCol=el("div",{});
+  const rightCol=el("div",{});
+  grid.append(
+    el("div",{},[el("div",{style:{color:S.tx2,fontWeight:600,fontSize:13,marginBottom:8}},"Concepts:"),leftCol]),
+    el("div",{},[el("div",{style:{color:S.tx2,fontWeight:600,fontSize:13,marginBottom:8}},"Definitions:"),rightCol])
+  );
+  wrap.appendChild(grid);
+
+  const checkBtn=el("button",{style:{background:S.bg4,border:`1px solid ${S.bdr}`,borderRadius:8,padding:"10px 20px",color:"gray",fontSize:15,fontWeight:700,fontFamily:"Outfit,sans-serif",cursor:"not-allowed"},onClick(){
+    if(state.checked||Object.keys(state.answers).length<items.length)return;
+    state.checked=true;renderMatch();
+    const score=items.filter((_,i)=>state.answers[i]===i).length;
+    resultDiv.textContent=`Score: ${score}/${items.length} — ${score===items.length?"🎉 Perfect!":"Review highlighted items."}`;
+    resultDiv.style.display="block";
+    resultDiv.style.background=score===items.length?`${S.green}15`:`${S.orange}15`;
+    resultDiv.style.borderColor=score===items.length?`${S.green}44`:`${S.orange}44`;
+    resultDiv.style.color=score===items.length?S.green:S.orange;
+  }});checkBtn.textContent="✓ Check Answers";
+  const rstBtn=el("button",{style:{background:"transparent",border:`1px solid ${S.bdr}`,borderRadius:8,padding:"10px 20px",color:S.tx2,fontSize:15,fontFamily:"Outfit,sans-serif"},onClick(){
+    state.answers={};state.sel=null;state.checked=false;resultDiv.style.display="none";renderMatch();
+  }});rstBtn.textContent="↺ Reset";
+  const resultDiv=el("div",{style:{display:"none",borderRadius:10,padding:"12px 16px",marginTop:10,border:"1px solid",fontWeight:700}});
+  wrap.append(el("div",{style:{display:"flex",gap:10,marginTop:12}},[ checkBtn,rstBtn]),resultDiv);
+
+  function renderMatch(){
+    leftCol.innerHTML="";rightCol.innerHTML="";
+    const allDone=Object.keys(state.answers).length===items.length;
+    checkBtn.style.background=allDone&&!state.checked?S.teal:S.bg4;
+    checkBtn.style.color=allDone&&!state.checked?S.bg:"gray";
+    checkBtn.style.borderColor=allDone&&!state.checked?S.teal:S.bdr;
+    checkBtn.style.cursor=allDone&&!state.checked?"pointer":"not-allowed";
+
+    items.forEach((item,i)=>{
+      const isMatch=state.answers[i]!==undefined;
+      const correct=state.answers[i]===i;
+      let cls="match-item";
+      if(state.checked)cls+=correct?" correct":" wrong";
+      else if(state.sel===i)cls+=" sel";
+      else if(isMatch)cls+=" done";
+      const d=el("div",{class:cls,onClick(){
+        if(state.checked)return;state.sel=state.sel===i?null:i;renderMatch();
+      }});
+      if(state.checked)d.appendChild(el("span",{},correct?"✅":"❌"));
+      d.appendChild(el("span",{},item));
+      if(isMatch&&!state.checked)d.appendChild(el("span",{style:{marginLeft:"auto",color:S.tx3,fontSize:11}},"→ matched"));
+      leftCol.appendChild(d);
+    });
+
+    defs2.forEach((def,i)=>{
+      const used=Object.values(state.answers).includes(i)&&!state.checked;
+      const d=el("div",{class:`match-def${used?" used":""}`,onClick(){
+        if(state.checked||state.sel===null)return;
+        state.answers[state.sel]=i;state.sel=null;renderMatch();
+      }});d.textContent=def;rightCol.appendChild(d);
+    });
+  }
+  renderMatch();
+  return wrap;
+}
+
+/* ══════════════════════════════
+   QUIZ
+══════════════════════════════ */
+const QUIZ_QS=[
+  {q:"What is the core characteristic of AWS Lambda?",opts:["Requires dedicated EC2 instances","Event-driven, serverless — code runs only when triggered","Only supports Python","Needs a Kubernetes cluster"],a:1,exp:"Lambda is event-driven and serverless. Code runs only when triggered. AWS manages ALL infrastructure."},
+  {q:"How is AWS Lambda billed?",opts:["Per hour of server uptime","Per GB of storage","Per 100ms of compute time — $0 when not running","Per number of functions created"],a:2,exp:"Lambda bills per 100ms of actual execution. When code is not running there is no charge. Free tier: 1M requests + 400,000 GB-seconds/month."},
+  {q:"Which languages does Lambda natively support?",opts:["Only Python and Node.js","Only Java and Go","Java, Go, PowerShell, Node.js, C#, Python, Ruby","Only compiled languages"],a:2,exp:"Lambda natively supports Java, Go, PowerShell, Node.js, C#, Python, and Ruby. Custom runtimes are also supported."},
+  {q:"What is an 'event source' in Lambda?",opts:["The IAM role attached to Lambda","An AWS service or app producing events that trigger Lambda","A CloudWatch log group","The deployment package"],a:1,exp:"An event source is any AWS service or developer-created app producing events that trigger a Lambda function."},
+  {q:"Which services invoke Lambda ASYNCHRONOUSLY by pushing events?",opts:["API Gateway and ALB","S3, SNS, and CloudWatch Events","DynamoDB and SQS","Lambda console and CLI"],a:1,exp:"S3, Amazon SNS, and CloudWatch Events push events to Lambda asynchronously. SQS/DynamoDB use pull polling."},
+  {q:"Maximum memory for a single Lambda function?",opts:["1,024 MB","4,096 MB","10,240 MB","512 MB"],a:2,exp:"Maximum memory is 10,240 MB (10 GB). Minimum is 128 MB. More memory also increases vCPU allocation."},
+  {q:"Maximum execution timeout for a Lambda function?",opts:["5 minutes","10 minutes","15 minutes","1 hour"],a:2,exp:"Maximum timeout is 15 minutes — a hard limit that cannot be increased. Minimum is 1 second."},
+  {q:"What is an 'execution role' in Lambda?",opts:["The function source code","IAM role granting Lambda permission to call other AWS services","CloudWatch monitoring config","Deployment package ZIP"],a:1,exp:"An execution role is an IAM role attached to Lambda defining which AWS services it can interact with during execution."},
+  {q:"What is a Lambda Layer?",opts:["A VPC subnet","ZIP of shared libraries/runtime shared across functions","A CloudWatch alarm","An API Gateway stage"],a:1,exp:"A Lambda Layer is a ZIP of libraries, a custom runtime, or other dependencies shared across functions to avoid the 250 MB limit."},
+  {q:"Maximum deployment package size (without container image)?",opts:["50 MB","100 MB","250 MB","1 GB"],a:2,exp:"Deployment package limit is 250 MB unzipped. For larger workloads, deploy Lambda as a container image (up to 10 GB)."},
+  {q:"Default soft limit for concurrent Lambda executions per Region?",opts:["100","500","1,000","10,000"],a:2,exp:"Default soft limit is 1,000 concurrent executions per Region. Soft limits can be raised via AWS Support ticket."},
+  {q:"How does Lambda handle fault tolerance?",opts:["Manual failover needed","Maintains capacity across multiple AZs automatically — no maintenance windows","Requires ECS","Manual multi-Region deployment"],a:1,exp:"Lambda runs across multiple Availability Zones automatically. No maintenance windows or scheduled downtimes."},
+  {q:"What does CloudWatch provide for Lambda?",opts:["Provisions Lambda infrastructure","Automatically logs all requests and stores function-generated logs","Manages IAM permissions","Controls Lambda pricing"],a:1,exp:"Lambda sends all invocation metrics and function-generated logs to CloudWatch automatically."},
+  {q:"Which service orchestrates multiple Lambda functions for complex workflows?",opts:["Amazon SQS","AWS Step Functions","Amazon SNS","AWS CloudFormation"],a:1,exp:"AWS Step Functions orchestrates Lambda functions for complex tasks using sequential, parallel, branching, and error-handling workflows."},
+  {q:"SQS triggers Lambda using which invocation model?",opts:["Push (async) — SQS pushes to Lambda","Pull (poll) — Lambda polls the SQS queue","Sync — SQS calls Lambda and waits","Scheduled time-based"],a:1,exp:"SQS uses the pull (poll) model. Lambda polls the queue and processes messages. SQS does NOT push events directly to Lambda."},
+];
+
+function buildQuiz(){
+  const state={sel:{},shown:{},score:null};
+  const wrap=el("div",{style:{margin:"24px 0"}});
+  wrap.appendChild(el("div",{style:{color:S.teal,fontWeight:700,fontSize:22,marginBottom:6}},"📝 Assessment Quiz — 15 Questions"));
+  wrap.appendChild(el("div",{style:{color:S.tx3,fontSize:14,marginBottom:20}},"AWS Lambda & Serverless — Hard level 🔴"));
+  const scoreDiv=el("div",{style:{display:"none",borderRadius:12,padding:"16px 20px",marginBottom:20,fontSize:18,fontWeight:700,textAlign:"center",border:"1px solid"}});
+  wrap.appendChild(scoreDiv);
+
+  const qDivs=[];
+  QUIZ_QS.forEach((q,qi)=>{
+    const qDiv=el("div",{style:{background:S.bg3,border:`1px solid ${S.bdr}`,borderRadius:12,padding:"18px 20px",marginBottom:14}});
+    qDiv.appendChild(el("div",{style:{color:S.tx,fontSize:16,fontWeight:600,marginBottom:12}},[
+      el("span",{style:{color:S.teal,marginRight:8}},`Q${qi+1}.`),q.q
+    ]));
+    const optDivs=[];
+    q.opts.forEach((opt,oi)=>{
+      const d=el("div",{class:"quiz-opt",onClick(){
+        if(state.shown[qi])return;
+        state.sel[qi]=oi;
+        optDivs.forEach((od,ii)=>{od.className="quiz-opt"+(state.sel[qi]===ii?" picked":"");});
+      }});
+      d.appendChild(el("span",{style:{fontWeight:700,minWidth:22}},"ABCD"[oi]+"."));
+      d.appendChild(document.createTextNode(opt));
+      qDiv.appendChild(d);optDivs.push(d);
+    });
+    const expDiv=el("div",{class:"quiz-exp"});
+    expDiv.innerHTML=`<span style="color:${S.blue};font-weight:700">💡 </span>`+q.exp;
+    qDiv.appendChild(expDiv);
+    wrap.appendChild(qDiv);qDivs.push({qDiv,optDivs,expDiv,q});
+  });
+
+  function revealAll(){
+    let s=0;
+    qDivs.forEach(({optDivs,expDiv,q},qi)=>{
+      state.shown[qi]=true;
+      optDivs.forEach((od,oi)=>{
+        od.className="quiz-opt";
+        if(oi===q.a)od.classList.add("correct");
+        else if(state.sel[qi]===oi)od.classList.add("wrong");
+        const mark=document.createElement("span");mark.style.marginLeft="auto";
+        if(oi===q.a)mark.textContent="✅";else if(state.sel[qi]===oi)mark.textContent="❌";
+        if(mark.textContent)od.appendChild(mark);
+      });
+      expDiv.classList.add("show");
+      if(state.sel[qi]===q.a)s++;
+    });
+    state.score=s;
+    scoreDiv.style.display="block";
+    scoreDiv.style.background=s>=12?`${S.green}18`:`${S.orange}18`;
+    scoreDiv.style.borderColor=s>=12?`${S.green}44`:`${S.orange}44`;
+    scoreDiv.style.color=s>=12?S.green:S.orange;
+    scoreDiv.textContent=`Score: ${s}/${QUIZ_QS.length} — ${s>=12?"🎉 Excellent!":s>=9?"👍 Good":"📖 Study and retry"}`;
+    submitBtn.style.display="none";
+  }
+  const submitBtn=el("button",{style:{background:S.teal,border:"none",borderRadius:10,padding:"12px 28px",color:S.bg,fontSize:16,fontWeight:700,fontFamily:"Outfit,sans-serif"},onClick:revealAll});
+  submitBtn.textContent="✓ Submit Quiz";
+  const rstBtn=el("button",{style:{background:"transparent",border:`1px solid ${S.bdr}`,borderRadius:10,padding:"12px 28px",color:S.tx2,fontSize:16,fontFamily:"Outfit,sans-serif"},onClick(){
+    // rebuild quiz
+    const newQuiz=buildQuiz();wrap.replaceWith(newQuiz);
+  }});rstBtn.textContent="↺ Restart";
+  wrap.append(el("div",{style:{display:"flex",gap:12,marginTop:8}},[submitBtn,rstBtn]));
+  return wrap;
+}
+
+/* ══════════════════════════════
+   SHORT ANSWER
+══════════════════════════════ */
+const SHORT_QS=[
+  {q:"Explain how Lambda billing differs from EC2 billing.",a:"EC2 bills per hour whether idle or busy. Lambda bills per 100ms of actual execution. If nothing triggers the function, you pay nothing. This makes Lambda cost-effective for bursty or low-frequency workloads where an EC2 server would sit idle most of the time."},
+  {q:"Describe push (async), pull (poll), and sync (direct) trigger models with one example each.",a:"Push (async): Source publishes event to Lambda without waiting — e.g. S3 fires on upload. Pull (poll): Lambda polls the source and processes records — e.g. Lambda reads from SQS queue. Sync (direct): Caller invokes Lambda and waits for response — e.g. API Gateway calls Lambda for each HTTP request."},
+  {q:"What is an IAM Execution Role and why does Lambda need it?",a:"An IAM execution role grants Lambda permission to call other AWS services. Without it, Lambda has no credentials. E.g. a function reading S3 needs s3:GetObject in its execution role; one writing to DynamoDB needs dynamodb:PutItem."},
+  {q:"Describe a real-world scenario for a scheduled Lambda function.",a:"Stop dev/test EC2 instances at 22:00 GMT and start them at 05:00 GMT using two CloudWatch Events rules. Saves ~65% of compute cost. Other examples: nightly DB backup, daily report, hourly cache warm-up, weekly log archival."},
+  {q:"What are Lambda Layers and when would you use them?",a:"Layers are ZIP archives of shared libraries, custom runtimes, or dependencies. Use them when: (1) Multiple functions share a common library like pandas. (2) Dependencies push toward the 250 MB package limit. (3) You want to separate code updates from dependency updates."},
+  {q:"What does the 15-minute max timeout imply about Lambda use cases?",a:"Lambda is unsuitable for long-running processes like video transcoding or hours-long batch jobs. Ideal for short stateless tasks: API responses, file processing, notifications, data transforms. For longer workflows, combine with Step Functions or use EC2/Fargate."},
+  {q:"How does Step Functions extend Lambda capabilities?",a:"A single Lambda is stateless and limited to 15 minutes. Step Functions chains multiple functions into a stateful workflow with sequential, parallel, branching, and error-handling steps — enabling complex long-running processes."},
+  {q:"Compare Lambda soft limits vs hard limits. Give one example of each.",a:"Soft limits can be increased via AWS Support ticket — e.g. 1,000 concurrent executions can be raised to tens of thousands. Hard limits cannot change — e.g. 15-minute max timeout is fixed regardless of support plan."},
+];
+
+function buildShortAnswer(){
+  const wrap=el("div",{style:{marginTop:32}});
+  wrap.appendChild(el("div",{style:{color:S.teal,fontWeight:700,fontSize:22,marginBottom:6}},"✍️ Short Answer Questions"));
+  wrap.appendChild(el("div",{style:{color:S.tx3,fontSize:14,marginBottom:20}},"Write your answer first, then reveal the model answer."));
+  SHORT_QS.forEach((q,i)=>{
+    const qDiv=el("div",{style:{background:S.bg3,border:`1px solid ${S.bdr}`,borderRadius:12,padding:"18px 20px",marginBottom:14}});
+    qDiv.appendChild(el("div",{style:{color:S.tx,fontSize:16,fontWeight:600,marginBottom:12}},[
+      el("span",{style:{color:S.teal,marginRight:8}},`Q${i+1}.`),q.q
+    ]));
+    const ta=document.createElement("textarea");
+    ta.placeholder="Write your answer here...";
+    Object.assign(ta.style,{width:"100%",minHeight:"88px",background:S.bg4,border:`1px solid ${S.bdr}`,borderRadius:"8px",padding:"12px",color:S.tx2,fontSize:"15px",resize:"vertical",outline:"none",lineHeight:"1.6",fontFamily:"'Outfit',sans-serif"});
+    qDiv.appendChild(ta);
+    const revBtn=el("button",{style:{marginTop:8,background:S.bg4,border:`1px solid ${S.teal}`,borderRadius:8,padding:"8px 18px",color:S.teal,fontSize:14,fontWeight:600,fontFamily:"Outfit,sans-serif"}});
+    revBtn.textContent="👁️ Reveal Model Answer";
+    const ansDiv=el("div",{style:{display:"none",background:`${S.teal}10`,border:`1px solid ${S.teal}33`,borderRadius:8,padding:"12px 16px",marginTop:10,color:S.tx2,fontSize:15,lineHeight:1.7}});
+    ansDiv.innerHTML=`<span style="color:${S.teal};font-weight:700">Model Answer: </span>`+q.a;
+    revBtn.addEventListener("click",()=>{ansDiv.style.display="block";});
+    qDiv.append(revBtn,ansDiv);wrap.appendChild(qDiv);
+  });
+  return wrap;
+}
+
+/* ══════════════════════════════
+   PAGE BUILDERS
+══════════════════════════════ */
+function buildOverview(){
+  const features=[
+    {icon:"⚡",t:"Zero Administration",d:"AWS manages OS, patching, scaling, and availability. You write code only.",c:S.teal},
+    {icon:"🔔",t:"Event-Driven",d:"Code runs ONLY when triggered. Not 24/7 like a server.",c:S.orange},
+    {icon:"💰",t:"Pay Per 100ms",d:"Billed for actual execution. $0 when code is not running.",c:S.green},
+    {icon:"📈",t:"Auto Scaling",d:"Scales from 1 to 1,000 concurrent executions automatically.",c:S.blue},
+    {icon:"🔧",t:"Built-in Fault Tolerance",d:"Runs across multiple AZs. No maintenance windows.",c:S.purple},
+    {icon:"🌍",t:"Multi-Language",d:"Java, Go, PowerShell, Node.js, C#, Python, Ruby + custom runtimes.",c:S.teal},
+  ];
+  const frag=document.createDocumentFragment();
+  frag.appendChild(el("div",{class:"sec-num"},"Section 5"));
+  frag.appendChild(el("div",{class:"sec-title"},"Introduction to AWS Lambda"));
+  frag.appendChild(arDiv("Lambda — خدمة Serverless من AWS، كودك يشتغل بس لما يجي إيفينت، تدفع بس وقت التنفيذ الفعلي"));
+  const intro=el("p",{style:{color:S.tx2,fontSize:17,margin:"14px 0 20px",lineHeight:1.8}});
+  intro.innerHTML=`AWS Lambda is an <strong style="color:${S.teal}">event-driven, serverless compute service</strong>. Run code without provisioning or managing servers. Create a Lambda function, set a trigger, and your code only runs when triggered. You pay only for the compute time consumed.`;
+  frag.appendChild(intro);
+
+  const featGrid=el("div",{class:"auto-grid",style:{margin:"0 0 16px"}});
+  features.forEach(f=>{
+    const d=el("div",{style:{background:S.bg3,border:`1px solid ${f.c}44`,borderRadius:12,padding:"18px"}});
+    d.appendChild(el("div",{style:{fontSize:26,marginBottom:8}},f.icon));
+    d.appendChild(el("div",{style:{color:f.c,fontWeight:700,fontSize:16,marginBottom:4}},f.t));
+    d.appendChild(el("div",{style:{color:S.tx2,fontSize:14}},f.d));
+    featGrid.appendChild(d);
+  });
+  frag.appendChild(featGrid);
+
+  const comp=card([]);
+  comp.appendChild(el("div",{style:{color:S.teal,fontWeight:700,fontSize:17,marginBottom:14}},"🆚 Serverless vs Traditional"));
+  const g2=el("div",{class:"grid2"});
+  const leftC=el("div",{});leftC.appendChild(el("div",{style:{color:S.red,fontWeight:700,marginBottom:8}},"Traditional Server (EC2)"));
+  ["Runs 24/7 — billed per hour","You provision, patch, and scale","Idle capacity is wasted spend","Maintenance windows required","Fixed capacity — must over-provision"].forEach(p=>{
+    leftC.appendChild(el("div",{style:{color:S.tx2,fontSize:14,marginBottom:6}},`⛔ ${p}`));
+  });
+  const rightC=el("div",{});rightC.appendChild(el("div",{style:{color:S.teal,fontWeight:700,marginBottom:8}},"AWS Lambda (Serverless)"));
+  ["Runs only on trigger — pay per 100ms","AWS manages ALL infrastructure","Zero idle cost","No maintenance windows — always available","Auto-scales to demand instantly"].forEach(p=>{
+    rightC.appendChild(el("div",{style:{color:S.tx2,fontSize:14,marginBottom:6}},`✅ ${p}`));
+  });
+  g2.append(leftC,rightC);comp.appendChild(g2);frag.appendChild(comp);
+  frag.appendChild(infoBox("tip","Lambda is ideal for <strong>event-driven, short-duration, stateless tasks</strong>. For tasks longer than 15 minutes, combine with <strong>AWS Step Functions</strong> or use EC2/Fargate."));
+  frag.appendChild(buildDiagServerless());
+  return frag;
+}
+
+function buildHowIt(){
+  const frag=document.createDocumentFragment();
+  frag.appendChild(el("div",{class:"sub-title"},"⚙️ How Lambda Works"));
+  frag.appendChild(arDiv("تكتب الكود، تحدد الـ Trigger والـ IAM Role، AWS تتكفل بكل شيء تاني"));
+  const intro=el("p",{style:{color:S.tx2,fontSize:17,margin:"12px 0 16px"}});
+  intro.innerHTML=`A <strong style="color:${S.teal}">Lambda function</strong> is the custom code you write. Lambda runs it on managed, fault-tolerant infrastructure across multiple Availability Zones.`;
+  frag.appendChild(intro);
+
+  const createCard=card([]);createCard.style.border=`1px solid ${S.bdr2}`;
+  createCard.appendChild(el("div",{style:{color:S.orange,fontWeight:700,fontSize:17,marginBottom:14}},"📋 Creating a Lambda Function"));
+  [
+    {n:"1",t:"Name the function",d:"Give your function a unique name in the console.",c:S.teal},
+    {n:"2",t:"Choose runtime",d:"Python, Node.js, Java, Go, Ruby, C#, PowerShell, or custom runtime.",c:S.blue},
+    {n:"3",t:"Set execution role",d:"Create/select IAM role granting Lambda permission to call other AWS services.",c:S.purple},
+    {n:"4",t:"Add trigger",d:"S3, API Gateway, CloudWatch Events, SQS, DynamoDB Streams, ALB, etc.",c:S.orange},
+    {n:"5",t:"Write / upload code",d:"Inline editor, ZIP upload, or container image (up to 10 GB).",c:S.teal},
+    {n:"6",t:"Set memory & timeout",d:"128 MB to 10,240 MB. Timeout: 1 second to 15 minutes.",c:S.blue},
+    {n:"7",t:"Optional settings",d:"Env vars, VPC, tags, reserved concurrency, dead-letter queue.",c:S.tx3},
+  ].forEach(s=>{
+    const row=el("div",{style:{display:"flex",gap:14,marginBottom:12,alignItems:"flex-start"}});
+    const num=el("div",{style:{background:s.c===S.tx3?S.bg4:s.c,color:s.c===S.tx3?S.tx3:S.bg,borderRadius:"50%",width:"28px",height:"28px",display:"flex",alignItems:"center",justifyContent:"center",fontWeight:700,fontSize:13,flexShrink:0,border:s.c===S.tx3?`1px solid ${S.bdr}`:"none"}},s.n);
+    const inner=el("div",{});
+    inner.appendChild(el("div",{style:{color:s.c===S.tx3?S.tx2:s.c,fontWeight:700,fontSize:15,marginBottom:3}},s.t));
+    inner.appendChild(el("div",{style:{color:S.tx2,fontSize:14}},s.d));
+    row.append(num,inner);createCard.appendChild(row);
+  });
+  frag.appendChild(createCard);
+
+  const codeCard=card([]);
+  codeCard.appendChild(el("div",{style:{color:S.teal,fontWeight:700,fontSize:16,marginBottom:10}},"🐍 Example Lambda Function (Python)"));
+  const pre=el("pre",{style:{background:S.bg2,border:`1px solid ${S.bdr}`,borderRadius:8,padding:"16px",color:S.teal,fontSize:13,overflowX:"auto",lineHeight:1.7}});
+  pre.textContent=`import json, boto3
+
+def lambda_handler(event, context):
+    s3 = boto3.client('s3')
+
+    bucket = event['Records'][0]['s3']['bucket']['name']
+    key    = event['Records'][0]['s3']['object']['key']
+
+    obj = s3.get_object(Bucket=bucket, Key=key)
+    image_data = obj['Body'].read()
+
+    # Resize using PIL from Lambda Layer
+    # thumbnail = resize(image_data, 128, 128)
+
+    s3.put_object(
+        Bucket='thumbnails-bucket',
+        Key=f'thumb_{key}',
+        Body=thumbnail
+    )
+    return { 'statusCode': 200, 'body': 'Done!' }`;
+  codeCard.appendChild(pre);frag.appendChild(codeCard);
+
+  const pkgCard=card([]);
+  pkgCard.appendChild(el("div",{style:{color:S.teal,fontWeight:700,fontSize:16,marginBottom:10}},"📦 Deployment Package Options"));
+  const g3=el("div",{class:"grid3"});
+  [{t:"ZIP Package",d:"Up to 250 MB unzipped. Standard for most functions.",c:S.teal},
+   {t:"Lambda Layer",d:"Shared ZIP for libraries — avoids package size limit.",c:S.orange},
+   {t:"Container Image",d:"Up to 10 GB. For large ML/data workloads.",c:S.purple}].forEach(p=>{
+    const d=el("div",{class:"card2",style:{border:`1px solid ${p.c}33`}});
+    d.appendChild(el("div",{style:{color:p.c,fontWeight:700,fontSize:14,marginBottom:4}},p.t));
+    d.appendChild(el("div",{style:{color:S.tx2,fontSize:13}},p.d));
+    g3.appendChild(d);
+  });
+  pkgCard.appendChild(g3);frag.appendChild(pkgCard);
+  frag.appendChild(infoBox("warn","Lambda functions are <strong>stateless by design</strong>. Each invocation starts fresh. For state between calls, use DynamoDB, S3, ElastiCache, or Step Functions."));
+  return frag;
+}
+
+function buildEvents(){
+  const frag=document.createDocumentFragment();
+  frag.appendChild(el("div",{class:"sub-title"},"🔔 Event Sources & Triggers"));
+  frag.appendChild(arDiv("مصادر الإيفينت — الخدمات اللي تقدر تشغّل Lambda تلقائياً: S3, SQS, API Gateway، وغيرها"));
+  const intro=el("p",{style:{color:S.tx2,fontSize:17,margin:"12px 0 16px"}});
+  intro.innerHTML=`An <strong style="color:${S.teal}">event source</strong> is an AWS service or developer app producing events that trigger Lambda.`;
+  frag.appendChild(intro);
+  frag.appendChild(buildDiagEvents());
+
+  const tblCard=card([]);
+  tblCard.appendChild(el("div",{style:{color:S.teal,fontWeight:700,fontSize:17,marginBottom:12}},"📋 Trigger Models — Full Comparison"));
+  const tbl=el("table",{});
+  const thead=el("thead",{});thead.appendChild(el("tr",{},["Service","Model","Direction","Use Case"].map(h=>el("th",{},h))));
+  tbl.appendChild(thead);
+  const tbody=el("tbody",{});
+  [["Amazon S3","Push (async)","S3 → Lambda","File upload processing"],
+   ["Amazon SNS","Push (async)","SNS → Lambda","Fan-out notifications"],
+   ["CloudWatch Events","Schedule","CW → Lambda","Cron jobs, auto stop/start EC2"],
+   ["Amazon SQS","Pull (poll)","Lambda polls SQS","Queue message processing"],
+   ["DynamoDB Streams","Pull (poll)","Lambda polls DDB","React to table changes"],
+   ["API Gateway","Sync (direct)","AGW → Lambda","REST/HTTP API backend"],
+   ["App Load Balancer","Sync (direct)","ALB → Lambda","HTTP request handler"],
+   ["CLI / SDK / Console","Direct invoke","Dev → Lambda","Testing and development"],
+  ].forEach(([svc,model,dir,use])=>{
+    const modelCol=model.includes("Push")?S.orange:model==="Schedule"?S.yellow:model.includes("Pull")?S.blue:model.includes("Sync")?S.purple:S.teal;
+    const row=el("tr",{});
+    row.appendChild(el("td",{style:{color:S.orange,fontWeight:600}},svc));
+    row.appendChild(el("td",{style:{color:modelCol}},model));
+    row.appendChild(el("td",{style:{color:S.tx2,fontFamily:"'IBM Plex Mono',monospace",fontSize:12}},dir));
+    row.appendChild(el("td",{style:{color:S.tx2}},use));
+    tbody.appendChild(row);
+  });
+  tbl.appendChild(tbody);
+  const overflow=el("div",{style:{overflowX:"auto"}});overflow.appendChild(tbl);tblCard.appendChild(overflow);
+  frag.appendChild(tblCard);
+  frag.appendChild(infoBox("tip","Lambda automatically monitors all invocations via <strong>Amazon CloudWatch</strong>. Your print/console.log goes to <strong>CloudWatch Logs</strong> automatically — no setup needed."));
+  return frag;
+}
+
+function buildUseCases(){
+  const frag=document.createDocumentFragment();
+  frag.appendChild(el("div",{class:"sub-title"},"💡 Lambda Use Cases"));
+  frag.appendChild(arDiv("أمثلة حقيقية: معالجة الصور، إيقاف EC2 تلقائياً، API بدون سيرفر، معالجة الطوابير"));
+  frag.appendChild(buildDiagS3());
+  frag.appendChild(buildDiagScheduled());
+
+  const moreCard=card([]);
+  moreCard.appendChild(el("div",{style:{color:S.teal,fontWeight:700,fontSize:17,marginBottom:14}},"🌐 More Use Cases"));
+  const ug=el("div",{class:"auto-grid"});
+  [{icon:"🛒",t:"Serverless API",d:"API Gateway → Lambda → DynamoDB. Handles thousands of req/sec with no servers.",c:S.teal},
+   {icon:"📊",t:"Real-Time Data Transform",d:"Kinesis → Lambda → S3. Process streaming data without managing infrastructure.",c:S.blue},
+   {icon:"🔒",t:"Security Automation",d:"CloudTrail → CloudWatch → Lambda. Auto-revoke overly permissive IAM policies.",c:S.red},
+   {icon:"📧",t:"Notification Service",d:"SNS → Lambda → SES. Send templated emails when events occur.",c:S.orange},
+   {icon:"🤖",t:"Chatbot Backend",d:"API Gateway → Lambda → Lex. Stateless per-request handling.",c:S.purple},
+   {icon:"🧹",t:"Nightly Cleanup",d:"CloudWatch Schedule → Lambda → S3. Delete temp files, archive old records.",c:S.yellow},
+  ].forEach(uc=>{
+    const d=el("div",{style:{background:S.bg4,border:`1px solid ${uc.c}33`,borderRadius:10,padding:"16px"}});
+    d.appendChild(el("div",{style:{fontSize:24,marginBottom:6}},uc.icon));
+    d.appendChild(el("div",{style:{color:uc.c,fontWeight:700,fontSize:14,marginBottom:6}},uc.t));
+    d.appendChild(el("div",{style:{color:S.tx2,fontSize:13}},uc.d));
+    ug.appendChild(d);
+  });
+  moreCard.appendChild(ug);frag.appendChild(moreCard);
+
+  const notCard=card([],S.bdr2);
+  notCard.appendChild(el("div",{style:{color:S.orange,fontWeight:700,fontSize:17,marginBottom:10}},"⚠️ When NOT to Use Lambda"));
+  const ng=el("div",{class:"grid2"});
+  [["Tasks > 15 minutes","Use EC2, Fargate, or AWS Batch"],
+   ["Long-running connections","WebSockets / persistent TCP → EC2"],
+   ["Stateful processes","Combine with DynamoDB or Step Functions"],
+   ["Very high memory > 10 GB","Use EC2 for larger RAM needs"],
+  ].forEach(([bad,alt])=>{
+    const d=el("div",{class:"card2",style:{border:`1px solid ${S.bdr2}`}});
+    d.appendChild(el("div",{style:{color:S.red,fontWeight:600,fontSize:13,marginBottom:3}},`⛔ ${bad}`));
+    d.appendChild(el("div",{style:{color:S.tx2,fontSize:12}},`→ ${alt}`));
+    ng.appendChild(d);
+  });
+  notCard.appendChild(ng);frag.appendChild(notCard);
+  return frag;
+}
+
+function buildLimits(){
+  const frag=document.createDocumentFragment();
+  frag.appendChild(el("div",{class:"sub-title"},"📊 Lambda Quotas & Limits"));
+  frag.appendChild(arDiv("الحدود الثابتة والمرنة في Lambda — مهم تعرفها قبل ما تبني نظام إنتاج يعتمد على Serverless"));
+  const intro=el("p",{style:{color:S.tx2,fontSize:17,margin:"12px 0 16px"}});
+  intro.innerHTML=`Limits are either <strong style="color:${S.orange}">soft</strong> (raisable via support ticket) or <strong style="color:${S.red}">hard</strong> (fixed, cannot change).`;
+  frag.appendChild(intro);
+
+  const limCard=card([]);
+  const limGrid=el("div",{style:{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(280px,1fr))",gap:12}});
+  [{name:"Max memory",val:"10,240 MB",type:"soft",col:S.teal,note:"128 MB minimum"},
+   {name:"Max execution timeout",val:"15 minutes",type:"hard",col:S.red,note:"Hard — cannot be increased"},
+   {name:"Concurrent executions",val:"1,000 / Region",type:"soft",col:S.orange,note:"Raise via support ticket"},
+   {name:"Deployment package",val:"250 MB",type:"hard",col:S.red,note:"Unzipped. Use Layers to reduce."},
+   {name:"Container image size",val:"10 GB",type:"hard",col:S.red,note:"For ML/large workloads"},
+   {name:"Environment variables",val:"4 KB total",type:"hard",col:S.red,note:"For config/secrets injection"},
+   {name:"Lambda Layer size",val:"250 MB/layer",type:"hard",col:S.red,note:"Max 5 layers per function"},
+   {name:"Free tier — requests",val:"1M / month",type:"free",col:S.green,note:"Always free, every account"},
+   {name:"Free tier — compute",val:"400K GB-sec",type:"free",col:S.green,note:"Always free, every month"},
+   {name:"Billing granularity",val:"100ms",type:"soft",col:S.teal,note:"Metered in 100ms increments"},
+  ].forEach(l=>{
+    const d=el("div",{style:{background:S.bg4,border:`1px solid ${l.col}33`,borderRadius:10,padding:"14px 16px"}});
+    const top=el("div",{style:{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:6}});
+    top.appendChild(el("div",{style:{color:S.tx2,fontSize:14,fontWeight:600}},l.name));
+    const badge=el("span",{style:{background:`${l.col}22`,border:`1px solid ${l.col}55`,borderRadius:20,padding:"2px 10px",fontSize:11,color:l.col,fontWeight:600,whiteSpace:"nowrap"}});
+    badge.textContent=l.type==="free"?"🎁 FREE":l.type==="soft"?"⬆ SOFT":"🔒 HARD";
+    top.appendChild(badge);d.appendChild(top);
+    d.appendChild(el("div",{style:{color:l.col,fontWeight:700,fontSize:20,marginBottom:4}},l.val));
+    d.appendChild(el("div",{style:{color:S.tx3,fontSize:12}},l.note));
+    limGrid.appendChild(d);
+  });
+  limCard.appendChild(limGrid);frag.appendChild(limCard);
+  frag.appendChild(infoBox("warn","<strong>Hard limits cannot be increased</strong> regardless of support plan. Design around them — use Step Functions for workflows longer than 15 minutes."));
+  frag.appendChild(infoBox("tip","<strong>Soft limits</strong> can be raised via AWS Support ticket. The 1,000 concurrent execution limit is often raised to 10,000+ for production workloads."));
+  frag.appendChild(ktBox([
+    "Serverless computing lets you build apps without provisioning or managing servers.",
+    "AWS Lambda is event-driven — code runs only when triggered; $0 when not running.",
+    "Billing is per 100ms of compute time. Free tier: 1M requests + 400K GB-seconds/month.",
+    "Lambda supports Java, Go, PowerShell, Node.js, C#, Python, Ruby, and custom runtimes.",
+    "Event sources: S3/SNS (push), SQS/DynamoDB (poll), API Gateway/ALB (sync direct).",
+    "Maximum memory: 10,240 MB. Maximum timeout: 15 minutes (hard limit — cannot increase).",
+    "1,000 concurrent executions per Region (soft limit — can be raised via support).",
+    "Lambda Layers share libraries across functions and avoid the 250 MB package limit.",
+    "Step Functions orchestrates multiple Lambda functions for complex long-running workflows.",
+  ]));
+  return frag;
+}
+
+function buildLab(){
+  const frag=document.createDocumentFragment();
+  frag.appendChild(buildFlipCards());
+  frag.appendChild(buildPricingCalc());
+  frag.appendChild(buildMatchLab());
+  return frag;
+}
+
+function buildQuizPage(){
+  const frag=document.createDocumentFragment();
+  frag.appendChild(buildQuiz());
+  frag.appendChild(buildShortAnswer());
+  return frag;
+}
+
+/* ══════════════════════════════
+   ROUTER
+══════════════════════════════ */
+const PAGES={overview:buildOverview,howit:buildHowIt,events:buildEvents,usecases:buildUseCases,limits:buildLimits,lab:buildLab,quiz:buildQuizPage};
+let currentTab="overview";
+
+function navigate(tab){
+  currentTab=tab;
+  document.querySelectorAll(".nav-btn").forEach(b=>{
+    b.classList.toggle("active",b.dataset.tab===tab);
+  });
+  const content=document.getElementById("page-content");
+  content.innerHTML="";
+  content.appendChild(PAGES[tab]());
+  window.scrollTo(0,0);
+}
+
+document.getElementById("main-nav").addEventListener("click",e=>{
+  const btn=e.target.closest(".nav-btn");
+  if(btn&&btn.dataset.tab)navigate(btn.dataset.tab);
+});
+
+navigate("overview");
+</script>
+</body>
+</html>
