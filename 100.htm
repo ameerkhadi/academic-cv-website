@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AWS Cloud Concepts – 100 MCQ Quiz</title>
+  <style>
+    :root {
+      --primary: #232f3e;
+      --accent: #ff9900;
+      --easy: #27ae60;
+      --medium: #2980b9;
+      --hard: #c0392b;
+      --bg: #f4f6f9;
+      --card: #ffffff;
+      --radius: 12px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--bg);
+      color: #222;
+      min-height: 100vh;
+    }
+
+    header {
+      background: var(--primary);
+      color: white;
+      padding: 30px 20px;
+      text-align: center;
+    }
+
+    header h1 { font-size: 2rem; color: var(--accent); }
+    header p { margin-top: 8px; font-size: 1rem; opacity: 0.85; }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      padding: 20px;
+      background: var(--primary);
+    }
+
+    .filter-btn {
+      padding: 9px 22px;
+      border: 2px solid var(--accent);
+      background: transparent;
+      color: white;
+      border-radius: 30px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.3s;
+    }
+
+    .filter-btn:hover, .filter-btn.active {
+      background: var(--accent);
+      color: var(--primary);
+      font-weight: bold;
+    }
+
+    .quiz-container {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 0 16px 60px;
+    }
+
+    .scoreboard {
+      background: var(--primary);
+      color: white;
+      border-radius: var(--radius);
+      padding: 18px 24px;
+      margin-bottom: 28px;
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      gap: 12px;
+      text-align: center;
+    }
+
+    .scoreboard div span {
+      display: block;
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: var(--accent);
+    }
+
+    .scoreboard div label { font-size: 0.8rem; opacity: 0.8; }
+
+    .section-label {
+      font-size: 1.1rem;
+      font-weight: bold;
+      margin: 30px 0 14px;
+      padding: 8px 16px;
+      border-radius: 6px;
+      color: white;
+    }
+
+    .label-easy   { background: var(--easy); }
+    .label-medium { background: var(--medium); }
+    .label-hard   { background: var(--hard); }
+
+    .question-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 22px 24px;
+      margin-bottom: 18px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      border-left: 5px solid #ccc;
+      transition: border-color 0.3s;
+    }
+
+    .question-card.easy   { border-left-color: var(--easy); }
+    .question-card.medium { border-left-color: var(--medium); }
+    .question-card.hard   { border-left-color: var(--hard); }
+    .question-card.hidden { display: none; }
+
+    .question-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .q-number { font-weight: bold; font-size: 0.85rem; color: #888; }
+
+    .difficulty-badge {
+      font-size: 0.72rem;
+      font-weight: bold;
+      padding: 3px 10px;
+      border-radius: 20px;
+      color: white;
+    }
+
+    .badge-easy   { background: var(--easy); }
+    .badge-medium { background: var(--medium); }
+    .badge-hard   { background: var(--hard); }
+
+    .question-text {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+
+    .options { display: flex; flex-direction: column; gap: 10px; }
+
+    .option-btn {
+      padding: 11px 16px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      background: white;
+      text-align: left;
+      cursor: pointer;
+      font-size: 0.92rem;
+      transition: all 0.25s;
+      line-height: 1.4;
+    }
+
+    .option-btn:hover:not(:disabled) {
+      border-color: var(--accent);
+      background: #fff8ee;
+    }
+
+    .option-btn.correct {
+      background: #eafaf1;
+      border-color: var(--easy);
+      color: #1a7a40;
+      font-weight: bold;
+    }
+
+    .option-btn.wrong {
+      background: #fdecea;
+      border-color: var(--hard);
+      color: #922b21;
+    }
+
+    .option-btn:disabled { cursor: default; }
+
+    .explanation {
+      margin-top: 14px;
+      padding: 12px 16px;
+      background: #f0f7ff;
+      border-left: 4px solid var(--medium);
+      border-radius: 6px;
+      font-size: 0.88rem;
+      line-height: 1.55;
+      display: none;
+    }
+
+    .explanation.show { display: block; }
+
+    .action-row {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 14px;
+    }
+
+    .reset-btn {
+      background: none;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 6px 14px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      color: #666;
+      transition: all 0.2s;
+    }
+
+    .reset-btn:hover { background: #eee; }
+
+    .submit-all-wrap {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    #submitAll {
+      background: var(--accent);
+      color: var(--primary);
+      border: none;
+      padding: 14px 40px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    #submitAll:hover { opacity: 0.88; }
+
+    #finalResult {
+      display: none;
+      margin-top: 28px;
+      background: var(--primary);
+      color: white;
+      border-radius: var(--radius);
+      padding: 28px;
+      text-align: center;
+    }
+
+    #finalResult h2 { font-size: 1.8rem; color: var(--accent); }
+    #finalResult p { margin-top: 10px; font-size: 1.1rem; }
+
+    .progress-bar-wrap {
+      background: #ddd;
+      border-radius: 10px;
+      height: 10px;
+      margin: 16px 0 6px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 10px;
+      transition: width 0.4s;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 0.8rem;
+      color: #aaa;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>☁️ AWS Cloud Concepts — 100 MCQ Quiz</h1>
+  <p>Cloud Concepts · AWS Infrastructure · VPC · Cloud Security & IAM</p>
+</header>
+
+<div class="controls">
+  <button class="filter-btn active" onclick="filterQuestions('all')">All (100)</button>
+  <button class="filter-btn" onclick="filterQuestions('easy')">🟢 Easy (34)</button>
+  <button class="filter-btn" onclick="filterQuestions('medium')">🔵 Medium (33)</button>
+  <button class="filter-btn" onclick="filterQuestions('hard')">🔴 Hard (33)</button>
+</div>
+
+<div class="quiz-container">
+
+  <div class="scoreboard">
+    <div><span id="sc-answered">0</span><label>Answered</label></div>
+    <div><span id="sc-correct">0</span><label>Correct ✅</label></div>
+    <div><span id="sc-wrong">0</span><label>Wrong ❌</label></div>
+    <div><span id="sc-pct">0%</span><label>Score</label></div>
+  </div>
+
+  <div class="progress-bar-wrap">
+    <div class="progress-bar-fill" id="progressBar" style="width:0%"></div>
+  </div>
+  <p style="font-size:0.8rem;color:#888;margin-bottom:20px;" id="progressText">0 of 100 answered</p>
+
+  <div id="quizBody"></div>
+
+  <div class="submit-all-wrap">
+    <button id="submitAll" onclick="showFinal()">📊 Show Final Score</button>
+  </div>
+
+  <div id="finalResult">
+    <h2 id="finalGrade"></h2>
+    <p id="finalMsg"></p>
+    <p style="margin-top:12px;font-size:0.9rem;opacity:0.75;">Review the explanations above for any questions you missed.</p>
+    <button onclick="resetAll()" style="margin-top:18px;padding:10px 28px;background:var(--accent);color:var(--primary);border:none;border-radius:20px;cursor:pointer;font-weight:bold;">🔄 Reset All</button>
+  </div>
+
+</div>
+
+<footer>Generated from AWS Cloud Foundations Course Lectures · Quiz v1.0</footer>
+
+<script>
+const questions = [
+
+  // ─────────────────────────────────────────────
+  // EASY (1–34)
+  // ─────────────────────────────────────────────
+  {
+    id:1, difficulty:"easy",
+    q:"What is cloud computing?",
+    opts:["A) On-premises server management","B) On-demand delivery of IT resources via the internet with pay-as-you-go pricing","C) A type of local area network","D) A hardware maintenance service"],
+    ans:1,
+    exp:"Cloud computing is the on-demand delivery of compute power, database, storage, applications, and other IT resources via the internet with pay-as-you-go pricing."
+  },
+  {
+    id:2, difficulty:"easy",
+    q:"Which of the following best describes IaaS?",
+    opts:["A) Provides fully managed end-user applications","B) Removes the need to manage underlying infrastructure","C) Provides access to networking, virtual computers, and data storage","D) Offers a completed product managed by the service provider"],
+    ans:2,
+    exp:"IaaS (Infrastructure as a Service) provides the basic building blocks for cloud IT: networking features, computers (virtual or dedicated hardware), and data storage space."
+  },
+  {
+    id:3, difficulty:"easy",
+    q:"Which cloud service model is web-based email an example of?",
+    opts:["A) IaaS","B) PaaS","C) SaaS","D) On-premises"],
+    ans:2,
+    exp:"Web-based email is a classic SaaS (Software as a Service) example — the user uses the software without managing servers or infrastructure."
+  },
+  {
+    id:4, difficulty:"easy",
+    q:"Which deployment model describes a fully cloud-based application?",
+    opts:["A) Hybrid","B) On-premises","C) Private cloud","D) Cloud"],
+    ans:3,
+    exp:"A cloud deployment model means all parts of the application run in the cloud, either created there or migrated to take advantage of cloud benefits."
+  },
+  {
+    id:5, difficulty:"easy",
+    q:"What is the hybrid cloud deployment model?",
+    opts:["A) Running all workloads in a public cloud","B) Using virtualization only on-premises","C) Connecting cloud-based resources with existing on-premises infrastructure","D) Deploying resources exclusively in private data centers"],
+    ans:2,
+    exp:"A hybrid deployment connects infrastructure and applications between cloud-based resources and existing on-premises resources."
+  },
+  {
+    id:6, difficulty:"easy",
+    q:"Which AWS service is similar to on-premises servers?",
+    opts:["A) Amazon S3","B) Amazon RDS","C) Amazon EC2","D) Amazon VPC"],
+    ans:2,
+    exp:"Amazon Machine Images (AMIs) and Amazon EC2 instances are similar to on-premises servers."
+  },
+  {
+    id:7, difficulty:"easy",
+    q:"What does AWS stand for?",
+    opts:["A) Advanced Web Solutions","B) Amazon Web Services","C) Automated Workload Systems","D) Application Web Stack"],
+    ans:1,
+    exp:"AWS stands for Amazon Web Services, a secure cloud platform offering a broad set of global cloud-based products."
+  },
+  {
+    id:8, difficulty:"easy",
+    q:"Which of the following is an advantage of cloud computing related to expenses?",
+    opts:["A) Trade variable expense for capital expense","B) Trade capital expense for variable expense","C) Eliminate all IT costs permanently","D) Reduce software licensing costs only"],
+    ans:1,
+    exp:"Cloud computing allows you to trade capital expenses (buying and maintaining hardware) for variable expenses (pay only for what you consume)."
+  },
+  {
+    id:9, difficulty:"easy",
+    q:"What does 'go global in minutes' mean as an advantage of AWS?",
+    opts:["A) AWS ships hardware globally in minutes","B) You can deploy applications in multiple AWS Regions around the world with just a few clicks","C) AWS customer support is available in all time zones","D) AWS provides global internet connectivity hardware"],
+    ans:1,
+    exp:"You can deploy your application in multiple AWS Regions around the world with just a few clicks, providing lower latency and a better customer experience."
+  },
+  {
+    id:10, difficulty:"easy",
+    q:"Which format does a web service typically use for API interactions?",
+    opts:["A) HTML and CSS","B) XML or JSON","C) SQL and YAML","D) PDF and CSV"],
+    ans:1,
+    exp:"A web service uses a standardized format — such as XML (Extensible Markup Language) or JSON (JavaScript Object Notation) — for API requests and responses."
+  },
+  {
+    id:11, difficulty:"easy",
+    q:"How many Regions did AWS have worldwide according to the infrastructure module?",
+    opts:["A) 10","B) 15","C) 22","D) 30"],
+    ans:2,
+    exp:"The AWS Cloud infrastructure is built around Regions, and AWS has 22 Regions worldwide (as stated in the module)."
+  },
+  {
+    id:12, difficulty:"easy",
+    q:"What is an AWS Availability Zone?",
+    opts:["A) A single data center in a Region","B) An isolated location within an AWS Region consisting of one or more data centers","C) A global content delivery point","D) A country where AWS operates"],
+    ans:1,
+    exp:"Each AWS Region has multiple, isolated locations known as Availability Zones, each of which can include multiple data centers."
+  },
+  {
+    id:13, difficulty:"easy",
+    q:"What is an IP address used for in a network?",
+    opts:["A) To encrypt data between machines","B) To uniquely identify each client machine in a network","C) To provide domain name resolution","D) To establish firewall rules only"],
+    ans:1,
+    exp:"Each client machine in a network has a unique Internet Protocol (IP) address that identifies it."
+  },
+  {
+    id:14, difficulty:"easy",
+    q:"How many bits does an IPv4 address contain?",
+    opts:["A) 8 bits","B) 16 bits","C) 32 bits","D) 128 bits"],
+    ans:2,
+    exp:"A 32-bit IP address is called an IPv4 address. It consists of four groups of 8 bits each (four octets)."
+  },
+  {
+    id:15, difficulty:"easy",
+    q:"What does VPC stand for?",
+    opts:["A) Virtual Public Cloud","B) Virtual Private Cloud","C) Variable Processing Cluster","D) Verified Private Connection"],
+    ans:1,
+    exp:"VPC stands for Virtual Private Cloud — a logically isolated section of the AWS Cloud where you can launch AWS resources."
+  },
+  {
+    id:16, difficulty:"easy",
+    q:"What is a subnet in the context of AWS VPC?",
+    opts:["A) A type of EC2 instance","B) A range of IP addresses within a VPC","C) A security rule for traffic","D) A type of storage volume"],
+    ans:1,
+    exp:"A subnet is a range of IP addresses in a VPC. Subnets belong to a single Availability Zone."
+  },
+  {
+    id:17, difficulty:"easy",
+    q:"What is the purpose of an Internet Gateway in AWS VPC?",
+    opts:["A) To connect two VPCs together","B) To allow communication between instances in the VPC and the internet","C) To restrict all outbound internet traffic","D) To provide DNS resolution within the VPC"],
+    ans:1,
+    exp:"An internet gateway allows communication between instances in your VPC and the internet, and performs network address translation for instances with public IPv4 addresses."
+  },
+  {
+    id:18, difficulty:"easy",
+    q:"Which AWS service is the highest priority for security?",
+    opts:["A) Amazon S3","B) AWS IAM","C) AWS Security is the highest priority at AWS overall","D) Amazon CloudFront"],
+    ans:2,
+    exp:"Security is the highest priority at Amazon Web Services (AWS), as stated in the Cloud Security module introduction."
+  },
+  {
+    id:19, difficulty:"easy",
+    q:"What does IAM stand for?",
+    opts:["A) Internet Access Management","B) Identity and Access Management","C) Infrastructure Administration Module","D) Instance Authorization Manager"],
+    ans:1,
+    exp:"IAM stands for AWS Identity and Access Management — it controls access to AWS services and resources."
+  },
+  {
+    id:20, difficulty:"easy",
+    q:"What are the three ways to create and manage resources on the AWS Cloud?",
+    opts:["A) Email, phone, and chat","B) AWS Management Console, AWS CLI, and SDKs","C) FTP, SSH, and Telnet","D) AWS Console, REST API, and GraphQL"],
+    ans:1,
+    exp:"The three ways are: the AWS Management Console (graphical interface), the AWS CLI (command-line), and SDKs (programming language packages)."
+  },
+  {
+    id:21, difficulty:"easy",
+    q:"What does PaaS remove the need for customers to manage?",
+    opts:["A) Application deployment","B) The underlying infrastructure including hardware and OS","C) Data classification","D) User authentication"],
+    ans:1,
+    exp:"PaaS (Platform as a Service) removes the need for customers to manage the underlying infrastructure (hardware, operating systems), letting them focus on application deployment and management."
+  },
+  {
+    id:22, difficulty:"easy",
+    q:"Which AWS service is similar to a storage area network (SAN)?",
+    opts:["A) Amazon EC2","B) Amazon EBS","C) Amazon VPC","D) Amazon IAM"],
+    ans:1,
+    exp:"Amazon EBS (Elastic Block Store) is similar to direct attached storage (DAS) and storage area networks (SAN) found in traditional IT environments."
+  },
+  {
+    id:23, difficulty:"easy",
+    q:"What type of subnet has direct access to the internet?",
+    opts:["A) Private subnet","B) Isolated subnet","C) Public subnet","D) Restricted subnet"],
+    ans:2,
+    exp:"Public subnets have direct access to the internet, while private subnets do not."
+  },
+  {
+    id:24, difficulty:"easy",
+    q:"What is the shared responsibility model about?",
+    opts:["A) Sharing cloud costs between customers","B) Dividing security responsibilities between AWS and the customer","C) Sharing data between AWS accounts","D) Joint ownership of AWS hardware"],
+    ans:1,
+    exp:"The shared responsibility model defines that AWS is responsible for security 'of' the cloud, while the customer is responsible for security 'in' the cloud."
+  },
+  {
+    id:25, difficulty:"easy",
+    q:"Who is responsible for the physical security of AWS data centers?",
+    opts:["A) The customer","B) AWS","C) Both equally","D) Third-party security firms hired by customers"],
+    ans:1,
+    exp:"AWS is responsible for protecting the physical infrastructure including data centers with controlled access, 24/7 security guards, and video surveillance."
+  },
+  {
+    id:26, difficulty:"easy",
+    q:"What is an IAM user?",
+    opts:["A) A temporary role granted to AWS services","B) A person or application defined in an AWS account that makes API calls","C) A group of multiple AWS accounts","D) A type of IAM policy"],
+    ans:1,
+    exp:"An IAM user is a person or application defined in an AWS account that must make API calls to AWS products, with a unique name and security credentials."
+  },
+  {
+    id:27, difficulty:"easy",
+    q:"What is an IAM group?",
+    opts:["A) A collection of IAM roles","B) A collection of IAM users","C) A JSON policy document","D) A set of AWS Regions"],
+    ans:1,
+    exp:"An IAM group is a collection of IAM users, making it easier to manage permissions for multiple users at once."
+  },
+  {
+    id:28, difficulty:"easy",
+    q:"What language are IAM policy documents written in?",
+    opts:["A) XML","B) YAML","C) JSON","D) HTML"],
+    ans:2,
+    exp:"IAM policy documents are written in JSON (JavaScript Object Notation)."
+  },
+  {
+    id:29, difficulty:"easy",
+    q:"Which deployment model is sometimes called 'private cloud'?",
+    opts:["A) Hybrid","B) Cloud","C) On-premises","D) SaaS"],
+    ans:2,
+    exp:"Deploying resources on-premises using virtualization and resource management tools is sometimes called private cloud."
+  },
+  {
+    id:30, difficulty:"easy",
+    q:"What is Amazon S3 primarily used for?",
+    opts:["A) Running virtual servers","B) Object storage","C) Managing user identities","D) Content delivery"],
+    ans:1,
+    exp:"Amazon Simple Storage Service (Amazon S3) is an AWS storage service used for object storage."
+  },
+  {
+    id:31, difficulty:"easy",
+    q:"How many IP addresses are reserved by AWS in every subnet CIDR block?",
+    opts:["A) 2","B) 3","C) 5","D) 8"],
+    ans:2,
+    exp:"AWS reserves five IP addresses in each subnet CIDR block for: network address, VPC local router, DNS resolution, future use, and network broadcast address."
+  },
+  {
+    id:32, difficulty:"easy",
+    q:"What does MFA stand for in AWS security?",
+    opts:["A) Managed Firewall Access","B) Multi-Factor Authentication","C) Multiple Function Authorization","D) Modular Framework Access"],
+    ans:1,
+    exp:"MFA stands for Multi-Factor Authentication — it requires users to provide an additional token beyond regular credentials to access AWS services."
+  },
+  {
+    id:33, difficulty:"easy",
+    q:"Which region characteristic was true for Regions introduced before March 20, 2019?",
+    opts:["A) They are disabled by default","B) They require special permissions to use","C) They are enabled by default","D) They are only available to government accounts"],
+    ans:2,
+    exp:"AWS Regions introduced before March 20, 2019 are enabled by default. Regions introduced after that date are disabled by default and must be manually enabled."
+  },
+  {
+    id:34, difficulty:"easy",
+    q:"What is the AWS Management Console?",
+    opts:["A) A command-line tool for scripting","B) A graphical web interface to access AWS features","C) A programming SDK for developers","D) An AWS billing and cost management tool only"],
+    ans:1,
+    exp:"The AWS Management Console provides a rich graphical interface to the majority of features offered by AWS."
+  },
+
+  // ─────────────────────────────────────────────
+  // MEDIUM (35–67)
+  // ─────────────────────────────────────────────
+  {
+    id:35, difficulty:"medium",
+    q:"Which of the following is NOT one of the three main cloud service models?",
+    opts:["A) Infrastructure as a Service (IaaS)","B) Platform as a Service (PaaS)","C) Network as a Service (NaaS)","D) Software as a Service (SaaS)"],
+    ans:2,
+    exp:"The three main cloud service models are IaaS, PaaS, and SaaS. NaaS (Network as a Service) is not one of the three main models described in the course."
+  },
+  {
+    id:36, difficulty:"medium",
+    q:"What does CIDR stand for and what is it used for?",
+    opts:["A) Cloud Infrastructure Data Routing — for encrypting cloud data","B) Classless Inter-Domain Routing — for expressing a group of consecutive IP addresses","C) Centralized Internet Domain Registry — for domain name registration","D) Configurable IP Data Range — for setting VPC security rules"],
+    ans:1,
+    exp:"CIDR stands for Classless Inter-Domain Routing. It is a method to describe networks and express a group of consecutive IP addresses using an IP address and a prefix length."
+  },
+  {
+    id:37, difficulty:"medium",
+    q:"In the CIDR notation 192.0.2.0/24, how many IP addresses are available?",
+    opts:["A) 24","B) 128","C) 256","D) 512"],
+    ans:2,
+    exp:"The /24 means the first 24 bits are fixed and the last 8 bits are flexible, giving 2⁸ = 256 IP addresses (ranging from 192.0.2.0 to 192.0.2.255)."
+  },
+  {
+    id:38, difficulty:"medium",
+    q:"What are the four factors to consider when selecting an AWS Region?",
+    opts:["A) Cost, language, population, and time zone","B) Data governance/legal requirements, latency, service availability, and cost","C) Network speed, hardware type, staff expertise, and cost","D) Security level, support tier, data center size, and geography"],
+    ans:1,
+    exp:"The four main factors for choosing a Region are: data governance and legal requirements, proximity to users (latency), service availability in the Region, and cost variation between Regions."
+  },
+  {
+    id:39, difficulty:"medium",
+    q:"What is the maximum distance between Availability Zones within the same AWS Region?",
+    opts:["A) 10 km","B) 50 km","C) 100 km","D) 500 km"],
+    ans:2,
+    exp:"All Availability Zones are within 100 km of each other, yet they are physically separated to protect against localized disasters."
+  },
+  {
+    id:40, difficulty:"medium",
+    q:"What is a NAT Gateway used for in AWS VPC?",
+    opts:["A) To provide static public IP addresses to EC2 instances","B) To enable instances in a private subnet to connect to the internet while preventing inbound connections","C) To route traffic between VPCs","D) To encrypt traffic between subnets"],
+    ans:1,
+    exp:"A NAT (Network Address Translation) gateway enables instances in a private subnet to connect to the internet or other AWS services, while preventing the internet from initiating connections with those instances."
+  },
+  {
+    id:41, difficulty:"medium",
+    q:"What is the main difference between a NAT Gateway and a NAT Instance?",
+    opts:["A) NAT Gateway is managed by AWS and provides better availability; NAT Instance requires customer management","B) NAT Instance supports IPv6; NAT Gateway supports only IPv4","C) NAT Gateway is free; NAT Instance is paid","D) NAT Instance is faster; NAT Gateway is more secure"],
+    ans:0,
+    exp:"A NAT Gateway is a managed NAT service offering better availability, higher bandwidth, and less administrative effort compared to a NAT Instance, which requires customer management."
+  },
+  {
+    id:42, difficulty:"medium",
+    q:"What is an Elastic IP address?",
+    opts:["A) A dynamic IP address assigned by DHCP","B) A static, public IPv4 address designed for dynamic cloud computing","C) An IPv6 address assigned to a VPC","D) A private IP address in a subnet"],
+    ans:1,
+    exp:"An Elastic IP address is a static and public IPv4 address designed for dynamic cloud computing. It can be associated with any instance or network interface and rapidly remapped to mask failures."
+  },
+  {
+    id:43, difficulty:"medium",
+    q:"What is the OSI model and how many layers does it have?",
+    opts:["A) A cloud security standard with 4 layers","B) A conceptual model explaining how data travels over a network with 7 layers","C) An AWS networking framework with 5 layers","D) An encryption protocol with 3 layers"],
+    ans:1,
+    exp:"The Open Systems Interconnection (OSI) model is a conceptual model used to explain how data travels over a network. It consists of seven layers."
+  },
+  {
+    id:44, difficulty:"medium",
+    q:"Which AWS service is equivalent to an on-premises firewall or ACL?",
+    opts:["A) Amazon EC2","B) AWS Security Groups and Network ACLs","C) Amazon S3","D) AWS Lambda"],
+    ans:1,
+    exp:"AWS security groups, network access control lists (network ACLs), and AWS IAM are similar to firewalls, access control lists (ACLs), and administrators in traditional IT."
+  },
+  {
+    id:45, difficulty:"medium",
+    q:"What happens when there is a conflict between IAM policies?",
+    opts:["A) The most permissive policy applies","B) The most recently created policy applies","C) The most restrictive policy applies","D) AWS prompts the administrator to choose"],
+    ans:2,
+    exp:"When there is a conflict between IAM policies, the most restrictive policy always applies. An explicit deny takes precedence over any allow statement."
+  },
+  {
+    id:46, difficulty:"medium",
+    q:"What are the two types of access that can be assigned to an IAM user?",
+    opts:["A) Read-only and read-write access","B) Programmatic access and AWS Management Console access","C) Admin access and guest access","D) Temporary access and permanent access"],
+    ans:1,
+    exp:"IAM users can be assigned programmatic access (using access key ID and secret key for CLI/SDK/API), AWS Management Console access (browser login), or both."
+  },
+  {
+    id:47, difficulty:"medium",
+    q:"Which service is an example of PaaS because AWS manages the OS and platform, not the customer?",
+    opts:["A) Amazon EC2","B) Amazon S3 (only for storage)","C) AWS Lambda and Amazon RDS","D) Amazon VPC"],
+    ans:2,
+    exp:"AWS Lambda and Amazon RDS are categorized as PaaS because AWS manages the infrastructure layer, the operating system, and platforms. Customers only access endpoints."
+  },
+  {
+    id:48, difficulty:"medium",
+    q:"What is an IAM role primarily used for?",
+    opts:["A) Long-term credentials for a single user","B) Granting temporary access to specific AWS resources to users, applications, or services","C) Defining the structure of IAM groups","D) Logging all API calls in AWS"],
+    ans:1,
+    exp:"An IAM role is intended to be assumable by anyone who needs it and provides temporary security credentials. It is used to delegate access to users, applications, or services."
+  },
+  {
+    id:49, difficulty:"medium",
+    q:"What is AWS Trusted Advisor?",
+    opts:["A) A DDoS protection service","B) A communications platform for enterprise meetings","C) An online tool that analyzes your AWS environment and provides real-time guidance following best practices","D) A managed database service"],
+    ans:2,
+    exp:"AWS Trusted Advisor is an online tool that analyzes your AWS environment and provides real-time guidance and recommendations to provision resources following AWS best practices."
+  },
+  {
+    id:50, difficulty:"medium",
+    q:"What is AWS Shield used for?",
+    opts:["A) Identity and access management","B) Cost optimization","C) Managed DDoS (Distributed Denial of Service) protection for applications on AWS","D) Encrypting data at rest"],
+    ans:2,
+    exp:"AWS Shield is a managed DDoS protection service that safeguards applications running on AWS with always-on detection and automatic inline mitigations."
+  },
+  {
+    id:51, difficulty:"medium",
+    q:"What is the purpose of a route table in a VPC?",
+    opts:["A) To define security rules for inbound and outbound traffic","B) To direct network traffic from a subnet using a set of routing rules","C) To assign IP addresses to EC2 instances","D) To manage DNS resolution within the VPC"],
+    ans:1,
+    exp:"A route table contains a set of rules (routes) that directs network traffic from a subnet. Each route specifies a destination CIDR block and a target for the traffic."
+  },
+  {
+    id:52, difficulty:"medium",
+    q:"What advantage does cloud computing provide regarding speed and agility?",
+    opts:["A) It eliminates all development costs","B) It reduces the time to provision new IT resources from weeks to minutes","C) It automates all software development tasks","D) It removes the need for a development team"],
+    ans:1,
+    exp:"Cloud computing increases speed and agility by making new IT resources available in minutes (not weeks), dramatically lowering the cost and time to experiment and develop."
+  },
+  {
+    id:53, difficulty:"medium",
+    q:"What is the maximum CIDR block size for a VPC IPv4 range?",
+    opts:["A) /8","B) /16","C) /24","D) /28"],
+    ans:1,
+    exp:"The IPv4 CIDR block for a VPC can be as large as /16 (which is 2¹⁶, or 65,536 addresses) or as small as /28 (which is 2⁴, or 16 addresses)."
+  },
+  {
+    id:54, difficulty:"medium",
+    q:"Which type of IAM policy is embedded directly into a single user, group, or role?",
+    opts:["A) Managed policy","B) Resource-based policy","C) Inline policy","D) Service control policy"],
+    ans:2,
+    exp:"Inline policies are policies that you create and manage, and they are embedded directly into a single user, group, or role — unlike managed policies, which can be attached to multiple entities."
+  },
+  {
+    id:55, difficulty:"medium",
+    q:"What is the customer's responsibility under the AWS shared responsibility model when using Amazon EC2?",
+    opts:["A) Physical security of the server hardware","B) Managing the hypervisor and virtualization layer","C) Managing the guest OS, application software, and security group configuration","D) Network infrastructure maintenance"],
+    ans:2,
+    exp:"For EC2 (IaaS), customers are responsible for managing the guest operating system (including patches), any installed application software, and the configuration of security groups."
+  },
+  {
+    id:56, difficulty:"medium",
+    q:"What is the purpose of Elastic Load Balancing in AWS, and what is its on-premises equivalent?",
+    opts:["A) Storage replication — equivalent to RAID systems","B) Traffic distribution — equivalent to routers, network pipelines, and switches","C) Identity management — equivalent to Active Directory","D) Content caching — equivalent to CDN appliances"],
+    ans:1,
+    exp:"Elastic Load Balancing and Amazon VPC are similar to routers, network pipelines, and switches in a traditional on-premises network."
+  },
+  {
+    id:57, difficulty:"medium",
+    q:"How does cloud computing address the problem of capacity planning?",
+    opts:["A) AWS pre-assigns fixed capacity to all customers","B) You must still estimate capacity in advance but get discounts for over-provisioning","C) You can access as much or as little as you need and scale up or down in minutes","D) Capacity is unlimited and free with all AWS accounts"],
+    ans:2,
+    exp:"Cloud computing eliminates guessing about capacity. You can access as much or as little as you need and scale up or down as required with only a few minutes' notice."
+  },
+  {
+    id:58, difficulty:"medium",
+    q:"What is the CIDR notation for a fixed/single IP address (specific host)?",
+    opts:["A) 0.0.0.0/0","B) 192.168.1.1/24","C) 192.0.2.1/32","D) 10.0.0.0/16"],
+    ans:2,
+    exp:"A /32 CIDR means every bit is fixed, representing a single IP address. This is used when you want to give firewall access to a specific host."
+  },
+  {
+    id:59, difficulty:"medium",
+    q:"What does 0.0.0.0/0 represent in CIDR notation?",
+    opts:["A) A private network with no internet access","B) A single loopback address","C) The entire internet — all IP addresses","D) A reserved AWS management address"],
+    ans:2,
+    exp:"In CIDR notation, 0.0.0.0/0 means every bit is flexible, representing the internet — all possible IP addresses."
+  },
+  {
+    id:60, difficulty:"medium",
+    q:"What is an elastic network interface in AWS?",
+    opts:["A) A virtual network interface that can be attached or detached from an instance in a VPC","B) A physical network card in an AWS data center","C) A type of Elastic IP address","D) A VPN connection between two VPCs"],
+    ans:0,
+    exp:"An elastic network interface is a virtual network interface that you can attach or detach from an instance in a VPC. Its attributes follow it when reattached to another instance."
+  },
+  {
+    id:61, difficulty:"medium",
+    q:"What is the advantage of associating an Elastic IP with a network interface rather than directly with an instance?",
+    opts:["A) It reduces AWS billing costs","B) You can move all attributes of the network interface from one instance to another in a single step","C) It provides IPv6 support automatically","D) It enables cross-region replication"],
+    ans:1,
+    exp:"Associating an Elastic IP with a network interface allows you to move all attributes of the network interface (including the Elastic IP) from one instance to another in a single step."
+  },
+  {
+    id:62, difficulty:"medium",
+    q:"What are the three elements of the AWS Global Infrastructure?",
+    opts:["A) Data centers, servers, and storage","B) Regions, Availability Zones, and Points of Presence (edge locations)","C) IAM, VPC, and CloudFront","D) EC2, S3, and RDS"],
+    ans:1,
+    exp:"The AWS Global Infrastructure consists of Regions, Availability Zones, and Points of Presence, which include edge locations and regional edge caches."
+  },
+  {
+    id:63, difficulty:"medium",
+    q:"Which feature of AWS Global Infrastructure means resources can dynamically adjust to increases or decreases in demand?",
+    opts:["A) Fault tolerant","B) High availability","C) Elastic and scalable","D) Redundant"],
+    ans:2,
+    exp:"The AWS Global Infrastructure is elastic and scalable, meaning resources can dynamically adjust to increases or decreases in capacity requirements and rapidly accommodate growth."
+  },
+  {
+    id:64, difficulty:"medium",
+    q:"What is the key difference between a public subnet and a private subnet in a VPC?",
+    opts:["A) Public subnets have more IP addresses than private subnets","B) Public subnets can communicate with the internet; private subnets cannot directly","C) Private subnets are more expensive than public subnets","D) Public subnets require an IAM policy to access"],
+    ans:1,
+    exp:"Public subnets have direct access to the internet (via an Internet Gateway), while private subnets do not have direct internet access."
+  },
+  {
+    id:65, difficulty:"medium",
+    q:"What must you specify when creating a NAT Gateway?",
+    opts:["A) A private subnet and a security group","B) A public subnet and an Elastic IP address","C) An Availability Zone and an IAM role","D) A VPC CIDR block and a route table"],
+    ans:1,
+    exp:"To create a NAT Gateway, you must specify the public subnet where it should reside, and an Elastic IP address to associate with it."
+  },
+  {
+    id:66, difficulty:"medium",
+    q:"What is the difference in responsibility for an Oracle database running on EC2 vs. running on Amazon RDS?",
+    opts:["A) No difference — both are managed entirely by AWS","B) On EC2, the customer applies Oracle patches; on RDS, AWS applies them","C) On RDS, the customer applies Oracle patches; on EC2, AWS applies them","D) Both require the customer to apply all patches regardless of service"],
+    ans:1,
+    exp:"If Oracle runs on EC2, the customer must apply Oracle software upgrades and patches. If Oracle runs on Amazon RDS (managed service), AWS handles patching, backups, and database administration."
+  },
+  {
+    id:67, difficulty:"medium",
+    q:"What is the IPv6 address length and how is it structured?",
+    opts:["A) 64 bits — four groups separated by dots","B) 96 bits — six groups separated by colons","C) 128 bits — eight groups of four hexadecimal characters separated by colons","D) 256 bits — sixteen groups of binary digits"],
+    ans:2,
+    exp:"IPv6 addresses are 128 bits, composed of eight groups of four letters and numbers in hexadecimal format, separated by colons. Each group represents 16 bits."
+  },
+
+  // ─────────────────────────────────────────────
+  // HARD (68–100)
+  // ─────────────────────────────────────────────
+  {
+    id:68, difficulty:"hard",
+    q:"A company wants to ensure their web servers can be accessed from the internet, but their database servers should NOT be reachable from the internet. What is the BEST VPC architecture to achieve this?",
+    opts:["A) Place all servers in one public subnet with security groups blocking DB traffic","B) Place web servers in a public subnet with an Internet Gateway, and database servers in a private subnet","C) Place all servers in a private subnet and use a NAT Gateway for web traffic","D) Use separate VPCs for web servers and database servers"],
+    ans:1,
+    exp:"The best practice is to place web servers in a public subnet (with Internet Gateway access) and database servers in a private subnet (no direct internet access). This follows the principle of least exposure."
+  },
+  {
+    id:69, difficulty:"hard",
+    q:"An application developer needs an EC2 instance to read from an S3 bucket without embedding AWS credentials in the application code. What is the BEST solution?",
+    opts:["A) Create an IAM user with S3 access and hardcode the credentials in the app","B) Share the root account credentials with the developer","C) Create an IAM role with S3 read permissions and attach it to the EC2 instance","D) Store credentials in an environment variable on the EC2 instance"],
+    ans:2,
+    exp:"The best approach is to create an IAM role with the necessary S3 read permissions and attach it to the EC2 instance. The application then uses the role's temporary credentials automatically without any hardcoded keys."
+  },
+  {
+    id:70, difficulty:"hard",
+    q:"Which statement CORRECTLY describes the relationship between VPCs, subnets, and Availability Zones?",
+    opts:["A) A VPC belongs to one Availability Zone; subnets span multiple Regions","B) A VPC belongs to one Region and can span multiple AZs; each subnet belongs to exactly one AZ","C) A VPC can span multiple Regions; subnets belong to one Region","D) Subnets and VPCs both belong to a single Availability Zone"],
+    ans:1,
+    exp:"A VPC belongs to a single AWS Region and can span multiple Availability Zones. Each subnet, however, belongs to exactly one Availability Zone."
+  },
+  {
+    id:71, difficulty:"hard",
+    q:"A company with EU customers must comply with the EU Data Protection Directive. When selecting an AWS Region, what should be the PRIMARY consideration?",
+    opts:["A) The Region with the lowest cost","B) The Region closest to the company's headquarters","C) Data governance and legal requirements — selecting a Region within the EU","D) The Region with the most available AWS services"],
+    ans:2,
+    exp:"Data governance and legal requirements are the primary consideration. The EU Data Protection Directive may require data to remain within EU geographical boundaries, making legal compliance the top priority over cost or latency."
+  },
+  {
+    id:72, difficulty:"hard",
+    q:"You have a subnet with CIDR block 10.0.0.0/24. How many IP addresses are actually available for EC2 instances?",
+    opts:["A) 256","B) 254","C) 251","D) 248"],
+    ans:2,
+    exp:"A /24 subnet has 256 total addresses. AWS reserves 5 of them (network address, VPC router, DNS, future use, broadcast), leaving 251 available for use by EC2 instances and other resources."
+  },
+  {
+    id:73, difficulty:"hard",
+    q:"An administrator attaches two IAM policies to a user. Policy A allows S3:PutObject on all buckets. Policy B explicitly denies S3:PutObject on a specific bucket 'finance-data'. What happens when the user tries to upload to the 'finance-data' bucket?",
+    opts:["A) The upload succeeds because Policy A allows all S3 PutObject actions","B) The upload is denied because an explicit deny always overrides an allow","C) AWS prompts the user to request administrator approval","D) The result depends on the order the policies were attached"],
+    ans:1,
+    exp:"An explicit deny always takes precedence over an allow. When there is a conflict between policies, the most restrictive policy applies — so the user is denied access to 'finance-data' regardless of the allow in Policy A."
+  },
+  {
+    id:74, difficulty:"hard",
+    q:"What is the fundamental difference between identity-based policies and resource-based policies in AWS IAM?",
+    opts:["A) Identity-based policies use JSON; resource-based policies use XML","B) Identity-based policies are attached to IAM principals (users/roles/groups); resource-based policies are attached to AWS resources like S3 buckets","C) Identity-based policies only allow actions; resource-based policies only deny actions","D) Resource-based policies are free; identity-based policies incur charges"],
+    ans:1,
+    exp:"Identity-based policies are attached to a principal (IAM user, role, or group) and control what actions that identity can perform. Resource-based policies are attached to a resource (like an S3 bucket) and control what actions a specified principal can perform on that resource."
+  },
+  {
+    id:75, difficulty:"hard",
+    q:"A company runs a global e-commerce platform and needs to minimize latency for customers worldwide. Which AWS strategy BEST addresses this requirement?",
+    opts:["A) Use a single large EC2 instance in the US East Region","B) Deploy the application in multiple AWS Regions closest to customer locations","C) Enable more Availability Zones in one Region","D) Use Reserved Instances to improve performance"],
+    ans:1,
+    exp:"Deploying the application in multiple AWS Regions around the world minimizes latency by keeping the application geographically close to users. AWS allows this with just a few clicks, providing lower latency globally."
+  },
+  {
+    id:76, difficulty:"hard",
+    q:"What is the difference between fault tolerance and high availability in the context of AWS Global Infrastructure?",
+    opts:["A) They are identical concepts in AWS","B) Fault tolerance means continuing operations despite a failed component (built-in redundancy); high availability means minimal downtime with minimal human intervention","C) High availability requires manual failover; fault tolerance is automatic","D) Fault tolerance applies only to storage services; high availability applies to compute"],
+    ans:1,
+    exp:"Fault tolerance refers to built-in component redundancy enabling continued operations despite a failed component. High availability means the system provides service with minimal downtime and requires minimal to no human intervention."
+  },
+  {
+    id:77, difficulty:"hard",
+    q:"Under the AWS shared responsibility model, which of the following is the CUSTOMER'S responsibility when using AWS Lambda (a PaaS service)?",
+    opts:["A) Patching the underlying operating system","B) Managing the hypervisor and virtualization","C) Managing their data, classifying assets, and applying appropriate permissions","D) Configuring physical network hardware"],
+    ans:2,
+    exp:"For PaaS services like Lambda, AWS manages the OS, infrastructure, and platforms. The customer remains responsible for managing their data, classifying assets, and applying appropriate permissions — but not OS patches or infrastructure."
+  },
+  {
+    id:78, difficulty:"hard",
+    q:"Why should you AVOID using the AWS root account for daily administrative tasks?",
+    opts:["A) The root account cannot access all AWS services","B) Root account actions cannot be logged in CloudTrail","C) The root account has unrestricted access to all resources and if compromised poses extreme risk; IAM users with least privilege should be used instead","D) Root accounts are automatically deleted after 30 days of inactivity"],
+    ans:2,
+    exp:"The AWS root account has complete, unrestricted access to all resources. If compromised, this presents extreme security risk. Best practice is to create IAM users with only the permissions they need (principle of least privilege) for daily tasks."
+  },
+  {
+    id:79, difficulty:"hard",
+    q:"A company wants to expand its on-premises data center to the cloud while maintaining connectivity to internal systems. Which deployment model should they choose?",
+    opts:["A) Full cloud deployment","B) SaaS model","C) Hybrid deployment","D) On-premises with virtualization only"],
+    ans:2,
+    exp:"A hybrid deployment connects cloud-based resources with existing on-premises infrastructure, enabling the organization to extend into the cloud while maintaining connectivity to internal systems."
+  },
+  {
+    id:80, difficulty:"hard",
+    q:"What is the CORRECT sequence to make a private subnet's instances access the internet outbound only?",
+    opts:["A) Attach Internet Gateway → update private subnet route table to 0.0.0.0/0 → Internet Gateway","B) Create NAT Gateway in private subnet → update route table","C) Create NAT Gateway in PUBLIC subnet → associate Elastic IP → update PRIVATE subnet route table to point 0.0.0.0/0 → NAT Gateway","D) Attach Internet Gateway directly to EC2 instances in the private subnet"],
+    ans:2,
+    exp:"The correct sequence is: (1) Create a NAT Gateway in a public subnet, (2) Associate an Elastic IP address with it, (3) Update the private subnet's route table to direct internet-bound traffic (0.0.0.0/0) to the NAT Gateway."
+  },
+  {
+    id:81, difficulty:"hard",
+    q:"Which AWS IAM concept would you use to grant a third-party auditing firm temporary access to specific AWS resources without creating long-term credentials for them?",
+    opts:["A) IAM User with temporary password","B) IAM Group with auditor permissions","C) IAM Role with a trust policy allowing the third-party account to assume it","D) IAM Managed Policy with expiration date"],
+    ans:2,
+    exp:"IAM roles are ideal for this scenario. A role with a trust policy allows the third party to assume it temporarily, providing temporary credentials without creating long-term IAM user credentials for the external party."
+  },
+  {
+    id:82, difficulty:"hard",
+    q:"How does the AWS infrastructure address the 'stop guessing capacity' advantage, and what is the traditional problem it solves?",
+    opts:["A) AWS provides unlimited free capacity; traditional IT required guessing and often over-purchased","B) Traditionally, capacity decisions made before deployment led to either expensive idle resources or limited capacity; AWS allows on-demand scaling in minutes","C) AWS pre-configures capacity based on machine learning predictions of your needs","D) Traditional IT had no capacity constraints; AWS introduced dynamic scaling as an enhancement"],
+    ans:1,
+    exp:"Traditionally, capacity decisions before deployment led to two problems: expensive idle resources (over-provisioning) or performance limitations (under-provisioning). AWS solves this by allowing you to scale up or down in minutes based on actual demand."
+  },
+  {
+    id:83, difficulty:"hard",
+    q:"What would happen to data stored in an AWS Region if that Region experienced a complete failure, assuming the customer has NOT configured cross-Region replication?",
+    opts:["A) AWS automatically replicates data to the nearest Region as a failover","B) Data is preserved because it is stored across multiple Availability Zones","C) The data would be unavailable because Regions are isolated and data is not automatically replicated across Regions","D) AWS Support can retrieve the data from backup within 24 hours"],
+    ans:2,
+    exp:"Regions are isolated from one another and resources are not automatically replicated across Regions. It is the customer's responsibility to replicate data across Regions if business needs require cross-Region resilience."
+  },
+  {
+    id:84, difficulty:"hard",
+    q:"An organization needs to prevent a specific IAM user from accessing any service OTHER than DynamoDB and S3. Which IAM policy element achieves this most precisely?",
+    opts:["A) An Allow statement with Resource: * for DynamoDB and S3 only","B) An explicit Deny using NotResource to deny all actions not targeting the specified DynamoDB table and S3 bucket","C) Removing the user from all IAM groups","D) Setting a service control policy on the AWS account"],
+    ans:1,
+    exp:"Using an explicit Deny with the NotResource element ensures the user cannot use any other DynamoDB or S3 actions or resources beyond what is specified, even if other policies grant permissions. Explicit deny always takes precedence."
+  },
+  {
+    id:85, difficulty:"hard",
+    q:"What is the architectural significance of Availability Zones being interconnected with high-bandwidth, low-latency fully redundant fiber?",
+    opts:["A) It allows customers to access AWS services faster from their offices","B) It enables synchronous replication between AZs, supporting highly available and fault-tolerant architectures","C) It reduces the cost of data transfer between AZs to zero","D) It allows AZs to share the same power infrastructure"],
+    ans:1,
+    exp:"The high-bandwidth, low-latency, redundant fiber between AZs enables synchronous replication, which is the foundation for building highly available and fault-tolerant applications distributed across multiple Availability Zones."
+  },
+  {
+    id:86, difficulty:"hard",
+    q:"Why does AWS use custom network equipment from Original Device Manufacturers (ODMs) rather than branded equipment?",
+    opts:["A) ODM equipment is cheaper and provides lower quality for non-critical systems","B) AWS uses ODM equipment where a second company specifies requirements and ODMs manufacture to those specs, allowing AWS to customize hardware for their specific infrastructure needs","C) ODM equipment complies with government regulations that branded equipment doesn't meet","D) Branded equipment is not available at the scale AWS requires"],
+    ans:1,
+    exp:"AWS uses custom network equipment sourced from ODMs (Original Device Manufacturers), which design and manufacture products based on AWS's specifications. This allows AWS to tailor hardware to their exact infrastructure requirements at scale."
+  },
+  {
+    id:87, difficulty:"hard",
+    q:"A developer wants to build a solution where customers send data to EC2 instances, which batch-process it and store objects in S3, then index them in DynamoDB — all within a private network. Which AWS services and categories are involved?",
+    opts:["A) EC2 (Compute), S3 (Storage), DynamoDB (Database), VPC (Networking)","B) EC2 (Storage), S3 (Compute), DynamoDB (Networking), VPC (Security)","C) Lambda (Compute), EBS (Storage), RDS (Database), CloudFront (Networking)","D) EC2 (Database), S3 (Networking), DynamoDB (Security), IAM (Compute)"],
+    ans:0,
+    exp:"This solution uses: Amazon EC2 (Compute category) for processing, Amazon S3 (Storage category) for object storage, Amazon DynamoDB (Database category) for indexing, and Amazon VPC (Networking category) to run everything in a private network."
+  },
+  {
+    id:88, difficulty:"hard",
+    q:"What is the critical security implication of IAM groups NOT supporting nesting?",
+    opts:["A) It reduces performance when querying group permissions","B) Administrators cannot create a hierarchy of permissions groups, requiring careful planning of flat group structures to avoid permission sprawl","C) It means groups can have unlimited members without performance impact","D) It prevents cross-account access for group members"],
+    ans:1,
+    exp:"Since groups cannot contain other groups (no nesting), administrators cannot create hierarchical permission structures. This requires careful planning of flat group designs to manage permissions at scale without creating overly complex or redundant policy assignments."
+  },
+  {
+    id:89, difficulty:"hard",
+    q:"What is the security implication of embedding AWS access keys directly in a mobile application?",
+    opts:["A) It improves performance by reducing authentication overhead","B) It complies with AWS best practices for mobile app security","C) Keys can be difficult to rotate and users can potentially extract and misuse them — IAM roles should be used instead","D) Embedded keys are automatically encrypted by the AWS SDK"],
+    ans:2,
+    exp:"Embedding AWS keys in mobile apps is a security risk because keys can be difficult to rotate and users can potentially extract them from the app and misuse them. IAM roles should be used for AWS access from applications."
+  },
+  {
+    id:90, difficulty:"hard",
+    q:"How does the concept of 'building blocks' apply to both AWS services and cloud computing generally?",
+    opts:["A) AWS services are modular components that can be selected and combined to build complex, scalable solutions tailored to specific business needs","B) AWS provides pre-built complete solutions that cannot be customized","C) Building blocks refers only to IaaS services and not PaaS or SaaS","D) AWS building blocks are static — once combined, they cannot be changed"],
+    ans:0,
+    exp:"AWS services are designed like building blocks — modular, independent components that can be assembled quickly, combined in various ways to build sophisticated scalable solutions, and adjusted as needs change. This applies across IaaS, PaaS, and SaaS services."
+  },
+  {
+    id:91, difficulty:"hard",
+    q:"What is the MINIMUM CIDR block size allowed for a VPC IPv4 CIDR, and how many usable IP addresses does it provide after AWS reservations?",
+    opts:["A) /24 — 251 usable addresses","B) /28 — 16 total, 11 usable after 5 reserved","C) /32 — 1 total, 0 usable after reservations","D) /16 — 65,536 total, 65,531 usable"],
+    ans:1,
+    exp:"The minimum VPC IPv4 CIDR block is /28, which provides 2⁴ = 16 total IP addresses. After AWS reserves 5 (network, router, DNS, future use, broadcast), only 11 IP addresses are available for use."
+  },
+  {
+    id:92, difficulty:"hard",
+    q:"How does the AWS Shared Responsibility Model change between IaaS and PaaS services?",
+    opts:["A) In IaaS, AWS manages everything; in PaaS, the customer manages everything","B) In IaaS, the customer has maximum control and maximum responsibility (OS, apps, security groups); in PaaS, AWS handles more (OS, platform, patching) and customer manages data and permissions","C) The model is identical for IaaS and PaaS — only SaaS differs","D) In PaaS, customers must manage physical hardware; in IaaS, they don't"],
+    ans:1,
+    exp:"With IaaS (like EC2), customers have maximum flexibility AND maximum responsibility (OS management, patching, application security). With PaaS (like Lambda/RDS), AWS takes on more responsibility for OS and platform management, while customers focus on data management and application-level concerns."
+  },
+  {
+    id:93, difficulty:"hard",
+    q:"A company needs a static public IP that can be quickly remapped to a different EC2 instance during failure. Which feature should they use, and why is associating it with a network interface preferred over associating it directly with an instance?",
+    opts:["A) Elastic IP — associating with a network interface allows all network attributes to move between instances in a single step","B) Public IP — associating with a network interface enables IPv6 support","C) Elastic IP — associating directly with an instance is faster during failover","D) Private IP — it can be remapped across Regions"],
+    ans:0,
+    exp:"An Elastic IP is a static public IPv4 address designed for this purpose. Associating it with a network interface (rather than directly with an instance) is preferred because you can move ALL attributes of the network interface from one instance to another in a single step, making failover faster and simpler."
+  },
+  {
+    id:94, difficulty:"hard",
+    q:"What happens to the local route in a VPC route table, and why is this significant?",
+    opts:["A) The local route can be modified to redirect internal traffic to an Internet Gateway","B) The local route is automatically created in every route table, enables communication within the VPC, and CANNOT be deleted","C) The local route must be manually created and points to 0.0.0.0/0","D) The local route is optional and only needed for multi-AZ deployments"],
+    ans:1,
+    exp:"Every route table automatically contains a local route for communication within the VPC. This route cannot be deleted, ensuring that instances within the VPC can always communicate with each other regardless of other routing changes."
+  },
+  {
+    id:95, difficulty:"hard",
+    q:"From a security architecture perspective, why should you design systems to span multiple Availability Zones rather than deploying everything in a single AZ?",
+    opts:["A) To reduce AWS costs through Reserved Instance discounts","B) AZs are not isolated from each other, so spanning them provides no benefit","C) A single AZ failure (from events like lightning, tornadoes, or earthquakes) would take down all resources; multi-AZ deployment provides isolation and resilience against such events","D) Multi-AZ deployment is required by AWS for all production workloads"],
+    ans:2,
+    exp:"Each AZ is a physically separate, isolated partition with its own power infrastructure. A disaster affecting one AZ (lightning, tornadoes, earthquakes) would not affect others. AWS recommends designing systems that can survive temporary or prolonged failure of an Availability Zone."
+  },
+  {
+    id:96, difficulty:"hard",
+    q:"What is the key architectural difference between using AWS CloudFront edge locations versus deploying directly to AWS Regions for content delivery?",
+    opts:["A) Edge locations provide compute power; Regions only provide storage","B) Edge locations cache content closer to end users to reduce latency; Regions contain the origin content and full AWS service catalogs","C) Regions are for development; edge locations are for production workloads","D) Edge locations provide higher security than Regions"],
+    ans:1,
+    exp:"Edge locations (Points of Presence) improve performance by caching content closer to users, significantly reducing latency for end users. Regions contain origin content and the full range of AWS services. CloudFront uses edge locations to serve cached content globally."
+  },
+  {
+    id:97, difficulty:"hard",
+    q:"In the AWS security model, what specific actions constitute 'security in the cloud' that are the customer's responsibility?",
+    opts:["A) Physical data center security, hardware maintenance, and network infrastructure","B) Hypervisor management, bare metal OS security, and global network monitoring","C) Encryption of data at rest and in transit, network configuration security, security credentials management, security group configuration, and OS patches on compute instances","D) Third-party auditor certifications and regulatory compliance for AWS infrastructure"],
+    ans:2,
+    exp:"'Security in the cloud' (customer responsibility) includes: encryption of data at rest and in transit, secure network configuration, managing security credentials and logins, configuring security groups, and maintaining OS updates and security patches on compute instances."
+  },
+  {
+    id:98, difficulty:"hard",
+    q:"Which combination of AWS services provides a layered security approach for controlling traffic to EC2 instances within a VPC?",
+    opts:["A) CloudFront + Route 53 + ElastiCache","B) Security Groups (instance-level) + Network ACLs (subnet-level) + IAM (resource access control)","C) EBS encryption + S3 bucket policies + CloudTrail logging","D) EC2 Key Pairs + SSH bastion host + VPN only"],
+    ans:1,
+    exp:"Amazon VPC supports multiple layers of security: Security Groups (stateful, at the instance level), Network ACLs (stateless, at the subnet level), and IAM (controlling which users/services can access resources). Together they provide a comprehensive defense-in-depth approach."
+  },
+  {
+    id:99, difficulty:"hard",
+    q:"Why is it significant that the AWS API serving as the common foundation for AWS Management Console, CLI, and SDKs is REST-based?",
+    opts:["A) REST APIs are faster than all other API types","B) It means all three access methods use the same underlying interface — any capability available in one tool is fundamentally available in others, ensuring consistency","C) REST APIs only work with JSON, standardizing data formats across AWS","D) REST-based APIs eliminate the need for authentication in AWS"],
+    ans:1,
+    exp:"All three access methods (Console, CLI, SDKs) are built on a common REST-like API. This means they share the same underlying capabilities and consistency — every interaction with AWS is ultimately an API call to the same infrastructure."
+  },
+  {
+    id:100, difficulty:"hard",
+    q:"A company is evaluating whether to move from on-premises to AWS. They are concerned about capital expenditure, unpredictable workloads, and global expansion. Which THREE cloud computing advantages MOST directly address these concerns?",
+    opts:["A) Trade capex for variable expense + Stop guessing capacity + Go global in minutes","B) High availability + Fault tolerance + Managed services","C) MFA support + IAM policies + VPC isolation","D) Edge locations + CloudFront + Route 53"],
+    ans:0,
+    exp:"(1) 'Trade capital expense for variable expense' eliminates large upfront hardware investments. (2) 'Stop guessing capacity' addresses unpredictable workloads — scale as needed in minutes. (3) 'Go global in minutes' enables deployment in multiple AWS Regions worldwide with just a few clicks for global expansion."
+  }
+];
+
+// ─── State ───────────────────────────────────────────────
+let answered = 0, correct = 0, wrong = 0;
+let currentFilter = 'all';
+
+// ─── Build Quiz ───────────────────────────────────────────
+function buildQuiz() {
+  const container = document.getElementById('quizBody');
+  container.innerHTML = '';
+
+  const groups = { easy: [], medium: [], hard: [] };
+  questions.forEach(q => groups[q.difficulty].push(q));
+
+  const labels = {
+    easy:   { text:'🟢 Easy Questions (1–34)',   cls:'label-easy' },
+    medium: { text:'🔵 Medium Questions (35–67)', cls:'label-medium' },
+    hard:   { text:'🔴 Hard Questions (68–100)',  cls:'label-hard' }
+  };
+
+  ['easy','medium','hard'].forEach(diff => {
+    const lbl = document.createElement('div');
+    lbl.className = `section-label ${labels[diff].cls} filter-section filter-${diff}`;
+    lbl.textContent = labels[diff].text;
+    lbl.id = `lbl-${diff}`;
+    container.appendChild(lbl);
+
+    groups[diff].forEach(q => {
+      const card = document.createElement('div');
+      card.className = `question-card ${diff} filter-section filter-${diff}`;
+      card.id = `card-${q.id}`;
+
+      card.innerHTML = `
+        <div class="question-header">
+          <span class="q-number">Q${q.id}</span>
+          <span class="difficulty-badge badge-${diff}">${diff.toUpperCase()}</span>
+        </div>
+        <div class="question-text">${q.q}</div>
+        <div class="options" id="opts-${q.id}">
+          ${q.opts.map((o,i) => `<button class="option-btn" onclick="selectAnswer(${q.id},${i})">${o}</button>`).join('')}
+        </div>
+        <div class="explanation" id="exp-${q.id}">💡 <strong>Explanation:</strong> ${q.exp}</div>
+        <div class="action-row">
+          <button class="reset-btn" onclick="resetQuestion(${q.id})">↺ Reset</button>
+        </div>`;
+
+      container.appendChild(card);
+    });
+  });
+}
+
+function selectAnswer(qId, chosen) {
+  const q = questions.find(x => x.id === qId);
+  const opts = document.querySelectorAll(`#opts-${qId} .option-btn`);
+  const exp = document.getElementById(`exp-${qId}`);
+
+  // Already answered?
+  if ([...opts].some(b => b.classList.contains('correct') || b.classList.contains('wrong'))) return;
+
+  opts.forEach((btn, i) => {
+    btn.disabled = true;
+    if (i === q.ans) btn.classList.add('correct');
+    else if (i === chosen) btn.classList.add('wrong');
+  });
+
+  exp.classList.add('show');
+  answered++;
+  if (chosen === q.ans) correct++; else wrong++;
+  updateScore();
+}
+
+function resetQuestion(qId) {
+  const q = questions.find(x => x.id === qId);
+  const opts = document.querySelectorAll(`#opts-${qId} .option-btn`);
+  const exp = document.getElementById(`exp-${qId}`);
+  const wasAnswered = [...opts].some(b => b.classList.contains('correct') || b.classList.contains('wrong'));
+  if (!wasAnswered) return;
+
+  const wasCorrect = opts[q.ans].classList.contains('correct') &&
+    [...opts].filter(b => b.classList.contains('wrong')).length === 0;
+  const wasWrong = [...opts].some(b => b.classList.contains('wrong'));
+
+  opts.forEach(btn => {
+    btn.disabled = false;
+    btn.classList.remove('correct','wrong');
+    btn.onclick = function(){};
+  });
+  opts.forEach((btn, i) => { btn.onclick = () => selectAnswer(qId, i); });
+  exp.classList.remove('show');
+
+  answered--;
+  if (wasCorrect) correct--;
+  if (wasWrong) wrong--;
+  updateScore();
+}
+
+function updateScore() {
+  document.getElementById('sc-answered').textContent = answered;
+  document.getElementById('sc-correct').textContent = correct;
+  document.getElementById('sc-wrong').textContent = wrong;
+  const pct = answered > 0 ? Math.round((correct / answered) * 100) : 0;
+  document.getElementById('sc-pct').textContent = pct + '%';
+  document.getElementById('progressBar').style.width = (answered / 100 * 100) + '%';
+  document.getElementById('progressText').textContent = `${answered} of 100 answered`;
+}
+
+function filterQuestions(filter) {
+  currentFilter = filter;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+
+  document.querySelectorAll('.filter-section').forEach(el => {
+    if (filter === 'all' || el.classList.contains(`filter-${filter}`)) {
+      el.classList.remove('hidden');
+    } else {
+      el.classList.add('hidden');
+    }
+  });
+}
+
+function showFinal() {
+  const pct = answered > 0 ? Math.round((correct / 100) * 100) : 0;
+  let grade, msg;
+  if (pct >= 90)      { grade = `🏆 Excellent! ${correct}/100`; msg = "Outstanding! You have a strong command of AWS Cloud concepts."; }
+  else if (pct >= 75) { grade = `✅ Good Job! ${correct}/100`; msg = "Great work! Review the questions you missed to solidify your knowledge."; }
+  else if (pct >= 60) { grade = `📘 Passing — ${correct}/100`; msg = "You passed! Focus on the hard questions and explanations for improvement."; }
+  else               { grade = `📖 Keep Studying — ${correct}/100`; msg = "Review the lecture materials and retry. You can do it!"; }
+
+  document.getElementById('finalGrade').textContent = grade;
+  document.getElementById('finalMsg').textContent = msg;
+  document.getElementById('finalResult').style.display = 'block';
+  document.getElementById('finalResult').scrollIntoView({ behavior: 'smooth' });
+}
+
+function resetAll() {
+  answered = 0; correct = 0; wrong = 0;
+  updateScore();
+  buildQuiz();
+  document.getElementById('finalResult').style.display = 'none';
+  filterQuestions.call({ target: document.querySelector('.filter-btn') }, currentFilter);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ─── Init ─────────────────────────────────────────────────
+buildQuiz();
+</script>
+</body>
+</html>
