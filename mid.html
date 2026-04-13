@@ -11,7 +11,6 @@
             box-sizing: border-box;
         }
 
-
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
@@ -78,10 +77,6 @@
             font-weight: 500;
         }
 
-        .input-wrapper {
-            position: relative;
-        }
-
         .input-wrapper input {
             width: 100%;
             padding: 16px 20px;
@@ -135,7 +130,6 @@
             transform: translateY(0);
         }
 
-        /* Result Card */
         .result {
             display: none;
             margin-top: 25px;
@@ -208,7 +202,6 @@
             grid-column: 1 / -1;
         }
 
-        /* Success theme */
         .result.success .result-header {
             background: linear-gradient(135deg, #11998e, #38ef7d);
             color: #fff;
@@ -230,7 +223,6 @@
             color: #fff;
         }
 
-        /* Score colors */
         .score-display {
             font-size: 52px !important;
             font-weight: 900 !important;
@@ -238,13 +230,12 @@
         }
 
         .score-10 { color: #38ef7d; }
-        .score-9 { color: #56ab2f; }
-        .score-8 { color: #a8e063; }
-        .score-7 { color: #f7971e; }
-        .score-6 { color: #fda085; }
+        .score-9  { color: #56ab2f; }
+        .score-8  { color: #a8e063; }
+        .score-7  { color: #f7971e; }
+        .score-6  { color: #fda085; }
         .score-low { color: #ff6b6b; }
 
-        /* Error theme */
         .result.error .result-header {
             background: linear-gradient(135deg, #ff416c, #ff4b2b);
             color: #fff;
@@ -264,38 +255,26 @@
             line-height: 1.7;
         }
 
-        /* Divider */
-        .divider {
-            display: flex;
-            align-items: center;
-            margin: 20px 0;
-            gap: 10px;
+        .result.warning .result-header {
+            background: linear-gradient(135deg, #f7971e, #ffd200);
+            color: #1a1a2e;
         }
 
-        .divider::before, .divider::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: rgba(255,255,255,0.1);
+        .result.warning .result-header .icon {
+            background: rgba(0,0,0,0.15);
         }
 
-        .divider span {
-            color: rgba(255,255,255,0.3);
-            font-size: 12px;
+        .result.warning .result-body {
+            background: rgba(255, 193, 7, 0.05);
+            border: 1px solid rgba(255, 193, 7, 0.2);
+            border-top: none;
+            color: rgba(255,255,255,0.85);
+            text-align: center;
+            font-size: 14px;
+            line-height: 1.9;
+            padding: 25px;
         }
 
-        /* Section badge */
-        .section-badge {
-            display: inline-block;
-            padding: 4px 14px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 700;
-            background: rgba(255,255,255,0.15);
-            border: 1px solid rgba(255,255,255,0.3);
-        }
-
-        /* Footer */
         .footer {
             text-align: center;
             margin-top: 25px;
@@ -310,14 +289,15 @@
     <div class="card">
         <div class="logo">
             <div class="logo-icon">☁️</div>
-            <h1> نتائج الامتحان-المد</h1>
-            <p>مادة الحوسبة السحابية اي اعتراض ارسل للاميل اسمك  والاعتراض amer.hadi@alshaab.edu.iq</p>
+            <h1>نتائج الامتحان</h1>
+            <p>مادة الحوسبة السحابية</p>
         </div>
 
         <div class="input-group">
             <label>أدخل رمزك الخاص</label>
             <div class="input-wrapper">
-                <input type="text" id="codeInput" placeholder="مثال: A-01 أو B-15" maxlength="6" />
+                <input type="text" id="codeInput"
+                placeholder="مثال: A-01 أو B-15" maxlength="6" />
             </div>
         </div>
 
@@ -327,7 +307,7 @@
     </div>
 
     <div class="footer">
-        جامعة الشعب &nbsp;|&nbsp; الامن السيبراني د.امير هادي 
+        جامعة الشعب &nbsp;|&nbsp;د.امير هادي اي اعتراض او مشكلة المراسلة عبر البريد الالكتروني  amer.hadi(at)alshaab.edu.iq
     </div>
 </div>
 
@@ -369,6 +349,7 @@ const students = {
   "A-34":{"name":"حسين فتح الله حسب الله حمود","score":10,"section":"A","shift":"صباحي"},
   "A-35":{"name":"رسول صميم كريدي عنفوص","score":8,"section":"A","shift":"صباحي"},
   "A-36":{"name":"روان علي عادل عبد الوهاب","score":10,"section":"A","shift":"صباحي"},
+  "A-37":{"name":"زهراء محمد بدر جدوع","score":null,"section":"A","shift":"صباحي"},
   "A-38":{"name":"زين العابدين علاوي عبد الحسين","score":10,"section":"A","shift":"صباحي"},
   "A-39":{"name":"سبأ وليد محمد جاسم","score":10,"section":"A","shift":"صباحي"},
   "A-40":{"name":"سجى محمد حميد عباس","score":10,"section":"A","shift":"صباحي"},
@@ -395,11 +376,13 @@ const students = {
   "B-10":{"name":"حسين احمد اياد مهدي","score":10,"section":"B","shift":"صباحي"},
   "B-11":{"name":"حسين سنان ابراهيم مراد","score":10,"section":"B","shift":"صباحي"},
   "B-12":{"name":"حسين صالح عزيز سالم","score":5,"section":"B","shift":"صباحي"},
+  "B-13":{"name":"حسين صباح سالم سكر","score":null,"section":"B","shift":"صباحي"},
   "B-14":{"name":"حسين صميم سعدون صلاح","score":6,"section":"B","shift":"صباحي"},
   "B-15":{"name":"حسين ظافر خلف محسن","score":9,"section":"B","shift":"صباحي"},
   "B-16":{"name":"حسين علاء نصار عبدالحسين","score":8,"section":"B","shift":"صباحي"},
   "B-17":{"name":"حسين علي عبد الله جرمط","score":8,"section":"B","shift":"صباحي"},
   "B-18":{"name":"حسين علي غافل روضان","score":4,"section":"B","shift":"صباحي"},
+  "B-19":{"name":"حسين علي فيصل طاهر","score":null,"section":"B","shift":"صباحي"},
   "B-20":{"name":"حسين فلاح كريم حسين","score":7,"section":"B","shift":"صباحي"},
   "B-21":{"name":"حنان طه محسن حمود","score":8,"section":"B","shift":"صباحي"},
   "B-22":{"name":"حيدر سمير عبد سلطان","score":9,"section":"B","shift":"صباحي"},
@@ -421,8 +404,11 @@ const students = {
   "B-38":{"name":"عبدالمهيمن صلاح فاضل مخيف","score":10,"section":"B","shift":"صباحي"},
   "B-39":{"name":"عسل مهند غسان ايوب","score":10,"section":"B","shift":"صباحي"},
   "B-40":{"name":"علي رعد رشيد ابراهيم","score":4,"section":"B","shift":"صباحي"},
+  "B-41":{"name":"علي مشتاق عبد المنعم عباس","score":null,"section":"B","shift":"صباحي"},
   "B-42":{"name":"عمار شهاب احمد جيجان","score":6,"section":"B","shift":"صباحي"},
+  "B-43":{"name":"عمار فريد حسين خلف","score":null,"section":"B","shift":"صباحي"},
   "B-44":{"name":"مجتبى ثامر علي عبيد","score":10,"section":"B","shift":"صباحي"},
+  "B-45":{"name":"محمـد عباس عبد علي","score":null,"section":"B","shift":"صباحي"},
   "B-46":{"name":"محمد قاسم عدنان عبد الغفور","score":9,"section":"B","shift":"صباحي"},
   "B-47":{"name":"مصعب فؤاد خلف ذيب","score":9,"section":"B","shift":"صباحي"},
   "B-48":{"name":"منتظر وليد عبدالحسين مزعل","score":6,"section":"B","shift":"صباحي"},
@@ -431,6 +417,7 @@ const students = {
   "B-51":{"name":"يونس حسن مطر عزيز","score":9,"section":"B","shift":"صباحي"},
   "C-01":{"name":"ابراهيم حسين رمضان ناصر","score":10,"section":"C","shift":"صباحي"},
   "C-02":{"name":"احمد اثير شاكر محمد","score":5,"section":"C","shift":"صباحي"},
+  "C-03":{"name":"احمد فريد صادق خضر","score":null,"section":"C","shift":"صباحي"},
   "C-04":{"name":"حسن حبيب حسين حبيب","score":9,"section":"C","shift":"صباحي"},
   "C-05":{"name":"حسن حيدر محسن عبود","score":10,"section":"C","shift":"صباحي"},
   "C-06":{"name":"حسن علي كريم حسن","score":9,"section":"C","shift":"صباحي"},
@@ -481,16 +468,20 @@ const students = {
   "D-02":{"name":"حسين علاء جعفر سعدون","score":6,"section":"D","shift":"صباحي"},
   "D-03":{"name":"حسين محمد حسين داود","score":9,"section":"D","shift":"صباحي"},
   "D-04":{"name":"خطاب عمر ضياء ياسين","score":10,"section":"D","shift":"صباحي"},
+  "D-05":{"name":"سجاد قاسم حامد عباس","score":null,"section":"D","shift":"صباحي"},
+  "D-06":{"name":"سجاد وائل سمير علي","score":null,"section":"D","shift":"صباحي"},
   "D-07":{"name":"عبدالله سعد جاسم محمد","score":9,"section":"D","shift":"صباحي"},
   "D-08":{"name":"عبدالله مازن كامل محمد","score":7,"section":"D","shift":"صباحي"},
   "D-09":{"name":"علي اسامة عباس حميد","score":10,"section":"D","shift":"صباحي"},
   "D-10":{"name":"علي المرتضى ياسين فاخر عوده","score":9,"section":"D","shift":"صباحي"},
+  "D-11":{"name":"علي جبار عكيب رجي","score":null,"section":"D","shift":"صباحي"},
   "D-12":{"name":"علي حسين امانه كريم","score":9,"section":"D","shift":"صباحي"},
   "D-13":{"name":"علي حيدر حسين علي","score":8,"section":"D","shift":"صباحي"},
   "D-14":{"name":"علي طالب اسماعيل حسين","score":8,"section":"D","shift":"صباحي"},
   "D-15":{"name":"علي ظافر محمود رحيم","score":4,"section":"D","shift":"صباحي"},
   "D-16":{"name":"علي عباس عليوي شمخي","score":9,"section":"D","shift":"صباحي"},
   "D-17":{"name":"علي علاء عباس مفتن","score":5,"section":"D","shift":"صباحي"},
+  "D-18":{"name":"علي فلاح علي حميد","score":null,"section":"D","shift":"صباحي"},
   "D-19":{"name":"علي قاسم خضير عباس","score":6,"section":"D","shift":"صباحي"},
   "D-20":{"name":"علي محمد مهدي صالح","score":9,"section":"D","shift":"صباحي"},
   "D-21":{"name":"علي مرتضى عبدالله جابر","score":10,"section":"D","shift":"صباحي"},
@@ -507,7 +498,9 @@ const students = {
   "D-32":{"name":"محمد الباقر حسنين قيس محمود","score":6,"section":"D","shift":"صباحي"},
   "D-33":{"name":"محمد تحسين علي حسين صبري","score":1,"section":"D","shift":"صباحي"},
   "D-34":{"name":"محمد جاسم جميل جاسم","score":8,"section":"D","shift":"صباحي"},
+  "D-35":{"name":"محمد حاتم مزعل فالح","score":null,"section":"D","shift":"صباحي"},
   "D-36":{"name":"محمد حسين محمد جواد حبيب","score":10,"section":"D","shift":"صباحي"},
+  "D-37":{"name":"مؤمل حسين موسى صالح","score":null,"section":"D","shift":"صباحي"},
   "D-38":{"name":"ميثاق قادر نجم عباس","score":9,"section":"D","shift":"صباحي"},
   "D-39":{"name":"ياسر زيد فوزي حسين","score":3,"section":"D","shift":"صباحي"},
   "D-40":{"name":"يوسف قاسم حسن شهاب","score":9,"section":"D","shift":"صباحي"},
@@ -520,6 +513,7 @@ const students = {
   "E-07":{"name":"سيف سعد موحان محمد","score":5,"section":"E","shift":"صباحي"},
   "E-08":{"name":"فاطمه ليث طه صالح","score":5,"section":"E","shift":"صباحي"},
   "E-09":{"name":"محمد حيدر كاظم نيرك","score":8,"section":"E","shift":"صباحي"},
+  "E-10":{"name":"محمد داود سلمان داود","score":null,"section":"E","shift":"صباحي"},
   "E-11":{"name":"محمد رضا صلاح حسن مطشر","score":9,"section":"E","shift":"صباحي"},
   "E-12":{"name":"محمد رضا مشتاق عبد القادر حمود","score":9,"section":"E","shift":"صباحي"},
   "E-13":{"name":"محمد رياض فالح جبر","score":9,"section":"E","shift":"صباحي"},
@@ -533,6 +527,8 @@ const students = {
   "E-21":{"name":"محمد فلاح حسن هاشم","score":10,"section":"E","shift":"صباحي"},
   "E-22":{"name":"محمد قاسم صالح محمد","score":9,"section":"E","shift":"صباحي"},
   "E-23":{"name":"محمد مجيد رجب خلف","score":8,"section":"E","shift":"صباحي"},
+  "E-24":{"name":"محمد مجيد سعدون داود","score":null,"section":"E","shift":"صباحي"},
+  "E-25":{"name":"محمد مخلد صفوت قحطان","score":null,"section":"E","shift":"صباحي"},
   "E-26":{"name":"محمد مهند عبد خلف","score":10,"section":"E","shift":"صباحي"},
   "E-27":{"name":"محمد مؤيد بهيج كاظم","score":10,"section":"E","shift":"صباحي"},
   "E-28":{"name":"محمد نصر عبد المجيد نصر","score":10,"section":"E","shift":"صباحي"},
@@ -543,13 +539,16 @@ const students = {
   "E-33":{"name":"مريم عامر محمد جلاب","score":9,"section":"E","shift":"صباحي"},
   "E-34":{"name":"مريم فؤاد عبود حسين","score":9,"section":"E","shift":"صباحي"},
   "E-35":{"name":"مصطفى اسعد جدوع حسين","score":9,"section":"E","shift":"صباحي"},
+  "E-36":{"name":"مصطفى اسعد عبد عون حميد","score":null,"section":"E","shift":"صباحي"},
   "E-37":{"name":"مصطفى تورك اي جلال مصطفى","score":10,"section":"E","shift":"صباحي"},
   "E-38":{"name":"مصطفى جواد عبد الحسن مسير","score":10,"section":"E","shift":"صباحي"},
   "E-39":{"name":"مصطفى جواد نعمه جواد","score":9,"section":"E","shift":"صباحي"},
   "E-40":{"name":"مصطفى حسين لفتة هوير","score":10,"section":"E","shift":"صباحي"},
   "E-41":{"name":"مصطفى رعد طالب سلمان","score":9,"section":"E","shift":"صباحي"},
+  "E-42":{"name":"مصطفى سعدون صبحي حسين","score":null,"section":"E","shift":"صباحي"},
   "E-43":{"name":"مصطفى سمير جليل فيصل","score":9,"section":"E","shift":"صباحي"},
   "E-44":{"name":"مصطفى صالح مهدي عياده","score":8,"section":"E","shift":"صباحي"},
+  "E-45":{"name":"مصطفى عبد الحسين رزوقي مجيد","score":null,"section":"E","shift":"صباحي"},
   "E-46":{"name":"مصطفى عز الدين جاسم محمد","score":6,"section":"E","shift":"صباحي"},
   "E-47":{"name":"مصطفى علي حمد هلول","score":8,"section":"E","shift":"صباحي"},
   "E-48":{"name":"مصطفى عماد فاضل محمد","score":8,"section":"E","shift":"صباحي"},
@@ -557,6 +556,7 @@ const students = {
   "E-50":{"name":"مصطفى هيثم حارث سلمان","score":10,"section":"E","shift":"صباحي"},
   "E-51":{"name":"مصعب خضر عبد صالح","score":9,"section":"E","shift":"صباحي"},
   "E-52":{"name":"مهدي نهاد شاكر داود","score":10,"section":"E","shift":"صباحي"},
+  "E-53":{"name":"مهيمن حسنين علي محمد","score":null,"section":"E","shift":"صباحي"},
   "E-54":{"name":"نبأ رعد سلمان منيف","score":9,"section":"E","shift":"صباحي"},
   "E-55":{"name":"نذير وليد جاسم محمد","score":10,"section":"E","shift":"صباحي"},
   "E-56":{"name":"همام فريد همام حسين","score":5,"section":"E","shift":"صباحي"},
@@ -566,6 +566,7 @@ const students = {
   "F-03":{"name":"اسامه محمد كاظم عباس","score":5,"section":"F","shift":"صباحي"},
   "F-04":{"name":"حسين محمد رشم عبد الله","score":8,"section":"F","shift":"صباحي"},
   "F-05":{"name":"حلا ناظم لطيف جاسم","score":8,"section":"F","shift":"صباحي"},
+  "F-06":{"name":"زينب عدنان حنون موسى","score":null,"section":"F","shift":"صباحي"},
   "F-07":{"name":"زينة علي شهيد مرهون","score":1,"section":"F","shift":"صباحي"},
   "F-08":{"name":"سيف علي رزاق عبد علي","score":8,"section":"F","shift":"صباحي"},
   "F-09":{"name":"ضرغام حسين محمد عبار","score":8,"section":"F","shift":"صباحي"},
@@ -575,6 +576,7 @@ const students = {
   "F-13":{"name":"علي حمد جاسم نعمه","score":9,"section":"F","shift":"صباحي"},
   "F-14":{"name":"علي مهند ناصر حسون","score":6,"section":"F","shift":"صباحي"},
   "F-15":{"name":"لمى انور صباح عيدان","score":10,"section":"F","shift":"صباحي"},
+  "F-16":{"name":"محمد صلاح مهدي حسين الياسري","score":null,"section":"F","shift":"صباحي"},
   "F-17":{"name":"محمد فراس عبد عبيد","score":6,"section":"F","shift":"صباحي"},
   "F-18":{"name":"محمد مسلم صالح مهدي","score":6,"section":"F","shift":"صباحي"},
   "F-19":{"name":"مرتضى اياد حامد حسن","score":6,"section":"F","shift":"صباحي"},
@@ -583,10 +585,12 @@ const students = {
   "F-22":{"name":"منار حمد جاسم نعمه","score":4,"section":"F","shift":"صباحي"},
   "F-23":{"name":"منتظر سعد فائق نجم","score":8,"section":"F","shift":"صباحي"},
   "F-24":{"name":"منتظر صادق غانم كلش","score":8,"section":"F","shift":"صباحي"},
+  "F-25":{"name":"منتظر عمار رشيد عداي","score":null,"section":"F","shift":"صباحي"},
   "F-26":{"name":"مهدي عبد الحسين عبود ناجي","score":9,"section":"F","shift":"صباحي"},
   "F-27":{"name":"نصير سعدون حليو حسين","score":9,"section":"F","shift":"صباحي"},
   "F-28":{"name":"نورالدين احمد علاء الدين شهاب","score":8,"section":"F","shift":"صباحي"},
   "F-29":{"name":"هادي مشتاق طالب فاضل","score":9,"section":"F","shift":"صباحي"},
+  "F-30":{"name":"همام عبدالامير عليوي عويز","score":null,"section":"F","shift":"صباحي"},
   "F-31":{"name":"ياسر احمد علي محمد","score":9,"section":"F","shift":"صباحي"},
   "F-32":{"name":"يعقوب ثائر محمود شرموط","score":9,"section":"F","shift":"صباحي"},
   "F-33":{"name":"يوسف ثامر ابوالهيل مانع","score":3,"section":"F","shift":"صباحي"},
@@ -594,9 +598,11 @@ const students = {
   "F-35":{"name":"يوسف صباح حاتم حسين","score":7,"section":"F","shift":"صباحي"},
   "F-36":{"name":"يوسف فارس هادي غايب","score":3,"section":"F","shift":"صباحي"},
   "F-37":{"name":"يوسف محمد خليفة موسى","score":9,"section":"F","shift":"صباحي"},
+  "F-38":{"name":"يوسف محمد محمود علي","score":null,"section":"F","shift":"صباحي"},
   "G-01":{"name":"ابان عدي سعدي حميد","score":8,"section":"G","shift":"صباحي"},
   "G-02":{"name":"احمد جبران محمد نايف","score":3,"section":"G","shift":"صباحي"},
   "G-03":{"name":"احمد صدام حسين عويد","score":3,"section":"G","shift":"صباحي"},
+  "G-04":{"name":"احمد طلال صالح عبيد","score":null,"section":"G","shift":"صباحي"},
   "G-05":{"name":"احمد علي نجم عبد","score":6,"section":"G","shift":"صباحي"},
   "G-06":{"name":"احمد مازن صبار محمد","score":8,"section":"G","shift":"صباحي"},
   "G-07":{"name":"احمد ناهي عبد الساده خلخال","score":10,"section":"G","shift":"صباحي"},
@@ -607,6 +613,7 @@ const students = {
   "G-12":{"name":"باقر عباس جليل عباس","score":6,"section":"G","shift":"صباحي"},
   "G-13":{"name":"جمان علي عبد رومي","score":8,"section":"G","shift":"صباحي"},
   "G-14":{"name":"حبيب حاكم كامل حسين","score":6,"section":"G","shift":"صباحي"},
+  "G-15":{"name":"حسن صافي عبد الله خيون","score":null,"section":"G","shift":"صباحي"},
   "G-16":{"name":"حسن علاء شكر محمود","score":5,"section":"G","shift":"صباحي"},
   "G-17":{"name":"حسين سعد عبد الساده خلخال","score":4,"section":"G","shift":"صباحي"},
   "G-18":{"name":"حسين علي احمد خضير","score":7,"section":"G","shift":"صباحي"},
@@ -631,10 +638,12 @@ const students = {
   "G-37":{"name":"علي كريم حنش صبر","score":7,"section":"G","shift":"صباحي"},
   "G-38":{"name":"محمد جمعه عاصي عبود","score":9,"section":"G","shift":"صباحي"},
   "G-39":{"name":"محمد زيد علي عمران","score":7,"section":"G","shift":"صباحي"},
+  "G-40":{"name":"محمد عيسى ابراهيم عكار","score":null,"section":"G","shift":"صباحي"},
   "G-41":{"name":"نور رياض حميد عطية","score":9,"section":"G","shift":"صباحي"},
   "G-42":{"name":"نور علي محمد جاسم","score":7,"section":"G","shift":"صباحي"},
   "G-43":{"name":"هديل عقيل فلاح رشيد","score":8,"section":"G","shift":"صباحي"},
   "H-01":{"name":"احمد بسمان صالح مهدي","score":7,"section":"H","shift":"صباحي"},
+  "H-02":{"name":"استبرق عبد الجبار جاسم داخل","score":null,"section":"H","shift":"صباحي"},
   "H-03":{"name":"الحمزة قاسم علي صحن","score":9,"section":"H","shift":"صباحي"},
   "H-04":{"name":"ثابت محمد عبد المهدي كنعان","score":5,"section":"H","shift":"صباحي"},
   "H-05":{"name":"حسن ساجد عبد عباس","score":8,"section":"H","shift":"صباحي"},
@@ -684,10 +693,13 @@ const students = {
   "I-13":{"name":"حسين علي ياسين محمد انور","score":5,"section":"I","shift":"مسائي"},
   "I-14":{"name":"حيدر صبحي سلمان حسن","score":3,"section":"I","shift":"مسائي"},
   "I-15":{"name":"حيدر طه عباس علوان","score":6,"section":"I","shift":"مسائي"},
+  "I-16":{"name":"خليل امجد خليل ابراهيم","score":null,"section":"I","shift":"مسائي"},
   "I-17":{"name":"رسول شهاب محي شهاب","score":4,"section":"I","shift":"مسائي"},
   "I-18":{"name":"رضا بهاء جاسم محمد","score":10,"section":"I","shift":"مسائي"},
+  "I-19":{"name":"سجاد غريب محمد حمود","score":null,"section":"I","shift":"مسائي"},
   "I-20":{"name":"سجاد محمد كاظم عبد","score":6,"section":"I","shift":"مسائي"},
   "I-21":{"name":"سلام فاهم شعلان سلمان","score":6,"section":"I","shift":"مسائي"},
+  "I-22":{"name":"سليمان رفعت محمد عبد الله","score":null,"section":"I","shift":"مسائي"},
   "I-23":{"name":"صادق زيد عبد طاهر","score":5,"section":"I","shift":"مسائي"},
   "I-24":{"name":"عباس صباح حسن كاظم","score":5,"section":"I","shift":"مسائي"},
   "I-25":{"name":"عباس فاضل مجيد هويران","score":5,"section":"I","shift":"مسائي"},
@@ -716,7 +728,9 @@ const students = {
   "J-09":{"name":"زيد سلمان عبيد عبد الله","score":6,"section":"J","shift":"مسائي"},
   "J-10":{"name":"زينب عباس كاظم الكناني","score":5,"section":"J","shift":"مسائي"},
   "J-11":{"name":"زينب محمد حبيب نصر الله","score":6,"section":"J","shift":"مسائي"},
+  "J-12":{"name":"صبا مصعب عباس علي","score":null,"section":"J","shift":"مسائي"},
   "J-13":{"name":"صلاح نعمان كاظم حسن","score":3,"section":"J","shift":"مسائي"},
+  "J-14":{"name":"علاء محمد مصطفى محمد","score":null,"section":"J","shift":"مسائي"},
   "J-15":{"name":"علي ثامر عبيد عليوي","score":8,"section":"J","shift":"مسائي"},
   "J-16":{"name":"علي عبد الرحمن كاظم راشد","score":6,"section":"J","shift":"مسائي"},
   "J-17":{"name":"فارس حسين ثامر علي","score":5,"section":"J","shift":"مسائي"},
@@ -725,8 +739,11 @@ const students = {
   "J-20":{"name":"ليث صادق لفته حسن","score":5,"section":"J","shift":"مسائي"},
   "J-21":{"name":"محسن حيدر محسن عبود","score":6,"section":"J","shift":"مسائي"},
   "J-22":{"name":"محمد جاسم محسن تقي","score":8,"section":"J","shift":"مسائي"},
+  "J-23":{"name":"محمد حاكم جهاد حسين","score":null,"section":"J","shift":"مسائي"},
   "J-24":{"name":"محمد سالم مري مسرهد","score":5,"section":"J","shift":"مسائي"},
+  "J-25":{"name":"محمد عبدالرزاق جار الله عبد الرزاق","score":null,"section":"J","shift":"مسائي"},
   "J-26":{"name":"محمد علي عباس علي","score":5,"section":"J","shift":"مسائي"},
+  "J-27":{"name":"محمد عماد كاظم حسن","score":null,"section":"J","shift":"مسائي"},
   "J-28":{"name":"محمد فاضل حسن جاسم","score":6,"section":"J","shift":"مسائي"},
   "J-29":{"name":"مرتضى عبود كريم كاظم","score":6,"section":"J","shift":"مسائي"},
   "J-30":{"name":"مصطفى اسعد عبد عليوي","score":6,"section":"J","shift":"مسائي"},
@@ -745,28 +762,28 @@ const students = {
 
 function getScoreClass(score) {
     if (score === 10) return 'score-10';
-    if (score === 9) return 'score-9';
-    if (score === 8) return 'score-8';
-    if (score === 7) return 'score-7';
-    if (score === 6) return 'score-6';
+    if (score === 9)  return 'score-9';
+    if (score === 8)  return 'score-8';
+    if (score === 7)  return 'score-7';
+    if (score === 6)  return 'score-6';
     return 'score-low';
 }
 
 function getScoreEmoji(score) {
     if (score === 10) return '🏆';
-    if (score >= 8) return '🌟';
-    if (score >= 6) return '✅';
-    if (score >= 4) return '⚠️';
+    if (score >= 8)   return '🌟';
+    if (score >= 6)   return '✅';
+    if (score >= 4)   return '⚠️';
     return '❌';
 }
 
 function getScoreLabel(score) {
     if (score === 10) return 'ممتاز';
-    if (score === 9) return 'جيد جداً';
-    if (score === 8) return 'جيد جداً';
-    if (score === 7) return 'جيد';
-    if (score === 6) return 'مقبول';
-    if (score >= 1) return 'ضعيف';
+    if (score === 9)  return 'جيد جداً';
+    if (score === 8)  return 'جيد جداً';
+    if (score === 7)  return 'جيد';
+    if (score === 6)  return 'مقبول';
+    if (score >= 1)   return 'ضعيف';
     return 'صفر';
 }
 
@@ -782,6 +799,32 @@ function checkResult() {
     const student = students[input];
 
     if (student) {
+
+        // حالة غير ممتحن
+        if (student.score === null) {
+            resultDiv.className = 'result warning';
+            resultDiv.innerHTML = `
+                <div class="result-header">
+                    <div class="icon">📋</div>
+                    <div class="info">
+                        <h3>الطالب مسجل في القوائم</h3>
+                        <h2>${student.name}</h2>
+                    </div>
+                </div>
+                <div class="result-body">
+                    <p>
+                        رمزك <strong style="color:#ffd200; font-size:16px;">${input}</strong>
+                        مسجل في الشعبة <strong style="color:#ffd200;">${student.shift} ${student.section}</strong>
+                        <br><br>
+                        🚫 <strong style="color:#ffd200;">غير ممتحن</strong>
+                        <br><br>
+                        
+                    </p>
+                </div>`;
+            resultDiv.style.display = 'block';
+            return;
+        }
+
         const scoreClass = getScoreClass(student.score);
         const emoji = getScoreEmoji(student.score);
         const label = getScoreLabel(student.score);
@@ -796,7 +839,7 @@ function checkResult() {
                 </div>
             </div>
             <div class="result-body">
-                <div class="info-box full" style="text-align:center; padding: 20px;">
+                <div class="info-box full" style="text-align:center; padding:20px;">
                     <div class="label">الدرجة من 10</div>
                     <div class="value score-display ${scoreClass}">${student.score}</div>
                     <div style="margin-top:8px; font-size:14px; opacity:0.8;">${emoji} ${label}</div>
@@ -809,8 +852,8 @@ function checkResult() {
                     <div class="label">الشعبة</div>
                     <div class="value" style="font-size:18px;">${student.shift} ${student.section}</div>
                 </div>
-            </div>
-        `;
+            </div>`;
+
     } else {
         resultDiv.className = 'result error';
         resultDiv.innerHTML = `
@@ -825,25 +868,21 @@ function checkResult() {
                 <p>الرمز <strong style="color:#fff;">"${input}"</strong> غير مسجل في قاعدة البيانات.<br>
                 تأكد من إدخال الرمز بشكل صحيح<br>
                 مثال: <strong style="color:#fff;">A-01</strong> أو <strong style="color:#fff;">B-15</strong></p>
-            </div>
-        `;
+            </div>`;
     }
 
     resultDiv.style.display = 'block';
 }
 
-// Allow Enter key
 document.getElementById('codeInput').addEventListener('keypress', function(e) {
     if (e.key === 'Enter') checkResult();
 });
 
-// Auto uppercase
 document.getElementById('codeInput').addEventListener('input', function() {
     const pos = this.selectionStart;
     this.value = this.value.toUpperCase();
     this.setSelectionRange(pos, pos);
 });
 </script>
-
 </body>
 </html>
