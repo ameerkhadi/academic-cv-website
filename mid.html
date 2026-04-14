@@ -3,10 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نتائج مادة الحوسبة السحابية امتحان المد</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <title>نتائج مادة الحوسبة السحابية</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
@@ -16,84 +20,271 @@
             justify-content: center;
             padding: 20px;
         }
-        .container { width: 100%; max-width: 550px; }
+
+        .container {
+            width: 100%;
+            max-width: 550px;
+        }
+
         .card {
-            background: rgba(255,255,255,0.05);
+            background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 24px;
             padding: 40px 35px;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
         }
-        .logo { text-align: center; margin-bottom: 30px; }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
         .logo-icon {
-            width: 80px; height: 80px;
+            width: 80px;
+            height: 80px;
             background: linear-gradient(135deg, #667eea, #764ba2);
             border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             margin: 0 auto 15px;
             font-size: 35px;
-            box-shadow: 0 10px 30px rgba(102,126,234,0.4);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
         }
-        .logo h1 { color: #fff; font-size: 22px; font-weight: 700; margin-bottom: 5px; }
-        .logo p { color: rgba(255,255,255,0.5); font-size: 13px; }
-        .input-group { margin-bottom: 20px; }
-        .input-group label { display: block; color: rgba(255,255,255,0.8); font-size: 14px; margin-bottom: 10px; font-weight: 500; }
+
+        .logo h1 {
+            color: #fff;
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .logo p {
+            color: rgba(255,255,255,0.5);
+            font-size: 13px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            color: rgba(255,255,255,0.8);
+            font-size: 14px;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
         .input-wrapper input {
-            width: 100%; padding: 16px 20px;
+            width: 100%;
+            padding: 16px 20px;
             background: rgba(255,255,255,0.08);
             border: 1px solid rgba(255,255,255,0.15);
-            border-radius: 14px; color: #fff;
-            font-size: 18px; font-family: 'Courier New', monospace;
-            text-align: center; letter-spacing: 3px;
-            text-transform: uppercase; outline: none;
+            border-radius: 14px;
+            color: #fff;
+            font-size: 18px;
+            font-family: 'Courier New', monospace;
+            text-align: center;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            outline: none;
             transition: all 0.3s ease;
         }
-        .input-wrapper input::placeholder { color: rgba(255,255,255,0.3); letter-spacing: 1px; font-size: 14px; font-family: 'Segoe UI', sans-serif; }
-        .input-wrapper input:focus { border-color: #667eea; background: rgba(102,126,234,0.1); box-shadow: 0 0 0 3px rgba(102,126,234,0.2); }
+
+        .input-wrapper input::placeholder {
+            color: rgba(255,255,255,0.3);
+            letter-spacing: 1px;
+            font-size: 14px;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .input-wrapper input:focus {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+        }
+
         .btn {
-            width: 100%; padding: 16px;
+            width: 100%;
+            padding: 16px;
             background: linear-gradient(135deg, #667eea, #764ba2);
-            border: none; border-radius: 14px; color: #fff;
-            font-size: 16px; font-weight: 700; cursor: pointer;
+            border: none;
+            border-radius: 14px;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 8px 25px rgba(102,126,234,0.4);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
             letter-spacing: 1px;
         }
-        .btn:hover { transform: translateY(-2px); box-shadow: 0 12px 35px rgba(102,126,234,0.5); }
-        .btn:active { transform: translateY(0); }
-        .result { display: none; margin-top: 25px; border-radius: 18px; overflow: hidden; animation: slideUp 0.4s ease; }
-        @keyframes slideUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
-        .result-header { padding: 20px 25px; display: flex; align-items: center; gap: 15px; }
-        .result-header .icon { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
-        .result-header .info h3 { font-size: 13px; opacity: 0.8; margin-bottom: 3px; }
-        .result-header .info h2 { font-size: 17px; font-weight: 700; }
-        .result-body { padding: 20px 25px 25px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .info-box { border-radius: 12px; padding: 15px; text-align: center; }
-        .info-box .label { font-size: 11px; opacity: 0.7; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 1px; }
-        .info-box .value { font-size: 20px; font-weight: 800; }
-        .info-box.full { grid-column: 1 / -1; }
-        .result.success .result-header { background: linear-gradient(135deg, #11998e, #38ef7d); color: #fff; }
-        .result.success .result-header .icon { background: rgba(255,255,255,0.2); }
-        .result.success .result-body { background: rgba(56,239,125,0.05); border: 1px solid rgba(56,239,125,0.15); border-top: none; }
-        .result.success .info-box { background: rgba(56,239,125,0.08); border: 1px solid rgba(56,239,125,0.2); color: #fff; }
-        .score-display { font-size: 52px !important; font-weight: 900 !important; line-height: 1; }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(102, 126, 234, 0.5);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .result {
+            display: none;
+            margin-top: 25px;
+            border-radius: 18px;
+            overflow: hidden;
+            animation: slideUp 0.4s ease;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .result-header {
+            padding: 20px 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .result-header .icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+
+        .result-header .info h3 {
+            font-size: 13px;
+            opacity: 0.8;
+            margin-bottom: 3px;
+        }
+
+        .result-header .info h2 {
+            font-size: 17px;
+            font-weight: 700;
+        }
+
+        .result-body {
+            padding: 20px 25px 25px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .info-box {
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .info-box .label {
+            font-size: 11px;
+            opacity: 0.7;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .info-box .value {
+            font-size: 20px;
+            font-weight: 800;
+        }
+
+        .info-box.full {
+            grid-column: 1 / -1;
+        }
+
+        .result.success .result-header {
+            background: linear-gradient(135deg, #11998e, #38ef7d);
+            color: #fff;
+        }
+
+        .result.success .result-header .icon {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .result.success .result-body {
+            background: rgba(56, 239, 125, 0.05);
+            border: 1px solid rgba(56, 239, 125, 0.15);
+            border-top: none;
+        }
+
+        .result.success .info-box {
+            background: rgba(56, 239, 125, 0.08);
+            border: 1px solid rgba(56, 239, 125, 0.2);
+            color: #fff;
+        }
+
+        .score-display {
+            font-size: 52px !important;
+            font-weight: 900 !important;
+            line-height: 1;
+        }
+
         .score-10 { color: #38ef7d; }
         .score-9  { color: #56ab2f; }
         .score-8  { color: #a8e063; }
         .score-7  { color: #f7971e; }
         .score-6  { color: #fda085; }
         .score-low { color: #ff6b6b; }
-        .result.error .result-header { background: linear-gradient(135deg, #ff416c, #ff4b2b); color: #fff; }
-        .result.error .result-header .icon { background: rgba(255,255,255,0.2); }
-        .result.error .result-body { background: rgba(255,65,108,0.05); border: 1px solid rgba(255,65,108,0.2); border-top: none; color: rgba(255,255,255,0.7); text-align: center; font-size: 14px; line-height: 1.7; }
-        .result.warning .result-header { background: linear-gradient(135deg, #f7971e, #ffd200); color: #1a1a2e; }
-        .result.warning .result-header .icon { background: rgba(0,0,0,0.15); }
-        .result.warning .result-body { background: rgba(255,193,7,0.05); border: 1px solid rgba(255,193,7,0.2); border-top: none; color: rgba(255,255,255,0.85); text-align: center; font-size: 14px; line-height: 1.9; padding: 25px; }
-        .footer { text-align: center; margin-top: 25px; color: rgba(255,255,255,0.25); font-size: 12px; }
+
+        .result.error .result-header {
+            background: linear-gradient(135deg, #ff416c, #ff4b2b);
+            color: #fff;
+        }
+
+        .result.error .result-header .icon {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .result.error .result-body {
+            background: rgba(255, 65, 108, 0.05);
+            border: 1px solid rgba(255, 65, 108, 0.2);
+            border-top: none;
+            color: rgba(255,255,255,0.7);
+            text-align: center;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .result.warning .result-header {
+            background: linear-gradient(135deg, #f7971e, #ffd200);
+            color: #1a1a2e;
+        }
+
+        .result.warning .result-header .icon {
+            background: rgba(0,0,0,0.15);
+        }
+
+        .result.warning .result-body {
+            background: rgba(255, 193, 7, 0.05);
+            border: 1px solid rgba(255, 193, 7, 0.2);
+            border-top: none;
+            color: rgba(255,255,255,0.85);
+            text-align: center;
+            font-size: 14px;
+            line-height: 1.9;
+            padding: 25px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 25px;
+            color: rgba(255,255,255,0.25);
+            font-size: 12px;
+        }
     </style>
 </head>
 <body>
+
 <div class="container">
     <div class="card">
         <div class="logo">
@@ -101,74 +292,516 @@
             <h1>نتائج الامتحان</h1>
             <p>مادة الحوسبة السحابية</p>
         </div>
+
         <div class="input-group">
             <label>أدخل رمزك الخاص</label>
             <div class="input-wrapper">
-                <input type="text" id="codeInput" placeholder="مثال: A-01 أو B-15" maxlength="6" />
+                <input type="text" id="codeInput"
+                placeholder="مثال: A-01 أو B-15" maxlength="6" />
             </div>
         </div>
+
         <button class="btn" onclick="checkResult()">🔍 عرض النتيجة</button>
+
         <div id="result" class="result"></div>
     </div>
-    <div class="footer"> &nbsp;|&nbsp; جامعة الشعب  | د.امير هادي | اي اعتراض او مشكلة المراسلة عبر البريد الالكتروني amer.hadi(at)alshaab.edu.iq</div>
+
+    <div class="footer">
+        جامعة الشعب &nbsp;|&nbsp; قسم علوم الحاسوب
+    </div>
 </div>
 
 <script>
-// ========= البيانات المشفرة =========
-const IV   = "xKAFZmeYp55lpkJBPppLAw==";
-const DATA = "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";
+const students = {
+  "A-01":{"name":"ابراهيم داود سلمان حنون","score":10,"section":"A","shift":"صباحي"},
+  "A-02":{"name":"ابراهيم عدنان كاظم جاسم","score":10,"section":"A","shift":"صباحي"},
+  "A-03":{"name":"احمد جعفر صالح محمود","score":8,"section":"A","shift":"صباحي"},
+  "A-04":{"name":"احمد شاكر جعفر عذيب","score":9,"section":"A","shift":"صباحي"},
+  "A-05":{"name":"احمد عامر جواد كاظم","score":10,"section":"A","shift":"صباحي"},
+  "A-06":{"name":"احمد عامر طاهر حسون","score":10,"section":"A","shift":"صباحي"},
+  "A-07":{"name":"احمد عباس حسين جمعه","score":10,"section":"A","shift":"صباحي"},
+  "A-08":{"name":"احمد عباس عواد جابر","score":10,"section":"A","shift":"صباحي"},
+  "A-09":{"name":"احمد عباس كاظم حمدان","score":10,"section":"A","shift":"صباحي"},
+  "A-10":{"name":"احمد عبد المنعم عبد الحميد راشد","score":9,"section":"A","shift":"صباحي"},
+  "A-11":{"name":"احمد عدي ياس خضير","score":10,"section":"A","shift":"صباحي"},
+  "A-12":{"name":"احمد علي جمعه علي","score":10,"section":"A","shift":"صباحي"},
+  "A-13":{"name":"احمد علي شذر زايد","score":9,"section":"A","shift":"صباحي"},
+  "A-14":{"name":"احمد فراس خضير حسين","score":5,"section":"A","shift":"صباحي"},
+  "A-15":{"name":"احمد فرحان خلف هويدي","score":10,"section":"A","shift":"صباحي"},
+  "A-16":{"name":"احمد مهند احمد محمد","score":7,"section":"A","shift":"صباحي"},
+  "A-17":{"name":"احمد موفق صاحب داود","score":10,"section":"A","shift":"صباحي"},
+  "A-18":{"name":"اريفان فرهاد طاهر كاكه خان","score":10,"section":"A","shift":"صباحي"},
+  "A-19":{"name":"اسامة حسن ضاري انغيمش","score":5,"section":"A","shift":"صباحي"},
+  "A-20":{"name":"اسامه نهاد محسن احمد","score":9,"section":"A","shift":"صباحي"},
+  "A-21":{"name":"الأمير علي محيسن خلف","score":10,"section":"A","shift":"صباحي"},
+  "A-22":{"name":"الحسن فاضل حسين سرحان","score":9,"section":"A","shift":"صباحي"},
+  "A-23":{"name":"المرتضى مالك محسن عبد الساده","score":10,"section":"A","shift":"صباحي"},
+  "A-24":{"name":"امنه عبد الصمد ذنون احمد","score":5,"section":"A","shift":"صباحي"},
+  "A-25":{"name":"امير حسنين هاشم محمد","score":10,"section":"A","shift":"صباحي"},
+  "A-26":{"name":"امير عبد الرحمن مزعل حسين","score":10,"section":"A","shift":"صباحي"},
+  "A-27":{"name":"امير قاسم سوادي محمد","score":10,"section":"A","shift":"صباحي"},
+  "A-28":{"name":"اميمة سعد عبد المطلب خلف","score":10,"section":"A","shift":"صباحي"},
+  "A-29":{"name":"اواب حمزة عباس جبر","score":9,"section":"A","shift":"صباحي"},
+  "A-30":{"name":"اوس محمد حميد احمد","score":10,"section":"A","shift":"صباحي"},
+  "A-31":{"name":"بارق رعد فاضل حسين","score":10,"section":"A","shift":"صباحي"},
+  "A-32":{"name":"جاسم محمد حسين شيال","score":10,"section":"A","shift":"صباحي"},
+  "A-33":{"name":"حسن عباس علي حسين","score":10,"section":"A","shift":"صباحي"},
+  "A-34":{"name":"حسين فتح الله حسب الله حمود","score":10,"section":"A","shift":"صباحي"},
+  "A-35":{"name":"رسول صميم كريدي عنفوص","score":8,"section":"A","shift":"صباحي"},
+  "A-36":{"name":"روان علي عادل عبد الوهاب","score":10,"section":"A","shift":"صباحي"},
+  "A-37":{"name":"زهراء محمد بدر جدوع","score":null,"section":"A","shift":"صباحي"},
+  "A-38":{"name":"زين العابدين علاوي عبد الحسين","score":10,"section":"A","shift":"صباحي"},
+  "A-39":{"name":"سبأ وليد محمد جاسم","score":10,"section":"A","shift":"صباحي"},
+  "A-40":{"name":"سجى محمد حميد عباس","score":10,"section":"A","shift":"صباحي"},
+  "A-41":{"name":"ضحى عبد الله حسن علي","score":10,"section":"A","shift":"صباحي"},
+  "A-42":{"name":"عباس وليد خالد نشعان","score":10,"section":"A","shift":"صباحي"},
+  "A-43":{"name":"قتاده شاكر جعفر عذيب","score":9,"section":"A","shift":"صباحي"},
+  "A-44":{"name":"محمد جواد رشيد ياسر كزار","score":10,"section":"A","shift":"صباحي"},
+  "A-45":{"name":"محمد حسام محمد عبد الله","score":8,"section":"A","shift":"صباحي"},
+  "A-46":{"name":"محمد هاشم محمد شمس الدين","score":10,"section":"A","shift":"صباحي"},
+  "A-47":{"name":"مرتضى رياض حسن علوان","score":10,"section":"A","shift":"صباحي"},
+  "A-48":{"name":"مصطفى صلاح الدين ابراهيم جاسم","score":10,"section":"A","shift":"صباحي"},
+  "A-49":{"name":"ميس وسام عبد الله مهدي","score":10,"section":"A","shift":"صباحي"},
+  "A-50":{"name":"ياسر عمار بدري صبري","score":10,"section":"A","shift":"صباحي"},
+  "A-51":{"name":"ياسين حيدر حمزة محمد حسين","score":10,"section":"A","shift":"صباحي"},
+  "B-01":{"name":"احمد علاء حسين هراطه","score":10,"section":"B","shift":"صباحي"},
+  "B-02":{"name":"اروى محمد فارس عناد","score":9,"section":"B","shift":"صباحي"},
+  "B-03":{"name":"امير خضير عباس جاسم","score":8,"section":"B","shift":"صباحي"},
+  "B-04":{"name":"تكتم فؤاد عبد الحكيم عبد الرزاق","score":8,"section":"B","shift":"صباحي"},
+  "B-05":{"name":"حسن علي جلوب شامي","score":5,"section":"B","shift":"صباحي"},
+  "B-06":{"name":"حسن كريم شنيشل حسين","score":10,"section":"B","shift":"صباحي"},
+  "B-07":{"name":"حسن هادي مجبل عباس","score":7,"section":"B","shift":"صباحي"},
+  "B-08":{"name":"حسنين حيدر جميل عبد الحسين","score":9,"section":"B","shift":"صباحي"},
+  "B-09":{"name":"حسين ابراهيم كاظم علي","score":7,"section":"B","shift":"صباحي"},
+  "B-10":{"name":"حسين احمد اياد مهدي","score":10,"section":"B","shift":"صباحي"},
+  "B-11":{"name":"حسين سنان ابراهيم مراد","score":10,"section":"B","shift":"صباحي"},
+  "B-12":{"name":"حسين صالح عزيز سالم","score":5,"section":"B","shift":"صباحي"},
+  "B-13":{"name":"حسين صباح سالم سكر","score":null,"section":"B","shift":"صباحي"},
+  "B-14":{"name":"حسين صميم سعدون صلاح","score":6,"section":"B","shift":"صباحي"},
+  "B-15":{"name":"حسين ظافر خلف محسن","score":9,"section":"B","shift":"صباحي"},
+  "B-16":{"name":"حسين علاء نصار عبدالحسين","score":8,"section":"B","shift":"صباحي"},
+  "B-17":{"name":"حسين علي عبد الله جرمط","score":8,"section":"B","shift":"صباحي"},
+  "B-18":{"name":"حسين علي غافل روضان","score":4,"section":"B","shift":"صباحي"},
+  "B-19":{"name":"حسين علي فيصل طاهر","score":null,"section":"B","shift":"صباحي"},
+  "B-20":{"name":"حسين فلاح كريم حسين","score":7,"section":"B","shift":"صباحي"},
+  "B-21":{"name":"حنان طه محسن حمود","score":8,"section":"B","shift":"صباحي"},
+  "B-22":{"name":"حيدر سمير عبد سلطان","score":9,"section":"B","shift":"صباحي"},
+  "B-23":{"name":"حيدر طلال كاظم محمد","score":6,"section":"B","shift":"صباحي"},
+  "B-24":{"name":"حيدر عامر مجبل سلمان","score":6,"section":"B","shift":"صباحي"},
+  "B-25":{"name":"حيدر عصام هادي عبود","score":9,"section":"B","shift":"صباحي"},
+  "B-26":{"name":"حيدر علي لطيف طالب لطيف","score":8,"section":"B","shift":"صباحي"},
+  "B-27":{"name":"حيدر محمد معروف راشد","score":9,"section":"B","shift":"صباحي"},
+  "B-28":{"name":"رأفت خالد عبد اللطيف جاسم","score":8,"section":"B","shift":"صباحي"},
+  "B-29":{"name":"رضا عبد الحسين علي حسين","score":8,"section":"B","shift":"صباحي"},
+  "B-30":{"name":"رعد عبدالله جاسم محمد علي","score":9,"section":"B","shift":"صباحي"},
+  "B-31":{"name":"رند عماد علي ضاحي","score":10,"section":"B","shift":"صباحي"},
+  "B-32":{"name":"زيد حامد سعدون هادي","score":7,"section":"B","shift":"صباحي"},
+  "B-33":{"name":"زيد علي محمد محسن","score":8,"section":"B","shift":"صباحي"},
+  "B-34":{"name":"زين العابدين صبيح كرم زامل","score":10,"section":"B","shift":"صباحي"},
+  "B-35":{"name":"سجاد سليم ابراهيم احمد","score":9,"section":"B","shift":"صباحي"},
+  "B-36":{"name":"شاكر محمود شاكر محمود","score":9,"section":"B","shift":"صباحي"},
+  "B-37":{"name":"عباس هادي محسن محمد","score":9,"section":"B","shift":"صباحي"},
+  "B-38":{"name":"عبدالمهيمن صلاح فاضل مخيف","score":10,"section":"B","shift":"صباحي"},
+  "B-39":{"name":"عسل مهند غسان ايوب","score":10,"section":"B","shift":"صباحي"},
+  "B-40":{"name":"علي رعد رشيد ابراهيم","score":4,"section":"B","shift":"صباحي"},
+  "B-41":{"name":"علي مشتاق عبد المنعم عباس","score":null,"section":"B","shift":"صباحي"},
+  "B-42":{"name":"عمار شهاب احمد جيجان","score":6,"section":"B","shift":"صباحي"},
+  "B-43":{"name":"عمار فريد حسين خلف","score":null,"section":"B","shift":"صباحي"},
+  "B-44":{"name":"مجتبى ثامر علي عبيد","score":10,"section":"B","shift":"صباحي"},
+  "B-45":{"name":"محمـد عباس عبد علي","score":null,"section":"B","shift":"صباحي"},
+  "B-46":{"name":"محمد قاسم عدنان عبد الغفور","score":9,"section":"B","shift":"صباحي"},
+  "B-47":{"name":"مصعب فؤاد خلف ذيب","score":9,"section":"B","shift":"صباحي"},
+  "B-48":{"name":"منتظر وليد عبدالحسين مزعل","score":6,"section":"B","shift":"صباحي"},
+  "B-49":{"name":"نورالحسين محمد صبيح جاسم","score":5,"section":"B","shift":"صباحي"},
+  "B-50":{"name":"ياسمين خضر تركي سهيل","score":10,"section":"B","shift":"صباحي"},
+  "B-51":{"name":"يونس حسن مطر عزيز","score":9,"section":"B","shift":"صباحي"},
+  "C-01":{"name":"ابراهيم حسين رمضان ناصر","score":10,"section":"C","shift":"صباحي"},
+  "C-02":{"name":"احمد اثير شاكر محمد","score":5,"section":"C","shift":"صباحي"},
+  "C-03":{"name":"احمد فريد صادق خضر","score":null,"section":"C","shift":"صباحي"},
+  "C-04":{"name":"حسن حبيب حسين حبيب","score":9,"section":"C","shift":"صباحي"},
+  "C-05":{"name":"حسن حيدر محسن عبود","score":10,"section":"C","shift":"صباحي"},
+  "C-06":{"name":"حسن علي كريم حسن","score":9,"section":"C","shift":"صباحي"},
+  "C-07":{"name":"حسنين كاظم جابر عبد","score":10,"section":"C","shift":"صباحي"},
+  "C-08":{"name":"حيدر كاظم كريم ذرب","score":10,"section":"C","shift":"صباحي"},
+  "C-09":{"name":"ذو الفقار ليث كاظم سعود","score":8,"section":"C","shift":"صباحي"},
+  "C-10":{"name":"سجاد احمد مصلح محمد","score":8,"section":"C","shift":"صباحي"},
+  "C-11":{"name":"سجاد جاسم خريمش ماذي","score":10,"section":"C","shift":"صباحي"},
+  "C-12":{"name":"سجاد فاضل غازي خليل","score":10,"section":"C","shift":"صباحي"},
+  "C-13":{"name":"سيف الدين قاسم جابر عبد","score":9,"section":"C","shift":"صباحي"},
+  "C-14":{"name":"سيف حميد محمد عبد الله","score":10,"section":"C","shift":"صباحي"},
+  "C-15":{"name":"سيف فاضل كاظم محمود","score":8,"section":"C","shift":"صباحي"},
+  "C-16":{"name":"سيف مهند فاضل كريم","score":10,"section":"C","shift":"صباحي"},
+  "C-17":{"name":"شهد قاسم محسن ولي","score":9,"section":"C","shift":"صباحي"},
+  "C-18":{"name":"صادق حسين بهلول لفته","score":8,"section":"C","shift":"صباحي"},
+  "C-19":{"name":"صادق عبد مسلم سعيد عبد","score":9,"section":"C","shift":"صباحي"},
+  "C-20":{"name":"صادق محمد حسن عبد الزهرة","score":9,"section":"C","shift":"صباحي"},
+  "C-21":{"name":"ضياء حبيب علي حسين","score":10,"section":"C","shift":"صباحي"},
+  "C-22":{"name":"طه باسم حامد فياض","score":10,"section":"C","shift":"صباحي"},
+  "C-23":{"name":"طه علاء عبد الرضا كبان","score":9,"section":"C","shift":"صباحي"},
+  "C-24":{"name":"طه محمد طه احمد","score":9,"section":"C","shift":"صباحي"},
+  "C-25":{"name":"طه ياسين طارق عداي","score":9,"section":"C","shift":"صباحي"},
+  "C-26":{"name":"عامر حسين هادي صالح","score":9,"section":"C","shift":"صباحي"},
+  "C-27":{"name":"عباس احمد كاظم سلمان","score":10,"section":"C","shift":"صباحي"},
+  "C-28":{"name":"عبدالرحمن جاسم محمد امين","score":5,"section":"C","shift":"صباحي"},
+  "C-29":{"name":"عبدالسلام حسن خضير حمزه","score":9,"section":"C","shift":"صباحي"},
+  "C-30":{"name":"عبدالله ابراهيم منير ابراهيم","score":6,"section":"C","shift":"صباحي"},
+  "C-31":{"name":"عبدالله إسماعيل عطية احمد","score":9,"section":"C","shift":"صباحي"},
+  "C-32":{"name":"عبدالله تحسين عبد علي محمد","score":9,"section":"C","shift":"صباحي"},
+  "C-33":{"name":"عبدالله حمزة عباس جبر","score":10,"section":"C","shift":"صباحي"},
+  "C-34":{"name":"عبدالله رزاق صالح معيلي","score":9,"section":"C","shift":"صباحي"},
+  "C-35":{"name":"عبدالله شاكر محمود سليمان","score":8,"section":"C","shift":"صباحي"},
+  "C-36":{"name":"عبدالله عزيز ميزر محرب","score":7,"section":"C","shift":"صباحي"},
+  "C-37":{"name":"عبدالله عمر اسماعيل علوان","score":9,"section":"C","shift":"صباحي"},
+  "C-38":{"name":"عبدالله فراس طالب ابراهيم","score":9,"section":"C","shift":"صباحي"},
+  "C-39":{"name":"عبدالله محمد عبد الله علي","score":5,"section":"C","shift":"صباحي"},
+  "C-40":{"name":"عبدالمهيمن دريد عبد الكريم جاسم","score":10,"section":"C","shift":"صباحي"},
+  "C-41":{"name":"عبيدة عمار رحيم كاظم","score":9,"section":"C","shift":"صباحي"},
+  "C-42":{"name":"عدنان مرسال باسم قاسم","score":7,"section":"C","shift":"صباحي"},
+  "C-43":{"name":"علاء عمار خضير عباس","score":6,"section":"C","shift":"صباحي"},
+  "C-44":{"name":"علي انور مهدي صالح","score":10,"section":"C","shift":"صباحي"},
+  "C-45":{"name":"محمد حسين فضل عبود","score":8,"section":"C","shift":"صباحي"},
+  "C-46":{"name":"ملاك شهاب احمد حسون","score":10,"section":"C","shift":"صباحي"},
+  "C-47":{"name":"منتظر علاوي غازي علي","score":9,"section":"C","shift":"صباحي"},
+  "C-48":{"name":"نبأ علي هادي نجم","score":9,"section":"C","shift":"صباحي"},
+  "C-49":{"name":"نورالدين عامر رحيم","score":7,"section":"C","shift":"صباحي"},
+  "D-01":{"name":"المرتجى معاذ جبار فهد","score":9,"section":"D","shift":"صباحي"},
+  "D-02":{"name":"حسين علاء جعفر سعدون","score":6,"section":"D","shift":"صباحي"},
+  "D-03":{"name":"حسين محمد حسين داود","score":9,"section":"D","shift":"صباحي"},
+  "D-04":{"name":"خطاب عمر ضياء ياسين","score":10,"section":"D","shift":"صباحي"},
+  "D-05":{"name":"سجاد قاسم حامد عباس","score":null,"section":"D","shift":"صباحي"},
+  "D-06":{"name":"سجاد وائل سمير علي","score":null,"section":"D","shift":"صباحي"},
+  "D-07":{"name":"عبدالله سعد جاسم محمد","score":9,"section":"D","shift":"صباحي"},
+  "D-08":{"name":"عبدالله مازن كامل محمد","score":7,"section":"D","shift":"صباحي"},
+  "D-09":{"name":"علي اسامة عباس حميد","score":10,"section":"D","shift":"صباحي"},
+  "D-10":{"name":"علي المرتضى ياسين فاخر عوده","score":9,"section":"D","shift":"صباحي"},
+  "D-11":{"name":"علي جبار عكيب رجي","score":null,"section":"D","shift":"صباحي"},
+  "D-12":{"name":"علي حسين امانه كريم","score":9,"section":"D","shift":"صباحي"},
+  "D-13":{"name":"علي حيدر حسين علي","score":8,"section":"D","shift":"صباحي"},
+  "D-14":{"name":"علي طالب اسماعيل حسين","score":8,"section":"D","shift":"صباحي"},
+  "D-15":{"name":"علي ظافر محمود رحيم","score":4,"section":"D","shift":"صباحي"},
+  "D-16":{"name":"علي عباس عليوي شمخي","score":9,"section":"D","shift":"صباحي"},
+  "D-17":{"name":"علي علاء عباس مفتن","score":5,"section":"D","shift":"صباحي"},
+  "D-18":{"name":"علي فلاح علي حميد","score":null,"section":"D","shift":"صباحي"},
+  "D-19":{"name":"علي قاسم خضير عباس","score":6,"section":"D","shift":"صباحي"},
+  "D-20":{"name":"علي محمد مهدي صالح","score":9,"section":"D","shift":"صباحي"},
+  "D-21":{"name":"علي مرتضى عبدالله جابر","score":10,"section":"D","shift":"صباحي"},
+  "D-22":{"name":"علي نعيم عنش محمد","score":6,"section":"D","shift":"صباحي"},
+  "D-23":{"name":"علي ولاء زايد خلف","score":7,"section":"D","shift":"صباحي"},
+  "D-24":{"name":"عمار رائد عبدالحسن علي","score":9,"section":"D","shift":"صباحي"},
+  "D-25":{"name":"فهد زكريا محي احمد","score":10,"section":"D","shift":"صباحي"},
+  "D-26":{"name":"كرار حيدر محمد جري","score":6,"section":"D","shift":"صباحي"},
+  "D-27":{"name":"كرار هيثم عباس اهتيمي","score":10,"section":"D","shift":"صباحي"},
+  "D-28":{"name":"ليث جاسم محمد حسن","score":5,"section":"D","shift":"صباحي"},
+  "D-29":{"name":"مجتبى احمد كاظم سلمان","score":10,"section":"D","shift":"صباحي"},
+  "D-30":{"name":"محمد ابراهيم مالك راضي","score":9,"section":"D","shift":"صباحي"},
+  "D-31":{"name":"محمد احمد محمد علي","score":4,"section":"D","shift":"صباحي"},
+  "D-32":{"name":"محمد الباقر حسنين قيس محمود","score":6,"section":"D","shift":"صباحي"},
+  "D-33":{"name":"محمد تحسين علي حسين صبري","score":1,"section":"D","shift":"صباحي"},
+  "D-34":{"name":"محمد جاسم جميل جاسم","score":8,"section":"D","shift":"صباحي"},
+  "D-35":{"name":"محمد حاتم مزعل فالح","score":null,"section":"D","shift":"صباحي"},
+  "D-36":{"name":"محمد حسين محمد جواد حبيب","score":10,"section":"D","shift":"صباحي"},
+  "D-37":{"name":"مؤمل حسين موسى صالح","score":null,"section":"D","shift":"صباحي"},
+  "D-38":{"name":"ميثاق قادر نجم عباس","score":9,"section":"D","shift":"صباحي"},
+  "D-39":{"name":"ياسر زيد فوزي حسين","score":3,"section":"D","shift":"صباحي"},
+  "D-40":{"name":"يوسف قاسم حسن شهاب","score":9,"section":"D","shift":"صباحي"},
+  "E-01":{"name":"اسراء حسن هاشم ذياب","score":5,"section":"E","shift":"صباحي"},
+  "E-02":{"name":"جعفر حسين صباح جعفر","score":9,"section":"E","shift":"صباحي"},
+  "E-03":{"name":"جعفر رياض حسين حسن","score":9,"section":"E","shift":"صباحي"},
+  "E-04":{"name":"حسين علي ديوان علوان","score":10,"section":"E","shift":"صباحي"},
+  "E-05":{"name":"زهراء طه عبد الكاظم جواد","score":9,"section":"E","shift":"صباحي"},
+  "E-06":{"name":"سميه رعد حسين مهدي","score":9,"section":"E","shift":"صباحي"},
+  "E-07":{"name":"سيف سعد موحان محمد","score":5,"section":"E","shift":"صباحي"},
+  "E-08":{"name":"فاطمه ليث طه صالح","score":5,"section":"E","shift":"صباحي"},
+  "E-09":{"name":"محمد حيدر كاظم نيرك","score":8,"section":"E","shift":"صباحي"},
+  "E-10":{"name":"محمد داود سلمان داود","score":null,"section":"E","shift":"صباحي"},
+  "E-11":{"name":"محمد رضا صلاح حسن مطشر","score":9,"section":"E","shift":"صباحي"},
+  "E-12":{"name":"محمد رضا مشتاق عبد القادر حمود","score":9,"section":"E","shift":"صباحي"},
+  "E-13":{"name":"محمد رياض فالح جبر","score":9,"section":"E","shift":"صباحي"},
+  "E-14":{"name":"محمد صلاح مهدي حسين الدباغ","score":6,"section":"E","shift":"صباحي"},
+  "E-15":{"name":"محمد عامر علي فرحان","score":8,"section":"E","shift":"صباحي"},
+  "E-16":{"name":"محمد عباس رحيم مظلوم","score":10,"section":"E","shift":"صباحي"},
+  "E-17":{"name":"محمد عبدالخضر يوسف عباس","score":6,"section":"E","shift":"صباحي"},
+  "E-18":{"name":"محمد عدنان عبد الله هارون","score":9,"section":"E","shift":"صباحي"},
+  "E-19":{"name":"محمد علي جمال ابراهيم حسين","score":8,"section":"E","shift":"صباحي"},
+  "E-20":{"name":"محمد علي كاظم عبيد","score":7,"section":"E","shift":"صباحي"},
+  "E-21":{"name":"محمد فلاح حسن هاشم","score":10,"section":"E","shift":"صباحي"},
+  "E-22":{"name":"محمد قاسم صالح محمد","score":9,"section":"E","shift":"صباحي"},
+  "E-23":{"name":"محمد مجيد رجب خلف","score":8,"section":"E","shift":"صباحي"},
+  "E-24":{"name":"محمد مجيد سعدون داود","score":null,"section":"E","shift":"صباحي"},
+  "E-25":{"name":"محمد مخلد صفوت قحطان","score":null,"section":"E","shift":"صباحي"},
+  "E-26":{"name":"محمد مهند عبد خلف","score":10,"section":"E","shift":"صباحي"},
+  "E-27":{"name":"محمد مؤيد بهيج كاظم","score":10,"section":"E","shift":"صباحي"},
+  "E-28":{"name":"محمد نصر عبد المجيد نصر","score":10,"section":"E","shift":"صباحي"},
+  "E-29":{"name":"محمود شوكت محمود عبد الرزاق","score":10,"section":"E","shift":"صباحي"},
+  "E-30":{"name":"مرتضى جابر بنيه بديوي","score":10,"section":"E","shift":"صباحي"},
+  "E-31":{"name":"مرتضى سمير جليل فيصل","score":9,"section":"E","shift":"صباحي"},
+  "E-32":{"name":"مرح اسحاق داوود عبد الله","score":6,"section":"E","shift":"صباحي"},
+  "E-33":{"name":"مريم عامر محمد جلاب","score":9,"section":"E","shift":"صباحي"},
+  "E-34":{"name":"مريم فؤاد عبود حسين","score":9,"section":"E","shift":"صباحي"},
+  "E-35":{"name":"مصطفى اسعد جدوع حسين","score":9,"section":"E","shift":"صباحي"},
+  "E-36":{"name":"مصطفى اسعد عبد عون حميد","score":null,"section":"E","shift":"صباحي"},
+  "E-37":{"name":"مصطفى تورك اي جلال مصطفى","score":10,"section":"E","shift":"صباحي"},
+  "E-38":{"name":"مصطفى جواد عبد الحسن مسير","score":10,"section":"E","shift":"صباحي"},
+  "E-39":{"name":"مصطفى جواد نعمه جواد","score":9,"section":"E","shift":"صباحي"},
+  "E-40":{"name":"مصطفى حسين لفتة هوير","score":10,"section":"E","shift":"صباحي"},
+  "E-41":{"name":"مصطفى رعد طالب سلمان","score":9,"section":"E","shift":"صباحي"},
+  "E-42":{"name":"مصطفى سعدون صبحي حسين","score":null,"section":"E","shift":"صباحي"},
+  "E-43":{"name":"مصطفى سمير جليل فيصل","score":9,"section":"E","shift":"صباحي"},
+  "E-44":{"name":"مصطفى صالح مهدي عياده","score":8,"section":"E","shift":"صباحي"},
+  "E-45":{"name":"مصطفى عبد الحسين رزوقي مجيد","score":null,"section":"E","shift":"صباحي"},
+  "E-46":{"name":"مصطفى عز الدين جاسم محمد","score":6,"section":"E","shift":"صباحي"},
+  "E-47":{"name":"مصطفى علي حمد هلول","score":8,"section":"E","shift":"صباحي"},
+  "E-48":{"name":"مصطفى عماد فاضل محمد","score":8,"section":"E","shift":"صباحي"},
+  "E-49":{"name":"مصطفى نمير شاكر حميد","score":9,"section":"E","shift":"صباحي"},
+  "E-50":{"name":"مصطفى هيثم حارث سلمان","score":10,"section":"E","shift":"صباحي"},
+  "E-51":{"name":"مصعب خضر عبد صالح","score":9,"section":"E","shift":"صباحي"},
+  "E-52":{"name":"مهدي نهاد شاكر داود","score":10,"section":"E","shift":"صباحي"},
+  "E-53":{"name":"مهيمن حسنين علي محمد","score":null,"section":"E","shift":"صباحي"},
+  "E-54":{"name":"نبأ رعد سلمان منيف","score":9,"section":"E","shift":"صباحي"},
+  "E-55":{"name":"نذير وليد جاسم محمد","score":10,"section":"E","shift":"صباحي"},
+  "E-56":{"name":"همام فريد همام حسين","score":5,"section":"E","shift":"صباحي"},
+  "E-57":{"name":"يوسف يونس صبحي حسين","score":9,"section":"E","shift":"صباحي"},
+  "F-01":{"name":"اباذر محمد علي مزهر","score":9,"section":"F","shift":"صباحي"},
+  "F-02":{"name":"احمد عباس رعيد دخل","score":9,"section":"F","shift":"صباحي"},
+  "F-03":{"name":"اسامه محمد كاظم عباس","score":5,"section":"F","shift":"صباحي"},
+  "F-04":{"name":"حسين محمد رشم عبد الله","score":8,"section":"F","shift":"صباحي"},
+  "F-05":{"name":"حلا ناظم لطيف جاسم","score":8,"section":"F","shift":"صباحي"},
+  "F-06":{"name":"زينب عدنان حنون موسى","score":null,"section":"F","shift":"صباحي"},
+  "F-07":{"name":"زينة علي شهيد مرهون","score":1,"section":"F","shift":"صباحي"},
+  "F-08":{"name":"سيف علي رزاق عبد علي","score":8,"section":"F","shift":"صباحي"},
+  "F-09":{"name":"ضرغام حسين محمد عبار","score":8,"section":"F","shift":"صباحي"},
+  "F-10":{"name":"عبدالله ثائر صادق رحيم","score":8,"section":"F","shift":"صباحي"},
+  "F-11":{"name":"عبدالله رسول ياسين علي","score":2,"section":"F","shift":"صباحي"},
+  "F-12":{"name":"عبدالله عامر سامي هلال","score":10,"section":"F","shift":"صباحي"},
+  "F-13":{"name":"علي حمد جاسم نعمه","score":9,"section":"F","shift":"صباحي"},
+  "F-14":{"name":"علي مهند ناصر حسون","score":6,"section":"F","shift":"صباحي"},
+  "F-15":{"name":"لمى انور صباح عيدان","score":10,"section":"F","shift":"صباحي"},
+  "F-16":{"name":"محمد صلاح مهدي حسين الياسري","score":null,"section":"F","shift":"صباحي"},
+  "F-17":{"name":"محمد فراس عبد عبيد","score":6,"section":"F","shift":"صباحي"},
+  "F-18":{"name":"محمد مسلم صالح مهدي","score":6,"section":"F","shift":"صباحي"},
+  "F-19":{"name":"مرتضى اياد حامد حسن","score":6,"section":"F","shift":"صباحي"},
+  "F-20":{"name":"مصعب ياسين جاسم محمد","score":10,"section":"F","shift":"صباحي"},
+  "F-21":{"name":"ملاك انور صباح علي سليم","score":0,"section":"F","shift":"صباحي"},
+  "F-22":{"name":"منار حمد جاسم نعمه","score":4,"section":"F","shift":"صباحي"},
+  "F-23":{"name":"منتظر سعد فائق نجم","score":8,"section":"F","shift":"صباحي"},
+  "F-24":{"name":"منتظر صادق غانم كلش","score":8,"section":"F","shift":"صباحي"},
+  "F-25":{"name":"منتظر عمار رشيد عداي","score":null,"section":"F","shift":"صباحي"},
+  "F-26":{"name":"مهدي عبد الحسين عبود ناجي","score":9,"section":"F","shift":"صباحي"},
+  "F-27":{"name":"نصير سعدون حليو حسين","score":9,"section":"F","shift":"صباحي"},
+  "F-28":{"name":"نورالدين احمد علاء الدين شهاب","score":8,"section":"F","shift":"صباحي"},
+  "F-29":{"name":"هادي مشتاق طالب فاضل","score":9,"section":"F","shift":"صباحي"},
+  "F-30":{"name":"همام عبدالامير عليوي عويز","score":null,"section":"F","shift":"صباحي"},
+  "F-31":{"name":"ياسر احمد علي محمد","score":9,"section":"F","shift":"صباحي"},
+  "F-32":{"name":"يعقوب ثائر محمود شرموط","score":9,"section":"F","shift":"صباحي"},
+  "F-33":{"name":"يوسف ثامر ابوالهيل مانع","score":3,"section":"F","shift":"صباحي"},
+  "F-34":{"name":"يوسف سعد فتحي جودي","score":5,"section":"F","shift":"صباحي"},
+  "F-35":{"name":"يوسف صباح حاتم حسين","score":7,"section":"F","shift":"صباحي"},
+  "F-36":{"name":"يوسف فارس هادي غايب","score":3,"section":"F","shift":"صباحي"},
+  "F-37":{"name":"يوسف محمد خليفة موسى","score":9,"section":"F","shift":"صباحي"},
+  "F-38":{"name":"يوسف محمد محمود علي","score":null,"section":"F","shift":"صباحي"},
+  "G-01":{"name":"ابان عدي سعدي حميد","score":8,"section":"G","shift":"صباحي"},
+  "G-02":{"name":"احمد جبران محمد نايف","score":3,"section":"G","shift":"صباحي"},
+  "G-03":{"name":"احمد صدام حسين عويد","score":3,"section":"G","shift":"صباحي"},
+  "G-04":{"name":"احمد طلال صالح عبيد","score":null,"section":"G","shift":"صباحي"},
+  "G-05":{"name":"احمد علي نجم عبد","score":6,"section":"G","shift":"صباحي"},
+  "G-06":{"name":"احمد مازن صبار محمد","score":8,"section":"G","shift":"صباحي"},
+  "G-07":{"name":"احمد ناهي عبد الساده خلخال","score":10,"section":"G","shift":"صباحي"},
+  "G-08":{"name":"الحسين محمد محمود علي","score":4,"section":"G","shift":"صباحي"},
+  "G-09":{"name":"امل محمد عبد الكريم حميد","score":6,"section":"G","shift":"صباحي"},
+  "G-10":{"name":"امير فرقد ناظم حمزه","score":3,"section":"G","shift":"صباحي"},
+  "G-11":{"name":"باقر رائد شهيد رشيد","score":6,"section":"G","shift":"صباحي"},
+  "G-12":{"name":"باقر عباس جليل عباس","score":6,"section":"G","shift":"صباحي"},
+  "G-13":{"name":"جمان علي عبد رومي","score":8,"section":"G","shift":"صباحي"},
+  "G-14":{"name":"حبيب حاكم كامل حسين","score":6,"section":"G","shift":"صباحي"},
+  "G-15":{"name":"حسن صافي عبد الله خيون","score":null,"section":"G","shift":"صباحي"},
+  "G-16":{"name":"حسن علاء شكر محمود","score":5,"section":"G","shift":"صباحي"},
+  "G-17":{"name":"حسين سعد عبد الساده خلخال","score":4,"section":"G","shift":"صباحي"},
+  "G-18":{"name":"حسين علي احمد خضير","score":7,"section":"G","shift":"صباحي"},
+  "G-19":{"name":"حيدر علاء حسين علوان","score":6,"section":"G","shift":"صباحي"},
+  "G-20":{"name":"حيدر موفق ادريس صالح","score":6,"section":"G","shift":"صباحي"},
+  "G-21":{"name":"دموع الزهراء اسعد مهدي عاشور","score":9,"section":"G","shift":"صباحي"},
+  "G-22":{"name":"دينا داخل خلف ماضي","score":9,"section":"G","shift":"صباحي"},
+  "G-23":{"name":"رقيه فرات علي حمادي","score":5,"section":"G","shift":"صباحي"},
+  "G-24":{"name":"زهراء اسماعيل ابراهيم محمود","score":7,"section":"G","shift":"صباحي"},
+  "G-25":{"name":"زيد طارق نعيم عاجل","score":8,"section":"G","shift":"صباحي"},
+  "G-26":{"name":"زينب حسين عذاب سلمان","score":9,"section":"G","shift":"صباحي"},
+  "G-27":{"name":"سجاد احمد زكي جاسم","score":7,"section":"G","shift":"صباحي"},
+  "G-28":{"name":"سجاد احمد نجم كريم","score":5,"section":"G","shift":"صباحي"},
+  "G-29":{"name":"سجاد انيس صلاح عبد الجبار","score":7,"section":"G","shift":"صباحي"},
+  "G-30":{"name":"سجاد جلال خماط جاسم","score":9,"section":"G","shift":"صباحي"},
+  "G-31":{"name":"شبل حيدر عبد الحسين عبد الكاظم","score":6,"section":"G","shift":"صباحي"},
+  "G-32":{"name":"صلاح وليد قاسم محمد","score":6,"section":"G","shift":"صباحي"},
+  "G-33":{"name":"طه صفاء خليل حسين","score":7,"section":"G","shift":"صباحي"},
+  "G-34":{"name":"عبدالحميد احمد جاسم محمد","score":5,"section":"G","shift":"صباحي"},
+  "G-35":{"name":"عبدالله صبري طعيمه عايس","score":9,"section":"G","shift":"صباحي"},
+  "G-36":{"name":"عبدالله وسام مجيد عداي","score":5,"section":"G","shift":"صباحي"},
+  "G-37":{"name":"علي كريم حنش صبر","score":7,"section":"G","shift":"صباحي"},
+  "G-38":{"name":"محمد جمعه عاصي عبود","score":9,"section":"G","shift":"صباحي"},
+  "G-39":{"name":"محمد زيد علي عمران","score":7,"section":"G","shift":"صباحي"},
+  "G-40":{"name":"محمد عيسى ابراهيم عكار","score":null,"section":"G","shift":"صباحي"},
+  "G-41":{"name":"نور رياض حميد عطية","score":9,"section":"G","shift":"صباحي"},
+  "G-42":{"name":"نور علي محمد جاسم","score":7,"section":"G","shift":"صباحي"},
+  "G-43":{"name":"هديل عقيل فلاح رشيد","score":8,"section":"G","shift":"صباحي"},
+  "H-01":{"name":"احمد بسمان صالح مهدي","score":7,"section":"H","shift":"صباحي"},
+  "H-02":{"name":"استبرق عبد الجبار جاسم داخل","score":null,"section":"H","shift":"صباحي"},
+  "H-03":{"name":"الحمزة قاسم علي صحن","score":9,"section":"H","shift":"صباحي"},
+  "H-04":{"name":"ثابت محمد عبد المهدي كنعان","score":5,"section":"H","shift":"صباحي"},
+  "H-05":{"name":"حسن ساجد عبد عباس","score":8,"section":"H","shift":"صباحي"},
+  "H-06":{"name":"سجاد علي عبد القادر جرجيس","score":5,"section":"H","shift":"صباحي"},
+  "H-07":{"name":"سما هيمن فخر الدين صالح","score":9,"section":"H","shift":"صباحي"},
+  "H-08":{"name":"سميره حسين رضا علي","score":9,"section":"H","shift":"صباحي"},
+  "H-09":{"name":"ضرغام خلف غموس عبد الله","score":6,"section":"H","shift":"صباحي"},
+  "H-10":{"name":"عبدالله باسم حسوني الملا","score":9,"section":"H","shift":"صباحي"},
+  "H-11":{"name":"عبدالله جاسم داود سلمان","score":9,"section":"H","shift":"صباحي"},
+  "H-12":{"name":"عبدالله علي عداي عوده","score":8,"section":"H","shift":"صباحي"},
+  "H-13":{"name":"علي حسن خضير فيصل","score":7,"section":"H","shift":"صباحي"},
+  "H-14":{"name":"علي سرمد جواد عبد الله","score":4,"section":"H","shift":"صباحي"},
+  "H-15":{"name":"علي شاكر عموشي علي","score":6,"section":"H","shift":"صباحي"},
+  "H-16":{"name":"علي عباس حسين حسن","score":7,"section":"H","shift":"صباحي"},
+  "H-17":{"name":"علي عدي داود علي","score":5,"section":"H","shift":"صباحي"},
+  "H-18":{"name":"علي مرتضى حيدر سليم عليوي","score":9,"section":"H","shift":"صباحي"},
+  "H-19":{"name":"علي ياس خضير عزيز","score":1,"section":"H","shift":"صباحي"},
+  "H-20":{"name":"عمر علي كاظم علي","score":9,"section":"H","shift":"صباحي"},
+  "H-21":{"name":"فاطمه فراس فاضل حسين","score":5,"section":"H","shift":"صباحي"},
+  "H-22":{"name":"كرار حيدر راضي عبد علي","score":5,"section":"H","shift":"صباحي"},
+  "H-23":{"name":"كرار صالح مهدي عطوف","score":9,"section":"H","shift":"صباحي"},
+  "H-24":{"name":"محمد حسنين خضير عبد العباس","score":9,"section":"H","shift":"صباحي"},
+  "H-25":{"name":"محمد عبدالرحمن جاسم دهش","score":9,"section":"H","shift":"صباحي"},
+  "H-26":{"name":"محمد مصطفى حسين علي","score":4,"section":"H","shift":"صباحي"},
+  "H-27":{"name":"محمد نجاح ارحيم منصور","score":9,"section":"H","shift":"صباحي"},
+  "H-28":{"name":"مصطفى صباح نوري متعب","score":2,"section":"H","shift":"صباحي"},
+  "H-29":{"name":"مصطفى عيسى حسين علوان","score":10,"section":"H","shift":"صباحي"},
+  "H-30":{"name":"مصطفى ميثم عبد الكاظم ناصر","score":6,"section":"H","shift":"صباحي"},
+  "H-31":{"name":"منتظر فاضل عباس جاري","score":9,"section":"H","shift":"صباحي"},
+  "H-32":{"name":"مهند محمد حميد مهدي","score":7,"section":"H","shift":"صباحي"},
+  "H-33":{"name":"همام مثنى عبيد حسين","score":10,"section":"H","shift":"صباحي"},
+  "H-34":{"name":"هند عبد الله علي عبد الله","score":7,"section":"H","shift":"صباحي"},
+  "H-35":{"name":"ياسين رياض ياسين علوان","score":1,"section":"H","shift":"صباحي"},
+  "H-36":{"name":"يحيى جمال فاضل إبراهيم","score":6,"section":"H","shift":"صباحي"},
+  "I-01":{"name":"ابراهيم مطشر غالي عامود","score":4,"section":"I","shift":"مسائي"},
+  "I-02":{"name":"احمد اسماعيل حميد عبدالغفور","score":5,"section":"I","shift":"مسائي"},
+  "I-03":{"name":"احمد ايهاب ثائر غازي","score":4,"section":"I","shift":"مسائي"},
+  "I-04":{"name":"احمد رعد احمد حسون","score":5,"section":"I","shift":"مسائي"},
+  "I-05":{"name":"احمد سعد طالب رواك","score":5,"section":"I","shift":"مسائي"},
+  "I-06":{"name":"احمد عبد الله احمد مهدي","score":6,"section":"I","shift":"مسائي"},
+  "I-07":{"name":"احمد غني جبر حبيب","score":10,"section":"I","shift":"مسائي"},
+  "I-08":{"name":"احمد نزار جليل علي","score":4,"section":"I","shift":"مسائي"},
+  "I-09":{"name":"اسامه عباس فاضل كاظم","score":9,"section":"I","shift":"مسائي"},
+  "I-10":{"name":"جلال الدين احمد عبد الزهره هادي","score":5,"section":"I","shift":"مسائي"},
+  "I-11":{"name":"جمال كريم ياسر فليح","score":9,"section":"I","shift":"مسائي"},
+  "I-12":{"name":"حسين علي حسين فليح","score":6,"section":"I","shift":"مسائي"},
+  "I-13":{"name":"حسين علي ياسين محمد انور","score":5,"section":"I","shift":"مسائي"},
+  "I-14":{"name":"حيدر صبحي سلمان حسن","score":3,"section":"I","shift":"مسائي"},
+  "I-15":{"name":"حيدر طه عباس علوان","score":6,"section":"I","shift":"مسائي"},
+  "I-16":{"name":"خليل امجد خليل ابراهيم","score":null,"section":"I","shift":"مسائي"},
+  "I-17":{"name":"رسول شهاب محي شهاب","score":4,"section":"I","shift":"مسائي"},
+  "I-18":{"name":"رضا بهاء جاسم محمد","score":10,"section":"I","shift":"مسائي"},
+  "I-19":{"name":"سجاد غريب محمد حمود","score":null,"section":"I","shift":"مسائي"},
+  "I-20":{"name":"سجاد محمد كاظم عبد","score":6,"section":"I","shift":"مسائي"},
+  "I-21":{"name":"سلام فاهم شعلان سلمان","score":6,"section":"I","shift":"مسائي"},
+  "I-22":{"name":"سليمان رفعت محمد عبد الله","score":null,"section":"I","shift":"مسائي"},
+  "I-23":{"name":"صادق زيد عبد طاهر","score":5,"section":"I","shift":"مسائي"},
+  "I-24":{"name":"عباس صباح حسن كاظم","score":5,"section":"I","shift":"مسائي"},
+  "I-25":{"name":"عباس فاضل مجيد هويران","score":5,"section":"I","shift":"مسائي"},
+  "I-26":{"name":"عبدالكريم مهدي ابراهيم هاني","score":5,"section":"I","shift":"مسائي"},
+  "I-27":{"name":"عبدالله جبار رشيد نغيمش","score":4,"section":"I","shift":"مسائي"},
+  "I-28":{"name":"عبدالله سعيد عبد القادر فهد","score":10,"section":"I","shift":"مسائي"},
+  "I-29":{"name":"علي نجم عبد طاهر","score":3,"section":"I","shift":"مسائي"},
+  "I-30":{"name":"عمر عبد السلام شكر محمود","score":5,"section":"I","shift":"مسائي"},
+  "I-31":{"name":"ليث محمد كاظم عبد اليمه","score":4,"section":"I","shift":"مسائي"},
+  "I-32":{"name":"محمد علي خلف علي","score":2,"section":"I","shift":"مسائي"},
+  "I-33":{"name":"مرتضى فخري عاشور محمد","score":5,"section":"I","shift":"مسائي"},
+  "I-34":{"name":"مصطفى جاسم محمد رسن","score":9,"section":"I","shift":"مسائي"},
+  "I-35":{"name":"مصطفى خالد ابراهيم نصار","score":5,"section":"I","shift":"مسائي"},
+  "I-36":{"name":"مصطفى رياض محمد رضا محسن","score":5,"section":"I","shift":"مسائي"},
+  "I-37":{"name":"مصطفى نجم عبد جوده","score":4,"section":"I","shift":"مسائي"},
+  "I-38":{"name":"مينه علي حاتم احمد","score":7,"section":"I","shift":"مسائي"},
+  "I-39":{"name":"هاني فلاح عبد الحسن علي","score":5,"section":"I","shift":"مسائي"},
+  "J-01":{"name":"ابراهيم احمد محمد لوتي","score":10,"section":"J","shift":"مسائي"},
+  "J-02":{"name":"احمد طالب عودة حسان","score":6,"section":"J","shift":"مسائي"},
+  "J-03":{"name":"اشرف عادل رفعت شوكت","score":5,"section":"J","shift":"مسائي"},
+  "J-04":{"name":"بندر خالد شهيد علي","score":6,"section":"J","shift":"مسائي"},
+  "J-05":{"name":"حاتم جاسم علوان جاسم","score":5,"section":"J","shift":"مسائي"},
+  "J-06":{"name":"حسن كريم طعمه رغيله","score":5,"section":"J","shift":"مسائي"},
+  "J-07":{"name":"حسين حسن مهدي صريم","score":5,"section":"J","shift":"مسائي"},
+  "J-08":{"name":"حسين هاشم احمد كريم","score":6,"section":"J","shift":"مسائي"},
+  "J-09":{"name":"زيد سلمان عبيد عبد الله","score":6,"section":"J","shift":"مسائي"},
+  "J-10":{"name":"زينب عباس كاظم الكناني","score":5,"section":"J","shift":"مسائي"},
+  "J-11":{"name":"زينب محمد حبيب نصر الله","score":6,"section":"J","shift":"مسائي"},
+  "J-12":{"name":"صبا مصعب عباس علي","score":null,"section":"J","shift":"مسائي"},
+  "J-13":{"name":"صلاح نعمان كاظم حسن","score":3,"section":"J","shift":"مسائي"},
+  "J-14":{"name":"علاء محمد مصطفى محمد","score":null,"section":"J","shift":"مسائي"},
+  "J-15":{"name":"علي ثامر عبيد عليوي","score":8,"section":"J","shift":"مسائي"},
+  "J-16":{"name":"علي عبد الرحمن كاظم راشد","score":6,"section":"J","shift":"مسائي"},
+  "J-17":{"name":"فارس حسين ثامر علي","score":5,"section":"J","shift":"مسائي"},
+  "J-18":{"name":"كاظم جابر جاسم غضيب","score":6,"section":"J","shift":"مسائي"},
+  "J-19":{"name":"كرار فاضل محمد محمد حسن","score":5,"section":"J","shift":"مسائي"},
+  "J-20":{"name":"ليث صادق لفته حسن","score":5,"section":"J","shift":"مسائي"},
+  "J-21":{"name":"محسن حيدر محسن عبود","score":6,"section":"J","shift":"مسائي"},
+  "J-22":{"name":"محمد جاسم محسن تقي","score":8,"section":"J","shift":"مسائي"},
+  "J-23":{"name":"محمد حاكم جهاد حسين","score":null,"section":"J","shift":"مسائي"},
+  "J-24":{"name":"محمد سالم مري مسرهد","score":5,"section":"J","shift":"مسائي"},
+  "J-25":{"name":"محمد عبدالرزاق جار الله عبد الرزاق","score":null,"section":"J","shift":"مسائي"},
+  "J-26":{"name":"محمد علي عباس علي","score":5,"section":"J","shift":"مسائي"},
+  "J-27":{"name":"محمد عماد كاظم حسن","score":null,"section":"J","shift":"مسائي"},
+  "J-28":{"name":"محمد فاضل حسن جاسم","score":6,"section":"J","shift":"مسائي"},
+  "J-29":{"name":"مرتضى عبود كريم كاظم","score":6,"section":"J","shift":"مسائي"},
+  "J-30":{"name":"مصطفى اسعد عبد عليوي","score":6,"section":"J","shift":"مسائي"},
+  "J-31":{"name":"مصطفى خالد جودي كاظم","score":6,"section":"J","shift":"مسائي"},
+  "J-32":{"name":"مصطفى عبدالرحمن مرعي حسن","score":6,"section":"J","shift":"مسائي"},
+  "J-33":{"name":"مصطفى نجم عبد الخالق زغير","score":4,"section":"J","shift":"مسائي"},
+  "J-34":{"name":"منار عدنان سوادي فهد","score":5,"section":"J","shift":"مسائي"},
+  "J-35":{"name":"منير زياد طارق محي الدين","score":5,"section":"J","shift":"مسائي"},
+  "J-36":{"name":"نازك برهان ادهم طاهر","score":6,"section":"J","shift":"مسائي"},
+  "J-37":{"name":"هاشم لعيبي غازي مشكور","score":5,"section":"J","shift":"مسائي"},
+  "J-38":{"name":"وليد خالد جياد عريبي","score":5,"section":"J","shift":"مسائي"},
+  "X-01":{"name":"حيدر اسماعيل فرج","score":9,"section":"X","shift":"—"},
+  "X-02":{"name":"منتظر مهند حيدر صبح","score":9,"section":"X","shift":"—"},
+  "X-03":{"name":"عبدالله جبار محمد حسين","score":7,"section":"X","shift":"—"}
+};
 
-const SECRET_KEY = "MySecretKey12345";
-
-// فك التشفير عند تحميل الصفحة
-let students = {};
-try {
-    const key  = CryptoJS.enc.Utf8.parse(SECRET_KEY);
-    const iv   = CryptoJS.enc.Base64.parse(IV);
-    const dec  = CryptoJS.AES.decrypt(DATA, key, {
-        iv: iv,
-        mode: CryptoJS.mode.CBC,
-        padding: CryptoJS.pad.Pkcs7
-    });
-    students = JSON.parse(dec.toString(CryptoJS.enc.Utf8));
-} catch(e) {
-    console.error("خطأ في فك التشفير");
-}
-
-function getScoreClass(s) {
-    if (s === 10) return 'score-10';
-    if (s === 9)  return 'score-9';
-    if (s === 8)  return 'score-8';
-    if (s === 7)  return 'score-7';
-    if (s === 6)  return 'score-6';
+function getScoreClass(score) {
+    if (score === 10) return 'score-10';
+    if (score === 9)  return 'score-9';
+    if (score === 8)  return 'score-8';
+    if (score === 7)  return 'score-7';
+    if (score === 6)  return 'score-6';
     return 'score-low';
 }
-function getScoreEmoji(s) {
-    if (s === 10) return '🏆';
-    if (s >= 8)   return '🌟';
-    if (s >= 6)   return '✅';
-    if (s >= 4)   return '⚠️';
+
+function getScoreEmoji(score) {
+    if (score === 10) return '🏆';
+    if (score >= 8)   return '🌟';
+    if (score >= 6)   return '✅';
+    if (score >= 4)   return '⚠️';
     return '❌';
 }
-function getScoreLabel(s) {
-    if (s === 10) return 'ممتاز';
-    if (s === 9)  return 'جيد جداً';
-    if (s === 8)  return 'جيد جداً';
-    if (s === 7)  return 'جيد';
-    if (s === 6)  return 'مقبول';
-    if (s >= 1)   return 'ضعيف';
+
+function getScoreLabel(score) {
+    if (score === 10) return 'ممتاز';
+    if (score === 9)  return 'جيد جداً';
+    if (score === 8)  return 'جيد جداً';
+    if (score === 7)  return 'جيد';
+    if (score === 6)  return 'مقبول';
+    if (score >= 1)   return 'ضعيف';
     return 'صفر';
 }
 
 function checkResult() {
-    const input     = document.getElementById('codeInput').value.trim().toUpperCase();
+    const input = document.getElementById('codeInput').value.trim().toUpperCase();
     const resultDiv = document.getElementById('result');
-    if (!input) { resultDiv.style.display = 'none'; return; }
+
+    if (!input) {
+        resultDiv.style.display = 'none';
+        return;
+    }
 
     const student = students[input];
 
     if (student) {
-        if (student.score === null || student.score === undefined) {
+
+        // حالة غير ممتحن
+        if (student.score === null) {
             resultDiv.className = 'result warning';
             resultDiv.innerHTML = `
                 <div class="result-header">
@@ -179,42 +812,48 @@ function checkResult() {
                     </div>
                 </div>
                 <div class="result-body">
-                    <p>رمزك <strong style="color:#ffd200;font-size:16px;">${input}</strong>
-                    مسجل في الشعبة <strong style="color:#ffd200;">${student.shift} ${student.section}</strong>
-                    <br><br>
-                    🚫 <strong style="color:#ffd200;">غير ممتحن</strong>
-                    <br><br>
+                    <p>
+                        رمزك <strong style="color:#ffd200; font-size:16px;">${input}</strong>
+                        مسجل في الشعبة <strong style="color:#ffd200;">${student.shift} ${student.section}</strong>
+                        <br><br>
+                        🚫 <strong style="color:#ffd200;">غير ممتحن</strong>
+                        <br><br>
+                        يرجى مراجعة الأستاذ لمعرفة السبب
                     </p>
                 </div>`;
-        } else {
-            const sc = getScoreClass(student.score);
-            const em = getScoreEmoji(student.score);
-            const lb = getScoreLabel(student.score);
-            resultDiv.className = 'result success';
-            resultDiv.innerHTML = `
-                <div class="result-header">
-                    <div class="icon">✅</div>
-                    <div class="info">
-                        <h3>تم العثور على نتيجتك</h3>
-                        <h2>${student.name}</h2>
-                    </div>
-                </div>
-                <div class="result-body">
-                    <div class="info-box full" style="text-align:center;padding:20px;">
-                        <div class="label">الدرجة من 10</div>
-                        <div class="value score-display ${sc}">${student.score}</div>
-                        <div style="margin-top:8px;font-size:14px;opacity:0.8;">${em} ${lb}</div>
-                    </div>
-                    <div class="info-box">
-                        <div class="label">الرمز</div>
-                        <div class="value" style="font-size:18px;font-family:monospace;">${input}</div>
-                    </div>
-                    <div class="info-box">
-                        <div class="label">الشعبة</div>
-                        <div class="value" style="font-size:18px;">${student.shift} ${student.section}</div>
-                    </div>
-                </div>`;
+            resultDiv.style.display = 'block';
+            return;
         }
+
+        const scoreClass = getScoreClass(student.score);
+        const emoji = getScoreEmoji(student.score);
+        const label = getScoreLabel(student.score);
+
+        resultDiv.className = 'result success';
+        resultDiv.innerHTML = `
+            <div class="result-header">
+                <div class="icon">✅</div>
+                <div class="info">
+                    <h3>تم العثور على نتيجتك</h3>
+                    <h2>${student.name}</h2>
+                </div>
+            </div>
+            <div class="result-body">
+                <div class="info-box full" style="text-align:center; padding:20px;">
+                    <div class="label">الدرجة من 10</div>
+                    <div class="value score-display ${scoreClass}">${student.score}</div>
+                    <div style="margin-top:8px; font-size:14px; opacity:0.8;">${emoji} ${label}</div>
+                </div>
+                <div class="info-box">
+                    <div class="label">الرمز</div>
+                    <div class="value" style="font-size:18px; font-family:monospace;">${input}</div>
+                </div>
+                <div class="info-box">
+                    <div class="label">الشعبة</div>
+                    <div class="value" style="font-size:18px;">${student.shift} ${student.section}</div>
+                </div>
+            </div>`;
+
     } else {
         resultDiv.className = 'result error';
         resultDiv.innerHTML = `
@@ -222,23 +861,27 @@ function checkResult() {
                 <div class="icon">❌</div>
                 <div class="info">
                     <h3>الرمز غير موجود</h3>
-                    <h2>غير ممتحن </h2>
+                    <h2>لم يتم العثور على نتيجة</h2>
                 </div>
             </div>
             <div class="result-body">
-                <p>الرمز <strong style="color:#fff;">"${input}"</strong> غير مسجل.<br>
+                <p>الرمز <strong style="color:#fff;">"${input}"</strong> غير مسجل في قاعدة البيانات.<br>
                 تأكد من إدخال الرمز بشكل صحيح<br>
                 مثال: <strong style="color:#fff;">A-01</strong> أو <strong style="color:#fff;">B-15</strong></p>
             </div>`;
     }
+
     resultDiv.style.display = 'block';
 }
 
-document.getElementById('codeInput').addEventListener('keypress', e => { if (e.key === 'Enter') checkResult(); });
+document.getElementById('codeInput').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') checkResult();
+});
+
 document.getElementById('codeInput').addEventListener('input', function() {
-    const p = this.selectionStart;
+    const pos = this.selectionStart;
     this.value = this.value.toUpperCase();
-    this.setSelectionRange(p, p);
+    this.setSelectionRange(pos, pos);
 });
 </script>
 </body>
