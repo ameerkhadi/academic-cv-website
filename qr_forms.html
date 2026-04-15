@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>عرض QR — نماذج الطلبة | أساسيات تكنولوجيا المعلومات</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Cairo',sans-serif;background:#09111f;color:#e8eaf0;direction:rtl;min-height:100vh}
+
+.hdr{background:linear-gradient(135deg,#050b14,#1a2e4a);border-bottom:2px solid #c9a227;padding:18px 30px;text-align:center}
+.hdr h1{font-size:20px;font-weight:700;color:#fff;margin-bottom:4px}
+.hdr h1 span{color:#e8c84a}
+.hdr p{font-size:12px;color:#7a8ba8}
+
+.tabs{display:flex;background:#0c1828;border-bottom:1px solid #1e2d50;padding:0 20px;gap:3px;justify-content:center}
+.tab{background:none;border:none;color:#7a8ba8;font-family:'Cairo',sans-serif;font-size:13px;font-weight:700;padding:13px 24px;cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;white-space:nowrap}
+.tab:hover{color:#e8eaf0}
+.tab.active{color:#e8c84a;border-bottom-color:#c9a227;background:rgba(201,162,39,.05)}
+
+.panel{display:none;animation:fade .3s ease}
+.panel.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+
+.main{padding:28px 30px;max-width:1000px;margin:0 auto}
+
+/* QR DISPLAY */
+.qr-section{display:flex;flex-direction:column;gap:24px}
+.qr-card{background:#111827;border-radius:14px;overflow:hidden;display:flex;align-items:stretch;border:1px solid #1e2d50}
+.qr-left{width:220px;flex-shrink:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;gap:12px}
+.qr-img{width:170px;height:170px;background:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:0 0 0 6px rgba(201,162,39,.15)}
+.qr-img img{width:100%;height:100%}
+.qr-right{flex:1;padding:22px 24px;border-right:1px solid #1e2d50}
+.unit-num{font-size:11px;font-weight:700;padding:3px 10px;border-radius:12px;display:inline-block;margin-bottom:8px}
+.qr-title{font-size:17px;font-weight:700;color:#fff;margin-bottom:6px}
+.qr-sub{font-size:12px;color:#7a8ba8;margin-bottom:14px;line-height:1.6}
+.steps-list{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
+.step-r{display:flex;align-items:center;gap:9px;font-size:12px;color:#9ca3b8}
+.step-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.url-box{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:7px;padding:9px 14px;font-size:11px;color:#7a8ba8;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.url-text{direction:ltr;text-align:left;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}
+.copy-btn{background:rgba(201,162,39,.1);border:1px solid rgba(201,162,39,.25);color:#e8c84a;padding:4px 12px;border-radius:5px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Cairo',sans-serif;white-space:nowrap;transition:all .2s}
+.copy-btn:hover{background:rgba(201,162,39,.2)}
+
+.ib{padding:12px 16px;border-radius:8px;font-size:12px;line-height:1.8;margin-bottom:16px;border-right:3px solid}
+.ib.gold{background:rgba(201,162,39,.07);border-color:#c9a227;color:#d4b44a}
+.ib.blue{background:rgba(45,140,240,.07);border-color:#2d8cf0;color:#6ab0f0}
+
+/* PRINT PAGE */
+.print-page{display:none}
+@media print{
+  body{background:#fff;color:#000}
+  .hdr,.tabs,.ib{display:none!important}
+  .panel{display:block!important}
+  .qr-card{border:1px solid #ccc;break-inside:avoid;page-break-inside:avoid;margin-bottom:20px}
+  .qr-right{border-right:1px solid #ccc}
+  .qr-title{color:#000}
+  .url-box{background:#f5f5f5;border:1px solid #ccc}
+  .url-text,.qr-sub,.step-r{color:#333}
+  .copy-btn{display:none}
+  .print-page{display:block;text-align:center;padding:10px;font-family:'Cairo',sans-serif;font-size:11px;color:#777;border-top:1px solid #eee;margin-top:16px}
+}
+
+@media(max-width:640px){
+  .qr-card{flex-direction:column}
+  .qr-left{width:100%;border-bottom:1px solid #1e2d50;border-right:none}
+  .main{padding:16px}
+  .tabs{gap:0}
+  .tab{padding:11px 14px;font-size:12px}
+}
+
+/* FORM PANEL */
+.form-wrap{background:#0c1828;border:2px solid #c9a227;border-radius:12px;padding:22px}
+.form-hdr{text-align:center;margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid rgba(201,162,39,.2)}
+.fht{font-size:16px;font-weight:700;color:#e8c84a;margin-bottom:3px}
+.fhs{font-size:12.5px;color:#e8eaf0;font-weight:600;margin-bottom:7px}
+.fhi{font-size:10px;color:#7a8ba8}
+.ftags{display:flex;gap:7px;justify-content:center;flex-wrap:wrap;margin-top:7px}
+.tag{display:inline-block;padding:2px 9px;border-radius:12px;font-size:10.5px;font-weight:600}
+.tg{background:rgba(201,162,39,.12);color:#e8c84a;border:1px solid rgba(201,162,39,.25)}
+.tb{background:rgba(45,140,240,.12);color:#2d8cf0;border:1px solid rgba(45,140,240,.25)}
+.tv{background:rgba(34,196,122,.12);color:#22c47a;border:1px solid rgba(34,196,122,.25)}
+.to{background:rgba(255,153,0,.12);color:#ff9933;border:1px solid rgba(255,153,0,.25)}
+.fs{background:#111827;border:1px solid #1e2d50;border-radius:8px;padding:15px;margin-bottom:11px}
+.fst{font-size:12px;font-weight:700;color:#e8c84a;margin-bottom:10px;padding-bottom:7px;border-bottom:1px solid rgba(201,162,39,.12);display:flex;align-items:center;gap:7px}
+.fr{margin-bottom:10px}
+.fl{font-size:11.5px;font-weight:600;color:#7a8ba8;margin-bottom:4px;display:block}
+.req{color:#e05252;margin-right:2px}
+.fi,.fsel,.fta{width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:6px;padding:8px 12px;color:#e8eaf0;font-family:'Cairo',sans-serif;font-size:12.5px;direction:rtl}
+.fi:focus,.fsel:focus,.fta:focus{outline:none;border-color:#c9a227;background:rgba(201,162,39,.03)}
+.fta{min-height:70px;resize:vertical}
+.fsel option{background:#111827}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:520px){.g2{grid-template-columns:1fr}}
+.rg{display:flex;gap:6px;flex-wrap:wrap}
+.rb{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:5px;padding:5px 11px;color:#7a8ba8;cursor:pointer;font-family:'Cairo',sans-serif;font-size:11.5px;transition:all .2s}
+.rb:hover,.rb.sel{background:rgba(201,162,39,.12);border-color:#c9a227;color:#e8c84a;font-weight:700}
+.cl{display:flex;flex-direction:column;gap:5px}
+.ci{display:flex;align-items:center;gap:8px;padding:6px 10px;background:rgba(255,255,255,.02);border-radius:6px;border:1px solid rgba(255,255,255,.04);cursor:pointer;font-size:12px;color:#7a8ba8}
+.ci:hover{background:rgba(255,255,255,.04)}
+.ci input{width:14px;height:14px;accent-color:#c9a227;cursor:pointer;flex-shrink:0}
+.ci.chk{color:#e8eaf0;border-color:rgba(201,162,39,.2)}
+.sbtn{background:linear-gradient(135deg,#c9a227,#a07818);color:#070b16;border:none;border-radius:7px;padding:11px 24px;font-family:'Cairo',sans-serif;font-size:13px;font-weight:900;cursor:pointer;display:inline-flex;align-items:center;gap:7px;transition:all .2s;margin-left:8px}
+.sbtn:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(201,162,39,.3)}
+.pbtn{background:rgba(45,140,240,.1);color:#2d8cf0;border:1px solid rgba(45,140,240,.3);border-radius:7px;padding:9px 18px;font-family:'Cairo',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.pbtn:hover{background:rgba(45,140,240,.2)}
+.gbtn{background:rgba(34,196,122,.1);color:#22c47a;border:1px solid rgba(34,196,122,.3);border-radius:7px;padding:9px 18px;font-family:'Cairo',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.gbtn:hover{background:rgba(34,196,122,.2)}
+.cmsg{display:none;margin-top:11px;padding:11px;background:rgba(34,196,122,.1);border:1px solid rgba(34,196,122,.3);border-radius:7px;color:#22c47a;font-size:12px}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <h1>عرض <span>QR Code</span> — نماذج الطلبة التطبيقية</h1>
+  <p>المعهد العالي لإعداد وتأهيل القادة | مادة أساسيات تكنولوجيا المعلومات | د. أمير هادي</p>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="sw('qr',this)">📱 عرض QR للطباعة</button>
+  <button class="tab" onclick="sw('f1',this)">📋 نموذج الوحدة ١</button>
+  <button class="tab" onclick="sw('f2',this)">📋 نموذج الوحدة ٢</button>
+  <button class="tab" onclick="sw('f3',this)">📋 نموذج الوحدة ٣</button>
+</div>
+
+<!-- ═══ QR PANEL ═══ -->
+<div id="p-qr" class="panel active">
+  <div class="main">
+    <div class="ib gold">
+      <strong>📌 تعليمات للمدرس:</strong> ارفع ملفات النماذج (form-u1.html / form-u2.html / form-u3.html) على GitHub Pages ثم اطبع هذه الصفحة وعلّقها في القاعة. الطلبة يمسحون الـ QR بهواتفهم ويملؤون النموذج مباشرة.
+    </div>
+    <div class="ib blue">
+      <strong>🔗 روابط النماذج المفترضة:</strong> بعد رفع الملفات على موقعك<br>
+      <span style="direction:ltr;display:inline-block">https://ameerkhadi.github.io/academic-cv-website/form-u1.html</span>
+    </div>
+
+    <div class="qr-section">
+
+      <!-- QR Unit 1 -->
+      <div class="qr-card">
+        <div class="qr-left" style="background:rgba(20,110,180,.08)">
+          <div class="qr-img">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=170x170&data=https://ameerkhadi.github.io/academic-cv-website/form-u1.html&color=146EB4&bgcolor=FFFFFF" alt="QR Unit 1" loading="lazy">
+          </div>
+          <div style="font-size:11px;color:#64b5f6;text-align:center;font-weight:700">امسح للوحدة الأولى</div>
+        </div>
+        <div class="qr-right">
+          <span class="unit-num" style="background:rgba(20,110,180,.2);color:#64b5f6">الوحدة الأولى 🏗️</span>
+          <div class="qr-title">تحليل مشروع تحول رقمي في مؤسسة حكومية</div>
+          <div class="qr-sub">يُحلل الطالب مشروع تحول رقمي حكومي حقيقي ويدرس مكونات بنيته التحتية التقنية، ويقيّم مدى كفاءتها في تحقيق الأهداف.</div>
+          <div class="steps-list">
+            <div class="step-r"><div class="step-dot" style="background:#146EB4"></div>اختيار مشروع حكومي رقمي عراقي أو إقليمي</div>
+            <div class="step-r"><div class="step-dot" style="background:#146EB4"></div>تحديد مكونات البنية التحتية وتوثيقها</div>
+            <div class="step-r"><div class="step-dot" style="background:#146EB4"></div>تقييم الكفاءة التقنية وتحديد جوانب القصور</div>
+            <div class="step-r"><div class="step-dot" style="background:#146EB4"></div>صياغة توصيات تطوير مبنية على التحليل</div>
+          </div>
+          <div class="url-box">
+            <span class="url-text" id="url1">https://ameerkhadi.github.io/academic-cv-website/form-u1.html</span>
+            <button class="copy-btn" onclick="copyUrl('url1',this)">📋 نسخ</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- QR Unit 2 -->
+      <div class="qr-card">
+        <div class="qr-left" style="background:rgba(230,81,0,.08)">
+          <div class="qr-img">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=170x170&data=https://ameerkhadi.github.io/academic-cv-website/form-u2.html&color=E65100&bgcolor=FFFFFF" alt="QR Unit 2" loading="lazy">
+          </div>
+          <div style="font-size:11px;color:#ffb74d;text-align:center;font-weight:700">امسح للوحدة الثانية</div>
+        </div>
+        <div class="qr-right">
+          <span class="unit-num" style="background:rgba(230,81,0,.2);color:#ffb74d">الوحدة الثانية 🖥️</span>
+          <div class="qr-title">تحليل نظام معلومات حكومي قائم</div>
+          <div class="qr-sub">يقوم الطالب بتحليل نظام معلومات حكومي موجود وتقييم كفاءته وفاعليته، مقدماً تقريراً تحليلياً يتضمن نقاط القوة والضعف والتوصيات.</div>
+          <div class="steps-list">
+            <div class="step-r"><div class="step-dot" style="background:#E65100"></div>اختيار نظام معلومات حكومي وجمع المعلومات</div>
+            <div class="step-r"><div class="step-dot" style="background:#E65100"></div>تصنيفه وفق أطر نظم المعلومات المعتمدة</div>
+            <div class="step-r"><div class="step-dot" style="background:#E65100"></div>قياس مؤشرات الأداء الرئيسية وتحليلها</div>
+            <div class="step-r"><div class="step-dot" style="background:#E65100"></div>كتابة تقرير تحليلي شامل مع توصيات</div>
+          </div>
+          <div class="url-box">
+            <span class="url-text" id="url2">https://ameerkhadi.github.io/academic-cv-website/form-u2.html</span>
+            <button class="copy-btn" onclick="copyUrl('url2',this)">📋 نسخ</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- QR Unit 3 -->
+      <div class="qr-card">
+        <div class="qr-left" style="background:rgba(46,125,50,.08)">
+          <div class="qr-img">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=170x170&data=https://ameerkhadi.github.io/academic-cv-website/form-u3.html&color=2E7D32&bgcolor=FFFFFF" alt="QR Unit 3" loading="lazy">
+          </div>
+          <div style="font-size:11px;color:#81c784;text-align:center;font-weight:700">امسح للوحدة الثالثة</div>
+        </div>
+        <div class="qr-right">
+          <span class="unit-num" style="background:rgba(46,125,50,.2);color:#81c784">الوحدة الثالثة 🗄️</span>
+          <div class="qr-title">تحليل دورة حياة البيانات وتقييم نظام إدارة البيانات</div>
+          <div class="qr-sub">يحلّل الطالب نظام إدارة بيانات في مؤسسة حكومية ويقيّم كفاءته في إدارة دورة حياة البيانات، مقدماً خطة لتحسين الجودة والحماية.</div>
+          <div class="steps-list">
+            <div class="step-r"><div class="step-dot" style="background:#2E7D32"></div>اختيار مؤسسة حكومية وتحليل نظام بياناتها</div>
+            <div class="step-r"><div class="step-dot" style="background:#2E7D32"></div>رسم دورة حياة البيانات الكاملة</div>
+            <div class="step-r"><div class="step-dot" style="background:#2E7D32"></div>تقييم أبعاد جودة البيانات وتحديد الفجوات</div>
+            <div class="step-r"><div class="step-dot" style="background:#2E7D32"></div>اقتراح خطة تحسين شاملة ومدعومة بالأدلة</div>
+          </div>
+          <div class="url-box">
+            <span class="url-text" id="url3">https://ameerkhadi.github.io/academic-cv-website/form-u3.html</span>
+            <button class="copy-btn" onclick="copyUrl('url3',this)">📋 نسخ</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="margin-top:20px;display:flex;gap:10px;justify-content:center">
+      <button class="sbtn" onclick="window.print()">🖨️ طباعة صفحة QR</button>
+    </div>
+    <div class="print-page">المعهد العالي لإعداد وتأهيل القادة | مادة أساسيات تكنولوجيا المعلومات | الفصل الأول 2025/2026</div>
+  </div>
+</div>
+
+<!-- ═══ FORM 1 ═══ -->
+<div id="p-f1" class="panel">
+  <div class="main">
+    <div class="ib gold"><strong>📱 هذا النموذج يُرفع على GitHub Pages</strong> — الطلبة يصلون إليه عبر QR. بعد الملء يضغطون "تصدير Excel" فيُنزَّل ملف جاهز للإرسال.</div>
+    <div class="form-wrap">
+      <div class="form-hdr">
+        <div class="fhi">المعهد العالي لإعداد وتأهيل القادة | أساسيات تكنولوجيا المعلومات</div>
+        <div class="fht">نموذج النشاط التطبيقي — الوحدة الأولى</div>
+        <div class="fhs">تحليل مشروع تحول رقمي في مؤسسة حكومية</div>
+        <div class="ftags"><span class="tag tg">البنية التحتية الرقمية</span><span class="tag tb">الفصل الأول 2025/2026</span><span class="tag tv">100 نقطة</span></div>
+      </div>
+      <div class="fs">
+        <div class="fst">🪪 بيانات الطالب</div>
+        <div class="g2">
+          <div class="fr"><label class="fl"><span class="req">*</span>الاسم الكامل</label><input id="f1_name" class="fi" placeholder="أدخل اسمك الكامل"></div>
+          <div class="fr"><label class="fl"><span class="req">*</span>الجهة / الرقم الوظيفي</label><input id="f1_org" class="fi" placeholder="جهتك أو رقمك الوظيفي"></div>
+          <div class="fr"><label class="fl">تاريخ التسليم</label><input id="f1_date" type="date" class="fi"></div>
+        </div>
+      </div>
+      <div class="fs">
+        <div class="fst">🏛️ الجزء الأول: اختيار المشروع (15 نقطة)</div>
+        <div class="fr"><label class="fl"><span class="req">*</span>اسم المشروع</label><input id="f1_proj" class="fi" placeholder="مثال: منصة اور / حكومة دبي الذكية..."></div>
+        <div class="fr"><label class="fl"><span class="req">*</span>الجهة الحكومية</label><input id="f1_gov" class="fi" placeholder="اسم الوزارة أو المؤسسة"></div>
+        <div class="g2">
+          <div class="fr"><label class="fl">الدولة</label>
+            <select id="f1_country" class="fsel"><option>— اختر —</option><option>العراق</option><option>الإمارات</option><option>السعودية</option><option>الأردن</option><option>مصر</option><option>البحرين</option><option>أخرى</option></select>
+          </div>
+          <div class="fr"><label class="fl">تاريخ انطلاق المشروع</label><input id="f1_year" class="fi" placeholder="مثال: 2018"></div>
+        </div>
+        <div class="fr"><label class="fl"><span class="req">*</span>وصف المشروع وأهدافه</label><textarea id="f1_desc" class="fta" placeholder="3-5 جمل: ما هو المشروع؟ من المستفيدون؟ ما أهدافه المعلنة؟"></textarea></div>
+        <div class="fr"><label class="fl">المصادر</label><textarea id="f1_src" class="fta" style="min-height:50px" placeholder="روابط أو مراجع..."></textarea></div>
+      </div>
+      <div class="fs">
+        <div class="fst">🖥️ الجزء الثاني: توثيق البنية التحتية (25 نقطة)</div>
+        <div class="fr"><label class="fl">المكونات التقنية (اختر كل ما ينطبق)</label>
+          <div class="cl">
+            <label class="ci"><input type="checkbox" onchange="tc(this)"> خوادم ومراكز البيانات</label>
+            <label class="ci"><input type="checkbox" onchange="tc(this)"> الحوسبة السحابية</label>
+            <label class="ci"><input type="checkbox" onchange="tc(this)"> شبكات الاتصالات والإنترنت</label>
+            <label class="ci"><input type="checkbox" onchange="tc(this)"> قواعد البيانات</label>
+            <label class="ci"><input type="checkbox" onchange="tc(this)"> البوابات الإلكترونية وتطبيقات الويب</label>
+            <label class="ci"><input type="checkbox" onchange="tc(this)"> تطبيقات الهاتف الذكي</label>
+            <label class="ci"><input type="checkbox" onchange="tc(this)"> أنظمة الأمن السيبراني</label>
+            <label class="ci"><input type="checkbox" onchange="tc(this)"> الذكاء الاصطناعي</label>
+            <label class="ci"><input type="checkbox" onchange="tc(this)"> إنترنت الأشياء (IoT)</label>
+            <label class="ci"><input type="checkbox" onchange="tc(this)"> أنظمة التكامل وAPI</label>
+          </div>
+        </div>
+        <div class="fr"><label class="fl"><span class="req">*</span>شرح دور أهم 3 مكونات</label>
+          <textarea id="f1_comp" class="fta" style="min-height:90px" placeholder="المكون الأول: ... — دوره: ...&#10;المكون الثاني: ... — دوره: ...&#10;المكون الثالث: ... — دوره: ..."></textarea>
+        </div>
+        <div class="fr"><label class="fl">الموفر السحابي</label>
+          <div class="rg" id="r_cloud"><button class="rb" onclick="sr('r_cloud',this)">AWS</button><button class="rb" onclick="sr('r_cloud',this)">Azure</button><button class="rb" onclick="sr('r_cloud',this)">Google Cloud</button><button class="rb" onclick="sr('r_cloud',this)">سحابة محلية</button><button class="rb" onclick="sr('r_cloud',this)">هجينة</button><button class="rb" onclick="sr('r_cloud',this)">غير معلوم</button></div>
+        </div>
+      </div>
+      <div class="fs">
+        <div class="fst">⚖️ الجزء الثالث: التقييم التقني والقصور (35 نقطة)</div>
+        <div class="fr"><label class="fl"><span class="req">*</span>التقييم الإجمالي للكفاءة</label>
+          <div class="rg" id="r_eff"><button class="rb" onclick="sr('r_eff',this)">⭐ ضعيف جداً</button><button class="rb" onclick="sr('r_eff',this)">⭐⭐ ضعيف</button><button class="rb" onclick="sr('r_eff',this)">⭐⭐⭐ متوسط</button><button class="rb" onclick="sr('r_eff',this)">⭐⭐⭐⭐ جيد</button><button class="rb" onclick="sr('r_eff',this)">⭐⭐⭐⭐⭐ ممتاز</button></div>
+        </div>
+        <div class="fr"><label class="fl"><span class="req">*</span>نقاط القوة</label><textarea id="f1_str" class="fta" placeholder="ما يعمل بكفاءة مع أدلة ملموسة..."></textarea></div>
+        <div class="fr"><label class="fl"><span class="req">*</span>جوانب القصور</label><textarea id="f1_weak" class="fta" placeholder="المشكلات والثغرات التقنية الموثّقة..."></textarea></div>
+      </div>
+      <div class="fs">
+        <div class="fst">💡 الجزء الرابع: التوصيات (25 نقطة)</div>
+        <div class="fr"><label class="fl"><span class="req">*</span>التوصية الأولى</label>
+          <input id="f1_r1t" class="fi" placeholder="عنوان التوصية" style="margin-bottom:7px">
+          <textarea id="f1_r1d" class="fta" placeholder="تفاصيل التنفيذ والأثر المتوقع..."></textarea>
+        </div>
+        <div class="fr"><label class="fl"><span class="req">*</span>التوصية الثانية</label>
+          <input id="f1_r2t" class="fi" placeholder="عنوان التوصية" style="margin-bottom:7px">
+          <textarea id="f1_r2d" class="fta" placeholder="تفاصيل التنفيذ والأثر المتوقع..."></textarea>
+        </div>
+        <div class="fr"><label class="fl">تجربة دولية للاستفادة منها</label><input id="f1_intl" class="fi" placeholder="مثال: تجربة إستونيا في الهوية الرقمية..."></div>
+        <div class="fr"><label class="fl">أهم درس مستفاد</label><textarea id="f1_lesson" class="fta" placeholder="بناءً على تجربتك الحكومية..."></textarea></div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;padding-top:6px;align-items:center">
+        <button class="sbtn" onclick="exportExcel(1)">📊 تصدير Excel</button>
+        <button class="gbtn" onclick="exportText(1)">📝 نسخ النص</button>
+        <button class="pbtn" onclick="window.print()">🖨️ طباعة</button>
+      </div>
+      <div id="cm1" class="cmsg">✅ تم التصدير بنجاح!</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ FORM 2 ═══ -->
+<div id="p-f2" class="panel">
+  <div class="main">
+    <div class="ib gold"><strong>📱 هذا النموذج يُرفع على GitHub Pages</strong> — الطلبة يصلون إليه عبر QR ويصدّرون إجاباتهم كـ Excel.</div>
+    <div class="form-wrap">
+      <div class="form-hdr">
+        <div class="fhi">المعهد العالي لإعداد وتأهيل القادة | أساسيات تكنولوجيا المعلومات</div>
+        <div class="fht">نموذج النشاط التطبيقي — الوحدة الثانية</div>
+        <div class="fhs">تحليل نظام معلومات حكومي قائم</div>
+        <div class="ftags"><span class="tag to">نظم المعلومات</span><span class="tag tb">الفصل الأول 2025/2026</span><span class="tag tv">100 نقطة</span></div>
+      </div>
+      <div class="fs">
+        <div class="fst">🪪 بيانات الطالب</div>
+        <div class="g2">
+          <div class="fr"><label class="fl"><span class="req">*</span>الاسم الكامل</label><input id="f2_name" class="fi" placeholder="أدخل اسمك الكامل"></div>
+          <div class="fr"><label class="fl"><span class="req">*</span>الجهة / الرقم الوظيفي</label><input id="f2_org" class="fi" placeholder="جهتك أو رقمك الوظيفي"></div>
+          <div class="fr"><label class="fl">تاريخ التسليم</label><input id="f2_date" type="date" class="fi"></div>
+        </div>
+      </div>
+      <div class="fs">
+        <div class="fst">💡 الجزء الأول: اختيار النظام (20 نقطة)</div>
+        <div class="fr"><label class="fl"><span class="req">*</span>اسم نظام المعلومات</label><input id="f2_sys" class="fi" placeholder="مثال: نظام ERP وزارة المالية..."></div>
+        <div class="fr"><label class="fl"><span class="req">*</span>الجهة المشغّلة</label><input id="f2_gov" class="fi" placeholder="اسم الوزارة أو المؤسسة"></div>
+        <div class="fr"><label class="fl">تصنيف النظام</label>
+          <div class="rg" id="r2_type"><button class="rb" onclick="sr('r2_type',this)">دعم القرار DSS</button><button class="rb" onclick="sr('r2_type',this)">تخطيط الموارد ERP</button><button class="rb" onclick="sr('r2_type',this)">إدارة علاقات المواطنين CiRM</button><button class="rb" onclick="sr('r2_type',this)">نظام إدارة MIS</button><button class="rb" onclick="sr('r2_type',this)">أخرى</button></div>
+        </div>
+        <div class="fr"><label class="fl"><span class="req">*</span>وصف وظيفة النظام</label><textarea id="f2_desc" class="fta" placeholder="ماذا يفعل النظام؟ من يستخدمه؟ ما الخدمة التي يقدمها؟"></textarea></div>
+        <div class="fr"><label class="fl">مرحلة دورة الحياة الحالية</label>
+          <div class="rg" id="r2_phase"><button class="rb" onclick="sr('r2_phase',this)">تطوير</button><button class="rb" onclick="sr('r2_phase',this)">تشغيل نشط</button><button class="rb" onclick="sr('r2_phase',this)">صيانة</button><button class="rb" onclick="sr('r2_phase',this)">تقاعد / استبدال</button></div>
+        </div>
+      </div>
+      <div class="fs">
+        <div class="fst">📊 الجزء الثاني: مؤشرات الأداء (30 نقطة)</div>
+        <div class="g2">
+          <div class="fr"><label class="fl">معدل الاستخدام</label>
+            <div class="rg" id="r2_k1"><button class="rb" onclick="sr('r2_k1',this)">⭐١</button><button class="rb" onclick="sr('r2_k1',this)">⭐⭐٢</button><button class="rb" onclick="sr('r2_k1',this)">⭐⭐⭐٣</button><button class="rb" onclick="sr('r2_k1',this)">⭐⭐⭐⭐٤</button><button class="rb" onclick="sr('r2_k1',this)">⭐⭐⭐⭐⭐٥</button></div>
+          </div>
+          <div class="fr"><label class="fl">رضا المستخدمين</label>
+            <div class="rg" id="r2_k2"><button class="rb" onclick="sr('r2_k2',this)">⭐١</button><button class="rb" onclick="sr('r2_k2',this)">⭐⭐٢</button><button class="rb" onclick="sr('r2_k2',this)">⭐⭐⭐٣</button><button class="rb" onclick="sr('r2_k2',this)">⭐⭐⭐⭐٤</button><button class="rb" onclick="sr('r2_k2',this)">⭐⭐⭐⭐⭐٥</button></div>
+          </div>
+          <div class="fr"><label class="fl">سرعة الاستجابة</label>
+            <div class="rg" id="r2_k3"><button class="rb" onclick="sr('r2_k3',this)">⭐١</button><button class="rb" onclick="sr('r2_k3',this)">⭐⭐٢</button><button class="rb" onclick="sr('r2_k3',this)">⭐⭐⭐٣</button><button class="rb" onclick="sr('r2_k3',this)">⭐⭐⭐⭐٤</button><button class="rb" onclick="sr('r2_k3',this)">⭐⭐⭐⭐⭐٥</button></div>
+          </div>
+          <div class="fr"><label class="fl">مستوى التكامل</label>
+            <div class="rg" id="r2_k4"><button class="rb" onclick="sr('r2_k4',this)">⭐١</button><button class="rb" onclick="sr('r2_k4',this)">⭐⭐٢</button><button class="rb" onclick="sr('r2_k4',this)">⭐⭐⭐٣</button><button class="rb" onclick="sr('r2_k4',this)">⭐⭐⭐⭐٤</button><button class="rb" onclick="sr('r2_k4',this)">⭐⭐⭐⭐⭐٥</button></div>
+          </div>
+        </div>
+        <div class="fr"><label class="fl"><span class="req">*</span>تحليل مفصّل للمؤشرات</label><textarea id="f2_kpi" class="fta" placeholder="اشرح تقييمك لكل مؤشر مع أدلة أو بيانات داعمة..."></textarea></div>
+      </div>
+      <div class="fs">
+        <div class="fst">⚖️ الجزء الثالث: القوة والضعف (30 نقطة)</div>
+        <div class="fr"><label class="fl"><span class="req">*</span>نقاط القوة</label><textarea id="f2_str" class="fta" placeholder="ما الذي يعمل بشكل جيد؟ ما الفوائد الفعلية؟"></textarea></div>
+        <div class="fr"><label class="fl"><span class="req">*</span>نقاط الضعف</label><textarea id="f2_weak" class="fta" placeholder="ما الإشكاليات الموثّقة؟ ما الشكاوى المتكررة؟"></textarea></div>
+        <div class="fr"><label class="fl">التوجه المستقبلي</label>
+          <div class="rg" id="r2_future"><button class="rb" onclick="sr('r2_future',this)">تطوير النظام القائم</button><button class="rb" onclick="sr('r2_future',this)">استبداله بالكامل</button><button class="rb" onclick="sr('r2_future',this)">هجين</button></div>
+        </div>
+      </div>
+      <div class="fs">
+        <div class="fst">💡 الجزء الرابع: التوصيات (20 نقطة)</div>
+        <div class="fr"><label class="fl"><span class="req">*</span>التوصية الأولى</label>
+          <input id="f2_r1t" class="fi" placeholder="عنوان التوصية" style="margin-bottom:7px">
+          <textarea id="f2_r1d" class="fta" placeholder="تفاصيل التنفيذ والأثر المتوقع..."></textarea>
+        </div>
+        <div class="fr"><label class="fl"><span class="req">*</span>التوصية الثانية</label>
+          <input id="f2_r2t" class="fi" placeholder="عنوان التوصية" style="margin-bottom:7px">
+          <textarea id="f2_r2d" class="fta" placeholder="تفاصيل التنفيذ والأثر المتوقع..."></textarea>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;padding-top:6px">
+        <button class="sbtn" onclick="exportExcel(2)">📊 تصدير Excel</button>
+        <button class="gbtn" onclick="exportText(2)">📝 نسخ النص</button>
+        <button class="pbtn" onclick="window.print()">🖨️ طباعة</button>
+      </div>
+      <div id="cm2" class="cmsg">✅ تم التصدير بنجاح!</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ FORM 3 ═══ -->
+<div id="p-f3" class="panel">
+  <div class="main">
+    <div class="ib gold"><strong>📱 هذا النموذج يُرفع على GitHub Pages</strong> — الطلبة يصلون إليه عبر QR ويصدّرون إجاباتهم كـ Excel.</div>
+    <div class="form-wrap">
+      <div class="form-hdr">
+        <div class="fhi">المعهد العالي لإعداد وتأهيل القادة | أساسيات تكنولوجيا المعلومات</div>
+        <div class="fht">نموذج النشاط التطبيقي — الوحدة الثالثة</div>
+        <div class="fhs">تحليل دورة حياة البيانات وتقييم نظام إدارة البيانات</div>
+        <div class="ftags"><span class="tag tv">إدارة البيانات</span><span class="tag tb">الفصل الأول 2025/2026</span><span class="tag tg">100 نقطة</span></div>
+      </div>
+      <div class="fs">
+        <div class="fst">🪪 بيانات الطالب</div>
+        <div class="g2">
+          <div class="fr"><label class="fl"><span class="req">*</span>الاسم الكامل</label><input id="f3_name" class="fi" placeholder="أدخل اسمك الكامل"></div>
+          <div class="fr"><label class="fl"><span class="req">*</span>الجهة / الرقم الوظيفي</label><input id="f3_org" class="fi" placeholder="جهتك أو رقمك الوظيفي"></div>
+          <div class="fr"><label class="fl">تاريخ التسليم</label><input id="f3_date" type="date" class="fi"></div>
+        </div>
+      </div>
+      <div class="fs">
+        <div class="fst">📁 الجزء الأول: تحليل نظام البيانات (20 نقطة)</div>
+        <div class="fr"><label class="fl"><span class="req">*</span>اسم المؤسسة الحكومية</label><input id="f3_inst" class="fi" placeholder="الوزارة أو الدائرة أو المؤسسة"></div>
+        <div class="fr"><label class="fl"><span class="req">*</span>وصف نظام إدارة البيانات الحالي</label><textarea id="f3_desc" class="fta" placeholder="كيف تُجمع البيانات؟ أين تُخزَّن؟ كيف تُستخدم؟"></textarea></div>
+        <div class="fr"><label class="fl">نوع قواعد البيانات</label>
+          <div class="rg" id="r3_db"><button class="rb" onclick="sr('r3_db',this)">علائقية SQL</button><button class="rb" onclick="sr('r3_db',this)">غير علائقية NoSQL</button><button class="rb" onclick="sr('r3_db',this)">هجينة</button><button class="rb" onclick="sr('r3_db',this)">ورقية</button><button class="rb" onclick="sr('r3_db',this)">غير معلوم</button></div>
+        </div>
+      </div>
+      <div class="fs">
+        <div class="fst">🔄 الجزء الثاني: دورة حياة البيانات (25 نقطة)</div>
+        <div class="fr"><label class="fl"><span class="req">*</span>مرحلة الإنشاء والجمع</label><textarea id="f3_lc1" class="fta" style="min-height:60px" placeholder="كيف تُنشأ البيانات أو تُجمع؟ من مصادرها؟"></textarea></div>
+        <div class="fr"><label class="fl"><span class="req">*</span>مرحلة التخزين والمعالجة</label><textarea id="f3_lc2" class="fta" style="min-height:60px" placeholder="أين تُخزَّن؟ كيف تُعالَج؟ من يملك الوصول؟"></textarea></div>
+        <div class="fr"><label class="fl"><span class="req">*</span>مرحلة الاسترجاع والاستخدام</label><textarea id="f3_lc3" class="fta" style="min-height:60px" placeholder="كيف يُصل إليها؟ من يستخدمها؟ لأي أغراض؟"></textarea></div>
+        <div class="fr"><label class="fl">مرحلة الأرشفة والإتلاف</label><textarea id="f3_lc4" class="fta" style="min-height:55px" placeholder="هل توجد سياسة للأرشفة والإتلاف الآمن؟"></textarea></div>
+      </div>
+      <div class="fs">
+        <div class="fst">✨ الجزء الثالث: جودة البيانات (30 نقطة)</div>
+        <div class="g2">
+          <div class="fr"><label class="fl">الدقة</label>
+            <div class="rg" id="r3_q1"><button class="rb" onclick="sr('r3_q1',this)">ضعيف</button><button class="rb" onclick="sr('r3_q1',this)">متوسط</button><button class="rb" onclick="sr('r3_q1',this)">جيد</button><button class="rb" onclick="sr('r3_q1',this)">ممتاز</button></div>
+          </div>
+          <div class="fr"><label class="fl">الاكتمال</label>
+            <div class="rg" id="r3_q2"><button class="rb" onclick="sr('r3_q2',this)">ضعيف</button><button class="rb" onclick="sr('r3_q2',this)">متوسط</button><button class="rb" onclick="sr('r3_q2',this)">جيد</button><button class="rb" onclick="sr('r3_q2',this)">ممتاز</button></div>
+          </div>
+          <div class="fr"><label class="fl">الاتساق</label>
+            <div class="rg" id="r3_q3"><button class="rb" onclick="sr('r3_q3',this)">ضعيف</button><button class="rb" onclick="sr('r3_q3',this)">متوسط</button><button class="rb" onclick="sr('r3_q3',this)">جيد</button><button class="rb" onclick="sr('r3_q3',this)">ممتاز</button></div>
+          </div>
+          <div class="fr"><label class="fl">التوقيت</label>
+            <div class="rg" id="r3_q4"><button class="rb" onclick="sr('r3_q4',this)">ضعيف</button><button class="rb" onclick="sr('r3_q4',this)">متوسط</button><button class="rb" onclick="sr('r3_q4',this)">جيد</button><button class="rb" onclick="sr('r3_q4',this)">ممتاز</button></div>
+          </div>
+        </div>
+        <div class="fr"><label class="fl"><span class="req">*</span>تحليل فجوات الجودة</label><textarea id="f3_gaps" class="fta" placeholder="ما أبرز مشكلات جودة البيانات؟ أسبابها وتداعياتها؟"></textarea></div>
+        <div class="fr"><label class="fl">هل تنشر المؤسسة بيانات مفتوحة؟</label>
+          <div class="rg" id="r3_open"><button class="rb" onclick="sr('r3_open',this)">نعم بشكل منتظم</button><button class="rb" onclick="sr('r3_open',this)">جزئياً</button><button class="rb" onclick="sr('r3_open',this)">لا</button><button class="rb" onclick="sr('r3_open',this)">غير معلوم</button></div>
+        </div>
+      </div>
+      <div class="fs">
+        <div class="fst">💡 الجزء الرابع: خطة التحسين (25 نقطة)</div>
+        <div class="fr"><label class="fl"><span class="req">*</span>أولوية ١: تحسين جودة البيانات</label>
+          <input id="f3_p1t" class="fi" placeholder="الإجراء المحدد" style="margin-bottom:7px">
+          <textarea id="f3_p1d" class="fta" placeholder="كيف يُحسّن أبعاد الجودة؟ الأثر المتوقع؟"></textarea>
+        </div>
+        <div class="fr"><label class="fl"><span class="req">*</span>أولوية ٢: تعزيز الأمن والخصوصية</label>
+          <input id="f3_p2t" class="fi" placeholder="الإجراء المحدد" style="margin-bottom:7px">
+          <textarea id="f3_p2d" class="fta" placeholder="كيف يحمي البيانات الحساسة وخصوصية المواطنين؟"></textarea>
+        </div>
+        <div class="fr"><label class="fl">البيانات كمورد استراتيجي</label><textarea id="f3_strat" class="fta" placeholder="كيف تُوظَّف البيانات لتحسين القرارات والسياسات؟"></textarea></div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;padding-top:6px">
+        <button class="sbtn" onclick="exportExcel(3)">📊 تصدير Excel</button>
+        <button class="gbtn" onclick="exportText(3)">📝 نسخ النص</button>
+        <button class="pbtn" onclick="window.print()">🖨️ طباعة</button>
+      </div>
+      <div id="cm3" class="cmsg">✅ تم التصدير بنجاح!</div>
+    </div>
+  </div>
+</div>
+
+<!-- SheetJS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script>
+function sw(id,btn){
+  document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('active')});
+  document.querySelectorAll('.tab').forEach(function(b){b.classList.remove('active')});
+  document.getElementById('p-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+function sr(gid,btn){
+  document.getElementById(gid).querySelectorAll('.rb').forEach(function(b){b.classList.remove('sel')});
+  btn.classList.add('sel');
+}
+function tc(cb){cb.closest('.ci').classList.toggle('chk',cb.checked)}
+
+function getSelVal(gid){
+  var el=document.getElementById(gid);
+  if(!el) return '';
+  var s=el.querySelector('.sel');
+  return s ? s.textContent.trim() : '';
+}
+function getChecked(container){
+  var boxes=container.querySelectorAll('input[type=checkbox]:checked');
+  return Array.from(boxes).map(function(b){return b.parentElement.textContent.trim()}).join(' | ');
+}
+function g(id){var el=document.getElementById(id);return el?el.value.trim():''}
+
+function exportExcel(unit){
+  var wb=XLSX.utils.book_new();
+  var rows=[];
+  var name='',data=[];
+  if(unit===1){
+    name='نموذج_الوحدة_الاولى';
+    var chk=document.querySelector('#p-f1 .cl');
+    data=[
+      ['الحقل','القيمة'],
+      ['الاسم',g('f1_name')],['الجهة',g('f1_org')],['تاريخ التسليم',g('f1_date')],
+      ['اسم المشروع',g('f1_proj')],['الجهة الحكومية',g('f1_gov')],['الدولة',g('f1_country')],
+      ['تاريخ الانطلاق',g('f1_year')],['وصف المشروع',g('f1_desc')],['المصادر',g('f1_src')],
+      ['المكونات التقنية',chk?getChecked(chk):''],['شرح المكونات',g('f1_comp')],
+      ['الموفر السحابي',getSelVal('r_cloud')],['تقييم الكفاءة',getSelVal('r_eff')],
+      ['نقاط القوة',g('f1_str')],['جوانب القصور',g('f1_weak')],
+      ['عنوان التوصية ١',g('f1_r1t')],['تفاصيل التوصية ١',g('f1_r1d')],
+      ['عنوان التوصية ٢',g('f1_r2t')],['تفاصيل التوصية ٢',g('f1_r2d')],
+      ['تجربة دولية',g('f1_intl')],['الدرس المستفاد',g('f1_lesson')]
+    ];
+  } else if(unit===2){
+    name='نموذج_الوحدة_الثانية';
+    data=[
+      ['الحقل','القيمة'],
+      ['الاسم',g('f2_name')],['الجهة',g('f2_org')],['تاريخ التسليم',g('f2_date')],
+      ['اسم النظام',g('f2_sys')],['الجهة المشغّلة',g('f2_gov')],
+      ['تصنيف النظام',getSelVal('r2_type')],['وصف النظام',g('f2_desc')],
+      ['مرحلة دورة الحياة',getSelVal('r2_phase')],
+      ['معدل الاستخدام',getSelVal('r2_k1')],['رضا المستخدمين',getSelVal('r2_k2')],
+      ['سرعة الاستجابة',getSelVal('r2_k3')],['مستوى التكامل',getSelVal('r2_k4')],
+      ['تحليل المؤشرات',g('f2_kpi')],['نقاط القوة',g('f2_str')],['نقاط الضعف',g('f2_weak')],
+      ['التوجه المستقبلي',getSelVal('r2_future')],
+      ['عنوان التوصية ١',g('f2_r1t')],['تفاصيل التوصية ١',g('f2_r1d')],
+      ['عنوان التوصية ٢',g('f2_r2t')],['تفاصيل التوصية ٢',g('f2_r2d')]
+    ];
+  } else {
+    name='نموذج_الوحدة_الثالثة';
+    data=[
+      ['الحقل','القيمة'],
+      ['الاسم',g('f3_name')],['الجهة',g('f3_org')],['تاريخ التسليم',g('f3_date')],
+      ['اسم المؤسسة',g('f3_inst')],['وصف نظام البيانات',g('f3_desc')],
+      ['نوع قاعدة البيانات',getSelVal('r3_db')],
+      ['مرحلة الإنشاء/الجمع',g('f3_lc1')],['مرحلة التخزين/المعالجة',g('f3_lc2')],
+      ['مرحلة الاسترجاع/الاستخدام',g('f3_lc3')],['مرحلة الأرشفة/الإتلاف',g('f3_lc4')],
+      ['الدقة',getSelVal('r3_q1')],['الاكتمال',getSelVal('r3_q2')],
+      ['الاتساق',getSelVal('r3_q3')],['التوقيت',getSelVal('r3_q4')],
+      ['تحليل فجوات الجودة',g('f3_gaps')],['بيانات مفتوحة؟',getSelVal('r3_open')],
+      ['عنوان أولوية ١',g('f3_p1t')],['تفاصيل أولوية ١',g('f3_p1d')],
+      ['عنوان أولوية ٢',g('f3_p2t')],['تفاصيل أولوية ٢',g('f3_p2d')],
+      ['البيانات كمورد استراتيجي',g('f3_strat')]
+    ];
+  }
+  var ws=XLSX.utils.aoa_to_sheet(data);
+  ws['!cols']=[{wch:30},{wch:60}];
+  XLSX.utils.book_append_sheet(wb,ws,'الإجابات');
+  XLSX.writeFile(wb, name+'_'+g('f'+unit+'_name')+'.xlsx');
+  var cm=document.getElementById('cm'+unit);
+  if(cm){cm.style.display='block';setTimeout(function(){cm.style.display='none'},4000)}
+}
+
+function exportText(unit){
+  var rows=[];
+  if(unit===1){
+    rows=['الاسم: '+g('f1_name'),'الجهة: '+g('f1_org'),'المشروع: '+g('f1_proj'),'الوصف: '+g('f1_desc'),'نقاط القوة: '+g('f1_str'),'جوانب القصور: '+g('f1_weak'),'التوصية الأولى: '+g('f1_r1t')+' — '+g('f1_r1d'),'التوصية الثانية: '+g('f1_r2t')+' — '+g('f1_r2d')];
+  } else if(unit===2){
+    rows=['الاسم: '+g('f2_name'),'الجهة: '+g('f2_org'),'النظام: '+g('f2_sys'),'الوصف: '+g('f2_desc'),'نقاط القوة: '+g('f2_str'),'نقاط الضعف: '+g('f2_weak'),'التوصية الأولى: '+g('f2_r1t'),'التوصية الثانية: '+g('f2_r2t')];
+  } else {
+    rows=['الاسم: '+g('f3_name'),'الجهة: '+g('f3_org'),'المؤسسة: '+g('f3_inst'),'مرحلة الإنشاء: '+g('f3_lc1'),'مرحلة التخزين: '+g('f3_lc2'),'فجوات الجودة: '+g('f3_gaps'),'أولوية ١: '+g('f3_p1t'),'أولوية ٢: '+g('f3_p2t')];
+  }
+  navigator.clipboard.writeText(rows.join('\n')).then(function(){
+    var cm=document.getElementById('cm'+unit);
+    if(cm){cm.textContent='✅ تم نسخ النص! الصقه في أي مكان.';cm.style.display='block';setTimeout(function(){cm.style.display='none';cm.textContent='✅ تم التصدير بنجاح!'},3000)}
+  });
+}
+
+function copyUrl(id, btn){
+  var txt=document.getElementById(id).textContent;
+  navigator.clipboard.writeText(txt).then(function(){
+    btn.textContent='✅ تم';
+    setTimeout(function(){btn.textContent='📋 نسخ'},2000);
+  });
+}
+</script>
+</body>
+</html>
