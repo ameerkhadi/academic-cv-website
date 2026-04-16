@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>نشاط الوحدة الأولى — البنية التحتية الرقمية</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Cairo',sans-serif;background:#f0f4f8;color:#1a2540;direction:rtl;min-height:100vh}
+
+/* TOP BAR */
+.topbar{background:linear-gradient(135deg,#1A2540,#2C3E6A);color:#fff;padding:14px 20px;text-align:center}
+.tb-inst{font-size:11px;color:#c9a227;margin-bottom:3px}
+.tb-title{font-size:16px;font-weight:700}
+.tb-sub{font-size:11px;color:rgba(255,255,255,.7);margin-top:2px}
+.tb-badge{display:inline-block;background:#c9a227;color:#1a2540;font-size:10px;font-weight:900;padding:2px 10px;border-radius:12px;margin-top:5px}
+
+/* PROGRESS */
+.progress-wrap{background:#fff;padding:10px 20px;border-bottom:1px solid #e0e6ef;position:sticky;top:0;z-index:50;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.prog-label{font-size:11px;color:#666;margin-bottom:4px;display:flex;justify-content:space-between}
+.prog-track{height:6px;background:#e0e6ef;border-radius:3px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(to left,#c9a227,#146EB4);border-radius:3px;transition:width .5s ease;width:0%}
+
+/* FORM */
+.form-wrap{max-width:680px;margin:0 auto;padding:16px}
+.section{background:#fff;border-radius:12px;padding:18px;margin-bottom:14px;box-shadow:0 2px 8px rgba(0,0,0,.06);border:1px solid #e0e6ef}
+.sec-title{font-size:13px;font-weight:700;color:#1a2540;margin-bottom:14px;padding-bottom:9px;border-bottom:2px solid #f0f4f8;display:flex;align-items:center;gap:8px}
+.sec-pts{font-size:10px;background:#146EB4;color:#fff;padding:2px 8px;border-radius:10px;font-weight:700}
+.field{margin-bottom:12px}
+.label{font-size:12px;font-weight:600;color:#444;margin-bottom:5px;display:block}
+.req{color:#e05252;margin-right:2px}
+.inp,.sel,.ta{width:100%;border:1px solid #d0d8e4;border-radius:7px;padding:10px 13px;font-family:'Cairo',sans-serif;font-size:13px;color:#1a2540;background:#fafbfd;transition:border-color .2s,box-shadow .2s}
+.inp:focus,.sel:focus,.ta:focus{outline:none;border-color:#146EB4;box-shadow:0 0 0 3px rgba(20,110,180,.1);background:#fff}
+.ta{min-height:80px;resize:vertical}
+.sel{cursor:pointer}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:480px){.g2{grid-template-columns:1fr}}
+
+/* CHOICES */
+.choices{display:flex;gap:7px;flex-wrap:wrap}
+.ch{background:#f0f4f8;border:1.5px solid #d0d8e4;border-radius:7px;padding:7px 13px;font-size:12px;color:#555;cursor:pointer;font-family:'Cairo',sans-serif;transition:all .2s;user-select:none}
+.ch:hover{border-color:#146EB4;background:#e8f4fd;color:#146EB4}
+.ch.sel{background:#146EB4;border-color:#146EB4;color:#fff;font-weight:700}
+
+/* CHECKLIST */
+.checklist{display:flex;flex-direction:column;gap:6px}
+.chk-item{display:flex;align-items:center;gap:9px;padding:8px 11px;border:1.5px solid #e0e6ef;border-radius:7px;cursor:pointer;font-size:12.5px;color:#444;transition:all .2s}
+.chk-item:hover{border-color:#146EB4;background:#f5f9ff}
+.chk-item input{width:15px;height:15px;accent-color:#146EB4;cursor:pointer;flex-shrink:0}
+.chk-item.on{border-color:#146EB4;background:#f0f7ff;color:#1a2540;font-weight:600}
+
+/* STARS */
+.stars{display:flex;gap:8px}
+.star-btn{background:#f0f4f8;border:1.5px solid #d0d8e4;border-radius:7px;padding:8px 12px;font-size:13px;cursor:pointer;font-family:'Cairo',sans-serif;transition:all .2s}
+.star-btn:hover{border-color:#c9a227;background:#fdf8e8}
+.star-btn.sel{background:#c9a227;border-color:#c9a227;font-weight:700}
+
+/* SUBMIT */
+.submit-btn{width:100%;background:linear-gradient(135deg,#146EB4,#0d5a9a);color:#fff;border:none;border-radius:10px;padding:14px;font-family:'Cairo',sans-serif;font-size:15px;font-weight:900;cursor:pointer;transition:all .3s;display:flex;align-items:center;justify-content:center;gap:10px;margin-top:6px}
+.submit-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(20,110,180,.35)}
+.submit-btn:disabled{background:#9eb8d0;cursor:not-allowed;transform:none;box-shadow:none}
+.submit-btn .spinner{width:18px;height:18px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:none}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* SUCCESS */
+.success-screen{display:none;text-align:center;padding:40px 20px}
+.success-icon{font-size:64px;margin-bottom:16px}
+.success-title{font-size:20px;font-weight:700;color:#1a7a4a;margin-bottom:8px}
+.success-sub{font-size:13px;color:#666;line-height:1.7}
+.success-box{background:#f0fdf4;border:1px solid #86efac;border-radius:12px;padding:20px;margin:16px 0}
+
+/* ERROR */
+.err-msg{background:#fef2f2;border:1px solid #fca5a5;color:#dc2626;padding:10px 14px;border-radius:7px;font-size:12.5px;margin-top:10px;display:none}
+
+/* HINT */
+.hint{font-size:11px;color:#888;margin-top:4px;font-style:italic}
+
+/* UNIT INDICATOR */
+.unit-ind{background:linear-gradient(135deg,#e8f4fd,#f0f8ff);border:1px solid #bde0f5;border-radius:10px;padding:12px 16px;margin-bottom:14px;display:flex;align-items:center;gap:12px}
+.unit-icon{font-size:28px}
+.unit-txt h3{font-size:13px;font-weight:700;color:#146EB4;margin-bottom:2px}
+.unit-txt p{font-size:11px;color:#666}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="tb-inst">🎓 المعهد العالي لإعداد وتأهيل القادة</div>
+  <div class="tb-title">أساسيات تكنولوجيا المعلومات</div>
+  <div class="tb-sub">الفصل الأول 2025/2026 | د. أمير هادي</div>
+  <div class="tb-badge">📋 نموذج النشاط التطبيقي</div>
+</div>
+
+<div class="progress-wrap">
+  <div class="prog-label"><span>التقدم في ملء النموذج</span><span id="pct">0%</span></div>
+  <div class="prog-track"><div class="prog-fill" id="prog"></div></div>
+</div>
+
+<div class="form-wrap">
+
+  <div class="unit-ind">
+    <div class="unit-icon">🏗️</div>
+    <div class="unit-txt">
+      <h3>الوحدة الأولى — التحول الرقمي والبنية التحتية التقنية</h3>
+      <p>تحليل مشروع تحول رقمي في مؤسسة حكومية | 100 نقطة</p>
+    </div>
+  </div>
+
+  <div id="form-body">
+
+    <!-- بيانات الطالب -->
+    <div class="section">
+      <div class="sec-title">🪪 بيانات الطالب</div>
+      <div class="g2">
+        <div class="field">
+          <label class="label"><span class="req">*</span>الاسم الكامل</label>
+          <input id="f_name" class="inp" placeholder="أدخل اسمك الكامل" oninput="updateProgress()">
+        </div>
+        <div class="field">
+          <label class="label"><span class="req">*</span>الجهة / الرقم الوظيفي</label>
+          <input id="f_org" class="inp" placeholder="جهتك أو رقمك الوظيفي" oninput="updateProgress()">
+        </div>
+      </div>
+      <div class="field">
+        <label class="label">تاريخ التسليم</label>
+        <input id="f_date" type="date" class="inp">
+      </div>
+    </div>
+
+    <!-- الجزء الأول -->
+    <div class="section">
+      <div class="sec-title">🏛️ الجزء الأول: اختيار المشروع <span class="sec-pts">15 نقطة</span></div>
+      <div class="field">
+        <label class="label"><span class="req">*</span>اسم المشروع / المبادرة الحكومية الرقمية</label>
+        <input id="f_proj" class="inp" placeholder="مثال: منصة اور / حكومة دبي الذكية / أبشر..." oninput="updateProgress()">
+      </div>
+      <div class="field">
+        <label class="label"><span class="req">*</span>الجهة الحكومية المسؤولة</label>
+        <input id="f_gov" class="inp" placeholder="اسم الوزارة أو المؤسسة" oninput="updateProgress()">
+      </div>
+      <div class="g2">
+        <div class="field">
+          <label class="label">الدولة</label>
+          <select id="f_country" class="sel">
+            <option value="">— اختر —</option>
+            <option>العراق</option><option>الإمارات</option><option>السعودية</option>
+            <option>الأردن</option><option>مصر</option><option>البحرين</option><option>أخرى</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="label">تاريخ الانطلاق</label>
+          <input id="f_year" class="inp" placeholder="مثال: 2018">
+        </div>
+      </div>
+      <div class="field">
+        <label class="label"><span class="req">*</span>وصف المشروع وأهدافه</label>
+        <textarea id="f_desc" class="ta" placeholder="3-5 جمل: ما هو المشروع؟ من المستفيدون؟ ما أهدافه المعلنة؟" oninput="updateProgress()"></textarea>
+      </div>
+      <div class="field">
+        <label class="label">المصادر المعتمدة</label>
+        <textarea id="f_src" class="ta" style="min-height:55px" placeholder="روابط أو مراجع..."></textarea>
+      </div>
+    </div>
+
+    <!-- الجزء الثاني -->
+    <div class="section">
+      <div class="sec-title">🖥️ الجزء الثاني: توثيق البنية التحتية <span class="sec-pts">25 نقطة</span></div>
+      <div class="field">
+        <label class="label">المكونات التقنية الموثّقة (اختر كل ما ينطبق)</label>
+        <div class="checklist" id="comp_list">
+          <label class="chk-item"><input type="checkbox" onchange="toggleChk(this)"> خوادم ومراكز البيانات</label>
+          <label class="chk-item"><input type="checkbox" onchange="toggleChk(this)"> الحوسبة السحابية (Cloud Computing)</label>
+          <label class="chk-item"><input type="checkbox" onchange="toggleChk(this)"> شبكات الاتصالات والإنترنت</label>
+          <label class="chk-item"><input type="checkbox" onchange="toggleChk(this)"> قواعد البيانات</label>
+          <label class="chk-item"><input type="checkbox" onchange="toggleChk(this)"> البوابات الإلكترونية وتطبيقات الويب</label>
+          <label class="chk-item"><input type="checkbox" onchange="toggleChk(this)"> تطبيقات الهاتف الذكي</label>
+          <label class="chk-item"><input type="checkbox" onchange="toggleChk(this)"> أنظمة الأمن السيبراني</label>
+          <label class="chk-item"><input type="checkbox" onchange="toggleChk(this)"> الذكاء الاصطناعي والتعلم الآلي</label>
+          <label class="chk-item"><input type="checkbox" onchange="toggleChk(this)"> إنترنت الأشياء (IoT)</label>
+          <label class="chk-item"><input type="checkbox" onchange="toggleChk(this)"> أنظمة التكامل وAPI</label>
+          <label class="chk-item"><input type="checkbox" onchange="toggleChk(this)"> أنظمة الهوية الرقمية</label>
+        </div>
+      </div>
+      <div class="field">
+        <label class="label"><span class="req">*</span>اشرح دور أهم ثلاثة مكونات</label>
+        <textarea id="f_comp" class="ta" style="min-height:100px" placeholder="المكون الأول: ... — دوره: ...&#10;المكون الثاني: ... — دوره: ...&#10;المكون الثالث: ... — دوره: ..." oninput="updateProgress()"></textarea>
+      </div>
+      <div class="field">
+        <label class="label">الموفر السحابي المستخدم</label>
+        <div class="choices" id="cloud_ch">
+          <div class="ch" onclick="pick('cloud_ch',this)">AWS</div>
+          <div class="ch" onclick="pick('cloud_ch',this)">Microsoft Azure</div>
+          <div class="ch" onclick="pick('cloud_ch',this)">Google Cloud</div>
+          <div class="ch" onclick="pick('cloud_ch',this)">سحابة محلية</div>
+          <div class="ch" onclick="pick('cloud_ch',this)">هجينة</div>
+          <div class="ch" onclick="pick('cloud_ch',this)">غير معلوم</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- الجزء الثالث -->
+    <div class="section">
+      <div class="sec-title">⚖️ الجزء الثالث: التقييم التقني وجوانب القصور <span class="sec-pts">35 نقطة</span></div>
+      <div class="field">
+        <label class="label"><span class="req">*</span>تقييمك الإجمالي للكفاءة التقنية</label>
+        <div class="stars" id="eff_ch">
+          <div class="star-btn" onclick="pick('eff_ch',this)">⭐ ضعيف جداً</div>
+          <div class="star-btn" onclick="pick('eff_ch',this)">⭐⭐ ضعيف</div>
+          <div class="star-btn" onclick="pick('eff_ch',this)">⭐⭐⭐ متوسط</div>
+          <div class="star-btn" onclick="pick('eff_ch',this)">⭐⭐⭐⭐ جيد</div>
+          <div class="star-btn" onclick="pick('eff_ch',this)">⭐⭐⭐⭐⭐ ممتاز</div>
+        </div>
+      </div>
+      <div class="field">
+        <label class="label"><span class="req">*</span>نقاط القوة التقنية</label>
+        <textarea id="f_str" class="ta" placeholder="ما يعمل بكفاءة في البنية التحتية مع أدلة ملموسة..." oninput="updateProgress()"></textarea>
+      </div>
+      <div class="field">
+        <label class="label"><span class="req">*</span>جوانب القصور والمشكلات التقنية</label>
+        <textarea id="f_weak" class="ta" placeholder="المشكلات والثغرات التقنية الموثّقة مع أدلة..." oninput="updateProgress()"></textarea>
+      </div>
+      <div class="field">
+        <label class="label">الفجوات التقنية الرئيسية</label>
+        <div class="checklist" id="gaps_list">
+          <label class="chk-item"><input type="checkbox" onchange="toggleChk(this)"> ضعف التكامل بين الأنظمة</label>
+          <label class="chk-item"><input type="checkbox" onchange="toggleChk(this)"> قصور في الأمن السيبراني</label>
+          <label class="chk-item"><input type="checkbox" onchange="toggleChk(this)"> محدودية الوصول (ضعف الإنترنت)</label>
+          <label class="chk-item"><input type="checkbox" onchange="toggleChk(this)"> ضعف تجربة المستخدم</label>
+          <label class="chk-item"><input type="checkbox" onchange="toggleChk(this)"> قصور في البنية السحابية</label>
+          <label class="chk-item"><input type="checkbox" onchange="toggleChk(this)"> نقص الكوادر التقنية</label>
+          <label class="chk-item"><input type="checkbox" onchange="toggleChk(this)"> غياب استراتيجية البيانات</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- الجزء الرابع -->
+    <div class="section">
+      <div class="sec-title">💡 الجزء الرابع: توصيات التطوير <span class="sec-pts">25 نقطة</span></div>
+      <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:7px;padding:10px 13px;margin-bottom:12px;font-size:12px;color:#92400e">
+        <strong>⚠️ شرط:</strong> كل توصية مرتبطة بقصور تقني محدد حددته في الجزء الثالث.
+      </div>
+      <div class="field">
+        <label class="label"><span class="req">*</span>عنوان التوصية الأولى</label>
+        <input id="f_r1t" class="inp" placeholder="عنوان التوصية الأولى" oninput="updateProgress()">
+      </div>
+      <div class="field">
+        <label class="label"><span class="req">*</span>تفاصيل التوصية الأولى</label>
+        <textarea id="f_r1d" class="ta" placeholder="المشكلة التي تعالجها؟ كيف تُنفّذ؟ الأثر المتوقع؟" oninput="updateProgress()"></textarea>
+      </div>
+      <div class="field">
+        <label class="label"><span class="req">*</span>عنوان التوصية الثانية</label>
+        <input id="f_r2t" class="inp" placeholder="عنوان التوصية الثانية" oninput="updateProgress()">
+      </div>
+      <div class="field">
+        <label class="label"><span class="req">*</span>تفاصيل التوصية الثانية</label>
+        <textarea id="f_r2d" class="ta" placeholder="المشكلة التي تعالجها؟ كيف تُنفّذ؟ الأثر المتوقع؟" oninput="updateProgress()"></textarea>
+      </div>
+      <div class="field">
+        <label class="label">تجربة دولية للاستفادة منها</label>
+        <input id="f_intl" class="inp" placeholder="مثال: تجربة إستونيا في الهوية الرقمية...">
+      </div>
+      <div class="field">
+        <label class="label">أهم درس مستفاد يمكن تطبيقه في جهتك</label>
+        <textarea id="f_lesson" class="ta" placeholder="بناءً على تجربتك الحكومية..."></textarea>
+      </div>
+    </div>
+
+    <button class="submit-btn" id="submitBtn" onclick="submitForm()">
+      <div class="spinner" id="spinner"></div>
+      <span id="btnText">✅ إرسال الإجابة</span>
+    </button>
+    <div class="err-msg" id="errMsg"></div>
+    <p style="text-align:center;font-size:11px;color:#888;margin-top:10px">بعد الإرسال تصل إجابتك مباشرة إلى المدرس</p>
+
+  </div>
+
+  <!-- SUCCESS -->
+  <div class="success-screen" id="successScreen">
+    <div class="success-icon">✅</div>
+    <div class="success-title">تم إرسال إجابتك بنجاح!</div>
+    <div class="success-box">
+      <div style="font-size:13px;color:#166534;font-weight:600;margin-bottom:6px">وصلت إجابتك إلى المدرس د. أمير هادي</div>
+      <div style="font-size:12px;color:#166534">الوحدة الأولى — تحليل مشروع تحول رقمي</div>
+    </div>
+    <div class="success-sub">يمكنك الآن إغلاق هذه الصفحة.<br>سيتواصل معك المدرس بشأن نتيجتك.</div>
+  </div>
+
+</div>
+
+<script>
+// ══ REPLACE WITH YOUR APPS SCRIPT URL ══════════════════════════
+var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby-QFEhZtYZHFx0h18AU8oUUarakstcF3HhnrCqF4UlIqytulwyWlOobD3X8mjPPgX6_A/exec';
+// ═══════════════════════════════════════════════════════════════
+
+var required = ['f_name','f_org','f_proj','f_gov','f_desc','f_comp','f_str','f_weak','f_r1t','f_r1d','f_r2t','f_r2d'];
+
+function updateProgress(){
+  var filled = required.filter(function(id){
+    var el = document.getElementById(id);
+    return el && el.value.trim().length > 2;
+  }).length;
+  var pct = Math.round(filled / required.length * 100);
+  document.getElementById('prog').style.width = pct + '%';
+  document.getElementById('pct').textContent = pct + '%';
+}
+
+function pick(groupId, el){
+  document.getElementById(groupId).querySelectorAll('.ch,.star-btn').forEach(function(b){b.classList.remove('sel')});
+  el.classList.add('sel');
+}
+
+function toggleChk(cb){
+  cb.closest('.chk-item').classList.toggle('on', cb.checked);
+}
+
+function getChecked(listId){
+  var items = document.getElementById(listId).querySelectorAll('input:checked');
+  return Array.from(items).map(function(i){return i.parentElement.textContent.trim()}).join(' | ');
+}
+
+function getPickVal(groupId){
+  var el = document.getElementById(groupId).querySelector('.sel');
+  return el ? el.textContent.trim() : '';
+}
+
+function v(id){ var el=document.getElementById(id); return el?el.value.trim():''; }
+function sv(id){ var el=document.getElementById(id); return el?(el.options[el.selectedIndex]?.text||''):''; }
+
+function validateForm(){
+  var empty = required.filter(function(id){
+    return !document.getElementById(id) || document.getElementById(id).value.trim().length < 3;
+  });
+  return empty.length === 0;
+}
+
+function submitForm(){
+  if(!validateForm()){
+    var err = document.getElementById('errMsg');
+    err.textContent = '⚠️ يرجى ملء جميع الحقول المطلوبة (المعلّمة بـ *)';
+    err.style.display = 'block';
+    window.scrollTo({top:0,behavior:'smooth'});
+    return;
+  }
+  document.getElementById('errMsg').style.display = 'none';
+  var btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  document.getElementById('spinner').style.display = 'block';
+  document.getElementById('btnText').textContent = 'جاري الإرسال...';
+
+  var data = {
+    unit: '1',
+    name: v('f_name'), org: v('f_org'), date: v('f_date'),
+    project: v('f_proj'), gov: v('f_gov'), country: sv('f_country'), year: v('f_year'),
+    desc: v('f_desc'), sources: v('f_src'),
+    components: getChecked('comp_list'), compDetail: v('f_comp'),
+    cloud: getPickVal('cloud_ch'), efficiency: getPickVal('eff_ch'),
+    strengths: v('f_str'), weaknesses: v('f_weak'), gaps: getChecked('gaps_list'),
+    rec1title: v('f_r1t'), rec1detail: v('f_r1d'),
+    rec2title: v('f_r2t'), rec2detail: v('f_r2d'),
+    international: v('f_intl'), lesson: v('f_lesson')
+  };
+
+  if(SCRIPT_URL === 'YOUR_APPS_SCRIPT_URL_HERE'){
+    setTimeout(function(){
+      document.getElementById('form-body').style.display='none';
+      document.getElementById('successScreen').style.display='block';
+      window.scrollTo({top:0,behavior:'smooth'});
+    }, 1200);
+    return;
+  }
+
+  fetch(SCRIPT_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(data)
+  }).then(function(){
+    document.getElementById('form-body').style.display='none';
+    document.getElementById('successScreen').style.display='block';
+    window.scrollTo({top:0,behavior:'smooth'});
+  }).catch(function(err){
+    btn.disabled = false;
+    document.getElementById('spinner').style.display='none';
+    document.getElementById('btnText').textContent = '✅ إرسال الإجابة';
+    var e = document.getElementById('errMsg');
+    e.textContent = '❌ خطأ في الإرسال. تأكد من الاتصال بالإنترنت وأعد المحاولة.';
+    e.style.display = 'block';
+  });
+}
+
+// Init
+updateProgress();
+</script>
+</body>
+</html>
