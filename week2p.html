@@ -1,0 +1,736 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>النشاط العملي — تحليل نظام معلومات حكومي</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Cairo',sans-serif;background:#f0f4f8;color:#1a2540;direction:rtl;min-height:100vh}
+
+/* ── TOP BAR ── */
+.topbar{background:linear-gradient(135deg,#1A2540,#2C3E6A);color:#fff;padding:14px 20px;text-align:center}
+.tb-inst{font-size:11px;color:#c9a227;margin-bottom:3px}
+.tb-title{font-size:16px;font-weight:700}
+.tb-sub{font-size:11px;color:rgba(255,255,255,.7);margin-top:2px}
+.tb-badge{display:inline-block;background:#c9a227;color:#1a2540;font-size:10px;font-weight:900;padding:2px 10px;border-radius:12px;margin-top:5px}
+
+/* ── PROGRESS ── */
+.prog-wrap{background:#fff;padding:10px 20px;border-bottom:1px solid #e0e6ef;position:sticky;top:0;z-index:50;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.prog-lbl{font-size:11px;color:#666;margin-bottom:4px;display:flex;justify-content:space-between}
+.prog-track{height:6px;background:#e0e6ef;border-radius:3px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(to left,#c9a227,#0369a1);border-radius:3px;transition:width .5s ease;width:0%}
+
+/* ── WRAP ── */
+.wrap{max-width:700px;margin:0 auto;padding:16px}
+
+/* ── EXAMPLE BOX ── */
+.eg-box{background:linear-gradient(135deg,#1e2d4a,#1a3a5c);border-radius:12px;padding:14px 18px;margin-bottom:14px;color:#fff;border-right:4px solid #c9a227}
+.eg-box h4{font-size:11px;color:#c9a227;font-weight:700;margin-bottom:8px;text-transform:uppercase;letter-spacing:.4px}
+.eg-row{font-size:12px;color:rgba(255,255,255,.75);margin-bottom:4px;line-height:1.6}
+.eg-row strong{color:#e8c84a}
+
+/* ── SECTION ── */
+.sec{background:#fff;border-radius:12px;padding:18px;margin-bottom:14px;box-shadow:0 2px 8px rgba(0,0,0,.06);border:1px solid #e0e6ef;border-top:3px solid #0369a1}
+.sec.c2{border-top-color:#7c3aed}
+.sec.c3{border-top-color:#059669}
+.sec.c4{border-top-color:#d97706}
+.sec.c5{border-top-color:#0891b2}
+.sec.c6{border-top-color:#dc2626}
+.sec.c7{border-top-color:#c9a227}
+.sec-title{font-size:13px;font-weight:700;color:#1a2540;margin-bottom:14px;padding-bottom:9px;border-bottom:2px solid #f0f4f8;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.snum{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:#0369a1;color:#fff;font-size:11px;font-weight:900;flex-shrink:0}
+.sec.c2 .snum{background:#7c3aed}
+.sec.c3 .snum{background:#059669}
+.sec.c4 .snum{background:#d97706}
+.sec.c5 .snum{background:#0891b2}
+.sec.c6 .snum{background:#dc2626}
+.sec.c7 .snum{background:#c9a227;color:#1a2540}
+
+/* ── FIELDS ── */
+.field{margin-bottom:12px}
+.lbl{font-size:12px;font-weight:600;color:#444;margin-bottom:5px;display:block}
+.req{color:#e05252;margin-right:2px}
+.inp,.sel,.ta{width:100%;border:1px solid #d0d8e4;border-radius:7px;padding:10px 13px;font-family:'Cairo',sans-serif;font-size:13px;color:#1a2540;background:#fafbfd;transition:border-color .2s,box-shadow .2s}
+.inp:focus,.sel:focus,.ta:focus{outline:none;border-color:#0369a1;box-shadow:0 0 0 3px rgba(3,105,161,.1);background:#fff}
+.ta{min-height:80px;resize:vertical}
+.ta.sm{min-height:60px}
+.hint{font-size:11px;color:#888;margin-top:4px;font-style:italic}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:480px){.g2{grid-template-columns:1fr}}
+
+/* ── CHOICES (pills) ── */
+.choices{display:flex;gap:7px;flex-wrap:wrap}
+.ch{background:#f0f4f8;border:1.5px solid #d0d8e4;border-radius:7px;padding:7px 13px;font-size:12px;color:#555;cursor:pointer;font-family:'Cairo',sans-serif;transition:all .2s;user-select:none}
+.ch:hover{border-color:#0369a1;background:#e8f4fd;color:#0369a1}
+.ch.sel{background:#0369a1;border-color:#0369a1;color:#fff;font-weight:700}
+
+/* ── SYS TYPE CARDS ── */
+.type-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:4px}
+.type-card{border:2px solid #e0e6ef;border-radius:9px;padding:12px 13px;cursor:pointer;transition:all .2s;background:#fafbfd}
+.type-card:hover{border-color:#0369a1;background:#eff6ff}
+.type-card.sel{border-color:#0369a1;background:#eff6ff}
+.tc-code{font-size:13px;font-weight:900;color:#0369a1;margin-bottom:3px}
+.tc-name{font-size:11.5px;font-weight:700;color:#1a2540;margin-bottom:3px}
+.tc-desc{font-size:10.5px;color:#666;line-height:1.5}
+.tc-ex{font-size:10px;color:#0369a1;margin-top:4px;font-style:italic}
+.type-card.sel .tc-code,.type-card.sel .tc-name{color:#0d47a1}
+@media(max-width:480px){.type-grid{grid-template-columns:1fr}}
+
+/* ── CHECKLIST ── */
+.cklist{display:flex;flex-direction:column;gap:6px}
+.ck-item{display:flex;align-items:center;gap:9px;padding:8px 11px;border:1.5px solid #e0e6ef;border-radius:7px;cursor:pointer;font-size:12.5px;color:#444;transition:all .2s}
+.ck-item:hover{border-color:#0369a1;background:#eff6ff}
+.ck-item input{width:15px;height:15px;accent-color:#0369a1;cursor:pointer;flex-shrink:0}
+.ck-item.on{border-color:#0369a1;background:#eff6ff;color:#1a2540;font-weight:600}
+
+/* ── STARS ── */
+.stars{display:flex;gap:7px;flex-wrap:wrap}
+.star-btn{background:#f0f4f8;border:1.5px solid #d0d8e4;border-radius:7px;padding:7px 11px;font-size:12px;cursor:pointer;font-family:'Cairo',sans-serif;transition:all .2s}
+.star-btn:hover{border-color:#c9a227;background:#fdf8e8}
+.star-btn.sel{background:#c9a227;border-color:#c9a227;font-weight:700}
+
+/* ── STAKEHOLDER TABLE ── */
+.sh-tbl{width:100%;border-collapse:collapse;font-size:12px}
+.sh-tbl th{background:#1e2d4a;color:#c9a227;padding:8px 11px;text-align:right;font-weight:700}
+.sh-tbl td{padding:6px 9px;border-bottom:1px solid #e0e6ef;vertical-align:middle}
+.sh-tbl tr:last-child td{border-bottom:none}
+.sh-tbl tr:nth-child(even) td{background:#f8f9fc}
+.si{width:100%;border:1px solid #d0d8e4;border-radius:5px;padding:6px 9px;font-family:'Cairo',sans-serif;font-size:12px;color:#1a2540;background:#fff}
+.si:focus{outline:none;border-color:#0369a1}
+
+/* ── RISK TABLE ── */
+.risk-tbl{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:10px}
+.risk-tbl th{background:#1e2d4a;color:#fff;padding:8px 10px;text-align:right;font-weight:700}
+.risk-tbl td{padding:7px 10px;border-bottom:1px solid #e0e6ef;vertical-align:middle}
+.risk-tbl tr:last-child td{border-bottom:none}
+.risk-tbl tr:nth-child(even) td{background:#f8f9fc}
+.badge{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px}
+.b-r{background:#fee2e2;color:#dc2626}
+.b-o{background:#ffedd5;color:#ea580c}
+.b-y{background:#fef9c3;color:#ca8a04}
+.pch{display:flex;gap:4px;flex-wrap:wrap}
+.pc{border:1.5px solid #d0d8e4;border-radius:5px;padding:4px 8px;font-size:10.5px;cursor:pointer;font-family:'Cairo',sans-serif;background:#f8f9fc;color:#555;transition:all .2s;white-space:nowrap}
+.pc:hover{border-color:#0369a1;color:#0369a1}
+.pc.sel{background:#0369a1;border-color:#0369a1;color:#fff;font-weight:700}
+
+/* ── ADD RISK ── */
+.add-risk-btn{display:flex;align-items:center;gap:7px;background:#f0f4f8;border:1.5px dashed #d0d8e4;border-radius:7px;padding:9px 14px;cursor:pointer;font-size:12px;color:#555;font-family:'Cairo',sans-serif;margin-bottom:10px;transition:all .2s;width:100%}
+.add-risk-btn:hover{border-color:#0369a1;color:#0369a1;background:#eff6ff}
+.dynamic-risk{background:#f8f9fc;border:1px solid #e0e6ef;border-radius:8px;padding:12px;margin-bottom:8px}
+.dr-row{display:grid;grid-template-columns:2fr 1fr auto;gap:8px;margin-bottom:7px;align-items:center}
+.remove-btn{background:#fef2f2;border:1px solid #fca5a5;border-radius:5px;padding:5px 10px;cursor:pointer;font-size:11px;color:#dc2626;font-family:'Cairo',sans-serif;white-space:nowrap}
+.remove-btn:hover{background:#fee2e2}
+
+/* ── SWOT ── */
+.swot-g{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.swot-box{border-radius:8px;padding:13px}
+.sw-s{background:#f0fdf4;border:1px solid #86efac}
+.sw-w{background:#fef2f2;border:1px solid #fca5a5}
+.sw-o{background:#eff6ff;border:1px solid #93c5fd}
+.sw-t{background:#fffbeb;border:1px solid #fde68a}
+.swot-title{font-size:11.5px;font-weight:700;margin-bottom:7px}
+.sw-s .swot-title{color:#16a34a}
+.sw-w .swot-title{color:#dc2626}
+.sw-o .swot-title{color:#2563eb}
+.sw-t .swot-title{color:#d97706}
+.swot-box .ta{background:#fff;min-height:65px;font-size:12px;border-color:#e0e6ef}
+@media(max-width:480px){.swot-g{grid-template-columns:1fr}}
+
+/* ── INFO ── */
+.info{border-radius:7px;padding:9px 13px;margin-bottom:11px;font-size:12px;line-height:1.7;border-right:3px solid}
+.i-blue{background:#eff6ff;border-color:#3b82f6;color:#1e40af}
+.i-yellow{background:#fffbeb;border-color:#f59e0b;color:#92400e}
+.i-teal{background:#f0fdfa;border-color:#0d9488;color:#0f5449}
+
+/* ── SUBMIT ── */
+.submit-btn{width:100%;background:linear-gradient(135deg,#0369a1,#1e3a8a);color:#fff;border:none;border-radius:10px;padding:14px;font-family:'Cairo',sans-serif;font-size:15px;font-weight:900;cursor:pointer;transition:all .3s;display:flex;align-items:center;justify-content:center;gap:10px;margin-top:6px}
+.submit-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(3,105,161,.35)}
+.submit-btn:disabled{background:#9eb8c8;cursor:not-allowed;transform:none;box-shadow:none}
+.spinner{width:18px;height:18px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:none}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── SUCCESS ── */
+.success-screen{display:none;text-align:center;padding:40px 20px}
+.success-icon{font-size:64px;margin-bottom:16px}
+.success-title{font-size:20px;font-weight:700;color:#1a7a4a;margin-bottom:8px}
+.success-box{background:#f0fdf4;border:1px solid #86efac;border-radius:12px;padding:20px;margin:16px 0}
+.success-sub{font-size:13px;color:#666;line-height:1.7}
+.err-msg{background:#fef2f2;border:1px solid #fca5a5;color:#dc2626;padding:10px 14px;border-radius:7px;font-size:12.5px;margin-top:10px;display:none}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="tb-inst">🎓 المعهد العالي لإعداد وتأهيل القادة</div>
+  <div class="tb-title">أساسيات تكنولوجيا المعلومات</div>
+  <div class="tb-sub">الفصل الأول 2025/2026 | د. أمير هادي</div>
+  <div class="tb-badge">📋 النشاط العملي — تحليل نظام معلومات حكومي</div>
+</div>
+
+<div class="prog-wrap">
+  <div class="prog-lbl"><span>التقدم في ملء النموذج</span><span id="pct">0%</span></div>
+  <div class="prog-track"><div class="prog-fill" id="prog"></div></div>
+</div>
+
+<div class="wrap">
+
+  <!-- مثال توضيحي -->
+  <div class="eg-box">
+    <h4>💡 مثال للاستئناس فقط — اختر أنت نظامك</h4>
+    <div class="eg-row"><strong>نظام DVLS:</strong> نظام تراخيص المركبات والسائقين | وزارة الداخلية | وطني | 15,000+ معاملة يومياً</div>
+    <div class="eg-row">تصنيفه: <strong>TPS</strong> (نظام معالجة المعاملات) — يعالج طلبات رخص القيادة والمركبات بشكل يومي متكرر</div>
+  </div>
+
+  <div id="form-body">
+
+  <!-- بيانات الطالب -->
+  <div class="sec">
+    <div class="sec-title">🪪 بيانات الطالب</div>
+    <div class="g2">
+      <div class="field">
+        <label class="lbl"><span class="req">*</span>الاسم الكامل</label>
+        <input id="f_name" class="inp" placeholder="أدخل اسمك الكامل" oninput="updProg()">
+      </div>
+      <div class="field">
+        <label class="lbl"><span class="req">*</span>الجهة / الرقم الوظيفي</label>
+        <input id="f_org" class="inp" placeholder="جهتك أو رقمك الوظيفي" oninput="updProg()">
+      </div>
+    </div>
+    <div class="field">
+      <label class="lbl">تاريخ التسليم</label>
+      <input id="f_date" type="date" class="inp">
+    </div>
+  </div>
+
+  <!-- الخطوة 1 -->
+  <div class="sec">
+    <div class="sec-title"><div class="snum">١</div> تعريف النظام وتحديد نطاقه</div>
+    <div class="info i-blue">📌 اختر نظام معلومات حكومي حقيقي تعرفه أو تعمل معه — كالتعليم أو الصحة أو المالية أو المرور أو غيرها.</div>
+
+    <div class="g2">
+      <div class="field">
+        <label class="lbl"><span class="req">*</span>اسم النظام الحكومي</label>
+        <input id="s1_name" class="inp" placeholder="مثال: نظام DVLS، نظام رواتب الموظفين، نظام تسجيل الطلاب..." oninput="updProg()">
+      </div>
+      <div class="field">
+        <label class="lbl"><span class="req">*</span>الجهة الحكومية المشغّلة</label>
+        <input id="s1_gov" class="inp" placeholder="الوزارة أو الدائرة أو المؤسسة" oninput="updProg()">
+      </div>
+    </div>
+    <div class="g2">
+      <div class="field">
+        <label class="lbl">نطاق التطبيق</label>
+        <div class="choices" id="c_scope">
+          <div class="ch" onclick="pick('c_scope',this)">🌍 وطني</div>
+          <div class="ch" onclick="pick('c_scope',this)">🏙️ محافظة</div>
+          <div class="ch" onclick="pick('c_scope',this)">🏢 قطاعي</div>
+          <div class="ch" onclick="pick('c_scope',this)">🏛️ دائرة واحدة</div>
+        </div>
+      </div>
+      <div class="field">
+        <label class="lbl">حجم المستخدمين / المعاملات</label>
+        <input id="s1_size" class="inp" placeholder="مثال: 15,000 معاملة يومياً / 5M مواطن">
+      </div>
+    </div>
+    <div class="field">
+      <label class="lbl"><span class="req">*</span>وصف النظام — ماذا يفعل؟ من يستخدمه؟ ما هدفه؟</label>
+      <textarea id="s1_desc" class="ta" placeholder="اكتب 3-5 جمل تصف النظام وخدماته الرئيسية وفئة المستفيدين..." oninput="updProg()"></textarea>
+    </div>
+    <div class="field">
+      <label class="lbl">وظائف النظام الرئيسية (اختر كل ما ينطبق)</label>
+      <div class="cklist" id="s1_funcs">
+        <label class="ck-item"><input type="checkbox" onchange="ck(this)"> إدخال البيانات وتسجيل المعاملات اليومية</label>
+        <label class="ck-item"><input type="checkbox" onchange="ck(this)"> معالجة الطلبات وإصدار الوثائق الرسمية</label>
+        <label class="ck-item"><input type="checkbox" onchange="ck(this)"> إدارة المدفوعات وتحصيل الرسوم</label>
+        <label class="ck-item"><input type="checkbox" onchange="ck(this)"> الاستعلام والتحقق من صحة الوثائق</label>
+        <label class="ck-item"><input type="checkbox" onchange="ck(this)"> إعداد التقارير والإحصاءات الدورية</label>
+        <label class="ck-item"><input type="checkbox" onchange="ck(this)"> دعم اتخاذ القرار وتحليل البيانات</label>
+        <label class="ck-item"><input type="checkbox" onchange="ck(this)"> التكامل مع أنظمة حكومية أخرى عبر API</label>
+        <label class="ck-item"><input type="checkbox" onchange="ck(this)"> إدارة الموارد البشرية أو المالية</label>
+      </div>
+    </div>
+
+    <!-- تصنيف النظام -->
+    <div class="field">
+      <label class="lbl"><span class="req">*</span>تصنيف النظام — ما نوعه؟</label>
+      <div class="type-grid" id="sys_type">
+        <div class="type-card" onclick="pickType(this,'TPS')">
+          <div class="tc-code">TPS</div>
+          <div class="tc-name">نظام معالجة المعاملات</div>
+          <div class="tc-desc">يعالج معاملات يومية متكررة بحجم كبير — التسجيل، الدفع، الإصدار</div>
+          <div class="tc-ex">مثال: نظام DVLS، نظام الدوام، نظام الفواتير</div>
+        </div>
+        <div class="type-card" onclick="pickType(this,'MIS')">
+          <div class="tc-code">MIS</div>
+          <div class="tc-name">نظام معلومات الإدارة</div>
+          <div class="tc-desc">يُنتج تقارير دورية منظّمة لدعم القرارات الروتينية للإدارة الوسطى</div>
+          <div class="tc-ex">مثال: نظام تقارير الأداء، نظام متابعة المشاريع</div>
+        </div>
+        <div class="type-card" onclick="pickType(this,'DSS')">
+          <div class="tc-code">DSS</div>
+          <div class="tc-name">نظام دعم القرار</div>
+          <div class="tc-desc">يُحلّل بيانات معقدة ويُولّد سيناريوهات لدعم قرارات غير روتينية</div>
+          <div class="tc-ex">مثال: نظام تحليل الميزانية، نظام توزيع الموارد</div>
+        </div>
+        <div class="type-card" onclick="pickType(this,'EIS')">
+          <div class="tc-code">EIS</div>
+          <div class="tc-name">نظام المعلومات التنفيذية</div>
+          <div class="tc-desc">يُقدّم لوحات قيادية استراتيجية للقيادة العليا بشكل مرئي ومبسّط</div>
+          <div class="tc-ex">مثال: لوحة قيادة الوزير، نظام مؤشرات الأداء الوطني</div>
+        </div>
+      </div>
+      <input type="hidden" id="s1_type" value="">
+      <p class="hint">اختر التصنيف الأنسب بناءً على الوظيفة الأساسية للنظام</p>
+    </div>
+    <div class="field">
+      <label class="lbl"><span class="req">*</span>لماذا اخترت هذا التصنيف؟ برّر اختيارك</label>
+      <textarea id="s1_why" class="ta sm" placeholder="اشرح لماذا النظام الذي اخترته يُصنَّف كـ TPS أو MIS أو DSS أو EIS..." oninput="updProg()"></textarea>
+    </div>
+  </div>
+
+  <!-- الخطوة 2 -->
+  <div class="sec c2">
+    <div class="sec-title"><div class="snum">٢</div> تحليل أصحاب المصلحة (Stakeholder Analysis)</div>
+    <div class="info i-blue">📌 لكل طرف، اكتب احتياجه الرئيسي من النظام بناءً على النظام الذي اخترته — لا تنسخ الأمثلة.</div>
+    <table class="sh-tbl">
+      <thead><tr><th style="width:28%">الطرف</th><th style="width:20%">النوع</th><th>احتياجه من النظام</th></tr></thead>
+      <tbody>
+        <tr><td><strong>المستخدم النهائي</strong><br><small style="color:#888">(المواطن / الموظف)</small></td><td>مستخدم نهائي</td><td><input id="sh1" class="si" placeholder="ما يحتاجه المستخدم مباشرةً..." oninput="updProg()"></td></tr>
+        <tr><td><strong>موظف التشغيل</strong><br><small style="color:#888">(من يُشغّل النظام يومياً)</small></td><td>مستخدم تشغيلي</td><td><input id="sh2" class="si" placeholder="ما يحتاجه الموظف للعمل بكفاءة..." oninput="updProg()"></td></tr>
+        <tr><td><strong>المدير / المشرف</strong></td><td>مستخدم إداري</td><td><input id="sh3" class="si" placeholder="ما يحتاجه المدير للإشراف والمتابعة..." oninput="updProg()"></td></tr>
+        <tr><td><strong>جهة مستفيدة</strong><br><small style="color:#888">(وزارة / هيئة أخرى)</small></td><td>جهة مستفيدة</td><td><input id="sh4" class="si" placeholder="بيانات أو تقارير تحتاجها جهة أخرى..." oninput="updProg()"></td></tr>
+        <tr><td><strong>شريك خارجي</strong><br><small style="color:#888">(شركات / مؤسسات)</small></td><td>شريك خارجي</td><td><input id="sh5" class="si" placeholder="ما يحتاجه الشريك الخارجي من النظام..."></td></tr>
+        <tr><td><strong>جهة رقابية</strong><br><small style="color:#888">(أمن / رقابة / تدقيق)</small></td><td>رقابية</td><td><input id="sh6" class="si" placeholder="متطلبات الامتثال والرقابة..."></td></tr>
+      </tbody>
+    </table>
+    <div class="field" style="margin-top:10px">
+      <label class="lbl">هل هناك طرف مهم آخر في نظامك؟ أضفه هنا</label>
+      <div class="g2">
+        <input id="sh_extra_name" class="inp" placeholder="اسم الطرف الإضافي">
+        <input id="sh_extra_need" class="inp" placeholder="احتياجه من النظام">
+      </div>
+    </div>
+  </div>
+
+  <!-- الخطوة 3 -->
+  <div class="sec c3">
+    <div class="sec-title"><div class="snum">٣</div> تحليل العمليات الوظيفية (Functional Analysis)</div>
+    <div class="info i-teal">📌 اشرح كيف تسير كل عملية في نظامك تحديداً — لا تكتف بالتعريف العام.</div>
+    <div class="field">
+      <label class="lbl"><span class="req">*</span>١. إدارة السجلات والملفات</label>
+      <textarea id="op1" class="ta sm" placeholder="كيف تُنشأ السجلات؟ ما البيانات المطلوبة؟ كيف تُحدَّث وتُؤرشَف؟" oninput="updProg()"></textarea>
+    </div>
+    <div class="field">
+      <label class="lbl"><span class="req">*</span>٢. معالجة الطلبات وإصدار الوثائق</label>
+      <textarea id="op2" class="ta sm" placeholder="كيف يُقدّم الطلب؟ ما مراحل المراجعة والموافقة؟ كيف تُصدَر الوثيقة؟" oninput="updProg()"></textarea>
+    </div>
+    <div class="field">
+      <label class="lbl">٣. إدارة المدفوعات</label>
+      <textarea id="op3" class="ta sm" placeholder="ما قنوات الدفع؟ كيف تُسجَّل المعاملة؟ كيف تُحوَّل للوزارة المالية؟"></textarea>
+    </div>
+    <div class="field">
+      <label class="lbl">٤. الاستعلام والتحقق</label>
+      <textarea id="op4" class="ta sm" placeholder="كيف يتحقق موظف آخر أو جهة خارجية من صحة الوثائق أو السجلات؟"></textarea>
+    </div>
+    <div class="field">
+      <label class="lbl">٥. إعداد التقارير والإحصاءات</label>
+      <textarea id="op5" class="ta sm" placeholder="ما أنواع التقارير؟ يومية / شهرية / سنوية؟ لمن تُرفع؟ كيف تُستخدَم؟"></textarea>
+    </div>
+  </div>
+
+  <!-- الخطوة 4 -->
+  <div class="sec c4">
+    <div class="sec-title"><div class="snum">٤</div> تحليل متطلبات النظام (Requirements Analysis)</div>
+
+    <div style="font-size:12.5px;font-weight:700;color:#d97706;margin-bottom:8px">أ) المتطلبات الوظيفية — ماذا يجب أن يفعل النظام؟</div>
+    <div class="info i-yellow">📌 اكتب 3 متطلبات وظيفية أساسية تراها ضرورية لنظامك بصيغة "يجب أن..."</div>
+    <div class="field">
+      <label class="lbl"><span class="req">*</span>المتطلب الوظيفي الأول</label>
+      <input id="fr1" class="inp" placeholder='مثال: "يجب أن يُتيح النظام تتبع الطلبات في الوقت الفعلي عبر رقم مرجعي"' oninput="updProg()">
+    </div>
+    <div class="field">
+      <label class="lbl"><span class="req">*</span>المتطلب الوظيفي الثاني</label>
+      <input id="fr2" class="inp" placeholder='مثال: "يجب أن يدعم النظام قنوات الدفع الإلكتروني المتعددة"' oninput="updProg()">
+    </div>
+    <div class="field">
+      <label class="lbl">المتطلب الوظيفي الثالث</label>
+      <input id="fr3" class="inp" placeholder="متطلب إضافي من تفكيرك...">
+    </div>
+
+    <div style="font-size:12.5px;font-weight:700;color:#d97706;margin:14px 0 8px">ب) المتطلبات غير الوظيفية — كيف يجب أن يؤدّيها؟</div>
+    <div class="info i-yellow">📌 حدّد المواصفة المطلوبة لكل معيار بناءً على طبيعة نظامك وحجمه.</div>
+    <div class="g2">
+      <div class="field">
+        <label class="lbl"><span class="req">*</span>زمن الاستجابة المقبول</label>
+        <div class="choices" id="nfr_resp">
+          <div class="ch" onclick="pick('nfr_resp',this)">أقل من ثانية</div>
+          <div class="ch" onclick="pick('nfr_resp',this)">1-2 ثانية</div>
+          <div class="ch" onclick="pick('nfr_resp',this)">حتى 5 ثوانٍ</div>
+          <div class="ch" onclick="pick('nfr_resp',this)">أكثر من 5 ثوانٍ</div>
+        </div>
+      </div>
+      <div class="field">
+        <label class="lbl"><span class="req">*</span>مستوى الإتاحة المطلوب</label>
+        <div class="choices" id="nfr_avail">
+          <div class="ch" onclick="pick('nfr_avail',this)">99.99% (Tier IV)</div>
+          <div class="ch" onclick="pick('nfr_avail',this)">99.95%</div>
+          <div class="ch" onclick="pick('nfr_avail',this)">99.9%</div>
+          <div class="ch" onclick="pick('nfr_avail',this)">أوقات الدوام فقط</div>
+        </div>
+      </div>
+      <div class="field">
+        <label class="lbl">مستوى الأمان المطلوب</label>
+        <div class="choices" id="nfr_sec">
+          <div class="ch" onclick="pick('nfr_sec',this)">تشفير AES-256 + MFA</div>
+          <div class="ch" onclick="pick('nfr_sec',this)">كلمة مرور فقط</div>
+          <div class="ch" onclick="pick('nfr_sec',this)">MFA فقط</div>
+          <div class="ch" onclick="pick('nfr_sec',this)">ISO 27001 كامل</div>
+        </div>
+      </div>
+      <div class="field">
+        <label class="lbl">سياسة النسخ الاحتياطي</label>
+        <div class="choices" id="nfr_bkp">
+          <div class="ch" onclick="pick('nfr_bkp',this)">كل ساعة</div>
+          <div class="ch" onclick="pick('nfr_bkp',this)">كل 6 ساعات</div>
+          <div class="ch" onclick="pick('nfr_bkp',this)">يومي</div>
+          <div class="ch" onclick="pick('nfr_bkp',this)">أسبوعي</div>
+        </div>
+      </div>
+    </div>
+    <div class="field">
+      <label class="lbl"><span class="req">*</span>تعليقك — ما المتطلب غير الوظيفي الأصعب تحقيقاً في سياقك؟ ولماذا؟</label>
+      <textarea id="nfr_comment" class="ta sm" placeholder="فكّر في الواقع العراقي / العربي — البنية التحتية، الكهرباء، الإنترنت..." oninput="updProg()"></textarea>
+    </div>
+  </div>
+
+  <!-- الخطوة 5 -->
+  <div class="sec c5">
+    <div class="sec-title"><div class="snum">٥</div> تحليل البيانات — الكيانات الرئيسية</div>
+    <div class="info i-teal">📌 سمّ الكيانات الرئيسية في نظامك — مثال DVLS: (سائق، رخصة، مركبة، مخالفة، طلب، دفعة مالية).</div>
+    <div class="field">
+      <label class="lbl"><span class="req">*</span>الكيانات الرئيسية في نظامك (Entity Names)</label>
+      <input id="ent_list" class="inp" placeholder="اكتبها مفصولة بفاصلة — مثال: المواطن، الطلب، الوثيقة، المدفوعة..." oninput="updProg()">
+      <p class="hint">حدّد 4-6 كيانات رئيسية تُشكّل جوهر قاعدة البيانات</p>
+    </div>
+    <div class="field">
+      <label class="lbl"><span class="req">*</span>الكيان الأهم — ما سماته الرئيسية وعلاقاته؟</label>
+      <div class="g2">
+        <textarea id="ent_main_attr" class="ta sm" placeholder="السمات: مثال للسائق — رقم الهوية، الاسم، الجنسية، رقم الجوال..." oninput="updProg()"></textarea>
+        <textarea id="ent_main_rel" class="ta sm" placeholder="العلاقات: مثال — يمتلك → رخصة، يرتكب → مخالفة..." oninput="updProg()"></textarea>
+      </div>
+    </div>
+    <div class="field">
+      <label class="lbl">برأيك — أيّ الكيانات أكثر حساسيةً عند تسرّبها؟ ولماذا؟</label>
+      <textarea id="ent_sensitive" class="ta sm" placeholder="فكّر في الخصوصية والأمن الوطني — أيّ بيانات إذا سُرّبت ستسبب أكبر ضرر؟"></textarea>
+    </div>
+  </div>
+
+  <!-- الخطوة 6 -->
+  <div class="sec c6">
+    <div class="sec-title"><div class="snum">٦</div> تحليل الأمن والمخاطر (Risk Analysis)</div>
+    <div class="info" style="background:#fef2f2;border-color:#ef4444;color:#991b1b;border-right:3px solid #ef4444;border-radius:7px;padding:9px 13px;margin-bottom:11px;font-size:12px">
+      📌 المخاطر الثلاثة أدناه <strong>ثابتة لجميع الأنظمة</strong> — قيّمها لنظامك، ثم أضف مخاطر خاصة بنظامك أنت.
+    </div>
+
+    <!-- مخاطر ثابتة -->
+    <table class="risk-tbl">
+      <thead><tr><th>المخاطرة</th><th>الاحتمالية في نظامك</th><th>الأثر</th><th>إجراء المعالجة المقترح</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>اختراق قاعدة البيانات</strong></td>
+          <td>
+            <div class="pch" id="r1_p">
+              <div class="pc" onclick="pck('r1_p',this)">منخفضة</div>
+              <div class="pc" onclick="pck('r1_p',this)">متوسطة</div>
+              <div class="pc" onclick="pck('r1_p',this)">عالية</div>
+            </div>
+          </td>
+          <td><span class="badge b-r">🔴 كارثي</span></td>
+          <td><input id="r1_fix" class="si" placeholder="إجراؤك المقترح..."></td>
+        </tr>
+        <tr>
+          <td><strong>انقطاع الخدمة</strong></td>
+          <td>
+            <div class="pch" id="r2_p">
+              <div class="pc" onclick="pck('r2_p',this)">منخفضة</div>
+              <div class="pc" onclick="pck('r2_p',this)">متوسطة</div>
+              <div class="pc" onclick="pck('r2_p',this)">عالية</div>
+            </div>
+          </td>
+          <td><span class="badge b-o">🟠 عالٍ</span></td>
+          <td><input id="r2_fix" class="si" placeholder="إجراؤك المقترح..."></td>
+        </tr>
+        <tr>
+          <td><strong>تزوير الوثائق الرقمية</strong></td>
+          <td>
+            <div class="pch" id="r3_p">
+              <div class="pc" onclick="pck('r3_p',this)">منخفضة</div>
+              <div class="pc" onclick="pck('r3_p',this)">متوسطة</div>
+              <div class="pc" onclick="pck('r3_p',this)">عالية</div>
+            </div>
+          </td>
+          <td><span class="badge b-r">🔴 عالٍ</span></td>
+          <td><input id="r3_fix" class="si" placeholder="إجراؤك المقترح..."></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- مخاطر مضافة -->
+    <div id="dynamic_risks"></div>
+    <button type="button" class="add-risk-btn" onclick="addRisk()">
+      ＋ أضف مخاطرة خاصة بنظامك
+    </button>
+
+    <div class="field">
+      <label class="lbl">أيّ المخاطر الأخطر في نظامك تحديداً؟ ولماذا؟</label>
+      <textarea id="risk_opinion" class="ta sm" placeholder="فكّر في طبيعة البيانات وحجم المستخدمين وسياق البلد..."></textarea>
+    </div>
+  </div>
+
+  <!-- الخطوة 7 -->
+  <div class="sec c7">
+    <div class="sec-title"><div class="snum">٧</div> تقييم SWOT والتوصيات النهائية</div>
+    <div class="info i-yellow">📌 اكتب رأيك الشخصي في كل خانة بناءً على تحليلك في الخطوات السابقة — لا تكرر الأمثلة.</div>
+
+    <div class="swot-g" style="margin-bottom:14px">
+      <div class="swot-box sw-s">
+        <div class="swot-title">✅ نقاط القوة (Strengths)</div>
+        <textarea id="sw_s" class="ta" placeholder="ما الذي يعمل جيداً في النظام؟ ما مزاياه الحالية الموثّقة؟"></textarea>
+      </div>
+      <div class="swot-box sw-w">
+        <div class="swot-title">⚠️ نقاط الضعف (Weaknesses)</div>
+        <textarea id="sw_w" class="ta" placeholder="ما مشكلاته الحالية؟ ما القصور الذي يُعاني منه المستخدمون؟"></textarea>
+      </div>
+      <div class="swot-box sw-o">
+        <div class="swot-title">🚀 الفرص (Opportunities)</div>
+        <textarea id="sw_o" class="ta" placeholder="ما إمكانيات التطوير المتاحة؟ AI؟ سحابة؟ تكامل مع أنظمة أخرى؟"></textarea>
+      </div>
+      <div class="swot-box sw-t">
+        <div class="swot-title">🛑 التهديدات (Threats)</div>
+        <textarea id="sw_t" class="ta" placeholder="ما التهديدات الخارجية؟ هجمات إلكترونية؟ تقادم تقني؟ تغيّر السياسات؟"></textarea>
+      </div>
+    </div>
+
+    <div style="font-size:12.5px;font-weight:700;color:#c9a227;margin-bottom:10px">💡 التوصيتان النهائيتان</div>
+    <div class="info i-yellow">⚠️ كل توصية يجب أن تبدأ بـ <strong>"لمعالجة [نقطة ضعف أو تهديد محدد]، أقترح..."</strong></div>
+
+    <div class="field">
+      <label class="lbl"><span class="req">*</span>عنوان التوصية الأولى</label>
+      <input id="rec1t" class="inp" placeholder="عنوان مختصر للتوصية الأولى" oninput="updProg()">
+      <textarea id="rec1d" class="ta sm" placeholder="لمعالجة [نقطة ضعف]، أقترح [إجراء محدد]، مما سيُحقق [أثر قابل للقياس]..." oninput="updProg()" style="margin-top:7px"></textarea>
+    </div>
+    <div class="field">
+      <label class="lbl"><span class="req">*</span>عنوان التوصية الثانية</label>
+      <input id="rec2t" class="inp" placeholder="عنوان مختصر للتوصية الثانية" oninput="updProg()">
+      <textarea id="rec2d" class="ta sm" placeholder="لمعالجة [نقطة ضعف أو استثمار فرصة]، أقترح [إجراء محدد]، مما سيُحقق..." oninput="updProg()" style="margin-top:7px"></textarea>
+    </div>
+    <div class="field">
+      <label class="lbl">الدرس الأهم الذي تستخلصه — كيف ستُطبّقه في جهتك؟</label>
+      <textarea id="lesson" class="ta sm" placeholder="ما الذي تعلّمته من هذا التحليل؟ ما الذي ستُغيّره في نظرتك لنظام معلوماتي في جهتك؟"></textarea>
+    </div>
+  </div>
+
+  <button class="submit-btn" id="submitBtn" onclick="submitForm()">
+    <div class="spinner" id="spinner"></div>
+    <span id="btnTxt">✅ إرسال التحليل الكامل</span>
+  </button>
+  <div class="err-msg" id="errMsg"></div>
+  <p style="text-align:center;font-size:11px;color:#888;margin-top:10px">تصل إجابتك مباشرة للمدرس د. أمير هادي بعد الإرسال</p>
+
+  </div><!-- form-body -->
+
+  <!-- SUCCESS -->
+  <div class="success-screen" id="successScreen">
+    <div class="success-icon">✅</div>
+    <div class="success-title">تم إرسال تحليلك بنجاح!</div>
+    <div class="success-box">
+      <div style="font-size:13px;color:#166534;font-weight:600;margin-bottom:5px">وصل تحليلك إلى المدرس د. أمير هادي</div>
+      <div style="font-size:12px;color:#166534">النشاط العملي — تحليل نظام معلومات حكومي (7 خطوات)</div>
+    </div>
+    <div class="success-sub">أنجزت التحليل المنهجي السباعي الخطوات بنجاح 🎉<br>يمكنك الآن إغلاق هذه الصفحة.</div>
+  </div>
+
+</div><!-- wrap -->
+
+<script>
+var SCRIPT_URL = 'var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzyxpumWjIi-6HyDkjE5oPOCCNwbKnegnPypvknK42kyK8SloZ-dwtNRgIwUNF96UTj/exec';
+
+// Required fields for progress
+var REQ = ['f_name','f_org','s1_name','s1_gov','s1_desc','s1_type','s1_why',
+           'sh1','sh2','sh3','sh4','op1','op2','fr1','fr2','nfr_comment',
+           'ent_list','ent_main_attr','ent_main_rel','rec1t','rec1d','rec2t','rec2d'];
+
+function updProg(){
+  var filled = REQ.filter(function(id){
+    var el = document.getElementById(id);
+    return el && el.value && el.value.trim().length > 2;
+  }).length;
+  var pct = Math.round(filled / REQ.length * 100);
+  document.getElementById('prog').style.width = pct + '%';
+  document.getElementById('pct').textContent = pct + '%';
+}
+
+function pick(gid, el){
+  document.getElementById(gid).querySelectorAll('.ch').forEach(function(b){b.classList.remove('sel')});
+  el.classList.add('sel');
+}
+
+function pck(gid, el){
+  document.getElementById(gid).querySelectorAll('.pc').forEach(function(b){b.classList.remove('sel')});
+  el.classList.add('sel');
+}
+
+function ck(cb){ cb.closest('.ck-item').classList.toggle('on', cb.checked); }
+
+function pickType(card, type){
+  document.querySelectorAll('.type-card').forEach(function(c){c.classList.remove('sel')});
+  card.classList.add('sel');
+  document.getElementById('s1_type').value = type;
+  updProg();
+}
+
+function getChecked(listId){
+  var el = document.getElementById(listId);
+  if(!el) return '';
+  return Array.from(el.querySelectorAll('input:checked')).map(function(i){
+    return i.parentElement.textContent.trim();
+  }).join(' | ');
+}
+
+function getPickVal(gid){
+  var el = document.getElementById(gid);
+  if(!el) return '';
+  var s = el.querySelector('.sel');
+  return s ? s.textContent.trim() : '';
+}
+
+function v(id){ var el=document.getElementById(id); return el ? el.value.trim() : ''; }
+
+// ── DYNAMIC RISKS ──
+var riskCount = 0;
+function addRisk(){
+  riskCount++;
+  var id = 'dr_' + riskCount;
+  var div = document.createElement('div');
+  div.className = 'dynamic-risk';
+  div.id = id;
+  div.innerHTML = `
+    <div class="dr-row">
+      <input class="inp" id="${id}_name" placeholder="اسم المخاطرة الخاصة بنظامك..." style="font-size:12px;padding:7px 10px">
+      <div class="choices" id="${id}_prob" style="gap:5px">
+        <div class="ch" onclick="pick('${id}_prob',this)" style="padding:5px 8px;font-size:11px">منخفضة</div>
+        <div class="ch" onclick="pick('${id}_prob',this)" style="padding:5px 8px;font-size:11px">متوسطة</div>
+        <div class="ch" onclick="pick('${id}_prob',this)" style="padding:5px 8px;font-size:11px">عالية</div>
+      </div>
+      <button type="button" class="remove-btn" onclick="removeRisk('${id}')">حذف</button>
+    </div>
+    <input class="inp" id="${id}_fix" placeholder="إجراء المعالجة المقترح لهذه المخاطرة..." style="font-size:12px;padding:7px 10px">
+  `;
+  document.getElementById('dynamic_risks').appendChild(div);
+}
+
+function removeRisk(id){ var el=document.getElementById(id); if(el) el.remove(); }
+
+function getDynamicRisks(){
+  var risks = [];
+  document.querySelectorAll('.dynamic-risk').forEach(function(d){
+    var id = d.id;
+    var name = v(id+'_name');
+    var prob = getPickVal(id+'_prob');
+    var fix = v(id+'_fix');
+    if(name) risks.push(name + ' | احتمالية: ' + (prob||'—') + ' | معالجة: ' + (fix||'—'));
+  });
+  return risks.join(' ⸻ ');
+}
+
+// ── VALIDATE ──
+function validateForm(){
+  return REQ.every(function(id){
+    var el = document.getElementById(id);
+    return el && el.value && el.value.trim().length >= 2;
+  });
+}
+
+// ── SUBMIT ──
+function submitForm(){
+  if(!validateForm()){
+    var err = document.getElementById('errMsg');
+    err.textContent = '⚠️ يرجى إكمال جميع الحقول المطلوبة (*) قبل الإرسال';
+    err.style.display = 'block';
+    for(var i=0;i<REQ.length;i++){
+      var el=document.getElementById(REQ[i]);
+      if(el && (!el.value || el.value.trim().length < 2)){
+        el.scrollIntoView({behavior:'smooth',block:'center'});
+        if(el.focus) el.focus();
+        break;
+      }
+    }
+    return;
+  }
+  document.getElementById('errMsg').style.display = 'none';
+  var btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  document.getElementById('spinner').style.display = 'block';
+  document.getElementById('btnTxt').textContent = 'جاري الإرسال...';
+
+  var data = {
+    unit: 'IS_ANALYSIS',
+    // student
+    name: v('f_name'), org: v('f_org'), date: v('f_date'),
+    // step 1
+    sysname: v('s1_name'), sysgov: v('s1_gov'),
+    scope: getPickVal('c_scope'), size: v('s1_size'),
+    sysdesc: v('s1_desc'), funcs: getChecked('s1_funcs'),
+    sysType: v('s1_type'), sysTypeWhy: v('s1_why'),
+    // step 2
+    sh1:v('sh1'), sh2:v('sh2'), sh3:v('sh3'),
+    sh4:v('sh4'), sh5:v('sh5'), sh6:v('sh6'),
+    sh_extra: v('sh_extra_name') + (v('sh_extra_need') ? ': ' + v('sh_extra_need') : ''),
+    // step 3
+    op1:v('op1'), op2:v('op2'), op3:v('op3'), op4:v('op4'), op5:v('op5'),
+    // step 4
+    fr1:v('fr1'), fr2:v('fr2'), fr3:v('fr3'),
+    nfr_resp: getPickVal('nfr_resp'), nfr_avail: getPickVal('nfr_avail'),
+    nfr_sec: getPickVal('nfr_sec'), nfr_bkp: getPickVal('nfr_bkp'),
+    nfr_comment: v('nfr_comment'),
+    // step 5
+    ent_list: v('ent_list'),
+    ent_main_attr: v('ent_main_attr'), ent_main_rel: v('ent_main_rel'),
+    ent_sensitive: v('ent_sensitive'),
+    // step 6
+    r1_p: getPickVal('r1_p'), r1_fix: v('r1_fix'),
+    r2_p: getPickVal('r2_p'), r2_fix: v('r2_fix'),
+    r3_p: getPickVal('r3_p'), r3_fix: v('r3_fix'),
+    dynamic_risks: getDynamicRisks(),
+    risk_opinion: v('risk_opinion'),
+    // step 7
+    sw_s: v('sw_s'), sw_w: v('sw_w'), sw_o: v('sw_o'), sw_t: v('sw_t'),
+    rec1title: v('rec1t'), rec1detail: v('rec1d'),
+    rec2title: v('rec2t'), rec2detail: v('rec2d'),
+    lesson: v('lesson')
+  };
+
+  fetch(SCRIPT_URL, {
+    method:'POST', mode:'no-cors',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify(data)
+  }).then(function(){
+    document.getElementById('form-body').style.display = 'none';
+    document.getElementById('successScreen').style.display = 'block';
+    window.scrollTo({top:0,behavior:'smooth'});
+  }).catch(function(){
+    btn.disabled = false;
+    document.getElementById('spinner').style.display = 'none';
+    document.getElementById('btnTxt').textContent = '✅ إرسال التحليل الكامل';
+    document.getElementById('errMsg').textContent = '❌ خطأ في الإرسال. تأكد من الاتصال بالإنترنت وأعد المحاولة.';
+    document.getElementById('errMsg').style.display = 'block';
+  });
+}
+
+updProg();
+</script>
+</body>
+</html>
