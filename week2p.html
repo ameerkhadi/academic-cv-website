@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -65,7 +64,7 @@ body{font-family:'Cairo',sans-serif;background:#f0f4f8;color:#1a2540;direction:r
 .choices{display:flex;gap:7px;flex-wrap:wrap}
 .ch{background:#f0f4f8;border:1.5px solid #d0d8e4;border-radius:7px;padding:7px 13px;font-size:12px;color:#555;cursor:pointer;font-family:'Cairo',sans-serif;transition:all .2s;user-select:none}
 .ch:hover{border-color:#0369a1;background:#e8f4fd;color:#0369a1}
-.ch.sel{background:#0369a1;border-color:#0369a1;color:#fff;font-weight:700}
+.ch.sel{background:#0369a1 !important;border-color:#0369a1 !important;color:#fff !important;font-weight:700 !important;box-shadow:0 2px 8px rgba(3,105,161,.4) !important}
 
 /* ── SYS TYPE CARDS ── */
 .type-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:4px}
@@ -90,7 +89,7 @@ body{font-family:'Cairo',sans-serif;background:#f0f4f8;color:#1a2540;direction:r
 .stars{display:flex;gap:7px;flex-wrap:wrap}
 .star-btn{background:#f0f4f8;border:1.5px solid #d0d8e4;border-radius:7px;padding:7px 11px;font-size:12px;cursor:pointer;font-family:'Cairo',sans-serif;transition:all .2s}
 .star-btn:hover{border-color:#c9a227;background:#fdf8e8}
-.star-btn.sel{background:#c9a227;border-color:#c9a227;font-weight:700}
+.star-btn.sel{background:#c9a227 !important;border-color:#c9a227 !important;font-weight:700 !important;color:#1a2540 !important}
 
 /* ── STAKEHOLDER TABLE ── */
 .sh-tbl{width:100%;border-collapse:collapse;font-size:12px}
@@ -114,7 +113,7 @@ body{font-family:'Cairo',sans-serif;background:#f0f4f8;color:#1a2540;direction:r
 .pch{display:flex;gap:4px;flex-wrap:wrap}
 .pc{border:1.5px solid #d0d8e4;border-radius:5px;padding:4px 8px;font-size:10.5px;cursor:pointer;font-family:'Cairo',sans-serif;background:#f8f9fc;color:#555;transition:all .2s;white-space:nowrap}
 .pc:hover{border-color:#0369a1;color:#0369a1}
-.pc.sel{background:#0369a1;border-color:#0369a1;color:#fff;font-weight:700}
+.pc.sel{background:#0369a1 !important;border-color:#0369a1 !important;color:#fff !important;font-weight:700 !important}
 
 /* ── ADD RISK ── */
 .add-risk-btn{display:flex;align-items:center;gap:7px;background:#f0f4f8;border:1.5px dashed #d0d8e4;border-radius:7px;padding:9px 14px;cursor:pointer;font-size:12px;color:#555;font-family:'Cairo',sans-serif;margin-bottom:10px;transition:all .2s;width:100%}
@@ -556,7 +555,7 @@ body{font-family:'Cairo',sans-serif;background:#f0f4f8;color:#1a2540;direction:r
 </div><!-- wrap -->
 
 <script>
-var SCRIPT_URL = 'var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzyxpumWjIi-6HyDkjE5oPOCCNwbKnegnPypvknK42kyK8SloZ-dwtNRgIwUNF96UTj/exec';
+var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzyxpumWjIi-6HyDkjE5oPOCCNwbKnegnPypvknK42kyK8SloZ-dwtNRgIwUNF96UTj/exec';
 
 // Required fields for progress
 var REQ = ['f_name','f_org','s1_name','s1_gov','s1_desc','s1_type','s1_why',
@@ -574,20 +573,50 @@ function updProg(){
 }
 
 function pick(gid, el){
-  document.getElementById(gid).querySelectorAll('.ch').forEach(function(b){b.classList.remove('sel')});
+  var group = document.getElementById(gid);
+  if(!group) return;
+  group.querySelectorAll('.ch').forEach(function(b){
+    b.classList.remove('sel');
+    b.style.background='';
+    b.style.color='';
+    b.style.borderColor='';
+    b.style.fontWeight='';
+  });
   el.classList.add('sel');
+  el.style.background='#0369a1';
+  el.style.color='#fff';
+  el.style.borderColor='#0369a1';
+  el.style.fontWeight='700';
 }
 
 function pck(gid, el){
-  document.getElementById(gid).querySelectorAll('.pc').forEach(function(b){b.classList.remove('sel')});
+  var group = document.getElementById(gid);
+  if(!group) return;
+  group.querySelectorAll('.pc').forEach(function(b){
+    b.classList.remove('sel');
+    b.style.background='';
+    b.style.color='';
+    b.style.borderColor='';
+    b.style.fontWeight='';
+  });
   el.classList.add('sel');
+  el.style.background='#0369a1';
+  el.style.color='#fff';
+  el.style.borderColor='#0369a1';
+  el.style.fontWeight='700';
 }
 
 function ck(cb){ cb.closest('.ck-item').classList.toggle('on', cb.checked); }
 
 function pickType(card, type){
-  document.querySelectorAll('.type-card').forEach(function(c){c.classList.remove('sel')});
+  document.querySelectorAll('.type-card').forEach(function(c){
+    c.classList.remove('sel');
+    c.style.borderColor='';
+    c.style.background='';
+  });
   card.classList.add('sel');
+  card.style.borderColor='#0369a1';
+  card.style.background='#dbeafe';
   document.getElementById('s1_type').value = type;
   updProg();
 }
