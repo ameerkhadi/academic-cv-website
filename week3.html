@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>إدارة البيانات الحكومية — دبلوم القيادة الرقمية</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════
+   RESET & ROOT
+═══════════════════════════════════════ */
+:root{
+  --ink:#1A1410; --ink2:#3D3020; --ink3:#6B5A45;
+  --bg:#FDFAF5; --bg2:#FFFFFF; --bg3:#F5EFE4; --bg4:#EDE4D3;
+  --gold:#8B6914; --gold2:#A88020; --gold3:#C49A30;
+  --gold-lt:rgba(139,105,20,0.1); --gold-bdr:rgba(139,105,20,0.25);
+  --teal:#0B5E5E; --teal-lt:rgba(11,94,94,0.08);
+  --red:#7A1A1A; --red-lt:rgba(122,26,26,0.07);
+  --green:#1A5230; --green-lt:rgba(26,82,48,0.07);
+  --blue:#1A3A6B; --blue-lt:rgba(26,58,107,0.07);
+  --shadow:0 2px 12px rgba(0,0,0,0.06);
+  --radius:10px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Cairo',sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+  direction:rtl;
+  line-height:1.8;
+  font-size:16px;
+}
+
+/* ═══════════════════════════════════════
+   COVER PAGE
+═══════════════════════════════════════ */
+.cover{
+  min-height:100vh;
+  background:linear-gradient(160deg,#0D1520 0%,#1A2535 45%,#0D1520 100%);
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;
+  padding:60px 32px;
+  position:relative;
+  overflow:hidden;
+  page-break-after:always;
+}
+.cover::before{
+  content:'';position:absolute;inset:0;
+  background-image:
+    radial-gradient(circle at 20% 30%,rgba(139,105,20,0.12) 0%,transparent 50%),
+    radial-gradient(circle at 80% 70%,rgba(11,94,94,0.08) 0%,transparent 45%);
+  pointer-events:none;
+}
+.cover-border{
+  position:absolute;inset:24px;
+  border:1px solid rgba(139,105,20,0.2);
+  border-radius:6px;pointer-events:none;
+}
+.cover-corner{position:absolute;width:36px;height:36px;border-color:#A88020;border-style:solid;}
+.cc-tr{top:24px;left:24px;border-width:2px 2px 0 0;border-radius:0 2px 0 0;}
+.cc-tl{top:24px;right:24px;border-width:2px 0 0 2px;border-radius:2px 0 0 0;}
+.cc-br{bottom:24px;left:24px;border-width:0 2px 2px 0;border-radius:0 0 2px 0;}
+.cc-bl{bottom:24px;right:24px;border-width:0 0 2px 2px;border-radius:0 0 0 2px;}
+
+.cover-chip{
+  display:inline-block;
+  background:rgba(139,105,20,0.15);
+  border:1px solid rgba(139,105,20,0.35);
+  border-radius:30px;
+  padding:5px 20px;
+  font-size:12px;letter-spacing:3px;
+  color:#C49A30;
+  margin-bottom:28px;
+  position:relative;z-index:2;
+}
+.cover h1{
+  font-family:'Amiri',serif;
+  font-size:clamp(36px,6vw,72px);
+  font-weight:700;
+  line-height:1.2;
+  position:relative;z-index:2;
+  margin-bottom:16px;
+}
+.cover h1 .ar{color:#F0EAD6;display:block;}
+.cover h1 .en{
+  font-size:0.5em;
+  background:linear-gradient(135deg,#A88020,#C49A30);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+  display:block;margin-top:8px;letter-spacing:2px;
+}
+.cover-line{
+  width:100px;height:2px;
+  background:linear-gradient(90deg,transparent,#A88020,transparent);
+  margin:20px auto;position:relative;z-index:2;
+}
+.cover-subtitle{
+  font-size:15px;color:rgba(240,234,214,0.65);
+  max-width:480px;line-height:1.9;
+  position:relative;z-index:2;
+  margin-bottom:40px;
+}
+
+/* instructors card on cover */
+.cover-instructors{
+  position:relative;z-index:2;
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(139,105,20,0.25);
+  border-radius:12px;
+  padding:24px 36px;
+  display:inline-block;
+  min-width:360px;
+}
+.ci-label{
+  font-size:10px;letter-spacing:3px;
+  color:#A88020;margin-bottom:14px;
+}
+.ci-row{
+  display:flex;align-items:center;gap:12px;
+  padding:10px 0;
+  border-bottom:1px solid rgba(255,255,255,0.06);
+}
+.ci-row:last-child{border:none;}
+.ci-avatar{
+  width:40px;height:40px;border-radius:50%;
+  background:linear-gradient(135deg,#A88020,#C49A30);
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;font-weight:700;color:#0D1520;
+  flex-shrink:0;
+}
+.ci-info{text-align:right;}
+.ci-name{font-size:14px;font-weight:700;color:#F0EAD6;}
+.ci-email{font-size:12px;color:#A88020;text-decoration:none;}
+.ci-email:hover{text-decoration:underline;}
+
+.cover-meta{
+  position:relative;z-index:2;
+  display:flex;gap:32px;margin-top:28px;
+  justify-content:center;flex-wrap:wrap;
+}
+.cm-item{text-align:center;}
+.cm-num{
+  font-family:'Amiri',serif;font-size:36px;font-weight:700;
+  color:#C49A30;display:block;line-height:1;
+}
+.cm-label{font-size:11px;color:rgba(240,234,214,0.45);margin-top:4px;letter-spacing:1px;}
+
+/* ═══════════════════════════════════════
+   NAVIGATION
+═══════════════════════════════════════ */
+.topnav{
+  position:sticky;top:0;z-index:200;
+  background:rgba(253,250,245,0.97);
+  backdrop-filter:blur(12px);
+  border-bottom:2px solid var(--gold-bdr);
+  padding:0 28px;
+  height:52px;
+  display:flex;align-items:center;justify-content:space-between;
+  box-shadow:0 2px 12px rgba(0,0,0,0.05);
+}
+.nav-brand{
+  font-size:13px;font-weight:700;color:var(--gold);
+  display:flex;align-items:center;gap:8px;white-space:nowrap;
+}
+.nav-links{display:flex;gap:4px;flex-wrap:wrap;}
+.nav-links a{
+  font-size:12px;color:var(--ink3);text-decoration:none;
+  padding:4px 10px;border-radius:6px;transition:all 0.2s;
+  white-space:nowrap;
+}
+.nav-links a:hover{background:var(--gold-lt);color:var(--gold);}
+.nav-progress{
+  height:3px;background:linear-gradient(90deg,var(--gold),var(--teal));
+  width:0%;transition:width 0.3s;
+}
+
+/* ═══════════════════════════════════════
+   LAYOUT
+═══════════════════════════════════════ */
+.wrapper{max-width:900px;margin:0 auto;padding:0 28px 80px;}
+
+/* ═══════════════════════════════════════
+   CHAPTER HEADER
+═══════════════════════════════════════ */
+.ch-head{
+  padding:52px 0 32px;
+  border-bottom:1px solid var(--bg4);
+  margin-bottom:36px;
+}
+.ch-tag{
+  display:inline-block;
+  background:var(--gold-lt);
+  border:1px solid var(--gold-bdr);
+  border-radius:4px;
+  padding:3px 14px;
+  font-size:10px;letter-spacing:3px;
+  color:var(--gold2);
+  margin-bottom:12px;
+}
+.ch-title{
+  font-family:'Amiri',serif;
+  font-size:clamp(26px,4vw,42px);
+  font-weight:700;
+  color:var(--ink);
+  line-height:1.25;
+  margin-bottom:10px;
+}
+.ch-title .hl{color:var(--gold2);}
+.ch-desc{font-size:14px;color:var(--ink3);max-width:580px;line-height:1.85;}
+
+/* ═══════════════════════════════════════
+   SECTION HEADINGS
+═══════════════════════════════════════ */
+h2.sec{
+  font-family:'Amiri',serif;
+  font-size:clamp(20px,3vw,28px);
+  font-weight:700;
+  color:var(--gold);
+  margin:40px 0 18px;
+  padding-bottom:10px;
+  border-bottom:2px solid var(--gold-bdr);
+  display:flex;align-items:center;gap:10px;
+}
+h2.sec::before{
+  content:'';display:block;
+  width:4px;height:28px;
+  background:linear-gradient(180deg,var(--gold),var(--gold3));
+  border-radius:4px;flex-shrink:0;
+}
+h3.sub{
+  font-size:17px;font-weight:700;
+  color:var(--teal);
+  margin:28px 0 12px;
+  display:flex;align-items:center;gap:8px;
+}
+h3.sub::before{
+  content:'◆';font-size:10px;color:var(--teal);flex-shrink:0;
+}
+h4.sub2{
+  font-size:15px;font-weight:700;
+  color:var(--ink2);
+  margin:20px 0 10px;
+}
+
+/* ═══════════════════════════════════════
+   BODY TEXT
+═══════════════════════════════════════ */
+p{
+  font-size:15px;color:var(--ink2);
+  line-height:1.95;margin-bottom:14px;
+}
+p .kw{color:var(--gold);font-weight:700;}
+p .kwt{color:var(--teal);font-weight:700;}
+p .kwr{color:var(--red);font-weight:700;}
+p .kwg{color:var(--green);font-weight:700;}
+p .kwb{color:var(--blue);font-weight:700;}
+
+/* ═══════════════════════════════════════
+   LISTS
+═══════════════════════════════════════ */
+.doc-list{
+  list-style:none;
+  margin:10px 0 18px;
+  display:flex;flex-direction:column;gap:8px;
+}
+.doc-list li{
+  display:flex;align-items:flex-start;gap:12px;
+  font-size:15px;color:var(--ink2);line-height:1.8;
+  padding:8px 14px;
+  background:var(--bg2);
+  border:1px solid rgba(0,0,0,0.05);
+  border-radius:8px;
+}
+.doc-list li .bullet{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--gold2);flex-shrink:0;margin-top:7px;
+}
+.doc-list li strong{color:var(--ink);font-weight:700;}
+
+/* numbered list */
+.num-list{list-style:none;margin:10px 0 18px;counter-reset:nlist;}
+.num-list li{
+  counter-increment:nlist;
+  display:flex;align-items:flex-start;gap:12px;
+  font-size:15px;color:var(--ink2);line-height:1.8;
+  margin-bottom:10px;
+}
+.num-list li::before{
+  content:counter(nlist);
+  min-width:28px;height:28px;
+  border-radius:8px;
+  background:var(--gold-lt);
+  border:1px solid var(--gold-bdr);
+  color:var(--gold2);font-weight:700;font-size:13px;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;margin-top:2px;
+}
+.num-list li strong{color:var(--gold2);font-weight:700;}
+
+/* ═══════════════════════════════════════
+   INFO BOXES
+═══════════════════════════════════════ */
+.info-box{
+  border-radius:var(--radius);
+  padding:18px 22px;
+  margin:18px 0;
+  border-right:4px solid;
+  font-size:14px;line-height:1.85;
+}
+.ib-gold{background:var(--gold-lt);border-color:var(--gold2);color:var(--ink2);}
+.ib-teal{background:var(--teal-lt);border-color:var(--teal);color:var(--ink2);}
+.ib-red {background:var(--red-lt); border-color:var(--red); color:var(--ink2);}
+.ib-green{background:var(--green-lt);border-color:var(--green);color:var(--ink2);}
+.ib-blue{background:var(--blue-lt);border-color:var(--blue);color:var(--ink2);}
+
+.ib-label{
+  font-size:10px;letter-spacing:2px;font-weight:700;
+  margin-bottom:8px;display:block;
+}
+.ib-gold .ib-label{color:var(--gold2);}
+.ib-teal .ib-label{color:var(--teal);}
+.ib-red  .ib-label{color:var(--red);}
+.ib-green .ib-label{color:var(--green);}
+.ib-blue .ib-label{color:var(--blue);}
+
+/* example box */
+.ex-box{
+  background:var(--bg2);
+  border:1px solid var(--bg4);
+  border-top:3px solid var(--teal);
+  border-radius:var(--radius);
+  padding:18px 22px;
+  margin:18px 0;
+  box-shadow:var(--shadow);
+}
+.ex-label{
+  font-size:10px;letter-spacing:2px;color:var(--teal);
+  font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:6px;
+}
+.ex-label::before{content:'📌';}
+.ex-text{font-size:14px;color:var(--ink2);line-height:1.85;}
+
+/* ═══════════════════════════════════════
+   TABLES
+═══════════════════════════════════════ */
+.tbl-wrap{overflow-x:auto;margin:18px 0;border-radius:var(--radius);box-shadow:var(--shadow);}
+table{
+  width:100%;border-collapse:collapse;
+  font-size:14px;background:var(--bg2);
+}
+thead tr{background:var(--gold-lt);}
+thead th{
+  padding:12px 16px;text-align:right;
+  color:var(--gold);font-weight:700;font-size:13px;
+  border-bottom:2px solid var(--gold-bdr);
+}
+tbody td{
+  padding:11px 16px;border-bottom:1px solid var(--bg4);
+  color:var(--ink2);vertical-align:top;line-height:1.7;
+}
+tbody tr:last-child td{border:none;}
+tbody tr:hover td{background:rgba(139,105,20,0.025);}
+tbody td:first-child{font-weight:600;color:var(--ink);}
+
+/* ═══════════════════════════════════════
+   DEFINITION BOX (DAMA)
+═══════════════════════════════════════ */
+.def-box{
+  background:linear-gradient(135deg,rgba(139,105,20,0.08),rgba(139,105,20,0.03));
+  border:1px solid var(--gold-bdr);
+  border-radius:12px;
+  padding:24px 28px;
+  margin:18px 0;
+  text-align:center;
+}
+.def-source{font-size:10px;color:var(--gold2);letter-spacing:2px;margin-bottom:12px;}
+.def-text{
+  font-family:'Amiri',serif;
+  font-size:clamp(16px,2vw,21px);
+  color:var(--ink);
+  line-height:1.8;font-weight:700;
+}
+.def-text .hl{color:var(--gold2);}
+.def-text .hlt{color:var(--teal);}
+
+/* ═══════════════════════════════════════
+   QUALITY DIMENSIONS GRID
+═══════════════════════════════════════ */
+.q6-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:14px;margin:18px 0;
+}
+.q6-card{
+  background:var(--bg2);
+  border:1px solid var(--bg4);
+  border-radius:var(--radius);
+  padding:18px;
+  border-top:3px solid;
+  box-shadow:var(--shadow);
+}
+.q6-1{border-top-color:var(--gold2);}
+.q6-2{border-top-color:var(--teal);}
+.q6-3{border-top-color:var(--green);}
+.q6-4{border-top-color:#C47A20;}
+.q6-5{border-top-color:var(--blue);}
+.q6-6{border-top-color:var(--red);}
+.q6-en{font-size:10px;letter-spacing:1.5px;margin-bottom:5px;}
+.q6-1 .q6-en{color:var(--gold2);}
+.q6-2 .q6-en{color:var(--teal);}
+.q6-3 .q6-en{color:var(--green);}
+.q6-4 .q6-en{color:#C47A20;}
+.q6-5 .q6-en{color:var(--blue);}
+.q6-6 .q6-en{color:var(--red);}
+.q6-ar{font-size:16px;font-weight:700;color:var(--ink);margin-bottom:6px;}
+.q6-def{font-size:13px;color:var(--ink3);line-height:1.7;margin-bottom:8px;}
+.q6-ex{
+  font-size:12px;color:var(--ink3);
+  background:var(--bg3);border-radius:6px;
+  padding:6px 10px;line-height:1.6;
+  border-right:2px solid;
+}
+.q6-1 .q6-ex{border-color:var(--gold2);}
+.q6-2 .q6-ex{border-color:var(--teal);}
+.q6-3 .q6-ex{border-color:var(--green);}
+.q6-4 .q6-ex{border-color:#C47A20;}
+.q6-5 .q6-ex{border-color:var(--blue);}
+.q6-6 .q6-ex{border-color:var(--red);}
+
+/* ═══════════════════════════════════════
+   5V BIG DATA GRID
+═══════════════════════════════════════ */
+.v5-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:12px;margin:18px 0;
+}
+.v5-card{
+  background:var(--bg2);border:1px solid var(--bg4);
+  border-radius:var(--radius);padding:18px 14px;text-align:center;
+  box-shadow:var(--shadow);
+}
+.v5-letter{
+  font-family:'Amiri',serif;font-size:48px;font-weight:700;
+  line-height:1;margin-bottom:4px;
+}
+.vc1 .v5-letter{color:var(--gold2);}
+.vc2 .v5-letter{color:var(--teal);}
+.vc3 .v5-letter{color:var(--green);}
+.vc4 .v5-letter{color:#C47A20;}
+.vc5 .v5-letter{color:var(--blue);}
+.v5-en{font-size:10px;letter-spacing:1px;color:var(--ink3);margin-bottom:6px;}
+.v5-ar{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:6px;}
+.v5-desc{font-size:12px;color:var(--ink3);line-height:1.65;}
+
+/* ═══════════════════════════════════════
+   LIFECYCLE FLOW
+═══════════════════════════════════════ */
+.lc-flow{display:flex;flex-direction:column;gap:0;margin:18px 0;}
+.lc-row{display:grid;grid-template-columns:60px 1fr;gap:0;}
+.lc-left{display:flex;flex-direction:column;align-items:center;}
+.lc-ball{
+  width:44px;height:44px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Amiri',serif;font-size:18px;font-weight:700;
+  color:#fff;flex-shrink:0;z-index:2;
+}
+.lc-line{
+  width:2px;flex:1;
+  background:linear-gradient(180deg,rgba(139,105,20,0.3),rgba(139,105,20,0.05));
+  margin:3px 0;
+}
+.lc-row:last-child .lc-line{display:none;}
+.lc-content{padding:0 0 24px 16px;}
+.lc-tag{font-size:9px;letter-spacing:2px;color:var(--gold);margin-bottom:4px;}
+.lc-title{font-size:17px;font-weight:700;color:var(--ink);margin-bottom:8px;}
+.lc-body{font-size:14px;color:var(--ink2);line-height:1.8;}
+.lc-body li{margin-bottom:4px;}
+
+/* ═══════════════════════════════════════
+   GOVERNANCE STRUCTURE
+═══════════════════════════════════════ */
+.gov-flow{display:flex;flex-direction:column;gap:8px;margin:16px 0;}
+.gov-row{
+  display:grid;grid-template-columns:150px 1fr;
+  gap:14px;align-items:start;
+  background:var(--bg2);border:1px solid var(--bg4);
+  border-radius:var(--radius);padding:14px 18px;
+  box-shadow:var(--shadow);
+}
+.gov-level{font-size:12px;font-weight:700;}
+.gov-role{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:4px;}
+.gov-tasks{font-size:13px;color:var(--ink3);line-height:1.7;}
+
+/* ═══════════════════════════════════════
+   NIST FRAMEWORK
+═══════════════════════════════════════ */
+.nist-row{
+  display:flex;align-items:flex-start;gap:16px;
+  background:var(--bg2);border:1px solid var(--bg4);
+  border-radius:var(--radius);padding:14px 18px;
+  margin-bottom:8px;box-shadow:var(--shadow);
+}
+.nist-icon{
+  width:40px;height:40px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;flex-shrink:0;
+}
+.nist-title{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:3px;}
+.nist-desc{font-size:13px;color:var(--ink3);line-height:1.7;}
+
+/* ═══════════════════════════════════════
+   DIVIDER
+═══════════════════════════════════════ */
+.divider{
+  height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold-bdr),transparent);
+  margin:40px 0;
+}
+
+/* ═══════════════════════════════════════
+   SUMMARY BOX
+═══════════════════════════════════════ */
+.summary{
+  background:linear-gradient(135deg,var(--gold-lt),rgba(139,105,20,0.03));
+  border:1px solid var(--gold-bdr);
+  border-radius:12px;padding:22px 28px;margin:28px 0;
+  text-align:center;
+}
+.summary p{
+  font-family:'Amiri',serif;font-size:18px;
+  color:var(--ink);line-height:1.7;
+}
+.summary p strong{color:var(--gold2);}
+
+/* ═══════════════════════════════════════
+   PRINT
+═══════════════════════════════════════ */
+@media print{
+  .topnav,.nav-progress{display:none;}
+  .cover{min-height:auto;padding:40px 20px;}
+  .wrapper{padding:0 16px;}
+  h2.sec{page-break-before:auto;}
+  .lc-flow,.q6-grid,.v5-grid{page-break-inside:avoid;}
+}
+
+/* ═══════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════ */
+@media(max-width:640px){
+  .wrapper{padding:0 16px 60px;}
+  .topnav{padding:0 14px;}
+  .nav-links{display:none;}
+  .cover-instructors{min-width:auto;padding:18px 20px;}
+  .gov-row{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+     COVER
+══════════════════════════════════════ -->
+<div class="cover" id="top">
+  <div class="cover-border"></div>
+  <div class="cover-corner cc-tl"></div>
+  <div class="cover-corner cc-tr"></div>
+  <div class="cover-corner cc-bl"></div>
+  <div class="cover-corner cc-br"></div>
+
+  <div class="cover-chip">دبلوم القيادة الرقمية العليا · العراق · المحاضرة الثالثة</div>
+
+  <h1>
+    <span class="ar">إدارة البيانات الحكومية</span>
+    <span class="en">Government Data Management</span>
+  </h1>
+
+  <div class="cover-line"></div>
+
+  <p class="cover-subtitle">
+    أساسيات تكنولوجيا المعلومات وتطبيقاتها في القيادة الرقمية<br>
+    مواد علمية شاملة للدارسين في برنامج الدبلوم
+  </p>
+
+  <div class="cover-instructors">
+    <div class="ci-label">إعداد وتقديم</div>
+    <div class="ci-row">
+      <div class="ci-avatar">أ</div>
+      <div class="ci-info">
+        <div class="ci-name">أ.م.د. أحمد محسن هيلان</div>
+        <a class="ci-email" href="mailto:ahmad.m.hailan@utq.edu.iq">ahmad.m.hailan@utq.edu.iq</a>
+      </div>
+    </div>
+    <div class="ci-row">
+      <div class="ci-avatar">أ</div>
+      <div class="ci-info">
+        <div class="ci-name">أ.م.د. أمير هادي</div>
+        <a class="ci-email" href="mailto:amer.hadi@alshaab.edu.iq">amer.hadi@alshaab.edu.iq</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="cover-meta">
+    <div class="cm-item"><span class="cm-num">١٠</span><div class="cm-label">محاور رئيسية</div></div>
+    <div class="cm-item"><span class="cm-num">٧</span><div class="cm-label">مراحل دورة الحياة</div></div>
+    <div class="cm-item"><span class="cm-num">٤</span><div class="cm-label">نماذج دولية</div></div>
+    <div class="cm-item"><span class="cm-num">٥</span><div class="cm-label">ساعات تعليمية</div></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     TOP NAV
+══════════════════════════════════════ -->
+<nav class="topnav">
+  <div class="nav-brand">📘 إدارة البيانات الحكومية</div>
+  <div class="nav-links">
+    <a href="#intro">المقدمة</a>
+    <a href="#def">التعريفات</a>
+    <a href="#components">المكونات</a>
+    <a href="#types">الأنواع</a>
+    <a href="#frameworks">الأطر</a>
+    <a href="#governance">الحوكمة</a>
+    <a href="#security">الأمن</a>
+    <a href="#challenges">التحديات</a>
+    <a href="#global">التجارب</a>
+    <a href="#activity">النشاط</a>
+  </div>
+</nav>
+<div class="nav-progress" id="progress"></div>
+
+<div class="wrapper">
+
+<!-- ══════════════════════════════════════
+     1. مقدمة
+══════════════════════════════════════ -->
+<div id="intro">
+  <div class="ch-head">
+    <div class="ch-tag">INTRODUCTION · المحور الأول</div>
+    <h1 class="ch-title">مقدمة — <span class="hl">لماذا البيانات مهمة؟</span></h1>
+    <p class="ch-desc">الأساس النظري والأهمية الاستراتيجية لإدارة البيانات في العمل الحكومي المعاصر</p>
+  </div>
+
+  <p>في عصر <span class="kw">الثورة الرقمية</span> والتحول الحكومي الإلكتروني، باتت البيانات تمثل <span class="kw">الركيزة الأساسية</span> لعمل الحكومات وصنع القرار السياسي والخدماتي. فالبيانات الحكومية هي المادة الخام التي تُبنى عليها السياسات العامة، وتُصمَّم من خلالها الخدمات الحكومية، وتُقاس بواسطتها مؤشرات الأداء الوطني والتنمية المستدامة.</p>
+
+  <p>تتميز إدارة البيانات الحكومية عن إدارة البيانات في القطاع الخاص بخصائص فريدة؛ إذ تتسم بالتعقيد المؤسسي الكبير، وتخضع لرقابة عامة واسعة، وتتعامل مع بيانات ذات حساسية عالية تمس حياة المواطنين وحقوقهم، وتعمل ضمن بيئة قانونية وتنظيمية صارمة. كما تمتد آثار قرارات إدارة البيانات الحكومية لتطال المجتمع بأسره، مما يجعلها <span class="kwt">مسألة حوكمة وطنية بامتياز.</span></p>
+
+  <h2 class="sec" id="why">لماذا البيانات الحكومية مهمة؟</h2>
+
+  <ul class="doc-list">
+    <li><span class="bullet"></span><div><strong>صنع القرار المبني على البيانات:</strong> تُمكّن إدارة البيانات الفعّالة صانعي القرار من الاستناد إلى معلومات دقيقة وموثوقة وحديثة عند رسم السياسات العامة وتخصيص الموارد الوطنية.</div></li>
+    <li><span class="bullet"></span><div><strong>تحسين الكفاءة الحكومية:</strong> تُقلل من الازدواجية في جمع البيانات ومعالجتها، وتُعزز تبادل المعلومات بين الجهات الحكومية، مما يُخفض التكاليف ويرفع مستوى الإنتاجية.</div></li>
+    <li><span class="bullet"></span><div><strong>تعزيز الشفافية والمساءلة:</strong> تُسهم في بناء الثقة بين الحكومة والمواطنين من خلال الانفتاح على البيانات العامة وتوفير أدوات المساءلة الفعّالة.</div></li>
+    <li><span class="bullet"></span><div><strong>دعم الابتكار وتطوير الخدمات:</strong> تُوفر بيانات عالية الجودة للقطاع الخاص والمجتمع المدني والباحثين، مما يُحفز الابتكار وتطوير حلول وخدمات جديدة.</div></li>
+    <li><span class="bullet"></span><div><strong>إدارة المخاطر الوطنية:</strong> تُسهم في رصد المخاطر والأزمات والتنبؤ بها في مجالات الصحة والأمن والاقتصاد والبيئة.</div></li>
+  </ul>
+</div>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════
+     2. التعريفات
+══════════════════════════════════════ -->
+<div id="def">
+  <h2 class="sec">تعريف إدارة البيانات الحكومية</h2>
+
+  <h3 class="sub">التعريف اللغوي والاصطلاحي</h3>
+  <p>تُعرَّف إدارة البيانات الحكومية <strong>(Government Data Management)</strong> لغةً بأنها مجموعة الأنشطة والعمليات والسياسات والإجراءات المنظمة التي تتبناها الحكومة لضمان توافر البيانات وسلامتها وجودتها وأمانها وإمكانية الوصول إليها وفق معايير وضوابط محددة.</p>
+
+  <div class="def-box">
+    <div class="def-source">التعريف الرسمي — معهد DAMA الدولي · DMBOK الطبعة الثانية 2017</div>
+    <div class="def-text">
+      إدارة البيانات هي: <span class="hl">تطوير وتنفيذ والإشراف</span> على الخطط والسياسات والبرامج والممارسات التي <span class="hlt">تُوصِّل وتضبط وتحمي وتعزز</span> قيمة <span class="hl">أصول البيانات والمعلومات</span> طوال دورة حياتها كاملة.
+    </div>
+  </div>
+
+  <h3 class="sub">تعريفات المنظمات الدولية</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>المنظمة</th><th>التعريف</th><th>التركيز الرئيسي</th></tr></thead>
+      <tbody>
+        <tr><td>OECD</td><td>الإطار الشامل لإدارة البيانات العامة لضمان خلق القيمة المستدامة والثقة الرقمية وتعزيز الخدمات العامة.</td><td>القيمة الاقتصادية</td></tr>
+        <tr><td>البنك الدولي</td><td>منظومة متكاملة من السياسات والأدوات لضمان أن البيانات متاحة وقابلة للاستخدام لصنع القرار وتقديم الخدمات.</td><td>صنع القرار</td></tr>
+        <tr><td>الأمم المتحدة UNDESA</td><td>الإطار المؤسسي والتقني لإدارة دورة حياة البيانات لتحقيق أهداف التنمية المستدامة وتعزيز الحوكمة الرقمية.</td><td>التنمية المستدامة</td></tr>
+        <tr><td>الاتحاد الأوروبي EU</td><td>النظام الشامل لحوكمة البيانات العامة بما يشمل السياسات والمعايير والأدوات لتحقيق السوق الأوروبي الموحد للبيانات.</td><td>الحوكمة الموحدة</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="sub">المفاهيم الأساسية المرتبطة</h3>
+
+  <h4 class="sub2">أ. البيانات الحكومية (Government Data)</h4>
+  <p>هي كل البيانات والمعلومات التي تجمعها الجهات الحكومية أو تنتجها أو تحتفظ بها في سياق ممارسة مهامها. وتشمل: البيانات الإدارية، والإحصائية، والجغرافية، والمالية، والأمنية، والصحية، والاجتماعية.</p>
+
+  <h4 class="sub2">ب. جودة البيانات (Data Quality)</h4>
+  <p>هي درجة ملاءمة البيانات للغرض المقصود منها، وتقاس بمعايير الدقة والاكتمال والاتساق والتوقيت والمصداقية وقابلية التفسير. وتُعدّ جودة البيانات شرطاً أساسياً لنجاح إدارة البيانات الحكومية.</p>
+
+  <h4 class="sub2">ج. حوكمة البيانات (Data Governance)</h4>
+  <p>هي منظومة السلطة والمسؤولية واتخاذ القرار التي تضبط إدارة البيانات وتحدد من يملك ماذا، ومن يستطيع القيام بأي فعل، ومتى وكيف يتم ذلك. وهي تُمثل الإطار التنظيمي لإدارة البيانات.</p>
+</div>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════
+     3. المكونات العشرة
+══════════════════════════════════════ -->
+<div id="components">
+  <h2 class="sec">مكونات إدارة البيانات الحكومية</h2>
+  <p>تتألف إدارة البيانات الحكومية من عشرة مجالات معرفية أساسية وفق إطار <strong>DAMA-DMBOK</strong>، وهي مترابطة ومتكاملة تشكّل معاً منظومة متكاملة:</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>#</th><th>المكوّن</th><th>بالإنجليزية</th><th>الوصف المختصر</th></tr></thead>
+      <tbody>
+        <tr><td>١</td><td><strong style="color:var(--gold2)">حوكمة البيانات ★</strong></td><td>Data Governance</td><td>من يملك؟ من يصل؟ كيف تُستخدم؟ — قرار إداري بالكامل</td></tr>
+        <tr><td>٢</td><td>معمارية البيانات</td><td>Data Architecture</td><td>التصميم الهيكلي الشامل لتنظيم البيانات وتدفقها</td></tr>
+        <tr><td>٣</td><td>النمذجة والتصميم</td><td>Modeling &amp; Design</td><td>تمثيل مرئي ومنطقي لعناصر البيانات وعلاقاتها</td></tr>
+        <tr><td>٤</td><td>التخزين والعمليات</td><td>Storage &amp; Operations</td><td>قواعد البيانات، المستودعات، النسخ الاحتياطي</td></tr>
+        <tr><td>٥</td><td><strong style="color:var(--red)">أمن البيانات ★</strong></td><td>Data Security</td><td>التشفير، التحكم بالوصول، المصادقة — قرار سياساتي</td></tr>
+        <tr><td>٦</td><td>التكامل والتشغيل البيني</td><td>Integration &amp; Interoperability</td><td>ETL، واجهات API، معايير التبادل</td></tr>
+        <tr><td>٧</td><td>المستودعات والذكاء التحليلي</td><td>DW &amp; BI Management</td><td>مستودعات البيانات، لوحات القيادة، التحليلات</td></tr>
+        <tr><td>٨</td><td>البيانات الوصفية</td><td>Metadata Management</td><td>بيانات عن البيانات — الكتالوجات والتصنيفات</td></tr>
+        <tr><td>٩</td><td><strong style="color:var(--orange,#C47A20)">جودة البيانات ★</strong></td><td>Data Quality</td><td>الأبعاد الستة — معيار القبول والرفض</td></tr>
+        <tr><td>١٠</td><td>البيانات الرئيسية والمرجعية</td><td>Master &amp; Reference Data</td><td>البيانات المشتركة الموحدة عبر الأنظمة</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="info-box ib-gold">
+    <span class="ib-label">★ المكونات الثلاثة الأهم للمدير العام</span>
+    المكونات المُشار إليها بـ ★ (الحوكمة، الأمن، الجودة) هي قرارات إدارية بالكامل تقع على عاتق المدير العام — لا على الفريق التقني. السبعة الأخرى مسؤولية الفريق التقني، ودور المدير معها: معرفة ما يطلبه منهم وكيف يُحاسبهم.
+  </div>
+
+  <h3 class="sub">الأبعاد الستة لجودة البيانات</h3>
+  <div class="q6-grid">
+    <div class="q6-card q6-1">
+      <div class="q6-en">ACCURACY</div>
+      <div class="q6-ar">الدقة</div>
+      <div class="q6-def">مطابقة البيانات للواقع الفعلي</div>
+      <div class="q6-ex">دقة عناوين المواطنين في سجلات الأحوال المدنية</div>
+    </div>
+    <div class="q6-card q6-2">
+      <div class="q6-en">COMPLETENESS</div>
+      <div class="q6-ar">الاكتمال</div>
+      <div class="q6-def">عدم وجود قيم مفقودة في الحقول الإلزامية</div>
+      <div class="q6-ex">اكتمال ملفات الضمان الاجتماعي دون حقول فارغة</div>
+    </div>
+    <div class="q6-card q6-3">
+      <div class="q6-en">CONSISTENCY</div>
+      <div class="q6-ar">الاتساق</div>
+      <div class="q6-def">تطابق البيانات عبر الأنظمة المختلفة</div>
+      <div class="q6-ex">تطابق بيانات المركبات بين الشرطة والمرور</div>
+    </div>
+    <div class="q6-card q6-4">
+      <div class="q6-en">TIMELINESS</div>
+      <div class="q6-ar">التوقيت</div>
+      <div class="q6-def">حداثة البيانات وتحديثها في الوقت المناسب</div>
+      <div class="q6-ex">تحديث بيانات الوفيات في السجلات المدنية فوراً</div>
+    </div>
+    <div class="q6-card q6-5">
+      <div class="q6-en">UNIQUENESS</div>
+      <div class="q6-ar">الفرادة</div>
+      <div class="q6-def">عدم تكرار السجلات في قاعدة البيانات</div>
+      <div class="q6-ex">تفادي ازدواجية ملفات دافعي الضرائب</div>
+    </div>
+    <div class="q6-card q6-6">
+      <div class="q6-en">VALIDITY</div>
+      <div class="q6-ar">الصلاحية</div>
+      <div class="q6-def">تطابق البيانات مع القواعد والمعايير المحددة</div>
+      <div class="q6-ex">صحة تنسيق أرقام الهوية الوطنية (١٠ أرقام)</div>
+    </div>
+  </div>
+
+  <div class="info-box ib-red">
+    <span class="ib-label">⚠️ مبدأ GIGO — القاعدة الذهبية</span>
+    <strong>Garbage In = Garbage Out.</strong> ما تُدخله يُحدد ما تحصل عليه. بيانات سيئة عند الإدخال = قرارات سيئة بغض النظر عن جودة التحليل. الجودة تُبنى عند نقطة الإدخال — لا بعدها.
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════
+     4. الأنواع
+══════════════════════════════════════ -->
+<div id="types">
+  <h2 class="sec">أنواع البيانات الحكومية</h2>
+
+  <h3 class="sub">التصنيف حسب الطبيعة والمحتوى</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>النوع</th><th>التعريف</th><th>أمثلة</th></tr></thead>
+      <tbody>
+        <tr><td>البيانات الإدارية</td><td>تُجمع كمنتج ثانوي للأنشطة الإدارية اليومية، تغطية شاملة وانتظام في الجمع</td><td>سجلات الميلاد والوفاة، رواتب الموظفين، تراخيص القيادة</td></tr>
+        <tr><td>البيانات الإحصائية</td><td>تُنتجها الجهات الإحصائية عبر التعدادات والمسوحات الميدانية المصممة للقياس</td><td>التعداد السكاني، مسوحات الدخل، معدلات البطالة</td></tr>
+        <tr><td>البيانات الجغرافية المكانية</td><td>مرتبطة بمواقع جغرافية محددة، تُستخدم في نظم المعلومات الجغرافية GIS</td><td>خرائط الطرق، سجلات الأراضي، شبكات الكهرباء والمياه</td></tr>
+        <tr><td>البيانات الصحية</td><td>الأكثر حساسية، تشمل السجلات الطبية وبيانات الأوبئة وإحصاءات الوفيات</td><td>السجلات الصحية الإلكترونية EHR، بيانات الرصد الوبائي</td></tr>
+        <tr><td>البيانات المالية</td><td>الميزانيات والإنفاق والديون والمشتريات الحكومية</td><td>الميزانية العامة، عائدات الضرائب، عقود المشتريات</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="sub">التصنيف حسب درجة الحساسية الأمنية</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>مستوى التصنيف</th><th>التعريف</th><th>أمثلة</th></tr></thead>
+      <tbody>
+        <tr><td style="color:var(--red)">سري للغاية (Top Secret)</td><td>إفشاؤه يُشكّل خطراً وجودياً على الأمن القومي</td><td>خطط الدفاع، مصادر الاستخبارات</td></tr>
+        <tr><td style="color:#C47A20">سري (Secret)</td><td>كشفه يُسبّب ضرراً جسيماً للأمن القومي</td><td>أنظمة الأسلحة، بيانات التجنيد العسكري</td></tr>
+        <tr><td style="color:var(--gold)">محدود التداول (Confidential)</td><td>بيانات حساسة للعمل الداخلي</td><td>بيانات المناقصات، مفاوضات الاتفاقيات</td></tr>
+        <tr><td style="color:var(--teal)">للاستخدام الرسمي فقط</td><td>بيانات إدارية داخلية غير موجهة للعموم</td><td>تقارير الأداء الداخلية، محاضر الاجتماعات</td></tr>
+        <tr><td style="color:var(--green)">مفتوحة (Open/Public)</td><td>متاحة للعموم دون قيود</td><td>الإحصاءات، الميزانيات المعلنة، الخرائط</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="sub">التصنيف حسب البنية والتنسيق</h3>
+  <ul class="doc-list">
+    <li><span class="bullet"></span><div><strong>البيانات المنظّمة (Structured Data):</strong> في قواعد بيانات علائقية ذات حقول محددة مسبقاً. مثال: سجلات دافعي الضرائب ورواتب الموظفين.</div></li>
+    <li><span class="bullet"></span><div><strong>البيانات شبه المنظّمة (Semi-Structured Data):</strong> تحتوي على علامات وصفية لكنها لا تتبع نموذجاً جدولياً صارماً. مثال: ملفات XML وJSON وقواعد بيانات NoSQL.</div></li>
+    <li><span class="bullet"></span><div><strong>البيانات غير المنظّمة (Unstructured Data):</strong> نصوص وصور وتسجيلات وملفات PDF، وتمثّل نحو <strong>٨٠٪</strong> من البيانات الحكومية الإجمالية.</div></li>
+  </ul>
+
+  <h3 class="sub">البيانات الضخمة الحكومية — خصائص الـ 5V</h3>
+  <div class="v5-grid">
+    <div class="v5-card vc1"><div class="v5-letter">V</div><div class="v5-en">Volume</div><div class="v5-ar">الحجم</div><div class="v5-desc">كميات هائلة تُولّدها الأنظمة الحكومية يومياً</div></div>
+    <div class="v5-card vc2"><div class="v5-letter">V</div><div class="v5-en">Velocity</div><div class="v5-ar">السرعة</div><div class="v5-desc">سرعة توليد البيانات وتدفقها في الوقت الفعلي</div></div>
+    <div class="v5-card vc3"><div class="v5-letter">V</div><div class="v5-en">Variety</div><div class="v5-ar">التنوع</div><div class="v5-desc">تنوع مصادر البيانات وأنواعها وتنسيقاتها</div></div>
+    <div class="v5-card vc4"><div class="v5-letter">V</div><div class="v5-en">Veracity</div><div class="v5-ar">المصداقية</div><div class="v5-desc">موثوقية البيانات ودقتها وخلوّها من الأخطاء</div></div>
+    <div class="v5-card vc5"><div class="v5-letter">V</div><div class="v5-en">Value</div><div class="v5-ar">القيمة</div><div class="v5-desc">إمكانية استخراج قيمة مضافة واتخاذ قرارات ذكية</div></div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════
+     5. الأطر الدولية
+══════════════════════════════════════ -->
+<div id="frameworks">
+  <h2 class="sec">الأطر والمعايير الدولية</h2>
+  <p>تُعدّ الأطر والمعايير الدولية الركيزة المنهجية التي تُوجّه الحكومات في بناء منظومتها لإدارة البيانات.</p>
+
+  <h3 class="sub">إطار الحكومة المفتوحة (Open Government Data Framework)</h3>
+  <ul class="doc-list">
+    <li><span class="bullet"></span><div><strong>الانفتاح بالافتراض (Open by Default):</strong> تُعدّ البيانات مفتوحة ما لم يكن هناك سبب مشروع لإغلاقها.</div></li>
+    <li><span class="bullet"></span><div><strong>قابلية الاستخدام الآلي (Machine Readable):</strong> يجب أن تكون البيانات في صيغ تُمكّن معالجتها برمجياً.</div></li>
+    <li><span class="bullet"></span><div><strong>البيانات المرخصة مفتوحة (Open Licensed):</strong> إتاحة إعادة الاستخدام والتوزيع دون قيود مالية.</div></li>
+    <li><span class="bullet"></span><div><strong>الإتاحة الكاملة (Completeness):</strong> نشر كل البيانات العامة وليس عيّنات منها فقط.</div></li>
+  </ul>
+
+  <div class="ex-box">
+    <div class="ex-label">مثال — ميثاق G8 للبيانات المفتوحة 2013</div>
+    <div class="ex-text">أصدرت دول مجموعة G8 عام 2013 ميثاق البيانات المفتوحة الذي يُحدد خمسة مبادئ: الانفتاح بالافتراض، الجودة والكمية، قابلية الاستخدام، إصدار البيانات لتحسين الحوكمة، وإصدار البيانات للابتكار. انضمت إليه لاحقاً أكثر من <strong>٧٥ دولة</strong>.</div>
+  </div>
+
+  <h3 class="sub">الإطار الأوروبي لقابلية التشغيل البيني (EIF)</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>الطبقة</th><th>المضمون</th></tr></thead>
+      <tbody>
+        <tr><td>قابلية التشغيل القانونية</td><td>توافق التشريعات والأنظمة بين الدول</td></tr>
+        <tr><td>قابلية التشغيل التنظيمية</td><td>التنسيق في العمليات والإجراءات الإدارية</td></tr>
+        <tr><td>قابلية التشغيل الدلالية</td><td>التفاهم المشترك في معاني البيانات وتعريفاتها</td></tr>
+        <tr><td>قابلية التشغيل التقنية</td><td>التوافق في البروتوكولات والواجهات والتنسيقات التقنية</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="sub">معيار ISO/IEC 25012 لجودة البيانات</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>البُعد</th><th>الخصائص</th></tr></thead>
+      <tbody>
+        <tr><td>جودة متأصلة في البيانات (Inherent)</td><td>الدقة، الاكتمال، الاتساق، المصداقية، الحداثة</td></tr>
+        <tr><td>جودة مرتبطة بالنظام (System-Dependent)</td><td>التوافر، المحمولية، الاستعادة، الوصولية، الامتثال، الكفاءة، الدقة، إمكانية التتبع، الفهم، قابلية التشغيل</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="sub">إطار NIST لأمن البيانات</h3>
+  <div class="nist-row"><div class="nist-icon" style="background:var(--blue-lt)">🔍</div><div><div class="nist-title">التعرف (Identify)</div><div class="nist-desc">تحديد الأصول الرقمية والمخاطر المرتبطة بها</div></div></div>
+  <div class="nist-row"><div class="nist-icon" style="background:var(--green-lt)">🛡️</div><div><div class="nist-title">الحماية (Protect)</div><div class="nist-desc">تطبيق ضمانات وقائية مناسبة لتقليل مخاطر الأمن</div></div></div>
+  <div class="nist-row"><div class="nist-icon" style="background:var(--gold-lt)">📡</div><div><div class="nist-title">الكشف (Detect)</div><div class="nist-desc">رصد الأحداث الأمنية والشذوذ في الوقت الفعلي</div></div></div>
+  <div class="nist-row"><div class="nist-icon" style="background:rgba(196,122,32,0.08)">⚡</div><div><div class="nist-title">الاستجابة (Respond)</div><div class="nist-desc">الاستجابة لحوادث الأمن السيبراني وتخفيف آثارها</div></div></div>
+  <div class="nist-row"><div class="nist-icon" style="background:var(--teal-lt)">🔄</div><div><div class="nist-title">التعافي (Recover)</div><div class="nist-desc">استعادة الخدمات والقدرات بعد حوادث الأمن</div></div></div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════
+     6. الحوكمة
+══════════════════════════════════════ -->
+<div id="governance">
+  <h2 class="sec">حوكمة البيانات الحكومية</h2>
+  <p>حوكمة البيانات الحكومية هي المنظومة المتكاملة من السياسات والإجراءات والمسؤوليات والصلاحيات التي تضبط كيفية اتخاذ القرارات المتعلقة بالبيانات. وهي تُجيب على الأسئلة الجوهرية: <span class="kwt">من يمتلك البيانات؟ من يصل إليها؟ كيف تُستخدم؟ كيف تُحمى؟</span></p>
+
+  <h3 class="sub">الهيكل التنظيمي للحوكمة</h3>
+  <div class="gov-flow">
+    <div class="gov-row" style="background:rgba(139,105,20,0.04);border-color:var(--gold-bdr);">
+      <div class="gov-level" style="color:var(--gold2)">المستوى الاستراتيجي</div>
+      <div><div class="gov-role">مجلس حوكمة البيانات</div><div class="gov-tasks">رسم السياسات العليا وتحديد الأولويات والبتّ في النزاعات الكبرى</div></div>
+    </div>
+    <div class="gov-row" style="background:rgba(11,94,94,0.04);border-color:rgba(11,94,94,0.2);">
+      <div class="gov-level" style="color:var(--teal)">المستوى التكتيكي</div>
+      <div><div class="gov-role">مدير البيانات الرئيسي (CDO)</div><div class="gov-tasks">قيادة مبادرات البيانات وتطوير الاستراتيجيات وتنسيق الجهود</div></div>
+    </div>
+    <div class="gov-row" style="background:rgba(26,82,48,0.04);border-color:rgba(26,82,48,0.2);">
+      <div class="gov-level" style="color:var(--green)">المستوى التشغيلي</div>
+      <div><div class="gov-role">مشرف البيانات (Data Steward)</div><div class="gov-tasks">ضمان جودة البيانات وتطبيق السياسات والإشراف اليومي</div></div>
+    </div>
+    <div class="gov-row">
+      <div class="gov-level" style="color:var(--blue)">الدور الفني</div>
+      <div><div class="gov-role">مهندس البيانات (Data Engineer)</div><div class="gov-tasks">بناء خطوط أنابيب البيانات وإدارة البنية التحتية التقنية</div></div>
+    </div>
+    <div class="gov-row">
+      <div class="gov-level" style="color:#7A1A7A">الدور التحليلي</div>
+      <div><div class="gov-role">محلل البيانات (Data Analyst)</div><div class="gov-tasks">تحليل البيانات واستخراج الرؤى وإعداد التقارير</div></div>
+    </div>
+  </div>
+
+  <h3 class="sub">سياسات حوكمة البيانات الخمس</h3>
+  <ul class="doc-list">
+    <li><span class="bullet"></span><div><strong>سياسة ملكية البيانات:</strong> تُحدد الجهة المالكة لكل نوع من البيانات ومسؤولياتها.</div></li>
+    <li><span class="bullet"></span><div><strong>سياسة الوصول والتفويض:</strong> تُنظّم من يستطيع الوصول إلى أي بيانات وبأي صلاحيات.</div></li>
+    <li><span class="bullet"></span><div><strong>سياسة الاحتفاظ بالبيانات:</strong> تُحدد مدة الاحتفاظ بكل نوع من البيانات قبل حذفه أو أرشفته.</div></li>
+    <li><span class="bullet"></span><div><strong>سياسة جودة البيانات:</strong> تُحدد معايير الجودة المقبولة ومسؤوليات ضبطها.</div></li>
+    <li><span class="bullet"></span><div><strong>سياسة الخصوصية وحماية البيانات الشخصية:</strong> تُنظّم التعامل مع البيانات الشخصية وفق التشريعات النافذة.</div></li>
+  </ul>
+
+  <h3 class="sub">نموذج نضج حوكمة البيانات — خمسة مستويات</h3>
+  <ol class="num-list">
+    <li><strong>المستوى الأولي:</strong> البيانات تُدار بشكل عشوائي وغير موحد، لا سياسات مكتوبة.</li>
+    <li><strong>المستوى المدار:</strong> توجد عمليات أساسية لكنها غير موحدة عبر الجهات.</li>
+    <li><strong>المستوى المحدد:</strong> توجد سياسات وعمليات موثقة ومعتمدة وتُطبَّق بانتظام.</li>
+    <li><strong>المستوى الكمي:</strong> تُقاس جودة البيانات وأداء العمليات بمؤشرات كمية دقيقة.</li>
+    <li><strong>المستوى المتحسّن:</strong> التحسين المستمر المبني على البيانات والقياس المنهجي.</li>
+  </ol>
+</div>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════
+     7. الأمن
+══════════════════════════════════════ -->
+<div id="security">
+  <h2 class="sec">الأمن والخصوصية وحماية البيانات</h2>
+
+  <h3 class="sub">التشريعات الدولية الرئيسية</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>التشريع</th><th>الجهة المصدرة</th><th>الأحكام الرئيسية</th></tr></thead>
+      <tbody>
+        <tr><td>GDPR</td><td>الاتحاد الأوروبي 2018</td><td>حق الوصول والتصحيح والنسيان، الموافقة الصريحة، إخطار الاختراق خلال 72 ساعة. غرامات تصل لـ 20 مليون يورو.</td></tr>
+        <tr><td>PDPA</td><td>المملكة العربية السعودية 2021</td><td>حوكمة البيانات الشخصية، حقوق الأفراد، المتطلبات الأمنية للبيانات</td></tr>
+        <tr><td>CCPA</td><td>ولاية كاليفورنيا الأمريكية</td><td>حق الإفصاح ورفض البيع والحذف للمستهلكين</td></tr>
+        <tr><td>قانون حماية البيانات</td><td>الإمارات العربية المتحدة 2021</td><td>حماية البيانات الشخصية وتنظيم معالجتها ونقلها</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="sub">التهديدات الأمنية</h3>
+  <div class="info-box ib-red">
+    <span class="ib-label">التهديدات الخارجية</span>
+    الهجمات الإلكترونية المتقدمة (APT) · هجمات برامج الفدية (Ransomware) · الاختراق عبر سلسلة التوريد
+  </div>
+  <div class="info-box ib-teal">
+    <span class="ib-label">التهديدات الداخلية — الأكثر شيوعاً (60% من الحالات)</span>
+    الموظفون الخبيثون · الإهمال والأخطاء البشرية · الامتيازات المفرطة (صلاحيات أوسع من المطلوب)
+  </div>
+
+  <h3 class="sub">ضمانات الحماية الحكومية</h3>
+  <ul class="doc-list">
+    <li><span class="bullet"></span><div><strong>إدارة الهوية والوصول (IAM):</strong> إدارة مركزية لصلاحيات المستخدمين عبر مبدأ الصلاحية الدنيا.</div></li>
+    <li><span class="bullet"></span><div><strong>التشفير الشامل (End-to-End Encryption):</strong> تشفير البيانات في كل مراحل تدفقها وتخزينها باستخدام معيار AES-256.</div></li>
+    <li><span class="bullet"></span><div><strong>التقسيم والعزل (Network Segmentation):</strong> فصل شبكات البيانات الحساسة عن الشبكات العامة.</div></li>
+    <li><span class="bullet"></span><div><strong>مراقبة الأمن المستمرة (SIEM):</strong> رصد وتحليل أحداث الأمن في الوقت الفعلي على مدار الساعة.</div></li>
+    <li><span class="bullet"></span><div><strong>اختبار الاختراق الدوري (Penetration Testing):</strong> تقييم دوري للثغرات الأمنية قبل أن يكتشفها المهاجمون.</div></li>
+  </ul>
+
+  <h3 class="sub">سيادة البيانات (Data Sovereignty)</h3>
+  <p>سيادة البيانات هي مبدأ يؤكد أن البيانات تخضع لقوانين وأنظمة الدولة التي جُمعت على أراضيها. وتشمل: توطين البيانات، سيادة السحابة، وتنظيم نقل البيانات عبر الحدود.</p>
+</div>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════
+     8. التحديات
+══════════════════════════════════════ -->
+<div id="challenges">
+  <h2 class="sec">التحديات والفرص والحلول</h2>
+
+  <h3 class="sub">التحديات التقنية</h3>
+  <ul class="doc-list">
+    <li><span class="bullet"></span><div><strong>تشتت الأنظمة القديمة (Legacy Systems):</strong> أنظمة عمرها عقود يتعذّر دمجها مع المنصات الحديثة.</div></li>
+    <li><span class="bullet"></span><div><strong>جزر البيانات (Data Silos):</strong> عدم تدفق البيانات بين الجهات الحكومية بسبب عوائق تقنية ومؤسسية.</div></li>
+    <li><span class="bullet"></span><div><strong>جودة البيانات المتردية:</strong> بيانات غير دقيقة أو مكررة أو ناقصة تُقلّل من موثوقية التحليلات.</div></li>
+    <li><span class="bullet"></span><div><strong>قصور البنية التحتية:</strong> نقص في الموارد الحوسبية وسعة التخزين وسرعة الشبكات.</div></li>
+  </ul>
+
+  <h3 class="sub">التحديات المؤسسية والبشرية</h3>
+  <ul class="doc-list">
+    <li><span class="bullet"></span><div><strong>نقص الكوادر المتخصصة:</strong> شُح في علماء البيانات ومهندسيها في القطاع الحكومي.</div></li>
+    <li><span class="bullet"></span><div><strong>مقاومة التغيير:</strong> تحفّظ بعض الجهات على مشاركة بياناتها خشية فقدان السيطرة.</div></li>
+    <li><span class="bullet"></span><div><strong>الثقافة التنظيمية:</strong> غياب ثقافة مؤسسية تُقدّر البيانات كأصل استراتيجي.</div></li>
+    <li><span class="bullet"></span><div><strong>الموازنات المحدودة:</strong> صعوبة تبرير الاستثمار في إدارة البيانات للقيادة غير المتخصصة.</div></li>
+  </ul>
+
+  <h3 class="sub">الحلول المقترحة</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>التحدي</th><th>الحل المقترح</th></tr></thead>
+      <tbody>
+        <tr><td>الأنظمة القديمة</td><td>بناء طبقة تكامل (Integration Layer) تربط القديم بالجديد دون الحاجة لاستبداله فورياً</td></tr>
+        <tr><td>جزر البيانات</td><td>منصة وطنية لتبادل البيانات مع واجهات API موحدة وحوكمة مشتركة</td></tr>
+        <tr><td>نقص الكوادر</td><td>برامج تدريبية متخصصة، شراكات مع الجامعات، حوافز للمتخصصين</td></tr>
+        <tr><td>مقاومة التغيير</td><td>إشراك القيادات في الاستراتيجية وإظهار القيمة المضافة بأمثلة ملموسة</td></tr>
+        <tr><td>جودة البيانات</td><td>برامج منهجية تشمل تنظيف البيانات وتوحيدها ورصد جودتها مستمراً</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="sub">الفرص الاستراتيجية</h3>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:14px 0;">
+    <div class="info-box ib-teal" style="margin:0;"><span class="ib-label">🚀 الحكومة التنبؤية</span>استخدام الذكاء الاصطناعي للتنبؤ باحتياجات المواطنين</div>
+    <div class="info-box ib-blue" style="margin:0;"><span class="ib-label">📊 تحسين السياسات</span>قياس أثر السياسات وتقييمها بدقة</div>
+    <div class="info-box ib-gold" style="margin:0;"><span class="ib-label">💰 الاقتصاد الرقمي</span>تحويل البيانات إلى قيمة اقتصادية</div>
+    <div class="info-box ib-green" style="margin:0;"><span class="ib-label">🌍 التعاون الدولي</span>شراكات لتبادل البيانات لمواجهة التحديات</div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════
+     9. التجارب الدولية
+══════════════════════════════════════ -->
+<div id="global">
+  <h2 class="sec">التجارب الدولية والنماذج الناجحة</h2>
+
+  <h3 class="sub">🇬🇧 المملكة المتحدة — نموذج جودة البيانات</h3>
+  <ul class="doc-list">
+    <li><span class="bullet"></span><div><strong>مكتب البيانات الحكومية (2020):</strong> لتحسين جودة البيانات وتوحيد المعايير عبر الوزارات.</div></li>
+    <li><span class="bullet"></span><div><strong>قاموس البيانات الوطني:</strong> تعريفات موحدة لمفاهيم البيانات عبر جميع الجهات الحكومية.</div></li>
+    <li><span class="bullet"></span><div><strong>منصة data.gov.uk:</strong> تضم أكثر من 50,000 مجموعة بيانات مفتوحة مجاناً.</div></li>
+  </ul>
+  <div class="ex-box">
+    <div class="ex-label">إنجاز محوري — نظام NHS للبيانات الصحية</div>
+    <div class="ex-text">يمتلك نظام الخدمة الصحية الوطنية البريطاني أحد أضخم مستودعات البيانات الصحية في العالم — <strong>55 مليون سجل طبي</strong>. خلال جائحة كوفيد-19، مكّنت هذه المنظومة من نشر اللقاحات بكفاءة استثنائية وأسهمت في إنتاج أبحاث طبية رائدة.</div>
+  </div>
+
+  <h3 class="sub">🇸🇬 سنغافورة — الحكومة الرقمية الذكية</h3>
+  <ul class="doc-list">
+    <li><span class="bullet"></span><div><strong>مبادرة Smart Nation:</strong> إطار وطني شامل يجمع البيانات من مصادر متعددة لتحسين جودة الحياة.</div></li>
+    <li><span class="bullet"></span><div><strong>SingPass:</strong> هوية رقمية موحدة يستخدمها أكثر من 4 ملايين مواطن للوصول لكل الخدمات.</div></li>
+    <li><span class="bullet"></span><div><strong>نظام Whole-of-Government (WOG):</strong> يُوحّد البيانات عبر 100 جهة حكومية.</div></li>
+  </ul>
+
+  <h3 class="sub">🇦🇪 الإمارات — نموذج عربي رائد</h3>
+  <ul class="doc-list">
+    <li><span class="bullet"></span><div><strong>استراتيجية بيانات الإمارات 2023-2026:</strong> تحويل البيانات إلى رافد اقتصادي.</div></li>
+    <li><span class="bullet"></span><div><strong>منصة بيانات الإمارات:</strong> تجمع بيانات أكثر من 180 جهة اتحادية ومحلية.</div></li>
+    <li><span class="bullet"></span><div><strong>UAE PASS:</strong> هوية رقمية موحدة تُتيح الوصول لأكثر من 6000 خدمة حكومية.</div></li>
+  </ul>
+
+  <h3 class="sub">🇦🇺 أستراليا — أقوى إطار قانوني</h3>
+  <ul class="doc-list">
+    <li><span class="bullet"></span><div><strong>قانون بيانات القطاع العام 2022:</strong> يُنظّم مشاركة بيانات الحكومة الفيدرالية.</div></li>
+    <li><span class="bullet"></span><div><strong>مكتب الوصاية على البيانات:</strong> هيئة مستقلة تُشرف على مشاركة البيانات والاستخدام الأخلاقي.</div></li>
+  </ul>
+
+  <h3 class="sub">مقارنة النماذج الدولية</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>الدولة</th><th>نقاط القوة</th><th>الميزة الفريدة</th><th>الدرس للاستلهام</th></tr></thead>
+      <tbody>
+        <tr><td>🇬🇧 المملكة المتحدة</td><td>جودة البيانات، التشريعات، الشفافية</td><td>أقدم نظام بيانات مفتوحة حكومية في العالم</td><td>ابدأ بتوحيد التعريفات</td></tr>
+        <tr><td>🇸🇬 سنغافورة</td><td>التكامل، الابتكار، الكفاءة التشغيلية</td><td>أعلى كثافة بيانات نسبة لعدد السكان</td><td>القرار السياسي يسبق التقنية</td></tr>
+        <tr><td>🇦🇪 الإمارات</td><td>التحديث السريع، الرقمنة الشاملة</td><td>الأسرع في تبني التقنيات الناشئة</td><td>الإلزام والمتابعة يُنتجان نتائج</td></tr>
+        <tr><td>🇦🇺 أستراليا</td><td>التشريعات، الحوكمة، الخصوصية</td><td>أقوى إطار قانوني لمشاركة البيانات</td><td>التشريع حماية للجميع</td></tr>
+        <tr><td>🇩🇰 الدنمارك</td><td>التبادل البيني، الخدمات المتكاملة</td><td>أعلى معدل استخدام للسجلات الإدارية</td><td>الرقم الشخصي الموحد يغير كل شيء</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="summary">
+    <p>الدرس المشترك لكل النماذج الناجحة: النجاح لم يأتِ من التقنية وحدها — بل من <strong>إرادة سياسية</strong> على أعلى المستويات، و<strong>إطار قانوني</strong> واضح ومُحدَّث، و<strong>ثقافة مؤسسية</strong> تُقدّر البيانات كأصل استراتيجي.</p>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════
+     10. النشاط العملي
+══════════════════════════════════════ -->
+<div id="activity">
+  <h2 class="sec">النشاط العملي — دورة حياة البيانات الحكومية</h2>
+  <p>تمرّ البيانات الحكومية بسبع مراحل رئيسية خلال دورة حياتها، وكل مرحلة تستلزم أنشطة وأدوات وضمانات محددة.</p>
+
+  <div class="lc-flow">
+
+    <div class="lc-row">
+      <div class="lc-left">
+        <div class="lc-ball" style="background:linear-gradient(135deg,var(--gold),var(--gold3))">١</div>
+        <div class="lc-line"></div>
+      </div>
+      <div class="lc-content">
+        <div class="lc-tag">PHASE 1 — PLANNING</div>
+        <div class="lc-title">التخطيط واكتساب البيانات</div>
+        <div class="lc-body">المرحلة التأسيسية التي تُحدد فيها الجهة احتياجاتها وأهدافها وتضع خطة شاملة لجمع البيانات. الأنشطة: تحديد متطلبات البيانات، تحديد المصادر، تصميم نماذج الجمع، وتحديد الإطار القانوني.</div>
+      </div>
+    </div>
+
+    <div class="lc-row">
+      <div class="lc-left">
+        <div class="lc-ball" style="background:linear-gradient(135deg,var(--teal),#0D7A7A)">٢</div>
+        <div class="lc-line"></div>
+      </div>
+      <div class="lc-content">
+        <div class="lc-tag">PHASE 2 — COLLECTION</div>
+        <div class="lc-title">جمع البيانات</div>
+        <div class="lc-body">التنفيذ الفعلي لاكتساب البيانات من مصادرها الأولية والثانوية عبر: التعداد الشامل، المسح العيّني، السجلات الإدارية، أجهزة الاستشعار IoT، والبيانات المفتوحة.</div>
+      </div>
+    </div>
+
+    <div class="lc-row">
+      <div class="lc-left">
+        <div class="lc-ball" style="background:linear-gradient(135deg,var(--blue),#2060B0)">٣</div>
+        <div class="lc-line"></div>
+      </div>
+      <div class="lc-content">
+        <div class="lc-tag">PHASE 3 — PROCESSING & CLEANING</div>
+        <div class="lc-title">معالجة البيانات وتنظيفها</div>
+        <div class="lc-body">تحويل البيانات الخام إلى بيانات جاهزة للاستخدام عبر: إزالة التكرار (Deduplication)، معالجة القيم المفقودة، توحيد التنسيقات، التحقق من النطاق، ومطابقة السجلات.</div>
+      </div>
+    </div>
+
+    <div class="lc-row">
+      <div class="lc-left">
+        <div class="lc-ball" style="background:linear-gradient(135deg,#7A1A7A,#A030A0)">٤</div>
+        <div class="lc-line"></div>
+      </div>
+      <div class="lc-content">
+        <div class="lc-tag">PHASE 4 — STORAGE</div>
+        <div class="lc-title">تخزين البيانات وإدارتها</div>
+        <div class="lc-body">قاعدة <strong>3-2-1</strong>: 3 نسخ على الأقل، على وسيطين مختلفين، مع نسخة خارج الموقع. التشفير بمعيار AES-256. التخزين الهرمي بين البيانات الساخنة والباردة.</div>
+      </div>
+    </div>
+
+    <div class="lc-row">
+      <div class="lc-left">
+        <div class="lc-ball" style="background:linear-gradient(135deg,#C47A20,#E09030)">٥</div>
+        <div class="lc-line"></div>
+      </div>
+      <div class="lc-content">
+        <div class="lc-tag">PHASE 5 — SHARING & USE</div>
+        <div class="lc-title">مشاركة البيانات واستخدامها</div>
+        <div class="lc-body">أربعة نماذج: المشاركة الداخلية بين الجهات، البيانات المفتوحة للعموم، المشاركة المنظمة مع أطراف محددة، والتحليل الموزع (Federated Analytics) للحفاظ على الخصوصية.</div>
+      </div>
+    </div>
+
+    <div class="lc-row">
+      <div class="lc-left">
+        <div class="lc-ball" style="background:linear-gradient(135deg,#4A5568,#2D3748)">٦</div>
+        <div class="lc-line"></div>
+      </div>
+      <div class="lc-content">
+        <div class="lc-tag">PHASE 6 — ARCHIVING</div>
+        <div class="lc-title">أرشفة البيانات</div>
+        <div class="lc-body">نقل البيانات غير النشطة لأنظمة أرشفة دائمة وفق جداول الاحتفاظ القانونية. استخدام تنسيقات أرشيفية مفتوحة (PDF/A، ODF). اختبارات استرجاع دورية.</div>
+      </div>
+    </div>
+
+    <div class="lc-row">
+      <div class="lc-left">
+        <div class="lc-ball" style="background:linear-gradient(135deg,var(--red),#C03030)">٧</div>
+      </div>
+      <div class="lc-content">
+        <div class="lc-tag">PHASE 7 — DISPOSAL</div>
+        <div class="lc-title">حذف البيانات وإتلافها الآمن</div>
+        <div class="lc-body">إتلاف البيانات منتهية المدة القانونية عبر: المسح الآمن (Secure Wipe بمعيار DoD 5220.22-M)، التشويه المغناطيسي، أو التدمير المادي — مع توثيق رسمي بمحضر موقَّع.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <h3 class="sub">الحالة الدراسية الشاملة — منظومة بيانات مكافحة الفقر</h3>
+  <div class="ex-box">
+    <div class="ex-label">السياق</div>
+    <div class="ex-text">قررت وزارة التنمية الاجتماعية إطلاق برنامج دعم اجتماعي موجّه للأسر الأكثر احتياجاً، يتطلب جمع <strong>35 متغيراً</strong> عبر 3 قنوات متوازية (ميدانية، إلكترونية، تحقق متقاطع).</div>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>المرحلة</th><th>ما تم</th><th>النتيجة</th></tr></thead>
+      <tbody>
+        <tr><td>التخطيط</td><td>تحديد 35 متغيراً، إطار قانوني، موافقة هيئة حماية البيانات</td><td>خطة واضحة قابلة للتنفيذ</td></tr>
+        <tr><td>الجمع</td><td>5000+ باحث ميداني + بوابة إلكترونية + تحقق متقاطع</td><td>تغطية شاملة ومتوازية</td></tr>
+        <tr><td>المعالجة</td><td>دمج 7,234 سجلاً مكرراً، توحيد 12,500 تاريخ، تصحيح 3,800 عنوان</td><td>بيانات نظيفة وموثوقة</td></tr>
+        <tr><td>التخزين</td><td>منظومة ثلاثية: تشغيلية + تحليلية + أرشيف سحابي AES-256</td><td>أمان وسرعة استرجاع</td></tr>
+        <tr><td>المشاركة</td><td>4 مستويات: داخلي + شريكة + عموم + أكاديمي</td><td>استخدام أمثل بحد أدنى وصول</td></tr>
+        <tr><td>الأرشفة</td><td>تحويل لتنسيق PDF/A-3، احتفاظ 25 سنة قانونياً</td><td>ذاكرة وطنية محفوظة</td></tr>
+        <tr><td>الإتلاف</td><td>مسح DoD 5220.22-M + إتلاف مادي + محضر رسمي</td><td>امتثال قانوني كامل</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="sub">أسئلة التحليل والتطبيق</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>السؤال</th><th>نقطة التركيز</th><th>المرحلة</th></tr></thead>
+      <tbody>
+        <tr><td>ما المخاطر القانونية والأخلاقية لجمع بيانات الأسر الفقيرة؟ وكيف تتعامل معها؟</td><td>الإطار القانوني والأخلاقيات</td><td>التخطيط</td></tr>
+        <tr><td>اقترح آلية لضمان دقة وسلامة البيانات التي يُدخلها الباحثون الميدانيون.</td><td>ضبط جودة البيانات</td><td>الجمع</td></tr>
+        <tr><td>كيف تُصمّم نموذج بيانات وصفية (Metadata) مناسباً لهذا البرنامج؟</td><td>إدارة البيانات الوصفية</td><td>التخزين</td></tr>
+        <tr><td>ما آليات حماية خصوصية الأسر عند مشاركة البيانات مع الجهات الأكاديمية؟</td><td>الخصوصية وحماية البيانات</td><td>المشاركة</td></tr>
+        <tr><td>صمّم جدول احتفاظ (Retention Schedule) مناسباً لأنواع بيانات البرنامج المختلفة.</td><td>سياسات الاحتفاظ</td><td>الأرشفة</td></tr>
+        <tr><td>ما معايير الاختيار بين المسح الآمن والتدمير المادي لإتلاف بيانات البرنامج؟</td><td>أمن البيانات</td><td>الإتلاف</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="sub">مؤشرات قياس أداء دورة الحياة (KPIs)</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>المرحلة</th><th>مؤشرات الأداء الرئيسية</th></tr></thead>
+      <tbody>
+        <tr><td>التخطيط</td><td>نسبة تغطية متطلبات البيانات · معدل الامتثال للإطار القانوني</td></tr>
+        <tr><td>الجمع</td><td>معدل الاستجابة · نسبة البيانات المكتملة · تكلفة جمع الوحدة</td></tr>
+        <tr><td>المعالجة</td><td>نسبة السجلات النظيفة بعد التنظيف · معدل الكشف عن الأخطاء</td></tr>
+        <tr><td>التخزين</td><td>معدل توافر الأنظمة (Uptime) · وقت استرجاع البيانات · نجاح النسخ الاحتياطي</td></tr>
+        <tr><td>المشاركة</td><td>عدد المستخدمين النشطين · معدل رضا المستخدمين</td></tr>
+        <tr><td>الأرشفة</td><td>نسبة اكتمال التوثيق · معدل نجاح اختبارات الاسترجاع</td></tr>
+        <tr><td>الإتلاف</td><td>نسبة الإتلاف في الموعد القانوني · نسبة توثيق عمليات الإتلاف</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="summary">
+    <p>
+      <strong>البيانات أصل استراتيجي</strong> — تُقيَّم وتُحمى وتُستثمر.<br>
+      الحكومة التي تُحسن إدارة بياناتها <strong>تُحسن خدمة مواطنيها</strong>.
+    </p>
+  </div>
+
+</div><!-- /activity -->
+
+</div><!-- /wrapper -->
+
+<!-- footer -->
+<footer style="background:var(--bg4);border-top:1px solid var(--gold-bdr);padding:32px;text-align:center;margin-top:40px;">
+  <p style="font-family:'Amiri',serif;font-size:18px;color:var(--gold);margin-bottom:8px;">دبلوم القيادة الرقمية العليا — العراق</p>
+  <p style="font-size:13px;color:var(--ink3);line-height:1.8;">
+    إعداد: أ.م.د. أحمد محسن هيلان &nbsp;·&nbsp; أ.م.د. أمير هادي<br>
+    <a href="mailto:ahmad.m.hailan@utq.edu.iq" style="color:var(--gold2);text-decoration:none;">ahmad.m.hailan@utq.edu.iq</a>
+    &nbsp;|&nbsp;
+    <a href="mailto:amer.hadi@alshaab.edu.iq" style="color:var(--gold2);text-decoration:none;">amer.hadi@alshaab.edu.iq</a>
+  </p>
+</footer>
+
+<script>
+// progress bar
+window.addEventListener('scroll',()=>{
+  const pct=(window.scrollY/(document.body.scrollHeight-window.innerHeight))*100;
+  document.getElementById('progress').style.width=Math.min(pct,100)+'%';
+});
+// smooth nav
+document.querySelectorAll('.nav-links a').forEach(a=>{
+  a.addEventListener('click',e=>{
+    e.preventDefault();
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t) t.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+});
+</script>
+</body>
+</html>
