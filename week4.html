@@ -1,0 +1,4042 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الحوسبة السحابية الحكومية — المحاضرة الرابعة</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+
+<style>
+/* ════ LECTURE STYLES ════ */
+
+:root {
+  --bg:       #050D1A;
+  --bg2:      #0a1628;
+  --bg3:      #0f1f3d;
+  --bg4:      #0d1a30;
+  --orange:   #FF9900;
+  --orange2:  rgba(255,153,0,0.12);
+  --orange3:  rgba(255,153,0,0.22);
+  --green:    #00e676;
+  --blue:     #4fc3f7;
+  --red:      #ef9a9a;
+  --purple:   #ce93d8;
+  --text:     #dcd9d0;
+  --text2:    #a0aab8;
+  --border:   rgba(255,153,0,0.18);
+  --border2:  rgba(255,255,255,0.06);
+  --shadow:   0 4px 30px rgba(0,0,0,0.5);
+  --r:        16px;
+}
+
+/* ── RESET & BASE ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Cairo', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  direction: rtl;
+  font-size: 16px;
+  line-height: 1;
+}
+
+/* ── GRID BG ── */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0;
+  background-image:
+    linear-gradient(rgba(255,153,0,.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,153,0,.03) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+}
+
+/* ── LAYOUT ── */
+.page-wrap {
+  position: relative; z-index: 1;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 20px 80px;
+}
+
+/* ── COVER ── */
+.cover {
+  text-align: center;
+  padding: 60px 20px 50px;
+  border-bottom: 1px solid var(--border2);
+  margin-bottom: 56px;
+  position: relative;
+}
+.cover-glow {
+  position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  width: 500px; height: 200px;
+  background: radial-gradient(ellipse, rgba(255,153,0,0.10), transparent 70%);
+  pointer-events: none;
+}
+.cover-tag {
+  display: inline-block;
+  border: 1px solid var(--border);
+  color: var(--orange);
+  background: var(--orange2);
+  font-size: 11px; font-weight: 700;
+  padding: 5px 20px; border-radius: 30px;
+  letter-spacing: 2px;
+  margin-bottom: 28px;
+}
+.cover h1 {
+  font-size: clamp(26px, 5vw, 42px);
+  font-weight: 900;
+  color: #fff;
+  line-height: 1.3;
+  margin-bottom: 8px;
+}
+.cover h2 {
+  font-size: clamp(16px, 3vw, 22px);
+  font-weight: 600;
+  color: var(--orange);
+  margin-bottom: 36px;
+}
+.authors {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.author-card {
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-radius: 14px;
+  padding: 16px 24px;
+  text-align: center;
+  min-width: 220px;
+}
+.author-card .name {
+  font-size: 15px; font-weight: 700; color: #fff;
+  margin-bottom: 6px;
+}
+.author-card a {
+  font-size: 12px; color: var(--blue);
+  text-decoration: none;
+  word-break: break-all;
+}
+.author-card a:hover { text-decoration: underline; }
+
+/* ── TOC ── */
+.toc {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 28px 28px;
+  margin-bottom: 56px;
+}
+.toc-title {
+  font-size: 14px; font-weight: 700;
+  color: var(--orange); letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border2);
+}
+.toc ol {
+  list-style: none;
+  counter-reset: toc;
+  display: flex; flex-direction: column; gap: 6px;
+}
+.toc ol li {
+  counter-increment: toc;
+  display: flex; align-items: center; gap: 14px;
+}
+.toc ol li::before {
+  content: counter(toc, arabic-indic);
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--orange2); border: 1px solid var(--border);
+  color: var(--orange); font-size: 12px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.toc ol li a {
+  color: var(--text2); text-decoration: none;
+  font-size: 14px; font-weight: 600;
+  transition: color .2s;
+}
+.toc ol li a:hover { color: var(--orange); }
+
+/* ── SECTION ── */
+.section {
+  margin-bottom: 60px;
+}
+.section-header {
+  display: flex; align-items: center; gap: 16px;
+  margin-bottom: 28px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid var(--border);
+}
+.section-num {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: var(--orange);
+  color: #000; font-size: 17px; font-weight: 900;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 0 20px rgba(255,153,0,0.3);
+}
+.section-title {
+  font-size: clamp(18px, 3vw, 26px);
+  font-weight: 900; color: #fff;
+  line-height: 1.3;
+}
+
+/* ── PROSE ── */
+p {
+  font-size: 15px;
+  line-height: 1.95;
+  color: var(--text);
+  text-align: justify;
+  margin-bottom: 16px;
+}
+p:last-child { margin-bottom: 0; }
+
+/* ── SUBSECTIONS ── */
+.subsection {
+  margin-bottom: 32px;
+}
+.subsection-title {
+  font-size: 17px; font-weight: 800;
+  color: var(--orange);
+  margin-bottom: 14px;
+  display: flex; align-items: center; gap: 10px;
+}
+.subsection-title::before {
+  content: '';
+  width: 4px; height: 20px;
+  background: var(--orange);
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+/* ── DEFINITION BOX ── */
+.def-box {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-right: 4px solid var(--orange);
+  border-radius: 0 var(--r) var(--r) 0;
+  padding: 20px 24px;
+  margin: 22px 0;
+  font-size: 15px;
+  line-height: 2;
+  color: var(--text);
+  text-align: justify;
+}
+.def-box .def-label {
+  font-size: 11px; font-weight: 800;
+  color: var(--orange); letter-spacing: 2px;
+  margin-bottom: 10px;
+  display: block;
+}
+
+/* ── INFO BOX ── */
+.info-box {
+  background: rgba(79,195,247,0.07);
+  border: 1px solid rgba(79,195,247,0.2);
+  border-right: 4px solid var(--blue);
+  border-radius: 0 var(--r) var(--r) 0;
+  padding: 18px 22px;
+  margin: 20px 0;
+  font-size: 14px; line-height: 1.9;
+  color: #b3e5fc;
+  text-align: justify;
+}
+.info-box .box-label {
+  font-size: 11px; font-weight: 800;
+  color: var(--blue); letter-spacing: 2px;
+  margin-bottom: 8px;
+  display: block;
+}
+
+/* ── HIGHLIGHT BOX ── */
+.highlight-box {
+  background: var(--orange2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 22px 24px;
+  margin: 22px 0;
+  font-size: 14px; line-height: 1.95;
+  color: var(--text);
+  text-align: justify;
+}
+.highlight-box .box-label {
+  font-size: 11px; font-weight: 800;
+  color: var(--orange); letter-spacing: 2px;
+  margin-bottom: 10px;
+  display: block;
+}
+
+/* ── GOLDEN RULES BOX ── */
+.rules-box {
+  background: linear-gradient(135deg, rgba(255,153,0,0.08), rgba(0,230,118,0.06));
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 24px 26px;
+  margin: 22px 0;
+}
+.rules-box .box-label {
+  font-size: 11px; font-weight: 800;
+  color: var(--orange); letter-spacing: 2px;
+  margin-bottom: 16px;
+  display: block;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border2);
+}
+.rules-box ol {
+  list-style: none;
+  counter-reset: rules;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.rules-box ol li {
+  counter-increment: rules;
+  display: flex; align-items: flex-start; gap: 14px;
+  font-size: 14px; line-height: 1.8; color: var(--text);
+  text-align: justify;
+}
+.rules-box ol li::before {
+  content: counter(rules);
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--orange);
+  color: #000; font-size: 12px; font-weight: 900;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 2px;
+}
+
+/* ── CARDS GRID ── */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  margin: 20px 0 24px;
+}
+.card {
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-radius: var(--r);
+  padding: 20px 18px;
+  transition: border-color .2s, transform .2s;
+}
+.card:hover { border-color: var(--orange); transform: translateY(-2px); }
+.card .card-icon { font-size: 28px; margin-bottom: 10px; }
+.card .card-title {
+  font-size: 15px; font-weight: 800; color: #fff;
+  margin-bottom: 8px;
+}
+.card p { font-size: 13px; color: var(--text2); line-height: 1.8; margin-bottom: 0; text-align: justify; }
+.card .card-tag {
+  display: inline-block; margin-top: 10px;
+  background: var(--orange2); border: 1px solid var(--border);
+  color: var(--orange); font-size: 11px; font-weight: 700;
+  padding: 3px 10px; border-radius: 20px;
+}
+
+/* ── 3-LEVEL CARDS ── */
+.level-cards { display: flex; flex-direction: column; gap: 14px; margin: 20px 0; }
+.level-card {
+  display: flex; align-items: flex-start; gap: 18px;
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-radius: var(--r);
+  padding: 20px 20px;
+  transition: border-color .2s;
+}
+.level-card:hover { border-color: var(--orange); }
+.level-badge {
+  min-width: 52px; height: 52px; border-radius: 14px;
+  background: var(--orange2); border: 1px solid var(--border);
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; flex-shrink: 0;
+}
+.level-badge .lv-num {
+  font-size: 18px; font-weight: 900; color: var(--orange); line-height: 1;
+}
+.level-badge .lv-label {
+  font-size: 8px; font-weight: 700; color: var(--orange);
+  letter-spacing: .5px; margin-top: 1px;
+}
+.level-card .lc-body h4 {
+  font-size: 16px; font-weight: 800; color: #fff; margin-bottom: 8px;
+}
+.level-card .lc-body p { font-size: 13.5px; color: var(--text2); line-height: 1.85; margin-bottom: 0; text-align: justify; }
+.level-card .lc-body .example-tag {
+  display: inline-block; margin-top: 10px;
+  font-size: 12px; font-weight: 600;
+  color: var(--green); background: rgba(0,230,118,.1);
+  border: 1px solid rgba(0,230,118,.2);
+  padding: 3px 12px; border-radius: 20px;
+}
+
+/* ── STAT ROW ── */
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+  margin: 20px 0 24px;
+}
+.stat-card {
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-radius: 14px;
+  padding: 18px 14px;
+  text-align: center;
+}
+.stat-card .sv {
+  font-size: 26px; font-weight: 900;
+  line-height: 1; margin-bottom: 5px;
+}
+.stat-card .sl { font-size: 11.5px; color: var(--text2); line-height: 1.4; }
+.sv-orange { color: var(--orange); }
+.sv-green  { color: var(--green); }
+.sv-blue   { color: var(--blue); }
+.sv-purple { color: var(--purple); }
+
+/* ── TIMELINE ── */
+.timeline { position: relative; margin: 20px 0 24px; }
+.timeline::before {
+  content: '';
+  position: absolute;
+  right: 20px; top: 0; bottom: 0;
+  width: 2px; background: var(--border);
+}
+.tl-item {
+  display: flex; gap: 20px;
+  padding-bottom: 24px;
+  position: relative;
+}
+.tl-item:last-child { padding-bottom: 0; }
+.tl-dot {
+  width: 42px; height: 42px; border-radius: 50%;
+  background: var(--bg3); border: 2px solid var(--orange);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; position: relative; z-index: 1;
+  font-size: 12px; font-weight: 800; color: var(--orange);
+}
+.tl-content { flex: 1; padding-top: 6px; }
+.tl-content h4 { font-size: 14px; font-weight: 800; color: var(--orange); margin-bottom: 6px; }
+.tl-content p  { font-size: 13.5px; color: var(--text2); line-height: 1.85; margin-bottom: 0; text-align: justify; }
+
+/* ── COMPARISON TABLE ── */
+.comp-table-wrap { overflow-x: auto; margin: 20px 0; }
+.comp-table {
+  width: 100%; border-collapse: collapse;
+  font-size: 13.5px;
+}
+.comp-table th {
+  background: var(--bg3);
+  padding: 12px 16px;
+  font-weight: 800; font-size: 12px;
+  color: var(--text2); letter-spacing: .5px;
+  border-bottom: 2px solid var(--border);
+  text-align: right;
+  white-space: nowrap;
+}
+.comp-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border2);
+  color: var(--text); line-height: 1.7;
+  vertical-align: top;
+}
+.comp-table tr:hover td { background: rgba(255,255,255,.02); }
+.comp-table .row-label {
+  font-weight: 800; color: var(--orange);
+  white-space: nowrap;
+}
+
+/* ── PROVIDER CARDS ── */
+.provider-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px; margin: 20px 0;
+}
+.provider-card {
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-radius: var(--r);
+  padding: 22px 20px;
+  transition: border-color .2s, transform .2s;
+}
+.provider-card:hover { border-color: var(--orange); transform: translateY(-2px); }
+.pc-header {
+  display: flex; align-items: center; gap: 14px;
+  margin-bottom: 14px; padding-bottom: 14px;
+  border-bottom: 1px solid var(--border2);
+}
+.pc-rank {
+  width: 38px; height: 38px; border-radius: 10px;
+  background: var(--orange2); border: 1px solid var(--border);
+  color: var(--orange); font-size: 15px; font-weight: 900;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.pc-name { font-size: 16px; font-weight: 900; color: #fff; }
+.pc-share { font-size: 12px; color: var(--text2); }
+.provider-card p { font-size: 13px; color: var(--text2); line-height: 1.85; margin-bottom: 10px; text-align: justify; }
+.pc-badge {
+  display: inline-block;
+  font-size: 11px; font-weight: 700;
+  padding: 3px 10px; border-radius: 20px;
+  margin-top: 4px;
+}
+.pc-b1 { background: rgba(255,153,0,.12); color: var(--orange); border: 1px solid var(--border); }
+.pc-b2 { background: rgba(79,195,247,.1); color: var(--blue); border: 1px solid rgba(79,195,247,.25); }
+.pc-b3 { background: rgba(206,147,216,.1); color: var(--purple); border: 1px solid rgba(206,147,216,.25); }
+
+/* ── REGION TABLE ── */
+.region-box {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  overflow: hidden;
+  margin: 20px 0;
+}
+.region-box .rb-header {
+  background: var(--orange2);
+  padding: 12px 20px;
+  font-size: 12px; font-weight: 800;
+  color: var(--orange); letter-spacing: 1px;
+  border-bottom: 1px solid var(--border);
+}
+.region-item {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border2);
+  font-size: 13.5px; line-height: 1.8;
+}
+.region-item:last-child { border-bottom: none; }
+.ri-flag { font-size: 22px; flex-shrink: 0; }
+.ri-body h5 { font-size: 14px; font-weight: 800; color: #fff; margin-bottom: 3px; }
+.ri-body p { font-size: 13px; color: var(--text2); margin: 0; line-height: 1.7; }
+
+/* ── SUMMARY BULLETS ── */
+.summary-list {
+  display: flex; flex-direction: column; gap: 8px;
+  margin: 16px 0;
+}
+.sl-item {
+  display: flex; align-items: flex-start; gap: 14px;
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-radius: 12px;
+  padding: 13px 16px;
+  font-size: 14px; line-height: 1.85; color: var(--text);
+  text-align: justify;
+}
+.sl-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--orange); flex-shrink: 0;
+  margin-top: 8px;
+}
+
+/* ── NIST CHARS ── */
+.chars-list {
+  display: flex; flex-direction: column; gap: 10px;
+  margin: 16px 0;
+}
+.char-item {
+  display: flex; align-items: flex-start; gap: 14px;
+  background: var(--bg2); border: 1px solid var(--border2);
+  border-radius: 12px; padding: 14px 16px;
+}
+.char-num {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: var(--orange);
+  color: #000; font-size: 13px; font-weight: 900;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 1px;
+}
+.char-body h5 { font-size: 14px; font-weight: 800; color: #fff; margin-bottom: 4px; }
+.char-body p  { font-size: 13px; color: var(--text2); line-height: 1.8; margin: 0; text-align: justify; }
+
+/* ── ANALOGY BOX ── */
+.analogy-box {
+  background: linear-gradient(135deg, rgba(255,153,0,.07), rgba(0,230,118,.05));
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 22px 24px;
+  margin: 20px 0;
+  display: flex; align-items: flex-start; gap: 16px;
+}
+.analogy-icon { font-size: 36px; flex-shrink: 0; }
+.analogy-body .ab-label {
+  font-size: 11px; font-weight: 800;
+  color: var(--orange); letter-spacing: 2px;
+  margin-bottom: 8px; display: block;
+}
+.analogy-body p { font-size: 14px; color: var(--text); line-height: 1.95; margin-bottom: 0; text-align: justify; }
+
+/* ── THREAT BOX ── */
+.threat-list { display: flex; flex-direction: column; gap: 10px; margin: 16px 0; }
+.threat-item {
+  background: rgba(239,154,154,.05);
+  border: 1px solid rgba(239,154,154,.15);
+  border-right: 3px solid var(--red);
+  border-radius: 0 12px 12px 0;
+  padding: 14px 18px;
+}
+.threat-item h5 { font-size: 14px; font-weight: 800; color: #ef9a9a; margin-bottom: 6px; }
+.threat-item p  { font-size: 13px; color: var(--text2); line-height: 1.85; margin: 0; text-align: justify; }
+
+/* ── FOOTER ── */
+.page-footer {
+  border-top: 1px solid var(--border2);
+  padding-top: 32px;
+  margin-top: 48px;
+  text-align: center;
+  color: var(--text2);
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 540px) {
+  .cover-tag { font-size: 10px; }
+  .stat-row  { grid-template-columns: repeat(2, 1fr); }
+  .cards-grid { grid-template-columns: 1fr; }
+  .provider-grid { grid-template-columns: 1fr; }
+  .analogy-box { flex-direction: column; }
+  .section-header { gap: 12px; }
+  body { font-size: 15px; }
+}
+
+/* ══════════════════════════════════
+   PRINT BUTTON — FLOATING
+══════════════════════════════════ */
+.print-fab {
+  position: fixed;
+  bottom: 32px;
+  left: 32px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.print-btn {
+  width: 60px; height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FF9900, #ff6600);
+  border: none; cursor: pointer;
+  box-shadow: 0 6px 28px rgba(255,153,0,0.55), 0 2px 8px rgba(0,0,0,0.4);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px;
+  transition: transform .2s, box-shadow .2s;
+  animation: fabPulse 3s ease-in-out infinite;
+}
+@keyframes fabPulse {
+  0%,100% { box-shadow: 0 6px 28px rgba(255,153,0,0.55), 0 0 0 0 rgba(255,153,0,0.3); }
+  50%      { box-shadow: 0 6px 28px rgba(255,153,0,0.55), 0 0 0 12px rgba(255,153,0,0); }
+}
+.print-btn:hover {
+  transform: scale(1.1) translateY(-2px);
+  box-shadow: 0 10px 36px rgba(255,153,0,0.7), 0 2px 8px rgba(0,0,0,0.4);
+  animation: none;
+}
+.print-btn:active { transform: scale(0.96); }
+.print-label {
+  background: rgba(10,22,40,0.92);
+  border: 1px solid rgba(255,153,0,0.3);
+  color: var(--orange);
+  font-family: 'Cairo', sans-serif;
+  font-size: 11px; font-weight: 700;
+  padding: 4px 12px; border-radius: 20px;
+  white-space: nowrap;
+  letter-spacing: .5px;
+}
+
+/* ══════════════════════════════════
+   @PRINT — PDF STYLES
+══════════════════════════════════ */
+@media print {
+  /* Page setup — A4 */
+  @page {
+    size: A4 portrait;
+    margin: 18mm 16mm 18mm 16mm;
+  }
+  @page :first {
+    margin-top: 10mm;
+  }
+
+  /* Hide browser UI & FAB */
+  .print-fab { display: none !important; }
+  body::before { display: none !important; }
+
+  /* Override dark theme → clean dark-on-white PDF */
+  :root {
+    --bg:     #050D1A;
+    --bg2:    #0d1a2e;
+    --bg3:    #111f35;
+    --orange: #cc7700;
+    --green:  #007744;
+    --blue:   #0066aa;
+    --red:    #aa2222;
+    --purple: #6622aa;
+    --text:   #111111;
+    --text2:  #444444;
+    --border: rgba(180,100,0,0.4);
+    --border2:rgba(0,0,0,0.12);
+  }
+
+  html, body {
+    background: #ffffff !important;
+    color: #111111 !important;
+    font-size: 11pt;
+    line-height: 1.6;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .page-wrap { max-width: 100% !important; padding: 0 !important; }
+
+  /* Cover */
+  .cover {
+    background: #050D1A !important;
+    color: white !important;
+    padding: 32pt 24pt !important;
+    border-radius: 0 !important;
+    page-break-after: always;
+    margin-bottom: 0 !important;
+  }
+  .cover-glow { display: none; }
+  .cover h1 { color: white !important; font-size: 24pt !important; }
+  .cover h2 { color: #FF9900 !important; }
+  .cover-tag { background: rgba(255,153,0,0.2) !important; color: #FF9900 !important; }
+  .author-card {
+    background: rgba(255,255,255,0.07) !important;
+    border-color: rgba(255,255,255,0.15) !important;
+  }
+  .author-card .name { color: white !important; }
+  .author-card a { color: #88ccff !important; }
+
+  /* TOC */
+  .toc {
+    background: #f8f9fc !important;
+    border: 1.5pt solid #FF9900 !important;
+    border-radius: 8pt !important;
+    page-break-after: avoid;
+    margin-bottom: 24pt !important;
+  }
+  .toc-title { color: #cc7700 !important; }
+  .toc ol li a { color: #333 !important; }
+  .toc ol li::before { background: rgba(255,153,0,.15) !important; color: #cc7700 !important; border-color: rgba(204,119,0,.3) !important; }
+
+  /* Section headers */
+  .section { margin-bottom: 28pt !important; page-break-inside: avoid; }
+  .section-header { border-bottom-color: rgba(204,119,0,0.35) !important; }
+  .section-num { background: #FF9900 !important; color: #000 !important; box-shadow: none !important; }
+  .section-title { color: #111 !important; font-size: 15pt !important; }
+
+  /* Typography */
+  p { color: #1a1a1a !important; font-size: 10.5pt !important; line-height: 1.85 !important; }
+  .subsection-title { color: #cc7700 !important; font-size: 11.5pt !important; }
+  .subsection-title::before { background: #cc7700 !important; }
+
+  /* Def box */
+  .def-box {
+    background: #fffbf0 !important;
+    border-color: #FF9900 !important;
+    border-right-color: #FF9900 !important;
+    color: #1a1a1a !important;
+    page-break-inside: avoid;
+  }
+  .def-box .def-label { color: #cc7700 !important; }
+
+  /* Info box */
+  .info-box {
+    background: #f0f8ff !important;
+    border-color: #0066aa !important;
+    border-right-color: #0066aa !important;
+    color: #003366 !important;
+    page-break-inside: avoid;
+  }
+  .info-box .box-label { color: #0066aa !important; }
+
+  /* Highlight box */
+  .highlight-box {
+    background: #fffbf0 !important;
+    border-color: rgba(204,119,0,.4) !important;
+    color: #1a1a1a !important;
+    page-break-inside: avoid;
+  }
+
+  /* Rules box */
+  .rules-box {
+    background: #fafff8 !important;
+    border-color: rgba(204,119,0,.3) !important;
+    page-break-inside: avoid;
+  }
+  .rules-box .box-label { color: #cc7700 !important; }
+  .rules-box ol li { color: #1a1a1a !important; }
+  .rules-box ol li::before { background: #FF9900 !important; color: #000 !important; }
+
+  /* Cards */
+  .card, .level-card, .stat-card, .author-card {
+    background: #f8f9fc !important;
+    border-color: rgba(0,0,0,0.12) !important;
+    break-inside: avoid;
+  }
+  .card .card-title { color: #111 !important; }
+  .card p { color: #444 !important; }
+  .card .card-tag { background: rgba(255,153,0,.12) !important; color: #cc7700 !important; }
+
+  .level-card .lc-body h4 { color: #111 !important; }
+  .level-card .lc-body p  { color: #444 !important; }
+  .level-card .lc-body .example-tag { background: rgba(0,119,68,.08) !important; color: #006633 !important; }
+  .level-badge { background: rgba(255,153,0,.1) !important; border-color: rgba(204,119,0,.3) !important; }
+  .lv-num, .lv-label { color: #cc7700 !important; }
+
+  /* Stats */
+  .sv-orange { color: #cc7700 !important; }
+  .sv-green  { color: #007744 !important; }
+  .sv-blue   { color: #0066aa !important; }
+  .sv-purple { color: #6622aa !important; }
+  .stat-card .sl { color: #555 !important; }
+
+  /* Timeline */
+  .timeline::before { background: rgba(204,119,0,.35) !important; }
+  .tl-dot { background: #fff !important; border-color: #FF9900 !important; color: #cc7700 !important; }
+  .tl-content h4 { color: #cc7700 !important; }
+  .tl-content p  { color: #444 !important; }
+
+  /* Tables */
+  .comp-table th { background: #f0f2f5 !important; color: #444 !important; border-bottom-color: rgba(204,119,0,.4) !important; }
+  .comp-table td { color: #1a1a1a !important; border-bottom-color: rgba(0,0,0,.08) !important; }
+  .comp-table .row-label { color: #cc7700 !important; }
+  .comp-table-wrap { page-break-inside: avoid; }
+
+  /* Providers */
+  .provider-card { background: #f8f9fc !important; border-color: rgba(0,0,0,0.1) !important; page-break-inside: avoid; }
+  .pc-name { color: #111 !important; }
+  .pc-share { color: #666 !important; }
+  .pc-rank { background: rgba(255,153,0,.12) !important; color: #cc7700 !important; }
+  .provider-card p { color: #444 !important; }
+  .pc-b1 { background: rgba(255,153,0,.1) !important; color: #996600 !important; }
+  .pc-b2 { background: rgba(0,102,170,.08) !important; color: #005599 !important; }
+  .pc-b3 { background: rgba(102,34,170,.08) !important; color: #551188 !important; }
+
+  /* Region box */
+  .region-box { background: #f8f9fc !important; border-color: rgba(204,119,0,.3) !important; page-break-inside: avoid; }
+  .region-box .rb-header { background: rgba(255,153,0,.1) !important; color: #cc7700 !important; }
+  .ri-body h5 { color: #111 !important; }
+  .ri-body p  { color: #555 !important; }
+  .region-item { border-bottom-color: rgba(0,0,0,.08) !important; }
+
+  /* Analogy box */
+  .analogy-box { background: #fffbf2 !important; border-color: rgba(204,119,0,.3) !important; page-break-inside: avoid; }
+  .ab-label { color: #cc7700 !important; }
+  .analogy-body p { color: #1a1a1a !important; }
+
+  /* Threat list */
+  .threat-item { background: #fff5f5 !important; border-right-color: #cc3333 !important; border-color: rgba(180,0,0,.15) !important; page-break-inside: avoid; }
+  .threat-item h5 { color: #aa1111 !important; }
+  .threat-item p  { color: #555 !important; }
+
+  /* Char items */
+  .char-item { background: #f8f9fc !important; border-color: rgba(0,0,0,.08) !important; page-break-inside: avoid; }
+  .char-num { background: #FF9900 !important; color: #000 !important; }
+  .char-body h5 { color: #111 !important; }
+  .char-body p  { color: #555 !important; }
+
+  /* Summary */
+  .sl-item { background: #f8f9fc !important; border-color: rgba(0,0,0,.08) !important; color: #1a1a1a !important; page-break-inside: avoid; }
+  .sl-dot { background: #FF9900 !important; }
+
+  /* Footer */
+  .page-footer { border-top-color: rgba(0,0,0,.1) !important; color: #666 !important; }
+  .page-footer a { color: #0066aa !important; }
+
+  /* Page breaks */
+  #s1, #s2, #s3 { page-break-before: auto; }
+  #s4, #s5      { page-break-before: always; }
+  #s6, #s7      { page-break-before: always; }
+  #s8, #s9      { page-break-before: always; }
+  #summary      { page-break-before: always; }
+
+  /* Running header on each page */
+  .page-wrap::before {
+    content: 'الحوسبة السحابية الحكومية · المحاضرة الرابعة · برنامج القيادة الرقمية';
+    display: block;
+    font-family: 'Cairo', sans-serif;
+    font-size: 8pt;
+    color: #999;
+    text-align: center;
+    padding-bottom: 8pt;
+    border-bottom: 1pt solid #ddd;
+    margin-bottom: 16pt;
+    direction: rtl;
+  }
+}
+
+</style>
+
+<style>
+/* ════ TAB NAVIGATION SYSTEM ════ */
+*, *::before, *::after { box-sizing: border-box; }
+
+.tab-bar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 10000;
+  background: rgba(4,8,15,0.97);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(255,153,0,0.2);
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  height: 54px;
+  gap: 2px;
+  box-shadow: 0 2px 24px rgba(0,0,0,0.7);
+}
+
+.tab-logo {
+  display: flex; align-items: center; gap: 8px;
+  padding-left: 12px; margin-left: 8px;
+  border-left: 1px solid rgba(255,153,0,0.15);
+  flex-shrink: 0;
+}
+.tab-logo .tl-icon { font-size: 18px; }
+.tab-logo .tl-text {
+  font-family:'Cairo',sans-serif; font-size:10px; font-weight:800;
+  color:rgba(255,153,0,0.7); letter-spacing:1px; line-height:1.3;
+}
+@media(max-width:500px){.tab-logo .tl-text{display:none;}}
+
+.tab-btn-nav {
+  display: flex; align-items: center; gap: 7px;
+  padding: 0 12px;
+  height: 100%;
+  border: none; background: none;
+  color: #5a6a7a;
+  font-family:'Cairo',sans-serif; font-size:12.5px; font-weight:700;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: all .2s;
+  white-space: nowrap; flex-shrink: 0;
+  letter-spacing: .2px;
+}
+.tab-btn-nav:hover { color: #ccc; }
+.tab-btn-nav.active { color: #FF9900; border-bottom-color: #FF9900; }
+.tab-btn-nav .ti { font-size:15px; }
+.tab-btn-nav .tl { }
+@media(max-width:440px){ .tab-btn-nav .tl { display:none; } .tab-btn-nav { padding:0 10px; } }
+
+.tab-spacer { flex:1; }
+
+.tab-print-btn {
+  display: flex; align-items: center; gap: 6px;
+  padding: 7px 14px;
+  background: rgba(255,153,0,0.1);
+  border: 1px solid rgba(255,153,0,0.28);
+  border-radius: 8px;
+  color: #FF9900;
+  font-family:'Cairo',sans-serif; font-size:12px; font-weight:700;
+  cursor: pointer;
+  transition: all .2s; flex-shrink:0;
+}
+.tab-print-btn:hover { background:rgba(255,153,0,0.2); box-shadow:0 0 16px rgba(255,153,0,0.25); }
+.tab-print-btn .plbl { display:none; }
+@media(min-width:560px){ .tab-print-btn .plbl { display:inline; } }
+
+/* Panel containers */
+.tab-panel-wrap { display:none; min-height:100vh; padding-top:54px; }
+.tab-panel-wrap.active { display:block; animation: tabFadeIn .25s ease; }
+@keyframes tabFadeIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
+
+#panel-lecture .page-wrap { padding-top:20px; }
+
+/* Print FAB */
+.print-fab { position:fixed; bottom:28px; left:28px; z-index:9999; display:flex; flex-direction:column; align-items:center; gap:6px; }
+.print-btn { width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#FF9900,#ff6600);border:none;cursor:pointer;box-shadow:0 4px 24px rgba(255,153,0,0.5);display:flex;align-items:center;justify-content:center;font-size:22px;transition:all .2s;animation:fabPulse 3s ease-in-out infinite; }
+@keyframes fabPulse { 0%,100%{box-shadow:0 4px 24px rgba(255,153,0,0.5),0 0 0 0 rgba(255,153,0,.25)} 50%{box-shadow:0 4px 24px rgba(255,153,0,0.5),0 0 0 10px rgba(255,153,0,0)} }
+.print-btn:hover { transform:scale(1.1) translateY(-2px); animation:none; box-shadow:0 8px 32px rgba(255,153,0,0.65); }
+.print-label { background:rgba(5,13,26,.9); border:1px solid rgba(255,153,0,.3); color:#FF9900; font-family:'Cairo',sans-serif; font-size:10px;font-weight:700; padding:3px 10px; border-radius:20px; white-space:nowrap; }
+
+/* Global toast */
+#g-toast { position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:rgba(10,22,40,0.95);border:1px solid rgba(255,153,0,.25);color:#e0ddd5;padding:10px 22px;border-radius:30px;font-family:'Cairo',sans-serif;font-size:13px;font-weight:600;transition:transform .35s;z-index:99999;white-space:nowrap;box-shadow:0 6px 28px rgba(0,0,0,.5);pointer-events:none; }
+#g-toast.show { transform:translateX(-50%) translateY(0); }
+
+/* Print styles */
+@media print {
+  .tab-bar,.print-fab,#g-toast { display:none!important; }
+  #panel-dt,#panel-cs { display:none!important; }
+  #panel-lecture { display:block!important; padding-top:0!important; }
+}
+</style>
+
+<style>
+/* ════ DT SIMULATOR STYLES (namespaced) ════ */
+.tab-ns-dt { font-family:'Cairo',sans-serif; background:#04080f; min-height:calc(100vh - 54px); direction:rtl; overflow-x:hidden; position:relative; }
+
+:root {
+  --bg: #04080f;
+  --orange: #FF9900;
+  --green: #00e676;
+  --blue: #2196f3;
+  --purple: #9c27b0;
+  --cyan: #00bcd4;
+  --red: #f44336;
+  --text: #e0ddd5;
+  --dim: #6b7a8d;
+
+  /* Phase colors */
+  --p0: #607d8b;   /* قبل الرقمنة */
+  --p1: #ff9800;   /* رقمنة */
+  --p2: #2196f3;   /* رقمية */
+  --p3: #9c27b0;   /* تحول رقمي */
+  --p4: #00bcd4;   /* سحابة */
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Cairo',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  direction:rtl;
+  overflow-x:hidden;
+}
+
+/* ── GRID BACKGROUND ── */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background-image:
+    linear-gradient(rgba(255,153,0,.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,153,0,.04) 1px,transparent 1px);
+  background-size:40px 40px;
+  pointer-events:none;z-index:0;
+}
+
+/* ── HERO ── */
+.hero{
+  position:relative;z-index:1;
+  text-align:center;
+  padding:60px 20px 40px;
+  max-width:800px;
+  margin:0 auto;
+}
+.hero-tag{
+  display:inline-block;
+  border:1px solid rgba(255,153,0,.4);
+  color:var(--orange);
+  font-size:11px;font-weight:700;
+  padding:5px 18px;border-radius:30px;
+  background:rgba(255,153,0,.08);
+  margin-bottom:20px;letter-spacing:2px;
+}
+.hero h1{
+  font-size:clamp(26px,6vw,52px);
+  font-weight:900;line-height:1.2;
+  margin-bottom:14px;
+}
+.hero h1 span{ color:var(--orange); }
+.hero p{
+  font-size:15px;color:var(--dim);
+  max-width:540px;margin:0 auto 30px;
+  line-height:1.8;
+}
+
+/* ── PHASE RAIL ── */
+.phase-rail{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:0;
+  max-width:780px;
+  margin:0 auto 50px;
+  padding:0 20px;
+  flex-wrap:nowrap;
+  overflow-x:auto;
+}
+.rail-stop{
+  display:flex;flex-direction:column;align-items:center;
+  gap:8px;cursor:pointer;flex:1;min-width:80px;
+  transition:transform .2s;
+}
+.rail-stop:hover{transform:translateY(-3px);}
+.rail-dot{
+  width:48px;height:48px;border-radius:50%;
+  border:3px solid var(--c,#444);
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;
+  background:rgba(0,0,0,.5);
+  transition:all .4s;
+  position:relative;
+}
+.rail-dot.lit{
+  background:var(--c);
+  box-shadow:0 0 20px var(--c);
+}
+.rail-dot.lit::after{
+  content:'';position:absolute;
+  inset:-6px;border-radius:50%;
+  border:2px solid var(--c);
+  opacity:.4;animation:ripple 2s infinite;
+}
+@keyframes ripple{0%{transform:scale(1);opacity:.4}100%{transform:scale(1.6);opacity:0}}
+.rail-label{font-size:10px;font-weight:700;color:var(--dim);text-align:center;line-height:1.3;}
+.rail-label.lit{color:var(--c);}
+.rail-line{
+  flex:1;height:3px;
+  background:linear-gradient(90deg,var(--from),var(--to));
+  min-width:20px;margin-bottom:28px;
+  opacity:.3;
+  transition:opacity .4s;
+}
+.rail-line.lit{opacity:1;}
+
+/* ── SECTION WRAPPER ── */
+.section{
+  max-width:860px;margin:0 auto 60px;
+  padding:0 20px;
+  position:relative;z-index:1;
+}
+
+/* ── PHASE CARD ── */
+.phase-card{
+  border-radius:24px;overflow:hidden;
+  border:1px solid rgba(255,255,255,.07);
+  background:rgba(255,255,255,.02);
+  transition:all .3s;
+}
+.phase-card:hover{
+  border-color:var(--c,.3);
+  box-shadow:0 0 40px rgba(0,0,0,.4);
+}
+.phase-header{
+  padding:30px 28px 24px;
+  background:linear-gradient(135deg,rgba(0,0,0,.6),rgba(0,0,0,.2));
+  border-bottom:1px solid rgba(255,255,255,.06);
+  position:relative;overflow:hidden;
+}
+.phase-header::before{
+  content:'';position:absolute;
+  top:-40px;left:-40px;
+  width:200px;height:200px;
+  border-radius:50%;
+  background:radial-gradient(circle,var(--c),transparent 70%);
+  opacity:.12;pointer-events:none;
+}
+.phase-era{
+  font-size:11px;font-weight:700;
+  color:var(--c);letter-spacing:2px;
+  margin-bottom:8px;
+}
+.phase-title{
+  font-size:clamp(20px,4vw,30px);
+  font-weight:900;color:#fff;
+  margin-bottom:6px;
+}
+.phase-sub{font-size:13px;color:var(--dim);line-height:1.7;}
+.phase-icon-bg{
+  position:absolute;left:24px;top:50%;
+  transform:translateY(-50%);
+  font-size:64px;opacity:.12;
+  pointer-events:none;
+}
+
+/* tabs inside card */
+.phase-tabs{
+  display:flex;border-bottom:1px solid rgba(255,255,255,.06);
+  overflow-x:auto;
+}
+.tab-btn{
+  flex:1;padding:14px 12px;
+  font-family:'Cairo',sans-serif;
+  font-size:12px;font-weight:700;
+  color:var(--dim);
+  background:none;border:none;cursor:pointer;
+  border-bottom:2px solid transparent;
+  transition:all .2s;white-space:nowrap;
+  min-width:80px;
+}
+.tab-btn.active{color:var(--c);border-bottom-color:var(--c);}
+.tab-btn:hover{color:var(--text);}
+
+.tab-panel{display:none;padding:24px 28px 28px;}
+.tab-panel.active{display:block;animation:fadeIn .3s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* content inside tabs */
+.def-block{
+  background:rgba(255,255,255,.03);
+  border-right:3px solid var(--c);
+  border-radius:0 12px 12px 0;
+  padding:16px 20px;
+  margin-bottom:16px;
+  font-size:14px;line-height:1.9;
+}
+.def-block strong{color:var(--c);}
+
+.feature-list{display:flex;flex-direction:column;gap:10px;}
+.feature-item{
+  display:flex;align-items:flex-start;gap:14px;
+  background:rgba(255,255,255,.03);
+  border-radius:12px;padding:14px 16px;
+}
+.feature-item .fi-ico{font-size:22px;flex-shrink:0;margin-top:1px;}
+.feature-item .fi-body h4{font-size:14px;font-weight:700;color:#fff;margin-bottom:3px;}
+.feature-item .fi-body p{font-size:12px;color:var(--dim);line-height:1.6;}
+
+.example-box{
+  background:linear-gradient(135deg,rgba(0,0,0,.5),rgba(0,0,0,.2));
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:16px;padding:20px;
+  margin-bottom:14px;
+}
+.example-box h4{
+  font-size:13px;font-weight:700;
+  color:var(--c);margin-bottom:12px;
+  padding-bottom:8px;
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.example-row{display:flex;align-items:center;gap:12px;margin-bottom:8px;}
+.ex-before{
+  flex:1;background:rgba(244,67,54,.1);
+  border-radius:8px;padding:8px 12px;
+  font-size:12px;color:#ef9a9a;
+}
+.ex-arrow{color:var(--c);font-size:18px;flex-shrink:0;}
+.ex-after{
+  flex:1;background:rgba(0,230,118,.1);
+  border-radius:8px;padding:8px 12px;
+  font-size:12px;color:#a5d6a7;
+}
+
+/* metric cards */
+.metrics-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:20px;}
+.metric-card{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:14px;padding:16px 14px;
+  text-align:center;
+}
+.metric-card .mv{
+  font-size:28px;font-weight:900;
+  color:var(--c);line-height:1;
+  margin-bottom:4px;
+}
+.metric-card .ml{font-size:11px;color:var(--dim);}
+
+/* challenge */
+.challenge-box{
+  background:rgba(255,153,0,.06);
+  border:1px solid rgba(255,153,0,.2);
+  border-radius:14px;padding:20px;
+  margin-bottom:16px;
+}
+.challenge-box h4{font-size:14px;font-weight:700;color:var(--orange);margin-bottom:12px;}
+.challenge-options{display:flex;flex-direction:column;gap:8px;}
+.ch-opt{
+  background:rgba(255,255,255,.04);
+  border:2px solid rgba(255,255,255,.08);
+  border-radius:10px;padding:12px 16px;
+  cursor:pointer;font-family:'Cairo',sans-serif;
+  font-size:13px;color:var(--text);
+  text-align:right;transition:all .2s;
+}
+.ch-opt:hover{border-color:rgba(255,153,0,.4);}
+.ch-opt.correct{border-color:var(--green);background:rgba(0,230,118,.08);color:var(--green);}
+.ch-opt.wrong{border-color:var(--red);background:rgba(244,67,54,.08);color:#ef9a9a;}
+.ch-feedback{
+  margin-top:12px;padding:12px 16px;
+  border-radius:10px;font-size:13px;
+  display:none;line-height:1.7;
+}
+.ch-feedback.show{display:block;}
+.ch-feedback.ok{background:rgba(0,230,118,.1);color:var(--green);border:1px solid rgba(0,230,118,.2);}
+.ch-feedback.no{background:rgba(244,67,54,.1);color:#ef9a9a;border:1px solid rgba(244,67,54,.2);}
+
+/* compare table */
+.compare-table{width:100%;border-collapse:collapse;font-size:13px;}
+.compare-table th{
+  padding:10px 14px;
+  background:rgba(255,255,255,.05);
+  font-weight:700;color:var(--dim);
+  font-size:11px;letter-spacing:1px;
+}
+.compare-table td{
+  padding:10px 14px;
+  border-bottom:1px solid rgba(255,255,255,.05);
+}
+.compare-table tr:hover td{background:rgba(255,255,255,.02);}
+.ct-stage{font-weight:700;}
+.ct-c0{color:var(--p0);}
+.ct-c1{color:var(--p1);}
+.ct-c2{color:var(--p2);}
+.ct-c3{color:var(--p3);}
+.ct-c4{color:var(--p4);}
+
+/* next button */
+.next-btn{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  background:var(--c);
+  color:#000;font-family:'Cairo',sans-serif;
+  font-size:15px;font-weight:700;
+  border:none;border-radius:14px;
+  padding:16px 32px;cursor:pointer;
+  margin:24px auto 0;
+  min-height:52px;width:100%;max-width:320px;
+  transition:all .2s;
+  box-shadow:0 4px 20px rgba(0,0,0,.3);
+}
+.next-btn:hover{filter:brightness(1.15);transform:translateY(-2px);}
+
+/* JOURNEY PROGRESS */
+.journey-bar{
+  max-width:860px;margin:0 auto 16px;
+  padding:0 20px;
+  display:flex;align-items:center;gap:12px;
+}
+.jb-label{font-size:12px;color:var(--dim);white-space:nowrap;}
+.jb-track{flex:1;height:6px;background:rgba(255,255,255,.08);border-radius:6px;overflow:hidden;}
+.jb-fill{height:100%;background:linear-gradient(90deg,var(--p1),var(--p2),var(--p3),var(--p4));border-radius:6px;transition:width .8s ease;}
+.jb-pct{font-size:12px;font-weight:700;color:var(--orange);white-space:nowrap;}
+
+/* final summary */
+.final-wrap{
+  max-width:860px;margin:0 auto 80px;
+  padding:0 20px;
+  position:relative;z-index:1;
+  display:none;
+}
+.final-wrap.show{display:block;animation:fadeIn .5s ease;}
+.final-card{
+  background:linear-gradient(135deg,rgba(0,188,212,.06),rgba(156,39,176,.06));
+  border:1px solid rgba(0,188,212,.2);
+  border-radius:24px;padding:40px 28px;
+  text-align:center;
+}
+.final-card h2{font-size:clamp(22px,5vw,36px);font-weight:900;color:#fff;margin-bottom:8px;}
+.final-card .fc-sub{font-size:14px;color:var(--dim);margin-bottom:30px;}
+.stages-summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:30px;}
+.ss-card{
+  border-radius:14px;padding:18px 14px;
+  text-align:center;
+  border:1px solid rgba(255,255,255,.1);
+}
+.ss-card .ss-ico{font-size:32px;margin-bottom:8px;}
+.ss-card .ss-name{font-size:12px;font-weight:700;margin-bottom:4px;}
+.ss-card .ss-desc{font-size:11px;color:var(--dim);line-height:1.5;}
+
+.score-ring{
+  width:120px;height:120px;
+  border-radius:50%;
+  background:conic-gradient(var(--cyan) 0deg,var(--cyan) calc(var(--pct)*3.6deg),rgba(255,255,255,.06) calc(var(--pct)*3.6deg));
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 20px;
+  position:relative;
+}
+.score-ring::before{
+  content:'';position:absolute;
+  inset:10px;border-radius:50%;
+  background:var(--bg);
+}
+.score-inner{position:relative;z-index:1;text-align:center;}
+.score-num{font-size:28px;font-weight:900;color:var(--cyan);}
+.score-lbl{font-size:10px;color:var(--dim);}
+
+.btn-restart{
+  background:var(--cyan);color:#000;
+  font-family:'Cairo',sans-serif;
+  font-size:15px;font-weight:700;
+  border:none;border-radius:14px;
+  padding:16px 40px;cursor:pointer;
+  transition:all .2s;min-height:52px;
+}
+.btn-restart:hover{filter:brightness(1.1);transform:translateY(-2px);}
+
+/* TOAST */
+.toast{
+  position:fixed;bottom:28px;left:50%;
+  transform:translateX(-50%) translateY(100px);
+  background:#1a1a2e;border:1px solid rgba(255,255,255,.15);
+  color:var(--text);padding:12px 24px;
+  border-radius:30px;font-size:13px;font-weight:600;
+  transition:transform .4s;z-index:9999;
+  white-space:nowrap;box-shadow:0 8px 30px rgba(0,0,0,.5);
+}
+.toast.show{transform:translateX(-50%) translateY(0);}
+
+/* KEY CONCEPT PILL */
+.concept-pill{
+  display:inline-block;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:20px;padding:4px 14px;
+  font-size:12px;color:var(--text);
+  margin:3px;
+}
+
+@media(max-width:520px){
+  .phase-header{padding:22px 18px;}
+  .tab-panel{padding:18px 16px 22px;}
+  .example-row{flex-direction:column;}
+  .ex-arrow{transform:rotate(90deg);}
+}
+
+</style>
+
+<style>
+/* ════ CLOUD SIMULATOR STYLES (namespaced) ════ */
+.tab-ns-cs { font-family:'Cairo',sans-serif; background:#050D1A; min-height:calc(100vh - 54px); direction:rtl; overflow-x:hidden; }
+
+  :root {
+    --bg: #050D1A;
+    --bg2: #0a1628;
+    --bg3: #0f1f3d;
+    --orange: #FF9900;
+    --orange-dim: rgba(255,153,0,0.15);
+    --green: #00e676;
+    --red: #E24B4A;
+    --text: #D3D1C7;
+    --text-dim: #7a8899;
+    --blue: #1a8fe3;
+    --border: rgba(255,153,0,0.2);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Cairo', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+    direction: rtl;
+  }
+
+  /* Particle canvas */
+  #particles { position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: 0.4; }
+
+  .screen { position: relative; z-index: 1; min-height: 100vh; padding: 20px 16px 40px; display: none; }
+  .screen.active { display: block; }
+
+  /* ===== HEADER ===== */
+  .header {
+    text-align: center;
+    padding: 30px 0 20px;
+  }
+  .header .badge {
+    display: inline-block;
+    background: var(--orange-dim);
+    border: 1px solid var(--border);
+    color: var(--orange);
+    font-size: 11px;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+    letter-spacing: 1px;
+  }
+  .header h1 {
+    font-size: clamp(22px, 5vw, 38px);
+    font-weight: 900;
+    background: linear-gradient(135deg, #fff 0%, var(--orange) 60%, #ff6600 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.3;
+    margin-bottom: 8px;
+  }
+  .header p {
+    color: var(--text-dim);
+    font-size: 14px;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  /* ===== CARDS ===== */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    max-width: 960px;
+    margin: 30px auto 0;
+  }
+  .org-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 22px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .org-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--orange-dim), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .org-card:hover { transform: translateY(-4px); border-color: var(--orange); box-shadow: 0 8px 40px rgba(255,153,0,0.2); }
+  .org-card:hover::before { opacity: 1; }
+  .org-card .icon { font-size: 48px; margin-bottom: 14px; display: block; }
+  .org-card h3 { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+  .org-card p { font-size: 13px; color: var(--text-dim); line-height: 1.7; margin-bottom: 16px; }
+  .level-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .level-beginner { background: rgba(0,230,118,0.15); color: var(--green); border: 1px solid rgba(0,230,118,0.3); }
+  .level-mid { background: rgba(26,143,227,0.15); color: var(--blue); border: 1px solid rgba(26,143,227,0.3); }
+  .level-adv { background: var(--orange-dim); color: var(--orange); border: 1px solid var(--border); }
+
+  /* ===== PROGRESS BAR ===== */
+  .progress-wrap {
+    max-width: 700px;
+    margin: 0 auto 30px;
+    padding: 0 8px;
+  }
+  .progress-steps {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    gap: 4px;
+  }
+  .step-dot {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+  .step-dot .dot {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--bg3);
+    border: 2px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-dim);
+    transition: all 0.4s;
+  }
+  .step-dot.done .dot { background: var(--orange); border-color: var(--orange); color: #000; }
+  .step-dot.active .dot { background: var(--bg3); border-color: var(--orange); color: var(--orange); box-shadow: 0 0 12px rgba(255,153,0,0.4); }
+  .step-dot .label { font-size: 10px; color: var(--text-dim); text-align: center; display: none; }
+  @media(min-width: 480px) { .step-dot .label { display: block; } }
+  .step-dot.done .label, .step-dot.active .label { color: var(--orange); }
+  .progress-bar-wrap {
+    height: 4px;
+    background: var(--bg3);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 6px;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--orange), #ffcc44);
+    border-radius: 4px;
+    transition: width 0.6s ease;
+  }
+
+  /* ===== STATION CARD ===== */
+  .station {
+    max-width: 700px;
+    margin: 0 auto;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 28px 22px;
+    animation: fadeUp 0.4s ease;
+  }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(20px) } to { opacity:1; transform:translateY(0) } }
+  .station h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--orange);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .station .subtitle { font-size: 13px; color: var(--text-dim); margin-bottom: 22px; }
+
+  /* diagnosis items */
+  .diag-item {
+    background: var(--bg3);
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .diag-item .ico { font-size: 24px; flex-shrink: 0; }
+  .diag-item .info h4 { font-size: 14px; font-weight: 600; color: #fff; }
+  .diag-item .info p { font-size: 12px; color: var(--text-dim); }
+  .diag-val {
+    margin-right: auto;
+    text-align: left;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--red);
+    white-space: nowrap;
+    min-width: 70px;
+    text-align: center;
+  }
+
+  /* mini bar chart */
+  .mini-chart { margin: 20px 0; }
+  .chart-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .chart-label { font-size: 12px; color: var(--text-dim); width: 90px; flex-shrink: 0; text-align: right; }
+  .chart-bar-bg { flex: 1; height: 22px; background: var(--bg3); border-radius: 6px; overflow: hidden; }
+  .chart-bar-fill {
+    height: 100%;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    padding-right: 8px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #000;
+    transition: width 1s ease;
+  }
+  .fill-red { background: linear-gradient(90deg, #E24B4A, #ff7070); }
+  .fill-orange { background: linear-gradient(90deg, #FF9900, #ffcc44); }
+  .fill-green { background: linear-gradient(90deg, #00e676, #00c853); }
+
+  /* choice cards */
+  .choices { display: flex; flex-direction: column; gap: 12px; }
+  .choice-card {
+    background: var(--bg3);
+    border: 2px solid transparent;
+    border-radius: 14px;
+    padding: 16px 18px;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+  }
+  .choice-card:hover { border-color: rgba(255,153,0,0.5); }
+  .choice-card.selected { border-color: var(--orange); background: var(--orange-dim); }
+  .choice-card.recommended::after {
+    content: '⭐ موصى به';
+    position: absolute;
+    top: 10px;
+    left: 12px;
+    background: var(--orange);
+    color: #000;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 10px;
+  }
+  .choice-card h4 { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+  .choice-card p { font-size: 12px; color: var(--text-dim); line-height: 1.6; }
+  .pros-cons { display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
+  .tag { font-size: 11px; padding: 2px 8px; border-radius: 10px; }
+  .tag-g { background: rgba(0,230,118,0.15); color: var(--green); }
+  .tag-r { background: rgba(226,75,74,0.15); color: var(--red); }
+
+  /* steps animation */
+  .steps-list { display: flex; flex-direction: column; gap: 0; }
+  .step-item {
+    display: flex;
+    gap: 14px;
+    opacity: 0;
+    transform: translateX(20px);
+    transition: all 0.5s ease;
+    padding-bottom: 20px;
+    position: relative;
+  }
+  .step-item.visible { opacity: 1; transform: translateX(0); }
+  .step-item .step-num {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--orange);
+    color: #000;
+    font-weight: 700;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+  .step-item::before {
+    content: '';
+    position: absolute;
+    right: 17px;
+    top: 36px;
+    bottom: 0;
+    width: 2px;
+    background: var(--border);
+  }
+  .step-item:last-child::before { display: none; }
+  .step-item .step-body h4 { font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 4px; }
+  .step-item .step-body p { font-size: 12px; color: var(--text-dim); }
+  .step-item .step-result {
+    margin-top: 8px;
+    background: rgba(0,230,118,0.1);
+    border: 1px solid rgba(0,230,118,0.2);
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 12px;
+    color: var(--green);
+    display: none;
+  }
+  .step-item.visible .step-result { display: block; }
+
+  /* results */
+  .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+  .compare-card {
+    background: var(--bg3);
+    border-radius: 14px;
+    padding: 16px;
+  }
+  .compare-card h5 {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-bottom: 12px;
+    text-align: center;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .metric-row { margin-bottom: 10px; }
+  .metric-row .label { font-size: 11px; color: var(--text-dim); margin-bottom: 3px; }
+  .metric-row .val { font-size: 16px; font-weight: 700; }
+  .val-bad { color: var(--red); }
+  .val-good { color: var(--green); }
+
+  /* certificate */
+  .certificate {
+    background: linear-gradient(135deg, var(--bg2), #0d1f3f);
+    border: 2px solid var(--orange);
+    border-radius: 20px;
+    padding: 30px 22px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .certificate::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 0%, rgba(255,153,0,0.1), transparent 60%);
+    pointer-events: none;
+  }
+  .certificate .cert-icon { font-size: 56px; margin-bottom: 10px; }
+  .certificate h3 { font-size: 22px; font-weight: 900; color: var(--orange); margin-bottom: 6px; }
+  .certificate .org-name { font-size: 16px; color: #fff; font-weight: 700; margin-bottom: 4px; }
+  .certificate .saving { font-size: 32px; font-weight: 900; color: var(--green); margin: 10px 0; }
+  .certificate p { font-size: 13px; color: var(--text-dim); line-height: 1.7; }
+
+  /* buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+    min-height: 48px;
+    min-width: 140px;
+  }
+  .btn-primary { background: var(--orange); color: #000; }
+  .btn-primary:hover { background: #ffaa20; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255,153,0,0.4); }
+  .btn-outline { background: transparent; border: 2px solid var(--border); color: var(--text); }
+  .btn-outline:hover { border-color: var(--orange); color: var(--orange); }
+  .btn-green { background: var(--green); color: #000; }
+  .btn-green:hover { background: #33ff99; transform: translateY(-2px); }
+
+  .btn-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px; justify-content: center; }
+
+  .nav-row {
+    display: flex;
+    gap: 12px;
+    justify-content: space-between;
+    margin-top: 24px;
+    flex-wrap: wrap;
+  }
+
+  /* info box */
+  .info-box {
+    background: rgba(26,143,227,0.1);
+    border: 1px solid rgba(26,143,227,0.3);
+    border-radius: 12px;
+    padding: 14px 16px;
+    font-size: 13px;
+    color: #a0d4f5;
+    margin-bottom: 16px;
+    line-height: 1.7;
+  }
+  .info-box strong { color: var(--blue); }
+
+  /* success toast */
+  .toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--green);
+    color: #000;
+    padding: 12px 24px;
+    border-radius: 30px;
+    font-weight: 700;
+    font-size: 14px;
+    transition: transform 0.4s ease;
+    z-index: 1000;
+    white-space: nowrap;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* animations */
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
+  .pulse { animation: pulse 2s infinite; }
+
+  @media(max-width: 480px) {
+    .compare-grid { grid-template-columns: 1fr; }
+    .station { padding: 20px 14px; }
+    .step-dot .label { font-size: 9px; }
+  }
+
+</style>
+
+</head>
+<body>
+
+<!-- ════ TAB BAR ════ -->
+<nav class="tab-bar">
+  <div class="tab-logo">
+    <span class="tl-icon">☁️</span>
+    <div class="tl-text">الحوسبة<br>السحابية</div>
+  </div>
+  <button class="tab-btn-nav active" id="nav-lecture" onclick="switchTab('lecture',this)">
+    <span class="ti">📖</span><span class="tl">المحاضرة</span>
+  </button>
+  <button class="tab-btn-nav" id="nav-dt" onclick="switchTab('dt',this)">
+    <span class="ti">🔄</span><span class="tl">محاكي التحول الرقمي</span>
+  </button>
+  <button class="tab-btn-nav" id="nav-cs" onclick="switchTab('cs',this)">
+    <span class="ti">🚀</span><span class="tl">محاكي السحابة</span>
+  </button>
+  <div class="tab-spacer"></div>
+  <button class="tab-print-btn" onclick="triggerPrint()">
+    🖨️ <span class="plbl">تصدير PDF</span>
+  </button>
+</nav>
+
+<!-- ════ PANEL 1 — LECTURE ════ -->
+<div class="tab-panel-wrap active" id="panel-lecture">
+<div class="page-wrap">
+
+<!-- ══════════════════════ COVER ══════════════════════ -->
+<div class="cover" id="top">
+  <div class="cover-glow"></div>
+  <div class="cover-tag">برنامج القيادة الرقمية — الدبلوم العالي</div>
+  <h1>الحوسبة السحابية الحكومية</h1>
+  <h2>المحاضرة الرابعة</h2>
+  <div class="authors">
+    <div class="author-card">
+      <div class="name">أ.م.د. أمير هادي</div>
+      <a href="mailto:amer.hadi@alshaab.edu.iq">amer.hadi@alshaab.edu.iq</a>
+    </div>
+    <div class="author-card">
+      <div class="name">أ.م.د. أحمد محسن هيلان</div>
+      <a href="mailto:ahmad.m.hailan@utq.edu.iq">ahmad.m.hailan@utq.edu.iq</a>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════ TOC ══════════════════════ -->
+<div class="toc">
+  <div class="toc-title">محتويات المحاضرة</div>
+  <ol>
+    <li><a href="#s1">تعريف الحوسبة ومكوناتها</a></li>
+    <li><a href="#s2">لماذا سُميت الحوسبة «سحابية»؟</a></li>
+    <li><a href="#s3">التعريف الرسمي للحوسبة السحابية — NIST</a></li>
+    <li><a href="#s4">فوائد الحوسبة السحابية</a></li>
+    <li><a href="#s5">أنواع الحوسبة السحابية</a></li>
+    <li><a href="#s6">نماذج الخدمة السحابية — IaaS وPaaS وSaaS</a></li>
+    <li><a href="#s7">البنية التحتية — مراكز البيانات والمناطق الجغرافية</a></li>
+    <li><a href="#s8">مزودو خدمة السحابة العالميون</a></li>
+    <li><a href="#s9">الأمن في السحابة</a></li>
+    <li><a href="#summary">الخلاصة والرسالة الأخيرة</a></li>
+  </ol>
+</div>
+
+<!-- ══════════════════════ SECTION 1 ══════════════════════ -->
+<div class="section" id="s1">
+  <div class="section-header">
+    <div class="section-num">١</div>
+    <div class="section-title">تعريف الحوسبة</div>
+  </div>
+
+  <p>قبل الحديث عن الحوسبة السحابية، لا بد أن يفهم الطالب ما هي الحوسبة أصلاً. الحوسبة ليست مجرد استخدام الحاسوب — بل هي منظومة متكاملة من العمليات المترابطة.</p>
+
+  <div class="def-box">
+    <span class="def-label">التعريف الأساسي</span>
+    الحوسبة هي عملية استقبال المعلومات ومعالجتها وتخزينها وإرسالها باستخدام الحاسوب.
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">مكونات نظام الحوسبة</div>
+    <p>يتكون أي نظام حوسبة من ستة عناصر رئيسية تعمل معاً بشكل متكامل ومتسلسل.</p>
+  </div>
+
+  <div class="cards-grid">
+    <div class="card">
+      <div class="card-icon">⌨️</div>
+      <div class="card-title">المدخلات</div>
+      <p>البيانات والأوامر التي يُدخلها المستخدم إلى النظام عبر لوحة المفاتيح أو الماوس أو الكاميرا أو الميكروفون.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🧠</div>
+      <div class="card-title">المعالج CPU</div>
+      <p>دماغ الحاسوب الذي ينفذ العمليات الحسابية والمنطقية. أبرز المصنّعين: Intel وAMD وApple.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">⚡</div>
+      <div class="card-title">الذاكرة العشوائية RAM</div>
+      <p>التخزين المؤقت السريع الذي يحتفظ بالبيانات قيد المعالجة فقط. تتراوح السعة في الأجهزة الحديثة بين 8 و32 جيجابايت.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">💾</div>
+      <div class="card-title">التخزين الدائم</div>
+      <p>يشمل الهارد ديسك وأقراص SSD وقواعد البيانات التي تحفظ الملفات والبرامج حتى بعد إيقاف الجهاز.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🌐</div>
+      <div class="card-title">الشبكة</div>
+      <p>تربط الأجهزة ببعضها وتتيح تبادل البيانات عبر شبكات LAN أو WAN أو الإنترنت.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🖥️</div>
+      <div class="card-title">المخرجات</div>
+      <p>ما يُعرض للمستخدم من نتائج كالشاشة والطابعة والتقارير.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════ SECTION 2 ══════════════════════ -->
+<div class="section" id="s2">
+  <div class="section-header">
+    <div class="section-num">٢</div>
+    <div class="section-title">لماذا سُميت الحوسبة «سحابية»؟</div>
+  </div>
+
+  <p>سؤال يطرحه كثير من المتدربين: لماذا اختاروا كلمة «سحابة» تحديداً لوصف هذه التقنية؟ الجواب يعود إلى عادة قديمة راسخة لدى مهندسي الشبكات والاتصالات.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">أصل التسمية</div>
+    <p>اعتاد مهندسو الشبكات منذ عقود على رسم الإنترنت في مخططاتهم التقنية على هيئة سحابة، لأن الإنترنت شبكة بالغة التعقيد لا يعرف أحد تفاصيلها الداخلية الكاملة. فكما أن السحابة في السماء تحمل في داخلها تفاصيل لا نراها، كذلك الإنترنت تخفي وراءها بنية تحتية ضخمة لا تظهر للمستخدم.</p>
+    <p>ولما ظهرت فكرة تقديم خدمات الحوسبة عبر تلك الشبكة الضخمة — أي الحوسبة عبر تلك السحابة — جاءت التسمية طبيعية ومنطقية. فالحوسبة السحابية هي ببساطة حوسبة تجري في مكان بعيد لا تراه ولا تعرف تفاصيله، مثل السحابة في السماء تماماً.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">التسلسل التاريخي لظهور المصطلح</div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot">1994</div>
+        <div class="tl-content">
+          <h4>شركة General Magic</h4>
+          <p>أول من استخدم كلمة «السحابة» للدلالة على الخدمات الرقمية البعيدة، حيث وظّفتها لوصف البيئة التي تتنقل فيها البرامج عبر الشبكة.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot">1996</div>
+        <div class="tl-content">
+          <h4>شركة Compaq</h4>
+          <p>وظّفت مصطلح Cloud Computing لأول مرة في وثيقة داخلية رسمية لتصف مستقبل الأعمال عبر الإنترنت.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot">2006</div>
+        <div class="tl-content">
+          <h4>Eric Schmidt — الرئيس التنفيذي لجوجل</h4>
+          <p>أعلن المصطلح رسمياً أمام مؤتمر صناعي عالمي قائلاً: «نسميه الحوسبة السحابية — ينبغي أن تكون البيانات والخدمات في سحابة ما»، فانتشر المصطلح بعدها انتشاراً واسعاً.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════ SECTION 3 ══════════════════════ -->
+<div class="section" id="s3">
+  <div class="section-header">
+    <div class="section-num">٣</div>
+    <div class="section-title">تعريف الحوسبة السحابية — NIST</div>
+  </div>
+
+  <p>يُعدّ تعريف معهد NIST الأمريكي للمعايير والتقنية التعريفَ الأكثر قبولاً واعتماداً على مستوى العالم، وقد صدر في الوثيقة الرسمية رقم SP 800-145 عام 2011 بعد مراجعة خمس عشرة مسودة.</p>
+
+  <div class="def-box">
+    <span class="def-label">التعريف الرسمي — NIST SP 800-145 · 2011</span>
+    الحوسبة السحابية هي نموذج يتيح الوصول الشبكي الملائم وفي أي وقت إلى مجموعة مشتركة من موارد الحوسبة القابلة للتهيئة — كالشبكات والسيرفرات والتخزين والتطبيقات والخدمات — بحيث يمكن توفيرها وتحريرها بأقل جهد إداري ممكن.
+  </div>
+
+  <div class="analogy-box">
+    <div class="analogy-icon">💡</div>
+    <div class="analogy-body">
+      <span class="ab-label">التشبيه الأوضح — الكهرباء</span>
+      <p>لفهم الحوسبة السحابية بسهولة، تخيّل الكهرباء في بيتك أو مكتبك. أنت لا تبني محطة كهربائية خاصة لتضيء غرفتك — تشترك مع شركة الكهرباء وتدفع فقط ما تستهلكه شهرياً، وحين تُغادر البيت تُطفئ الأضواء ويتوقف الدفع. الحوسبة السحابية تعمل بنفس المبدأ تماماً: لا تشتري سيرفرات بالملايين، بل تشترك مع مزود السحابة وتدفع فقط ما تستهلكه من موارد، وتُوقف الخدمة متى تريد.</p>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">الخصائص الخمس الأساسية — NIST</div>
+    <p>حدّد معهد NIST خمس خصائص جوهرية يجب توافرها جميعاً في أي خدمة لكي تُعدّ حوسبة سحابية حقيقية وليست مجرد استضافة تقليدية.</p>
+    <div class="chars-list">
+      <div class="char-item">
+        <div class="char-num">١</div>
+        <div class="char-body">
+          <h5>خدمة عند الطلب — On-demand Self-service</h5>
+          <p>الموارد تُطلب وتُوفَّر فوراً بدون الحاجة للتنسيق مع أي موظف أو انتظار موافقة.</p>
+        </div>
+      </div>
+      <div class="char-item">
+        <div class="char-num">٢</div>
+        <div class="char-body">
+          <h5>الوصول الواسع عبر الشبكة — Broad Network Access</h5>
+          <p>الخدمة تعمل على أي جهاز سواء كان حاسوباً أو هاتفاً أو تابلت.</p>
+        </div>
+      </div>
+      <div class="char-item">
+        <div class="char-num">٣</div>
+        <div class="char-body">
+          <h5>تجميع الموارد — Resource Pooling</h5>
+          <p>تُشارَك البنية التحتية بين آلاف العملاء في آنٍ واحد مما يخفض التكاليف بشكل كبير.</p>
+        </div>
+      </div>
+      <div class="char-item">
+        <div class="char-num">٤</div>
+        <div class="char-body">
+          <h5>المرونة السريعة — Rapid Elasticity</h5>
+          <p>النظام يتوسع تلقائياً حين يزيد الطلب ويتقلص حين ينخفض دون أي تدخل بشري.</p>
+        </div>
+      </div>
+      <div class="char-item">
+        <div class="char-num">٥</div>
+        <div class="char-body">
+          <h5>الخدمة القابلة للقياس — Measured Service</h5>
+          <p>تدفع بالضبط ما استهلكته لا أكثر ولا أقل، مثل عداد الكهرباء أو الماء تماماً.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════ SECTION 4 ══════════════════════ -->
+<div class="section" id="s4">
+  <div class="section-header">
+    <div class="section-num">٤</div>
+    <div class="section-title">فوائد الحوسبة السحابية</div>
+  </div>
+
+  <p>الفوائد الحقيقية تُقاس بالأرقام لا بالكلام. فيما يلي أبرز فوائد الحوسبة السحابية مدعومةً بأرقام موثقة من واقع حكومات عربية.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">أولاً — توفير التكاليف</div>
+    <p>التحول للسحابة يحوّل الإنفاق من شراء أصول رأسمالية ثابتة ومكلفة — كالسيرفرات وأجهزة التبريد والكهرباء وصيانتها — إلى دفعات تشغيلية مرنة تدفعها فقط حين تحتاج الخدمة.</p>
+    <div class="stat-row">
+      <div class="stat-card"><div class="sv sv-orange">5.6B</div><div class="sl">ريال سعودي وُفِّرت من المنصة الوطنية السعودية</div></div>
+      <div class="stat-card"><div class="sv sv-green">1.5B$</div><div class="sl">دولار أمريكي ما يعادله الرقم أعلاه</div></div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">ثانياً — المرونة والتوسع الفوري</div>
+    <p>في النظام التقليدي، إطلاق سيرفر جديد يستغرق أسابيع من الإجراءات: الشراء والشحن والتركيب والتهيئة والاختبار. في السحابة، تُطلق سيرفراً جديداً في غضون دقائق معدودة بضغطة زر. وزارة الصحة السعودية استفادت من هذه المرونة لتوسيع خدمات التطبيب عن بعد بشكل سريع خلال جائحة كوفيد-19 دون الحاجة لشراء أي معدات جديدة.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">ثالثاً — الوصول من أي مكان وأي جهاز</div>
+    <p>موظفو الدائرة في العاصمة أو في المحافظات أو في الخارج — يصلون لنفس البيانات ونفس التطبيقات وبنفس مستوى الأمان، طالما عندهم اتصال بالإنترنت. هذا غيّر كلياً مفهوم العمل الحكومي وفتح آفاقاً جديدة لتقديم الخدمات بعيداً عن قيود المكان.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">رابعاً — الأمن المتقدم والموحّد</div>
+    <p>بدلاً من إدارة الأمن بشكل منفصل في كل دائرة بموظفين مختلفين ومستويات متفاوتة، توفر السحابة إطار أمن سيبراني موحداً ومتكاملاً تُطبَّق فيه أفضل الممارسات العالمية تلقائياً على مدار الساعة من خلال فرق متخصصة لا تنام.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">خامساً — الاستدامة البيئية</div>
+    <div class="stat-row">
+      <div class="stat-card"><div class="sv sv-green">64MW</div><div class="sl">انخفاض في استهلاك الطاقة — المنصة السعودية</div></div>
+      <div class="stat-card"><div class="sv sv-green">608K</div><div class="sl">طن CO₂ خُفِّض سنوياً</div></div>
+    </div>
+    <p>ذلك لأن السحابة تُشارك الموارد بين آلاف المؤسسات بدلاً من إهدار طاقة السيرفرات الخاملة في كل دائرة على حدة.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">سادساً — النمو الاقتصادي</div>
+    <div class="stat-row">
+      <div class="stat-card"><div class="sv sv-orange">124.8B$</div><div class="sl">حجم السوق السحابي السعودي المتوقع 2033</div></div>
+      <div class="stat-card"><div class="sv sv-blue">31.7%</div><div class="sl">معدل النمو السنوي — يتجاوز المتوسط العالمي</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════ SECTION 5 ══════════════════════ -->
+<div class="section" id="s5">
+  <div class="section-header">
+    <div class="section-num">٥</div>
+    <div class="section-title">أنواع الحوسبة السحابية</div>
+  </div>
+
+  <p>حدّد معهد NIST ثلاثة نماذج رئيسية لنشر الحوسبة السحابية، ولكل منها خصائصه ومتطلباته والسياق الذي يناسبه.</p>
+
+  <div class="level-cards">
+    <div class="level-card">
+      <div class="level-badge"><div class="lv-num">☁️</div><div class="lv-label">عامة</div></div>
+      <div class="lc-body">
+        <h4>السحابة العامة — Public Cloud</h4>
+        <p>البنية التحتية مملوكة ومُدارة من شركة خارجية متخصصة كـ AWS أو Microsoft Azure أو Google Cloud، وتُشارَك بين ملايين العملاء في آنٍ واحد على مستوى العالم. تمتاز بانخفاض التكلفة نسبياً والمرونة العالية في التوسع والتقليص، غير أن درجة التحكم فيها محدودة.</p>
+        <span class="example-tag">✅ الأنسب للتطبيقات غير الحساسة والخدمات الإلكترونية الموجهة للمواطنين</span>
+      </div>
+    </div>
+    <div class="level-card">
+      <div class="level-badge"><div class="lv-num">🔒</div><div class="lv-label">خاصة</div></div>
+      <div class="lc-body">
+        <h4>السحابة الخاصة — Private Cloud</h4>
+        <p>تُخصَّص البنية التحتية بالكامل لمؤسسة واحدة فقط، سواء كانت مستضافة داخل مبانيها أو لدى مزود خارجي بموجب عقد حصري. تمنح تحكماً كاملاً في البيانات والأمان والإعدادات.</p>
+        <span class="example-tag">✅ الأنسب للجهات الحكومية والقطاع المالي والبيانات بالغة الحساسية</span>
+      </div>
+    </div>
+    <div class="level-card">
+      <div class="level-badge"><div class="lv-num">🔀</div><div class="lv-label">هجينة</div></div>
+      <div class="lc-body">
+        <h4>السحابة الهجينة — Hybrid Cloud</h4>
+        <p>تجمع بين النوعين في منظومة متكاملة واحدة. البيانات الحساسة وجوهر العمليات الحيوية تبقى على السحابة الخاصة أو الأنظمة الداخلية، بينما التطبيقات الأقل حساسية والخدمات المقدمة للعموم تعمل على السحابة العامة. يحقق التوازن الأمثل بين الأمان والمرونة والكفاءة الاقتصادية.</p>
+        <span class="example-tag">✅ الأكثر انتشاراً في المؤسسات الحكومية الكبيرة</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════ SECTION 6 ══════════════════════ -->
+<div class="section" id="s6">
+  <div class="section-header">
+    <div class="section-num">٦</div>
+    <div class="section-title">نماذج الخدمة السحابية — IaaS وPaaS وSaaS</div>
+  </div>
+
+  <p>تُقدِّم السحابة خدماتها على ثلاثة مستويات متدرجة. كلما ارتقينا في المستويات زادت سهولة الاستخدام وقلت المسؤوليات الإدارية وقلّ التحكم في المقابل.</p>
+
+  <div class="level-cards">
+    <div class="level-card">
+      <div class="level-badge"><div class="lv-num">01</div><div class="lv-label">IaaS</div></div>
+      <div class="lc-body">
+        <h4>البنية التحتية كخدمة — Infrastructure as a Service</h4>
+        <p>يوفر المزود للعميل الموارد الأساسية من سيرفرات افتراضية وتخزين وشبكات، ويتولى العميل بنفسه إدارة نظام التشغيل والتطبيقات وكل ما يعلوها. هذا المستوى يمنح أعلى درجة من التحكم لكنه يتطلب فريقاً تقنياً متقدماً.</p>
+        <span class="example-tag">🏛️ مثال: حكومة البحرين تستخدم AWS EC2 لاستضافة 85% من خدماتها الحكومية</span>
+      </div>
+    </div>
+    <div class="level-card">
+      <div class="level-badge"><div class="lv-num">02</div><div class="lv-label">PaaS</div></div>
+      <div class="lc-body">
+        <h4>المنصة كخدمة — Platform as a Service</h4>
+        <p>يوفر المزود بيئة تطوير كاملة وجاهزة تتضمن نظام التشغيل والأدوات البرمجية ومنصة التشغيل، ويتولى العميل كتابة التطبيقات وإدارة بياناتها فقط دون القلق عن أي شيء تحتها.</p>
+        <span class="example-tag">🏙️ مثال: حكومة دبي تستخدمه لتطبيقات مبادرة دبي بلا ورق</span>
+      </div>
+    </div>
+    <div class="level-card">
+      <div class="level-badge"><div class="lv-num">03</div><div class="lv-label">SaaS</div></div>
+      <div class="lc-body">
+        <h4>البرمجيات كخدمة — Software as a Service</h4>
+        <p>المزود يُدير كل شيء من الألف إلى الياء بما في ذلك التطبيق والبيانات ونظام التشغيل والبنية التحتية. المستخدم يفتح المتصفح ويستخدم التطبيق مباشرة بدون أي إعداد أو صيانة أو تحديثات يدوية. هذا ما تستخدمه معظم الجهات الحكومية يومياً بدون أن تدرك أنها على السحابة.</p>
+        <span class="example-tag">📧 أمثلة: Microsoft 365 للبريد والوثائق — Zoom وTeams للاجتماعات</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection" style="margin-top:28px">
+    <div class="subsection-title">المقارنة بين نماذج الخدمة</div>
+    <div class="comp-table-wrap">
+      <table class="comp-table">
+        <thead>
+          <tr>
+            <th>العنصر</th>
+            <th>IaaS</th>
+            <th>PaaS</th>
+            <th>SaaS</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="row-label">ما يديره المزود</td>
+            <td>البنية التحتية فقط</td>
+            <td>البنية + المنصة</td>
+            <td>كل شيء</td>
+          </tr>
+          <tr>
+            <td class="row-label">ما يديره العميل</td>
+            <td>نظام التشغيل والتطبيقات</td>
+            <td>التطبيقات والبيانات</td>
+            <td>لا شيء — يستخدم فقط</td>
+          </tr>
+          <tr>
+            <td class="row-label">درجة التحكم</td>
+            <td>عالية جداً</td>
+            <td>متوسطة</td>
+            <td>محدودة</td>
+          </tr>
+          <tr>
+            <td class="row-label">المناسب لـ</td>
+            <td>الفرق التقنية المتقدمة</td>
+            <td>المطورون</td>
+            <td>المستخدمون النهائيون</td>
+          </tr>
+          <tr>
+            <td class="row-label">مثال</td>
+            <td>AWS EC2</td>
+            <td>AWS Elastic Beanstalk</td>
+            <td>Gmail, Office 365</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════ SECTION 7 ══════════════════════ -->
+<div class="section" id="s7">
+  <div class="section-header">
+    <div class="section-num">٧</div>
+    <div class="section-title">البنية التحتية — مراكز البيانات والمناطق الجغرافية</div>
+  </div>
+
+  <p>السحابة ليست مجرد فكرة مجردة — هي مبانٍ ضخمة حقيقية تملؤها السيرفرات، منتشرة حول العالم وفق هيكل هندسي متدرج مُصمَّم لضمان أعلى مستوى من الاستمرارية والأمان والسرعة.</p>
+
+  <div class="level-cards">
+    <div class="level-card">
+      <div class="level-badge"><div class="lv-num">🏭</div><div class="lv-label">Data Center</div></div>
+      <div class="lc-body">
+        <h4>المستوى الأول — مركز البيانات</h4>
+        <p>مبنى فيزيائي ضخم يحتوي على آلاف السيرفرات المترابطة، مزود بأنظمة كهرباء احتياطية متعددة وأنظمة تبريد متقدمة وحماية أمنية مادية مشددة تعمل على مدار الساعة سبعة أيام في الأسبوع. AWS لديها مئات من هذه المراكز حول العالم.</p>
+      </div>
+    </div>
+    <div class="level-card">
+      <div class="level-badge"><div class="lv-num">🌍</div><div class="lv-label">Region</div></div>
+      <div class="lc-body">
+        <h4>المستوى الثاني — المنطقة الجغرافية</h4>
+        <p>موقع جغرافي محدد حول العالم تتجمع فيه عدة مراكز بيانات مترابطة. الهدف تمكين العملاء من اختيار المنطقة الأقرب لمستخدميهم النهائيين لتقليل التأخر وتحقيق أسرع أداء ممكن. AWS لديها اليوم أكثر من 36 منطقة جغرافية.</p>
+      </div>
+    </div>
+    <div class="level-card">
+      <div class="level-badge"><div class="lv-num">🛡️</div><div class="lv-label">AZ</div></div>
+      <div class="lc-body">
+        <h4>المستوى الثالث — منطقة التوفر — Availability Zone</h4>
+        <p>منطقة معزولة استقلالاً تاماً داخل المنطقة الجغرافية، تحتوي على مركز بيانات أو أكثر بشبكة كهربائية وشبكة اتصالات مستقلة خاصة بها. كل منطقة جغرافية تحتوي على ثلاث مناطق توفر على الأقل. الهدف: لو تعطلت منطقة بسبب حريق أو زلزال أو قطع كهرباء، تستمر المنطقتان الأخريان في العمل تلقائياً دون أي انقطاع في الخدمة.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="region-box">
+    <div class="rb-header">مناطق AWS في الشرق الأوسط — موثّقة</div>
+    <div class="region-item">
+      <div class="ri-flag">🇧🇭</div>
+      <div class="ri-body">
+        <h5>البحرين — me-south-1</h5>
+        <p>أُطلقت عام 2019 · ثلاث مناطق توفر · أقرب منطقة AWS للعراق والخليج</p>
+      </div>
+    </div>
+    <div class="region-item">
+      <div class="ri-flag">🇦🇪</div>
+      <div class="ri-body">
+        <h5>الإمارات العربية المتحدة — me-central-1</h5>
+        <p>أُطلقت عام 2022 · ثلاث مناطق توفر في دبي وأبوظبي</p>
+      </div>
+    </div>
+    <div class="region-item">
+      <div class="ri-flag">🇸🇦</div>
+      <div class="ri-body">
+        <h5>المملكة العربية السعودية</h5>
+        <p>مُعلَن عنها عام 2026 · استثمار 5.3 مليار دولار قيد التنفيذ</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════ SECTION 8 ══════════════════════ -->
+<div class="section" id="s8">
+  <div class="section-header">
+    <div class="section-num">٨</div>
+    <div class="section-title">مزودو خدمة السحابة العالميون</div>
+  </div>
+
+  <p>يُهيمن ثلاثة مزودين كبار على سوق الحوسبة السحابية العالمي ويتشاركون معاً أكثر من 66% من الإيرادات العالمية للبنية التحتية السحابية في الربع الأول من عام 2024.</p>
+
+  <div class="provider-grid">
+    <div class="provider-card">
+      <div class="pc-header">
+        <div class="pc-rank">١</div>
+        <div>
+          <div class="pc-name">Amazon Web Services</div>
+          <div class="pc-share">حصة سوقية: 31%</div>
+        </div>
+      </div>
+      <p>أطلقته Amazon عام 2006 بعد أن طورته لاستخدامها الداخلي ثم فتحته للعالم. بدأ بخدمتين رئيسيتين هما S3 للتخزين وEC2 للسيرفرات الافتراضية، وتوسّع اليوم لأكثر من 200 خدمة.</p>
+      <p>في المنطقة العربية: أطلق منطقته في البحرين عام 2019 ومنطقة الإمارات عام 2022، مع خطط لمنطقة سعودية عام 2026.</p>
+      <span class="pc-badge pc-b1">أكثر خدماته شهرة: EC2 للسيرفرات الافتراضية</span>
+    </div>
+    <div class="provider-card">
+      <div class="pc-header">
+        <div class="pc-rank">٢</div>
+        <div>
+          <div class="pc-name">Microsoft Azure</div>
+          <div class="pc-share">حصة سوقية: 25%</div>
+        </div>
+      </div>
+      <p>أطلقته Microsoft عام 2010 مستفيدةً من قاعدة عملائها الضخمة في المؤسسات والحكومات. في نمو مستمر مدفوع بتكامله السلس مع Microsoft 365 وTeams وOffice.</p>
+      <p>يُعدّ الخيار الأكثر انتشاراً في المؤسسات الحكومية والمدارس والجامعات التي تعمل ببيئة Microsoft.</p>
+      <span class="pc-badge pc-b2">أكثر خدماته شهرة: Azure Active Directory</span>
+    </div>
+    <div class="provider-card">
+      <div class="pc-header">
+        <div class="pc-rank">٣</div>
+        <div>
+          <div class="pc-name">Google Cloud Platform</div>
+          <div class="pc-share">حصة سوقية: 10%</div>
+        </div>
+      </div>
+      <p>أطلقته Google عام 2008 مستفيدةً من خبرتها الهائلة في إدارة البيانات الضخمة. في تصاعد مستمر مدفوع بثورة الذكاء الاصطناعي.</p>
+      <p>يُعدّ الخيار المفضل للمشاريع البحثية والتحليلية بسبب قوته في مجالات الذكاء الاصطناعي وتحليلات البيانات الضخمة.</p>
+      <span class="pc-badge pc-b3">أكثر خدماته شهرة: BigQuery لتحليل البيانات الضخمة</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════ SECTION 9 ══════════════════════ -->
+<div class="section" id="s9">
+  <div class="section-header">
+    <div class="section-num">٩</div>
+    <div class="section-title">الأمن في السحابة</div>
+  </div>
+
+  <p>الأمن هو الشاغل الأكبر لدى القادة الحكوميين عند التفكير في التحول للسحابة. والحقيقة الموثقة أن السحابة في معظم الحالات أكثر أماناً من الأنظمة التقليدية — شريطة فهم مبدأ المسؤولية المشتركة والالتزام به.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">نموذج المسؤولية المشتركة — Shared Responsibility Model</div>
+    <p>أطلق AWS هذا النموذج ليوضح حدود مسؤوليات كل طرف بدقة. المبدأ الجوهري بسيط وواضح: المزود يؤمّن السحابة ذاتها بما فيها كل البنية التحتية الفيزيائية والشبكات والسيرفرات، في حين يتحمل العميل مسؤولية تأمين ما يضعه بداخل السحابة من بيانات وتطبيقات وصلاحيات.</p>
+
+    <div class="analogy-box">
+      <div class="analogy-icon">🏨</div>
+      <div class="analogy-body">
+        <span class="ab-label">تشبيه الفندق — لفهم المسؤولية المشتركة</span>
+        <p>الفندق يؤمّن المبنى والأبواب والكاميرات والحراسة على مدار الساعة — لكنك أنت المسؤول عن حقيبتك ومفتاح غرفتك وبطاقتك البنكية ومقتنياتك الشخصية. السحابة تعمل بنفس المنطق تماماً: المزود يحمي البنية التحتية، وأنت تحمي بياناتك وحساباتك وصلاحياتك.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">أبرز التهديدات الأمنية الموثقة</div>
+    <p>وفقاً لتقرير Cloud Security Alliance، فإن الغالبية العظمى من الاختراقات الأمنية في السحابة تحدث بسبب قصور في ضوابط العميل لا في البنية التحتية للمزود.</p>
+    <div class="threat-list">
+      <div class="threat-item">
+        <h5>الإعدادات الخاطئة — Misconfiguration</h5>
+        <p>كانت السبب وراء تسريب بيانات ملايين المواطنين في حوادث متعددة حين تُترك خزائن البيانات مفتوحة للعموم عن غير قصد.</p>
+      </div>
+      <div class="threat-item">
+        <h5>ضعف كلمات المرور وإدارة الهوية</h5>
+        <p>السبب المباشر في اختراق مكتب إدارة شؤون الموظفين الأمريكي عام 2015 حيث سُرقت بيانات 21 مليون موظف حكومي من بينهم عناصر في CIA وFBI بسبب كلمة مرور بسيطة لدى أحد الموظفين.</p>
+      </div>
+      <div class="threat-item">
+        <h5>برامج الفدية — Ransomware</h5>
+        <p>أصابت Colonial Pipeline عام 2021 فأوقفت أكبر خط أنابيب وقود في أمريكا لستة أيام متواصلة، واضطرت الشركة لدفع 4.4 مليون دولار فدية قبل أن يستعيد FBI جزءاً منها.</p>
+      </div>
+      <div class="threat-item">
+        <h5>التهديد الداخلي — Insider Threat</h5>
+        <p>الأصعب في الكشف لأن مصدره موظف يملك صلاحيات شرعية — يستوجب مراقبة مستمرة ومبدأ الصلاحية الدنيا.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">القواعد الذهبية الخمس للأمن السحابي</div>
+    <div class="rules-box">
+      <span class="box-label">القواعد الذهبية الخمس — الالتزام بها يُغلق 90% من الثغرات</span>
+      <ol>
+        <li><strong>المصادقة الثنائية MFA:</strong> لكل حساب حكومي بدون استثناء واحد — كلمة المرور وحدها لم تعد كافية.</li>
+        <li><strong>مبدأ الصلاحية الدنيا:</strong> كل موظف يرى ويصل فقط لما يحتاجه في عمله المحدد لا أكثر.</li>
+        <li><strong>التشفير الدائم:</strong> تشفير البيانات أثناء النقل عبر بروتوكول TLS وأثناء التخزين بمعيار AES-256.</li>
+        <li><strong>المراقبة المستمرة:</strong> تسجيل وحفظ كل إجراء يتم على النظام ومراجعة التقارير بانتظام.</li>
+        <li><strong>النسخ الاحتياطية — قاعدة 3-2-1:</strong> ثلاث نسخ على وسيطين مختلفين مع نسخة خارج الموقع.</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════ SUMMARY ══════════════════════ -->
+<div class="section" id="summary">
+  <div class="section-header">
+    <div class="section-num">✦</div>
+    <div class="section-title">الخلاصة والرسالة الأخيرة</div>
+  </div>
+
+  <p>قبل الانتقال للاستراحة، نُلخّص كل ما مررنا به في جملة جوهرية واحدة لكل موضوع:</p>
+
+  <div class="summary-list">
+    <div class="sl-item"><div class="sl-dot"></div>الحوسبة هي منظومة متكاملة من معالج وذاكرة وتخزين وشبكة ومدخلات ومخرجات.</div>
+    <div class="sl-item"><div class="sl-dot"></div>سُميت سحابية لأن المهندسين رسموا الإنترنت تاريخياً على شكل سحابة في مخططاتهم.</div>
+    <div class="sl-item"><div class="sl-dot"></div>التعريف الرسمي صادر من NIST عام 2011 ويُعدّ المرجع العالمي المعتمد.</div>
+    <div class="sl-item"><div class="sl-dot"></div>الفوائد موثقة بأرقام حقيقية: 1.5 مليار دولار وُفِّرت في السعودية و85% من خدمات البحرين على السحابة.</div>
+    <div class="sl-item"><div class="sl-dot"></div>ثلاثة أنواع: عامة للتطبيقات المفتوحة — خاصة للبيانات الحساسة — هجينة لمزج الاثنين.</div>
+    <div class="sl-item"><div class="sl-dot"></div>ثلاثة مستويات للخدمة: IaaS للبنية التحتية — PaaS للمطورين — SaaS للمستخدم النهائي.</div>
+    <div class="sl-item"><div class="sl-dot"></div>البنية التحتية متدرجة: مركز بيانات داخل منطقة توفر داخل منطقة جغرافية.</div>
+    <div class="sl-item"><div class="sl-dot"></div>الأمن السحابي مسؤولية مشتركة — المزود يحمي السحابة، وأنت تحمي ما بداخلها.</div>
+  </div>
+</div>
+
+<!-- ══════════════════════ FOOTER ══════════════════════ -->
+<div class="page-footer">
+  <p>برنامج القيادة الرقمية — الدبلوم العالي · الحوسبة السحابية الحكومية · المحاضرة الرابعة</p>
+  <p style="margin-top:6px">
+    أ.م.د. أمير هادي —
+    <a href="mailto:amer.hadi@alshaab.edu.iq" style="color:var(--blue)">amer.hadi@alshaab.edu.iq</a>
+    &nbsp;|&nbsp;
+    أ.م.د. أحمد محسن هيلان —
+    <a href="mailto:ahmad.m.hailan@utq.edu.iq" style="color:var(--blue)">ahmad.m.hailan@utq.edu.iq</a>
+  </p>
+  <p style="margin-top:16px;font-size:12px;color:#4a5568">
+    <a href="#top" style="color:var(--orange);text-decoration:none;font-weight:700">↑ العودة للأعلى</a>
+  </p>
+</div>
+
+</div><!-- end page-wrap -->
+</div>
+
+<!-- ════ PANEL 2 — DIGITAL TRANSFORMATION ════ -->
+<div class="tab-panel-wrap" id="panel-dt">
+<div class="tab-ns-dt">
+
+
+<div id="dt_toast" class="dt_toast"></div>
+
+<!-- ══════════════════════════════════════
+     HERO
+══════════════════════════════════════ -->
+<div class="hero">
+  <div class="hero-tag">محاكي تعليمي تفاعلي</div>
+  <h1>رحلة <span>التحول الرقمي</span><br>من الورق إلى السحابة</h1>
+  <p>استكشف المراحل الأربع للتحول الرقمي خطوة بخطوة — من الرقمنة البسيطة حتى الانتقال الكامل إلى السحابة</p>
+</div>
+
+<!-- ══════════════════════════════════════
+     PHASE RAIL
+══════════════════════════════════════ -->
+<div class="phase-rail">
+  <div class="rail-stop" onclick="dt_jumpTo(0)">
+    <div class="rail-dot lit" style="--c:var(--p0)" id="dot0">📜</div>
+    <div class="rail-label lit" style="--c:var(--p0)">قبل الرقمنة</div>
+  </div>
+  <div class="rail-line" style="--from:var(--p0);--to:var(--p1)" id="line01"></div>
+  <div class="rail-stop" onclick="dt_jumpTo(1)">
+    <div class="rail-dot" style="--c:var(--p1)" id="dot1">🖨️</div>
+    <div class="rail-label" style="--c:var(--p1)" id="lbl1">الرقمنة</div>
+  </div>
+  <div class="rail-line" style="--from:var(--p1);--to:var(--p2)" id="line12"></div>
+  <div class="rail-stop" onclick="dt_jumpTo(2)">
+    <div class="rail-dot" style="--c:var(--p2)" id="dot2">💻</div>
+    <div class="rail-label" style="--c:var(--p2)" id="lbl2">الرقمية</div>
+  </div>
+  <div class="rail-line" style="--from:var(--p2);--to:var(--p3)" id="line23"></div>
+  <div class="rail-stop" onclick="dt_jumpTo(3)">
+    <div class="rail-dot" style="--c:var(--p3)" id="dot3">🔄</div>
+    <div class="rail-label" style="--c:var(--p3)" id="lbl3">التحول الرقمي</div>
+  </div>
+  <div class="rail-line" style="--from:var(--p3);--to:var(--p4)" id="line34"></div>
+  <div class="rail-stop" onclick="dt_jumpTo(4)">
+    <div class="rail-dot" style="--c:var(--p4)" id="dot4">☁️</div>
+    <div class="rail-label" style="--c:var(--p4)" id="lbl4">السحابة</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     JOURNEY PROGRESS
+══════════════════════════════════════ -->
+<div class="journey-bar">
+  <span class="jb-label">التقدم في الرحلة</span>
+  <div class="jb-track"><div class="jb-fill" id="jbFill" style="width:0%"></div></div>
+  <span class="jb-pct" id="jbPct">0%</span>
+</div>
+
+<!-- ══════════════════════════════════════
+     PHASE 0 — قبل الرقمنة
+══════════════════════════════════════ -->
+<div class="section" id="phase0">
+<div class="phase-card" style="--c:var(--p0)">
+  <div class="phase-header" style="--c:var(--p0)">
+    <div class="phase-era">المرحلة الصفرية · ما قبل 2000</div>
+    <div class="phase-title">الواقع التقليدي — الورق والأرشيف</div>
+    <div class="phase-sub">لفهم قيمة التحول، علينا أولاً أن نعيش الواقع الذي كانت عليه المؤسسات</div>
+    <div class="phase-icon-bg">📜</div>
+  </div>
+
+  <div class="phase-tabs">
+    <button class="tab-btn active" style="--c:var(--p0)" onclick="dt_switchTab(this,'t0a')">الواقع</button>
+    <button class="tab-btn" style="--c:var(--p0)" onclick="dt_switchTab(this,'t0b')">المشاكل</button>
+    <button class="tab-btn" style="--c:var(--p0)" onclick="dt_switchTab(this,'t0c')">تحدِّ نفسك</button>
+  </div>
+
+  <div class="tab-panel active" id="t0a">
+    <div class="metrics-row">
+      <div class="metric-card" style="--c:var(--p0)"><div class="mv">📁</div><div class="ml">أرشيف ورقي</div></div>
+      <div class="metric-card" style="--c:var(--p0)"><div class="mv">5+</div><div class="ml">أيام للمعاملة</div></div>
+      <div class="metric-card" style="--c:var(--p0)"><div class="mv">30%</div><div class="ml">وثائق مفقودة</div></div>
+      <div class="metric-card" style="--c:var(--p0)"><div class="mv">0%</div><div class="ml">أتمتة</div></div>
+    </div>
+    <div class="feature-list">
+      <div class="feature-item">
+        <div class="fi-ico">🗂️</div>
+        <div class="fi-body"><h4>الأرشيف الورقي</h4><p>ملايين الوثائق في أدراج ومجلدات — البحث يستغرق ساعات</p></div>
+      </div>
+      <div class="feature-item">
+        <div class="fi-ico">🖊️</div>
+        <div class="fi-body"><h4>التوقيع اليدوي على كل ورقة</h4><p>كل معاملة تحتاج توقيع 3–5 مسؤولين — كل واحد في مكتب مختلف</p></div>
+      </div>
+      <div class="feature-item">
+        <div class="fi-ico">📮</div>
+        <div class="fi-body"><h4>التواصل بالبريد والفاكس</h4><p>الرسائل الرسمية تصل بعد أيام — الرد بعد أسابيع</p></div>
+      </div>
+      <div class="feature-item">
+        <div class="fi-ico">🔥</div>
+        <div class="fi-body"><h4>لا نسخ احتياطية</h4><p>حريق واحد أو فيضان = فقدان سنوات من السجلات للأبد</p></div>
+      </div>
+    </div>
+    <button class="next-btn" style="--c:var(--p0)" onclick="dt_progressTo(1)">التالي: ما هي الرقمنة؟ ←</button>
+  </div>
+
+  <div class="tab-panel" id="t0b">
+    <div class="example-box" style="--c:var(--p0)">
+      <h4>🏛️ مثال: طلب شهادة ميلاد في الدوائر التقليدية</h4>
+      <div class="example-row">
+        <div class="ex-before">المواطن يأتي شخصياً للدائرة</div>
+        <div class="ex-arrow">→</div>
+        <div class="ex-after">يملأ استمارة ورقية بخط اليد</div>
+      </div>
+      <div class="example-row">
+        <div class="ex-before">الموظف يبحث في أرشيف ورقي</div>
+        <div class="ex-arrow">→</div>
+        <div class="ex-after">يعود بعد 3 أيام للاستلام</div>
+      </div>
+      <div class="example-row">
+        <div class="ex-before">إذا الوثيقة مفقودة = بداية من الصفر</div>
+        <div class="ex-arrow">→</div>
+        <div class="ex-after">تكلفة إضافية + وقت ضائع</div>
+      </div>
+    </div>
+    <div class="def-block" style="--c:var(--p0)">
+      <strong>التكلفة الخفية للورق:</strong> لا تقتصر على ورق وطباعة فقط — 
+      بل تشمل تكلفة الوقت الضائع للموظفين، خسارة الإنتاجية، 
+      المساحة التخزينية للأرشيف، وتكلفة إعادة إنتاج الوثائق المفقودة.
+      تقدّر بعض الدراسات أن المؤسسة متوسطة الحجم تخسر <strong>25,000$–50,000$ سنوياً</strong> بسبب إدارة الورق.
+    </div>
+    <button class="next-btn" style="--c:var(--p0)" onclick="dt_progressTo(1)">التالي: ما هي الرقمنة؟ ←</button>
+  </div>
+
+  <div class="tab-panel" id="t0c">
+    <div class="challenge-box" style="--c:var(--p0)">
+      <h4>🎯 اختبر فهمك: السؤال الأول</h4>
+      <p style="font-size:13px;color:var(--dim);margin-bottom:14px;">موظف يبحث في أرشيف ورقي عن وثيقة عمرها 5 سنوات. ما أكبر مخاطرة في هذا السيناريو؟</p>
+      <div class="challenge-options">
+        <button class="ch-opt" onclick="dt_checkAnswer(this,'t0c',false)">أ. البحث يأخذ وقتاً طويلاً</button>
+        <button class="ch-opt" onclick="dt_checkAnswer(this,'t0c',false)">ب. الموظف قد يتعب من البحث</button>
+        <button class="ch-opt" onclick="dt_checkAnswer(this,'t0c',true)">ج. الوثيقة قد تكون مفقودة أو تالفة ولا يمكن استرجاعها</button>
+        <button class="ch-opt" onclick="dt_checkAnswer(this,'t0c',false)">د. الأرشيف يحتاج موظفاً إضافياً</button>
+      </div>
+      <div class="ch-feedback" id="fb_t0c"></div>
+    </div>
+    <button class="next-btn" style="--c:var(--p0)" onclick="dt_progressTo(1)">التالي: ما هي الرقمنة؟ ←</button>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PHASE 1 — رقمنة Digitization
+══════════════════════════════════════ -->
+<div class="section" id="phase1" style="display:none">
+<div class="phase-card" style="--c:var(--p1)">
+  <div class="phase-header" style="--c:var(--p1)">
+    <div class="phase-era">المرحلة الأولى · 2000–2010 · Digitization</div>
+    <div class="phase-title">الرقمنة — تحويل الورق إلى ملفات</div>
+    <div class="phase-sub">نحوّل الوثائق الورقية إلى ملفات رقمية — لكن طريقة العمل لم تتغير بعد</div>
+    <div class="phase-icon-bg">🖨️</div>
+  </div>
+
+  <div class="phase-tabs">
+    <button class="tab-btn active" style="--c:var(--p1)" onclick="dt_switchTab(this,'t1a')">التعريف</button>
+    <button class="tab-btn" style="--c:var(--p1)" onclick="dt_switchTab(this,'t1b')">الأمثلة</button>
+    <button class="tab-btn" style="--c:var(--p1)" onclick="dt_switchTab(this,'t1c')">الفرق عن التالي</button>
+    <button class="tab-btn" style="--c:var(--p1)" onclick="dt_switchTab(this,'t1d')">تحدِّ نفسك</button>
+  </div>
+
+  <div class="tab-panel active" id="t1a">
+    <div class="def-block" style="--c:var(--p1)">
+      <strong>الرقمنة (Digitization)</strong> هي عملية <strong>تحويل المعلومات التناظرية (الورقية) إلى صيغة رقمية</strong>.
+      هي أبسط خطوة في رحلة التحول — نقوم بتحويل الشكل فقط، دون تغيير طريقة العمل.
+    </div>
+    <div class="metrics-row">
+      <div class="metric-card" style="--c:var(--p1)"><div class="mv">PDF</div><div class="ml">الوثائق المحوّلة</div></div>
+      <div class="metric-card" style="--c:var(--p1)"><div class="mv">40%</div><div class="ml">توفير مساحة</div></div>
+      <div class="metric-card" style="--c:var(--p1)"><div class="mv">3→1</div><div class="ml">أيام البحث</div></div>
+      <div class="metric-card" style="--c:var(--p1)"><div class="mv">💾</div><div class="ml">نسخ احتياطي</div></div>
+    </div>
+    <div class="feature-list">
+      <div class="feature-item">
+        <div class="fi-ico">📷</div>
+        <div class="fi-body"><h4>المسح الضوئي (Scanning)</h4><p>تحويل الوثائق الورقية إلى صور رقمية أو PDF باستخدام الماسح الضوئي</p></div>
+      </div>
+      <div class="feature-item">
+        <div class="fi-ico">🔤</div>
+        <div class="fi-body"><h4>تقنية OCR — التعرف على النصوص</h4><p>تحويل الصور النصية إلى نصوص قابلة للبحث والتعديل تلقائياً</p></div>
+      </div>
+      <div class="feature-item">
+        <div class="fi-ico">💾</div>
+        <div class="fi-body"><h4>الحفظ في مجلدات رقمية</h4><p>تنظيم الملفات في قرص صلب أو شبكة داخلية — بدلاً من خزانات الأوراق</p></div>
+      </div>
+    </div>
+    <div class="def-block" style="--c:var(--p1);margin-top:16px">
+      ⚠️ <strong>مهم:</strong> الرقمنة <em>لا</em> تعني تغيير طريقة العمل — الموظف لا يزال يتبع نفس الإجراءات، 
+      لكن بدلاً من الورق يستخدم ملفات PDF. <strong>العمل لم يتغير — فقط الوعاء تغيّر.</strong>
+    </div>
+    <button class="next-btn" style="--c:var(--p1)" onclick="dt_progressTo(2)">التالي: الرقمية ←</button>
+  </div>
+
+  <div class="tab-panel" id="t1b">
+    <div class="example-box" style="--c:var(--p1)">
+      <h4>📌 أمثلة على الرقمنة في الحياة اليومية</h4>
+      <div class="example-row">
+        <div class="ex-before">📰 الجريدة الورقية</div>
+        <div class="ex-arrow">→</div>
+        <div class="ex-after">PDF للجريدة على الموقع</div>
+      </div>
+      <div class="example-row">
+        <div class="ex-before">📕 الكتاب المطبوع</div>
+        <div class="ex-arrow">→</div>
+        <div class="ex-after">ملف e-Book بنفس المحتوى</div>
+      </div>
+      <div class="example-row">
+        <div class="ex-before">🗃️ سجلات الموظفين الورقية</div>
+        <div class="ex-arrow">→</div>
+        <div class="ex-after">ملفات Excel أو PDF مخزنة</div>
+      </div>
+      <div class="example-row">
+        <div class="ex-before">🎵 شريط كاسيت</div>
+        <div class="ex-arrow">→</div>
+        <div class="ex-after">ملف MP3</div>
+      </div>
+    </div>
+    <div class="def-block" style="--c:var(--p1)">
+      <strong>لاحظ:</strong> في كل هذه الأمثلة — المحتوى نفسه، الطريقة نفسها، 
+      فقط <strong>الشكل تغيّر من مادي إلى رقمي.</strong>
+      لم يتغير شيء في كيفية إنتاج الجريدة أو توزيعها — فقط نُشرت كـ PDF إضافياً.
+    </div>
+    <button class="next-btn" style="--c:var(--p1)" onclick="dt_progressTo(2)">التالي: الرقمية ←</button>
+  </div>
+
+  <div class="tab-panel" id="t1c">
+    <div style="overflow-x:auto">
+    <table class="compare-table">
+      <tr>
+        <th>العنصر</th>
+        <th class="ct-c1">الرقمنة</th>
+        <th class="ct-c2">الرقمية (التالية)</th>
+      </tr>
+      <tr>
+        <td>ما يتغير</td>
+        <td>شكل المعلومة فقط</td>
+        <td>طريقة العمل كاملاً</td>
+      </tr>
+      <tr>
+        <td>مثال</td>
+        <td>PDF بدل الورقة</td>
+        <td>نموذج رقمي تفاعلي</td>
+      </tr>
+      <tr>
+        <td>الإجراءات</td>
+        <td>نفس الإجراءات</td>
+        <td>إجراءات جديدة ومحسّنة</td>
+      </tr>
+      <tr>
+        <td>توفير الوقت</td>
+        <td>جزئي</td>
+        <td>كبير</td>
+      </tr>
+      <tr>
+        <td>التأثير</td>
+        <td>منخفض</td>
+        <td>متوسط–عالٍ</td>
+      </tr>
+    </table>
+    </div>
+    <div class="def-block" style="--c:var(--p1);margin-top:16px">
+      <strong>الخلاصة:</strong> الرقمنة هي الخطوة الأولى الضرورية — 
+      لكنها <em>لا تكفي وحدها</em> لتحقيق كفاءة حقيقية. 
+      إنها تشبه تحويل كتاب ورقي لـ PDF: نفس المحتوى، 
+      لكن أسهل تخزيناً — المرحلة التالية هي التي تُحدث فرقاً حقيقياً.
+    </div>
+    <button class="next-btn" style="--c:var(--p1)" onclick="dt_progressTo(2)">التالي: الرقمية ←</button>
+  </div>
+
+  <div class="tab-panel" id="t1d">
+    <div class="challenge-box" style="--c:var(--p1)">
+      <h4>🎯 اختبر فهمك: الرقمنة</h4>
+      <p style="font-size:13px;color:var(--dim);margin-bottom:14px;">مستشفى حوّل سجلات المرضى الورقية إلى ملفات PDF وخزّنها في القرص الصلب. بقي الطبيب يملأ نفس النماذج يدوياً ثم يُسلّمها للسكرتيرة لمسحها ضوئياً. هذه العملية هي:</p>
+      <div class="challenge-options">
+        <button class="ch-opt" onclick="dt_checkAnswer(this,'t1d',true)">أ. رقمنة (Digitization) — تحويل شكل فقط</button>
+        <button class="ch-opt" onclick="dt_checkAnswer(this,'t1d',false)">ب. رقمية (Digitalization) — تغيير طريقة العمل</button>
+        <button class="ch-opt" onclick="dt_checkAnswer(this,'t1d',false)">ج. تحول رقمي — تغيير جوهري</button>
+        <button class="ch-opt" onclick="dt_checkAnswer(this,'t1d',false)">د. حوسبة سحابية</button>
+      </div>
+      <div class="ch-feedback" id="fb_t1d"></div>
+    </div>
+    <button class="next-btn" style="--c:var(--p1)" onclick="dt_progressTo(2)">التالي: الرقمية ←</button>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PHASE 2 — رقمية Digitalization
+══════════════════════════════════════ -->
+<div class="section" id="phase2" style="display:none">
+<div class="phase-card" style="--c:var(--p2)">
+  <div class="phase-header" style="--c:var(--p2)">
+    <div class="phase-era">المرحلة الثانية · 2010–2018 · Digitalization</div>
+    <div class="phase-title">الرقمية — تغيير طريقة العمل</div>
+    <div class="phase-sub">الآن نستخدم التقنية لتحسين العمليات — ليس فقط تحويل شكل البيانات</div>
+    <div class="phase-icon-bg">💻</div>
+  </div>
+
+  <div class="phase-tabs">
+    <button class="tab-btn active" style="--c:var(--p2)" onclick="dt_switchTab(this,'t2a')">التعريف</button>
+    <button class="tab-btn" style="--c:var(--p2)" onclick="dt_switchTab(this,'t2b')">الأمثلة</button>
+    <button class="tab-btn" style="--c:var(--p2)" onclick="dt_switchTab(this,'t2c')">التقنيات</button>
+    <button class="tab-btn" style="--c:var(--p2)" onclick="dt_switchTab(this,'t2d')">تحدِّ نفسك</button>
+  </div>
+
+  <div class="tab-panel active" id="t2a">
+    <div class="def-block" style="--c:var(--p2)">
+      <strong>الرقمية (Digitalization)</strong> هي استخدام التقنية الرقمية 
+      <strong>لتغيير طريقة العمل وتحسين العمليات</strong> بهدف تحقيق قيمة وكفاءة أعلى.
+      هنا نغيّر <em>كيف</em> نعمل — لا مجرد تحويل شكل المعلومة.
+    </div>
+    <div class="metrics-row">
+      <div class="metric-card" style="--c:var(--p2)"><div class="mv">60%</div><div class="ml">تسريع العمليات</div></div>
+      <div class="metric-card" style="--c:var(--p2)"><div class="mv">ERP</div><div class="ml">أنظمة متكاملة</div></div>
+      <div class="metric-card" style="--c:var(--p2)"><div class="mv">5→1</div><div class="ml">أيام → ساعات</div></div>
+      <div class="metric-card" style="--c:var(--p2)"><div class="mv">🤝</div><div class="ml">تكامل الأنظمة</div></div>
+    </div>
+    <div class="feature-list">
+      <div class="feature-item">
+        <div class="fi-ico">📊</div>
+        <div class="fi-body"><h4>أنظمة إدارة المؤسسة (ERP)</h4><p>نظام واحد متكامل يربط المالية والموارد البشرية والمشتريات — بدلاً من أنظمة منفصلة</p></div>
+      </div>
+      <div class="feature-item">
+        <div class="fi-ico">🔄</div>
+        <div class="fi-body"><h4>أتمتة سير العمل (Workflow Automation)</h4><p>طلب الإجازة يصل للمدير تلقائياً، يوافق بنقرة، ويُسجّل في النظام — بدون ورق</p></div>
+      </div>
+      <div class="feature-item">
+        <div class="fi-ico">📱</div>
+        <div class="fi-body"><h4>الخدمات الإلكترونية للجمهور</h4><p>المواطن يقدّم طلبه من هاتفه، يتابع حالته، ويستلم النتيجة — بدون زيارة الدائرة</p></div>
+      </div>
+      <div class="feature-item">
+        <div class="fi-ico">📈</div>
+        <div class="fi-body"><h4>لوحات المتابعة (Dashboards)</h4><p>المدير يرى بيانات لحظية: كم معاملة أُنجزت، كم في الانتظار، أين الاختناق</p></div>
+      </div>
+    </div>
+    <button class="next-btn" style="--c:var(--p2)" onclick="dt_progressTo(3)">التالي: التحول الرقمي الكامل ←</button>
+  </div>
+
+  <div class="tab-panel" id="t2b">
+    <div class="example-box" style="--c:var(--p2)">
+      <h4>📌 مثال: تحوّل مستشفى من الورق إلى الرقمية</h4>
+      <div class="example-row">
+        <div class="ex-before">نموذج ورقي يملؤه المريض</div>
+        <div class="ex-arrow">→</div>
+        <div class="ex-after">تطبيق موبايل لتسجيل بيانات المريض</div>
+      </div>
+      <div class="example-row">
+        <div class="ex-before">الطبيب يكتب الوصفة يدوياً</div>
+        <div class="ex-arrow">→</div>
+        <div class="ex-after">نظام HIS يُرسل الوصفة للصيدلية تلقائياً</div>
+      </div>
+      <div class="example-row">
+        <div class="ex-before">تقرير شهري يُعدّ يدوياً خلال أيام</div>
+        <div class="ex-arrow">→</div>
+        <div class="ex-after">Dashboard يُحدّث لحظياً 24/7</div>
+      </div>
+    </div>
+    <div class="example-box" style="--c:var(--p2)">
+      <h4>🏛️ مثال: وزارة حكومية تتبنى الرقمية</h4>
+      <div class="example-row">
+        <div class="ex-before">موظف يراجع 500 طلب ورقي يومياً</div>
+        <div class="ex-arrow">→</div>
+        <div class="ex-after">النظام يصنّفها تلقائياً ويوزّعها</div>
+      </div>
+      <div class="example-row">
+        <div class="ex-before">اجتماعات يدوية لمتابعة المشاريع</div>
+        <div class="ex-arrow">→</div>
+        <div class="ex-after">نظام إدارة مشاريع يُتابع كل شيء</div>
+      </div>
+    </div>
+    <button class="next-btn" style="--c:var(--p2)" onclick="dt_progressTo(3)">التالي: التحول الرقمي الكامل ←</button>
+  </div>
+
+  <div class="tab-panel" id="t2c">
+    <div class="def-block" style="--c:var(--p2)">
+      <strong>التقنيات الأساسية في مرحلة الرقمية:</strong>
+    </div>
+    <div class="feature-list">
+      <div class="feature-item">
+        <div class="fi-ico">🏗️</div>
+        <div class="fi-body">
+          <h4>ERP — نظام تخطيط موارد المؤسسة</h4>
+          <p>SAP, Oracle, Microsoft Dynamics — يربط كل أقسام المؤسسة في نظام واحد</p>
+          <div style="margin-top:6px">
+            <span class="concept-pill">المالية</span>
+            <span class="concept-pill">HR</span>
+            <span class="concept-pill">المشتريات</span>
+            <span class="concept-pill">المخازن</span>
+          </div>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="fi-ico">👥</div>
+        <div class="fi-body">
+          <h4>CRM — إدارة علاقات العملاء</h4>
+          <p>Salesforce, HubSpot — تتابع كل تفاعل مع المواطن أو العميل</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="fi-ico">🔗</div>
+        <div class="fi-body">
+          <h4>API — ربط الأنظمة</h4>
+          <p>نظام الوزارة يتحدث تلقائياً مع نظام التأمين ونظام البنك — بدون إدخال يدوي</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="fi-ico">📲</div>
+        <div class="fi-body">
+          <h4>تطبيقات الهاتف والبوابات الإلكترونية</h4>
+          <p>واجهة المواطن للخدمات الحكومية من أي مكان وأي وقت</p>
+        </div>
+      </div>
+    </div>
+    <button class="next-btn" style="--c:var(--p2)" onclick="dt_progressTo(3)">التالي: التحول الرقمي الكامل ←</button>
+  </div>
+
+  <div class="tab-panel" id="t2d">
+    <div class="challenge-box" style="--c:var(--p2)">
+      <h4>🎯 اختبر فهمك: الرقمية</h4>
+      <p style="font-size:13px;color:var(--dim);margin-bottom:14px;">ما الفرق الجوهري بين الرقمنة والرقمية؟</p>
+      <div class="challenge-options">
+        <button class="ch-opt" onclick="dt_checkAnswer(this,'t2d',false)">أ. الرقمنة أحدث من الرقمية</button>
+        <button class="ch-opt" onclick="dt_checkAnswer(this,'t2d',false)">ب. الرقمنة تستخدم السحابة والرقمية لا</button>
+        <button class="ch-opt" onclick="dt_checkAnswer(this,'t2d',true)">ج. الرقمنة تحوّل الشكل فقط، الرقمية تغيّر طريقة العمل كاملاً</button>
+        <button class="ch-opt" onclick="dt_checkAnswer(this,'t2d',false)">د. لا فرق بينهما، نفس المفهوم بمسميات مختلفة</button>
+      </div>
+      <div class="ch-feedback" id="fb_t2d"></div>
+    </div>
+    <button class="next-btn" style="--c:var(--p2)" onclick="dt_progressTo(3)">التالي: التحول الرقمي الكامل ←</button>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PHASE 3 — تحول رقمي Digital Transformation
+══════════════════════════════════════ -->
+<div class="section" id="phase3" style="display:none">
+<div class="phase-card" style="--c:var(--p3)">
+  <div class="phase-header" style="--c:var(--p3)">
+    <div class="phase-era">المرحلة الثالثة · 2018–2023 · Digital Transformation</div>
+    <div class="phase-title">التحول الرقمي — إعادة اختراع المؤسسة</div>
+    <div class="phase-sub">الآن نُعيد التفكير في نموذج العمل بالكامل — ليس فقط تحسينه</div>
+    <div class="phase-icon-bg">🔄</div>
+  </div>
+
+  <div class="phase-tabs">
+    <button class="tab-btn active" style="--c:var(--p3)" onclick="dt_switchTab(this,'t3a')">التعريف</button>
+    <button class="tab-btn" style="--c:var(--p3)" onclick="dt_switchTab(this,'t3b')">الأركان الأربعة</button>
+    <button class="tab-btn" style="--c:var(--p3)" onclick="dt_switchTab(this,'t3c')">القيادة</button>
+    <button class="tab-btn" style="--c:var(--p3)" onclick="dt_switchTab(this,'t3d')">تحدِّ نفسك</button>
+  </div>
+
+  <div class="tab-panel active" id="t3a">
+    <div class="def-block" style="--c:var(--p3)">
+      <strong>التحول الرقمي (Digital Transformation)</strong> هو <strong>إعادة تصميم المؤسسة جوهرياً</strong> 
+      بالاستفادة من التقنيات الرقمية — يطال الثقافة والاستراتيجية ونموذج العمل، 
+      ليس فقط الأدوات والأنظمة.
+    </div>
+    <div class="metrics-row">
+      <div class="metric-card" style="--c:var(--p3)"><div class="mv">🧬</div><div class="ml">تغيير جوهري</div></div>
+      <div class="metric-card" style="--c:var(--p3)"><div class="mv">AI</div><div class="ml">ذكاء اصطناعي</div></div>
+      <div class="metric-card" style="--c:var(--p3)"><div class="mv">90%</div><div class="ml">أتمتة القرارات</div></div>
+      <div class="metric-card" style="--c:var(--p3)"><div class="mv">🌐</div><div class="ml">نموذج عمل جديد</div></div>
+    </div>
+    <div class="example-box" style="--c:var(--p3)">
+      <h4>🔍 الفرق الجوهري — مثال واقعي</h4>
+      <div class="example-row">
+        <div class="ex-before">🏦 بنك تقليدي يضيف تطبيق هاتف<br><small>(رقمية)</small></div>
+        <div class="ex-arrow">≠</div>
+        <div class="ex-after">🏦 بنك يُعيد تصميم نفسه كـ"شركة تقنية تقدم خدمات مالية"<br><small>(تحول رقمي)</small></div>
+      </div>
+      <div class="example-row">
+        <div class="ex-before">🏛️ وزارة تُطلق بوابة إلكترونية<br><small>(رقمية)</small></div>
+        <div class="ex-arrow">≠</div>
+        <div class="ex-after">🏛️ وزارة تُعيد تصميم خدماتها بالكامل حول احتياجات المواطن + AI لاتخاذ القرار<br><small>(تحول رقمي)</small></div>
+      </div>
+    </div>
+    <button class="next-btn" style="--c:var(--p3)" onclick="dt_progressTo(4)">التالي: الانتقال للسحابة ←</button>
+  </div>
+
+  <div class="tab-panel" id="t3b">
+    <div class="feature-list">
+      <div class="feature-item">
+        <div class="fi-ico">🎯</div>
+        <div class="fi-body">
+          <h4>١. الاستراتيجية الرقمية</h4>
+          <p>رؤية واضحة: أين نريد أن نكون خلال 5 سنوات؟ كيف تخدم التقنية رسالتنا؟</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="fi-ico">🧠</div>
+        <div class="fi-body">
+          <h4>٢. الثقافة والكفاءات البشرية</h4>
+          <p>التحول لا يحدث بالأنظمة وحدها — الموظفون يجب أن يفكروا رقمياً ويُجدّدوا باستمرار</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="fi-ico">⚡</div>
+        <div class="fi-body">
+          <h4>٣. التقنية المتطورة</h4>
+          <p>الذكاء الاصطناعي، تحليل البيانات الضخمة، إنترنت الأشياء — تُستخدم لاتخاذ قرارات أذكى</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="fi-ico">🔁</div>
+        <div class="fi-body">
+          <h4>٤. نموذج العمل الجديد</h4>
+          <p>إعادة تصميم كيف تُقدّم الخدمة، كيف تُنشئ القيمة، وكيف تُقيس النجاح</p>
+        </div>
+      </div>
+    </div>
+    <button class="next-btn" style="--c:var(--p3)" onclick="dt_progressTo(4)">التالي: الانتقال للسحابة ←</button>
+  </div>
+
+  <div class="tab-panel" id="t3c">
+    <div class="def-block" style="--c:var(--p3)">
+      <strong>لماذا يفشل 70% من مشاريع التحول الرقمي؟</strong>
+      معظم المؤسسات تشتري أنظمة جديدة لكن لا تُغيّر ثقافتها وهياكلها.
+    </div>
+    <div class="feature-list">
+      <div class="feature-item">
+        <div class="fi-ico">👔</div>
+        <div class="fi-body"><h4>دور القيادة — الأهم</h4><p>التحول الرقمي يبدأ من القمة — القائد يجب أن يكون <strong>مؤمناً ومُحرّكاً</strong> للتغيير، لا فقط موافقاً عليه</p></div>
+      </div>
+      <div class="feature-item">
+        <div class="fi-ico">🚫</div>
+        <div class="fi-body"><h4>المقاومة الداخلية — التحدي الأكبر</h4><p>"هكذا كنا نعمل دائماً" — هذه الجملة هي عدو التحول الرقمي الأول</p></div>
+      </div>
+      <div class="feature-item">
+        <div class="fi-ico">📏</div>
+        <div class="fi-body"><h4>قياس النجاح بمؤشرات رقمية</h4><p>KPIs واضحة: وقت تقديم الخدمة، رضا المواطن، التوفير في التكاليف، سرعة القرار</p></div>
+      </div>
+    </div>
+    <button class="next-btn" style="--c:var(--p3)" onclick="dt_progressTo(4)">التالي: الانتقال للسحابة ←</button>
+  </div>
+
+  <div class="tab-panel" id="t3d">
+    <div class="challenge-box" style="--c:var(--p3)">
+      <h4>🎯 اختبر فهمك: التحول الرقمي</h4>
+      <p style="font-size:13px;color:var(--dim);margin-bottom:14px;">وزارة صحة أضافت تطبيق هاتف لحجز المواعيد، لكن الطبيب لا يزال يكتب التشخيص بالقلم والورقة، والإدارة لا تزال تُعدّ التقارير يدوياً. هذا يُمثّل:</p>
+      <div class="challenge-options">
+        <button class="ch-opt" onclick="dt_checkAnswer(this,'t3d',false)">أ. تحول رقمي ناجح</button>
+        <button class="ch-opt" onclick="dt_checkAnswer(this,'t3d',true)">ب. رقمية جزئية — لم يتحقق التحول الحقيقي بعد</button>
+        <button class="ch-opt" onclick="dt_checkAnswer(this,'t3d',false)">ج. رقمنة فقط</button>
+        <button class="ch-opt" onclick="dt_checkAnswer(this,'t3d',false)">د. استخدام السحابة</button>
+      </div>
+      <div class="ch-feedback" id="fb_t3d"></div>
+    </div>
+    <button class="next-btn" style="--c:var(--p3)" onclick="dt_progressTo(4)">التالي: الانتقال للسحابة ←</button>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PHASE 4 — السحابة Cloud
+══════════════════════════════════════ -->
+<div class="section" id="phase4" style="display:none">
+<div class="phase-card" style="--c:var(--p4)">
+  <div class="phase-header" style="--c:var(--p4)">
+    <div class="phase-era">المرحلة الرابعة · 2023 وما بعد · Cloud Computing</div>
+    <div class="phase-title">السحابة — البنية التحتية للتحول الكامل</div>
+    <div class="phase-sub">السحابة هي ما تُمكّن التحول الرقمي من التوسع والتسارع — هي المحرك، لا الهدف</div>
+    <div class="phase-icon-bg">☁️</div>
+  </div>
+
+  <div class="phase-tabs">
+    <button class="tab-btn active" style="--c:var(--p4)" onclick="dt_switchTab(this,'t4a')">لماذا السحابة؟</button>
+    <button class="tab-btn" style="--c:var(--p4)" onclick="dt_switchTab(this,'t4b')">أنواع السحابة</button>
+    <button class="tab-btn" style="--c:var(--p4)" onclick="dt_switchTab(this,'t4c')">نماذج الخدمة</button>
+    <button class="tab-btn" style="--c:var(--p4)" onclick="dt_switchTab(this,'t4d')">تحدِّ نفسك</button>
+  </div>
+
+  <div class="tab-panel active" id="t4a">
+    <div class="def-block" style="--c:var(--p4)">
+      <strong>الحوسبة السحابية</strong> هي تقديم خدمات الحوسبة (سيرفرات، تخزين، قواعد بيانات، شبكات، برمجيات) 
+      عبر الإنترنت — <strong>تدفع فقط ما تستخدمه</strong>، وتتوسع أو تتقلص حسب حاجتك.
+    </div>
+    <div class="feature-list">
+      <div class="feature-item">
+        <div class="fi-ico">⚡</div>
+        <div class="fi-body"><h4>المرونة الفورية (Elasticity)</h4><p>موقع حكومي يستقبل مليون زيارة في يوم واحد؟ السحابة توسّع الموارد تلقائياً — ثم تعيدها</p></div>
+      </div>
+      <div class="feature-item">
+        <div class="fi-ico">💰</div>
+        <div class="fi-body"><h4>نموذج الدفع حسب الاستخدام</h4><p>بدلاً من شراء سيرفر بـ 50,000$ تدفع 200$ شهرياً فقط لما تستخدمه فعلاً</p></div>
+      </div>
+      <div class="feature-item">
+        <div class="fi-ico">🌍</div>
+        <div class="fi-body"><h4>الوصول من أي مكان</h4><p>موظف في الميدان أو في المنزل يصل لنفس الأنظمة بأمان — بدون VPN معقد</p></div>
+      </div>
+      <div class="feature-item">
+        <div class="fi-ico">🔒</div>
+        <div class="fi-body"><h4>الأمان والاستمرارية</h4><p>AWS و Azure يستثمران مليارات في الأمان — أكثر مما تستطيع أي مؤسسة حكومية منفردةً</p></div>
+      </div>
+    </div>
+    <button class="next-btn" style="--c:var(--p4)" onclick="dt_finishJourney()">🎉 أكمل الرحلة — عرض الملخص</button>
+  </div>
+
+  <div class="tab-panel" id="t4b">
+    <div style="overflow-x:auto">
+    <table class="compare-table">
+      <tr>
+        <th>النوع</th>
+        <th>التعريف</th>
+        <th>المناسب لـ</th>
+      </tr>
+      <tr>
+        <td class="ct-stage" style="color:var(--p4)">☁️ عامة</td>
+        <td>سيرفرات مشتركة تُديرها AWS/Azure</td>
+        <td>المؤسسات الصغيرة والمتوسطة</td>
+      </tr>
+      <tr>
+        <td class="ct-stage" style="color:var(--p3)">🔒 خاصة</td>
+        <td>سحابة خاصة بالمؤسسة فقط</td>
+        <td>البنوك والدفاع والبيانات السرية</td>
+      </tr>
+      <tr>
+        <td class="ct-stage" style="color:var(--p2)">🔀 هجينة</td>
+        <td>جزء خاص + جزء عام</td>
+        <td>الحكومات والمؤسسات الكبرى</td>
+      </tr>
+    </table>
+    </div>
+    <div class="def-block" style="--c:var(--p4);margin-top:16px">
+      <strong>التوصية للمؤسسات الحكومية:</strong> السحابة الهجينة — 
+      البيانات الحساسة تبقى داخلياً، والخدمات العامة تنتقل للسحابة العامة 
+      لتحقيق المرونة والتوفير.
+    </div>
+    <button class="next-btn" style="--c:var(--p4)" onclick="dt_finishJourney()">🎉 أكمل الرحلة — عرض الملخص</button>
+  </div>
+
+  <div class="tab-panel" id="t4c">
+    <div class="feature-list">
+      <div class="feature-item">
+        <div class="fi-ico">🖥️</div>
+        <div class="fi-body">
+          <h4>IaaS — بنية تحتية كخدمة</h4>
+          <p>تستأجر سيرفرات وشبكات افتراضية — تتحكم في كل شيء. مثال: AWS EC2</p>
+          <div style="margin-top:6px"><span class="concept-pill">مناسب للتقنيين</span><span class="concept-pill">تحكم كامل</span></div>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="fi-ico">⚙️</div>
+        <div class="fi-body">
+          <h4>PaaS — منصة كخدمة</h4>
+          <p>بيئة تطوير جاهزة — أنت تكتب الكود فقط. مثال: AWS Elastic Beanstalk</p>
+          <div style="margin-top:6px"><span class="concept-pill">للمطورين</span><span class="concept-pill">أسرع إطلاق</span></div>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="fi-ico">📱</div>
+        <div class="fi-body">
+          <h4>SaaS — برمجيات كخدمة</h4>
+          <p>تطبيق جاهز تفتحه من المتصفح. مثال: Gmail, Office 365, Salesforce</p>
+          <div style="margin-top:6px"><span class="concept-pill">جاهز فوراً</span><span class="concept-pill">لا صيانة</span><span class="concept-pill">للجميع</span></div>
+        </div>
+      </div>
+    </div>
+    <button class="next-btn" style="--c:var(--p4)" onclick="dt_finishJourney()">🎉 أكمل الرحلة — عرض الملخص</button>
+  </div>
+
+  <div class="tab-panel" id="t4d">
+    <div class="challenge-box" style="--c:var(--p4)">
+      <h4>🎯 السؤال الأخير: السحابة والتحول الرقمي</h4>
+      <p style="font-size:13px;color:var(--dim);margin-bottom:14px;">مدير عام يقول: "انتقلنا للسحابة، إذاً أكملنا التحول الرقمي." ما رأيك؟</p>
+      <div class="challenge-options">
+        <button class="ch-opt" onclick="dt_checkAnswer(this,'t4d',false)">أ. صحيح — السحابة = التحول الرقمي</button>
+        <button class="ch-opt" onclick="dt_checkAnswer(this,'t4d',true)">ب. خطأ — السحابة أداة تُمكّن التحول، لكنها ليست التحول بحد ذاته</button>
+        <button class="ch-opt" onclick="dt_checkAnswer(this,'t4d',false)">ج. صحيح إذا كانوا استخدموا AWS</button>
+        <button class="ch-opt" onclick="dt_checkAnswer(this,'t4d',false)">د. لا يهم — المهم الانتقال للسحابة</button>
+      </div>
+      <div class="ch-feedback" id="fb_t4d"></div>
+    </div>
+    <button class="next-btn" style="--c:var(--p4)" onclick="dt_finishJourney()">🎉 أكمل الرحلة — عرض الملخص</button>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════
+     FINAL SUMMARY
+══════════════════════════════════════ -->
+<div class="final-wrap" id="finalWrap">
+  <div class="final-card">
+    <div class="score-ring" style="--pct:var(--score,75)">
+      <div class="score-inner">
+        <div class="score-num" id="scoreNum">-</div>
+        <div class="score-lbl">من 4</div>
+      </div>
+    </div>
+    <h2>🎓 أتممت رحلة التحول الرقمي!</h2>
+    <p class="fc-sub">إليك ملخص المراحل الأربع التي استكشفتها</p>
+
+    <div class="stages-summary">
+      <div class="ss-card" style="background:rgba(96,125,139,.1);border-color:rgba(96,125,139,.3)">
+        <div class="ss-ico">📜</div>
+        <div class="ss-name" style="color:var(--p0)">قبل الرقمنة</div>
+        <div class="ss-desc">الورق والأرشيف — لا أتمتة</div>
+      </div>
+      <div class="ss-card" style="background:rgba(255,152,0,.08);border-color:rgba(255,152,0,.3)">
+        <div class="ss-ico">🖨️</div>
+        <div class="ss-name" style="color:var(--p1)">الرقمنة</div>
+        <div class="ss-desc">تحويل الشكل فقط — PDF بدل ورق</div>
+      </div>
+      <div class="ss-card" style="background:rgba(33,150,243,.08);border-color:rgba(33,150,243,.3)">
+        <div class="ss-ico">💻</div>
+        <div class="ss-name" style="color:var(--p2)">الرقمية</div>
+        <div class="ss-desc">تغيير طريقة العمل — ERP وأتمتة</div>
+      </div>
+      <div class="ss-card" style="background:rgba(156,39,176,.08);border-color:rgba(156,39,176,.3)">
+        <div class="ss-ico">🔄</div>
+        <div class="ss-name" style="color:var(--p3)">التحول الرقمي</div>
+        <div class="ss-desc">إعادة اختراع المؤسسة — AI ونموذج جديد</div>
+      </div>
+      <div class="ss-card" style="background:rgba(0,188,212,.08);border-color:rgba(0,188,212,.3)">
+        <div class="ss-ico">☁️</div>
+        <div class="ss-name" style="color:var(--p4)">السحابة</div>
+        <div class="ss-desc">البنية التحتية التي تُمكّن كل شيء</div>
+      </div>
+    </div>
+
+    <div class="def-block" style="--c:var(--cyan);margin-bottom:24px;text-align:right">
+      <strong>الخلاصة الذهبية:</strong>
+      الرقمنة تُحوّل الشكل ←
+      الرقمية تُحوّل العمليات ←
+      التحول الرقمي يُحوّل المؤسسة كاملاً ←
+      <strong>السحابة تُمكّن وتُسرّع كل هذا</strong>
+    </div>
+
+    <button class="btn-restart" onclick="dt_restartAll()">🔄 ابدأ من جديد</button>
+  </div>
+</div>
+
+
+
+</div>
+</div>
+
+<!-- ════ PANEL 3 — CLOUD SIMULATOR ════ -->
+<div class="tab-panel-wrap" id="panel-cs">
+<div class="tab-ns-cs">
+
+
+<canvas id="particles"></canvas>
+<div id="cs-toast-el" class="toast">✅ تم الاختيار بنجاح</div>
+
+<!-- ========== SCREEN 1: HOME ========== -->
+<div id="screen-home" class="screen active">
+  <div class="header">
+    <div class="badge">برنامج القيادة الرقمية — الدبلوم العالي</div>
+    <h1>رحلة التحول الرقمي السحابي</h1>
+    <p>اختر مؤسستك وابدأ رحلة التحول من الأنظمة التقليدية إلى السحابة</p>
+  </div>
+
+  <div class="cards-grid">
+    <div class="org-card" onclick="cs_startJourney(0)">
+      <span class="icon">📄</span>
+      <h3>دائرة الخدمات الحكومية</h3>
+      <p>تعمل بالأوراق والأرشيف اليدوي — لا يوجد أي نظام رقمي حتى الآن</p>
+      <span class="level-badge level-beginner">المستوى: مبتدئ</span>
+    </div>
+    <div class="org-card" onclick="cs_startJourney(1)">
+      <span class="icon">🖥️</span>
+      <h3>مديرية التخطيط والمتابعة</h3>
+      <p>عندها سيرفر وحاسبات، لكن البيانات موزعة على Excel في أجهزة الموظفين</p>
+      <span class="level-badge level-mid">المستوى: متوسط</span>
+    </div>
+    <div class="org-card" onclick="cs_startJourney(2)">
+      <span class="icon">🏛️</span>
+      <h3>هيئة تقنية المعلومات</h3>
+      <p>نظام معلومات يعمل، لكنه On-Premise قديم وبطيء ومكلف الصيانة</p>
+      <span class="level-badge level-adv">المستوى: متقدم</span>
+    </div>
+  </div>
+</div>
+
+<!-- ========== SCREEN 2: JOURNEY ========== -->
+<div id="screen-journey" class="screen">
+  <div class="progress-wrap">
+    <div class="progress-steps" id="progressSteps"></div>
+    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressFill" style="width:0%"></div></div>
+  </div>
+  <div id="stationContent"></div>
+</div>
+
+
+
+</div>
+</div>
+
+<!-- ════ PRINT FAB (lecture only) ════ -->
+<div class="print-fab" id="printFab">
+  <button class="print-btn" onclick="triggerPrint()">🖨️</button>
+  <span class="print-label">تصدير PDF</span>
+</div>
+
+<!-- ════ GLOBAL TOAST ════ -->
+<div id="g-toast"></div>
+
+<!-- ════ TAB CONTROLLER ════ -->
+<script>
+var _activeTab = 'lecture';
+
+function switchTab(tab, btn) {
+  document.querySelectorAll('.tab-panel-wrap').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn-nav').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + tab).classList.add('active');
+  btn.classList.add('active');
+  _activeTab = tab;
+  var fab = document.getElementById('printFab');
+  if(fab) fab.style.display = (tab === 'lecture') ? 'flex' : 'none';
+  window.scrollTo({top:0, behavior:'smooth'});
+  gToast({'lecture':'📖 المحاضرة','dt':'🔄 محاكي التحول الرقمي','cs':'🚀 محاكي السحابة'}[tab]);
+}
+
+function gToast(msg) {
+  var t = document.getElementById('g-toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+function triggerPrint() {
+  var btn = document.querySelector('.print-btn');
+  if(btn){btn.style.transform='scale(.9)';btn.textContent='⏳';}
+  setTimeout(() => { if(btn){btn.style.transform='';btn.textContent='🖨️';} window.print(); }, 200);
+}
+</script>
+
+<!-- ════ DT SIMULATOR SCRIPT ════ -->
+<script>
+(function() {
+'use strict';
+// ── STATE ──
+let score = 0;
+let answeredChallenges = {};
+let unlockedPhase = 0;
+
+// ── TOAST ──
+function dt_toast(msg) {
+  if(typeof gToast === 'function') gToast(msg);
+}
+
+// ── TABS ──
+function dt_switchTab(btn, panelId) {
+  const card = btn.closest('.phase-card');
+  card.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  card.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(panelId).classList.add('active');
+}
+
+// ── PROGRESS ──
+function dt_progressTo(phaseIdx) {
+  // unlock and show next phase
+  const next = document.getElementById('phase' + phaseIdx);
+  if(next) {
+    next.style.display = 'block';
+    next.style.animation = 'fadeIn .5s ease';
+    setTimeout(() => next.scrollIntoView({behavior:'smooth', block:'start'}), 100);
+  }
+  if(phaseIdx > unlockedPhase) {
+    unlockedPhase = phaseIdx;
+    dt_lightRail(phaseIdx);
+  }
+  dt_updateJourneyBar();
+}
+
+function dt_jumpTo(idx) {
+  if(idx > unlockedPhase && idx > 0) {
+    dt_toast('⚠️ أكمل المرحلة الحالية أولاً');
+    return;
+  }
+  const el = document.getElementById('phase' + idx);
+  if(el) {
+    el.style.display = 'block';
+    el.scrollIntoView({behavior:'smooth', block:'start'});
+  }
+}
+
+function dt_lightRail(upToIdx) {
+  for(let i = 0; i <= upToIdx; i++) {
+    const dot = document.getElementById('dot' + i);
+    const lbl = document.getElementById('lbl' + i);
+    if(dot) dot.classList.add('lit');
+    if(lbl) lbl.classList.add('lit');
+    if(i < upToIdx) {
+      const line = document.getElementById('line' + i + (i+1));
+      if(line) line.classList.add('lit');
+    }
+  }
+}
+
+function dt_updateJourneyBar() {
+  const pct = Math.round((unlockedPhase / 4) * 100);
+  document.getElementById('jbFill').style.width = pct + '%';
+  document.getElementById('jbPct').textContent = pct + '%';
+}
+
+// ── CHALLENGES ──
+function dt_checkAnswer(btn, challengeId, isCorrect) {
+  if(answeredChallenges[challengeId]) return; // already answered
+  answeredChallenges[challengeId] = true;
+  const parent = btn.closest('.challenge-options');
+  parent.querySelectorAll('.ch-opt').forEach(b => b.style.pointerEvents = 'none');
+  
+  const fb = document.getElementById('fb_' + challengeId);
+  if(isCorrect) {
+    btn.classList.add('correct');
+    score++;
+    fb.textContent = '✅ إجابة صحيحة! ' + dt_getFeedback(challengeId, true);
+    fb.className = 'ch-feedback show ok';
+    dt_toast('🎯 ممتاز! إجابة صحيحة');
+  } else {
+    btn.classList.add('wrong');
+    // highlight correct
+    parent.querySelectorAll('.ch-opt').forEach(b2 => {
+      if(b2.onclick.toString().includes('true')) b2.classList.add('correct');
+    });
+    fb.textContent = '❌ إجابة خاطئة. ' + dt_getFeedback(challengeId, false);
+    fb.className = 'ch-feedback show no';
+    dt_toast('💡 راجع التعريف وحاول مرة أخرى');
+  }
+}
+
+function dt_getFeedback(id, correct) {
+  const msgs = {
+    't0c_t': 'الخطر الأكبر في الأنظمة الورقية هو عدم إمكانية استرجاع الوثيقة عند فقدانها أو تلفها — لا توجد نسخة احتياطية.',
+    't0c_f': 'الإجابة الصحيحة هي: الوثيقة قد تكون مفقودة أو تالفة ولا يمكن استرجاعها — هذا الخطر الوجودي للأرشيف الورقي.',
+    't1d_t': 'صحيح! تحويل النماذج لـ PDF والمسح الضوئي هو رقمنة — تغيير الشكل فقط بدون تغيير طريقة العمل.',
+    't1d_f': 'الإجابة الصحيحة: الرقمنة — لأن طريقة العمل لم تتغير، فقط حُوِّل الشكل من ورق إلى PDF.',
+    't2d_t': 'تماماً! الرقمنة = تحويل الشكل. الرقمية = تغيير طريقة العمل. الفرق جوهري وليس مجرد مصطلحات.',
+    't2d_f': 'الإجابة الصحيحة: الرقمنة تحوّل الشكل فقط، بينما الرقمية تُعيد تصميم العمليات كاملاً.',
+    't3d_t': 'صحيح! إضافة تطبيق هاتف هي رقمية جزئية — التحول الرقمي يتطلب إعادة تصميم المؤسسة بالكامل.',
+    't3d_f': 'الصحيح: رقمية جزئية — لأن جوهر العمل (الطبيب والإدارة) لم يتغير بعد.',
+    't4d_t': 'ممتاز! السحابة أداة قوية تُمكّن التحول، لكن التحول الحقيقي يتطلب تغيير الاستراتيجية والثقافة والعمليات.',
+    't4d_f': 'الصحيح: السحابة وسيلة لا غاية — مؤسسة انتقلت للسحابة بنفس الإجراءات القديمة لم تتحوّل بعد.',
+  };
+  return msgs[id + (correct?'_t':'_f')] || '';
+}
+
+// ── FINISH ──
+function dt_finishJourney() {
+  dt_updateJourneyBar();
+  dt_lightRail(4);
+  document.getElementById('jbFill').style.width = '100%';
+  document.getElementById('jbPct').textContent = '100%';
+
+  const fw = document.getElementById('finalWrap');
+  fw.classList.add('show');
+  document.getElementById('scoreNum').textContent = score;
+  fw.style.setProperty('--score', Math.round((score/4)*100));
+  setTimeout(() => fw.scrollIntoView({behavior:'smooth', block:'start'}), 200);
+  dt_toast('🎓 أحسنت! أتممت الرحلة كاملة');
+}
+
+function dt_restartAll() {
+  score = 0;
+  answeredChallenges = {};
+  unlockedPhase = 0;
+
+  // hide all phases except 0
+  [1,2,3,4].forEach(i => {
+    const el = document.getElementById('phase' + i);
+    if(el) el.style.display = 'none';
+  });
+
+  // reset rail
+  [1,2,3,4].forEach(i => {
+    const dot = document.getElementById('dot' + i);
+    const lbl = document.getElementById('lbl' + i);
+    if(dot) dot.classList.remove('lit');
+    if(lbl) lbl.classList.remove('lit');
+  });
+  ['01','12','23','34'].forEach(pair => {
+    const line = document.getElementById('line' + pair);
+    if(line) line.classList.remove('lit');
+  });
+
+  // reset progress
+  document.getElementById('jbFill').style.width = '0%';
+  document.getElementById('jbPct').textContent = '0%';
+
+  // hide final
+  document.getElementById('finalWrap').classList.remove('show');
+
+  // reset challenge options
+  document.querySelectorAll('.ch-opt').forEach(b => {
+    b.classList.remove('correct','wrong');
+    b.style.pointerEvents = '';
+  });
+  document.querySelectorAll('.ch-feedback').forEach(f => f.classList.remove('show'));
+
+  // reset tabs to first
+  document.querySelectorAll('.phase-card').forEach(card => {
+    const tabs = card.querySelectorAll('.tab-btn');
+    const panels = card.querySelectorAll('.tab-panel');
+    tabs.forEach((t,i) => t.classList.toggle('active', i===0));
+    panels.forEach((p,i) => p.classList.toggle('active', i===0));
+  });
+
+  window.scrollTo({top:0, behavior:'smooth'});
+  dt_toast('🔄 تمت إعادة التشغيل');
+}
+
+// init rail dot 0
+dt_lightRail(0);
+dt_updateJourneyBar();
+
+// Init
+dt_lightRail(0);
+dt_updateJourneyBar();
+
+// Expose to window for onclick handlers
+window.dt_switchTab = dt_switchTab;
+window.dt_progressTo = dt_progressTo;
+window.dt_jumpTo = dt_jumpTo;
+window.dt_checkAnswer = dt_checkAnswer;
+window.dt_finishJourney = dt_finishJourney;
+window.dt_restartAll = dt_restartAll;
+})();
+</script>
+
+<!-- ════ CLOUD SIMULATOR SCRIPT ════ -->
+<script>
+(function() {
+'use strict';
+// =================== DATA ===================
+const orgs = [
+  {
+    id: 0,
+    name: "دائرة الخدمات الحكومية",
+    icon: "📄",
+    level: "مبتدئ",
+    diagnosis: {
+      title: "تشخيص الوضع الحالي",
+      subtitle: "هذه هي التحديات التي تواجهها دائرتك اليوم",
+      problems: [
+        { ico: "💸", title: "التكلفة السنوية", desc: "طباعة، أرشفة، نقل وثائق", val: "45,000$" },
+        { ico: "⏰", title: "وقت إنجاز المعاملة", desc: "انتظار، توقيعات، مراجعات يدوية", val: "5 أيام" },
+        { ico: "📉", title: "موثوقية الخدمة", desc: "ضياع وثائق، أخطاء بشرية", val: "70%" },
+        { ico: "🔒", title: "أمان البيانات", desc: "لا يوجد نسخ احتياطي للوثائق", val: "منخفض" },
+      ],
+      chartData: [
+        { label: "الكفاءة", val: 20, type: "fill-red" },
+        { label: "الأمان", val: 15, type: "fill-red" },
+        { label: "السرعة", val: 10, type: "fill-red" },
+      ]
+    },
+    cloudRec: 1, // هجينة
+    serviceRec: 2, // SaaS
+    steps: [
+      { title: "رقمنة النماذج والوثائق", desc: "تحويل كل النماذج الورقية إلى PDF تفاعلية رقمية", result: "✅ وفّرت 80% من تكلفة الطباعة فوراً" },
+      { title: "إطلاق بريد حكومي سحابي", desc: "Gmail for Government أو Microsoft 365 — جاهز في يوم واحد", result: "✅ التواصل الداخلي أصبح فورياً" },
+      { title: "نظام إدارة الوثائق", desc: "Google Drive حكومي — كل موظف يصل لملفاته من أي جهاز", result: "✅ لا مزيد من ضياع الوثائق" },
+      { title: "بوابة الخدمات الإلكترونية", desc: "المواطن يرسل طلبه من هاتفه — بدون مجيء للدائرة", result: "✅ وقت المعاملة انخفض من 5 أيام لساعتين" },
+      { title: "لوحة المتابعة والتقارير", desc: "المدير يرى إحصاءات لحظية — كم معاملة أُنجزت اليوم", result: "✅ اتخاذ القرار صار مبنياً على بيانات حقيقية" },
+    ],
+    results: {
+      before: { cost: "45,000$", speed: "5 أيام", reliability: "70%", security: "منخفض" },
+      after:  { cost: "18,000$", speed: "ساعتان", reliability: "99.9%", security: "عالٍ جداً" },
+      saving: "60%",
+      msg: "حوّلت دائرتك من أوراق ومجلدات إلى منظومة رقمية متكاملة. المواطن يُنجز معاملته من بيته، وأنت تتابع كل شيء بنقرة واحدة."
+    }
+  },
+  {
+    id: 1,
+    name: "مديرية التخطيط والمتابعة",
+    icon: "🖥️",
+    level: "متوسط",
+    diagnosis: {
+      title: "تشخيص الوضع الحالي",
+      subtitle: "عندك بنية تحتية — لكن المشاكل تعطّل العمل يومياً",
+      problems: [
+        { ico: "💸", title: "التكلفة السنوية", desc: "صيانة سيرفر، كهرباء، مساحة، IT", val: "35,000$" },
+        { ico: "⏰", title: "الوصول للبيانات", desc: "موظف يبحث عن Excel في جهاز زميله", val: "ساعات" },
+        { ico: "📉", title: "موثوقية السيرفر", desc: "انقطاع كهرباء = توقف كامل للعمل", val: "85%" },
+        { ico: "🔄", title: "تحديث البيانات", desc: "نسختان مختلفتان لنفس الملف لدى موظفين", val: "متضارب" },
+      ],
+      chartData: [
+        { label: "الكفاءة", val: 40, type: "fill-orange" },
+        { label: "الأمان", val: 35, type: "fill-orange" },
+        { label: "التوفر", val: 50, type: "fill-orange" },
+      ]
+    },
+    cloudRec: 0, // عامة
+    serviceRec: 0, // IaaS
+    steps: [
+      { title: "ترحيل السيرفر إلى AWS EC2", desc: "السيرفر الموجود يتحوّل لـ Virtual Machine في السحابة — بنفس إعداداته", result: "✅ السيرفر الآن يعمل 99.9% بدون انقطاع" },
+      { title: "توحيد ملفات Excel في SharePoint", desc: "ملف واحد مشترك — الجميع يعدّل ويرى التغييرات لحظياً", result: "✅ انتهى عصر النسخ المتضاربة" },
+      { title: "النسخ الاحتياطي التلقائي", desc: "كل يوم الساعة 3 صباحاً، كل بياناتك تُنسخ تلقائياً", result: "✅ البيانات محمية حتى لو تعطّل الجهاز" },
+      { title: "الوصول عن بُعد الآمن", desc: "كل موظف يصل لكل ملفاته من المنزل أو الميدان بكلمة مرور واحدة", result: "✅ العمل لا يتوقف — حتى في الإجازات والطوارئ" },
+      { title: "لوحة المؤشرات والتقارير الموحدة", desc: "Power BI يسحب البيانات من كل المصادر ويعرضها بشكل واضح", result: "✅ التقرير الشهري أصبح يُعدّ بدقائق لا أيام" },
+    ],
+    results: {
+      before: { cost: "35,000$", speed: "ساعات", reliability: "85%", security: "متوسط" },
+      after:  { cost: "15,000$", speed: "ثوانٍ", reliability: "99.9%", security: "عالٍ جداً" },
+      saving: "57%",
+      msg: "حوّلت مديريتك من سيرفر محلي معرّض للعطل إلى بنية سحابية مرنة وموثوقة. فريقك يعمل بكفاءة من أي مكان، وبياناتك محمية ومتاحة دائماً."
+    }
+  },
+  {
+    id: 2,
+    name: "هيئة تقنية المعلومات",
+    icon: "🏛️",
+    level: "متقدم",
+    diagnosis: {
+      title: "تشخيص الوضع الحالي",
+      subtitle: "نظامك يعمل — لكنه يكلّف أكثر مما يستحق",
+      problems: [
+        { ico: "💸", title: "التكلفة السنوية", desc: "سيرفرات، تراخيص، فريق IT متخصص", val: "80,000$" },
+        { ico: "🚀", title: "إطلاق خدمة جديدة", desc: "شراء سيرفر → تركيب → إعداد → أسابيع", val: "أسابيع" },
+        { ico: "📈", title: "التوسع عند الطلب", desc: "الموسم الانتخابي أو الإحصاء يُعطّل الموقع", val: "محدود" },
+        { ico: "🔧", title: "عبء الصيانة", desc: "فريق كامل لصيانة الأجهزة بدلاً من تطوير الخدمات", val: "مرتفع" },
+      ],
+      chartData: [
+        { label: "الكفاءة", val: 65, type: "fill-orange" },
+        { label: "الأمان", val: 70, type: "fill-orange" },
+        { label: "المرونة", val: 30, type: "fill-red" },
+      ]
+    },
+    cloudRec: 1, // هجينة
+    serviceRec: 0, // IaaS
+    steps: [
+      { title: "البيانات الحساسة تبقى داخل الهيئة", desc: "بياناتك السرية والحيوية تبقى على سيرفراتك الداخلية — لا تخرج", result: "✅ الأمن الوطني للبيانات محفوظ 100%" },
+      { title: "الخدمات العامة تنتقل للسحابة", desc: "الموقع الإلكتروني، بوابة المواطن، التقارير العامة — كلها AWS", result: "✅ الموقع يتحمّل مليون زيارة في نفس الوقت" },
+      { title: "ربط السحابة بالبنية الداخلية", desc: "AWS Direct Connect — خط مباشر بين هيئتك وAWS بأمان عالٍ", result: "✅ النظامان يعملان كأنهما نظام واحد متكامل" },
+      { title: "التوسع التلقائي عند الحاجة", desc: "Auto Scaling — عند زيادة الزوار، AWS يضيف موارد تلقائياً ثم يقلصها", result: "✅ لا انقطاع — حتى في أوقات الذروة القصوى" },
+      { title: "تحرير فريق IT للابتكار", desc: "بدلاً من صيانة سيرفرات، فريقك يطوّر خدمات جديدة للمواطنين", result: "✅ خدمة جديدة تُطلق في دقائق لا أسابيع" },
+    ],
+    results: {
+      before: { cost: "80,000$", speed: "أسابيع", reliability: "95%", security: "جيد" },
+      after:  { cost: "32,000$", speed: "دقائق", reliability: "99.99%", security: "ممتاز" },
+      saving: "60%",
+      msg: "هيئتك أصبحت نموذجاً للتحول الرقمي الناجح. البيانات الحساسة محمية داخلياً، والخدمات العامة تعمل بسرعة ومرونة كاملة. فريقك يبتكر بدلاً من أن يُصلح."
+    }
+  }
+];
+
+const cloudTypes = [
+  { name: "السحابة العامة", desc: "تستأجر الموارد من شركة كبرى (AWS, Azure) — تدفع فقط ما تستخدمه", pros: ["تكلفة منخفضة", "جاهزة فوراً"], cons: ["البيانات على سيرفر الشركة"] },
+  { name: "السحابة الهجينة", desc: "جزء على سيرفراتك الداخلية وجزء على السحابة — أفضل الاثنين", pros: ["مرونة عالية", "أمان للبيانات الحساسة"], cons: ["إعداد أكثر تعقيداً"] },
+  { name: "السحابة الخاصة", desc: "سحابة خاصة بك أنت فقط — أعلى أمان لكن التكلفة أعلى", pros: ["أمان مطلق"], cons: ["تكلفة بنية تحتية مرتفعة"] },
+];
+const cloudRecs = ["السحابة الهجينة", "السحابة العامة", "السحابة الهجينة"];
+
+const serviceTypes = [
+  { name: "IaaS — بنية تحتية كخدمة", desc: "تستأجر سيرفرات وشبكة افتراضية — تحكم كامل. مثال: AWS EC2 للسيرفرات", pros: ["تحكم كامل", "مناسب للتقنيين"], cons: ["تحتاج خبرة تقنية"] },
+  { name: "PaaS — منصة كخدمة", desc: "بيئة تطوير جاهزة — أنت تكتب الكود فقط. مثال: Heroku, AWS Elastic Beanstalk", pros: ["أسرع للمطورين"], cons: ["تحكم أقل في البنية"] },
+  { name: "SaaS — برمجيات كخدمة", desc: "تطبيق جاهز تفتحه من المتصفح — بدون تثبيت. مثال: Gmail, Office 365", pros: ["جاهز فوراً", "لا صيانة"], cons: ["تخصيص محدود"] },
+];
+const serviceRecs = [["IaaS", "SaaS"], ["SaaS", "IaaS"], ["IaaS"]];
+
+// =================== STATE ===================
+let currentOrg = null;
+let currentStation = 0;
+let stepsTimer = null;
+let selectedCloud = -1;   // 0=عامة 1=هجينة 2=خاصة
+let selectedService = -1; // 0=IaaS 1=PaaS 2=SaaS
+const stationNames = ["التشخيص", "نوع السحابة", "نموذج الخدمة", "خطوات التحول", "النتائج"];
+
+// =================== DYNAMIC RESULT ENGINE ===================
+/*
+  المنطق:
+  كل مؤسسة لها أرقام أساسية (base). ثم كل اختيار يُطبّق معاملات تأثير:
+
+  نوع السحابة:
+    عامة  → تكلفة أقل (−10%)، أمان متوسط، موثوقية جيدة
+    هجينة → تكلفة متوسطة (الموصى به للمؤسسات الحكومية)، أمان عالٍ
+    خاصة  → تكلفة أعلى (+15%)، أمان مثالي، لكن موثوقية أقل (إدارة ذاتية)
+
+  نموذج الخدمة:
+    IaaS → تحكم + تكلفة متوسطة، سرعة جيدة
+    PaaS → سرعة تطوير أعلى، تكلفة متوسطة
+    SaaS → أسرع تطبيقاً، أقل تكلفة، لكن تحكم محدود
+*/
+
+const cloudModifiers = [
+  // عامة
+  { costMult: 0.90, reliability: "99.9%", securityScore: 2, securityLabel: "جيد",     speedBonus: 0,  savingAdj: +5,  note: "السحابة العامة توفّر تكلفة أعلى لكن بياناتك على سيرفرات مشتركة" },
+  // هجينة
+  { costMult: 1.00, reliability: "99.9%", securityScore: 3, securityLabel: "عالٍ جداً", speedBonus: 0,  savingAdj:  0,  note: "السحابة الهجينة تحقق توازناً مثالياً بين التكلفة والأمان" },
+  // خاصة
+  { costMult: 1.18, reliability: "99.5%", securityScore: 4, securityLabel: "ممتاز",   speedBonus: 0,  savingAdj: -12, note: "السحابة الخاصة أعلى أماناً لكن تكلفتها أكبر لأنك تدير البنية بنفسك" },
+];
+
+const serviceModifiers = [
+  // IaaS
+  { costMult: 1.00, speedLabel: null, speedBonus: 0,  savingAdj: 0,  note: "IaaS يمنحك تحكماً كاملاً — مثالي للمؤسسات ذات الكوادر التقنية" },
+  // PaaS
+  { costMult: 1.05, speedLabel: "دقائق", speedBonus: 1, savingAdj: -3, note: "PaaS يُسرّع التطوير لكن يحتاج مطورين — غير مثالي للمؤسسات الحكومية المبتدئة" },
+  // SaaS
+  { costMult: 0.88, speedLabel: null, speedBonus: 0,  savingAdj: +7, note: "SaaS جاهز فوراً بدون خبرة تقنية — الأنسب للبداية السريعة" },
+];
+
+function cs_computeResults() {
+  const org = currentOrg;
+  const cm = cloudModifiers[selectedCloud >= 0 ? selectedCloud : org.cloudRec];
+  const sm = serviceModifiers[selectedService >= 0 ? selectedService : org.serviceRec];
+
+  // base after cost (from org data)
+  const baseCostAfterNum = parseInt(org.results.after.cost.replace(/[^0-9]/g,''));
+  const baseSaving = parseInt(org.results.saving);
+
+  // apply multipliers
+  const adjustedCost = Math.round(baseCostAfterNum * cm.costMult * sm.costMult / 100) * 100;
+  const baseCostBefore = parseInt(org.results.before.cost.replace(/[^0-9]/g,''));
+  const savingPct = Math.round((1 - adjustedCost / baseCostBefore) * 100);
+
+  // speed: PaaS speeds up delivery
+  const speedAfter = sm.speedLabel || org.results.after.speed;
+
+  // security: combine scores
+  const secLabel = cm.securityLabel;
+
+  // reliability
+  const rel = cm.reliability;
+
+  // warning if bad combo
+  const isOptimal = (selectedCloud === org.cloudRec || selectedCloud === -1) &&
+                    (selectedService === org.serviceRec || selectedService === -1);
+
+  const cloudName = selectedCloud >= 0 ? cloudTypes[selectedCloud].name : cloudTypes[org.cloudRec].name;
+  const serviceName = selectedService >= 0 ? serviceTypes[selectedService].name : serviceTypes[org.serviceRec].name;
+
+  const notes = [];
+  if(selectedCloud >= 0 && selectedCloud !== org.cloudRec) notes.push(`⚠️ ${cm.note}`);
+  if(selectedService >= 0 && selectedService !== org.serviceRec) notes.push(`⚠️ ${sm.note}`);
+  if(isOptimal) notes.push(`✅ اخترت المزيج الأمثل لمؤسستك — نتائج مثالية`);
+
+  return {
+    before: org.results.before,
+    after: {
+      cost: adjustedCost.toLocaleString('en') + "$",
+      speed: speedAfter,
+      reliability: rel,
+      security: secLabel,
+    },
+    saving: savingPct + "%",
+    cloudName, serviceName,
+    notes,
+    isOptimal,
+    msg: isOptimal
+      ? org.results.msg
+      : `اخترت ${cloudName} مع ${serviceName}. ${notes.filter(n=>n.startsWith('⚠️')).map(n=>n.slice(3)).join(' ')} يمكنك إعادة التجربة لاكتشاف المزيج الأمثل.`
+  };
+}
+
+// =================== PARTICLES ===================
+(function() {
+  const c = document.getElementById('particles');
+  const ctx = c.getContext('2d');
+  let W, H, pts;
+  function resize() { W = c.width = innerWidth; H = c.height = innerHeight; init(); }
+  function init() {
+    pts = Array.from({length: 60}, () => ({
+      x: Math.random()*W, y: Math.random()*H,
+      vx: (Math.random()-.5)*.3, vy: (Math.random()-.5)*.3,
+      r: Math.random()*2+.5
+    }));
+  }
+  function draw() {
+    ctx.clearRect(0,0,W,H);
+    pts.forEach(p => {
+      p.x += p.vx; p.y += p.vy;
+      if(p.x<0) p.x=W; if(p.x>W) p.x=0;
+      if(p.y<0) p.y=H; if(p.y>H) p.y=0;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+      ctx.fillStyle = 'rgba(255,153,0,0.5)';
+      ctx.fill();
+    });
+    // connections
+    for(let i=0;i<pts.length;i++) for(let j=i+1;j<pts.length;j++) {
+      const dx = pts[i].x-pts[j].x, dy = pts[i].y-pts[j].y;
+      const d = Math.sqrt(dx*dx+dy*dy);
+      if(d < 100) {
+        ctx.beginPath();
+        ctx.moveTo(pts[i].x, pts[i].y);
+        ctx.lineTo(pts[j].x, pts[j].y);
+        ctx.strokeStyle = `rgba(255,153,0,${0.12*(1-d/100)})`;
+        ctx.stroke();
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+  window.addEventListener('resize', resize);
+  resize(); draw();
+})();
+
+// =================== FUNCTIONS ===================
+function cs_showToast(msg) {
+  if(typeof gToast === 'function') gToast(msg);
+}
+
+function cs_startJourney(idx) {
+  currentOrg = orgs[idx];
+  currentStation = 0;
+  selectedCloud = -1;
+  selectedService = -1;
+  document.getElementById('screen-home').classList.remove('active');
+  document.getElementById('screen-journey').classList.add('active');
+  cs_renderProgress();
+  cs_renderStation();
+}
+
+function cs_renderProgress() {
+  const wrap = document.getElementById('progressSteps');
+  wrap.innerHTML = '';
+  stationNames.forEach((name, i) => {
+    const done = i < currentStation;
+    const active = i === currentStation;
+    wrap.innerHTML += `
+      <div class="step-dot ${done?'done':''} ${active?'active':''}">
+        <div class="dot">${done ? '✓' : i+1}</div>
+        <div class="label">${name}</div>
+      </div>`;
+  });
+  document.getElementById('progressFill').style.width = ((currentStation / (stationNames.length-1))*100) + '%';
+}
+
+function cs_renderStation() {
+  const el = document.getElementById('stationContent');
+  if(currentStation === 0) cs_renderDiagnosis(el);
+  else if(currentStation === 1) cs_renderCloud(el);
+  else if(currentStation === 2) cs_renderService(el);
+  else if(currentStation === 3) cs_renderSteps(el);
+  else if(currentStation === 4) cs_renderResults(el);
+}
+
+function cs_next() {
+  if(stepsTimer) { clearInterval(stepsTimer); stepsTimer = null; }
+  currentStation++;
+  cs_renderProgress();
+  cs_renderStation();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+function cs_back() {
+  if(stepsTimer) { clearInterval(stepsTimer); stepsTimer = null; }
+  if(currentStation === 0) {
+    document.getElementById('screen-journey').classList.remove('active');
+    document.getElementById('screen-home').classList.add('active');
+  } else {
+    currentStation--;
+    cs_renderProgress();
+    cs_renderStation();
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+}
+
+function cs_renderDiagnosis(el) {
+  const d = currentOrg.diagnosis;
+  const bars = d.chartData.map(c => `
+    <div class="chart-row">
+      <span class="chart-label">${c.label}</span>
+      <div class="chart-bar-bg">
+        <div class="chart-bar-fill ${c.type}" style="width:0%" id="bar_${c.label}">${c.val}%</div>
+      </div>
+    </div>`).join('');
+  const probs = d.problems.map(p => `
+    <div class="diag-item">
+      <div class="ico">${p.ico}</div>
+      <div class="info"><h4>${p.title}</h4><p>${p.desc}</p></div>
+      <div class="diag-val">${p.val}</div>
+    </div>`).join('');
+
+  el.innerHTML = `
+    <div class="station">
+      <h2>📊 ${d.title}</h2>
+      <p class="subtitle">${d.subtitle}</p>
+      <div class="info-box">🏢 المؤسسة المختارة: <strong>${currentOrg.icon} ${currentOrg.name}</strong> — المستوى: <strong>${currentOrg.level}</strong></div>
+      ${probs}
+      <div class="mini-chart" style="margin-top:20px">
+        <p style="font-size:13px;color:var(--text-dim);margin-bottom:10px;">📈 مؤشرات الأداء الحالية</p>
+        ${bars}
+      </div>
+      <div class="nav-row">
+        <button class="btn btn-outline" onclick="cs_back()">← رجوع</button>
+        <button class="btn btn-primary" onclick="cs_next()">التالي: اختر نوع السحابة →</button>
+      </div>
+    </div>`;
+  setTimeout(() => {
+    d.chartData.forEach(c => {
+      const b = document.getElementById('bar_' + c.label);
+      if(b) b.style.width = c.val + '%';
+    });
+  }, 100);
+}
+
+function cs_renderCloud(el) {
+  const rec = currentOrg.cloudRec;
+  const presel = selectedCloud >= 0 ? selectedCloud : rec;
+  const cards = cloudTypes.map((c, i) => {
+    const isRec = i === rec;
+    const tags = c.pros.map(p => `<span class="tag tag-g">✓ ${p}</span>`).join('') +
+                 c.cons.map(p => `<span class="tag tag-r">✗ ${p}</span>`).join('');
+    return `
+      <div class="choice-card ${isRec?'recommended':''} ${i===presel?'selected':''}" onclick="cs_selectChoice(this, 'cloud', ${i})" id="cloud_${i}">
+        <h4>${['☁️','🔀','🔒'][i]} ${c.name}</h4>
+        <p>${c.desc}</p>
+        <div class="pros-cons">${tags}</div>
+      </div>`;
+  }).join('');
+
+  el.innerHTML = `
+    <div class="station">
+      <h2>☁️ المحطة الثانية: اختر نوع السحابة</h2>
+      <p class="subtitle">كيف تريد أن تستضيف بيانات مؤسستك؟ — <strong>اختيارك يؤثر على النتائج النهائية</strong></p>
+      <div class="info-box">💡 التوصية لـ <strong>${currentOrg.name}</strong>: <strong>${cloudRecs[currentOrg.id]}</strong> — لأنها تناسب مستواك الحالي وتوازن بين التكلفة والأمان</div>
+      <div class="choices">${cards}</div>
+      <div id="liveHint_cloud" class="info-box" style="display:${selectedCloud>=0?'block':'none'};margin-top:12px">
+        ${selectedCloud>=0 ? (selectedCloud===currentOrg.cloudRec ? '<span style="color:var(--green)">✅ هذا هو الاختيار الأمثل لمؤسستك</span>' : '<span style="color:var(--orange)">⚠️ '+cloudModifiers[selectedCloud].note+'</span>') : ''}
+      </div>
+      <div class="nav-row">
+        <button class="btn btn-outline" onclick="cs_back()">← رجوع</button>
+        <button class="btn btn-primary" onclick="cs_validateAndNext('cloud')">التالي: نموذج الخدمة →</button>
+      </div>
+    </div>`;
+}
+
+function cs_renderService(el) {
+  const rec = currentOrg.serviceRec;
+  const presel = selectedService >= 0 ? selectedService : rec;
+  const cards = serviceTypes.map((s, i) => {
+    const isRec = i === rec;
+    const tags = s.pros.map(p => `<span class="tag tag-g">✓ ${p}</span>`).join('') +
+                 s.cons.map(p => `<span class="tag tag-r">✗ ${p}</span>`).join('');
+    return `
+      <div class="choice-card ${isRec?'recommended':''} ${i===presel?'selected':''}" onclick="cs_selectChoice(this, 'service', ${i})" id="service_${i}">
+        <h4>${['🖥️','⚙️','📱'][i]} ${s.name}</h4>
+        <p>${s.desc}</p>
+        <div class="pros-cons">${tags}</div>
+      </div>`;
+  }).join('');
+
+  const recNames = serviceRecs[currentOrg.id].join(' + ');
+  el.innerHTML = `
+    <div class="station">
+      <h2>⚙️ المحطة الثالثة: نموذج الخدمة السحابية</h2>
+      <p class="subtitle">ماذا ستستأجر من السحابة بالضبط؟ — <strong>اختيارك يؤثر على التكلفة والسرعة</strong></p>
+      <div class="info-box">💡 التوصية لـ <strong>${currentOrg.name}</strong>: ابدأ بـ <strong>${recNames}</strong></div>
+      <div class="choices">${cards}</div>
+      <div id="liveHint_service" class="info-box" style="display:${selectedService>=0?'block':'none'};margin-top:12px">
+        ${selectedService>=0 ? (selectedService===currentOrg.serviceRec ? '<span style="color:var(--green)">✅ هذا هو الاختيار الأمثل لمؤسستك</span>' : '<span style="color:var(--orange)">⚠️ '+serviceModifiers[selectedService].note+'</span>') : ''}
+      </div>
+      <div class="nav-row">
+        <button class="btn btn-outline" onclick="cs_back()">← رجوع</button>
+        <button class="btn btn-primary" onclick="cs_validateAndNext('service')">التالي: خطوات التحول →</button>
+      </div>
+    </div>`;
+}
+
+function cs_selectChoice(card, type, idx) {
+  document.querySelectorAll('.choice-card').forEach(c => {
+    if(c.id && c.id.startsWith(type + '_')) c.classList.remove('selected');
+  });
+  card.classList.add('selected');
+  if(type === 'cloud') selectedCloud = idx;
+  if(type === 'service') selectedService = idx;
+
+  // show live impact hint
+  const hint = document.getElementById('liveHint_' + type);
+  if(hint) {
+    const mods = type === 'cloud' ? cloudModifiers : serviceModifiers;
+    const m = mods[idx];
+    const rec = type === 'cloud' ? currentOrg.cloudRec : currentOrg.serviceRec;
+    const isRec = idx === rec;
+    hint.innerHTML = isRec
+      ? `<span style="color:var(--green)">✅ هذا هو الاختيار الأمثل لمؤسستك — سيُحقق أفضل النتائج</span>`
+      : `<span style="color:var(--orange)">⚠️ ${m.note}</span>`;
+    hint.style.display = 'block';
+  }
+  cs_showToast('✅ تم الاختيار');
+}
+
+function cs_validateAndNext(type) {
+  cs_next();
+}
+
+function cs_renderSteps(el) {
+  const steps = currentOrg.steps;
+  const items = steps.map((s, i) => `
+    <div class="step-item" id="stepItem_${i}">
+      <div class="step-num">${i+1}</div>
+      <div class="step-body">
+        <h4>${s.title}</h4>
+        <p>${s.desc}</p>
+        <div class="step-result">${s.result}</div>
+      </div>
+    </div>`).join('');
+
+  el.innerHTML = `
+    <div class="station">
+      <h2>🚀 المحطة الرابعة: خطوات التحول</h2>
+      <p class="subtitle">شاهد رحلة التحول تتكشّف خطوة بخطوة</p>
+      <div class="steps-list">${items}</div>
+      <div class="nav-row" id="stepsNav" style="display:none">
+        <button class="btn btn-outline" onclick="cs_back()">← رجوع</button>
+        <button class="btn btn-green" onclick="cs_next()">🎉 عرض النتائج →</button>
+      </div>
+    </div>`;
+
+  let i = 0;
+  stepsTimer = setInterval(() => {
+    const item = document.getElementById('stepItem_' + i);
+    if(item) item.classList.add('visible');
+    i++;
+    if(i >= steps.length) {
+      clearInterval(stepsTimer);
+      stepsTimer = null;
+      setTimeout(() => {
+        const nav = document.getElementById('stepsNav');
+        if(nav) nav.style.display = 'flex';
+      }, 600);
+    }
+  }, 900);
+}
+
+function cs_renderResults(el) {
+  const r = cs_computeResults();
+  const org = currentOrg;
+
+  // score badge
+  const scoreBg = r.isOptimal ? 'var(--green)' : (parseInt(r.saving) > 40 ? 'var(--orange)' : 'var(--red)');
+  const scoreIcon = r.isOptimal ? '🏆' : (parseInt(r.saving) > 40 ? '✅' : '⚠️');
+  const scoreLabel = r.isOptimal ? 'مزيج مثالي' : (parseInt(r.saving) > 40 ? 'نتيجة جيدة' : 'يمكن تحسينها');
+
+  const notesHtml = r.notes.map(n => `<div style="padding:6px 0;font-size:13px">${n}</div>`).join('');
+
+  // dynamic chart bars (after)
+  const chartBars = [
+    { label: "توفير التكلفة", val: Math.min(parseInt(r.saving), 95), type: parseInt(r.saving) > 50 ? 'fill-green' : parseInt(r.saving) > 30 ? 'fill-orange' : 'fill-red' },
+    { label: "الموثوقية", val: parseFloat(r.after.reliability), type: 'fill-green' },
+    { label: "مستوى الأمان", val: [50,75,90,100][ {منخفض:0,متوسط:1,'جيد':2,'عالٍ جداً':3,'ممتاز':3}[r.after.security] || 2 ], type: 'fill-green' },
+  ];
+  const chartHtml = chartBars.map(b => `
+    <div class="chart-row">
+      <span class="chart-label">${b.label}</span>
+      <div class="chart-bar-bg">
+        <div class="chart-bar-fill ${b.type}" id="res_bar_${b.label}" style="width:0%">${b.val}%</div>
+      </div>
+    </div>`).join('');
+
+  el.innerHTML = `
+    <div class="station">
+      <h2>📊 المحطة الخامسة: النتائج والمقارنة</h2>
+      <p class="subtitle">بناءً على اختياراتك: <strong>${r.cloudName}</strong> + <strong>${r.serviceName}</strong></p>
+
+      <div class="compare-grid">
+        <div class="compare-card">
+          <h5>⚠️ قبل التحول</h5>
+          <div class="metric-row"><div class="label">التكلفة السنوية</div><div class="val val-bad">${r.before.cost}</div></div>
+          <div class="metric-row"><div class="label">السرعة</div><div class="val val-bad">${r.before.speed}</div></div>
+          <div class="metric-row"><div class="label">الموثوقية</div><div class="val val-bad">${r.before.reliability}</div></div>
+          <div class="metric-row"><div class="label">الأمان</div><div class="val val-bad">${r.before.security}</div></div>
+        </div>
+        <div class="compare-card">
+          <h5>✅ بعد التحول السحابي</h5>
+          <div class="metric-row"><div class="label">التكلفة السنوية</div><div class="val val-good">${r.after.cost}</div></div>
+          <div class="metric-row"><div class="label">السرعة</div><div class="val val-good">${r.after.speed}</div></div>
+          <div class="metric-row"><div class="label">الموثوقية</div><div class="val val-good">${r.after.reliability}</div></div>
+          <div class="metric-row"><div class="label">الأمان</div><div class="val val-good">${r.after.security}</div></div>
+        </div>
+      </div>
+
+      <div class="mini-chart" style="margin:16px 0">
+        <p style="font-size:13px;color:var(--text-dim);margin-bottom:10px">📈 مؤشرات الأداء بعد التحول</p>
+        ${chartHtml}
+      </div>
+
+      <div class="info-box" style="margin-bottom:16px">${notesHtml}</div>
+
+      <div class="certificate">
+        <div class="cert-icon">${scoreIcon}</div>
+        <h3>شهادة إتمام رحلة التحول</h3>
+        <div class="org-name">${org.icon} ${org.name}</div>
+        <div style="display:inline-block;background:${scoreBg};color:#000;padding:4px 16px;border-radius:20px;font-size:12px;font-weight:700;margin:8px 0">${scoreLabel}</div>
+        <div class="saving" style="color:${scoreBg}">وفّرت ${r.saving} من التكاليف</div>
+        <p>${r.msg}</p>
+        ${!r.isOptimal ? `<p style="margin-top:10px;font-size:12px;color:var(--orange)">💡 جرّب الخيار الموصى به لتحصل على نتائج أفضل!</p>` : ''}
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="cs_restartSame()">🔄 أعد التجربة</button>
+        <button class="btn btn-outline" onclick="cs_goHome()">🏠 جرّب مؤسسة أخرى</button>
+      </div>
+    </div>`;
+
+  setTimeout(() => {
+    chartBars.forEach(b => {
+      const bar = document.getElementById('res_bar_' + b.label);
+      if(bar) bar.style.width = b.val + '%';
+    });
+  }, 100);
+}
+
+function cs_restartSame() {
+  const idx = currentOrg.id;
+  cs_startJourney(idx);
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+function cs_goHome() {
+  if(stepsTimer) { clearInterval(stepsTimer); stepsTimer = null; }
+  document.getElementById('screen-journey').classList.remove('active');
+  document.getElementById('screen-home').classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+// Expose to window for onclick handlers
+window.cs_startJourney = cs_startJourney;
+window.cs_back = cs_back;
+window.cs_next = cs_next;
+window.cs_selectChoice = cs_selectChoice;
+window.cs_validateAndNext = cs_validateAndNext;
+window.cs_restartSame = cs_restartSame;
+window.cs_goHome = cs_goHome;
+})();
+</script>
+</body>
+</html>
