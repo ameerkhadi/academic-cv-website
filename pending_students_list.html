@@ -1,0 +1,104 @@
+
+<style>
+  .header{padding:1.5rem 1.5rem 1rem;border-bottom:0.5px solid var(--color-border-tertiary);display:flex;align-items:center;justify-content:space-between}
+  .badge{background:var(--color-background-danger);color:var(--color-text-danger);font-size:12px;font-weight:500;padding:4px 12px;border-radius:20px}
+  .search-wrap{padding:1rem 1.5rem;border-bottom:0.5px solid var(--color-border-tertiary)}
+  .search-wrap input{width:100%;box-sizing:border-box;font-size:14px}
+  .list{padding:0.5rem 1rem 1rem}
+  .item{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:var(--border-radius-md);transition:background 0.15s}
+  .item:hover{background:var(--color-background-secondary)}
+  .num{font-size:12px;color:var(--color-text-tertiary);min-width:24px;text-align:right}
+  .avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;flex-shrink:0}
+  .name{font-size:14px;color:var(--color-text-primary)}
+  .pill{margin-left:auto;font-size:11px;padding:2px 8px;border-radius:10px;background:var(--color-background-warning);color:var(--color-text-warning);white-space:nowrap}
+  .section-label{font-size:11px;font-weight:500;color:var(--color-text-tertiary);padding:12px 12px 4px;letter-spacing:0.05em;text-transform:uppercase}
+  .empty{padding:2rem;text-align:center;color:var(--color-text-secondary);font-size:14px}
+</style>
+
+<h2 class="sr-only">Pending students who have not accepted the course invitation</h2>
+
+<div style="background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden">
+  <div class="header">
+    <div>
+      <p style="margin:0;font-size:16px;font-weight:500;color:var(--color-text-primary)">Pending invitations</p>
+      <p style="margin:0;font-size:13px;color:var(--color-text-secondary)">AWS Academy ML Foundations [171945]</p>
+    </div>
+    <span class="badge" id="count-badge">52 pending</span>
+  </div>
+  <div class="search-wrap">
+    <input type="text" placeholder="Search by name…" id="search" oninput="filter()">
+  </div>
+  <div class="list" id="list"></div>
+</div>
+
+<script>
+const en = [
+  "Hamad Ahmed","Ameer Luay Ali","Abdullah Ahmed Haleem","Hayder Samer Jasem",
+  "Hussein Alaa Jafar Sadoon","Hussein Ali Sarhan Danki","Mohammed Abdlrazaq Jarullah",
+  "Osamah Abbas Fadhel","Hadeel Sameer","Maryam Muayyad Younis"
+];
+const ar = [
+  "احمد خميس عبدالله علي التميمي","سارة حسين عبدالخالق كريم الخزرجي",
+  "واثق معتز سعدي بدري الدليمي","حسن مقدم نصيف جاسم الربيعي",
+  "انور احمد سلمان جاسم الطائي","أحمد محمد علي مطير الغريباوي",
+  "عبد الحسين علاء عبد الحسين وحيد الكلكاوي","ايه جمعه جبر جاسم",
+  "طيبة كريم حسن جبر","جواد حسن يوسف جواد","مصطفى نجم عبد جوده",
+  "نور الدين فائق عبد حسن","ام البنين عبدالرسول حسين","ميار علاء ياسر حسين",
+  "زينب حيدر عبدالرضا حمزه","مريم عاصم عبار حمزه","ابان عدي سعدي حميد",
+  "ايهاب احمد راسم اسعد درويش","زهراء فاضل حسون رفيش","نورالدين اسامه نعمه رمضان",
+  "علي صائب احمد سرحان","داوود سامي داوود سليمان","علي عصام عبدالاه صاحب",
+  "ضحى كريم جلو صكر","سجاد ثامر علي عباس","علي وسام تومان عباس",
+  "عبدالله حسنين محمد عبدالرضا","زينة اياد خريبط عبود","محمد احمد شمخي عبود",
+  "رياض علي عثمان علي","علي خالد دوازة علي","محمد علي خلف علي",
+  "مريم احمد ناجي فاضل","عبد المهيمن غزوان عماد كامل","دعاء طالب عطيه كريدي",
+  "زين العابدين عبدالرحمن لازم","هبه عائد مشتت لازم","احمد علي سليم محسن",
+  "زهراء اسماعيل ابراهيم محمود","نبأ رعد سلمان منيف","عبدالله محمد كاظم نعيس",
+  "سما رياض عبدالمنعم ياسين"
+];
+
+const colors = ["c-purple","c-teal","c-blue","c-coral","c-amber","c-pink","c-green"];
+function initials(name){
+  const p = name.trim().split(/\s+/);
+  return (p[0][0]+(p[1]?p[1][0]:'')).toUpperCase();
+}
+function colorFor(name){
+  let h=0; for(let c of name) h=(h*31+c.charCodeAt(0))%colors.length;
+  return colors[h];
+}
+const fills = {"c-purple":"#CECBF6","c-teal":"#9FE1CB","c-blue":"#B5D4F4","c-coral":"#F5C4B3","c-amber":"#FAC775","c-pink":"#F4C0D1","c-green":"#C0DD97"};
+const texts = {"c-purple":"#3C3489","c-teal":"#085041","c-blue":"#0C447C","c-coral":"#712B13","c-amber":"#633806","c-pink":"#72243E","c-green":"#27500A"};
+
+function render(enList, arList){
+  const L = document.getElementById('list');
+  L.innerHTML='';
+  const total = enList.length + arList.length;
+  document.getElementById('count-badge').textContent = total+' pending';
+  if(total===0){L.innerHTML='<div class="empty">No results found</div>';return;}
+
+  if(enList.length){
+    const sl=document.createElement('div'); sl.className='section-label'; sl.textContent='English names'; L.appendChild(sl);
+    enList.forEach(([i,n])=>{
+      const c=colorFor(n), d=document.createElement('div'); d.className='item';
+      d.innerHTML=`<span class="num">${i}</span><div class="avatar" style="background:${fills[c]};color:${texts[c]}">${initials(n)}</div><span class="name">${n}</span><span class="pill"><i class="ti ti-clock" style="font-size:11px;vertical-align:-1px;margin-right:3px" aria-hidden="true"></i>Pending</span>`;
+      L.appendChild(d);
+    });
+  }
+  if(arList.length){
+    const sl=document.createElement('div'); sl.className='section-label'; sl.textContent='Arabic names'; L.appendChild(sl);
+    arList.forEach(([i,n])=>{
+      const c=colorFor(n), d=document.createElement('div'); d.className='item';
+      d.innerHTML=`<span class="num">${i}</span><div class="avatar" style="background:${fills[c]};color:${texts[c]}">${initials(n)}</div><span class="name" dir="rtl">${n}</span><span class="pill"><i class="ti ti-clock" style="font-size:11px;vertical-align:-1px;margin-right:3px" aria-hidden="true"></i>Pending</span>`;
+      L.appendChild(d);
+    });
+  }
+}
+
+function filter(){
+  const q=document.getElementById('search').value.toLowerCase();
+  const fe=en.map((n,i)=>[i+1,n]).filter(([,n])=>n.toLowerCase().includes(q));
+  const fa=ar.map((n,i)=>[en.length+i+1,n]).filter(([,n])=>n.includes(q)||n.toLowerCase().includes(q));
+  render(fe,fa);
+}
+
+render(en.map((n,i)=>[i+1,n]), ar.map((n,i)=>[en.length+i+1,n]));
+</script>
