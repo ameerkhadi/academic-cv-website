@@ -1,0 +1,1744 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الذكاء الاصطناعي للقيادة الإدارية</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #1a56db;
+  --primary-light: #e8f0fe;
+  --primary-dark: #1a3d8f;
+  --accent: #0ea5e9;
+  --accent2: #6366f1;
+  --success: #059669;
+  --warning: #d97706;
+  --danger: #dc2626;
+  --text: #111827;
+  --text2: #4b5563;
+  --text3: #9ca3af;
+  --bg: #ffffff;
+  --bg2: #f9fafb;
+  --bg3: #f3f4f6;
+  --border: #e5e7eb;
+  --border2: #d1d5db;
+  --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.10);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Cairo', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  direction: rtl;
+  line-height: 1.7;
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg3); }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+
+/* ── HERO ── */
+.hero {
+  background: linear-gradient(135deg, #1a3d8f 0%, #1a56db 50%, #0ea5e9 100%);
+  color: white;
+  padding: 64px 40px 56px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(255,255,255,0.06) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(255,255,255,0.04) 0%, transparent 50%);
+}
+
+.hero-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 30px;
+  padding: 6px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-bottom: 22px;
+  font-family: 'Tajawal', sans-serif;
+}
+
+.hero-title {
+  font-size: clamp(32px, 5vw, 52px);
+  font-weight: 900;
+  line-height: 1.2;
+  margin-bottom: 16px;
+}
+
+.hero-sub {
+  font-size: 18px;
+  opacity: 0.85;
+  max-width: 620px;
+  font-family: 'Tajawal', sans-serif;
+  font-weight: 400;
+  margin-bottom: 36px;
+  line-height: 1.8;
+}
+
+.hero-stats {
+  display: flex;
+  gap: 36px;
+  flex-wrap: wrap;
+}
+
+.hero-stat {
+  text-align: center;
+}
+
+.hero-stat-num {
+  font-size: 30px;
+  font-weight: 900;
+  display: block;
+}
+
+.hero-stat-label {
+  font-size: 13px;
+  opacity: 0.75;
+  font-family: 'Tajawal', sans-serif;
+}
+
+/* ── OBJECTIVES ── */
+.objectives {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 48px 40px;
+}
+
+.section-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--primary);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  font-family: 'Tajawal', sans-serif;
+}
+
+.section-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 28px;
+  position: relative;
+  padding-right: 16px;
+}
+
+.section-title::before {
+  content: '';
+  position: absolute;
+  right: 0; top: 4px; bottom: 4px;
+  width: 4px;
+  background: var(--primary);
+  border-radius: 2px;
+}
+
+.obj-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.obj-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 16px 18px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.obj-item:hover {
+  border-color: var(--primary);
+  box-shadow: var(--shadow-md);
+}
+
+.obj-icon {
+  width: 36px; height: 36px;
+  background: var(--primary-light);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.obj-text {
+  font-size: 14px;
+  color: var(--text2);
+  font-family: 'Tajawal', sans-serif;
+  line-height: 1.7;
+}
+
+/* ── COURSE BODY ── */
+.course-body {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 40px 64px;
+}
+
+/* ── TOPIC CARD ── */
+.topic {
+  margin-bottom: 40px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.topic-header {
+  padding: 24px 28px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.2s;
+  background: white;
+}
+
+.topic-header:hover { background: var(--bg2); }
+
+.topic-num {
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  font-weight: 900;
+  flex-shrink: 0;
+  color: white;
+}
+
+.topic-header-text { flex: 1; }
+
+.topic-name {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 3px;
+}
+
+.topic-meta {
+  font-size: 13px;
+  color: var(--text3);
+  font-family: 'Tajawal', sans-serif;
+}
+
+.topic-chevron {
+  font-size: 20px;
+  color: var(--text3);
+  transition: transform 0.3s;
+  flex-shrink: 0;
+}
+
+.topic.open .topic-chevron { transform: rotate(180deg); }
+
+.topic-body {
+  display: none;
+  border-top: 1px solid var(--border);
+}
+
+.topic.open .topic-body { display: block; }
+
+/* ── MODULE LIST ── */
+.module-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.module {
+  border-bottom: 1px solid var(--border);
+}
+
+.module:last-child { border-bottom: none; }
+
+.module-header {
+  padding: 18px 28px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+  background: white;
+}
+
+.module-header:hover { background: var(--bg2); }
+
+.module-num-badge {
+  width: 28px; height: 28px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.module-title {
+  flex: 1;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.module-toggle {
+  font-size: 14px;
+  color: var(--text3);
+  transition: transform 0.25s;
+}
+
+.module.open .module-toggle { transform: rotate(45deg); }
+
+.module-content {
+  display: none;
+  padding: 0 28px 24px 28px;
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+}
+
+.module.open .module-content { display: block; }
+
+/* ── CONTENT BLOCKS ── */
+.content-intro {
+  font-size: 15px;
+  color: var(--text2);
+  font-family: 'Tajawal', sans-serif;
+  line-height: 1.8;
+  padding: 20px 0 16px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 16px;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+@media (max-width: 640px) { .content-grid { grid-template-columns: 1fr; } }
+
+.content-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+
+.content-card-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  font-family: 'Tajawal', sans-serif;
+}
+
+.content-card-body {
+  font-size: 13px;
+  color: var(--text2);
+  font-family: 'Tajawal', sans-serif;
+  line-height: 1.75;
+}
+
+.bullet-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.bullet-item {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 13px;
+  color: var(--text2);
+  font-family: 'Tajawal', sans-serif;
+  line-height: 1.7;
+}
+
+.bullet-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--primary);
+  flex-shrink: 0;
+  margin-top: 7px;
+}
+
+.key-takeaway {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  background: var(--primary-light);
+  border: 1px solid rgba(26,86,219,0.15);
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-top: 14px;
+}
+
+.key-takeaway-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+
+.key-takeaway-text {
+  font-size: 13px;
+  color: #1a3d8f;
+  font-family: 'Tajawal', sans-serif;
+  line-height: 1.75;
+  font-weight: 500;
+}
+
+/* ── TOPIC COLORS ── */
+.t1 { background: linear-gradient(135deg, #1a56db, #4f87f7); }
+.t1 .topic-header { border-right: 4px solid #1a56db; }
+.t1 .module-num-badge { background: #e8f0fe; color: #1a56db; }
+.t1 .content-card-label { color: #1a56db; }
+.t1 .bullet-dot { background: #1a56db; }
+
+.t2 { background: linear-gradient(135deg, #6366f1, #818cf8); }
+.t2 .topic-header { border-right: 4px solid #6366f1; }
+.t2 .module-num-badge { background: #eef2ff; color: #6366f1; }
+.t2 .content-card-label { color: #6366f1; }
+.t2 .bullet-dot { background: #6366f1; }
+.t2 .key-takeaway { background: #eef2ff; border-color: rgba(99,102,241,0.15); }
+.t2 .key-takeaway-text { color: #3730a3; }
+
+.t3 { background: linear-gradient(135deg, #059669, #10b981); }
+.t3 .topic-header { border-right: 4px solid #059669; }
+.t3 .module-num-badge { background: #d1fae5; color: #059669; }
+.t3 .content-card-label { color: #059669; }
+.t3 .bullet-dot { background: #059669; }
+.t3 .key-takeaway { background: #d1fae5; border-color: rgba(5,150,105,0.2); }
+.t3 .key-takeaway-text { color: #065f46; }
+
+.t4 { background: linear-gradient(135deg, #d97706, #f59e0b); }
+.t4 .topic-header { border-right: 4px solid #d97706; }
+.t4 .module-num-badge { background: #fef3c7; color: #d97706; }
+.t4 .content-card-label { color: #d97706; }
+.t4 .bullet-dot { background: #d97706; }
+.t4 .key-takeaway { background: #fef3c7; border-color: rgba(217,119,6,0.2); }
+.t4 .key-takeaway-text { color: #92400e; }
+
+.t5 { background: linear-gradient(135deg, #0891b2, #06b6d4); }
+.t5 .topic-header { border-right: 4px solid #0891b2; }
+.t5 .module-num-badge { background: #cffafe; color: #0891b2; }
+.t5 .content-card-label { color: #0891b2; }
+.t5 .bullet-dot { background: #0891b2; }
+.t5 .key-takeaway { background: #cffafe; border-color: rgba(8,145,178,0.2); }
+.t5 .key-takeaway-text { color: #164e63; }
+
+.t6 { background: linear-gradient(135deg, #7c3aed, #a855f7); }
+.t6 .topic-header { border-right: 4px solid #7c3aed; }
+.t6 .module-num-badge { background: #f5f3ff; color: #7c3aed; }
+.t6 .content-card-label { color: #7c3aed; }
+.t6 .bullet-dot { background: #7c3aed; }
+.t6 .key-takeaway { background: #f5f3ff; border-color: rgba(124,58,237,0.15); }
+.t6 .key-takeaway-text { color: #4c1d95; }
+
+/* ── PROGRESS BAR ── */
+.progress-bar-wrap {
+  background: var(--bg3);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.progress-bar-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 10px 40px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.progress-label { font-size: 13px; color: var(--text2); font-weight: 600; white-space: nowrap; }
+.progress-track { flex: 1; height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
+.progress-fill { height: 100%; background: linear-gradient(90deg, var(--primary), var(--accent)); border-radius: 3px; transition: width 0.4s; width: 0%; }
+.progress-pct { font-size: 13px; color: var(--primary); font-weight: 700; min-width: 36px; text-align: left; }
+
+/* ── DIVIDER ── */
+.divider { height: 1px; background: var(--border); max-width: 960px; margin: 0 auto 40px; }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  padding: 32px 40px;
+  text-align: center;
+  color: var(--text3);
+  font-size: 13px;
+  font-family: 'Tajawal', sans-serif;
+}
+
+footer strong { color: var(--primary); }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-tag">🎓 دبلوم القيادة الرقمية العليا</div>
+    <h1 class="hero-title">الذكاء الاصطناعي<br>للقيادة الإدارية</h1>
+    <p class="hero-sub">كورس متكامل يؤهل القادة والمديرين لاستيعاب تقنيات الذكاء الاصطناعي وتوظيفها في بيئات العمل المؤسسي والحكومي</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="hero-stat-num">6</span><span class="hero-stat-label">موضوعات رئيسية</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">30</span><span class="hero-stat-label">مفردة تعليمية</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">6</span><span class="hero-stat-label">مخرجات تعلم</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">1</span><span class="hero-stat-label">مشروع عملي</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- PROGRESS -->
+<div class="progress-bar-wrap">
+  <div class="progress-bar-inner">
+    <span class="progress-label">تقدم الكورس</span>
+    <div class="progress-track"><div class="progress-fill" id="pbar"></div></div>
+    <span class="progress-pct" id="ppct">0%</span>
+  </div>
+</div>
+
+<!-- OBJECTIVES -->
+<div class="objectives">
+  <div class="section-label">Course Objectives</div>
+  <div class="section-title">مخرجات التعلم</div>
+  <div class="obj-grid">
+    <div class="obj-item"><div class="obj-icon">🧠</div><div class="obj-text">فهم المفاهيم الأساسية للذكاء الاصطناعي وتطبيقاتها في البيئة الإدارية والمؤسسية</div></div>
+    <div class="obj-item"><div class="obj-icon">🤖</div><div class="obj-text">التمييز بين أنواع تعلم الآلة وتحديد تطبيقاتها المناسبة في القرارات القيادية</div></div>
+    <div class="obj-item"><div class="obj-icon">⚙️</div><div class="obj-text">تصميم خطط أتمتة للعمليات الروتينية باستخدام أدوات الذكاء الاصطناعي المتاحة</div></div>
+    <div class="obj-item"><div class="obj-icon">✨</div><div class="obj-text">توظيف أدوات الذكاء الاصطناعي التوليدي في إنتاج المحتوى ودعم القرار الإداري</div></div>
+    <div class="obj-item"><div class="obj-icon">🌐</div><div class="obj-text">بناء خارطة طريق للتحول الرقمي المدعوم بالذكاء الاصطناعي على مستوى المؤسسة</div></div>
+    <div class="obj-item"><div class="obj-icon">🚀</div><div class="obj-text">تطوير مشروع عملي تطبيقي يوظف الذكاء الاصطناعي في حل مشكلة إدارية حقيقية</div></div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- COURSE BODY -->
+<div class="course-body">
+
+<!-- ══════════ TOPIC 1 ══════════ -->
+<div class="topic t1" id="topic1">
+  <div class="topic-header" onclick="toggleTopic('topic1')">
+    <div class="topic-num t1" style="width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;flex-shrink:0;color:white;background:linear-gradient(135deg,#1a56db,#4f87f7);">١</div>
+    <div class="topic-header-text">
+      <div class="topic-name">مقدمة عن الذكاء الاصطناعي في الإدارة</div>
+      <div class="topic-meta">Introduction to AI in Management &nbsp;|&nbsp; 5 مفردات</div>
+    </div>
+    <div class="topic-chevron">▼</div>
+  </div>
+  <div class="topic-body">
+    <div class="module-list">
+
+      <!-- 1.1 -->
+      <div class="module t1" id="m1-1">
+        <div class="module-header" onclick="toggleModule('m1-1')">
+          <div class="module-num-badge">١.١</div>
+          <div class="module-title">تعريف الذكاء الاصطناعي ومفاهيمه الأساسية</div>
+          <div class="module-toggle">+</div>
+        </div>
+        <div class="module-content">
+          <div class="content-intro">الذكاء الاصطناعي (AI) هو قدرة الأنظمة الحاسوبية على محاكاة السلوك الذكي البشري — من التعلم والتفكير واتخاذ القرار وحل المشكلات. يُعدّ اليوم أحد أعظم التحولات التقنية في تاريخ الإدارة.</div>
+          <div class="content-grid">
+            <div class="content-card">
+              <div class="content-card-label">التعريف الجوهري</div>
+              <div class="content-card-body">
+                <div class="bullet-list">
+                  <div class="bullet-item"><div class="bullet-dot"></div>نظام يتعلم من البيانات ويحسّن أداءه باستمرار</div>
+                  <div class="bullet-item"><div class="bullet-dot"></div>يتضمن: تعلم الآلة، الشبكات العصبية، معالجة اللغة</div>
+                  <div class="bullet-item"><div class="bullet-dot"></div>الهدف: أتمتة المهام المعرفية وتعزيز القرار البشري</div>
+                </div>
+              </div>
+            </div>
+            <div class="content-card">
+              <div class="content-card-label">المكونات الرئيسية</div>
+              <div class="content-card-body">
+                <div class="bullet-list">
+                  <div class="bullet-item"><div class="bullet-dot"></div><strong>Machine Learning:</strong> تعلم الآلة من البيانات</div>
+                  <div class="bullet-item"><div class="bullet-dot"></div><strong>NLP:</strong> معالجة اللغة الطبيعية</div>
+                  <div class="bullet-item"><div class="bullet-dot"></div><strong>Computer Vision:</strong> رؤية الحاسوب وتحليل الصور</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="key-takeaway"><div class="key-takeaway-icon">💡</div><div class="key-takeaway-text">الفكرة الجوهرية: الذكاء الاصطناعي ليس بديلاً عن القائد، بل مضخّم لقدراته — يساعده على اتخاذ قرارات أسرع وأدق بناءً على بيانات أكثر.</div></div>
+        </div>
+      </div>
+
+      <!-- 1.2 -->
+      <div class="module t1" id="m1-2">
+        <div class="module-header" onclick="toggleModule('m1-2')">
+          <div class="module-num-badge">١.٢</div>
+          <div class="module-title">تاريخ الذكاء الاصطناعي وتطوره</div>
+          <div class="module-toggle">+</div>
+        </div>
+        <div class="module-content">
+          <div class="content-intro">من الأحلام الفلسفية إلى الثورة التقنية — رحلة الذكاء الاصطناعي عبر العقود تكشف كيف تحوّلت الفكرة إلى صناعة بتريليونات الدولارات.</div>
+          <div class="content-grid">
+            <div class="content-card">
+              <div class="content-card-label">المحطات التاريخية الكبرى</div>
+              <div class="content-card-body">
+                <div class="bullet-list">
+                  <div class="bullet-item"><div class="bullet-dot"></div><strong>1956:</strong> مؤتمر دارتموث — ميلاد مصطلح AI</div>
+                  <div class="bullet-item"><div class="bullet-dot"></div><strong>1980-90:</strong> ظهور الأنظمة الخبيرة في الشركات</div>
+                  <div class="bullet-item"><div class="bullet-dot"></div><strong>2012:</strong> ثورة التعلم العميق (Deep Learning)</div>
+                  <div class="bullet-item"><div class="bullet-dot"></div><strong>2022:</strong> انتشار النماذج التوليدية (ChatGPT)</div>
+                </div>
+              </div>
+            </div>
+            <div class="content-card">
+              <div class="content-card-label">المحركات الحديثة</div>
+              <div class="content-card-body">
+                <div class="bullet-list">
+                  <div class="bullet-item"><div class="bullet-dot"></div>انفجار البيانات الضخمة (Big Data)</div>
+                  <div class="bullet-item"><div class="bullet-dot"></div>قوة الحوسبة السحابية المتاحة للجميع</div>
+                  <div class="bullet-item"><div class="bullet-dot"></div>خوارزميات التعلم العميق المتطورة</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="key-takeaway"><div class="key-takeaway-icon">📌</div><div class="key-takeaway-text">نحن نعيش الموجة الثالثة للذكاء الاصطناعي — وهي الأقوى والأوسع تأثيراً. القادة الذين يفهمون هذا التاريخ يستطيعون قراءة المستقبل بشكل أفضل.</div></div>
+        </div>
+      </div>
+
+      <!-- 1.3 -->
+      <div class="module t1" id="m1-3">
+        <div class="module-header" onclick="toggleModule('m1-3')">
+          <div class="module-num-badge">١.٣</div>
+          <div class="module-title">تطبيقات الذكاء الاصطناعي في القطاعات الإدارية</div>
+          <div class="module-toggle">+</div>
+        </div>
+        <div class="module-content">
+          <div class="content-intro">يتغلغل الذكاء الاصطناعي في كل قطاعات العمل — من الموارد البشرية إلى المالية والتسويق والعمليات، مغيّراً طريقة اتخاذ القرار على كل مستوى.</div>
+          <div class="content-grid">
+            <div class="content-card">
+              <div class="content-card-label">قطاعات التطبيق الرئيسية</div>
+              <div class="content-card-body">
+                <div class="bullet-list">
+                  <div class="bullet-item"><div class="bullet-dot"></div><strong>الموارد البشرية:</strong> فلترة السير الذاتية وتقييم الأداء</div>
+                  <div class="bullet-item"><div class="bullet-dot"></div><strong>المالية:</strong> كشف الاحتيال والتنبؤ بالتدفقات النقدية</div>
+                  <div class="bullet-item"><div class="bullet-dot"></div><strong>التسويق:</strong> تخصيص المحتوى وتحليل سلوك العملاء</div>
+                  <div class="bullet-item"><div class="bullet-dot"></div><strong>سلسلة التوريد:</strong> التنبؤ بالطلب وتحسين المخزون</div>
+                </div>
+              </div>
+            </div>
+            <div class="content-card">
+              <div class="content-card-label">القيمة المضافة للمؤسسة</div>
+              <div class="content-card-body">
+                <div class="bullet-list">
+                  <div class="bullet-item"><div class="bullet-dot"></div>تخفيض التكاليف التشغيلية حتى 40%</div>
+                  <div class="bullet-item"><div class="bullet-dot"></div>تسريع دورات اتخاذ القرار</div>
+                  <div class="bullet-item"><div class="bullet-dot"></div>تحسين تجربة العملاء والخدمات</div>
+                  <div class="bullet-item"><div class="bullet-dot"></div>اكتشاف الفرص التجارية المخفية في البيانات</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="key-takeaway"><div class="key-takeaway-icon">🎯</div><div class="key-takeaway-text">الشركات التي تدمج الذكاء الاصطناعي في عملياتها الإدارية تُحقق ميزة تنافسية تراكمية — كلما بكّرت في التبني، كلما زاد الفارق عن المنافسين.</div></div>
+        </div>
+      </div>
+
+      <!-- 1.4 -->
+      <div class="module t1" id="m1-4">
+        <div class="module-header" onclick="toggleModule('m1-4')">
+          <div class="module-num-badge">١.٤</div>
+          <div class="module-title">فرص وتحديات تبني الذكاء الاصطناعي</div>
+          <div class="module-toggle">+</div>
+        </div>
+        <div class="module-content">
+          <div class="content-intro">كل ثورة تقنية تحمل في طياتها فرصاً استثنائية وتحديات حقيقية. الفهم الواضح للجانبين يُمكّن القائد من اتخاذ قرارات استراتيجية سليمة.</div>
+          <div class="content-grid">
+            <div class="content-card" style="border-right: 3px solid #059669;">
+              <div class="content-card-label" style="color:#059669;">✅ الفرص</div>
+              <div class="content-card-body">
+                <div class="bullet-list">
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#059669;"></div>زيادة الإنتاجية وخفض التكاليف</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#059669;"></div>خدمات حكومية وتجارية أسرع وأذكى</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#059669;"></div>فتح نماذج أعمال جديدة كلياً</div>
+                </div>
+              </div>
+            </div>
+            <div class="content-card" style="border-right: 3px solid #dc2626;">
+              <div class="content-card-label" style="color:#dc2626;">⚠️ التحديات</div>
+              <div class="content-card-body">
+                <div class="bullet-list">
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#dc2626;"></div>جودة البيانات وخصوصيتها</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#dc2626;"></div>مقاومة التغيير داخل المنظمة</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#dc2626;"></div>الفجوة في المهارات الرقمية</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="key-takeaway"><div class="key-takeaway-icon">⚖️</div><div class="key-takeaway-text">الإدارة الذكية للتحديات لا تعني تجنّبها، بل الاستعداد لها مسبقاً — ببناء الكفاءات وسياسات البيانات وثقافة التغيير قبل البدء.</div></div>
+        </div>
+      </div>
+
+      <!-- 1.5 -->
+      <div class="module t1" id="m1-5">
+        <div class="module-header" onclick="toggleModule('m1-5')">
+          <div class="module-num-badge">١.٥</div>
+          <div class="module-title">أخلاقيات الذكاء الاصطناعي والحوكمة المؤسسية</div>
+          <div class="module-toggle">+</div>
+        </div>
+        <div class="module-content">
+          <div class="content-intro">مع القدرة الهائلة تأتي مسؤولية هائلة — الحوكمة الأخلاقية للذكاء الاصطناعي باتت ضرورة تنافسية وقانونية وليست خياراً.</div>
+          <div class="content-grid">
+            <div class="content-card">
+              <div class="content-card-label">المبادئ الأخلاقية الأساسية</div>
+              <div class="content-card-body">
+                <div class="bullet-list">
+                  <div class="bullet-item"><div class="bullet-dot"></div><strong>الشفافية:</strong> فهم كيف تتخذ الأنظمة قراراتها</div>
+                  <div class="bullet-item"><div class="bullet-dot"></div><strong>الإنصاف:</strong> تجنب التحيز في الخوارزميات</div>
+                  <div class="bullet-item"><div class="bullet-dot"></div><strong>الخصوصية:</strong> حماية بيانات الأفراد والمؤسسات</div>
+                  <div class="bullet-item"><div class="bullet-dot"></div><strong>المساءلة:</strong> تحديد المسؤولية عند الأخطاء</div>
+                </div>
+              </div>
+            </div>
+            <div class="content-card">
+              <div class="content-card-label">إطار الحوكمة للمؤسسة</div>
+              <div class="content-card-body">
+                <div class="bullet-list">
+                  <div class="bullet-item"><div class="bullet-dot"></div>وضع سياسات واضحة لاستخدام البيانات</div>
+                  <div class="bullet-item"><div class="bullet-dot"></div>تشكيل لجنة أخلاقيات الذكاء الاصطناعي</div>
+                  <div class="bullet-item"><div class="bullet-dot"></div>مراجعة دورية لنتائج الأنظمة الذكية</div>
+                  <div class="bullet-item"><div class="bullet-dot"></div>الامتثال للوائح AI الإقليمية والدولية</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="key-takeaway"><div class="key-takeaway-icon">🛡️</div><div class="key-takeaway-text">المؤسسة التي تبني إطار أخلاقي للذكاء الاصطناعي تحمي نفسها قانونياً وتكسب ثقة عملائها وشركائها على المدى الطويل.</div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ TOPIC 2 ══════════ -->
+<div class="topic t2" id="topic2">
+  <div class="topic-header" onclick="toggleTopic('topic2')">
+    <div class="topic-num" style="width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;flex-shrink:0;color:white;background:linear-gradient(135deg,#6366f1,#818cf8);">٢</div>
+    <div class="topic-header-text">
+      <div class="topic-name">تعلم الآلة وتطبيقات القيادة</div>
+      <div class="topic-meta">Machine Learning & Leadership Applications &nbsp;|&nbsp; 5 مفردات</div>
+    </div>
+    <div class="topic-chevron">▼</div>
+  </div>
+  <div class="topic-body">
+    <div class="module-list">
+
+      <div class="module t2" id="m2-1">
+        <div class="module-header" onclick="toggleModule('m2-1')">
+          <div class="module-num-badge">٢.١</div>
+          <div class="module-title">مدخل إلى تعلم الآلة Machine Learning</div>
+          <div class="module-toggle">+</div>
+        </div>
+        <div class="module-content">
+          <div class="content-intro">تعلم الآلة هو الفرع الأقوى في الذكاء الاصطناعي — بدلاً من برمجة القواعد يدوياً، يتعلم النظام تلقائياً من البيانات ويُحسّن نفسه باستمرار.</div>
+          <div class="content-grid">
+            <div class="content-card">
+              <div class="content-card-label">أنواع تعلم الآلة</div>
+              <div class="content-card-body">
+                <div class="bullet-list">
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#6366f1;"></div><strong>Supervised Learning:</strong> تعلم موجَّه بأمثلة مصنَّفة</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#6366f1;"></div><strong>Unsupervised Learning:</strong> اكتشاف أنماط خفية في البيانات</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#6366f1;"></div><strong>Reinforcement Learning:</strong> التعلم بالمكافأة والعقوبة</div>
+                </div>
+              </div>
+            </div>
+            <div class="content-card">
+              <div class="content-card-label">أمثلة إدارية عملية</div>
+              <div class="content-card-body">
+                <div class="bullet-list">
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#6366f1;"></div>التنبؤ بمبيعات الشهر القادم (Supervised)</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#6366f1;"></div>تقسيم العملاء لشرائح (Unsupervised)</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#6366f1;"></div>روبوتات التفاوض الذكية (Reinforcement)</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="key-takeaway"><div class="key-takeaway-icon">💡</div><div class="key-takeaway-text">القائد لا يحتاج لبرمجة الخوارزميات — يحتاج لمعرفة أي نوع من تعلم الآلة يناسب مشكلته وكيف يقيّم جودة النتائج.</div></div>
+        </div>
+      </div>
+
+      <div class="module t2" id="m2-2">
+        <div class="module-header" onclick="toggleModule('m2-2')">
+          <div class="module-num-badge">٢.٢</div>
+          <div class="module-title">التنبؤ وتحليل البيانات للقرارات القيادية</div>
+          <div class="module-toggle">+</div>
+        </div>
+        <div class="module-content">
+          <div class="content-intro">البيانات هي النفط الجديد — والتحليل التنبؤي هو المصفاة التي تحوّلها إلى قرارات ذهبية. القائد الذي يستخدم التحليل التنبؤي يتحرك استباقياً بدلاً من التفاعلي.</div>
+          <div class="content-grid">
+            <div class="content-card">
+              <div class="content-card-label">أدوات التحليل التنبؤي</div>
+              <div class="content-card-body">
+                <div class="bullet-list">
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#6366f1;"></div><strong>Power BI:</strong> لوحات معلومات تفاعلية فورية</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#6366f1;"></div><strong>Tableau:</strong> تصوير بياني احترافي للبيانات</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#6366f1;"></div><strong>Google Analytics:</strong> تحليل سلوك المستخدمين</div>
+                </div>
+              </div>
+            </div>
+            <div class="content-card">
+              <div class="content-card-label">قرارات مبنية على البيانات</div>
+              <div class="content-card-body">
+                <div class="bullet-list">
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#6366f1;"></div>متى نوظف ومتى نُقلص؟</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#6366f1;"></div>أي منتج يستحق الاستثمار أكثر؟</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#6366f1;"></div>كيف نتوقع تصرفات العميل؟</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="key-takeaway"><div class="key-takeaway-icon">📊</div><div class="key-takeaway-text">الشركة التي تتخذ 70% من قراراتها بناءً على بيانات وتحليلات تتفوق باستمرار على منافسيها الذين يعتمدون على الحدس.</div></div>
+        </div>
+      </div>
+
+      <div class="module t2" id="m2-3">
+        <div class="module-header" onclick="toggleModule('m2-3')">
+          <div class="module-num-badge">٢.٣</div>
+          <div class="module-title">نماذج التوصية في بيئات الأعمال</div>
+          <div class="module-toggle">+</div>
+        </div>
+        <div class="module-content">
+          <div class="content-intro">نماذج التوصية هي المحرك الخفي خلف أمازون وNetflix ويوتيوب — ونفس التقنية أصبحت متاحة لكل مؤسسة تريد تخصيص تجربة عملائها وموظفيها.</div>
+          <div class="content-grid">
+            <div class="content-card">
+              <div class="content-card-label">كيف تعمل نماذج التوصية</div>
+              <div class="content-card-body">
+                <div class="bullet-list">
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#6366f1;"></div>Collaborative Filtering: مقارنة سلوك المستخدمين المتشابهين</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#6366f1;"></div>Content-Based: تحليل خصائص المنتج/الخدمة نفسها</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#6366f1;"></div>Hybrid: دمج النهجين لدقة أعلى</div>
+                </div>
+              </div>
+            </div>
+            <div class="content-card">
+              <div class="content-card-label">تطبيقات إدارية</div>
+              <div class="content-card-body">
+                <div class="bullet-list">
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#6366f1;"></div>توصية الموظف بدورات تدريبية مناسبة</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#6366f1;"></div>اقتراح الموردين المناسبين لكل مشروع</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#6366f1;"></div>تخصيص العروض للعملاء أوتوماتيكياً</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="key-takeaway"><div class="key-takeaway-icon">🎯</div><div class="key-takeaway-text">التخصيص الذكي يرفع رضا العملاء والموظفين في آنٍ واحد — كل توصية دقيقة تعني وقتاً أقل ضائعاً وقراراً أفضل.</div></div>
+        </div>
+      </div>
+
+      <div class="module t2" id="m2-4">
+        <div class="module-header" onclick="toggleModule('m2-4')">
+          <div class="module-num-badge">٢.٤</div>
+          <div class="module-title">كشف الأنماط والشذوذات في بيانات المؤسسة</div>
+          <div class="module-toggle">+</div>
+        </div>
+        <div class="module-content">
+          <div class="content-intro">كشف الشذوذات (Anomaly Detection) هو درع المؤسسة ضد الاحتيال والأعطال والمشكلات التشغيلية — يرصد التحليل الذكي ما يعجز العين البشرية عن رؤيته في ملايين السجلات.</div>
+          <div class="content-grid">
+            <div class="content-card">
+              <div class="content-card-label">حالات الاستخدام</div>
+              <div class="content-card-body">
+                <div class="bullet-list">
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#6366f1;"></div>كشف الاحتيال المالي والمصرفي</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#6366f1;"></div>رصد أعطال المعدات قبل وقوعها</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#6366f1;"></div>تحديد الموظفين ذوي الأداء غير المعتاد</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#6366f1;"></div>مراقبة جودة المنتجات في الإنتاج</div>
+                </div>
+              </div>
+            </div>
+            <div class="content-card">
+              <div class="content-card-label">الأدوات والتقنيات</div>
+              <div class="content-card-body">
+                <div class="bullet-list">
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#6366f1;"></div>Isolation Forest: عزل النقاط الشاذة</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#6366f1;"></div>LSTM Networks: رصد التسلسلات الزمنية</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#6366f1;"></div>AutoML: كشف تلقائي بدون خبرة تقنية</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="key-takeaway"><div class="key-takeaway-icon">🔍</div><div class="key-takeaway-text">كل ريال ضائع في الاحتيال أو كل ساعة توقف غير مخططة تُكلّف المؤسسة أكثر بكثير من تكلفة نظام الرصد الذكي.</div></div>
+        </div>
+      </div>
+
+      <div class="module t2" id="m2-5">
+        <div class="module-header" onclick="toggleModule('m2-5')">
+          <div class="module-num-badge">٢.٥</div>
+          <div class="module-title">تحليل المشاعر وذكاء الزبون</div>
+          <div class="module-toggle">+</div>
+        </div>
+        <div class="module-content">
+          <div class="content-intro">تحليل المشاعر (Sentiment Analysis) يحوّل كلمات العملاء على وسائل التواصل والمراجعات والشكاوى إلى بيانات قابلة للقياس والتحسين.</div>
+          <div class="content-grid">
+            <div class="content-card">
+              <div class="content-card-label">كيف يعمل تحليل المشاعر</div>
+              <div class="content-card-body">
+                <div class="bullet-list">
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#6366f1;"></div>قراءة النص وتصنيفه (إيجابي/سلبي/محايد)</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#6366f1;"></div>رصد الموضوعات المتكررة والشكاوى</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#6366f1;"></div>تتبع التغيرات الزمنية في رضا العملاء</div>
+                </div>
+              </div>
+            </div>
+            <div class="content-card">
+              <div class="content-card-label">أدوات وتطبيقات</div>
+              <div class="content-card-body">
+                <div class="bullet-list">
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#6366f1;"></div>Brandwatch, Mention: مراقبة الإنترنت</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#6366f1;"></div>Azure Cognitive Services: تحليل النصوص</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#6366f1;"></div>تكامل مع CRM لمتابعة حالة العميل</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="key-takeaway"><div class="key-takeaway-icon">💬</div><div class="key-takeaway-text">كل تغريدة وكل مراجعة هي بيانات ثمينة — تحليل المشاعر يحوّلها من ضجيج إلى مؤشرات أداء قابلة للعمل الإداري الفوري.</div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ TOPIC 3 ══════════ -->
+<div class="topic t3" id="topic3">
+  <div class="topic-header" onclick="toggleTopic('topic3')">
+    <div class="topic-num" style="width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;flex-shrink:0;color:white;background:linear-gradient(135deg,#059669,#10b981);">٣</div>
+    <div class="topic-header-text">
+      <div class="topic-name">الأتمتة للأعمال الروتينية بالذكاء الاصطناعي</div>
+      <div class="topic-meta">AI-Powered Business Automation &nbsp;|&nbsp; 5 مفردات</div>
+    </div>
+    <div class="topic-chevron">▼</div>
+  </div>
+  <div class="topic-body">
+    <div class="module-list">
+
+      <div class="module t3" id="m3-1">
+        <div class="module-header" onclick="toggleModule('m3-1')">
+          <div class="module-num-badge">٣.١</div>
+          <div class="module-title">مفهوم الأتمتة الذكية وأنواعها</div>
+          <div class="module-toggle">+</div>
+        </div>
+        <div class="module-content">
+          <div class="content-intro">الأتمتة الذكية تتجاوز الأتمتة التقليدية — بدلاً من تنفيذ تعليمات ثابتة، تتعلم الأنظمة الذكية من الاستثناءات وتتكيف مع المواقف الجديدة.</div>
+          <div class="content-grid">
+            <div class="content-card">
+              <div class="content-card-label">مستويات الأتمتة</div>
+              <div class="content-card-body">
+                <div class="bullet-list">
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#059669;"></div><strong>RPA:</strong> أتمتة العمليات الروبوتية (نسخ/لصق/نقل)</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#059669;"></div><strong>IPA:</strong> أتمتة ذكية تدمج RPA مع AI</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#059669;"></div><strong>Hyperautomation:</strong> أتمتة شاملة للمنظمة كاملاً</div>
+                </div>
+              </div>
+            </div>
+            <div class="content-card">
+              <div class="content-card-label">العمليات القابلة للأتمتة</div>
+              <div class="content-card-body">
+                <div class="bullet-list">
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#059669;"></div>إدخال البيانات وتوليد التقارير</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#059669;"></div>الفوترة والمطابقة المالية</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#059669;"></div>خدمة العملاء الروتينية (Chatbots)</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#059669;"></div>مراجعة الوثائق والعقود</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="key-takeaway"><div class="key-takeaway-icon">⚙️</div><div class="key-takeaway-text">كل ساعة عمل بشري يقضيها موظفك في مهام روتينية متكررة يمكن استعادتها للعمل الإبداعي والاستراتيجي عبر الأتمتة الذكية.</div></div>
+        </div>
+      </div>
+
+      <div class="module t3" id="m3-2">
+        <div class="module-header" onclick="toggleModule('m3-2')">
+          <div class="module-num-badge">٣.٢</div>
+          <div class="module-title">أتمتة العمليات الروبوتية RPA</div>
+          <div class="module-toggle">+</div>
+        </div>
+        <div class="module-content">
+          <div class="content-intro">RPA (Robotic Process Automation) هو أكثر أدوات الأتمتة انتشاراً — روبوت برمجي يقلّد تصرفات الإنسان على الكمبيوتر بسرعة وبلا أخطاء على مدار الساعة.</div>
+          <div class="content-grid">
+            <div class="content-card">
+              <div class="content-card-label">أشهر أدوات RPA</div>
+              <div class="content-card-body">
+                <div class="bullet-list">
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#059669;"></div><strong>UiPath:</strong> الأكثر انتشاراً عالمياً</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#059669;"></div><strong>Automation Anywhere:</strong> للمؤسسات الكبيرة</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#059669;"></div><strong>Power Automate:</strong> مدمج مع بيئة Microsoft 365</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#059669;"></div><strong>Zapier / Make:</strong> للشركات الصغيرة والمتوسطة</div>
+                </div>
+              </div>
+            </div>
+            <div class="content-card">
+              <div class="content-card-label">نتائج عملية موثقة</div>
+              <div class="content-card-body">
+                <div class="bullet-list">
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#059669;"></div>تخفيض وقت المعالجة بنسبة 80%</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#059669;"></div>تقليل الأخطاء البشرية إلى صفر تقريباً</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#059669;"></div>العمل 24/7 بلا توقف ولا إجازات</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#059669;"></div>توثيق تلقائي لجميع العمليات</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="key-takeaway"><div class="key-takeaway-icon">🤖</div><div class="key-takeaway-text">ROI متوسط لمشاريع RPA يتراوح بين 30-200% في السنة الأولى — من أسرع أدوات تحقيق العائد في مشاريع الذكاء الاصطناعي.</div></div>
+        </div>
+      </div>
+
+      <div class="module t3" id="m3-3">
+        <div class="module-header" onclick="toggleModule('m3-3')">
+          <div class="module-num-badge">٣.٣</div>
+          <div class="module-title">الدردشة الآلية وخدمة العملاء الذكية</div>
+          <div class="module-toggle">+</div>
+        </div>
+        <div class="module-content">
+          <div class="content-intro">Chatbots ووكلاء الذكاء الاصطناعي (AI Agents) يحوّلون خدمة العملاء من مركز تكلفة إلى ميزة تنافسية — خدمة فورية ومتعددة اللغات بدون قوائم انتظار.</div>
+          <div class="content-grid">
+            <div class="content-card">
+              <div class="content-card-label">جيل جديد من الدردشة الآلية</div>
+              <div class="content-card-body">
+                <div class="bullet-list">
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#059669;"></div>Chatbots بسيطة: قواعد ثابتة وردود محددة مسبقاً</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#059669;"></div>NLP Chatbots: تفهم النية وراء الكلمات</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#059669;"></div>AI Agents: تنجز مهام كاملة باستقلالية</div>
+                </div>
+              </div>
+            </div>
+            <div class="content-card">
+              <div class="content-card-label">منصات البناء المتاحة</div>
+              <div class="content-card-body">
+                <div class="bullet-list">
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#059669;"></div>Microsoft Copilot Studio: بدون برمجة</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#059669;"></div>Dialogflow (Google): متعدد اللغات</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#059669;"></div>Botpress: مفتوح المصدر وقابل للتخصيص</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="key-takeaway"><div class="key-takeaway-icon">💬</div><div class="key-takeaway-text">Chatbot واحد يستطيع التعامل مع آلاف العملاء في آنٍ واحد — مع إحالة الحالات المعقدة لموظف بشري بذكاء.</div></div>
+        </div>
+      </div>
+
+      <div class="module t3" id="m3-4">
+        <div class="module-header" onclick="toggleModule('m3-4')">
+          <div class="module-num-badge">٣.٤</div>
+          <div class="module-title">أتمتة الموارد البشرية والعمليات الإدارية</div>
+          <div class="module-toggle">+</div>
+        </div>
+        <div class="module-content">
+          <div class="content-intro">الموارد البشرية تمتلئ بالمهام الورقية والمتكررة — الأتمتة لا تلغي دور HR بل تحرره للمهام الاستراتيجية كتطوير المواهب وبناء الثقافة.</div>
+          <div class="content-grid">
+            <div class="content-card">
+              <div class="content-card-label">العمليات القابلة للأتمتة في HR</div>
+              <div class="content-card-body">
+                <div class="bullet-list">
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#059669;"></div>فلترة السير الذاتية وجدولة المقابلات</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#059669;"></div>Onboarding الإلكتروني الآلي للموظف الجديد</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#059669;"></div>احتساب الرواتب ومتابعة الحضور</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#059669;"></div>تقييم الأداء ورصد مؤشرات التفاعل</div>
+                </div>
+              </div>
+            </div>
+            <div class="content-card">
+              <div class="content-card-label">الأدوات المتخصصة</div>
+              <div class="content-card-body">
+                <div class="bullet-list">
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#059669;"></div><strong>Workday AI:</strong> تخطيط القوى العاملة</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#059669;"></div><strong>HireVue:</strong> مقابلات فيديو بتحليل ذكي</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#059669;"></div><strong>Lattice:</strong> إدارة الأداء والتطوير</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="key-takeaway"><div class="key-takeaway-icon">👥</div><div class="key-takeaway-text">الأتمتة في HR ليست تهديداً للموظفين — بل تحريراً لطاقتهم نحو العمل الإنساني الحقيقي الذي لا تستطيع الآلة القيام به.</div></div>
+        </div>
+      </div>
+
+      <div class="module t3" id="m3-5">
+        <div class="module-header" onclick="toggleModule('m3-5')">
+          <div class="module-num-badge">٣.٥</div>
+          <div class="module-title">قياس الكفاءة والعائد من الاستثمار في الأتمتة</div>
+          <div class="module-toggle">+</div>
+        </div>
+        <div class="module-content">
+          <div class="content-intro">قبل الأتمتة وبعدها يجب القياس — ROI واضح هو ما يقنع مجلس الإدارة ويضمن استمرار الدعم للمشاريع الذكية.</div>
+          <div class="content-grid">
+            <div class="content-card">
+              <div class="content-card-label">مؤشرات قياس النجاح</div>
+              <div class="content-card-body">
+                <div class="bullet-list">
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#059669;"></div>الوقت المُوفَّر لكل عملية (ساعات/يوم)</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#059669;"></div>معدل الأخطاء قبل وبعد الأتمتة</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#059669;"></div>تكلفة العملية: يدوية مقابل آلية</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#059669;"></div>رضا الموظفين والعملاء (NPS Score)</div>
+                </div>
+              </div>
+            </div>
+            <div class="content-card">
+              <div class="content-card-label">نموذج حساب ROI</div>
+              <div class="content-card-body">
+                <div class="bullet-list">
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#059669;"></div>حدد تكلفة التنفيذ (ترخيص + تدريب)</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#059669;"></div>احسب الوفر السنوي (وقت + أخطاء + موارد)</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#059669;"></div>ROI = (الوفر - التكلفة) / التكلفة × 100%</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#059669;"></div>فترة الاسترداد عادة 6-18 شهراً</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="key-takeaway"><div class="key-takeaway-icon">📈</div><div class="key-takeaway-text">ابدأ بعملية واحدة واثبت النجاح أولاً — بيانات النجاح الأولى هي أقوى حجة لتوسيع الأتمتة في المنظمة كلها.</div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ TOPIC 4 ══════════ -->
+<div class="topic t4" id="topic4">
+  <div class="topic-header" onclick="toggleTopic('topic4')">
+    <div class="topic-num" style="width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;flex-shrink:0;color:white;background:linear-gradient(135deg,#d97706,#f59e0b);">٤</div>
+    <div class="topic-header-text">
+      <div class="topic-name">أدوات الذكاء الاصطناعي التوليدي</div>
+      <div class="topic-meta">Generative AI Tools &nbsp;|&nbsp; 5 مفردات</div>
+    </div>
+    <div class="topic-chevron">▼</div>
+  </div>
+  <div class="topic-body">
+    <div class="module-list">
+
+      <div class="module t4" id="m4-1">
+        <div class="module-header" onclick="toggleModule('m4-1')">
+          <div class="module-num-badge">٤.١</div>
+          <div class="module-title">مقدمة إلى الذكاء الاصطناعي التوليدي GenAI</div>
+          <div class="module-toggle">+</div>
+        </div>
+        <div class="module-content">
+          <div class="content-intro">الذكاء الاصطناعي التوليدي (GenAI) هو الجيل الجديد الذي يُنشئ محتوى جديداً — نصوص، صور، كود برمجي، موسيقى — بدلاً من مجرد تحليل البيانات الموجودة.</div>
+          <div class="content-grid">
+            <div class="content-card">
+              <div class="content-card-label">ما الذي يميزه؟</div>
+              <div class="content-card-body">
+                <div class="bullet-list">
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#d97706;"></div>يُنتج محتوى أصيلاً لم يكن موجوداً من قبل</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#d97706;"></div>يتعامل مع السياق والتعليمات بلغة طبيعية</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#d97706;"></div>يتكيف مع أسلوب وصوت المستخدم</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#d97706;"></div>يُنجز في دقائق ما كان يستغرق أياماً</div>
+                </div>
+              </div>
+            </div>
+            <div class="content-card">
+              <div class="content-card-label">أشهر النماذج 2024-2025</div>
+              <div class="content-card-body">
+                <div class="bullet-list">
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#d97706;"></div><strong>ChatGPT / GPT-4o:</strong> نصوص، كود، تحليل</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#d97706;"></div><strong>Claude (Anthropic):</strong> تحليل متعمق وكتابة</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#d97706;"></div><strong>Gemini (Google):</strong> دمج بيانات Google</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#d97706;"></div><strong>Copilot (Microsoft):</strong> مدمج في Office 365</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="key-takeaway"><div class="key-takeaway-icon">✨</div><div class="key-takeaway-text">GenAI لا يحتاج لمبرمج — يحتاج لشخص يتقن صياغة التعليمات بوضوح. مهارة Prompt Engineering أصبحت من أهم مهارات القرن.</div></div>
+        </div>
+      </div>
+
+      <div class="module t4" id="m4-2">
+        <div class="module-header" onclick="toggleModule('m4-2')">
+          <div class="module-num-badge">٤.٢</div>
+          <div class="module-title">توليد النصوص والمحتوى الإداري</div>
+          <div class="module-toggle">+</div>
+        </div>
+        <div class="module-content">
+          <div class="content-intro">من التقارير التنفيذية إلى السياسات المؤسسية والعروض التقديمية — GenAI يمكنه توليد مسودة احترافية في دقائق يُعدّلها القائد بدل أن يكتبها من الصفر.</div>
+          <div class="content-grid">
+            <div class="content-card">
+              <div class="content-card-label">تطبيقات الكتابة الإدارية</div>
+              <div class="content-card-body">
+                <div class="bullet-list">
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#d97706;"></div>صياغة الخطط الاستراتيجية والخطط التشغيلية</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#d97706;"></div>تحرير المراسلات الرسمية والتقارير</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#d97706;"></div>إعداد الأجندة وملخصات الاجتماعات</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#d97706;"></div>كتابة إجراءات العمل SOPs</div>
+                </div>
+              </div>
+            </div>
+            <div class="content-card">
+              <div class="content-card-label">نصائح الاستخدام الفعّال</div>
+              <div class="content-card-body">
+                <div class="bullet-list">
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#d97706;"></div>حدد الجمهور والغرض والأسلوب بوضوح</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#d97706;"></div>راجع المخرجات وأضف خبرتك المحلية</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#d97706;"></div>استخدمه للمسودة الأولى وليس النسخة النهائية</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#d97706;"></div>تجنب المعلومات الحساسة والسرية</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="key-takeaway"><div class="key-takeaway-icon">📝</div><div class="key-takeaway-text">القائد الذكي يستخدم GenAI لتضخيم طاقته الكتابية 10 أضعاف — ينفق وقته في مراجعة ورفع الجودة بدل التأليف من الصفر.</div></div>
+        </div>
+      </div>
+
+      <div class="module t4" id="m4-3">
+        <div class="module-header" onclick="toggleModule('m4-3')">
+          <div class="module-num-badge">٤.٣</div>
+          <div class="module-title">توليد الصور والعروض المرئية</div>
+          <div class="module-toggle">+</div>
+        </div>
+        <div class="module-content">
+          <div class="content-intro">أدوات توليد الصور بالذكاء الاصطناعي تحوّل الأفكار إلى مرئيات احترافية في ثوانٍ — من الشعارات إلى الإنفوجراف إلى صور الحملات التسويقية.</div>
+          <div class="content-grid">
+            <div class="content-card">
+              <div class="content-card-label">أدوات توليد المرئيات</div>
+              <div class="content-card-body">
+                <div class="bullet-list">
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#d97706;"></div><strong>Midjourney:</strong> جودة فنية استثنائية</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#d97706;"></div><strong>DALL-E 3:</strong> مدمج مع ChatGPT</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#d97706;"></div><strong>Canva AI:</strong> تصميم سهل للعروض</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#d97706;"></div><strong>Gamma.app:</strong> عروض تقديمية آلية</div>
+                </div>
+              </div>
+            </div>
+            <div class="content-card">
+              <div class="content-card-label">الاستخدامات المؤسسية</div>
+              <div class="content-card-body">
+                <div class="bullet-list">
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#d97706;"></div>تصميم مواد التدريب والتوعية</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#d97706;"></div>إنتاج محتوى وسائل التواصل الاجتماعي</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#d97706;"></div>تصوير مفاهيم المشاريع والأفكار</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#d97706;"></div>إنشاء العروض التقديمية الاحترافية</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="key-takeaway"><div class="key-takeaway-icon">🎨</div><div class="key-takeaway-text">ما كان يحتاج مصمماً جرافيك ويومين من العمل أصبح ممكناً في 60 ثانية — مع الاحتفاظ بمعايير جودة احترافية.</div></div>
+        </div>
+      </div>
+
+      <div class="module t4" id="m4-4">
+        <div class="module-header" onclick="toggleModule('m4-4')">
+          <div class="module-num-badge">٤.٤</div>
+          <div class="module-title">هندسة الأوامر Prompt Engineering للقادة</div>
+          <div class="module-toggle">+</div>
+        </div>
+        <div class="module-content">
+          <div class="content-intro">Prompt Engineering هي فن وعلم التواصل مع الذكاء الاصطناعي — كيف تصيغ سؤالك أو طلبك يحدد 80% من جودة النتيجة التي ستحصل عليها.</div>
+          <div class="content-grid">
+            <div class="content-card">
+              <div class="content-card-label">عناصر الـ Prompt المثالي</div>
+              <div class="content-card-body">
+                <div class="bullet-list">
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#d97706;"></div><strong>الدور:</strong> "أنت محلل مالي متخصص في..."</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#d97706;"></div><strong>السياق:</strong> معلومات الخلفية والقيود</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#d97706;"></div><strong>المهمة:</strong> ما تريده بالضبط</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#d97706;"></div><strong>التنسيق:</strong> جدول، نقاط، فقرة...</div>
+                </div>
+              </div>
+            </div>
+            <div class="content-card">
+              <div class="content-card-label">تقنيات متقدمة</div>
+              <div class="content-card-body">
+                <div class="bullet-list">
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#d97706;"></div>Chain of Thought: اطلب التفكير خطوة بخطوة</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#d97706;"></div>Few-Shot: أعطِ أمثلة على ما تريد</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#d97706;"></div>Role Play: اجعله يلعب دوراً محدداً</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#d97706;"></div>Iterative: حسّن النتيجة عبر محادثة</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="key-takeaway"><div class="key-takeaway-icon">🔑</div><div class="key-takeaway-text">مثال عملي: بدلاً من "اكتب تقرير" قل "اكتب تقريراً تنفيذياً بصفحتين لمجلس الإدارة يلخص أداء Q1 ويقترح 3 إجراءات تصحيحية لربع السنة القادم."</div></div>
+        </div>
+      </div>
+
+      <div class="module t4" id="m4-5">
+        <div class="module-header" onclick="toggleModule('m4-5')">
+          <div class="module-num-badge">٤.٥</div>
+          <div class="module-title">حدود وسياسات استخدام GenAI في المؤسسة</div>
+          <div class="module-toggle">+</div>
+        </div>
+        <div class="module-content">
+          <div class="content-intro">الاستخدام غير المنضبط لـ GenAI يُعرّض المؤسسة لمخاطر قانونية وأمنية وسمعة — السياسة الواضحة قبل الاستخدام الواسع ضرورة وليست خياراً.</div>
+          <div class="content-grid">
+            <div class="content-card">
+              <div class="content-card-label">المخاطر الرئيسية</div>
+              <div class="content-card-body">
+                <div class="bullet-list">
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#d97706;"></div>تسريب بيانات سرية للنماذج العامة</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#d97706;"></div>Hallucination: معلومات خاطئة تبدو صحيحة</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#d97706;"></div>مشكلات حقوق الملكية الفكرية</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#d97706;"></div>الاعتماد المفرط وضعف التفكير النقدي</div>
+                </div>
+              </div>
+            </div>
+            <div class="content-card">
+              <div class="content-card-label">عناصر سياسة الاستخدام المؤسسية</div>
+              <div class="content-card-body">
+                <div class="bullet-list">
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#d97706;"></div>قائمة الأدوات المعتمدة والمحظورة</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#d97706;"></div>تصنيف البيانات التي لا تُدخَل للنماذج</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#d97706;"></div>إلزامية مراجعة المخرجات قبل النشر</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#d97706;"></div>الإفصاح عند استخدام AI في وثائق رسمية</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="key-takeaway"><div class="key-takeaway-icon">⚖️</div><div class="key-takeaway-text">السياسة الذكية لا تمنع الاستخدام — بل تُقنّن وتحمي. المنظمات التي تضع سياسات واضحة تتبنى GenAI بشكل أسرع وأأمن.</div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ TOPIC 5 ══════════ -->
+<div class="topic t5" id="topic5">
+  <div class="topic-header" onclick="toggleTopic('topic5')">
+    <div class="topic-num" style="width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;flex-shrink:0;color:white;background:linear-gradient(135deg,#0891b2,#06b6d4);">٥</div>
+    <div class="topic-header-text">
+      <div class="topic-name">الذكاء الاصطناعي في التحول الرقمي — تطبيقي</div>
+      <div class="topic-meta">AI in Digital Transformation — Applied &nbsp;|&nbsp; 5 مفردات</div>
+    </div>
+    <div class="topic-chevron">▼</div>
+  </div>
+  <div class="topic-body">
+    <div class="module-list">
+
+      <div class="module t5" id="m5-1">
+        <div class="module-header" onclick="toggleModule('m5-1')">
+          <div class="module-num-badge">٥.١</div>
+          <div class="module-title">الذكاء الاصطناعي كركيزة للتحول الرقمي</div>
+          <div class="module-toggle">+</div>
+        </div>
+        <div class="module-content">
+          <div class="content-intro">التحول الرقمي بدون ذكاء اصطناعي مجرد رقمنة (Digitization) — الذكاء الاصطناعي يرفعه إلى مستوى الذكاء الحقيقي الذي يتعلم ويتطور باستمرار.</div>
+          <div class="content-grid">
+            <div class="content-card">
+              <div class="content-card-label">ركائز التحول الرقمي الذكي</div>
+              <div class="content-card-body">
+                <div class="bullet-list">
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#0891b2;"></div>البيانات: تجميع وتنقية وحوكمة البيانات</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#0891b2;"></div>الذكاء: نماذج AI تحلل وتتنبأ وتقترح</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#0891b2;"></div>الأتمتة: تنفيذ القرارات بلا تدخل بشري</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#0891b2;"></div>التجربة: واجهات ذكية لموظف وعميل</div>
+                </div>
+              </div>
+            </div>
+            <div class="content-card">
+              <div class="content-card-label">نماذج ناجحة عالمياً</div>
+              <div class="content-card-body">
+                <div class="bullet-list">
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#0891b2;"></div><strong>سنغافورة:</strong> حكومة رقمية ذكية بالكامل</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#0891b2;"></div><strong>دبي:</strong> خدمات بلا ورق بالذكاء الاصطناعي</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#0891b2;"></div><strong>تركيا:</strong> ميناء ذكي بالأتمتة الكاملة</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="key-takeaway"><div class="key-takeaway-icon">🌐</div><div class="key-takeaway-text">التحول الرقمي الحقيقي لا يُقاس بعدد التطبيقات المُطلقة — بل بمدى تغيّر طريقة عمل المؤسسة وتفكير موظفيها وقادتها.</div></div>
+        </div>
+      </div>
+
+      <div class="module t5" id="m5-2">
+        <div class="module-header" onclick="toggleModule('m5-2')">
+          <div class="module-num-badge">٥.٢</div>
+          <div class="module-title">خارطة طريق AI للمنظمة</div>
+          <div class="module-toggle">+</div>
+        </div>
+        <div class="module-content">
+          <div class="content-intro">خارطة طريق واضحة تحوّل رؤية الذكاء الاصطناعي من حلم إلى خطة قابلة للتنفيذ — بمراحل محددة وأولويات واضحة وموارد مخصصة.</div>
+          <div class="content-grid">
+            <div class="content-card">
+              <div class="content-card-label">مراحل خارطة الطريق</div>
+              <div class="content-card-body">
+                <div class="bullet-list">
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#0891b2;"></div><strong>المرحلة ١:</strong> التقييم — أين نحن الآن؟</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#0891b2;"></div><strong>المرحلة ٢:</strong> Quick Wins — نتائج سريعة 3-6 أشهر</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#0891b2;"></div><strong>المرحلة ٣:</strong> التوسع — نشر الحلول الناجحة</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#0891b2;"></div><strong>المرحلة ٤:</strong> التحويل — إعادة هيكلة النماذج</div>
+                </div>
+              </div>
+            </div>
+            <div class="content-card">
+              <div class="content-card-label">عوامل النجاح الحاسمة</div>
+              <div class="content-card-body">
+                <div class="bullet-list">
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#0891b2;"></div>دعم القيادة العليا وتبنّيها الشخصي</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#0891b2;"></div>وضوح استراتيجية البيانات قبل البدء</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#0891b2;"></div>بناء الكفاءات الداخلية بالتوازي</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#0891b2;"></div>إدارة التغيير وكسب المقاومة</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="key-takeaway"><div class="key-takeaway-icon">🗺️</div><div class="key-takeaway-text">ابدأ بمشكلة حقيقية لا بتقنية — ابحث عن "نقطة الألم" الأكثر تكلفة في مؤسستك وابنِ حولها أول مشروع ذكاء اصطناعي.</div></div>
+        </div>
+      </div>
+
+      <div class="module t5" id="m5-3">
+        <div class="module-header" onclick="toggleModule('m5-3')">
+          <div class="module-num-badge">٥.٣</div>
+          <div class="module-title">تطبيق عملي: الخدمات الحكومية الذكية</div>
+          <div class="module-toggle">+</div>
+        </div>
+        <div class="module-content">
+          <div class="content-intro">القطاع الحكومي يمتلك بيانات ضخمة وعمليات روتينية هائلة — الذكاء الاصطناعي يمكنه تحويل الخدمة الحكومية من طوابير انتظار إلى خدمة فورية استباقية.</div>
+          <div class="content-grid">
+            <div class="content-card">
+              <div class="content-card-label">تطبيقات حكومية فعلية</div>
+              <div class="content-card-body">
+                <div class="bullet-list">
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#0891b2;"></div>معالجة الطلبات والتصاريح آلياً</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#0891b2;"></div>كشف الاحتيال في المنح والدعم الحكومي</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#0891b2;"></div>التنبؤ بالطلب على الخدمات وتخصيص الموارد</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#0891b2;"></div>المساعد الذكي للمواطن (24/7)</div>
+                </div>
+              </div>
+            </div>
+            <div class="content-card">
+              <div class="content-card-label">تحديات القطاع العام</div>
+              <div class="content-card-body">
+                <div class="bullet-list">
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#0891b2;"></div>حساسية البيانات والخصوصية المواطنين</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#0891b2;"></div>بيروقراطية التحديث والتشريعات</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#0891b2;"></div>شُح الكفاءات التقنية الحكومية</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#0891b2;"></div>ضرورة العدالة والشفافية في القرارات</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="key-takeaway"><div class="key-takeaway-icon">🏛️</div><div class="key-takeaway-text">الحكومة التي تعتمد الذكاء الاصطناعي لا توفر فقط التكاليف — بل تُحسّن ثقة المواطن وتُسرّع التنمية الاقتصادية.</div></div>
+        </div>
+      </div>
+
+      <div class="module t5" id="m5-4">
+        <div class="module-header" onclick="toggleModule('m5-4')">
+          <div class="module-num-badge">٥.٤</div>
+          <div class="module-title">بناء ثقافة مؤسسية داعمة للذكاء الاصطناعي</div>
+          <div class="module-toggle">+</div>
+        </div>
+        <div class="module-content">
+          <div class="content-intro">التقنية وحدها لا تكفي — التحول الرقمي الحقيقي يحتاج ثقافة مؤسسية تتبنى التجريب وتقبل الفشل كمرحلة تعلم وتضع البيانات في قلب كل قرار.</div>
+          <div class="content-grid">
+            <div class="content-card">
+              <div class="content-card-label">مبادئ الثقافة الذكية</div>
+              <div class="content-card-body">
+                <div class="bullet-list">
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#0891b2;"></div>Data-Driven: البيانات تقود القرار لا الحدس</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#0891b2;"></div>Experimentation: التجريب السريع والتعلم من الأخطاء</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#0891b2;"></div>Collaboration: بين الفرق التقنية والإدارية</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#0891b2;"></div>Continuous Learning: التطوير المستمر للكفاءات</div>
+                </div>
+              </div>
+            </div>
+            <div class="content-card">
+              <div class="content-card-label">دور القائد في بناء الثقافة</div>
+              <div class="content-card-body">
+                <div class="bullet-list">
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#0891b2;"></div>استخدام الأدوات شخصياً وبشكل علني</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#0891b2;"></div>مكافأة التجريب والابتكار حتى عند الفشل</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#0891b2;"></div>تخصيص وقت ومصادر للتعلم المستمر</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#0891b2;"></div>الإعلان عن الأهداف الرقمية وقياسها</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="key-takeaway"><div class="key-takeaway-icon">🌱</div><div class="key-takeaway-text">الثقافة تأكل الاستراتيجية على الفطور — مشروع AI لا يصمد أمام ثقافة ترفضه. ابنِ الثقافة أولاً، التقنية ستأتي وحدها.</div></div>
+        </div>
+      </div>
+
+      <div class="module t5" id="m5-5">
+        <div class="module-header" onclick="toggleModule('m5-5')">
+          <div class="module-num-badge">٥.٥</div>
+          <div class="module-title">قياس أثر التحول الرقمي بالذكاء الاصطناعي</div>
+          <div class="module-toggle">+</div>
+        </div>
+        <div class="module-content">
+          <div class="content-intro">ما لا يُقاس لا يُدار — قياس أثر مشاريع الذكاء الاصطناعي يضمن استمرار الدعم القيادي ويُحسّن التوجيه الاستراتيجي للمشاريع القادمة.</div>
+          <div class="content-grid">
+            <div class="content-card">
+              <div class="content-card-label">إطار القياس المتوازن</div>
+              <div class="content-card-body">
+                <div class="bullet-list">
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#0891b2;"></div><strong>مالي:</strong> ROI، تخفيض التكاليف، رفع الإيرادات</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#0891b2;"></div><strong>تشغيلي:</strong> سرعة العمليات، معدل الأخطاء</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#0891b2;"></div><strong>العملاء:</strong> رضا العملاء (NPS)، معدل الاحتفاظ</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#0891b2;"></div><strong>المنظمة:</strong> رضا الموظفين، سرعة القرار</div>
+                </div>
+              </div>
+            </div>
+            <div class="content-card">
+              <div class="content-card-label">أدوات ولوحات المتابعة</div>
+              <div class="content-card-body">
+                <div class="bullet-list">
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#0891b2;"></div>Power BI Dashboard لمتابعة KPIs يومياً</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#0891b2;"></div>تقارير ربع سنوية لمجلس الإدارة</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#0891b2;"></div>مقارنة Benchmark مع معايير الصناعة</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#0891b2;"></div>استطلاعات دورية للموظفين والعملاء</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="key-takeaway"><div class="key-takeaway-icon">📊</div><div class="key-takeaway-text">حدد مؤشراتك قبل بدء المشروع — ليس بعده. Baseline واضح يجعل نجاح المشروع قابلاً للإثبات والاحتفاء به.</div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ TOPIC 6 ══════════ -->
+<div class="topic t6" id="topic6">
+  <div class="topic-header" onclick="toggleTopic('topic6')">
+    <div class="topic-num" style="width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;flex-shrink:0;color:white;background:linear-gradient(135deg,#7c3aed,#a855f7);">٦</div>
+    <div class="topic-header-text">
+      <div class="topic-name">الذكاء الاصطناعي — المشروع العملي</div>
+      <div class="topic-meta">AI Capstone Project &nbsp;|&nbsp; 5 مفردات</div>
+    </div>
+    <div class="topic-chevron">▼</div>
+  </div>
+  <div class="topic-body">
+    <div class="module-list">
+
+      <div class="module t6" id="m6-1">
+        <div class="module-header" onclick="toggleModule('m6-1')">
+          <div class="module-num-badge">٦.١</div>
+          <div class="module-title">تحديد مشكلة وصياغة حل بالذكاء الاصطناعي</div>
+          <div class="module-toggle">+</div>
+        </div>
+        <div class="module-content">
+          <div class="content-intro">أول وأهم خطوة في أي مشروع ذكاء اصطناعي — تحديد المشكلة الصحيحة. مشروع يحل مشكلة حقيقية بحل بسيط أفضل من مشروع معقد يحل مشكلة وهمية.</div>
+          <div class="content-grid">
+            <div class="content-card">
+              <div class="content-card-label">إطار تحديد المشكلة</div>
+              <div class="content-card-body">
+                <div class="bullet-list">
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#7c3aed;"></div><strong>ما المشكلة؟</strong> وصف دقيق قابل للقياس</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#7c3aed;"></div><strong>من المتضرر؟</strong> الأفراد/الأقسام/العملاء</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#7c3aed;"></div><strong>ما التكلفة؟</strong> كم يكلف الوضع الحالي؟</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#7c3aed;"></div><strong>ما البيانات؟</strong> هل البيانات متاحة وكافية؟</div>
+                </div>
+              </div>
+            </div>
+            <div class="content-card">
+              <div class="content-card-label">معايير اختيار المشروع</div>
+              <div class="content-card-body">
+                <div class="bullet-list">
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#7c3aed;"></div>نطاق محدود ومُنجز في 3 أشهر</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#7c3aed;"></div>بيانات موجودة وجاهزة للاستخدام</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#7c3aed;"></div>نتائج قابلة للقياس والإثبات</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#7c3aed;"></div>دعم الفريق المعني وأصحاب المصلحة</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="key-takeaway"><div class="key-takeaway-icon">🎯</div><div class="key-takeaway-text">مشروعك العملي = مشكلة حقيقية في مؤسستك + بيانات متاحة + حل ذكاء اصطناعي محدد + مؤشر نجاح قابل للقياس.</div></div>
+        </div>
+      </div>
+
+      <div class="module t6" id="m6-2">
+        <div class="module-header" onclick="toggleModule('m6-2')">
+          <div class="module-num-badge">٦.٢</div>
+          <div class="module-title">جمع البيانات وإعدادها للمشروع</div>
+          <div class="module-toggle">+</div>
+        </div>
+        <div class="module-content">
+          <div class="content-intro">جودة البيانات تحدد 70% من نجاح مشروع الذكاء الاصطناعي — "مدخلات خاطئة = مخرجات خاطئة" (Garbage In, Garbage Out) قانون لا استثناء فيه.</div>
+          <div class="content-grid">
+            <div class="content-card">
+              <div class="content-card-label">مراحل إعداد البيانات</div>
+              <div class="content-card-body">
+                <div class="bullet-list">
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#7c3aed;"></div><strong>الجمع:</strong> تحديد مصادر البيانات ووصولها</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#7c3aed;"></div><strong>التنظيف:</strong> إزالة القيم المكررة والناقصة</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#7c3aed;"></div><strong>التحويل:</strong> توحيد التنسيقات والوحدات</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#7c3aed;"></div><strong>التقسيم:</strong> تدريب / تحقق / اختبار</div>
+                </div>
+              </div>
+            </div>
+            <div class="content-card">
+              <div class="content-card-label">أدوات عملية للمدير</div>
+              <div class="content-card-body">
+                <div class="bullet-list">
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#7c3aed;"></div>Excel/Sheets: للبيانات الصغيرة والتحليل الأولي</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#7c3aed;"></div>Power Query: تنظيف وتحويل البيانات</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#7c3aed;"></div>ChatGPT: تحليل ملفات CSV مباشرة</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#7c3aed;"></div>Google Looker Studio: تصوير البيانات</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="key-takeaway"><div class="key-takeaway-icon">📂</div><div class="key-takeaway-text">في مشروعك العملي: حدد أولاً أي البيانات متاحة وجاهزة — هذا يحدد نوع الحل الممكن تطبيقه، وليس العكس.</div></div>
+        </div>
+      </div>
+
+      <div class="module t6" id="m6-3">
+        <div class="module-header" onclick="toggleModule('m6-3')">
+          <div class="module-num-badge">٦.٣</div>
+          <div class="module-title">بناء النموذج الأولي MVP بأدوات بسيطة</div>
+          <div class="module-toggle">+</div>
+        </div>
+        <div class="module-content">
+          <div class="content-intro">MVP (Minimum Viable Product) هو أبسط نسخة من الحل تُثبت الفكرة وتُقدّم قيمة حقيقية — لا تنتظر الكمال لتبدأ، ابدأ وحسّن.</div>
+          <div class="content-grid">
+            <div class="content-card">
+              <div class="content-card-label">أدوات No-Code للمديرين</div>
+              <div class="content-card-body">
+                <div class="bullet-list">
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#7c3aed;"></div><strong>Microsoft Copilot Studio:</strong> Chatbot بدون برمجة</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#7c3aed;"></div><strong>Power Automate:</strong> أتمتة العمليات</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#7c3aed;"></div><strong>Azure ML (AutoML):</strong> نماذج تنبؤية</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#7c3aed;"></div><strong>Make.com:</strong> تكامل الأنظمة المختلفة</div>
+                </div>
+              </div>
+            </div>
+            <div class="content-card">
+              <div class="content-card-label">خطوات بناء MVP</div>
+              <div class="content-card-body">
+                <div class="bullet-list">
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#7c3aed;"></div>حدد وظيفة واحدة فقط تحلها</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#7c3aed;"></div>اختر أبسط أداة تُنجز المهمة</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#7c3aed;"></div>جرّبه مع مجموعة صغيرة (Pilot)</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#7c3aed;"></div>اجمع الملاحظات وطوّر في الجولة التالية</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="key-takeaway"><div class="key-takeaway-icon">🚀</div><div class="key-takeaway-text">MVP في أسبوعين أفضل من نظام كامل في سنة — السوق والمستخدمون سيُخبرونك ما يريدون فعلاً بعد التجربة.</div></div>
+        </div>
+      </div>
+
+      <div class="module t6" id="m6-4">
+        <div class="module-header" onclick="toggleModule('m6-4')">
+          <div class="module-num-badge">٦.٤</div>
+          <div class="module-title">تقييم المشروع وعرض النتائج</div>
+          <div class="module-toggle">+</div>
+        </div>
+        <div class="module-content">
+          <div class="content-intro">تقييم المشروع هو إغلاق حلقة التعلم — نقيس، نُقارن بالهدف، نُحلّل الفجوات، ونقدم التوصيات بشكل يُقنع القيادة بالاستمرار والتوسع.</div>
+          <div class="content-grid">
+            <div class="content-card">
+              <div class="content-card-label">معايير التقييم</div>
+              <div class="content-card-body">
+                <div class="bullet-list">
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#7c3aed;"></div>هل حُقق الهدف الأصلي؟ (نعم/جزئياً/لا)</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#7c3aed;"></div>ما مؤشرات الأداء المُحققة مقارنة بالـ KPIs؟</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#7c3aed;"></div>ما الدروس المستفادة والتحديات التي واجهناها؟</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#7c3aed;"></div>ما التوصيات للمرحلة التالية؟</div>
+                </div>
+              </div>
+            </div>
+            <div class="content-card">
+              <div class="content-card-label">عرض النتائج للقيادة</div>
+              <div class="content-card-body">
+                <div class="bullet-list">
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#7c3aed;"></div>Executive Summary: صفحة واحدة للقرار</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#7c3aed;"></div>قصة بصرية: مخططات ومقارنات قبل/بعد</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#7c3aed;"></div>الأرقام أولاً: ROI وتوفير التكاليف</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#7c3aed;"></div>توصية واضحة: استمر / عدّل / أوقف</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="key-takeaway"><div class="key-takeaway-icon">📋</div><div class="key-takeaway-text">عرض النتائج للقيادة العليا: ابدأ بالنتيجة (Conclusion First) ثم الأدلة — القادة مشغولون ويريدون القرار في السطر الأول.</div></div>
+        </div>
+      </div>
+
+      <div class="module t6" id="m6-5">
+        <div class="module-header" onclick="toggleModule('m6-5')">
+          <div class="module-num-badge">٦.٥</div>
+          <div class="module-title">مستقبل الذكاء الاصطناعي وتطوير القائد الرقمي</div>
+          <div class="module-toggle">+</div>
+        </div>
+        <div class="module-content">
+          <div class="content-intro">الذكاء الاصطناعي يتطور بسرعة غير مسبوقة — القائد الذكي لا ينتظر الاستقرار ليبدأ، بل يبني قدرته على التعلم المستمر والتكيف السريع.</div>
+          <div class="content-grid">
+            <div class="content-card">
+              <div class="content-card-label">اتجاهات 2025-2030</div>
+              <div class="content-card-body">
+                <div class="bullet-list">
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#7c3aed;"></div><strong>AI Agents:</strong> وكلاء يعملون باستقلالية تامة</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#7c3aed;"></div><strong>Multimodal AI:</strong> نص + صوت + صورة + فيديو</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#7c3aed;"></div><strong>Edge AI:</strong> ذكاء في الجهاز بدون اتصال</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#7c3aed;"></div><strong>AI Regulation:</strong> تشريعات دولية صارمة</div>
+                </div>
+              </div>
+            </div>
+            <div class="content-card">
+              <div class="content-card-label">خارطة تطوير القائد الرقمي</div>
+              <div class="content-card-body">
+                <div class="bullet-list">
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#7c3aed;"></div>متابعة أخبار AI يومياً (10 دقائق كافية)</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#7c3aed;"></div>تجريب أداة جديدة كل أسبوعين</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#7c3aed;"></div>بناء شبكة من المتخصصين الرقميين</div>
+                  <div class="bullet-item"><div class="bullet-dot" style="background:#7c3aed;"></div>مشاركة المعرفة مع الفريق بانتظام</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="key-takeaway"><div class="key-takeaway-icon">🌟</div><div class="key-takeaway-text">القائد الذكي لا يتنافس مع الذكاء الاصطناعي — يتعاون معه. الذين يفهمونه ويوظّفونه سيقودون المنظمات التالية.</div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</div><!-- /course-body -->
+
+<footer>
+  <strong>الذكاء الاصطناعي للقيادة الإدارية</strong> &nbsp;|&nbsp; دبلوم القيادة الرقمية العليا &nbsp;|&nbsp;
+  أ.د. أمير هادي &nbsp;|&nbsp; ameer.hadi@uobabylon.edu.iq
+</footer>
+
+<script>
+function toggleTopic(id) {
+  const el = document.getElementById(id);
+  el.classList.toggle('open');
+  updateProgress();
+}
+
+function toggleModule(id) {
+  const el = document.getElementById(id);
+  el.classList.toggle('open');
+  updateProgress();
+}
+
+function updateProgress() {
+  const total = document.querySelectorAll('.module').length;
+  const open = document.querySelectorAll('.module.open').length;
+  const pct = Math.round((open / total) * 100);
+  document.getElementById('pbar').style.width = pct + '%';
+  document.getElementById('ppct').textContent = pct + '%';
+}
+
+// open first topic by default
+document.getElementById('topic1').classList.add('open');
+</script>
+</body>
+</html>
