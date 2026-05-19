@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>قواعد البيانات — محاضرة تدريبية</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:      #0a0a0a;
+    --surface: #111111;
+    --card:    #181818;
+    --border:  #2a2a2a;
+    --white:   #f0f0f0;
+    --muted:   #888888;
+    --accent:  #ffffff;
+    --dim:     #444444;
+    --orange:  #f97316;
+    --orange-dim: #7c3a0d;
+    --orange-bg:  #1a0d05;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--white);
+    font-family: 'Tajawal', sans-serif;
+    font-size: 17px;
+    line-height: 1.9;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 60px 40px 100px;
+  }
+
+  /* ── غلاف ── */
+  .cover {
+    text-align: center;
+    padding: 80px 20px 90px;
+    border: 1px solid var(--orange);
+    margin-bottom: 80px;
+    position: relative;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    inset: 8px;
+    border: 1px solid var(--orange-dim);
+    pointer-events: none;
+  }
+  .cover-icon { font-size: 56px; margin-bottom: 24px; display: block; }
+  .cover h1 {
+    font-size: 54px;
+    font-weight: 900;
+    letter-spacing: -1px;
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+  .cover-sub {
+    font-size: 18px;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .cover-tag {
+    font-size: 14px;
+    color: var(--dim);
+    font-style: italic;
+  }
+  .cover-footer {
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--dim);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  /* ── عناوين ── */
+  h2.sec {
+    font-size: 28px;
+    font-weight: 700;
+    margin: 72px 0 20px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--orange);
+    color: var(--white);
+  }
+  h2.sec span.num {
+    color: var(--orange);
+    font-weight: 300;
+    font-size: 22px;
+    margin-left: 10px;
+  }
+
+  h3.sub {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 44px 0 14px;
+    padding-right: 14px;
+    border-right: 3px solid var(--orange);
+  }
+
+  p { margin-bottom: 16px; color: #d0d0d0; }
+
+  /* ── ملاحظة ── */
+  .note {
+    border-right: 3px solid var(--orange);
+    padding: 14px 20px;
+    margin: 28px 0;
+    background: #141414;
+    font-size: 15px;
+    color: #bbb;
+    font-style: italic;
+  }
+  .note strong { color: var(--white); font-style: normal; }
+
+  /* ── قوائم ── */
+  ul.list, ol.list {
+    padding-right: 28px;
+    margin-bottom: 20px;
+  }
+  ul.list li, ol.list li {
+    color: #d0d0d0;
+    margin-bottom: 10px;
+    padding-right: 6px;
+  }
+  ul.list li::marker { color: var(--muted); }
+  ol.list li::marker { color: var(--muted); font-weight: 600; }
+  li strong { color: var(--white); }
+
+  /* ── جداول ── */
+  .tbl-wrap { overflow-x: auto; margin: 28px 0; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+  }
+  th {
+    background: var(--orange);
+    color: #000;
+    padding: 12px 16px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 14px;
+  }
+  td {
+    padding: 11px 16px;
+    border: 1px solid var(--border);
+    text-align: right;
+    color: #ccc;
+    vertical-align: middle;
+  }
+  tr:nth-child(even) td { background: #131313; }
+  tr:nth-child(odd)  td { background: var(--surface); }
+  td strong { color: var(--white); }
+
+  /* ── فاصل صفحات ── */
+  .page-break {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 72px 0;
+  }
+
+  /* ════════════════════════════════════════════════
+     الشكل ١ — دورة حياة البيانات (دائري)
+  ════════════════════════════════════════════════ */
+  .diagram-wrap {
+    margin: 40px 0;
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 36px 24px 28px;
+  }
+  .diagram-title {
+    text-align: center;
+    font-size: 14px;
+    color: var(--orange);
+    letter-spacing: 2px;
+    margin-bottom: 32px;
+    text-transform: uppercase;
+  }
+
+  /* دائري */
+  .cycle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    position: relative;
+  }
+  .cycle-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+    width: 100%;
+  }
+  .cycle-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 120px;
+    height: 120px;
+    border: 1px solid var(--orange);
+    background: #0a0a0a;
+    text-align: center;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+  .cycle-node .icon { font-size: 26px; }
+  .cycle-node .label {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.2;
+  }
+  .cycle-node .sub-label {
+    font-size: 10px;
+    color: var(--muted);
+    line-height: 1.3;
+  }
+  /* أسهم أفقية */
+  .arr-h {
+    width: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+  }
+  .arr-h::before {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; top: 50%;
+    height: 1px;
+    background: var(--dim);
+  }
+  .arr-h::after {
+    content: '◀';
+    position: absolute;
+    right: -2px;
+    font-size: 10px;
+    color: var(--dim);
+    line-height: 1;
+    margin-top: -5px;
+  }
+  .arr-h.ltr::after { content: '▶'; right: auto; left: -2px; }
+  /* أسهم رأسية */
+  .arr-v {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 1px;
+    background: var(--dim);
+  }
+  .arr-v::after {
+    content: '▼';
+    position: absolute;
+    bottom: -4px;
+    font-size: 10px;
+    color: var(--dim);
+  }
+  .arr-v.up::after { content: '▲'; bottom: auto; top: -4px; }
+  /* حاوي رأسي للعقدة + السهم */
+  .cycle-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* ════════════════════════════════════════════════
+     الشكل ٢ — العلاقة بين الجداول
+  ════════════════════════════════════════════════ */
+  .rel-diagram {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1fr;
+    align-items: start;
+    gap: 0;
+    direction: ltr; /* رسم بياني من اليسار لليمين */
+  }
+  .rel-table {
+    border: 1px solid var(--white);
+    background: var(--bg);
+    overflow: hidden;
+  }
+  .rel-table-head {
+    background: var(--orange);
+    color: #000;
+    font-weight: 700;
+    font-size: 13px;
+    text-align: center;
+    padding: 10px 8px;
+    font-family: 'Tajawal', sans-serif;
+  }
+  .rel-table-row {
+    padding: 7px 12px;
+    font-size: 12px;
+    color: #bbb;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Tajawal', sans-serif;
+    direction: rtl;
+  }
+  .rel-table-row .pk { color: #fff; font-weight: 700; font-size: 11px; }
+  .rel-table-row .fk { color: var(--muted); font-size: 10px; }
+  .rel-connector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4px;
+    min-height: 140px;
+  }
+  .rel-line {
+    flex: 1;
+    width: 1px;
+    background: var(--dim);
+    position: relative;
+  }
+  .rel-label {
+    font-size: 11px;
+    color: var(--muted);
+    writing-mode: vertical-rl;
+    padding: 4px 0;
+    letter-spacing: 1px;
+  }
+  .rel-arrow { font-size: 11px; color: var(--dim); }
+
+  /* ── ختام ── */
+  .end-bar {
+    text-align: center;
+    border-top: 1px solid var(--orange);
+    padding-top: 24px;
+    margin-top: 80px;
+    font-size: 14px;
+    color: var(--dim);
+    letter-spacing: 1px;
+  }
+
+  @media print {
+    body { padding: 30px 20px; }
+    .page-break { page-break-after: always; }
+  }
+
+  .cover-authors {
+    margin-top: 36px;
+    margin-bottom: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--orange);
+    line-height: 2;
+  }
+
+  /* ── مثال حكومي ── */
+  .gov-example {
+    border: 1px solid var(--orange);
+    background: var(--orange-bg);
+    padding: 28px 28px 22px;
+    margin: 36px 0;
+  }
+  .gov-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--orange);
+    margin-bottom: 14px;
+  }
+  .gov-desc {
+    font-size: 15px;
+    color: #bbb;
+    margin-bottom: 28px;
+    line-height: 1.9;
+  }
+  .gov-diagram-label, .gov-steps-label {
+    font-size: 13px;
+    color: var(--orange);
+    letter-spacing: 1px;
+    margin-bottom: 14px;
+    font-weight: 600;
+  }
+  .gov-steps-label { margin-top: 28px; }
+  .gov-diagram {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    direction: rtl;
+    overflow-x: auto;
+  }
+  .gov-tbl {
+    border: 1px solid var(--orange);
+    background: var(--bg);
+    min-width: 160px;
+    flex-shrink: 0;
+  }
+  .gov-tbl-center { flex: 1; }
+  .gov-tbl-head {
+    background: var(--orange);
+    color: #000;
+    font-weight: 700;
+    font-size: 13px;
+    text-align: center;
+    padding: 9px 10px;
+    font-family: "Tajawal", sans-serif;
+  }
+  .gov-tbl-row {
+    padding: 8px 12px;
+    font-size: 13px;
+    color: #aaa;
+    border-top: 1px solid #1e1e1e;
+    font-family: "Tajawal", sans-serif;
+    direction: rtl;
+  }
+  .pk-row { color: var(--white); font-weight: 600; }
+  .fk-row { color: #f97316aa; }
+  .gov-conn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 42px;
+    min-width: 56px;
+    flex-shrink: 0;
+  }
+  .gov-conn-line {
+    flex: 1;
+    width: 1px;
+    background: var(--orange-dim);
+    min-height: 20px;
+  }
+  .gov-conn-label {
+    font-size: 11px;
+    color: var(--orange);
+    padding: 4px 0;
+    writing-mode: vertical-rl;
+    letter-spacing: 1px;
+  }
+  .gov-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 16px;
+    font-size: 12px;
+    color: var(--muted);
+    direction: rtl;
+  }
+  .leg-item { display: flex; align-items: center; gap: 5px; }
+  .leg-pk { color: var(--white); }
+  .leg-fk { color: var(--orange); }
+  .gov-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    direction: rtl;
+  }
+  .gov-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    background: var(--surface);
+    border: 1px solid #1e1e1e;
+    padding: 12px 16px;
+  }
+  .step-num {
+    background: var(--orange);
+    color: #000;
+    font-weight: 900;
+    font-size: 14px;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .step-text {
+    font-size: 14px;
+    color: #ccc;
+    line-height: 1.7;
+    padding-top: 3px;
+  }
+  .step-arrow {
+    text-align: center;
+    color: var(--orange);
+    font-size: 18px;
+    padding: 2px 0;
+    line-height: 1;
+  }
+  .gov-note {
+    margin-top: 20px;
+    font-size: 13px;
+    color: var(--muted);
+    font-style: italic;
+    border-right: 3px solid var(--orange-dim);
+    padding-right: 12px;
+    direction: rtl;
+  }
+
+
+  /* ── لغة الاستعلام ── */
+  .sql-explain {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 24px;
+    margin: 28px 0;
+  }
+  .sql-explain-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--orange);
+    margin-bottom: 20px;
+  }
+  .sql-cards {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    direction: rtl;
+    flex-wrap: wrap;
+  }
+  .sql-card {
+    flex: 1;
+    min-width: 130px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 16px 12px;
+    text-align: center;
+  }
+  .sql-card-icon { font-size: 24px; margin-bottom: 6px; }
+  .sql-card-label {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--orange);
+    margin-bottom: 6px;
+  }
+  .sql-card-desc { font-size: 12px; color: var(--muted); line-height: 1.6; }
+  .sql-arrow-h {
+    font-size: 20px;
+    color: var(--orange-dim);
+    padding: 0 6px;
+    flex-shrink: 0;
+  }
+  .sql-example-box {
+    background: var(--surface);
+    border: 1px solid var(--orange-dim);
+    border-right: 3px solid var(--orange);
+    padding: 22px 22px 18px;
+    margin: 28px 0;
+    direction: rtl;
+  }
+  .sql-ex-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--orange);
+    margin-bottom: 18px;
+  }
+  .sql-req-label {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+  .sql-req-human {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    padding: 14px 18px;
+    font-size: 15px;
+    color: var(--white);
+    line-height: 1.8;
+    font-style: italic;
+  }
+  .sql-req-steps {
+    background: #0d1117;
+    border: 1px solid #222;
+    padding: 14px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .sql-step-row {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    direction: rtl;
+    font-size: 14px;
+  }
+  .sql-kw {
+    color: var(--orange);
+    font-weight: 700;
+    min-width: 48px;
+    flex-shrink: 0;
+  }
+  .sql-val { color: #aed6f1; }
+
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════════
+     الغلاف
+══════════════════════════════════════════════════════════════ -->
+<div class="cover">
+  <span class="cover-icon">🗄</span>
+  <h1>قواعد البيانات</h1>
+  <p class="cover-sub">مفهومها — أهميتها — تطبيقاتها في حياتنا</p>
+  <div class="cover-authors">إعداد<br>أ.م.د. أمير هادي<br>أ.م.د. أحمد محسن هيلان</div>
+  <div class="cover-footer">المعهد العالي للقيادة</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     أولاً
+══════════════════════════════════════════════════════════════ -->
+<h2 class="sec"><span class="num">أولاً</span> ما هي قاعدة البيانات؟</h2>
+
+<p>قبل أن نتحدث عن التقنية، دعنا نبدأ بمثال مألوف: تخيّل أنك تعمل في مكتب الشؤون القانونية وأمامك خزانة ضخمة مليئة بملفات الموظفين. كل ملف يحتوي على الاسم والوظيفة وتاريخ التعيين والراتب وسجل الإجازات. الآن تخيّل أن هذه الخزانة أصبحت إلكترونية، ذكية، وقادرة على إيجاد أي معلومة تحتاجها في أقل من ثانية — هذه هي قاعدة البيانات.</p>
+
+<p>قاعدة البيانات هي نظام إلكتروني يُخزّن المعلومات بطريقة منظمة وآمنة، ويتيح استرجاعها وتحديثها ومشاركتها بسهولة تامة. وهي ليست حكراً على المبرمجين أو المختصين التقنيين — بل إن كل واحد منّا يتعامل معها يومياً دون أن يدري.</p>
+
+<h3 class="sub">قاعدة البيانات في حياتنا اليومية</h3>
+<p>قد لا تلاحظها، لكنها موجودة في كل مكان:</p>
+
+<div class="tbl-wrap">
+<table>
+  <thead><tr><th>قاعدة البيانات خلفها</th><th>الموقف اليومي</th></tr></thead>
+  <tbody>
+    <tr><td>مصرف وطني العراق</td><td>تسحب من الصراف الآلي</td></tr>
+    <tr><td>نظام شؤون الطلاب</td><td>تراجع درجاتك عبر بوابة الجامعة</td></tr>
+    <tr><td>شبكة شركة الاتصالات</td><td>تُجري اتصالاً هاتفياً</td></tr>
+    <tr><td>سجلات وزارة الصحة</td><td>تُراجع طبيباً في مستشفى حكومي</td></tr>
+    <tr><td>منظومة وزارة الكهرباء</td><td>تُدفع فاتورة الكهرباء</td></tr>
+    <tr><td>نظام المعهد العالي للقيادة</td><td>تُسجّل في دورة تدريبية</td></tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+<div class="note"><strong>ملاحظة:</strong> كل ما يتعلق بتسجيل معلومات وحفظها واسترجاعها لاحقاً هو في جوهره قاعدة بيانات — سواء كان ورقياً أو إلكترونياً.</div>
+
+<h3 class="sub">الفرق بين البيانات والمعلومات</h3>
+
+<div class="tbl-wrap">
+<table>
+  <thead><tr><th>المصطلح</th><th>التعريف البسيط</th><th>مثال توضيحي</th></tr></thead>
+  <tbody>
+    <tr><td><strong>البيانات</strong></td><td>أرقام أو كلمات بدون سياق أو تفسير</td><td>الأرقام: 85، 72، 91</td></tr>
+    <tr><td><strong>المعلومات</strong></td><td>بيانات مُعالَجة ومُفسَّرة وذات معنى</td><td>متوسط علامات الطالب هو 82 من 100</td></tr>
+    <tr><td><strong>المعرفة</strong></td><td>معلومات تُساعد في اتخاذ قرار صائب</td><td>هذا الطالب يحتاج دعماً في المادة الثالثة</td></tr>
+  </tbody>
+</table>
+</div>
+
+<hr class="page-break">
+
+<!-- ══════════════════════════════════════════════════════════════
+     ثانياً
+══════════════════════════════════════════════════════════════ -->
+<h2 class="sec"><span class="num">ثانياً</span> لماذا نحتاج قواعد البيانات؟</h2>
+
+<p>قبل انتشار قواعد البيانات الإلكترونية، كانت المؤسسات تعتمد على الملفات الورقية وجداول الإكسل والسجلات اليدوية. وقد كان هذا النهج يُعاني من مشكلات جوهرية عديدة جعلت الحاجة إلى نظام أفضل أمراً حتمياً.</p>
+
+<h3 class="sub">المشكلات التي تحلّها قواعد البيانات</h3>
+
+<div class="tbl-wrap">
+<table>
+  <thead><tr><th>الجانب</th><th>المشكلة القديمة</th><th>الحل الذي تقدمه قاعدة البيانات</th></tr></thead>
+  <tbody>
+    <tr><td><strong>سرعة الوصول</strong></td><td>البحث في آلاف الملفات يستغرق ساعات</td><td>البحث يستغرق ثوانٍ معدودة حتى في الملايين</td></tr>
+    <tr><td><strong>دقة البيانات</strong></td><td>نفس الشخص يُسجَّل بأسماء مختلفة</td><td>القواعد تمنع إدخال بيانات متعارضة تلقائياً</td></tr>
+    <tr><td><strong>الأمان والخصوصية</strong></td><td>أي موظف يطّلع على ملفات لا تخصه</td><td>صلاحيات دقيقة: كل شخص يرى ما يخصه فقط</td></tr>
+    <tr><td><strong>العمل المتزامن</strong></td><td>شخص واحد فقط يستخدم الملف في كل مرة</td><td>مئات المستخدمين يعملون في نفس الوقت</td></tr>
+    <tr><td><strong>الحفظ والاسترداد</strong></td><td>حريق أو خطأ بشري يُتلف كل شيء</td><td>نسخ احتياطية تلقائية تضمن استعادة البيانات</td></tr>
+    <tr><td><strong>التقارير والقرار</strong></td><td>إعداد التقارير يتطلب جهداً يدوياً كبيراً</td><td>التقارير تُولَّد تلقائياً بدقة عالية</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="note"><strong>ملاحظة:</strong> التحول من الملفات الورقية إلى قواعد البيانات ليس ترفاً تقنياً — بل هو ضرورة إدارية تعود بفوائد مباشرة على كفاءة العمل وجودة الخدمة.</div>
+
+<hr class="page-break">
+
+<!-- ══════════════════════════════════════════════════════════════
+     ثالثاً
+══════════════════════════════════════════════════════════════ -->
+<h2 class="sec"><span class="num">ثالثاً</span> مكونات قاعدة البيانات بلغة بسيطة</h2>
+
+<p>لا تحتاج أن تكون متخصصاً تقنياً لتفهم كيف تعمل قاعدة البيانات. فلنستخدم أمثلة مألوفة من الحياة اليومية لشرح كل مكوّن.</p>
+
+<h3 class="sub">أولاً: الجدول — وعاء المعلومات</h3>
+
+<p>تخيّل جدول الإكسل الذي ربما استخدمته من قبل — الصفوف والأعمدة. في قاعدة البيانات هذا يُسمّى «جدول»، وهو الوحدة الأساسية لتخزين المعلومات. كل جدول يمثّل فئة واحدة من البيانات، مثل: جدول الموظفين، أو جدول الطلاب، أو جدول المعاملات.</p>
+
+<div class="tbl-wrap">
+<table>
+  <thead><tr><th>رقم الموظف</th><th>الاسم الكامل</th><th>تاريخ التعيين</th><th>القسم</th><th>الراتب</th></tr></thead>
+  <tbody>
+    <tr><td>001</td><td>علي محمد الجابري</td><td>15/3/2018</td><td>الشؤون القانونية</td><td>750,000</td></tr>
+    <tr><td>002</td><td>زينب حسن العبيدي</td><td>02/9/2020</td><td>الموارد البشرية</td><td>680,000</td></tr>
+    <tr><td>003</td><td>أحمد كريم السلطاني</td><td>01/1/2016</td><td>التخطيط والمتابعة</td><td>820,000</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3 class="sub">ثانياً: المعرّف الفريد — هوية كل سجل</h3>
+<p>في أي سجل رسمي هناك رقم لا يتكرر يُميّز الشخص عن غيره — كرقم الهوية الوطنية. في قاعدة البيانات يُسمّى هذا «المفتاح الأساسي»، وهو العمود الذي يضمن أن كل سجل له هوية فريدة لا تتكرر أبداً.</p>
+
+<h3 class="sub">ثالثاً: العلاقات بين الجداول</h3>
+<p>قاعدة البيانات لا تتكون من جدول واحد معزول — بل من مجموعة جداول مترابطة تتبادل المعلومات فيما بينها:</p>
+<ul class="list">
+  <li>جدول الموظفين يرتبط بجدول الأقسام: كل موظف ينتمي إلى قسم محدد</li>
+  <li>جدول الأقسام يرتبط بجدول المديريات: كل قسم يتبع مديرية معينة</li>
+  <li>جدول الموظفين يرتبط بجدول الإجازات: كل موظف له سجل إجازاته</li>
+  <li>جدول المعاملات يرتبط بجدول الموظف المسؤول: لمعرفة من أنجز كل معاملة</li>
+</ul>
+
+<!-- ════════════════════════
+     الشكل ٢ — علاقة الجداول
+════════════════════════ -->
+<div class="diagram-wrap">
+  <div class="diagram-title">شكل (١) — العلاقة بين الجداول في منظومة الموظفين</div>
+
+  <div class="rel-diagram">
+
+    <!-- جدول الأقسام -->
+    <div class="rel-table">
+      <div class="rel-table-head">جدول الأقسام</div>
+      <div class="rel-table-row"><span class="pk">🔑</span> رقم القسم</div>
+      <div class="rel-table-row">اسم القسم</div>
+      <div class="rel-table-row">رقم المديرية</div>
+    </div>
+
+    <!-- رابط -->
+    <div class="rel-connector">
+      <div class="rel-arrow">▶</div>
+      <div class="rel-line"></div>
+      <div class="rel-label">1 : N</div>
+      <div class="rel-line"></div>
+      <div class="rel-arrow">◀</div>
+    </div>
+
+    <!-- جدول الموظفين -->
+    <div class="rel-table">
+      <div class="rel-table-head">جدول الموظفين</div>
+      <div class="rel-table-row"><span class="pk">🔑</span> رقم الموظف</div>
+      <div class="rel-table-row">الاسم الكامل</div>
+      <div class="rel-table-row"><span class="fk">↗</span> رقم القسم</div>
+      <div class="rel-table-row">الراتب</div>
+    </div>
+
+    <!-- رابط -->
+    <div class="rel-connector">
+      <div class="rel-arrow">▶</div>
+      <div class="rel-line"></div>
+      <div class="rel-label">1 : N</div>
+      <div class="rel-line"></div>
+      <div class="rel-arrow">◀</div>
+    </div>
+
+    <!-- جدول الإجازات -->
+    <div class="rel-table">
+      <div class="rel-table-head">جدول الإجازات</div>
+      <div class="rel-table-row"><span class="pk">🔑</span> رقم الإجازة</div>
+      <div class="rel-table-row"><span class="fk">↗</span> رقم الموظف</div>
+      <div class="rel-table-row">تاريخ البدء</div>
+      <div class="rel-table-row">عدد الأيام</div>
+    </div>
+
+  </div>
+
+  <p style="text-align:center; font-size:13px; color:var(--muted); margin-top:20px;">
+    السهم 🔑 = مفتاح أساسي (هوية فريدة) &nbsp;|&nbsp; ↗ = مفتاح خارجي (رابط بجدول آخر) &nbsp;|&nbsp; 1:N = قسم واحد يضم عدة موظفين
+  </p>
+</div>
+
+<div class="note"><strong>ملاحظة:</strong> هذه الروابط بين الجداول هي التي تُتيح الحصول على تقارير شاملة — مثلاً: «جميع المعاملات المنجزة الشهر الماضي مع اسم المنجز والقسم الذي يعمل فيه».</div>
+
+<hr class="page-break">
+
+<!-- ══════════════════════════════════════════════════════════════
+     رابعاً
+══════════════════════════════════════════════════════════════ -->
+<h2 class="sec"><span class="num">رابعاً</span> أنواع قواعد البيانات</h2>
+
+<p>ليست قواعد البيانات نوعاً واحداً — فكما أن هناك أنواعاً مختلفة من السيارات كل منها مناسب لغرض محدد، كذلك قواعد البيانات تتنوع بحسب طبيعة المعلومات المراد تخزينها وطريقة استخدامها.</p>
+
+<h3 class="sub">أ. قواعد البيانات العلائقية — الأكثر شيوعاً</h3>
+<p>هذا النوع هو الأكثر استخداماً في العالم، وهو ما تعتمده معظم المؤسسات الحكومية والبنوك والجامعات. يعتمد على تنظيم المعلومات في جداول مترابطة مع ضمانات الأمان والدقة.</p>
+
+<h3 class="sub">ب. قواعد بيانات الوثائق</h3>
+<p>تُخزّن المعلومات في شكل وثائق مرنة لا تلتزم بشكل جدول ثابت. مناسبة لتخزين المحتوى المتنوع الشكل، مثل المقالات والتقارير ذات الهياكل المختلفة.</p>
+
+<h3 class="sub">ج. قواعد البيانات الوقتية</h3>
+<p>متخصصة في تتبع التغيرات عبر الزمن. مثالية لتسجيل سجلات الأسعار التاريخية، أو تتبع مسار معاملة من لحظة فتحها حتى إغلاقها.</p>
+
+<h3 class="sub">د. قواعد بيانات الرسوم البيانية</h3>
+<p>تُركّز على تمثيل العلاقات المعقدة بين الأشخاص أو المؤسسات. تُستخدم في تحليل الشبكات وأنظمة التوصيات وخرائط التأثير.</p>
+
+<div class="tbl-wrap">
+<table>
+  <thead><tr><th>النوع</th><th>طريقة التنظيم</th><th>مجال الاستخدام المثالي</th></tr></thead>
+  <tbody>
+    <tr><td><strong>العلائقية</strong></td><td>جداول مترابطة</td><td>الحكومة، البنوك، الجامعات، الشركات الكبرى</td></tr>
+    <tr><td><strong>الوثائقية</strong></td><td>وثائق مرنة</td><td>المواقع الإلكترونية، التطبيقات الإدارية</td></tr>
+    <tr><td><strong>الوقتية</strong></td><td>بيانات مرتبطة بالزمن</td><td>تتبع المعاملات، السجلات التاريخية</td></tr>
+    <tr><td><strong>الرسوم البيانية</strong></td><td>عُقد وروابط</td><td>تحليل الشبكات، الخرائط التنظيمية</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="note"><strong>ملاحظة:</strong> بالنسبة للأقسام الإنسانية والإدارية، قواعد البيانات العلائقية هي الأكثر صلة واستخداماً في العمل اليومي.</div>
+
+<hr class="page-break">
+
+<!-- ══════════════════════════════════════════════════════════════
+     خامساً
+══════════════════════════════════════════════════════════════ -->
+<h2 class="sec"><span class="num">خامساً</span> كيف تُدار قواعد البيانات؟</h2>
+
+<p>قاعدة البيانات ليست مجرد مخزن ثابت للمعلومات — بل هي نظام حي يتطور ويُدار بشكل مستمر. فهم هذه الإدارة يُساعد أي موظف أو مسؤول على التعامل مع هذه الأنظمة بثقة وكفاءة.</p>
+
+  <div class="cycle">
+    <!-- صف علوي -->
+    <div class="cycle-row">
+      <div class="cycle-col">
+        <div class="cycle-node">
+          <span class="icon">✏️</span>
+          <span class="label">الإدخال</span>
+          <span class="sub-label">تسجيل المعاملة<br>أو الموظف</span>
+        </div>
+      </div>
+
+      <div class="arr-h ltr"></div>
+
+      <div class="cycle-col">
+        <div class="cycle-node">
+          <span class="icon">💾</span>
+          <span class="label">التخزين</span>
+          <span class="sub-label">الحفظ الآمن<br>في النظام</span>
+        </div>
+      </div>
+
+      <div class="arr-h ltr"></div>
+
+      <div class="cycle-col">
+        <div class="cycle-node">
+          <span class="icon">🔍</span>
+          <span class="label">الاسترجاع</span>
+          <span class="sub-label">البحث عن<br>المعلومة</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- أسهم رأسية -->
+    <div style="display:flex; justify-content:space-between; width:100%; padding: 0 60px;">
+      <div class="arr-v up"></div>
+      <div style="width:1px"></div>
+      <div class="arr-v"></div>
+    </div>
+
+    <!-- صف سفلي (معكوس) -->
+    <div class="cycle-row">
+      <div class="cycle-col">
+        <div class="cycle-node">
+          <span class="icon">🗂</span>
+          <span class="label">الأرشفة</span>
+          <span class="sub-label">حفظ القديم<br>وتنظيمه</span>
+        </div>
+      </div>
+
+      <div class="arr-h"></div>
+
+      <div class="cycle-col">
+        <div class="cycle-node">
+          <span class="icon">📊</span>
+          <span class="label">التحليل</span>
+          <span class="sub-label">التقارير<br>واتخاذ القرار</span>
+        </div>
+      </div>
+
+      <div class="arr-h"></div>
+
+      <div class="cycle-col">
+        <div class="cycle-node">
+          <span class="icon">✏</span>
+          <span class="label">التحديث</span>
+          <span class="sub-label">تعديل البيانات<br>الموجودة</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p style="text-align:center; font-size:13px; color:var(--muted); margin-top:24px;">
+    البيانات تسير في دورة مستمرة — من الإدخال حتى الأرشفة، ثم تبدأ من جديد
+  </p>
+</div>
+
+
+<h3 class="sub">لغة الاستعلام — كيف نتحدث مع قاعدة البيانات؟</h3>
+<p>
+قاعدة البيانات تحفظ الملايين من السجلات، لكن كيف نطلب منها معلومة بعينها؟ الجواب هو
+<strong>لغة الاستعلام</strong>، وهي اللغة التي يتواصل بها الموظف أو النظام مع قاعدة البيانات
+لطلب المعلومات أو إضافتها أو تعديلها. تخيّل أنك تُكلّم موظف الأرشيف وتقول له:
+«أعطني سجل كل موظف تم تعيينه بعد عام ٢٠١٥ في قسم الشؤون القانونية مرتّبين تصاعدياً حسب الراتب»
+— هذا بالضبط ما تفعله لغة الاستعلام، لكن بصيغة يفهمها الحاسوب.
+</p>
+<p>
+أشهر لغات الاستعلام هي <strong>لغة الاستعلام الهيكلية</strong> وهي معيار عالمي تستخدمه معظم
+أنظمة قواعد البيانات الحكومية والمصرفية والجامعية. وعلى الرغم من أن كتابة هذه الأوامر مهمة
+المختصين التقنيين، إلا أن فهم مبدأها مهم لكل مسؤول يتعامل مع هذه الأنظمة.
+</p>
+
+<div class="sql-explain">
+  <div class="sql-explain-title">🔎 كيف يعمل الاستعلام؟ — بلغة بسيطة</div>
+  <div class="sql-cards">
+    <div class="sql-card">
+      <div class="sql-card-icon">📥</div>
+      <div class="sql-card-label">اختر</div>
+      <div class="sql-card-desc">حدد البيانات التي تريد رؤيتها — اسم الموظف؟ راتبه؟ قسمه؟</div>
+    </div>
+    <div class="sql-arrow-h">←</div>
+    <div class="sql-card">
+      <div class="sql-card-icon">🗃</div>
+      <div class="sql-card-label">من أين</div>
+      <div class="sql-card-desc">حدد الجدول الذي تريد البحث فيه — جدول الموظفين أم المعاملات؟</div>
+    </div>
+    <div class="sql-arrow-h">←</div>
+    <div class="sql-card">
+      <div class="sql-card-icon">🔍</div>
+      <div class="sql-card-label">الشرط</div>
+      <div class="sql-card-desc">حدد الشرط للتصفية — فقط من تعيّن بعد ٢٠١٥؟ أو راتبه فوق مليون؟</div>
+    </div>
+    <div class="sql-arrow-h">←</div>
+    <div class="sql-card">
+      <div class="sql-card-icon">📊</div>
+      <div class="sql-card-label">الترتيب</div>
+      <div class="sql-card-desc">رتّب النتيجة — تصاعدياً أم تنازلياً؟ حسب الاسم أم الراتب؟</div>
+    </div>
+  </div>
+</div>
+
+<div class="sql-example-box">
+  <div class="sql-ex-title">مثال — طلب من قاعدة البيانات</div>
+
+  <div class="sql-req-label">▸ الطلب بلغة بشرية:</div>
+  <div class="sql-req-human">«أعطني أسماء ورواتب جميع موظفي قسم الشؤون القانونية الذين تعيّنوا بعد عام ٢٠١٥، مرتّبين من الأعلى راتباً إلى الأدنى»</div>
+
+  <div class="sql-req-label" style="margin-top:18px;">▸ ما يحدث داخل النظام (للاطلاع فقط):</div>
+  <div class="sql-req-steps">
+    <div class="sql-step-row"><span class="sql-kw">اختر</span><span class="sql-val">اسم الموظف، الراتب</span></div>
+    <div class="sql-step-row"><span class="sql-kw">من</span><span class="sql-val">جدول الموظفين</span></div>
+    <div class="sql-step-row"><span class="sql-kw">حيث</span><span class="sql-val">القسم = «الشؤون القانونية» وسنة التعيين أكبر من ٢٠١٥</span></div>
+    <div class="sql-step-row"><span class="sql-kw">رتّب</span><span class="sql-val">حسب الراتب تنازلياً</span></div>
+  </div>
+
+  <div class="sql-req-label" style="margin-top:18px;">▸ النتيجة التي يُرجعها النظام:</div>
+  <div class="tbl-wrap" style="margin:0;">
+  <table style="margin:0;">
+    <thead><tr><th>اسم الموظف</th><th>الراتب الشهري</th></tr></thead>
+    <tbody>
+      <tr><td>أحمد كريم السلطاني</td><td>950,000 دينار</td></tr>
+      <tr><td>علي محمد الجابري</td><td>820,000 دينار</td></tr>
+      <tr><td>زينب حسن العبيدي</td><td>750,000 دينار</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p style="font-size:13px; color:var(--muted); margin-top:10px; font-style:italic; direction:rtl;">
+    النظام فرز آلاف السجلات وأعاد النتيجة الدقيقة في أجزاء من الثانية — دون أن يتصفح الموظف أي ملف يدوياً.
+  </p>
+</div>
+
+<div class="note"><strong>ملاحظة:</strong> لا يُشترط على الموظف الإداري أن يكتب أوامر الاستعلام بنفسه — فالواجهات الإلكترونية الحديثة تُترجم نقراتك وفلاترك تلقائياً إلى استعلامات، لكن فهم المبدأ يجعلك تستخدم النظام باحترافية أعلى.</div>
+
+<h3 class="sub">من يدير قاعدة البيانات؟</h3>
+<ul class="list">
+  <li><strong>مدير قاعدة البيانات:</strong> المتخصص التقني المسؤول عن تصميم البنية الأساسية للنظام وصيانته وضمان أمانه</li>
+  <li><strong>المستخدم النهائي:</strong> الموظف أو المسؤول الذي يُدخل البيانات ويستعلم عنها ويُنتج التقارير — وهذا الدور يخصك</li>
+  <li><strong>مدير النظام:</strong> المسؤول عن البنية التحتية والخوادم والشبكة التي تعمل عليها قاعدة البيانات</li>
+  <li><strong>صاحب القرار:</strong> المسؤول الذي يستفيد من التقارير والتحليلات في اتخاذ قراراته الإدارية</li>
+</ul>
+
+<h3 class="sub">أمان البيانات وحمايتها</h3>
+<ol class="list">
+  <li><strong>صلاحيات الوصول المتدرجة:</strong> كل مستخدم يرى فقط ما يحتاجه — الموظف يرى ملفه، المدير يرى ملفات قسمه</li>
+  <li><strong>تسجيل كل العمليات:</strong> كل تعديل أو إضافة أو حذف يُسجَّل مع اسم منفّذه وتوقيت تنفيذه</li>
+  <li><strong>النسخ الاحتياطية التلقائية:</strong> نسخ منتظمة تُخزَّن في مواقع آمنة</li>
+  <li><strong>التشفير:</strong> البيانات الحساسة محمية بتشفير يجعلها غير قابلة للقراءة حتى لو وقعت في الأيدي الخطأ</li>
+  <li><strong>جدار الحماية:</strong> يمنع الوصول غير المصرح به من الشبكة الخارجية</li>
+</ol>
+
+<div class="note"><strong>ملاحظة:</strong> من المسؤوليات القانونية والأخلاقية لكل موظف: عدم مشاركة بياناته مع أي شخص آخر، والإبلاغ فوراً عن أي اختراق أو وصول غير مشروع.</div>
+
+<hr class="page-break">
+
+<!-- ══════════════════════════════════════════════════════════════
+     سادساً
+══════════════════════════════════════════════════════════════ -->
+<h2 class="sec"><span class="num">سادساً</span> قواعد البيانات والتحول الرقمي</h2>
+
+<p>التحول الرقمي الذي تشهده المؤسسات الحكومية والخاصة في العراق والعالم لا يقوم إلا على ركيزة واحدة: قواعد البيانات. فالحكومة الإلكترونية، والخدمات الرقمية للمواطن، وإدارة المشاريع الكبرى — كلها تحتاج إلى بيانات منظمة وموثوقة.</p>
+
+<h3 class="sub">أثر قواعد البيانات على جودة الخدمة الحكومية</h3>
+<ul class="list">
+  <li>المواطن يُنجز معاملته في ساعات بدلاً من أسابيع</li>
+  <li>المسؤول يتخذ قراره بناءً على أرقام دقيقة حقيقية لا تقديرات</li>
+  <li>الفساد يصعب إخفاؤه لأن كل عملية مُسجَّلة ومُتتبَّعة</li>
+  <li>توفير الورق والمساحة التخزينية والجهد البشري المهدر في المهام التكرارية</li>
+  <li>التقارير الدورية تُنتج تلقائياً بدقة عالية ودون تأخير</li>
+</ul>
+
+<h3 class="sub">تجارب ناجحة من واقعنا</h3>
+
+<div class="tbl-wrap">
+<table>
+  <thead><tr><th>المجال</th><th>ما تحقق بعد الرقمنة</th></tr></thead>
+  <tbody>
+    <tr><td><strong>فواتير الكهرباء</strong></td><td>قراءة العداد وحساب الفاتورة وإرسالها إلكترونياً في أقل من دقيقة</td></tr>
+    <tr><td><strong>شؤون الموظفين</strong></td><td>الكشف الفوري عن التكرار والتلاعب في سجلات الموظفين</td></tr>
+    <tr><td><strong>التعليم الجامعي</strong></td><td>تتبع أوضاع الطلاب وإصدار الشهادات إلكترونياً</td></tr>
+    <tr><td><strong>السجل الصحي الموحد</strong></td><td>تحديد حالة المريض وتاريخه الطبي في ثوانٍ عند أي مستشفى</td></tr>
+    <tr><td><strong>البوابات الحكومية</strong></td><td>تقليص وقت إنجاز المعاملة من أيام إلى ساعات</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3 class="sub">الملخص العام للمحاضرة</h3>
+<ol class="list">
+  <li>قاعدة البيانات هي نظام إلكتروني منظم لتخزين المعلومات وإدارتها واسترجاعها بكفاءة وأمان</li>
+  <li>نتعامل معها يومياً في البنوك والمستشفيات والجامعات والخدمات الحكومية دون أن ندري</li>
+  <li>تحل مشكلات حقيقية: التكرار، والبحث البطيء، وضياع الملفات، وضعف الأمان</li>
+  <li>تتكون من جداول مترابطة لكل منها معرّف فريد يضمن دقة البيانات</li>
+  <li>تتعدد أنواعها، وأكثرها استخداماً في قطاعنا هو النوع العلائقي القائم على الجداول</li>
+  <li>إدارتها تشمل أدواراً متعددة: التقني والمستخدم النهائي والمسؤول — وكل دور مهم</li>
+  <li>هي العمود الفقري للتحول الرقمي وتحسين جودة الخدمة الحكومية</li>
+</ol>
+
+<h3 class="sub">توصيات للعمل</h3>
+<ul class="list">
+  <li>اطّلع على منظومة إدارة البيانات في مؤسستك وافهم كيفية الاستفادة منها</li>
+  <li>احرص على دقة البيانات التي تُدخلها — خطأ صغير قد يُسبّب مشكلات كبيرة</li>
+  <li>لا تُشارك بيانات الدخول الخاصة بك مع أحد مهما كان السبب</li>
+  <li>بادر بطلب تقارير من النظام لدعم قراراتك بدلاً من الاعتماد على التخمين</li>
+  <li>اقترح على إدارتك رقمنة أي عملية ورقية تتكرر أكثر من مرة في الأسبوع</li>
+</ul>
+
+<div class="note"><strong>ملاحظة:</strong> قواعد البيانات ليست عالم المبرمجين وحدهم — هي أداة في يد كل مسؤول يسعى إلى كفاءة أعلى وخدمة أفضل وقرار أصوب.</div>
+
+
+<div class="end-bar">المعهد العالي للقيادة</div>
+
+</body>
+</html>
