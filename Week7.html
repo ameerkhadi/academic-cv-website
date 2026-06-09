@@ -1,0 +1,1461 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>تكامل الأنظمة الحكومية – محاضرة تعليمية</title>
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary:    #1a3c6e;
+      --secondary:  #0d7a8e;
+      --accent:     #f0a500;
+      --accent2:    #27ae60;
+      --accent3:    #e74c3c;
+      --light:      #f4f8fc;
+      --white:      #ffffff;
+      --text:       #2c3e50;
+      --muted:      #6c7a8d;
+      --border:     #dce6f0;
+      --shadow:     0 4px 20px rgba(26,60,110,.12);
+      --radius:     14px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Segoe UI', 'Tahoma', 'Arial', sans-serif;
+      background: linear-gradient(135deg, #e8f0fb 0%, #f4f8fc 50%, #eaf6f6 100%);
+      color: var(--text);
+      line-height: 1.85;
+      font-size: 16px;
+    }
+
+    /* ===== HERO HEADER ===== */
+    .hero {
+      background: linear-gradient(135deg, var(--primary) 0%, #0d4a7a 40%, var(--secondary) 100%);
+      color: var(--white);
+      text-align: center;
+      padding: 60px 30px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: "";
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .hero-icon {
+      font-size: 4rem;
+      margin-bottom: 16px;
+      display: block;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,.3));
+    }
+    .hero h1 {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800;
+      letter-spacing: .5px;
+      text-shadow: 0 2px 10px rgba(0,0,0,.3);
+      margin-bottom: 12px;
+    }
+    .hero .subtitle {
+      font-size: 1.1rem;
+      opacity: .85;
+      max-width: 680px;
+      margin: 0 auto 20px;
+    }
+
+    /* Authors Box */
+    .hero-authors {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,.13);
+      border: 1px solid rgba(255,255,255,.3);
+      border-radius: 14px;
+      padding: 16px 32px;
+      margin-bottom: 22px;
+      backdrop-filter: blur(8px);
+    }
+    .hero-authors .prep-label {
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      opacity: .75;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .hero-authors .author-name {
+      font-size: 1.05rem;
+      font-weight: 700;
+      opacity: .95;
+      letter-spacing: .3px;
+    }
+    .hero-authors .institute {
+      font-size: .88rem;
+      opacity: .78;
+      margin-top: 6px;
+      border-top: 1px solid rgba(255,255,255,.25);
+      padding-top: 8px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .hero-badges {
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;
+    }
+    .badge {
+      background: rgba(255,255,255,.18);
+      border: 1px solid rgba(255,255,255,.35);
+      border-radius: 30px;
+      padding: 6px 18px;
+      font-size: .85rem;
+      backdrop-filter: blur(6px);
+    }
+
+    /* ===== MAIN CONTAINER ===== */
+    .container {
+      max-width: 1100px;
+      margin: -40px auto 60px;
+      padding: 0 20px;
+    }
+
+    /* ===== TABLE OF CONTENTS ===== */
+    .toc {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 28px 32px;
+      margin-bottom: 32px;
+      border-right: 5px solid var(--accent);
+    }
+    .toc h2 { color: var(--primary); font-size: 1.15rem; margin-bottom: 16px; }
+    .toc ol {
+      padding-right: 22px;
+      columns: 2;
+      column-gap: 40px;
+    }
+    .toc ol li { margin-bottom: 6px; }
+    .toc ol li a {
+      color: var(--secondary);
+      text-decoration: none;
+      font-size: .95rem;
+      transition: color .2s;
+    }
+    .toc ol li a:hover { color: var(--primary); text-decoration: underline; }
+
+    /* ===== SECTION CARDS ===== */
+    .section-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 38px 40px;
+      margin-bottom: 32px;
+      border-top: 4px solid var(--primary);
+      transition: box-shadow .3s;
+    }
+    .section-card:hover { box-shadow: 0 8px 36px rgba(26,60,110,.18); }
+
+    .section-card.green  { border-top-color: var(--accent2); }
+    .section-card.amber  { border-top-color: var(--accent); }
+    .section-card.red    { border-top-color: var(--accent3); }
+    .section-card.teal   { border-top-color: var(--secondary); }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+    .section-icon {
+      width: 50px; height: 50px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+    .icon-blue   { background: #e8f0fb; }
+    .icon-green  { background: #eafaf1; }
+    .icon-amber  { background: #fef9e7; }
+    .icon-red    { background: #fdedec; }
+    .icon-teal   { background: #e8f8fb; }
+
+    .section-title h2 {
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    .section-title .section-num {
+      font-size: .78rem;
+      color: var(--muted);
+      display: block;
+      margin-top: 2px;
+    }
+
+    p { margin-bottom: 14px; color: var(--text); }
+
+    /* ===== KEY TERMS ===== */
+    .term { font-weight: 700; color: var(--primary); }
+    .highlight { background: #fff3cd; border-radius: 4px; padding: 1px 5px; font-weight: 600; }
+    .key-def {
+      background: #e8f0fb;
+      border-right: 4px solid var(--primary);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 18px 0;
+      font-size: .97rem;
+    }
+    .key-def strong { color: var(--primary); display: block; margin-bottom: 6px; font-size: 1rem; }
+
+    /* ===== DIAGRAMS ===== */
+
+    /* Architecture Layers */
+    .arch-diagram {
+      margin: 28px 0;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: 0 4px 18px rgba(0,0,0,.10);
+    }
+    .arch-diagram .diag-title {
+      background: var(--primary);
+      color: #fff;
+      text-align: center;
+      padding: 12px;
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: .3px;
+    }
+    .arch-layer {
+      display: flex;
+      align-items: stretch;
+      border-bottom: 2px solid rgba(255,255,255,.7);
+    }
+    .arch-layer:last-child { border-bottom: none; }
+    .layer-num {
+      width: 52px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem;
+      flex-shrink: 0;
+      font-weight: 900;
+      opacity: .7;
+    }
+    .layer-body { flex: 1; padding: 16px 20px; }
+    .layer-label { font-size: .75rem; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; opacity: .7; margin-bottom: 3px; }
+    .layer-name  { font-size: 1.05rem; font-weight: 800; margin-bottom: 4px; }
+    .layer-desc  { font-size: .88rem; opacity: .85; }
+    .layer-tags  { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+    .ltag {
+      background: rgba(255,255,255,.25);
+      border: 1px solid rgba(255,255,255,.45);
+      border-radius: 20px;
+      padding: 3px 12px;
+      font-size: .78rem;
+      font-weight: 600;
+    }
+    .l1 { background: linear-gradient(90deg,#1a3c6e,#1e4d8c); color:#fff; }
+    .l2 { background: linear-gradient(90deg,#0d7a8e,#0e8fa5); color:#fff; }
+    .l3 { background: linear-gradient(90deg,#27ae60,#2ecc71); color:#fff; }
+    .l4 { background: linear-gradient(90deg,#f39c12,#f0a500); color:#fff; }
+    .l5 { background: linear-gradient(90deg,#8e44ad,#9b59b6); color:#fff; }
+    .l6 { background: linear-gradient(90deg,#c0392b,#e74c3c); color:#fff; }
+
+    /* Flow Diagram */
+    .flow-diagram {
+      background: #f8fbff;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 20px;
+      margin: 28px 0;
+      overflow-x: auto;
+    }
+    .flow-title { text-align: center; font-weight: 700; font-size: 1rem; color: var(--primary); margin-bottom: 22px; }
+    .flow-row {
+      display: flex; align-items: center; justify-content: center;
+      flex-wrap: wrap; gap: 0; min-width: 600px;
+    }
+    .flow-node {
+      background: var(--white);
+      border: 2px solid var(--primary);
+      border-radius: 12px;
+      padding: 14px 16px;
+      text-align: center;
+      min-width: 115px;
+      box-shadow: 0 2px 10px rgba(26,60,110,.10);
+    }
+    .flow-node .fn-icon  { font-size: 1.8rem; display: block; margin-bottom: 5px; }
+    .flow-node .fn-label { font-size: .8rem; font-weight: 700; color: var(--primary); }
+    .flow-node .fn-sub   { font-size: .72rem; color: var(--muted); margin-top: 2px; }
+    .flow-node.active { background: var(--primary); border-color: var(--primary); }
+    .flow-node.active .fn-label { color: #fff; }
+    .flow-node.active .fn-sub   { color: rgba(255,255,255,.75); }
+    .flow-arrow { font-size: 1.6rem; color: var(--secondary); padding: 0 6px; flex-shrink: 0; }
+
+    /* Cycle Diagram */
+    .cycle-wrap { background: #f8fbff; border: 1.5px solid var(--border); border-radius: var(--radius); padding: 28px 20px; margin: 28px 0; }
+    .cycle-title { text-align: center; font-weight: 700; color: var(--primary); font-size: 1rem; margin-bottom: 22px; }
+    .cycle-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; }
+    .cycle-step {
+      background: var(--white); border-radius: 12px; padding: 18px 14px; text-align: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,.07); border-bottom: 3px solid transparent; transition: transform .2s;
+    }
+    .cycle-step:hover { transform: translateY(-4px); }
+    .cycle-step .cs-num {
+      width: 34px; height: 34px; border-radius: 50%;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: .9rem; color: #fff; margin-bottom: 10px;
+    }
+    .cycle-step .cs-icon { font-size: 1.6rem; display: block; margin-bottom: 8px; }
+    .cycle-step .cs-name { font-weight: 700; font-size: .9rem; color: var(--primary); }
+    .cycle-step .cs-desc { font-size: .78rem; color: var(--muted); margin-top: 4px; }
+
+    /* Comparison Table */
+    .comp-table { width: 100%; border-collapse: collapse; margin: 22px 0; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,.08); }
+    .comp-table thead tr { background: var(--primary); color: #fff; }
+    .comp-table thead th { padding: 14px 16px; text-align: right; font-size: .92rem; font-weight: 700; }
+    .comp-table tbody tr:nth-child(even) { background: #f4f8fc; }
+    .comp-table tbody tr:hover { background: #e8f0fb; }
+    .comp-table tbody td { padding: 12px 16px; font-size: .9rem; border-bottom: 1px solid var(--border); }
+    .comp-table tbody td:first-child { font-weight: 700; color: var(--primary); }
+    .pill { display: inline-block; border-radius: 20px; padding: 3px 12px; font-size: .75rem; font-weight: 700; }
+    .pill-green { background: #eafaf1; color: #1e8449; }
+    .pill-red   { background: #fdedec; color: #c0392b; }
+    .pill-blue  { background: #e8f0fb; color: #1a3c6e; }
+
+    /* Benefits */
+    .benefits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; margin: 24px 0; }
+    .benefit-card {
+      background: linear-gradient(135deg, var(--white) 0%, #f4f8fc 100%);
+      border-radius: 12px; padding: 22px 18px; text-align: center;
+      box-shadow: 0 2px 12px rgba(0,0,0,.07); border-top: 3px solid var(--secondary);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .benefit-card:hover { transform: translateY(-5px); box-shadow: 0 8px 24px rgba(0,0,0,.12); }
+    .benefit-card .bc-icon  { font-size: 2.2rem; margin-bottom: 10px; display: block; }
+    .benefit-card .bc-title { font-weight: 800; color: var(--primary); font-size: .95rem; margin-bottom: 7px; }
+    .benefit-card .bc-text  { font-size: .82rem; color: var(--muted); line-height: 1.6; }
+    .benefit-card:nth-child(2) { border-top-color: var(--accent2); }
+    .benefit-card:nth-child(3) { border-top-color: var(--accent); }
+    .benefit-card:nth-child(4) { border-top-color: var(--accent3); }
+    .benefit-card:nth-child(5) { border-top-color: #8e44ad; }
+    .benefit-card:nth-child(6) { border-top-color: #16a085; }
+
+    /* Challenges */
+    .challenge-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin: 22px 0; }
+    .challenge-item {
+      background: var(--white); border-radius: 12px; padding: 18px 20px;
+      display: flex; align-items: flex-start; gap: 14px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.06); border-right: 4px solid transparent;
+    }
+    .challenge-item:nth-child(odd)  { border-right-color: var(--accent3); }
+    .challenge-item:nth-child(even) { border-right-color: var(--accent); }
+    .challenge-item .ci-icon  { font-size: 1.8rem; flex-shrink: 0; }
+    .challenge-item .ci-title { font-weight: 700; color: var(--text); font-size: .93rem; margin-bottom: 4px; }
+    .challenge-item .ci-text  { font-size: .83rem; color: var(--muted); line-height: 1.6; }
+
+    /* Integration Types */
+    .int-types { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 18px; margin: 24px 0; }
+    .int-type-box { border-radius: 14px; padding: 24px 18px; text-align: center; color: #fff; box-shadow: 0 4px 16px rgba(0,0,0,.15); transition: transform .2s; }
+    .int-type-box:hover { transform: translateY(-6px); }
+    .int-type-box .it-icon { font-size: 2.2rem; display: block; margin-bottom: 10px; }
+    .int-type-box .it-name { font-weight: 800; font-size: 1rem; margin-bottom: 8px; }
+    .it-label { display: inline-block; background: rgba(255,255,255,.25); border-radius: 20px; padding: 3px 12px; font-size: .76rem; margin-bottom: 8px; }
+    .int-type-box .it-desc { font-size: .82rem; opacity: .9; line-height: 1.6; }
+    .itb1 { background: linear-gradient(135deg,#1a3c6e,#2557a7); }
+    .itb2 { background: linear-gradient(135deg,#0d7a8e,#0fbad6); }
+    .itb3 { background: linear-gradient(135deg,#27ae60,#1e8449); }
+    .itb4 { background: linear-gradient(135deg,#f0a500,#e67e22); }
+    .itb5 { background: linear-gradient(135deg,#8e44ad,#9b59b6); }
+    .itb6 { background: linear-gradient(135deg,#c0392b,#e74c3c); }
+
+    /* Tech Stack */
+    .tech-stack { background: var(--primary); border-radius: var(--radius); padding: 28px 24px; margin: 24px 0; color: #fff; }
+    .tech-stack .ts-title { text-align: center; font-size: 1.05rem; font-weight: 700; margin-bottom: 22px; opacity: .9; }
+    .ts-rows { display: flex; flex-direction: column; gap: 12px; }
+    .ts-row { display: flex; align-items: center; gap: 14px; background: rgba(255,255,255,.08); border-radius: 10px; padding: 12px 16px; }
+    .ts-row .tsr-icon  { font-size: 1.5rem; flex-shrink: 0; }
+    .ts-row .tsr-cat   { font-size: .72rem; font-weight: 700; letter-spacing: 1px; opacity: .6; margin-bottom: 2px; }
+    .ts-row .tsr-name  { font-size: .9rem; font-weight: 700; }
+    .ts-row .tsr-items { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 5px; }
+    .tsr-item { background: rgba(255,255,255,.15); border-radius: 6px; padding: 2px 10px; font-size: .75rem; }
+
+    /* Standards */
+    .standards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin: 22px 0; }
+    .std-card { background: linear-gradient(135deg,#f4f8fc,var(--white)); border: 1.5px solid var(--border); border-radius: 10px; padding: 16px 14px; text-align: center; transition: border-color .2s, box-shadow .2s; }
+    .std-card:hover { border-color: var(--secondary); box-shadow: 0 4px 14px rgba(13,122,142,.15); }
+    .std-card .sc-badge { background: var(--primary); color: #fff; border-radius: 8px; padding: 4px 12px; font-size: .82rem; font-weight: 700; display: inline-block; margin-bottom: 8px; }
+    .std-card .sc-name  { font-weight: 700; font-size: .88rem; color: var(--text); margin-bottom: 4px; }
+    .std-card .sc-desc  { font-size: .77rem; color: var(--muted); }
+
+    /* Info Boxes */
+    .info-box { border-radius: 10px; padding: 18px 22px; margin: 20px 0; display: flex; align-items: flex-start; gap: 14px; }
+    .info-box.ib-blue  { background: #e8f0fb; border-right: 4px solid var(--primary); }
+    .info-box.ib-green { background: #eafaf1; border-right: 4px solid var(--accent2); }
+    .info-box.ib-amber { background: #fef9e7; border-right: 4px solid var(--accent); }
+    .info-box.ib-red   { background: #fdedec; border-right: 4px solid var(--accent3); }
+    .info-box .ib-icon  { font-size: 1.6rem; flex-shrink: 0; margin-top: 2px; }
+    .info-box .ib-title { font-weight: 700; font-size: .95rem; margin-bottom: 5px; }
+    .info-box.ib-blue  .ib-title { color: var(--primary); }
+    .info-box.ib-green .ib-title { color: var(--accent2); }
+    .info-box.ib-amber .ib-title { color: #b7770d; }
+    .info-box.ib-red   .ib-title { color: var(--accent3); }
+    .info-box .ib-text  { font-size: .88rem; color: var(--text); line-height: 1.7; }
+
+    /* Case Studies */
+    .case-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 18px; margin: 22px 0; }
+    .case-card { border-radius: 14px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,.10); }
+    .case-head { padding: 18px 20px 14px; color: #fff; }
+    .case-head .ch-icon  { font-size: 2rem; display: block; margin-bottom: 6px; }
+    .case-head .ch-title { font-weight: 800; font-size: 1rem; }
+    .case-head .ch-sub   { font-size: .78rem; opacity: .8; margin-top: 3px; }
+    .case-body { background: var(--white); padding: 16px 20px; }
+    .case-body ul { padding-right: 18px; margin: 0; }
+    .case-body ul li { font-size: .86rem; margin-bottom: 6px; color: var(--text); }
+    .case1 .case-head { background: linear-gradient(135deg,#1a3c6e,#2557a7); }
+    .case2 .case-head { background: linear-gradient(135deg,#0d7a8e,#0fbad6); }
+    .case3 .case-head { background: linear-gradient(135deg,#27ae60,#1e8449); }
+    .case4 .case-head { background: linear-gradient(135deg,#8e44ad,#b567d4); }
+
+    /* Roadmap */
+    .roadmap { position: relative; margin: 28px 0; padding-right: 30px; }
+    .roadmap::before {
+      content: ""; position: absolute; right: 14px; top: 0; bottom: 0;
+      width: 3px; background: linear-gradient(to bottom, var(--primary), var(--secondary), var(--accent2)); border-radius: 3px;
+    }
+    .roadmap-item {
+      position: relative; margin-bottom: 24px; padding: 18px 22px 18px 18px;
+      background: var(--white); border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,.07);
+    }
+    .roadmap-item::before {
+      content: ""; position: absolute; right: -22px; top: 22px;
+      width: 14px; height: 14px; border-radius: 50%;
+      background: var(--primary); border: 3px solid var(--white); box-shadow: 0 0 0 3px var(--primary);
+    }
+    .roadmap-item:nth-child(2)::before { background: var(--secondary); box-shadow: 0 0 0 3px var(--secondary); }
+    .roadmap-item:nth-child(3)::before { background: var(--accent2);  box-shadow: 0 0 0 3px var(--accent2); }
+    .roadmap-item:nth-child(4)::before { background: var(--accent);   box-shadow: 0 0 0 3px var(--accent); }
+    .ri-phase { font-size: .72rem; font-weight: 700; letter-spacing: 1.2px; color: var(--secondary); margin-bottom: 4px; }
+    .ri-title { font-weight: 800; font-size: 1rem; color: var(--primary); margin-bottom: 6px; }
+    .ri-text  { font-size: .87rem; color: var(--muted); }
+
+    /* Footer */
+    .footer {
+      background: var(--primary); color: rgba(255,255,255,.8);
+      text-align: center; padding: 32px 20px; font-size: .9rem; margin-top: 50px;
+    }
+    .footer strong { color: var(--accent); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 680px) {
+      .section-card { padding: 26px 22px; }
+      .toc ol { columns: 1; }
+      .flow-row { min-width: 500px; }
+      .arch-layer .layer-num { display: none; }
+      .hero-authors { padding: 14px 18px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ====== HERO ====== -->
+<header class="hero">
+  <span class="hero-icon">🏛️</span>
+  <h1>تكامل الأنظمة الحكومية</h1>
+ 
+  <!-- Authors -->
+  <div class="hero-authors">
+    <div class="prep-label">✍️ إعداد</div>
+    <div class="author-name">أ.م.د. أمير هادي</div>
+    <div class="author-name">أ.م.د. أحمد محسن هيلان</div>
+    <div class="institute">🎓 المعهد العالي للقيادة</div>
+  </div>
+
+ 
+</header>
+
+<!-- ====== CONTAINER ====== -->
+<div class="container">
+
+  <!-- TABLE OF CONTENTS -->
+  <div class="toc">
+    <h2>📋 محتويات المحاضرة</h2>
+    <ol>
+      <li><a href="#s1">مقدمة ومفهوم التكامل</a></li>
+      <li><a href="#s2">أهمية تكامل الأنظمة</a></li>
+      <li><a href="#s3">البنية المعمارية للتكامل</a></li>
+      <li><a href="#s4">أنواع التكامل الحكومي</a></li>
+      <li><a href="#s5">نماذج وأطر العمل</a></li>
+      <li><a href="#s6">التقنيات والمعايير</a></li>
+      <li><a href="#s7">دورة حياة مشروع التكامل</a></li>
+      <li><a href="#s8">التحديات والمخاطر</a></li>
+      <li><a href="#s9">أمثلة تطبيقية</a></li>
+      <li><a href="#s10">التوجهات المستقبلية</a></li>
+      <li><a href="#s11">خلاصة</a></li>
+    </ol>
+  </div>
+
+  <!-- ============================== -->
+  <!-- SECTION 1: INTRODUCTION        -->
+  <!-- ============================== -->
+  <div class="section-card" id="s1">
+    <div class="section-title">
+      <div class="section-icon icon-blue">📖</div>
+      <div>
+        <h2>مقدمة ومفهوم تكامل الأنظمة الحكومية</h2>
+        <span class="section-num">القسم الأول</span>
+      </div>
+    </div>
+
+    <p>
+      في ظل التحول الرقمي المتسارع الذي تشهده الحكومات حول العالم، أصبح
+      <span class="term">تكامل الأنظمة الحكومية</span> ركيزةً أساسية لتحقيق حكومة ذكية وفعّالة.
+      فالحكومات الحديثة لا تستطيع أن تؤدي مهامها بكفاءة عالية إذا ظلت أنظمتها الرقمية معزولةً
+      عن بعضها في صوامع بيانات منفردة.
+    </p>
+
+    <div class="key-def">
+      <strong>🔑 التعريف الجوهري:</strong>
+      <span class="term">تكامل الأنظمة الحكومية</span> هو عملية <span class="highlight">ربط وتوحيد</span>
+      قواعد البيانات والأنظمة البرمجية والبنى التحتية الرقمية بين مختلف الجهات الحكومية والقطاعات،
+      بهدف تبادل المعلومات بسلاسة وتقديم خدمات متكاملة للمواطنين والمؤسسات، ضمن إطار مؤسسي وتقني وأمني موحّد.
+    </div>
+
+    <p>
+      يرتكز هذا التكامل على مفهوم <span class="term">قابلية التشغيل البيني</span>
+      (Interoperability)، وهي قدرة الأنظمة المختلفة على التواصل والتعامل مع بعضها البعض
+      بفاعلية وكفاءة دون الحاجة إلى تدخّل بشري مستمر، مما يُمكّن من أتمتة العمليات الحكومية
+      وتحسين جودة الخدمات المقدمة للمستفيدين.
+    </p>
+
+    <div class="flow-diagram">
+      <div class="flow-title">🔄 مسار التحول من الأنظمة المعزولة إلى الحكومة المتكاملة</div>
+      <div class="flow-row">
+        <div class="flow-node">
+          <span class="fn-icon">🏢</span>
+          <div class="fn-label">أنظمة معزولة</div>
+          <div class="fn-sub">بيانات مجزأة</div>
+        </div>
+        <div class="flow-arrow">←</div>
+        <div class="flow-node">
+          <span class="fn-icon">🔗</span>
+          <div class="fn-label">ربط الأنظمة</div>
+          <div class="fn-sub">توحيد البيانات</div>
+        </div>
+        <div class="flow-arrow">←</div>
+        <div class="flow-node active">
+          <span class="fn-icon">🌐</span>
+          <div class="fn-label">منصة تكامل</div>
+          <div class="fn-sub">ESB / API Gateway</div>
+        </div>
+        <div class="flow-arrow">←</div>
+        <div class="flow-node">
+          <span class="fn-icon">📊</span>
+          <div class="fn-label">بيانات موحّدة</div>
+          <div class="fn-sub">قرارات أفضل</div>
+        </div>
+        <div class="flow-arrow">←</div>
+        <div class="flow-node">
+          <span class="fn-icon">🏛️</span>
+          <div class="fn-label">حكومة ذكية</div>
+          <div class="fn-sub">خدمات متميزة</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-box ib-blue">
+      <div class="ib-icon">💡</div>
+      <div>
+        <div class="ib-title">نقطة محورية</div>
+        <div class="ib-text">
+          التكامل الحكومي ليس مجرد مشروع تقني، بل هو
+          <strong>تحوّل مؤسسي شامل</strong> يشمل السياسات والإجراءات والثقافة التنظيمية
+          إلى جانب البنية التقنية. وهذا ما يجعله أحد أكثر المبادرات تعقيداً وتأثيراً في القطاع الحكومي.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================== -->
+  <!-- SECTION 2: IMPORTANCE          -->
+  <!-- ============================== -->
+  <div class="section-card green" id="s2">
+    <div class="section-title">
+      <div class="section-icon icon-green">⭐</div>
+      <div>
+        <h2>أهمية تكامل الأنظمة الحكومية</h2>
+        <span class="section-num">القسم الثاني</span>
+      </div>
+    </div>
+
+    <p>
+      لا تقتصر أهمية تكامل الأنظمة الحكومية على الجانب التقني وحده، بل تمتد لتشمل أبعاداً
+      اقتصادية واجتماعية وسياسية عميقة. فهو يُعدّ المحرك الأساسي لتحقيق
+      <span class="term">الخدمة الحكومية الموحّدة</span> وتعزيز الثقة العامة بالمؤسسات الحكومية.
+    </p>
+
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <span class="bc-icon">⚡</span>
+        <div class="bc-title">تسريع تقديم الخدمات</div>
+        <div class="bc-text">تقليص وقت إنجاز المعاملات من أسابيع إلى دقائق بفضل التبادل الآلي للبيانات بين الجهات</div>
+      </div>
+      <div class="benefit-card">
+        <span class="bc-icon">💰</span>
+        <div class="bc-title">خفض التكاليف التشغيلية</div>
+        <div class="bc-text">إلغاء ازدواجية البيانات والأنظمة، وتقليص النفقات المرتبطة بإدخال البيانات يدوياً بنسبة تصل إلى 60%</div>
+      </div>
+      <div class="benefit-card">
+        <span class="bc-icon">🎯</span>
+        <div class="bc-title">دقة البيانات وموثوقيتها</div>
+        <div class="bc-text">مصدر بيانات موحّد يضمن عدم التعارض بين السجلات الحكومية ويحسّن جودة القرارات</div>
+      </div>
+      <div class="benefit-card">
+        <span class="bc-icon">🔍</span>
+        <div class="bc-title">تعزيز الشفافية والرقابة</div>
+        <div class="bc-text">إمكانية تتبع المعاملات في الوقت الفعلي وتقليص الفساد الإداري من خلال الأتمتة الكاملة</div>
+      </div>
+      <div class="benefit-card">
+        <span class="bc-icon">😊</span>
+        <div class="bc-title">تحسين تجربة المستفيد</div>
+        <div class="bc-text">توفير خدمات شاملة عبر نافذة واحدة دون الحاجة لزيارات متعددة أو تكرار تقديم المستندات</div>
+      </div>
+      <div class="benefit-card">
+        <span class="bc-icon">📈</span>
+        <div class="bc-title">دعم اتخاذ القرار</div>
+        <div class="bc-text">توفير رؤى تحليلية شاملة للقيادة العليا تعتمد على بيانات موحّدة من جميع القطاعات</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================== -->
+  <!-- SECTION 3: ARCHITECTURE        -->
+  <!-- ============================== -->
+  <div class="section-card" id="s3">
+    <div class="section-title">
+      <div class="section-icon icon-blue">🏗️</div>
+      <div>
+        <h2>البنية المعمارية لتكامل الأنظمة الحكومية</h2>
+        <span class="section-num">القسم الثالث</span>
+      </div>
+    </div>
+
+    <p>
+      تعتمد البنية المعمارية لأي نظام تكامل حكومي ناجح على نموذج
+      <span class="term">متعدد الطبقات</span>، حيث تؤدي كل طبقة دوراً محدداً ومتخصصاً،
+      وتتفاعل مع الطبقات الأخرى وفق معايير وبروتوكولات واضحة. يُجسّد هذا النموذج مبدأ
+      <span class="highlight">الفصل بين المسؤوليات</span>
+      الذي يُيسّر الصيانة ويُعزز قابلية التوسع.
+    </p>
+
+    <div class="arch-diagram">
+      <div class="diag-title">🏛️ النموذج المعماري متعدد الطبقات لتكامل الأنظمة الحكومية</div>
+
+      <div class="arch-layer l1">
+        <div class="layer-num">6</div>
+        <div class="layer-body">
+          <div class="layer-label">Layer 6 — TOP</div>
+          <div class="layer-name">طبقة المستفيد والواجهات الأمامية</div>
+          <div class="layer-desc">البوابات الإلكترونية · تطبيقات الجوال · نوافذ الخدمة الواحدة · واجهات الذكاء الاصطناعي</div>
+          <div class="layer-tags">
+            <span class="ltag">بوابة حكومية</span><span class="ltag">تطبيق موبايل</span>
+            <span class="ltag">Chatbot</span><span class="ltag">نافذة واحدة</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="arch-layer l2">
+        <div class="layer-num">5</div>
+        <div class="layer-body">
+          <div class="layer-label">Layer 5 — PRESENTATION</div>
+          <div class="layer-name">طبقة الخدمات الرقمية</div>
+          <div class="layer-desc">إدارة واجهات برمجة التطبيقات · البوابة الموحّدة للـ API · إدارة جلسات المستخدمين والهوية</div>
+          <div class="layer-tags">
+            <span class="ltag">API Gateway</span><span class="ltag">OAuth 2.0</span>
+            <span class="ltag">SSO</span><span class="ltag">Load Balancer</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="arch-layer l3">
+        <div class="layer-num">4</div>
+        <div class="layer-body">
+          <div class="layer-label">Layer 4 — INTEGRATION</div>
+          <div class="layer-name">طبقة التكامل والوساطة (ESB)</div>
+          <div class="layer-desc">ناقل الخدمات المؤسسية · توجيه الرسائل · تحويل البيانات · تنسيق العمليات</div>
+          <div class="layer-tags">
+            <span class="ltag">ESB</span><span class="ltag">Message Queue</span>
+            <span class="ltag">Data Transform</span><span class="ltag">Orchestration</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="arch-layer l4">
+        <div class="layer-num">3</div>
+        <div class="layer-body">
+          <div class="layer-label">Layer 3 — BUSINESS</div>
+          <div class="layer-name">طبقة منطق الأعمال الحكومية</div>
+          <div class="layer-desc">قواعد الأعمال · سير العمل الآلي · الإجراءات والتصاريح الرقمية · محركات القرار</div>
+          <div class="layer-tags">
+            <span class="ltag">BPM</span><span class="ltag">Rules Engine</span>
+            <span class="ltag">Workflow</span><span class="ltag">eForm</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="arch-layer l5">
+        <div class="layer-num">2</div>
+        <div class="layer-body">
+          <div class="layer-label">Layer 2 — DATA</div>
+          <div class="layer-name">طبقة إدارة البيانات والمعرفة</div>
+          <div class="layer-desc">المستودعات الوطنية · حوكمة البيانات · كتالوج البيانات المرجعية · التحليلات والذكاء الاصطناعي</div>
+          <div class="layer-tags">
+            <span class="ltag">Data Warehouse</span><span class="ltag">MDM</span>
+            <span class="ltag">Data Lake</span><span class="ltag">BI / AI Analytics</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="arch-layer l6">
+        <div class="layer-num">1</div>
+        <div class="layer-body">
+          <div class="layer-label">Layer 1 — INFRASTRUCTURE</div>
+          <div class="layer-name">طبقة البنية التحتية والأمن السيبراني</div>
+          <div class="layer-desc">الحوسبة السحابية الحكومية · مراكز البيانات · شبكات الاتصال الآمنة · PKI والتشفير</div>
+          <div class="layer-tags">
+            <span class="ltag">Gov Cloud</span><span class="ltag">Data Center</span>
+            <span class="ltag">PKI / TLS</span><span class="ltag">Firewall</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p>
+      تجدر الإشارة إلى أن هذه الطبقات لا تعمل بشكل مستقل، بل تترابط عبر
+      <span class="term">واجهات برمجية موحّدة</span> (APIs) وبروتوكولات تبادل بيانات قياسية،
+      مع وجود طبقة أفقية للأمن والحوكمة تمتد عبر جميع الطبقات لضمان الامتثال والحماية.
+    </p>
+  </div>
+
+  <!-- ============================== -->
+  <!-- SECTION 4: TYPES               -->
+  <!-- ============================== -->
+  <div class="section-card amber" id="s4">
+    <div class="section-title">
+      <div class="section-icon icon-amber">🔄</div>
+      <div>
+        <h2>أنواع التكامل الحكومي</h2>
+        <span class="section-num">القسم الرابع</span>
+      </div>
+    </div>
+
+    <p>
+      يتّخذ التكامل الحكومي أشكالاً متعددة تتدرّج من تكامل البيانات البسيط وصولاً إلى تكامل
+      العمليات المعقد. يُنظر إلى هذه الأنواع من زوايا مختلفة: من حيث
+      <span class="term">الاتجاه</span>، أو من حيث <span class="term">النطاق</span>،
+      أو من حيث <span class="term">التقنية المستخدمة</span>.
+    </p>
+
+    <div class="int-types">
+      <div class="int-type-box itb1">
+        <span class="it-icon">📊</span>
+        <div class="it-name">تكامل البيانات</div>
+        <span class="it-label">Data Integration</span>
+        <div class="it-desc">توحيد قواعد البيانات وضمان اتساق السجلات عبر الجهات الحكومية المختلفة</div>
+      </div>
+      <div class="int-type-box itb2">
+        <span class="it-icon">⚙️</span>
+        <div class="it-name">تكامل العمليات</div>
+        <span class="it-label">Process Integration</span>
+        <div class="it-desc">ربط سير العمل والإجراءات الإدارية تلقائياً بين الجهات دون تدخل بشري</div>
+      </div>
+      <div class="int-type-box itb3">
+        <span class="it-icon">🔌</span>
+        <div class="it-name">تكامل الخدمات</div>
+        <span class="it-label">Service Integration</span>
+        <div class="it-desc">ربط الخدمات الإلكترونية معاً لتقديم خدمة موحّدة للمستفيد عبر قناة واحدة</div>
+      </div>
+      <div class="int-type-box itb4">
+        <span class="it-icon">📱</span>
+        <div class="it-name">تكامل القنوات</div>
+        <span class="it-label">Channel Integration</span>
+        <div class="it-desc">توحيد تجربة المستخدم عبر الويب والموبايل والكاونتر الفيزيائي والمساعد الذكي</div>
+      </div>
+      <div class="int-type-box itb5">
+        <span class="it-icon">🔐</span>
+        <div class="it-name">تكامل الهوية</div>
+        <span class="it-label">Identity Integration</span>
+        <div class="it-desc">الهوية الرقمية الموحّدة ونظام الدخول الأحادي (SSO) عبر جميع الخدمات الحكومية</div>
+      </div>
+      <div class="int-type-box itb6">
+        <span class="it-icon">🌍</span>
+        <div class="it-name">تكامل القطاع الخاص</div>
+        <span class="it-label">Public-Private Integration</span>
+        <div class="it-desc">ربط الأنظمة الحكومية مع المنظومة البنكية والقطاعات التجارية والخدمية الخاصة</div>
+      </div>
+    </div>
+
+    <h3 style="margin: 28px 0 14px; color: var(--primary); font-size: 1.05rem;">📋 مقارنة نماذج التكامل المعماري</h3>
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>نموذج التكامل</th>
+          <th>التوصيف</th>
+          <th>المزايا</th>
+          <th>العيوب</th>
+          <th>الملاءمة</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>نقطة لنقطة (P2P)</td>
+          <td>ربط مباشر بين نظامين</td>
+          <td>بسيط وسريع التنفيذ</td>
+          <td>غير قابل للتوسع، تعقيد متزايد</td>
+          <td><span class="pill pill-blue">للمشاريع الصغيرة</span></td>
+        </tr>
+        <tr>
+          <td>ناقل الخدمات (ESB)</td>
+          <td>وسيط مركزي يربط كل الأنظمة</td>
+          <td>تحكم مركزي، تحويل البيانات</td>
+          <td>نقطة فشل مركزية واحدة</td>
+          <td><span class="pill pill-green">للمؤسسات الكبيرة</span></td>
+        </tr>
+        <tr>
+          <td>المعمارية الخدمية (SOA)</td>
+          <td>خدمات موزّعة قابلة لإعادة الاستخدام</td>
+          <td>مرونة عالية، قابلية التوسع</td>
+          <td>تعقيد الحوكمة والإدارة</td>
+          <td><span class="pill pill-green">للحكومات الرقمية</span></td>
+        </tr>
+        <tr>
+          <td>الخدمات المصغّرة (Microservices)</td>
+          <td>وحدات وظيفية مستقلة صغيرة</td>
+          <td>مرونة، نشر مستقل، resilience</td>
+          <td>تعقيد البنية التحتية</td>
+          <td><span class="pill pill-green">للتحول السحابي</span></td>
+        </tr>
+        <tr>
+          <td>بوابة API (API Gateway)</td>
+          <td>نقطة دخول موحّدة للواجهات البرمجية</td>
+          <td>أمان مركزي، إدارة موحّدة</td>
+          <td>تعقيد إدارة الإصدارات</td>
+          <td><span class="pill pill-blue">للخدمات الرقمية</span></td>
+        </tr>
+        <tr>
+          <td>المعمارية الحدثية (EDA)</td>
+          <td>تكامل مبني على الأحداث والرسائل</td>
+          <td>فك الاقتران، تدفق البيانات الفوري</td>
+          <td>صعوبة تتبع الأحداث</td>
+          <td><span class="pill pill-red">للأنظمة المعقدة</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ============================== -->
+  <!-- SECTION 5: FRAMEWORKS          -->
+  <!-- ============================== -->
+  <div class="section-card teal" id="s5">
+    <div class="section-title">
+      <div class="section-icon icon-teal">📐</div>
+      <div>
+        <h2>نماذج وأطر عمل التكامل الحكومي</h2>
+        <span class="section-num">القسم الخامس</span>
+      </div>
+    </div>
+
+    <p>
+      طوّرت الهيئات الدولية والحكومات الرائدة أطر عمل وامتثال شاملة لتوجيه مشاريع
+      التكامل الحكومي وضمان نجاحها. تستند هذه الأطر إلى خبرات متراكمة وتجارب ناجحة
+      ومبادئ موحّدة تضمن <span class="term">التوافق والاستدامة</span>.
+    </p>
+
+    <div class="flow-diagram">
+      <div class="flow-title">🌍 الإطار الأوروبي لقابلية التشغيل البيني (EIF) — المستويات الأربعة</div>
+      <div class="flow-row">
+        <div class="flow-node">
+          <span class="fn-icon">⚖️</span>
+          <div class="fn-label">القانوني</div>
+          <div class="fn-sub">Legal</div>
+        </div>
+        <div class="flow-arrow">↔</div>
+        <div class="flow-node">
+          <span class="fn-icon">🏢</span>
+          <div class="fn-label">التنظيمي</div>
+          <div class="fn-sub">Organisational</div>
+        </div>
+        <div class="flow-arrow">↔</div>
+        <div class="flow-node active">
+          <span class="fn-icon">📋</span>
+          <div class="fn-label">الدلالي</div>
+          <div class="fn-sub">Semantic</div>
+        </div>
+        <div class="flow-arrow">↔</div>
+        <div class="flow-node">
+          <span class="fn-icon">🔧</span>
+          <div class="fn-label">التقني</div>
+          <div class="fn-sub">Technical</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-box ib-green">
+      <div class="ib-icon">🌐</div>
+      <div>
+        <div class="ib-title">الإطار الأوروبي لقابلية التشغيل البيني (EIF)</div>
+        <div class="ib-text">
+          يُعتبر الإطار الأوروبي لقابلية التشغيل البيني (European Interoperability Framework) من أشمل أطر العمل الدولية.
+          يُعرّف أربعة مستويات للتكامل: <strong>القانوني</strong> (ضمان التوافق التشريعي)،
+          <strong>التنظيمي</strong> (توحيد العمليات والمسؤوليات)،
+          <strong>الدلالي</strong> (توحيد معنى البيانات وفهمها)، و
+          <strong>التقني</strong> (توحيد البروتوكولات والمعايير الرقمية).
+        </div>
+      </div>
+    </div>
+
+    <div class="info-box ib-amber">
+      <div class="ib-icon">🏛️</div>
+      <div>
+        <div class="ib-title">إطار معمارية المؤسسة الحكومية (TOGAF / Zachman)</div>
+        <div class="ib-text">
+          تُستخدم أطر معمارية المؤسسة مثل <strong>TOGAF</strong> و<strong>Zachman Framework</strong>
+          لتوجيه التصميم المعماري الشامل للأنظمة الحكومية المتكاملة، مع التركيز على محاذاة
+          استراتيجية تكنولوجيا المعلومات مع الأهداف الاستراتيجية للحكومة، وضمان التوافق بين
+          طبقات البيانات والتطبيقات والبنية التحتية.
+        </div>
+      </div>
+    </div>
+
+    <div class="info-box ib-blue">
+      <div class="ib-icon">🔗</div>
+      <div>
+        <div class="ib-title">منصات التكامل الوطنية — نماذج خليجية رائدة</div>
+        <div class="ib-text">
+          طوّرت دول الخليج العربي منصات وطنية متقدمة للتكامل. في سلطنة عُمان: منصة
+          <strong>تكمّل</strong> التي تربط الجهات الحكومية وتوحّد قواعد بياناتها.
+          في المملكة العربية السعودية: منصة <strong>نضي</strong> الوطنية لقياس تكامل الأنظمة
+          ضمن مؤشر التميز التشغيلي، إلى جانب <strong>بوابة بيانات.gov.sa</strong> كمنصة للبيانات المفتوحة.
+          وفي الإمارات: منصة <strong>UAE Pass</strong> للهوية الرقمية الموحّدة عبر جميع الخدمات.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================== -->
+  <!-- SECTION 6: TECHNOLOGIES        -->
+  <!-- ============================== -->
+  <div class="section-card" id="s6">
+    <div class="section-title">
+      <div class="section-icon icon-blue">⚙️</div>
+      <div>
+        <h2>التقنيات والمعايير الأساسية</h2>
+        <span class="section-num">القسم السادس</span>
+      </div>
+    </div>
+
+    <p>
+      يعتمد تكامل الأنظمة الحكومية على منظومة من التقنيات والمعايير الدولية التي تضمن
+      قابلية التشغيل البيني ومستوى الأمان المطلوب. إن اعتماد <span class="term">المعايير المفتوحة</span>
+      بدلاً من الحلول الاحتكارية يُعزز الاستدامة ويقلّل من الارتباط بمورّد واحد (Vendor Lock-in).
+    </p>
+
+    <div class="tech-stack">
+      <div class="ts-title">🛠️ المكدّس التقني لمنصة التكامل الحكومي</div>
+      <div class="ts-rows">
+        <div class="ts-row">
+          <div class="tsr-icon">🔌</div>
+          <div>
+            <div class="tsr-cat">CONNECTIVITY</div>
+            <div class="tsr-name">بروتوكولات الاتصال والربط</div>
+            <div class="tsr-items">
+              <span class="tsr-item">REST API</span><span class="tsr-item">SOAP</span>
+              <span class="tsr-item">GraphQL</span><span class="tsr-item">gRPC</span>
+              <span class="tsr-item">WebSocket</span>
+            </div>
+          </div>
+        </div>
+        <div class="ts-row">
+          <div class="tsr-icon">📨</div>
+          <div>
+            <div class="tsr-cat">MESSAGING</div>
+            <div class="tsr-name">أنظمة الرسائل وقوائم الانتظار</div>
+            <div class="tsr-items">
+              <span class="tsr-item">Apache Kafka</span><span class="tsr-item">RabbitMQ</span>
+              <span class="tsr-item">IBM MQ</span><span class="tsr-item">Azure Service Bus</span>
+            </div>
+          </div>
+        </div>
+        <div class="ts-row">
+          <div class="tsr-icon">🔐</div>
+          <div>
+            <div class="tsr-cat">SECURITY</div>
+            <div class="tsr-name">الأمن والهوية الرقمية</div>
+            <div class="tsr-items">
+              <span class="tsr-item">OAuth 2.0</span><span class="tsr-item">OpenID Connect</span>
+              <span class="tsr-item">SAML 2.0</span><span class="tsr-item">PKI / TLS 1.3</span>
+              <span class="tsr-item">Zero Trust</span>
+            </div>
+          </div>
+        </div>
+        <div class="ts-row">
+          <div class="tsr-icon">📋</div>
+          <div>
+            <div class="tsr-cat">DATA FORMATS</div>
+            <div class="tsr-name">تنسيقات تبادل البيانات</div>
+            <div class="tsr-items">
+              <span class="tsr-item">JSON / JSON-LD</span><span class="tsr-item">XML</span>
+              <span class="tsr-item">Avro</span><span class="tsr-item">Protobuf</span>
+              <span class="tsr-item">FHIR (صحة)</span>
+            </div>
+          </div>
+        </div>
+        <div class="ts-row">
+          <div class="tsr-icon">☁️</div>
+          <div>
+            <div class="tsr-cat">CLOUD & INFRA</div>
+            <div class="tsr-name">البنية السحابية والحاويات</div>
+            <div class="tsr-items">
+              <span class="tsr-item">Kubernetes</span><span class="tsr-item">Docker</span>
+              <span class="tsr-item">Gov Cloud</span><span class="tsr-item">Hybrid Cloud</span>
+              <span class="tsr-item">Edge Computing</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="margin: 28px 0 16px; color: var(--primary); font-size: 1.05rem;">📏 المعايير الدولية للتكامل الحكومي</h3>
+    <div class="standards-grid">
+      <div class="std-card">
+        <div class="sc-badge">ISO 25012</div>
+        <div class="sc-name">جودة البيانات</div>
+        <div class="sc-desc">معايير قياس جودة البيانات المتبادلة بين الأنظمة الحكومية</div>
+      </div>
+      <div class="std-card">
+        <div class="sc-badge">ISO 27001</div>
+        <div class="sc-name">أمن المعلومات</div>
+        <div class="sc-desc">إطار إدارة أمن المعلومات في الأنظمة الحكومية المتكاملة</div>
+      </div>
+      <div class="std-card">
+        <div class="sc-badge">NIST SP 800</div>
+        <div class="sc-name">الأمن السيبراني</div>
+        <div class="sc-desc">إرشادات أمن الأنظمة الحكومية والبيانات الوطنية الحساسة</div>
+      </div>
+      <div class="std-card">
+        <div class="sc-badge">OpenAPI 3.x</div>
+        <div class="sc-name">توثيق الواجهات</div>
+        <div class="sc-desc">معيار موحّد لوصف وتوثيق واجهات الـ API الحكومية</div>
+      </div>
+      <div class="std-card">
+        <div class="sc-badge">W3C DCAT</div>
+        <div class="sc-name">كتالوج البيانات</div>
+        <div class="sc-desc">معيار وصف مجموعات البيانات الحكومية المفتوحة والمشتركة</div>
+      </div>
+      <div class="std-card">
+        <div class="sc-badge">ebXML</div>
+        <div class="sc-name">التجارة الإلكترونية</div>
+        <div class="sc-desc">بنية رسائل قياسية للتبادل التجاري والحكومي الإلكتروني</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================== -->
+  <!-- SECTION 7: LIFECYCLE           -->
+  <!-- ============================== -->
+  <div class="section-card green" id="s7">
+    <div class="section-title">
+      <div class="section-icon icon-green">🔄</div>
+      <div>
+        <h2>دورة حياة مشروع التكامل الحكومي</h2>
+        <span class="section-num">القسم السابع</span>
+      </div>
+    </div>
+
+    <p>
+      ينتهج تنفيذ مشاريع التكامل الحكومي دورةً حياتية منهجية تضمن تحقيق الأهداف المرجوّة
+      والالتزام بالجدول الزمني والميزانية المحدّدة. تجمع هذه الدورة بين المنهجيات الرشيقة
+      (Agile) والمتدرّجة (Iterative) بما يتناسب مع الطبيعة المعقّدة للبيئة الحكومية.
+    </p>
+
+    <div class="cycle-wrap">
+      <div class="cycle-title">♻️ مراحل دورة حياة مشروع التكامل الحكومي</div>
+      <div class="cycle-grid">
+        <div class="cycle-step" style="border-bottom-color:#1a3c6e;">
+          <div class="cs-num" style="background:#1a3c6e;">1</div>
+          <span class="cs-icon">🔍</span>
+          <div class="cs-name">الرصد والتشخيص</div>
+          <div class="cs-desc">تحليل الواقع الحالي ورسم خريطة الأنظمة الموجودة وتحديد الفجوات</div>
+        </div>
+        <div class="cycle-step" style="border-bottom-color:#0d7a8e;">
+          <div class="cs-num" style="background:#0d7a8e;">2</div>
+          <span class="cs-icon">📋</span>
+          <div class="cs-name">تحليل المتطلبات</div>
+          <div class="cs-desc">جمع متطلبات الأعمال والتقنية من جميع الأطراف المعنية</div>
+        </div>
+        <div class="cycle-step" style="border-bottom-color:#27ae60;">
+          <div class="cs-num" style="background:#27ae60;">3</div>
+          <span class="cs-icon">🏗️</span>
+          <div class="cs-name">التصميم المعماري</div>
+          <div class="cs-desc">تصميم بنية الحل وتحديد المعايير والتقنيات ونماذج البيانات</div>
+        </div>
+        <div class="cycle-step" style="border-bottom-color:#f0a500;">
+          <div class="cs-num" style="background:#f0a500;">4</div>
+          <span class="cs-icon">⚙️</span>
+          <div class="cs-name">التطوير والبناء</div>
+          <div class="cs-desc">برمجة واجهات التكامل وخدمات تحويل البيانات وسير العمل</div>
+        </div>
+        <div class="cycle-step" style="border-bottom-color:#8e44ad;">
+          <div class="cs-num" style="background:#8e44ad;">5</div>
+          <span class="cs-icon">🧪</span>
+          <div class="cs-name">الاختبار والتحقق</div>
+          <div class="cs-desc">اختبار الوحدات والتكامل والأداء والأمان والقبول</div>
+        </div>
+        <div class="cycle-step" style="border-bottom-color:#c0392b;">
+          <div class="cs-num" style="background:#c0392b;">6</div>
+          <span class="cs-icon">🚀</span>
+          <div class="cs-name">النشر والتشغيل</div>
+          <div class="cs-desc">الإطلاق التدريجي مع ضمان الاستمرارية وعدم التأثير على الخدمات القائمة</div>
+        </div>
+        <div class="cycle-step" style="border-bottom-color:#16a085;">
+          <div class="cs-num" style="background:#16a085;">7</div>
+          <span class="cs-icon">📊</span>
+          <div class="cs-name">المراقبة والرصد</div>
+          <div class="cs-desc">رصد الأداء وجودة البيانات والأعطال في الوقت الفعلي</div>
+        </div>
+        <div class="cycle-step" style="border-bottom-color:#2c3e50;">
+          <div class="cs-num" style="background:#2c3e50;">8</div>
+          <span class="cs-icon">🔧</span>
+          <div class="cs-name">التحسين المستمر</div>
+          <div class="cs-desc">تحليل الأداء واستيعاب التغييرات والإصدارات الجديدة بشكل مستمر</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================== -->
+  <!-- SECTION 8: CHALLENGES          -->
+  <!-- ============================== -->
+  <div class="section-card red" id="s8">
+    <div class="section-title">
+      <div class="section-icon icon-red">⚠️</div>
+      <div>
+        <h2>التحديات والمخاطر في تكامل الأنظمة الحكومية</h2>
+        <span class="section-num">القسم الثامن</span>
+      </div>
+    </div>
+
+    <p>
+      على الرغم من الفوائد العظيمة لتكامل الأنظمة الحكومية، تواجه مشاريع التكامل
+      جملةً من التحديات التقنية والتنظيمية والبشرية التي تستدعي خططاً مدروسة للتعامل معها.
+      إنّ إغفال هذه التحديات قد يُفضي إلى إخفاقات مكلفة وتأخيرات في تسليم المشروع.
+    </p>
+
+    <div class="challenge-list">
+      <div class="challenge-item">
+        <div class="ci-icon">🏚️</div>
+        <div>
+          <div class="ci-title">الأنظمة القديمة (Legacy Systems)</div>
+          <div class="ci-text">صعوبة ربط الأنظمة القديمة التي لا تدعم معايير الـ API الحديثة، وتكلفة ترحيل البيانات التاريخية</div>
+        </div>
+      </div>
+      <div class="challenge-item">
+        <div class="ci-icon">🏛️</div>
+        <div>
+          <div class="ci-title">التعقيد التنظيمي والسياسي</div>
+          <div class="ci-text">تعدد الجهات المعنية وتباين أولوياتها وصعوبة الحصول على التوافق والتعاون المؤسسي بينها</div>
+        </div>
+      </div>
+      <div class="challenge-item">
+        <div class="ci-icon">🔐</div>
+        <div>
+          <div class="ci-title">الأمن والخصوصية</div>
+          <div class="ci-text">ضمان حماية البيانات الحساسة أثناء النقل والتبادل، ومنع الوصول غير المصرّح في بيئة مترابطة</div>
+        </div>
+      </div>
+      <div class="challenge-item">
+        <div class="ci-icon">📊</div>
+        <div>
+          <div class="ci-title">جودة البيانات وعدم اتساقها</div>
+          <div class="ci-text">تباين تعريفات البيانات وتنسيقاتها بين الجهات المختلفة، مما يستلزم عمليات تنظيف وتحويل مكلفة</div>
+        </div>
+      </div>
+      <div class="challenge-item">
+        <div class="ci-icon">💰</div>
+        <div>
+          <div class="ci-title">التكاليف والميزانيات</div>
+          <div class="ci-text">ضخامة التكاليف الأولية وصعوبة تبرير العائد على الاستثمار على المدى القصير للجهات المالية</div>
+        </div>
+      </div>
+      <div class="challenge-item">
+        <div class="ci-icon">👥</div>
+        <div>
+          <div class="ci-title">إدارة التغيير والمقاومة البشرية</div>
+          <div class="ci-text">مقاومة الموظفين للتغيير والحاجة لبرامج تأهيل وتدريب مكثّفة على الأنظمة الجديدة</div>
+        </div>
+      </div>
+      <div class="challenge-item">
+        <div class="ci-icon">⚖️</div>
+        <div>
+          <div class="ci-title">الإطار القانوني والتشريعي</div>
+          <div class="ci-text">غياب أو عدم كفاية التشريعات المنظِّمة لتبادل البيانات الحكومية وحماية الخصوصية الرقمية</div>
+        </div>
+      </div>
+      <div class="challenge-item">
+        <div class="ci-icon">📡</div>
+        <div>
+          <div class="ci-title">البنية التحتية غير المتجانسة</div>
+          <div class="ci-text">تفاوت مستوى البنية التحتية الرقمية بين الجهات الحكومية المختلفة خاصةً في المناطق النائية</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-box ib-amber">
+      <div class="ib-icon">🛡️</div>
+      <div>
+        <div class="ib-title">استراتيجيات التخفيف من المخاطر</div>
+        <div class="ib-text">
+          تشمل أبرز استراتيجيات التخفيف: <strong>التنفيذ التدريجي</strong> (Phased Implementation)
+          لتفادي الاضطراب في الخدمات القائمة، <strong>طبقة الوساطة</strong> (Middleware Adapters)
+          للتعامل مع الأنظمة القديمة، <strong>حوكمة البيانات</strong> لضمان الجودة والاتساق،
+          و<strong>إدارة التغيير</strong> من خلال إشراك مبكر لجميع الأطراف المعنية.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================== -->
+  <!-- SECTION 9: CASE STUDIES        -->
+  <!-- ============================== -->
+  <div class="section-card teal" id="s9">
+    <div class="section-title">
+      <div class="section-icon icon-teal">🌍</div>
+      <div>
+        <h2>أمثلة تطبيقية وتجارب دولية ناجحة</h2>
+        <span class="section-num">القسم التاسع</span>
+      </div>
+    </div>
+
+    <p>
+      تزخر التجربة الدولية بنماذج رائدة في تكامل الأنظمة الحكومية، قدّمت دروساً قيّمة
+      للحكومات الساعية إلى التحول الرقمي. تُبرز هذه التجارب أهمية التخطيط الاستراتيجي
+      والإرادة السياسية وجودة التنفيذ في تحقيق التكامل الفعّال.
+    </p>
+
+    <div class="case-grid">
+      <div class="case-card case1">
+        <div class="case-head">
+          <span class="ch-icon">🇪🇪</span>
+          <div class="ch-title">إستونيا — نموذج X-Road</div>
+          <div class="ch-sub">أكثر دول العالم تكاملاً رقمياً</div>
+        </div>
+        <div class="case-body">
+          <ul>
+            <li><strong>X-Road:</strong> منصة تكامل مفتوحة المصدر تربط 900+ نظام حكومي وخاص</li>
+            <li>99% من الخدمات الحكومية متاحة إلكترونياً بالكامل على مدار الساعة</li>
+            <li>الهوية الرقمية الوطنية (e-ID) تُستخدم في 4000+ خدمة مختلفة</li>
+            <li>وفّر النظام ما يعادل 2% من الناتج المحلي الإجمالي سنوياً في التكاليف</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="case-card case2">
+        <div class="case-head">
+          <span class="ch-icon">🇸🇬</span>
+          <div class="ch-title">سنغافورة — الحكومة الذكية</div>
+          <div class="ch-sub">Smart Nation Initiative</div>
+        </div>
+        <div class="case-body">
+          <ul>
+            <li><strong>NDI Platform:</strong> منصة الهوية الرقمية الوطنية الموحّدة لكل المواطنين</li>
+            <li><strong>SingPass:</strong> دخول أحادي لأكثر من 1700 خدمة حكومية وخاصة</li>
+            <li><strong>Moments of Life:</strong> تطبيق يجمع خدمات دورة الحياة في نقطة واحدة</li>
+            <li>تبادل البيانات بين 22 وزارة وجهة حكومية رئيسية بشكل آلي</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="case-card case3">
+        <div class="case-head">
+          <span class="ch-icon">🇦🇪</span>
+          <div class="ch-title">الإمارات — الحكومة الرقمية</div>
+          <div class="ch-sub">UAE Digital Government Strategy</div>
+        </div>
+        <div class="case-body">
+          <ul>
+            <li><strong>UAE Pass:</strong> هوية رقمية موحّدة تخدم 9+ مليون مستخدم</li>
+            <li>ربط 130+ جهة حكومية اتحادية ومحلية عبر منصة موحّدة</li>
+            <li>تقليص وقت إنجاز المعاملات بنسبة تصل إلى 85%</li>
+            <li>احتلت المرتبة الأولى عربياً في مؤشر التطوير الحكومي الإلكتروني للأمم المتحدة</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="case-card case4">
+        <div class="case-head">
+          <span class="ch-icon">🇸🇦</span>
+          <div class="ch-title">المملكة العربية السعودية — رؤية 2030</div>
+          <div class="ch-sub">التحول الرقمي الحكومي</div>
+        </div>
+        <div class="case-body">
+          <ul>
+            <li><strong>Absher:</strong> منصة الهوية الرقمية وخدمات الجوازات والأحوال</li>
+            <li><strong>منصة نضي:</strong> قياس وتكامل البيانات الوطنية عبر الجهات الحكومية</li>
+            <li><strong>منصة تكامل:</strong> لإدارة المشاريع والمشتريات الحكومية آلياً</li>
+            <li>استهداف رفع نسبة الخدمات الحكومية الرقمية إلى 100% ضمن رؤية 2030</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================== -->
+  <!-- SECTION 10: FUTURE             -->
+  <!-- ============================== -->
+  <div class="section-card" id="s10">
+    <div class="section-title">
+      <div class="section-icon icon-blue">🚀</div>
+      <div>
+        <h2>التوجهات المستقبلية في تكامل الأنظمة الحكومية</h2>
+        <span class="section-num">القسم العاشر</span>
+      </div>
+    </div>
+
+    <p>
+      يشهد مجال تكامل الأنظمة الحكومية تطوراً متسارعاً مدفوعاً بتقنيات ثورية ناشئة
+      وتحوّلات جذرية في نماذج تقديم الخدمات. إنّ فهم هذه التوجهات والتهيؤ لها يُمثّل
+      <span class="term">ميزة تنافسية استراتيجية</span> للحكومات الطامحة إلى القيادة الرقمية.
+    </p>
+
+    <div class="roadmap">
+      <div class="roadmap-item">
+        <div class="ri-phase">الاتجاه الأول</div>
+        <div class="ri-title">🤖 الذكاء الاصطناعي في قلب التكامل</div>
+        <div class="ri-text">
+          توظيف الذكاء الاصطناعي ونماذج اللغة الكبيرة (LLMs) لأتمتة تحويل البيانات
+          واكتشاف الأنماط وتوقّع الأعطال، فضلاً عن المساعدين الرقميين الحكوميين القادرين
+          على تقديم خدمات شاملة بشكل محادثاتي عبر ربط عشرات الأنظمة الخلفية.
+        </div>
+      </div>
+      <div class="roadmap-item">
+        <div class="ri-phase">الاتجاه الثاني</div>
+        <div class="ri-title">⛓️ البلوكتشين لموثوقية السجلات الحكومية</div>
+        <div class="ri-text">
+          استخدام تقنية السلاسل الكتلية لتبادل البيانات الحكومية الحساسة بطريقة غير قابلة
+          للتزوير وموزّعة، مع تطبيقات في السجلات العقارية، الأحوال المدنية، سلاسل الإمداد،
+          والعقود الذكية الحكومية، مما يُعزز الثقة بين الجهات المتكاملة.
+        </div>
+      </div>
+      <div class="roadmap-item">
+        <div class="ri-phase">الاتجاه الثالث</div>
+        <div class="ri-title">🌐 تكامل إنترنت الأشياء والمدن الذكية</div>
+        <div class="ri-text">
+          ربط ملايين الأجهزة والمستشعرات الحكومية (المرور، البيئة، البنية التحتية، الطاقة)
+          بالأنظمة الحكومية المركزية لتحقيق إدارة حضرية في الوقت الفعلي، والاستجابة الفورية
+          للأحداث الطارئة، وتحسين كفاءة استهلاك الموارد.
+        </div>
+      </div>
+      <div class="roadmap-item">
+        <div class="ri-phase">الاتجاه الرابع</div>
+        <div class="ri-title">🔒 نموذج الثقة الصفرية والأمن الكمومي</div>
+        <div class="ri-text">
+          اعتماد نموذج <strong>Zero Trust Architecture</strong> الذي يُلغي الثقة الضمنية
+          ويُحوّل التحقق إلى عملية مستمرة في كل طلب. ومع بروز الحوسبة الكمومية، ستتجه
+          الحكومات نحو تشفير ما بعد الكم (Post-Quantum Cryptography) لحماية البنية
+          التحتية للتكامل على المدى البعيد.
+        </div>
+      </div>
+    </div>
+
+    <div class="info-box ib-blue">
+      <div class="ib-icon">🔮</div>
+      <div>
+        <div class="ib-title">رؤية مستقبلية: الحكومة كمنصة (Government as a Platform)</div>
+        <div class="ib-text">
+          يتجه تفكير الحكومات المتقدّمة نحو مفهوم <strong>"الحكومة كمنصة"</strong> (GaaP)،
+          حيث تُصبح البنية التحتية الحكومية المتكاملة منصةً مفتوحة يمكن للقطاع الخاص والمجتمع المدني
+          البناء فوقها وتطوير خدمات مبتكرة جديدة، شأنها شأن منصات التطبيقات التجارية اليوم.
+          هذا النموذج يُحوّل الحكومة من مُقدِّم خدمات تقليدي إلى مُمكِّن لمنظومة رقمية شاملة.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================== -->
+  <!-- SECTION 11: SUMMARY            -->
+  <!-- ============================== -->
+  <div class="section-card green" id="s11">
+    <div class="section-title">
+      <div class="section-icon icon-green">🎓</div>
+      <div>
+        <h2>الخلاصة والمبادئ الجوهرية</h2>
+        <span class="section-num">القسم الحادي عشر</span>
+      </div>
+    </div>
+
+    <p>
+      يتضح من هذه المحاضرة الشاملة أن تكامل الأنظمة الحكومية ليس رفاهيةً تقنية، بل هو
+      <span class="term">ضرورة حتمية</span> لأي حكومة تسعى إلى تلبية تطلّعات مواطنيها
+      في عصر التحول الرقمي. وفيما يلي أبرز المبادئ والدروس المستخلصة:
+    </p>
+
+    <div class="flow-diagram" style="background:linear-gradient(135deg,#f0f7ff,#f4faf4);">
+      <div class="flow-title" style="color:var(--primary);">🏆 ركائز نجاح مشروع التكامل الحكومي</div>
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap:14px; padding:10px 0;">
+        <div style="background:#fff;border-radius:10px;padding:14px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.07);border-top:3px solid #1a3c6e;">
+          <div style="font-size:1.8rem;margin-bottom:6px;">🎯</div>
+          <div style="font-weight:700;font-size:.88rem;color:#1a3c6e;">رؤية استراتيجية واضحة</div>
+        </div>
+        <div style="background:#fff;border-radius:10px;padding:14px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.07);border-top:3px solid #0d7a8e;">
+          <div style="font-size:1.8rem;margin-bottom:6px;">🤝</div>
+          <div style="font-weight:700;font-size:.88rem;color:#0d7a8e;">التوافق المؤسسي الكامل</div>
+        </div>
+        <div style="background:#fff;border-radius:10px;padding:14px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.07);border-top:3px solid #27ae60;">
+          <div style="font-size:1.8rem;margin-bottom:6px;">📏</div>
+          <div style="font-weight:700;font-size:.88rem;color:#27ae60;">المعايير المفتوحة</div>
+        </div>
+        <div style="background:#fff;border-radius:10px;padding:14px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.07);border-top:3px solid #f0a500;">
+          <div style="font-size:1.8rem;margin-bottom:6px;">🔐</div>
+          <div style="font-weight:700;font-size:.88rem;color:#b7770d;">الأمان والخصوصية</div>
+        </div>
+        <div style="background:#fff;border-radius:10px;padding:14px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.07);border-top:3px solid #8e44ad;">
+          <div style="font-size:1.8rem;margin-bottom:6px;">📊</div>
+          <div style="font-weight:700;font-size:.88rem;color:#8e44ad;">حوكمة البيانات</div>
+        </div>
+        <div style="background:#fff;border-radius:10px;padding:14px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.07);border-top:3px solid #c0392b;">
+          <div style="font-size:1.8rem;margin-bottom:6px;">🔄</div>
+          <div style="font-weight:700;font-size:.88rem;color:#c0392b;">التحسين المستمر</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-box ib-green">
+      <div class="ib-icon">✅</div>
+      <div>
+        <div class="ib-title">الرسالة الختامية</div>
+        <div class="ib-text">
+          تكامل الأنظمة الحكومية هو مسيرة وليس وجهة. فالحكومة المتكاملة حقاً هي التي تنظر
+          إلى التكامل باعتباره رحلة مستمرة من التحسين والتطوير، وليس مشروعاً يُنجز مرة واحدة.
+          والمفتاح الحقيقي للنجاح يكمن في التوازن بين الطموح التقني والواقعية التنظيمية،
+          مع وضع المستفيد النهائي — المواطن — في مركز كل قرار وكل تصميم.
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end .container -->
+
+<!-- ====== FOOTER ====== -->
+<footer class="footer">
+  <p>🏛️ <strong>تكامل الأنظمة الحكومية</strong> — Integration of Government Systems</p>
+  <p style="margin-top:6px; font-size:.88rem; opacity:.85;">
+    إعداد: <strong style="color:var(--accent);">أ.م.د. أمير هادي &nbsp;|&nbsp; أ.م.د. أحمد محسن هيلان</strong>
+  </p>
+  <p style="margin-top:4px; font-size:.82rem; opacity:.7;">
+    المعهد العالي للقيادة · محاضرة أكاديمية متكاملة · 2026
+  </p>
+</footer>
+
+</body>
+</html>
