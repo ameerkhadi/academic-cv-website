@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الذكاء الاصطناعي | المعهد العالي لإعداد وتأهيل القادة</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Almarai:wght@300;400;700;800&family=IBM+Plex+Mono:wght@400;500&family=Tajawal:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: #F4F0E6;
+    --paper-2: #EBE4D2;
+    --card: #FBF9F2;
+    --rule: #C9BFA8;
+    --rule-strong: #A79A78;
+    --ink: #201D18;
+    --navy: #2C3E63;
+    --gold: #A9852E;
+    --burgundy: #7A2E2E;
+    --muted: #6B6255;
+    --mono: 'IBM Plex Mono', monospace;
+    --display: 'Amiri', serif;
+    --body: 'Almarai', sans-serif;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    background-image:
+      repeating-linear-gradient(180deg, transparent, transparent 42px, rgba(41,35,25,0.025) 43px);
+    color:var(--ink);
+    font-family:var(--body);
+    line-height:1.9;
+    overflow-x:hidden;
+  }
+  .track{
+    position:fixed; top:0; right:calc(50% - 1px); width:1px; height:100%;
+    background:var(--rule);
+    z-index:0; opacity:.4;
+  }
+  header.hero{
+    position:relative; padding:80px 24px 56px; text-align:center; overflow:hidden;
+    border-bottom:1px solid var(--rule);
+  }
+  .eyebrow{
+    font-family:var(--mono); letter-spacing:.22em; color:var(--navy);
+    font-size:12px; text-transform:uppercase; margin-bottom:22px; display:inline-block;
+    padding-bottom:8px; border-bottom:1px solid var(--rule-strong);
+  }
+  h1.title{
+    font-family:var(--display); font-weight:700; font-size:clamp(38px,6vw,64px);
+    line-height:1.2; margin-bottom:18px; color:var(--ink);
+  }
+  .title-rule{
+    width:120px; height:3px; margin:0 auto 26px;
+    background:repeating-linear-gradient(90deg, var(--navy) 0 6px, transparent 6px 10px);
+  }
+  .subtitle{ color:var(--muted); font-size:18px; max-width:640px; margin:0 auto 30px; font-style:italic; font-family:var(--display); }
+  .meta-row{
+    display:flex; gap:0; justify-content:center; flex-wrap:wrap; font-size:14px;
+    color:var(--muted); font-family:var(--mono);
+  }
+  .meta-chip{ padding:0 16px; }
+  .meta-chip + .meta-chip{ border-right:1px solid var(--rule-strong); }
+  .meta-chip b{ color:var(--ink); font-family:var(--body); font-weight:700;}
+
+  .neuralline{ display:block; margin:44px auto 0; max-width:900px; width:100%; }
+
+  main{ max-width:980px; margin:0 auto; padding:0 24px 120px; position:relative; z-index:1; }
+
+  section.point{
+    position:relative; padding:60px 0 10px;
+    border-bottom:1px solid var(--rule);
+  }
+  section.point:last-of-type{ border-bottom:none; }
+
+  .node{
+    position:absolute; right:-9px; top:74px; width:16px; height:16px;
+    background:var(--paper); border:2px solid var(--navy); z-index:2;
+    transform:rotate(45deg);
+  }
+  .point-head{ display:flex; align-items:baseline; gap:16px; margin-bottom:10px; padding-right:6px;}
+  .num{ font-family:var(--display); font-style:italic; color:var(--navy); font-size:19px; letter-spacing:.02em;}
+  h2.point-title{ font-family:var(--display); font-weight:700; font-size:clamp(23px,3.2vw,30px); }
+  .point-body{ padding-right:6px; }
+  p{ color:#2E2A22; font-size:17px; margin-bottom:14px; max-width:760px; }
+  .lead{ color:var(--ink); font-size:18px; }
+  strong{ color:var(--navy); font-weight:700; }
+  .examples{ color:var(--muted); font-size:15px; }
+  ul.clean{ list-style:none; margin:14px 0; padding:0; }
+  ul.clean li{ padding-right:20px; position:relative; color:#2E2A22; margin-bottom:8px; font-size:16px;}
+  ul.clean li::before{ content:"—"; position:absolute; right:0; color:var(--navy); font-size:14px; top:0;}
+
+  .diagram-wrap{
+    margin:28px 0 10px; background:var(--card); border:1px solid var(--rule);
+    padding:22px; overflow-x:auto;
+  }
+  .diagram-caption{ text-align:center; color:var(--muted); font-size:13px; font-family:var(--display); font-style:italic; margin-top:12px; }
+
+  table.data-table{ width:100%; border-collapse:collapse; margin:20px 0; font-size:15px; }
+  table.data-table th{
+    background:transparent; color:var(--navy); font-family:var(--mono);
+    padding:10px 10px 12px; text-align:center; border-bottom:2px solid var(--ink); font-weight:600;
+  }
+  table.data-table td{ padding:11px 10px; text-align:center; border-bottom:1px solid var(--rule); color:#2E2A22;}
+  table.data-table tr:nth-child(even) td{ background:rgba(41,35,25,.025); }
+  .tag-pos{ color:var(--burgundy); font-weight:700;}
+  .tag-neg{ color:var(--navy); font-weight:700;}
+
+  .compare-grid{ display:grid; grid-template-columns:1fr 1fr; gap:1px; margin:22px 0; background:var(--rule); border:1px solid var(--rule);}
+  @media(max-width:640px){ .compare-grid{ grid-template-columns:1fr; } }
+  .card{ background:var(--card); padding:22px;}
+  .card h3{ font-family:var(--display); font-size:19px; margin-bottom:10px; padding-bottom:8px; border-bottom:1px solid var(--rule);}
+  .card.a h3{ color:var(--navy);}
+  .card.b h3{ color:var(--gold);}
+
+  .ext-table{ width:100%; border-collapse:collapse; margin:20px 0; font-size:15px;}
+  .ext-table td, .ext-table th{ padding:14px; border-bottom:1px solid var(--rule); text-align:right;}
+  .ext-table th{ background:transparent; color:var(--navy); font-family:var(--mono); border-bottom:2px solid var(--ink);}
+  .ext-table td:first-child{ font-weight:700; color:var(--ink); white-space:nowrap; font-family:var(--display);}
+
+  .note-box{
+    border-right:2px solid var(--gold); background:transparent;
+    padding:6px 20px; margin:22px 0; font-size:15px; color:#4A3B14;
+  }
+  .note-box b{ color:var(--gold); font-family:var(--display); }
+
+  .warn-box{
+    border-right:2px solid var(--burgundy); background:rgba(122,46,46,.045);
+    padding:16px 20px; margin:22px 0; font-size:15px; color:#4A2020;
+  }
+  .warn-box b{ color:var(--burgundy); }
+
+  footer{
+    text-align:center; padding:56px 24px 80px; color:var(--muted); font-size:14px;
+    position:relative; z-index:1; border-top:1px solid var(--rule);
+  }
+  footer .name{ color:var(--ink); font-family:var(--display); font-weight:700; font-size:19px; margin-bottom:6px;}
+  footer .inst{ margin-bottom:18px; }
+  footer .sig{ font-family:var(--mono); font-size:11px; color:var(--muted); letter-spacing:.08em; }
+
+  @media (prefers-reduced-motion: no-preference){
+    .fade-in{ animation: fadeUp .6s ease both; }
+    @keyframes fadeUp{ from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);} }
+  }
+</style>
+</head>
+<body>
+
+<div class="track"></div>
+
+<header class="hero">
+  <span class="eyebrow">محاضرة تعليمية</span>
+  <h1 class="title">الذكاء الاصطناعي</h1>
+  <div class="title-rule"></div>
+  <div class="meta-row">
+    <span class="meta-chip"><b>المحاضر:</b> د. أمير كاظم هادي</span>
+    <span class="meta-chip"><b>الجهة:</b> المعهد العالي لإعداد وتأهيل القادة</span>
+  </div>
+
+  <svg class="neuralline" viewBox="0 0 900 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <line x1="60" y1="20" x2="840" y2="20" stroke="#C9BFA8" stroke-width="1"/>
+    <rect x="440" y="14" width="12" height="12" fill="#F4F0E6" stroke="#2C3E63" stroke-width="1.5" transform="rotate(45 446 20)"/>
+    <rect x="200" y="16" width="8" height="8" fill="#F4F0E6" stroke="#A9852E" stroke-width="1.5"/>
+    <rect x="692" y="16" width="8" height="8" fill="#F4F0E6" stroke="#A9852E" stroke-width="1.5"/>
+  </svg>
+</header>
+
+<main>
+
+  <!-- 1 -->
+  <section class="point">
+    <div class="node"></div>
+    <div class="point-head"><span class="num">01</span><h2 class="point-title">تعريف الذكاء الاصطناعي</h2></div>
+    <div class="point-body">
+      <p class="lead">الذكاء الاصطناعي (AI) هو فرع من علوم الحاسوب يُعنى ببناء أنظمة قادرة على تنفيذ مهام تحتاج عادة إلى ذكاء بشري: <strong>التعلم، الفهم، الاستنتاج، واتخاذ القرار</strong>.</p>
+      <p>بعبارة أبسط: هو محاولة محاكاة قدرات العقل البشري داخل آلة.</p>
+      <p class="examples">أمثلة يومية: Siri، السيارات ذاتية القيادة، ChatGPT، أنظمة التعرف على الوجوه.</p>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="point">
+    <div class="node"></div>
+    <div class="point-head"><span class="num">02</span><h2 class="point-title">نموذج المدخلات والمخرجات</h2></div>
+    <div class="point-body">
+      <p class="lead">أي نموذج ذكاء اصطناعي، مهما كان معقداً، يُختصر بثلاث خطوات: <strong>مدخل → نموذج → مخرج</strong>.</p>
+      <p><strong>نموذج الذكاء الاصطناعي (AI Model)</strong> هو برنامج رياضي يتعلّم الأنماط والعلاقات من كمية كبيرة من البيانات، ثم يستخدم ما تعلّمه لاتخاذ قرار أو تصنيف أو توليد مخرج جديد عند إعطائه مدخلاً لم يره من قبل.</p>
+      <div class="diagram-wrap">
+        <svg viewBox="0 0 700 140" xmlns="http://www.w3.org/2000/svg" width="100%">
+          <rect x="20" y="45" width="130" height="50" rx="10" fill="#FBF8F0" stroke="#C9BFA8"/>
+          <text x="85" y="75" text-anchor="middle" fill="#2A2620" font-family="Tajawal" font-size="14">المدخل</text>
+          <path d="M155 70 H 260" stroke="#2C3E63" stroke-width="2" marker-end="url(#arrow)"/>
+          <rect x="265" y="30" width="170" height="80" rx="12" fill="rgba(44,62,99,0.08)" stroke="#2C3E63" stroke-width="2"/>
+          <text x="350" y="65" text-anchor="middle" fill="#2C3E63" font-family="Tajawal" font-weight="700" font-size="15">نموذج الذكاء</text>
+          <text x="350" y="88" text-anchor="middle" fill="#6B6255" font-family="Tajawal" font-size="11">Model</text>
+          <path d="M440 70 H 545" stroke="#A9852E" stroke-width="2" marker-end="url(#arrow2)"/>
+          <rect x="550" y="45" width="130" height="50" rx="10" fill="#FBF8F0" stroke="#C9BFA8"/>
+          <text x="615" y="75" text-anchor="middle" fill="#2A2620" font-family="Tajawal" font-size="14">المخرج</text>
+          <defs>
+            <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="none" stroke="#2C3E63"/></marker>
+            <marker id="arrow2" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="none" stroke="#A9852E"/></marker>
+          </defs>
+        </svg>
+        <div class="diagram-caption">مثال: خصائص مريض → نموذج تشخيص → مصاب / غير مصاب</div>
+      </div>
+      <ul class="clean">
+        <li>تشخيص السكري: خصائص المريض ← مصاب / غير مصاب</li>
+        <li>تصنيف صورة: صورة ← قطة / كلب</li>
+        <li>توقع الطقس: بيانات جوية ← توقع الحالة الجوية</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section class="point">
+    <div class="node"></div>
+    <div class="point-head"><span class="num">03</span><h2 class="point-title">من الأنظمة القائمة على القواعد إلى التعلم الآلي</h2></div>
+    <div class="point-body">
+      <p class="lead">قبل الذكاء الاصطناعي الحديث، كانت الأنظمة تُبنى بقواعد يدوية من نوع <strong>If–Else</strong>.</p>
+      <div class="compare-grid">
+        <div class="card a">
+          <h3>Rule-Based (قديماً)</h3>
+          <ul class="clean">
+            <li>تحتاج كتابة يدوية لكل حالة ممكنة</li>
+            <li>لا تتعلم من التجربة</li>
+            <li>تفشل مع المسائل المعقدة</li>
+          </ul>
+        </div>
+        <div class="card b">
+          <h3>Machine Learning (اليوم)</h3>
+          <ul class="clean">
+            <li>النظام يتعلم القواعد بنفسه من البيانات</li>
+            <li>يتحسن كلما زادت البيانات</li>
+            <li>يتعامل مع التعقيد والاستثناءات</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section class="point">
+    <div class="node"></div>
+    <div class="point-head"><span class="num">04</span><h2 class="point-title">تصنيف الذكاء الاصطناعي: تنبؤي وتوليدي</h2></div>
+    <div class="point-body">
+      <div class="compare-grid">
+        <div class="card a">
+          <h3>تنبؤي (Predictive)</h3>
+          <p style="font-size:15px; margin-bottom:8px;">يصنّف أو يتنبأ بناءً على بيانات موجودة</p>
+          <span class="examples">تشخيص، تصنيف صور، توقع الطقس</span>
+        </div>
+        <div class="card b">
+          <h3>توليدي (Generative)</h3>
+          <p style="font-size:15px; margin-bottom:8px;">ينشئ محتوى جديداً لم يكن موجوداً</p>
+          <ul class="clean" style="margin-top:6px;">
+            <li>ChatGPT</li>
+            <li>Claude</li>
+            <li>Gemini</li>
+            <li>DeepSeek</li>
+            <li>Manus</li>
+            <li>Genspark</li>
+            <li>Mistral</li>
+            <li>Midjourney</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section class="point">
+    <div class="node"></div>
+    <div class="point-head"><span class="num">05</span><h2 class="point-title">خطوات بناء نموذج ذكاء اصطناعي</h2></div>
+    <div class="point-body">
+      <p class="lead">عملية بناء أي نموذج تمر بسبع خطوات متسلسلة، وهي <strong>عملية تكرارية</strong> وليست خطية بالكامل.</p>
+      <div class="diagram-wrap">
+        <svg viewBox="0 0 760 320" xmlns="http://www.w3.org/2000/svg" width="100%">
+          <!-- steps as nodes along a path -->
+          <g font-family="Tajawal" font-size="12.5" fill="#2A2620">
+            <!-- step boxes -->
+            <g id="steps">
+              <!-- 1 -->
+              <rect x="20" y="20" width="150" height="46" rx="8" fill="#FBF8F0" stroke="#2C3E63"/>
+              <text x="95" y="48" text-anchor="middle">أ) تحديد المشكلة</text>
+              <!-- 2 -->
+              <rect x="200" y="20" width="150" height="46" rx="8" fill="#FBF8F0" stroke="#2C3E63"/>
+              <text x="275" y="48" text-anchor="middle">ب) جمع البيانات</text>
+              <!-- 3 -->
+              <rect x="380" y="20" width="150" height="46" rx="8" fill="#FBF8F0" stroke="#2C3E63"/>
+              <text x="455" y="48" text-anchor="middle">ج) تنظيف وترميز</text>
+              <!-- 4 -->
+              <rect x="560" y="20" width="180" height="46" rx="8" fill="#FBF8F0" stroke="#2C3E63"/>
+              <text x="650" y="48" text-anchor="middle">د) اختيار الخوارزمية</text>
+
+              <!-- 5 -->
+              <rect x="560" y="130" width="180" height="46" rx="8" fill="#FBF8F0" stroke="#A9852E"/>
+              <text x="650" y="158" text-anchor="middle">هـ) تدريب (70%)</text>
+              <!-- 6 -->
+              <rect x="380" y="130" width="150" height="46" rx="8" fill="#FBF8F0" stroke="#A9852E"/>
+              <text x="455" y="158" text-anchor="middle">و) اختبار (30%)</text>
+              <!-- 7 -->
+              <rect x="150" y="130" width="200" height="46" rx="8" fill="rgba(122,46,46,0.08)" stroke="#7A2E2E"/>
+              <text x="250" y="152" text-anchor="middle" fill="#5C2323">ز) تقييم الدقة</text>
+              <text x="250" y="168" text-anchor="middle" fill="#6B6255" font-size="10">عالية → اعتماد | ضعيفة → إعادة</text>
+            </g>
+            <!-- arrows top row -->
+            <path d="M170 43 H196" stroke="#2C3E63" stroke-width="1.5" marker-end="url(#a3)"/>
+            <path d="M350 43 H376" stroke="#2C3E63" stroke-width="1.5" marker-end="url(#a3)"/>
+            <path d="M530 43 H556" stroke="#2C3E63" stroke-width="1.5" marker-end="url(#a3)"/>
+            <!-- down to training -->
+            <path d="M650 66 V126" stroke="#A9852E" stroke-width="1.5" marker-end="url(#a4)"/>
+            <!-- training to testing -->
+            <path d="M556 153 H534" stroke="#A9852E" stroke-width="1.5" marker-end="url(#a4)"/>
+            <!-- testing to eval -->
+            <path d="M376 153 H354" stroke="#A9852E" stroke-width="1.5" marker-end="url(#a4)"/>
+            <!-- feedback loop back to data collection -->
+            <path d="M195 176 C 120 220, 120 250, 220 250 C 320 250, 320 100, 275 66" fill="none" stroke="#7A2E2E" stroke-width="1.5" stroke-dasharray="4 4" marker-end="url(#a5)"/>
+            <text x="150" y="270" fill="#6B6255" font-size="11">إعادة تكرار عند ضعف الدقة</text>
+          </g>
+          <defs>
+            <marker id="a3" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="none" stroke="#2C3E63"/></marker>
+            <marker id="a4" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="none" stroke="#A9852E"/></marker>
+            <marker id="a5" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="none" stroke="#7A2E2E"/></marker>
+          </defs>
+        </svg>
+        <div class="diagram-caption">دورة تكرارية: من تحديد المشكلة إلى التقييم، وإعادة الكرّة عند الحاجة</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section class="point">
+    <div class="node"></div>
+    <div class="point-head"><span class="num">06</span><h2 class="point-title">مثال: جدول بيانات تشخيص السكري</h2></div>
+    <div class="point-body">
+      <p class="lead">الأعمدة تمثل الخصائص (Features)، والصفوف تمثل السجلات (المرضى)، مع عمود النتيجة (Label).</p>
+      <table class="data-table">
+        <tr><th>العمر</th><th>الوزن (كغم)</th><th>نسبة السكر</th><th>النتيجة</th></tr>
+        <tr><td>45</td><td>82</td><td>180</td><td class="tag-pos">مصاب</td></tr>
+        <tr><td>29</td><td>65</td><td>95</td><td class="tag-neg">غير مصاب</td></tr>
+        <tr><td>60</td><td>90</td><td>210</td><td class="tag-pos">مصاب</td></tr>
+        <tr><td>34</td><td>70</td><td>102</td><td class="tag-neg">غير مصاب</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section class="point">
+    <div class="node"></div>
+    <div class="point-head"><span class="num">07</span><h2 class="point-title">من الصورة إلى بيانات رقمية</h2></div>
+    <div class="point-body">
+      <p class="lead">النموذج لا "يرى" الصورة كما نراها؛ فالصورة تتحول إلى مصفوفة أرقام تمثل قيم البكسلات (0–255) قبل إدخالها للنموذج.</p>
+      <div class="diagram-wrap">
+        <svg viewBox="0 0 700 160" xmlns="http://www.w3.org/2000/svg" width="100%">
+          <!-- cat icon placeholder -->
+          <rect x="30" y="35" width="90" height="90" rx="10" fill="#FBF8F0" stroke="#C9BFA8"/>
+          <text x="75" y="85" text-anchor="middle" font-size="34">🐱</text>
+          <path d="M130 80 H210" stroke="#2C3E63" stroke-width="2" marker-end="url(#a3b)"/>
+          <!-- pixel grid -->
+          <g id="grid">
+            <!-- generated 5x5 grid -->
+          </g>
+          <text x="170" y="65" text-anchor="middle" fill="#6B6255" font-size="11" font-family="JetBrains Mono">تحويل</text>
+          <g transform="translate(220,25)">
+            <rect x="0" y="0" width="220" height="110" rx="8" fill="#F3EFE4" stroke="#C9BFA8"/>
+            <text x="110" y="18" text-anchor="middle" fill="#6B6255" font-size="10" font-family="JetBrains Mono">Pixel Matrix</text>
+          </g>
+          <g transform="translate(232,32)" font-family="JetBrains Mono" font-size="9.5" fill="#2C3E63">
+            <text x="0" y="12">12  84  201  33  90</text>
+            <text x="0" y="30">200  15  62  178  9</text>
+            <text x="0" y="48">55  240  8  120  199</text>
+            <text x="0" y="66">3  177  91  44  210</text>
+            <text x="0" y="84">160  22  135  70  5</text>
+          </g>
+          <path d="M450 80 H545" stroke="#A9852E" stroke-width="2" marker-end="url(#a4b)"/>
+          <rect x="550" y="35" width="120" height="90" rx="10" fill="rgba(169,133,46,0.08)" stroke="#A9852E"/>
+          <text x="610" y="75" text-anchor="middle" fill="#5C4419" font-size="13" font-family="Tajawal">نموذج AI</text>
+          <text x="610" y="95" text-anchor="middle" fill="#6B6255" font-size="10">Input Layer</text>
+          <defs>
+            <marker id="a3b" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="none" stroke="#2C3E63"/></marker>
+            <marker id="a4b" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="none" stroke="#A9852E"/></marker>
+          </defs>
+        </svg>
+        <div class="diagram-caption">صورة (🐱) ← مصفوفة قيم بكسلات (0–255) ← طبقة إدخال النموذج</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8 -->
+  <section class="point">
+    <div class="node"></div>
+    <div class="point-head"><span class="num">08</span><h2 class="point-title">مشكلة الأوفرفيتنج (Overfitting)</h2></div>
+    <div class="point-body">
+      <p class="lead">إذا دُرّب النموذج على <strong>100%</strong> من البيانات دون تقسيم، فإنه "يحفظ" البيانات عن ظهر قلب بدلاً من تعلّم النمط العام، فيفشل أمام بيانات جديدة لم يرها من قبل.</p>
+      <div class="diagram-wrap">
+        <svg viewBox="0 0 700 130" xmlns="http://www.w3.org/2000/svg" width="100%">
+          <text x="350" y="20" text-anchor="middle" fill="#6B6255" font-size="12" font-family="JetBrains Mono">توزيع البيانات القياسي</text>
+          <rect x="60" y="40" width="420" height="40" rx="6" fill="rgba(44,62,99,0.15)" stroke="#2C3E63"/>
+          <text x="270" y="65" text-anchor="middle" fill="#2C3E63" font-family="Tajawal" font-weight="700">تدريب (Training) — 70%</text>
+          <rect x="480" y="40" width="180" height="40" rx="6" fill="rgba(169,133,46,0.15)" stroke="#A9852E"/>
+          <text x="570" y="65" text-anchor="middle" fill="#A9852E" font-family="Tajawal" font-weight="700">اختبار — 30%</text>
+          <text x="350" y="110" text-anchor="middle" fill="#5C2323" font-size="12">بدون هذا التقسيم → حفظ حرفي للبيانات لا تعلّم للنمط ⚠</text>
+        </svg>
+        <div class="diagram-caption">تقسيم 70/30 هو خط الدفاع الأول ضد الأوفرفيتنج</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9 -->
+  <section class="point">
+    <div class="node"></div>
+    <div class="point-head"><span class="num">09</span><h2 class="point-title">إشكاليات أخلاقية: الديب فيك والتحيّز</h2></div>
+    <div class="point-body">
+      <div class="compare-grid">
+        <div class="card a">
+          <h3>الديب فيك (Deepfake)</h3>
+          <p style="font-size:15px;">فيديوهات وصور مزيفة تُنتَج بالذكاء الاصطناعي التوليدي، بمخاطر تضليل وابتزاز حقيقية.</p>
+        </div>
+        <div class="card b">
+          <h3>التحيّز (Bias)</h3>
+          <p style="font-size:15px;">النموذج يرث تحيّز البيانات التي دُرّب عليها — فيكرر أخطاء الماضي بثقة رقمية.</p>
+        </div>
+      </div>
+
+      <p class="lead" style="margin-top:26px;">مثال تطبيقي — نظام تتبع السير الذاتية (ATS):</p>
+      <div class="diagram-wrap">
+        <svg viewBox="0 0 700 130" xmlns="http://www.w3.org/2000/svg" width="100%">
+          <g font-family="Tajawal" font-size="13">
+            <rect x="10" y="35" width="150" height="55" rx="8" fill="#FBF8F0" stroke="#C9BFA8"/>
+            <text x="85" y="58" text-anchor="middle" fill="#2A2620">3000 سيرة ذاتية</text>
+            <text x="85" y="76" text-anchor="middle" fill="#6B6255" font-size="11">تتقدم للوظيفة</text>
+
+            <path d="M160 62 H255" stroke="#7A2E2E" stroke-width="2" marker-end="url(#aw)"/>
+            <text x="207" y="52" text-anchor="middle" fill="#7A2E2E" font-size="11">فرز آلي (ATS)</text>
+
+            <rect x="260" y="35" width="140" height="55" rx="8" fill="rgba(122,46,46,0.08)" stroke="#7A2E2E"/>
+            <text x="330" y="58" text-anchor="middle" fill="#5C2323">200 سيرة</text>
+            <text x="330" y="76" text-anchor="middle" fill="#6B6255" font-size="11">قد تُستبعد كفاءات هنا</text>
+
+            <path d="M400 62 H495" stroke="#2C3E63" stroke-width="2" marker-end="url(#ag)"/>
+            <text x="447" y="52" text-anchor="middle" fill="#2C3E63" font-size="11">مراجعة HR</text>
+
+            <rect x="500" y="35" width="150" height="55" rx="8" fill="rgba(44,62,99,0.08)" stroke="#2C3E63"/>
+            <text x="575" y="58" text-anchor="middle" fill="#1C1B19">20 مرشحاً نهائياً</text>
+            <text x="575" y="76" text-anchor="middle" fill="#6B6255" font-size="11">القرار البشري الأخير</text>
+          </g>
+          <defs>
+            <marker id="aw" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="none" stroke="#7A2E2E"/></marker>
+            <marker id="ag" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="none" stroke="#2C3E63"/></marker>
+          </defs>
+        </svg>
+        <div class="diagram-caption">لو كان ATS متحيّزاً، يُستبعد مرشحون مؤهّلون قبل أن تصل سيرهم لعين إنسان</div>
+      </div>
+      <div class="warn-box"><b>الدرس الأخلاقي:</b> الأتمتة تُسرّع القرار، لكنها لا تُعفي من مسؤولية مراجعته.</div>
+    </div>
+  </section>
+
+  <!-- 10 -->
+  <section class="point">
+    <div class="node"></div>
+    <div class="point-head"><span class="num">10</span><h2 class="point-title">عملاء الذكاء الاصطناعي (AI Agents) وتوسعات كلود</h2></div>
+    <div class="point-body">
+      <p class="lead">التحول الأحدث ليس فقط في النموذج، بل في طريقة عمله: من <strong>نموذج يُجيب</strong> إلى <strong>عميل ينفّذ</strong>.</p>
+
+      <div class="compare-grid">
+        <div class="card a">
+          <h3>Genspark</h3>
+          <p style="font-size:15px;">منصة "Super Agent" تجمع بحثاً وكتابة وتحليلاً وإنشاء عروض تقديمية وصفحات ويب ضمن بيئة واحدة، تنفّذ المهام نيابة عن المستخدم.</p>
+        </div>
+        <div class="card b">
+          <h3>Manus</h3>
+          <p style="font-size:15px;">عميل مستقل ينفّذ المهام على خوادمه الخاصة بعيداً عن جهاز المستخدم: بحث، تصفح، كتابة كود، وتسليم نتيجة نهائية جاهزة.</p>
+        </div>
+      </div>
+
+      <div class="note-box"><b>الفكرة الجوهرية:</b> الانتقال من نموذج Predictive/Generative يجيب على سؤال، إلى Agent يخطط وينفذ ويُقيّم نتائجه بنفسه.</div>
+
+      <p class="lead" style="margin-top:10px;">وبالعودة إلى منصة Claude، أربع طبقات توسّع قدراته:</p>
+      <table class="ext-table">
+        <tr><th>العنصر</th><th>الوظيفة</th></tr>
+        <tr><td>Projects</td><td>حاوية تحتفظ بسياق ثابت — تعليمات وملفات مرجعية تُورَّث تلقائياً في كل محادثة</td></tr>
+        <tr><td>Skills</td><td>تعليمات مكتوبة يحمّلها Claude تلقائياً عند الحاجة لتنفيذ مهمة محددة خطوة بخطوة</td></tr>
+        <tr><td>Connectors</td><td>وصول مباشر لتطبيقات وبيانات خارجية (بريد إلكتروني، تقويم، أدوات إدارة...)</td></tr>
+        <tr><td>Plugins</td><td>حزم جاهزة تجمع مهارات وموصلات وأوامر لوظيفة عمل محددة</td></tr>
+      </table>
+
+      <div class="diagram-wrap">
+        <svg viewBox="0 0 700 110" xmlns="http://www.w3.org/2000/svg" width="100%">
+          <g font-family="Tajawal" font-size="13">
+            <rect x="20" y="30" width="140" height="50" rx="8" fill="#FBF8F0" stroke="#C9BFA8"/>
+            <text x="90" y="60" text-anchor="middle" fill="#2A2620">Gmail 📧</text>
+            <path d="M160 55 H255" stroke="#A9852E" stroke-width="2" marker-end="url(#ac)"/>
+            <text x="207" y="45" text-anchor="middle" fill="#A9852E" font-size="11">Connector</text>
+            <rect x="260" y="20" width="180" height="70" rx="10" fill="rgba(169,133,46,0.08)" stroke="#A9852E"/>
+            <text x="350" y="50" text-anchor="middle" fill="#5C4419" font-weight="700">Claude</text>
+            <text x="350" y="68" text-anchor="middle" fill="#6B6255" font-size="10">يقرأ / يفرز / يصيغ رداً</text>
+            <path d="M440 55 H535" stroke="#2C3E63" stroke-width="2" marker-end="url(#ad)"/>
+            <rect x="540" y="30" width="140" height="50" rx="8" fill="rgba(44,62,99,0.08)" stroke="#2C3E63"/>
+            <text x="610" y="60" text-anchor="middle" fill="#1C1B19">رد جاهز ✅</text>
+          </g>
+          <defs>
+            <marker id="ac" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="none" stroke="#A9852E"/></marker>
+            <marker id="ad" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="none" stroke="#2C3E63"/></marker>
+          </defs>
+        </svg>
+        <div class="diagram-caption">مثال تطبيقي: ربط Claude بالبريد الإلكتروني عبر Connector لقراءة الرسائل وصياغة الردود مباشرة</div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="name">د. أمير كاظم هادي</div>
+  <div class="inst">المعهد العالي لإعداد وتأهيل القادة</div>
+  <div class="sig">محاضرة: الذكاء الاصطناعي — إعداد وتنظيم</div>
+</footer>
+
+</body>
+</html>
