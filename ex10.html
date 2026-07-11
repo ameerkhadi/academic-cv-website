@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الذكاء الاصطناعي — اختبار تفاعلي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0a0f1a;
+    --bg-2: #0d1526;
+    --surface: #111b30;
+    --surface-2: #16223d;
+    --line: #22304a;
+    --line-soft: #1a2540;
+    --gold: #c9a24b;
+    --gold-soft: #8a7038;
+    --ink: #ece7da;
+    --ink-dim: #97a0b5;
+    --ink-faint: #5c6684;
+    --good: #4caf7d;
+    --good-bg: rgba(76,175,125,0.12);
+    --bad: #d16a6a;
+    --bad-bg: rgba(209,106,106,0.12);
+  }
+  *{ box-sizing: border-box; }
+  html,body{ margin:0; padding:0; }
+  body{
+    background:
+      radial-gradient(1100px 500px at 85% -10%, rgba(201,162,75,0.10), transparent 60%),
+      radial-gradient(900px 600px at -10% 110%, rgba(201,162,75,0.06), transparent 55%),
+      linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+    color: var(--ink);
+    font-family: 'Tajawal', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+  .wrap{
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 56px 22px 90px;
+  }
+
+  .eyebrow{
+    text-align:center;
+    color: var(--gold);
+    font-size: 12px;
+    letter-spacing: 0.26em;
+    font-weight: 700;
+    margin-bottom: 14px;
+    opacity: 0.9;
+  }
+  h1{
+    font-family: 'Amiri', serif;
+    font-weight: 700;
+    text-align: center;
+    font-size: clamp(26px, 5.5vw, 38px);
+    line-height: 1.3;
+    margin: 0 0 10px;
+    color: #f5f1e6;
+  }
+  .byline{
+    text-align:center;
+    color: var(--ink-faint);
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    margin-bottom: 36px;
+  }
+
+  /* ---- progress ---- */
+  .progress-row{
+    display:flex; align-items:center; justify-content:space-between;
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: var(--ink-dim);
+  }
+  .progress-track{
+    height: 3px; width: 100%;
+    background: var(--line);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 34px;
+  }
+  .progress-fill{
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--gold-soft), var(--gold));
+    transition: width 0.4s ease;
+  }
+  .score-chip{
+    color: var(--gold);
+    font-weight: 700;
+  }
+
+  /* ---- question card ---- */
+  .card{
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 30px 26px;
+  }
+  .qnum{
+    font-family: 'Amiri', serif;
+    color: var(--gold);
+    font-size: 14px;
+    margin-bottom: 10px;
+    letter-spacing: 0.02em;
+  }
+  .qtext{
+    font-size: 19px;
+    font-weight: 500;
+    line-height: 1.7;
+    color: var(--ink);
+    margin-bottom: 26px;
+  }
+  .options{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .opt{
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    border: 1px solid var(--line-soft);
+    border-radius: 8px;
+    background: var(--surface-2);
+    cursor: pointer;
+    text-align: right;
+    transition: border-color 0.2s ease, background 0.2s ease, transform 0.15s ease;
+  }
+  .opt:hover{ border-color: var(--gold-soft); }
+  .opt .tag{
+    flex: 0 0 auto;
+    width: 30px; height: 30px;
+    border: 1px solid var(--line-soft);
+    border-radius: 50%;
+    display: flex; align-items:center; justify-content:center;
+    font-family: 'Amiri', serif;
+    font-size: 14px;
+    color: var(--ink-faint);
+    transition: all 0.2s ease;
+  }
+  .opt .txt{
+    flex: 1 1 auto;
+    font-size: 15.5px;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+  .opt.disabled{ cursor: default; }
+  .opt.correct{
+    border-color: var(--good);
+    background: var(--good-bg);
+  }
+  .opt.correct .tag{ border-color: var(--good); color: var(--good); }
+  .opt.wrong{
+    border-color: var(--bad);
+    background: var(--bad-bg);
+  }
+  .opt.wrong .tag{ border-color: var(--bad); color: var(--bad); }
+  .opt.muted{ opacity: 0.45; }
+
+  .feedback{
+    margin-top: 20px;
+    font-size: 13.5px;
+    min-height: 18px;
+    color: var(--ink-dim);
+  }
+  .feedback.good{ color: var(--good); }
+  .feedback.bad{ color: var(--bad); }
+
+  .actions{
+    display:flex; justify-content:flex-end;
+    margin-top: 26px;
+  }
+  .btn{
+    appearance: none;
+    border: 1px solid var(--gold-soft);
+    background: transparent;
+    color: var(--gold);
+    padding: 11px 26px;
+    border-radius: 7px;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 14.5px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .btn.show{ opacity: 1; pointer-events: auto; }
+  .btn:hover{ background: var(--gold); color: #0a0f1a; }
+
+  /* ---- results ---- */
+  .results{
+    display:none;
+    text-align:center;
+    padding: 50px 26px;
+  }
+  .results.show{ display:block; }
+  .results .big{
+    font-family: 'Amiri', serif;
+    font-size: 56px;
+    color: var(--gold);
+    margin-bottom: 6px;
+  }
+  .results .label{
+    color: var(--ink-dim);
+    font-size: 15px;
+    margin-bottom: 34px;
+  }
+  .results .msg{
+    font-size: 16px;
+    color: var(--ink);
+    margin-bottom: 34px;
+    line-height: 1.8;
+  }
+  .retry{
+    display:inline-block;
+    border: 1px solid var(--gold-soft);
+    background: transparent;
+    color: var(--gold);
+    padding: 12px 30px;
+    border-radius: 7px;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 14.5px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+  .retry:hover{ background: var(--gold); color: #0a0f1a; }
+
+  footer{
+    text-align:center;
+    margin-top: 60px;
+    color: var(--ink-faint);
+    font-size: 12px;
+    letter-spacing: 0.03em;
+  }
+
+  @media (max-width: 520px){
+    .wrap{ padding: 40px 16px 70px; }
+    .card{ padding: 22px 18px; }
+    .qtext{ font-size: 17px; }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="eyebrow">برنامج القيادة الرقمية — الدبلوم العالي</div>
+    <h1>الذكاء الاصطناعي</h1>
+    <div class="byline">اختبار تفاعلي — إعداد: أ.م.د. أمير هادي</div>
+
+    <div id="quizArea">
+      <div class="progress-row">
+        <span id="qCounter">سؤال ١ / 29</span>
+        <span class="score-chip" id="scoreChip">النتيجة: 0</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+      <div class="card">
+        <div class="qnum" id="qNum">السؤال ١</div>
+        <div class="qtext" id="qText"></div>
+        <div class="options" id="optsArea"></div>
+        <div class="feedback" id="feedback"></div>
+        <div class="actions">
+          <button class="btn" id="nextBtn">السؤال التالي ←</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="results" id="resultsArea">
+      <div class="big" id="finalScore">0/0</div>
+      <div class="label">نتيجتك النهائية</div>
+      <div class="msg" id="finalMsg"></div>
+      <button class="retry" id="retryBtn">إعادة الاختبار</button>
+    </div>
+
+    <footer>
+      المعهد العالي لإعداد وتأهيل القادة · إعداد: أ.م.د. أمير هادي
+    </footer>
+  </div>
+
+<script>
+const DATA = [{"q": "ما تعريف الذكاء الاصطناعي؟", "options": ["منظومة تقنية تربط عدة أجهزة حاسوب ببعضها لتبادل الملفات عبر الشبكة", "فرع من علوم الحاسوب يُعنى ببناء أنظمة قادرة على تنفيذ مهام تحتاج عادة إلى ذكاء بشري كالتعلم والفهم والاستنتاج واتخاذ القرار", "برنامج رياضي يتعلّم الأنماط من البيانات ليستخدمها في تصنيف الصور فقط دون سواها", "فرع من علوم الحاسوب يُعنى ببناء أنظمة تُخزّن كميات ضخمة من البيانات وتُرجعها عند الطلب"], "correct": "ب"}, {"q": "أي مجموعة من الأمثلة التالية هي بالضبط الأمثلة اليومية على الذكاء الاصطناعي؟", "options": ["Siri، برامج معالجة النصوص، أنظمة التعرف على الوجوه، الطابعات الذكية", "Siri، السيارات ذاتية القيادة، ChatGPT، أنظمة التعرف على الوجوه", "السيارات ذاتية القيادة، ChatGPT، برامج جداول البيانات، أنظمة الدفع الإلكتروني", "Siri، ChatGPT، أنظمة التعرف على الوجوه، أنظمة تصحيح الإملاء التقليدية"], "correct": "ب"}, {"q": "ما الخطوات الثلاث التي يُختصر بها أي نموذج ذكاء اصطناعي؟", "options": ["تحديد المشكلة ← جمع البيانات ← تقييم الدقة", "مدخل ← نموذج ← مخرج", "بيانات ← تدريب ← اختبار", "مدخل ← تنظيف وترميز ← مخرج"], "correct": "ب"}, {"q": "كيف يُعرَّف «نموذج الذكاء الاصطناعي» (AI Model)؟", "options": ["برنامج رياضي يتعلّم الأنماط والعلاقات من كمية كبيرة من البيانات ويستخدمها لاتخاذ قرار أو تصنيف أو توليد مخرج جديد", "برنامج رياضي يُخزّن كل الحالات الممكنة مسبقاً على شكل قواعد If–Else يدوية", "برنامج يحوّل الصورة إلى ملف صوتي قبل تمريرها إلى طبقة الإدخال", "برنامج يقارن المدخل بقاعدة بيانات جاهزة ويُعيد أقرب نتيجة مطابقة تماماً"], "correct": "أ"}, {"q": "في مثال تشخيص السكري ضمن نموذج المدخلات والمخرجات، ما الذي يمثّل «المدخل» تحديداً؟", "options": ["بيانات جوية", "مصفوفة قيم البكسلات", "خصائص المريض", "مصاب / غير مصاب"], "correct": "ج"}, {"q": "ما الفرق الجوهري بين الأنظمة القائمة على القواعد (Rule-Based) والتعلم الآلي (Machine Learning)؟", "options": ["كلاهما يتعلم من البيانات، لكن التعلم الآلي أبطأ في معالجة الاستثناءات المعقدة", "التعلم الآلي يتعلم القواعد بنفسه من البيانات ويتحسن معها، بينما القائم على القواعد يحتاج كتابة يدوية لكل حالة", "القائم على القواعد يتعلم من التجربة تلقائياً، بينما التعلم الآلي يحتاج كتابة يدوية لكل حالة ممكنة", "القائم على القواعد يُستخدم في التصنيف التوليدي، بينما التعلم الآلي يُستخدم في التصنيف التنبؤي فقط"], "correct": "ب"}, {"q": "ما الذي يميز التعلم الآلي (اليوم) عن النهج القديم القائم على القواعد؟", "options": ["لا يتأثر أداؤه بزيادة أو نقصان كمية البيانات المتاحة", "يفشل غالباً أمام المسائل المعقدة ذات الاستثناءات الكثيرة", "يحتاج كتابة يدوية دقيقة لكل حالة ممكنة قبل التشغيل", "يتحسن أداؤه كلما زادت البيانات ويتعامل مع التعقيد والاستثناءات"], "correct": "د"}, {"q": "ما الفرق بين الذكاء الاصطناعي «التنبؤي» و«التوليدي»؟", "options": ["التنبؤي مخصص للنصوص فقط، والتوليدي مخصص للصور والفيديو فقط", "التنبؤي يصنّف أو يتنبأ بناءً على بيانات موجودة، بينما التوليدي ينشئ محتوى جديداً لم يكن موجوداً", "التوليدي يصنّف أو يتنبأ بناءً على بيانات موجودة، بينما التنبؤي ينشئ محتوى جديداً لم يكن موجوداً", "كلاهما يُنشئ محتوى جديداً، لكن التنبؤي يفعل ذلك بسرعة أكبر من التوليدي"], "correct": "ب"}, {"q": "أي زوج من الأدوات التالية صُنِّف بالكامل ضمن أمثلة الذكاء الاصطناعي «التوليدي»؟", "options": ["Gemini وMidjourney", "Gemini وتوقّع الطقس", "تشخيص السكري وMistral", "تصنيف الصور وDeepSeek"], "correct": "أ"}, {"q": "كم عدد الخطوات المتسلسلة لعملية بناء نموذج ذكاء اصطناعي؟", "options": ["سبع خطوات", "ست خطوات", "أربع خطوات", "ثماني خطوات"], "correct": "أ"}, {"q": "ما طبيعة عملية بناء نموذج الذكاء الاصطناعي؟", "options": ["عملية تكرارية وليست خطية بالكامل، تُعاد عند ضعف الدقة", "عملية تكرارية تبدأ من التدريب فقط دون حاجة لتحديد المشكلة أولاً", "عملية تنتهي تلقائياً عند خطوة اختيار الخوارزمية دون تدريب أو اختبار", "عملية خطية بالكامل تسير من الخطوة الأولى للأخيرة دون أي عودة"], "correct": "أ"}, {"q": "في مثال جدول بيانات تشخيص السكري، ماذا تمثل الصفوف وماذا تمثل الأعمدة؟", "options": ["الصفوف والأعمدة كلاهما يمثلان الخصائص (Features) فقط دون سجلات", "الصفوف تمثل الخصائص (Features)، والأعمدة تمثل السجلات (المرضى)", "الصفوف تمثل عمود النتيجة (Label) فقط، والأعمدة تمثل المرضى", "الصفوف تمثل السجلات (المرضى)، والأعمدة تمثل الخصائص (Features)"], "correct": "د"}, {"q": "كيف تتحول الصورة إلى بيانات يفهمها نموذج الذكاء الاصطناعي؟", "options": ["تتحول إلى ملف صوتي يُقرأ بواسطة طبقة الإدخال (Input Layer)", "تتحول إلى نص وصفي يشرح محتوى الصورة كلمة كلمة", "تبقى الصورة كما هي وتُمرَّر مباشرة دون أي معالجة رقمية", "تتحول إلى مصفوفة أرقام تمثل قيم البكسلات بين 0 و255"], "correct": "د"}, {"q": "ما الذي يحدث عندما يُدرَّب النموذج على 100% من البيانات دون تقسيمها إلى تدريب واختبار؟", "options": ["لا يتغير أداؤه إطلاقاً سواء قُسّمت البيانات أم لم تُقسّم", "يصبح أسرع في المعالجة لكنه يفقد القدرة على التصنيف تماماً", "يحفظ البيانات عن ظهر قلب بدلاً من تعلّم النمط العام، فيفشل أمام بيانات جديدة (Overfitting)", "يتعلم النمط العام بدقة أعلى لأن كمية البيانات المتاحة له أكبر"], "correct": "ج"}, {"q": "ما النسبة القياسية المعتمدة لتقسيم البيانات بين التدريب والاختبار؟", "options": ["60% تدريب و40% اختبار", "80% تدريب و20% اختبار", "70% تدريب و30% اختبار", "70% اختبار و30% تدريب"], "correct": "ج"}, {"q": "ما «الديب فيك» (Deepfake)؟", "options": ["فيديوهات وصور مزيفة تُنتَج بالذكاء الاصطناعي التوليدي بمخاطر تضليل وابتزاز حقيقية", "نظام يكتشف الصور المزيفة تلقائياً ويحذف أي محتوى مضلل", "برنامج تنبؤي يحلل حركة الوجه للتحقق من هوية الشخص أمنياً", "فيديوهات وصور حقيقية تُعالَج فقط لتحسين جودتها ووضوحها"], "correct": "أ"}, {"q": "ما معنى «التحيّز» (Bias) في نماذج الذكاء الاصطناعي؟", "options": ["النموذج يرفض معالجة أي بيانات لم تُصنَّف أو تُرمَّز مسبقاً", "النموذج يرث تحيّز البيانات التي دُرّب عليها فيكرر أخطاء الماضي بثقة رقمية", "النموذج يتوقف عن العمل تلقائياً عند اكتشاف بيانات ناقصة", "النموذج يفضّل دوماً النتائج التنبؤية على النتائج التوليدية"], "correct": "ب"}, {"q": "في مثال نظام تتبع السير الذاتية (ATS)، ما التسلسل الصحيح للأعداد من التقديم إلى القرار النهائي؟", "options": ["3000 سيرة ← 200 سيرة بعد مراجعة HR ← 20 مرشحاً بعد الفرز الآلي", "200 سيرة ← 3000 سيرة بعد الفرز الآلي ← 20 مرشحاً نهائياً بعد مراجعة HR", "3000 سيرة ← 200 سيرة بعد الفرز الآلي ← 20 مرشحاً نهائياً بعد مراجعة HR", "3000 سيرة ← 20 سيرة بعد الفرز الآلي ← 200 مرشح نهائي بعد مراجعة HR"], "correct": "ج"}, {"q": "ما الفكرة الجوهرية للانتقال من «نموذج يجيب» إلى «عميل ينفّذ» (AI Agent)؟", "options": ["دمج النموذج التنبؤي بالنموذج التوليدي في أداة واحدة تُدعى Rule-Based", "استبدال النماذج التوليدية بالكامل بنماذج تنبؤية أكثر دقة في القرار", "الانتقال من نموذج Agent يخطط وينفذ إلى نموذج Predictive يكتفي بالإجابة على سؤال", "الانتقال من نموذج Predictive/Generative يجيب على سؤال إلى Agent يخطط وينفذ ويقيّم نتائجه بنفسه"], "correct": "د"}, {"q": "رتّب طبقات Claude الأربع مع وظيفة كل منها: Projects، Skills، Connectors، Plugins؟", "options": ["Projects وصول لتطبيقات خارجية، Skills حاوية سياق ثابت، Connectors حزم جاهزة لوظيفة عمل، Plugins تعليمات لمهمة محددة", "Projects تعليمات تُحمَّل تلقائياً لمهمة محددة، Skills حاوية سياق ثابت، Connectors حزم جاهزة، Plugins وصول لتطبيقات خارجية", "Projects حزم جاهزة لوظيفة عمل، Skills وصول لتطبيقات خارجية، Connectors تعليمات لمهمة محددة، Plugins حاوية سياق ثابت", "Projects حاوية سياق ثابت، Skills تعليمات تُحمَّل تلقائياً لمهمة محددة، Connectors وصول لتطبيقات خارجية، Plugins حزم جاهزة لوظيفة عمل"], "correct": "د"}, {"q": "بالربط بين مفهوم «الأوفرفيتنج» وخطوات بناء النموذج السبع، في أي خطوتين يُعالَج خطر الأوفرفيتنج مباشرة؟", "options": ["خطوتا تحديد المشكلة وجمع البيانات، لأن دقة تعريف المشكلة تمنع حفظ النموذج للبيانات", "خطوة تقييم الدقة وحدها، لأنها الخطوة الوحيدة التي تكتشف الأوفرفيتنج بعد وقوعه", "خطوتا التدريب (70%) والاختبار (30%)، لأن تقسيم البيانات هو خط الدفاع الأول ضد الأوفرفيتنج", "خطوتا تنظيف وترميز واختيار الخوارزمية، لأن نوع الخوارزمية هو ما يحدد وقوع الأوفرفيتنج"], "correct": "ج"}, {"q": "بالمقارنة بين مثال تشخيص السكري ومثال تصنيف الصور (قطة/كلب)، ما القاسم المشترك الدقيق بينهما ضمن نموذج المدخلات والمخرجات؟", "options": ["كلاهما مثال على ذكاء اصطناعي توليدي يُنشئ محتوى بصرياً جديداً لم يكن موجوداً", "كلاهما يتطلب عميل ذكاء اصطناعي (Agent) لتنفيذ عملية التصنيف نيابة عن المستخدم", "كلاهما يعتمد على مصفوفة بكسلات 0–255 كمدخل أساسي وحيد للنموذج", "كلاهما مدخل بيانات يمر عبر نموذج تنبؤي يُخرج تصنيفاً إلى فئة من فئتين محددتين مسبقاً"], "correct": "د"}, {"q": "لو أن نظام ATS دُرّب على بيانات توظيف قديمة متحيّزة، فما العلاقة الدقيقة بين هذا التحيّز ورقم الـ200 سيرة الناتجة عن الفرز الآلي؟", "options": ["من بين الـ200 سيرة المستبعدة آلياً قد توجد كفاءات مؤهّلة استُبعدت بسبب تحيّز ورثه النموذج من بيانات تدريبه لا بسبب نقص كفاءتها الفعلية", "الـ200 سيرة هي بالضرورة الأقل كفاءة فعلياً، والتحيّز هنا لا يؤثر على دقة هذا الفرز إطلاقاً", "رقم الـ200 ثابت رياضياً بغض النظر عن وجود تحيّز في بيانات التدريب من عدمه", "التحيّز يظهر فقط في مرحلة مراجعة HR للعشرين مرشحاً النهائيين وليس في الفرز الآلي الأول"], "correct": "أ"}, {"q": "بالربط بين تعريف «Rule-Based» وتعريف «AI Model»، لماذا لا يُعدّ النظام القائم على القواعد اليدوية «نموذج ذكاء اصطناعي» بالمعنى الدقيق للمصطلح؟", "options": ["لأن AI Model لا يمكنه التعامل مع أي بيانات غير مصنّفة مسبقاً بعكس Rule-Based", "لأن Rule-Based يُستخدم حصراً في الذكاء الاصطناعي التوليدي دون التنبؤي", "لأن AI Model يتعلم الأنماط من البيانات ذاتياً، بينما Rule-Based يعتمد على قواعد If–Else مكتوبة يدوياً لكل حالة دون تعلّم فعلي", "لأن Rule-Based أسرع في المعالجة من AI Model رغم اعتماد كليهما على نفس آلية التعلم من البيانات"], "correct": "ج"}, {"q": "بالمقارنة بين «Genspark» و«Manus»، مع ملاحظة أنهما وردا أيضاً ضمن قائمة أمثلة الذكاء الاصطناعي التوليدي، ما الذي يفسّر ظهورهما في السياقين معاً؟", "options": ["لأنهما مخصصتان فقط لتوليد الصور، وهذا ما يجعلهما عميلي تنفيذ في آنٍ واحد", "هما أدوات توليدية في جوهر تقنيتها، لكنها طُوِّرت لتعمل كعملاء (Agents) ينفذون مهاماً كاملة بدل الاكتفاء بتوليد إجابة واحدة", "لأنهما الأداتان الوحيدتان اللتان لا تعتمدان على أي نموذج ذكاء اصطناعي أصلاً", "ظهورهما في القائمتين خطأ لأنهما تنبؤيتان بالكامل ولا علاقة لهما بالتوليد"], "correct": "ب"}, {"q": "بالربط بين مثال «Connector» الخاص بالبريد الإلكتروني وتصنيف الذكاء الاصطناعي إلى تنبؤي وتوليدي، أي تصنيف تنتمي إليه خطوة «صياغة الرد» تحديداً؟", "options": ["تنبؤي وتوليدي معاً بالتساوي، لأن قراءة الرسالة وفرزها وصياغة الرد عمليات متطابقة تقنياً", "لا ينتمي لأي من التصنيفين لأن Connector وظيفته النقل فقط دون أي معالجة ذكاء اصطناعي", "توليدي، لأن صياغة الرد إنشاء لمحتوى جديد لم يكن موجوداً من قبل استناداً إلى محتوى الرسالة", "تنبؤي، لأن صياغة الرد تصنيف للرسالة الواردة إلى فئة «تحتاج رداً» أو «لا تحتاج رداً»"], "correct": "ج"}, {"q": "لو دخلت مصفوفة بكسلات صورة القطة (0–255) نموذجاً تنبؤياً للتصنيف بدلاً من نموذج توليدي، فما الفرق الجوهري في طبيعة المخرج المتوقع؟", "options": ["المخرج التنبؤي سينشئ صورة جديدة للقطة، بينما التوليدي سيكتفي بتصنيفها فئة واحدة", "المخرج التنبؤي يتطلب دائماً عميل ذكاء اصطناعي (Agent)، بعكس المخرج التوليدي", "لا فرق البتة، لأن كلا النوعين يُنتج بالضرورة محتوى بصرياً جديداً بالجودة نفسها", "المخرج التنبؤي سيكون تصنيفاً لفئة موجودة مسبقاً (مثل قطة أو كلب)، بينما المخرج التوليدي كان سينشئ محتوى بصرياً جديداً لم يكن موجوداً"], "correct": "د"}, {"q": "بالربط بين عمود «النتيجة» (Label) في جدول تشخيص السكري وخطوتَي «تحديد المشكلة» و«تنظيف وترميز» في بناء النموذج، ما دوره الدقيق؟", "options": ["هو عمود اختياري لا علاقة له بخطوة تحديد المشكلة، ويُضاف فقط بعد انتهاء التدريب والاختبار", "هو أحد الخصائص (Features) العادية شأنه شأن عمود العمر أو الوزن دون أي دور خاص", "يظهر فقط في خطوة اختيار الخوارزمية ولا علاقة له بخطوتَي تحديد المشكلة أو الترميز", "هو الهدف الذي حُدِّد أصلاً في خطوة تحديد المشكلة، ويظل العمود المرجعي الذي تُنظَّم وتُرمَّز بقية الأعمدة استناداً إلى علاقتها به"], "correct": "د"}, {"q": "بالمقارنة بين «الديب فيك» و«التحيّز» كإشكاليتين أخلاقيتين، أيهما ينتج عن استخدام مقصود لتقنية توليدية وأيهما ينتج عادة دون قصد من مصمم النموذج؟", "options": ["كلاهما ينتج حصراً بقصد متعمد من فريق تطوير النموذج في جميع الحالات دون استثناء", "الديب فيك غالباً استخدام مقصود لتقنية توليدية لخداع المشاهد، بينما التحيّز ينتج عادة دون قصد نتيجة طبيعة بيانات التدريب التاريخية", "التحيّز غالباً استخدام مقصود لتوليد محتوى مزيف، بينما الديب فيك ينتج دون قصد من طبيعة البيانات", "كلاهما ينتج دون قصد بالكامل، ولا علاقة لأيٍّ منهما باستخدام الذكاء الاصطناعي التوليدي"], "correct": "ب"}];
+const LETTERS = ["أ","ب","ج","د"];
+
+let current = 0;
+let score = 0;
+let answered = false;
+
+const qCounter = document.getElementById('qCounter');
+const scoreChip = document.getElementById('scoreChip');
+const progressFill = document.getElementById('progressFill');
+const qNum = document.getElementById('qNum');
+const qText = document.getElementById('qText');
+const optsArea = document.getElementById('optsArea');
+const feedback = document.getElementById('feedback');
+const nextBtn = document.getElementById('nextBtn');
+const quizArea = document.getElementById('quizArea');
+const resultsArea = document.getElementById('resultsArea');
+const finalScore = document.getElementById('finalScore');
+const finalMsg = document.getElementById('finalMsg');
+const retryBtn = document.getElementById('retryBtn');
+
+const ORDINALS = ["الأول","الثاني","الثالث","الرابع","الخامس","السادس","السابع","الثامن","التاسع","العاشر"];
+function ordinalWord(n){
+  if(n <= 10) return ORDINALS[n-1];
+  return n.toString();
+}
+
+function renderQuestion(){
+  answered = false;
+  feedback.textContent = "";
+  feedback.className = "feedback";
+  nextBtn.classList.remove("show");
+
+  const item = DATA[current];
+  qCounter.textContent = `سؤال ${current+1} / ${DATA.length}`;
+  scoreChip.textContent = `النتيجة: ${score}`;
+  progressFill.style.width = `${(current/DATA.length)*100}%`;
+  qNum.textContent = `السؤال ${ordinalWord(current+1)}`;
+  qText.textContent = item.q;
+
+  optsArea.innerHTML = "";
+  item.options.forEach((optText, idx) => {
+    const letter = LETTERS[idx];
+    const row = document.createElement('div');
+    row.className = 'opt';
+    row.innerHTML = `<div class="tag">${letter}</div><div class="txt">${optText}</div>`;
+    row.addEventListener('click', () => selectOption(letter, row));
+    optsArea.appendChild(row);
+  });
+}
+
+function selectOption(letter, row){
+  if(answered) return;
+  answered = true;
+  const item = DATA[current];
+  const isCorrect = letter === item.correct;
+
+  Array.from(optsArea.children).forEach((el, idx) => {
+    el.classList.add('disabled');
+    const elLetter = LETTERS[idx];
+    if(elLetter === item.correct){
+      el.classList.add('correct');
+    } else if(el === row){
+      el.classList.add('wrong');
+    } else {
+      el.classList.add('muted');
+    }
+  });
+
+  if(isCorrect){
+    score++;
+    feedback.textContent = "إجابة صحيحة";
+    feedback.classList.add('good');
+  } else {
+    feedback.textContent = `إجابة غير صحيحة — الصحيح هو (${item.correct})`;
+    feedback.classList.add('bad');
+  }
+  scoreChip.textContent = `النتيجة: ${score}`;
+  nextBtn.classList.add('show');
+}
+
+nextBtn.addEventListener('click', () => {
+  current++;
+  if(current >= DATA.length){
+    showResults();
+  } else {
+    renderQuestion();
+  }
+});
+
+function showResults(){
+  quizArea.style.display = "none";
+  resultsArea.classList.add('show');
+  progressFill.style.width = "100%";
+  finalScore.textContent = `${score}/${DATA.length}`;
+  const pct = Math.round((score/DATA.length)*100);
+  let msg = "";
+  if(pct >= 85) msg = "أداء ممتاز — إتقان واضح للمادة.";
+  else if(pct >= 70) msg = "أداء جيد جداً — بقيت نقاط بسيطة تحتاج مراجعة.";
+  else if(pct >= 50) msg = "أداء مقبول — يُنصح بمراجعة المحتوى مرة أخرى.";
+  else msg = "يُنصح بإعادة قراءة المادة ثم إعادة المحاولة.";
+  finalMsg.textContent = `${pct}% من الإجابات صحيحة. ${msg}`;
+}
+
+retryBtn.addEventListener('click', () => {
+  current = 0; score = 0;
+  quizArea.style.display = "";
+  resultsArea.classList.remove('show');
+  renderQuestion();
+});
+
+renderQuestion();
+</script>
+</body>
+</html>

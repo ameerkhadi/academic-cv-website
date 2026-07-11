@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>قواعد البيانات — اختبار تفاعلي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0a0f1a;
+    --bg-2: #0d1526;
+    --surface: #111b30;
+    --surface-2: #16223d;
+    --line: #22304a;
+    --line-soft: #1a2540;
+    --gold: #c9a24b;
+    --gold-soft: #8a7038;
+    --ink: #ece7da;
+    --ink-dim: #97a0b5;
+    --ink-faint: #5c6684;
+    --good: #4caf7d;
+    --good-bg: rgba(76,175,125,0.12);
+    --bad: #d16a6a;
+    --bad-bg: rgba(209,106,106,0.12);
+  }
+  *{ box-sizing: border-box; }
+  html,body{ margin:0; padding:0; }
+  body{
+    background:
+      radial-gradient(1100px 500px at 85% -10%, rgba(201,162,75,0.10), transparent 60%),
+      radial-gradient(900px 600px at -10% 110%, rgba(201,162,75,0.06), transparent 55%),
+      linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+    color: var(--ink);
+    font-family: 'Tajawal', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+  .wrap{
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 56px 22px 90px;
+  }
+
+  .eyebrow{
+    text-align:center;
+    color: var(--gold);
+    font-size: 12px;
+    letter-spacing: 0.26em;
+    font-weight: 700;
+    margin-bottom: 14px;
+    opacity: 0.9;
+  }
+  h1{
+    font-family: 'Amiri', serif;
+    font-weight: 700;
+    text-align: center;
+    font-size: clamp(26px, 5.5vw, 38px);
+    line-height: 1.3;
+    margin: 0 0 10px;
+    color: #f5f1e6;
+  }
+  .byline{
+    text-align:center;
+    color: var(--ink-faint);
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    margin-bottom: 36px;
+  }
+
+  /* ---- progress ---- */
+  .progress-row{
+    display:flex; align-items:center; justify-content:space-between;
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: var(--ink-dim);
+  }
+  .progress-track{
+    height: 3px; width: 100%;
+    background: var(--line);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 34px;
+  }
+  .progress-fill{
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--gold-soft), var(--gold));
+    transition: width 0.4s ease;
+  }
+  .score-chip{
+    color: var(--gold);
+    font-weight: 700;
+  }
+
+  /* ---- question card ---- */
+  .card{
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 30px 26px;
+  }
+  .qnum{
+    font-family: 'Amiri', serif;
+    color: var(--gold);
+    font-size: 14px;
+    margin-bottom: 10px;
+    letter-spacing: 0.02em;
+  }
+  .qtext{
+    font-size: 19px;
+    font-weight: 500;
+    line-height: 1.7;
+    color: var(--ink);
+    margin-bottom: 26px;
+  }
+  .options{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .opt{
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    border: 1px solid var(--line-soft);
+    border-radius: 8px;
+    background: var(--surface-2);
+    cursor: pointer;
+    text-align: right;
+    transition: border-color 0.2s ease, background 0.2s ease, transform 0.15s ease;
+  }
+  .opt:hover{ border-color: var(--gold-soft); }
+  .opt .tag{
+    flex: 0 0 auto;
+    width: 30px; height: 30px;
+    border: 1px solid var(--line-soft);
+    border-radius: 50%;
+    display: flex; align-items:center; justify-content:center;
+    font-family: 'Amiri', serif;
+    font-size: 14px;
+    color: var(--ink-faint);
+    transition: all 0.2s ease;
+  }
+  .opt .txt{
+    flex: 1 1 auto;
+    font-size: 15.5px;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+  .opt.disabled{ cursor: default; }
+  .opt.correct{
+    border-color: var(--good);
+    background: var(--good-bg);
+  }
+  .opt.correct .tag{ border-color: var(--good); color: var(--good); }
+  .opt.wrong{
+    border-color: var(--bad);
+    background: var(--bad-bg);
+  }
+  .opt.wrong .tag{ border-color: var(--bad); color: var(--bad); }
+  .opt.muted{ opacity: 0.45; }
+
+  .feedback{
+    margin-top: 20px;
+    font-size: 13.5px;
+    min-height: 18px;
+    color: var(--ink-dim);
+  }
+  .feedback.good{ color: var(--good); }
+  .feedback.bad{ color: var(--bad); }
+
+  .actions{
+    display:flex; justify-content:flex-end;
+    margin-top: 26px;
+  }
+  .btn{
+    appearance: none;
+    border: 1px solid var(--gold-soft);
+    background: transparent;
+    color: var(--gold);
+    padding: 11px 26px;
+    border-radius: 7px;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 14.5px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .btn.show{ opacity: 1; pointer-events: auto; }
+  .btn:hover{ background: var(--gold); color: #0a0f1a; }
+
+  /* ---- results ---- */
+  .results{
+    display:none;
+    text-align:center;
+    padding: 50px 26px;
+  }
+  .results.show{ display:block; }
+  .results .big{
+    font-family: 'Amiri', serif;
+    font-size: 56px;
+    color: var(--gold);
+    margin-bottom: 6px;
+  }
+  .results .label{
+    color: var(--ink-dim);
+    font-size: 15px;
+    margin-bottom: 34px;
+  }
+  .results .msg{
+    font-size: 16px;
+    color: var(--ink);
+    margin-bottom: 34px;
+    line-height: 1.8;
+  }
+  .retry{
+    display:inline-block;
+    border: 1px solid var(--gold-soft);
+    background: transparent;
+    color: var(--gold);
+    padding: 12px 30px;
+    border-radius: 7px;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 14.5px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+  .retry:hover{ background: var(--gold); color: #0a0f1a; }
+
+  footer{
+    text-align:center;
+    margin-top: 60px;
+    color: var(--ink-faint);
+    font-size: 12px;
+    letter-spacing: 0.03em;
+  }
+
+  @media (max-width: 520px){
+    .wrap{ padding: 40px 16px 70px; }
+    .card{ padding: 22px 18px; }
+    .qtext{ font-size: 17px; }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="eyebrow">برنامج القيادة الرقمية — الدبلوم العالي</div>
+    <h1>قواعد البيانات</h1>
+    <div class="byline">اختبار تفاعلي — إعداد: أ.م.د. أمير هادي</div>
+
+    <div id="quizArea">
+      <div class="progress-row">
+        <span id="qCounter">سؤال ١ / 27</span>
+        <span class="score-chip" id="scoreChip">النتيجة: 0</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+      <div class="card">
+        <div class="qnum" id="qNum">السؤال ١</div>
+        <div class="qtext" id="qText"></div>
+        <div class="options" id="optsArea"></div>
+        <div class="feedback" id="feedback"></div>
+        <div class="actions">
+          <button class="btn" id="nextBtn">السؤال التالي ←</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="results" id="resultsArea">
+      <div class="big" id="finalScore">0/0</div>
+      <div class="label">نتيجتك النهائية</div>
+      <div class="msg" id="finalMsg"></div>
+      <button class="retry" id="retryBtn">إعادة الاختبار</button>
+    </div>
+
+    <footer>
+      المعهد العالي لإعداد وتأهيل القادة · إعداد: أ.م.د. أمير هادي
+    </footer>
+  </div>
+
+<script>
+const DATA = [{"q": "ما هو التعريف الأساسي لقاعدة البيانات؟", "options": ["برنامج حاسوبي متخصص بالمحاسبة فقط", "خزانة ورقية تُستخدم لحفظ الملفات القديمة", "نظام إلكتروني يخزّن المعلومات بطريقة منظمة وآمنة ويتيح استرجاعها وتحديثها ومشاركتها بسهولة", "تطبيق للتواصل الاجتماعي بين الموظفين"], "correct": "ج"}, {"q": "في مثال «خزانة ملفات الموظفين»، ما الذي جعلها أشبه بقاعدة بيانات؟", "options": ["أنها نُقلت إلى غرفة أكثر أماناً داخل المبنى", "أنها أصبحت إلكترونية وذكية وقادرة على إيجاد أي معلومة في أقل من ثانية", "أنها أصبحت مخصصة لحفظ ملفات المديرين فقط", "أنها أصبحت أكبر حجماً وتحتوي على مزيد من الملفات الورقية"], "correct": "ب"}, {"q": "وفق الجدول التوضيحي، ما هي قاعدة البيانات التي تعمل خلف عملية دفع فاتورة الكهرباء؟", "options": ["نظام شؤون الطلاب", "منظومة وزارة الكهرباء", "سجلات وزارة الصحة", "شبكة شركة الاتصالات"], "correct": "ب"}, {"q": "ما الفرق الجوهري بين «البيانات» و«المعلومات» حسب جدول المصطلحات؟", "options": ["البيانات والمعلومات مصطلحان مترادفان تماماً", "البيانات لا يمكن تخزينها إلا داخل قاعدة البيانات", "المعلومات هي الأرقام الخام قبل أي معالجة", "البيانات أرقام أو كلمات بلا سياق، أما المعلومات فهي بيانات مُعالجة ومُفسَّرة وذات معنى"], "correct": "د"}, {"q": "ما المشكلة القديمة المرتبطة بـ«سرعة الوصول» قبل اعتماد قواعد البيانات؟", "options": ["كان البحث في آلاف الملفات الورقية يستغرق ساعات طويلة", "كانت النسخ الاحتياطية تُعمل يومياً بشكل آلي", "كانت التقارير تُنتج بسرعة لكن بدقة منخفضة", "كان عدد المستخدمين المسموح لهم بالدخول محدوداً جداً"], "correct": "أ"}, {"q": "كيف تحل قاعدة البيانات مشكلة «دقة البيانات» المتعلقة بتسجيل الشخص نفسه بأسماء مختلفة؟", "options": ["القواعد تمنع إدخال بيانات متعارضة تلقائياً", "بتحويل جميع الملفات إلى نسخ ورقية إضافية", "بحذف أي سجل يحتوي على تكرار دون تنبيه", "بتكليف موظف لمراجعة كل ملف يدوياً كل أسبوع"], "correct": "أ"}, {"q": "ما الحل الذي تقدمه قاعدة البيانات لمشكلة «العمل المتزامن» التي كانت تحد من استخدام الملف الورقي؟", "options": ["يُشترط حضور جميع الموظفين لتحديث ملف واحد", "مئات المستخدمين يمكنهم العمل على النظام في الوقت نفسه", "تُغلق قاعدة البيانات تلقائياً بعد كل عملية إدخال", "يُسمح لموظف واحد فقط بالدخول للنظام في كل مرة"], "correct": "ب"}, {"q": "ما هو «الجدول» في قاعدة البيانات حسب الشرح المبسّط؟", "options": ["برنامج منفصل يُستخدم لطباعة التقارير فقط", "الوحدة الأساسية لتخزين المعلومات، يشبه جدول الإكسل بصفوفه وأعمدته", "رمز أمني يُستخدم للدخول إلى النظام", "ملف صوتي يحفظ تسجيلات الاجتماعات"], "correct": "ب"}, {"q": "ما هو «المفتاح الأساسي» في الجدول؟", "options": ["اسم الجدول كما يظهر في واجهة النظام", "كلمة المرور الخاصة بمدير قاعدة البيانات", "العمود الذي يضمن أن كل سجل له هوية فريدة لا تتكرر، مثل رقم الهوية الوطنية", "أي عمود يحتوي على أرقام مهما كان نوعها"], "correct": "ج"}, {"q": "في شكل العلاقة بين جدول الأقسام وجدول الموظفين، ماذا تعني العلاقة الموضحة (1:N)؟", "options": ["كل قسم يرتبط بموظف واحد فقط دون غيره", "القسم الواحد يضم عدة موظفين", "الموظف الواحد ينتمي إلى عدة أقسام في آنٍ واحد", "لا توجد أي علاقة بين الجدولين"], "correct": "ب"}, {"q": "أي نوع من قواعد البيانات هو الأكثر استخداماً في المؤسسات الحكومية والبنوك والجامعات؟", "options": ["قواعد بيانات الوثائق", "قواعد البيانات الوقتية", "قواعد بيانات الرسوم البيانية", "قواعد البيانات العلائقية"], "correct": "د"}, {"q": "ما هو مجال الاستخدام المثالي لـ«قواعد البيانات الوقتية» وفق الجدول المقارن؟", "options": ["المواقع الإلكترونية والتطبيقات الإدارية", "الحكومة والبنوك والجامعات", "تتبع المعاملات والسجلات التاريخية", "تحليل الشبكات والخرائط التنظيمية"], "correct": "ج"}, {"q": "ما هو مجال الاستخدام المثالي لـ«قواعد بيانات الرسوم البيانية»؟", "options": ["تسجيل سجلات الأسعار التاريخية", "تخزين المقالات والتقارير ذات الهياكل المختلفة", "تحليل الشبكات وأنظمة التوصيات وخرائط التأثير", "إدارة رواتب الموظفين شهرياً"], "correct": "ج"}, {"q": "ما هي المراحل الست التي تمر بها دورة إدارة البيانات المستمرة؟", "options": ["التخطيط، التمويل، التوظيف، التدريب، التقييم، الإغلاق", "التصميم، البرمجة، الاختبار، النشر، الصيانة، الحذف", "الجمع، الترميز، الطباعة، التوقيع، الختم، الحفظ", "الإدخال، التخزين، الاسترجاع، الأرشفة، التحليل، التحديث"], "correct": "د"}, {"q": "ما تعريف «لغة الاستعلام»؟", "options": ["اللغة التي يتواصل بها المستخدم أو النظام مع قاعدة البيانات لطلب المعلومات أو إضافتها أو تعديلها", "وسيلة اتصال صوتي بين الموظفين والإدارة", "نظام تشفير خاص بالبريد الإلكتروني الحكومي", "برنامج مستقل لتصميم واجهات المستخدم فقط"], "correct": "أ"}, {"q": "في نموذج الاستعلام (اختر / من / حيث / رتّب)، ماذا يمثل عنصر «حيث»؟", "options": ["قائمة الأعمدة المطلوب إظهارها فقط", "الشرط الذي تُصفّى بناءً عليه البيانات", "الجدول الذي يجري البحث فيه", "طريقة عرض النتيجة تصاعدياً أو تنازلياً"], "correct": "ب"}, {"q": "من هو المسؤول عن تصميم البنية الأساسية لقاعدة البيانات وصيانتها وضمان أمانها؟", "options": ["مدير النظام", "صاحب القرار", "مدير قاعدة البيانات", "المستخدم النهائي"], "correct": "ج"}, {"q": "ما الوسيلة التي تجعل البيانات الحساسة غير قابلة للقراءة حتى لو وقعت في الأيدي الخطأ؟", "options": ["التشفير", "جدار الحماية", "تسجيل كل العمليات", "صلاحيات الوصول المتدرجة"], "correct": "أ"}, {"q": "بالربط بين «المفتاح الأساسي» و«العلاقات بين الجداول»، لماذا يُعد رقم الموظف الفريد ضرورياً لربط جدول الموظفين بجدول الإجازات؟", "options": ["لأنه يُستخدم فقط لحساب راتب الموظف الشهري", "لأنه يُغني عن الحاجة لوجود جدول الأقسام أصلاً", "لأن المفتاح الفريد يضمن ربط كل سجل إجازة بالموظف الصحيح دون التباس مع موظف آخر يحمل اسماً مشابهاً", "لأنه يحدد عدد أيام الإجازة المسموح بها لكل قسم"], "correct": "ج"}, {"q": "من قسم التجارب الناجحة، تقليص وقت حساب فاتورة الكهرباء إلى أقل من دقيقة يعكس أي مبدأ من مبادئ حل مشكلات الملفات الورقية؟", "options": ["مبدأ الأرشفة الذي يحفظ الفواتير القديمة لسنوات", "مبدأ العلاقات بين الجداول الذي يربط الأقسام بالمديريات", "مبدأ التشفير الذي يحمي بيانات المشتركين من الاختراق", "مبدأ سرعة الوصول الذي يتيح للنظام البحث والمعالجة في ثوانٍ معدودة"], "correct": "د"}, {"q": "لو أراد مسؤول شؤون الموظفين تقريراً عن «جميع المعاملات المنجزة الشهر الماضي مع اسم المنجز والقسم»، فما الذي يجعل هذا التقرير ممكناً وفق شرح العلاقات بين الجداول؟", "options": ["الروابط بين جدول المعاملات وجدول الموظفين وجدول الأقسام عبر المفاتيح الخارجية", "اعتماد قاعدة بيانات من نوع الرسوم البيانية حصراً", "وجود نسخة ورقية احتياطية من كل معاملة في الأرشيف", "استخدام جدار الحماية لمنع دخول أي مستخدم غير مصرح له"], "correct": "أ"}, {"q": "أي نوع من الأنواع الأربعة لقواعد البيانات هو الأنسب لتخزين السجل الصحي الموحد الذي يحدد تاريخ المريض الطبي عبر الزمن؟", "options": ["قواعد البيانات العلائقية حصراً دون غيرها", "قواعد بيانات الوثائق لمرونتها الشكلية فقط", "قواعد بيانات الرسوم البيانية لتحليل الشبكات", "قواعد البيانات الوقتية، لأنها متخصصة في تتبع التغيرات عبر الزمن"], "correct": "د"}, {"q": "بالمقارنة بين دور «المستخدم النهائي» ودور «صاحب القرار» في إدارة قاعدة البيانات، ما الفرق الجوهري بينهما؟", "options": ["صاحب القرار هو المسؤول الوحيد عن إدخال البيانات يومياً", "المستخدم النهائي يُدخل البيانات ويستعلم عنها وينتج التقارير، بينما صاحب القرار يستفيد من هذه التقارير في اتخاذ قراراته الإدارية", "كلاهما يقوم بتصميم البنية التقنية لقاعدة البيانات", "المستخدم النهائي هو المسؤول عن صيانة الخوادم والشبكة"], "correct": "ب"}, {"q": "كيف يرتبط «التشفير» و«جدار الحماية» معاً في تحقيق أمان شامل للبيانات رغم اختلاف وظيفة كل منهما؟", "options": ["التشفير يمنع دخول الشبكة الخارجية بينما جدار الحماية يشفّر الملفات", "جدار الحماية يمنع الوصول غير المصرح من الشبكة الخارجية، بينما التشفير يحمي البيانات نفسها حتى إن وصل إليها شخص غير مصرح", "كلاهما يؤديان الوظيفة نفسها تماماً فيُستغنى عن أحدهما", "لا علاقة بينهما لأن كلاً منهما يُطبَّق في نظام منفصل تماماً"], "correct": "ب"}, {"q": "وفق الملخص العام، لماذا تُعد قواعد البيانات «العمود الفقري للتحول الرقمي» وليست مجرد أداة تقنية؟", "options": ["لأنها تُلغي الحاجة إلى وجود موظفين في المؤسسات الحكومية", "لأنها تُستخدم فقط من قبل المبرمجين والمختصين التقنيين", "لأنها مرتبطة فقط بقطاع الاتصالات دون بقية القطاعات", "لأن الخدمات الحكومية والرقمية، كالحكومة الإلكترونية، تعتمد أساساً على بيانات منظمة وموثوقة لتقديمها"], "correct": "د"}, {"q": "بالربط بين «صعوبة إخفاء الفساد» في أثر التحول الرقمي و«تسجيل كل العمليات» في أمان البيانات، ما العلاقة بينهما؟", "options": ["تسجيل كل عملية تعديل أو إضافة مع اسم منفّذها وتوقيتها يجعل تتبّع أي تلاعب أو فساد ممكناً بسهولة", "الفساد يصعب إخفاؤه بسبب التشفير فقط دون غيره من الإجراءات", "تسجيل العمليات يزيد من صعوبة إعداد التقارير الدورية", "لا توجد علاقة، فالفساد يُكتشف فقط عبر التقارير المالية السنوية"], "correct": "أ"}, {"q": "بالمقارنة بين قاعدة البيانات العلائقية وقاعدة بيانات الوثائق، لماذا تُفضَّل العلائقية عادة في القطاعات الحكومية والمصرفية؟", "options": ["لأن العلائقية لا تحتاج إلى أي مفتاح أساسي أو علاقات بين الجداول", "لأن الوثائقية أغلى تكلفة من العلائقية بكثير", "لأن هذه القطاعات تحتاج بيانات منظمة في جداول ثابتة مع ضمانات دقة وأمان عالية، بينما الوثائقية أنسب للمحتوى متنوع الشكل كالمقالات", "لأن القطاعات الحكومية ممنوعة قانونياً من استخدام قواعد بيانات الوثائق"], "correct": "ج"}];
+const LETTERS = ["أ","ب","ج","د"];
+
+let current = 0;
+let score = 0;
+let answered = false;
+
+const qCounter = document.getElementById('qCounter');
+const scoreChip = document.getElementById('scoreChip');
+const progressFill = document.getElementById('progressFill');
+const qNum = document.getElementById('qNum');
+const qText = document.getElementById('qText');
+const optsArea = document.getElementById('optsArea');
+const feedback = document.getElementById('feedback');
+const nextBtn = document.getElementById('nextBtn');
+const quizArea = document.getElementById('quizArea');
+const resultsArea = document.getElementById('resultsArea');
+const finalScore = document.getElementById('finalScore');
+const finalMsg = document.getElementById('finalMsg');
+const retryBtn = document.getElementById('retryBtn');
+
+const ORDINALS = ["الأول","الثاني","الثالث","الرابع","الخامس","السادس","السابع","الثامن","التاسع","العاشر"];
+function ordinalWord(n){
+  if(n <= 10) return ORDINALS[n-1];
+  return n.toString();
+}
+
+function renderQuestion(){
+  answered = false;
+  feedback.textContent = "";
+  feedback.className = "feedback";
+  nextBtn.classList.remove("show");
+
+  const item = DATA[current];
+  qCounter.textContent = `سؤال ${current+1} / ${DATA.length}`;
+  scoreChip.textContent = `النتيجة: ${score}`;
+  progressFill.style.width = `${(current/DATA.length)*100}%`;
+  qNum.textContent = `السؤال ${ordinalWord(current+1)}`;
+  qText.textContent = item.q;
+
+  optsArea.innerHTML = "";
+  item.options.forEach((optText, idx) => {
+    const letter = LETTERS[idx];
+    const row = document.createElement('div');
+    row.className = 'opt';
+    row.innerHTML = `<div class="tag">${letter}</div><div class="txt">${optText}</div>`;
+    row.addEventListener('click', () => selectOption(letter, row));
+    optsArea.appendChild(row);
+  });
+}
+
+function selectOption(letter, row){
+  if(answered) return;
+  answered = true;
+  const item = DATA[current];
+  const isCorrect = letter === item.correct;
+
+  Array.from(optsArea.children).forEach((el, idx) => {
+    el.classList.add('disabled');
+    const elLetter = LETTERS[idx];
+    if(elLetter === item.correct){
+      el.classList.add('correct');
+    } else if(el === row){
+      el.classList.add('wrong');
+    } else {
+      el.classList.add('muted');
+    }
+  });
+
+  if(isCorrect){
+    score++;
+    feedback.textContent = "إجابة صحيحة";
+    feedback.classList.add('good');
+  } else {
+    feedback.textContent = `إجابة غير صحيحة — الصحيح هو (${item.correct})`;
+    feedback.classList.add('bad');
+  }
+  scoreChip.textContent = `النتيجة: ${score}`;
+  nextBtn.classList.add('show');
+}
+
+nextBtn.addEventListener('click', () => {
+  current++;
+  if(current >= DATA.length){
+    showResults();
+  } else {
+    renderQuestion();
+  }
+});
+
+function showResults(){
+  quizArea.style.display = "none";
+  resultsArea.classList.add('show');
+  progressFill.style.width = "100%";
+  finalScore.textContent = `${score}/${DATA.length}`;
+  const pct = Math.round((score/DATA.length)*100);
+  let msg = "";
+  if(pct >= 85) msg = "أداء ممتاز — إتقان واضح للمادة.";
+  else if(pct >= 70) msg = "أداء جيد جداً — بقيت نقاط بسيطة تحتاج مراجعة.";
+  else if(pct >= 50) msg = "أداء مقبول — يُنصح بمراجعة المحتوى مرة أخرى.";
+  else msg = "يُنصح بإعادة قراءة المادة ثم إعادة المحاولة.";
+  finalMsg.textContent = `${pct}% من الإجابات صحيحة. ${msg}`;
+}
+
+retryBtn.addEventListener('click', () => {
+  current = 0; score = 0;
+  quizArea.style.display = "";
+  resultsArea.classList.remove('show');
+  renderQuestion();
+});
+
+renderQuestion();
+</script>
+</body>
+</html>

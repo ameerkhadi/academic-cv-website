@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الحوسبة السحابية الحكومية — اختبار تفاعلي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0a0f1a;
+    --bg-2: #0d1526;
+    --surface: #111b30;
+    --surface-2: #16223d;
+    --line: #22304a;
+    --line-soft: #1a2540;
+    --gold: #c9a24b;
+    --gold-soft: #8a7038;
+    --ink: #ece7da;
+    --ink-dim: #97a0b5;
+    --ink-faint: #5c6684;
+    --good: #4caf7d;
+    --good-bg: rgba(76,175,125,0.12);
+    --bad: #d16a6a;
+    --bad-bg: rgba(209,106,106,0.12);
+  }
+  *{ box-sizing: border-box; }
+  html,body{ margin:0; padding:0; }
+  body{
+    background:
+      radial-gradient(1100px 500px at 85% -10%, rgba(201,162,75,0.10), transparent 60%),
+      radial-gradient(900px 600px at -10% 110%, rgba(201,162,75,0.06), transparent 55%),
+      linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+    color: var(--ink);
+    font-family: 'Tajawal', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+  .wrap{
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 56px 22px 90px;
+  }
+
+  .eyebrow{
+    text-align:center;
+    color: var(--gold);
+    font-size: 12px;
+    letter-spacing: 0.26em;
+    font-weight: 700;
+    margin-bottom: 14px;
+    opacity: 0.9;
+  }
+  h1{
+    font-family: 'Amiri', serif;
+    font-weight: 700;
+    text-align: center;
+    font-size: clamp(26px, 5.5vw, 38px);
+    line-height: 1.3;
+    margin: 0 0 10px;
+    color: #f5f1e6;
+  }
+  .byline{
+    text-align:center;
+    color: var(--ink-faint);
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    margin-bottom: 36px;
+  }
+
+  /* ---- progress ---- */
+  .progress-row{
+    display:flex; align-items:center; justify-content:space-between;
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: var(--ink-dim);
+  }
+  .progress-track{
+    height: 3px; width: 100%;
+    background: var(--line);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 34px;
+  }
+  .progress-fill{
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--gold-soft), var(--gold));
+    transition: width 0.4s ease;
+  }
+  .score-chip{
+    color: var(--gold);
+    font-weight: 700;
+  }
+
+  /* ---- question card ---- */
+  .card{
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 30px 26px;
+  }
+  .qnum{
+    font-family: 'Amiri', serif;
+    color: var(--gold);
+    font-size: 14px;
+    margin-bottom: 10px;
+    letter-spacing: 0.02em;
+  }
+  .qtext{
+    font-size: 19px;
+    font-weight: 500;
+    line-height: 1.7;
+    color: var(--ink);
+    margin-bottom: 26px;
+  }
+  .options{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .opt{
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    border: 1px solid var(--line-soft);
+    border-radius: 8px;
+    background: var(--surface-2);
+    cursor: pointer;
+    text-align: right;
+    transition: border-color 0.2s ease, background 0.2s ease, transform 0.15s ease;
+  }
+  .opt:hover{ border-color: var(--gold-soft); }
+  .opt .tag{
+    flex: 0 0 auto;
+    width: 30px; height: 30px;
+    border: 1px solid var(--line-soft);
+    border-radius: 50%;
+    display: flex; align-items:center; justify-content:center;
+    font-family: 'Amiri', serif;
+    font-size: 14px;
+    color: var(--ink-faint);
+    transition: all 0.2s ease;
+  }
+  .opt .txt{
+    flex: 1 1 auto;
+    font-size: 15.5px;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+  .opt.disabled{ cursor: default; }
+  .opt.correct{
+    border-color: var(--good);
+    background: var(--good-bg);
+  }
+  .opt.correct .tag{ border-color: var(--good); color: var(--good); }
+  .opt.wrong{
+    border-color: var(--bad);
+    background: var(--bad-bg);
+  }
+  .opt.wrong .tag{ border-color: var(--bad); color: var(--bad); }
+  .opt.muted{ opacity: 0.45; }
+
+  .feedback{
+    margin-top: 20px;
+    font-size: 13.5px;
+    min-height: 18px;
+    color: var(--ink-dim);
+  }
+  .feedback.good{ color: var(--good); }
+  .feedback.bad{ color: var(--bad); }
+
+  .actions{
+    display:flex; justify-content:flex-end;
+    margin-top: 26px;
+  }
+  .btn{
+    appearance: none;
+    border: 1px solid var(--gold-soft);
+    background: transparent;
+    color: var(--gold);
+    padding: 11px 26px;
+    border-radius: 7px;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 14.5px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .btn.show{ opacity: 1; pointer-events: auto; }
+  .btn:hover{ background: var(--gold); color: #0a0f1a; }
+
+  /* ---- results ---- */
+  .results{
+    display:none;
+    text-align:center;
+    padding: 50px 26px;
+  }
+  .results.show{ display:block; }
+  .results .big{
+    font-family: 'Amiri', serif;
+    font-size: 56px;
+    color: var(--gold);
+    margin-bottom: 6px;
+  }
+  .results .label{
+    color: var(--ink-dim);
+    font-size: 15px;
+    margin-bottom: 34px;
+  }
+  .results .msg{
+    font-size: 16px;
+    color: var(--ink);
+    margin-bottom: 34px;
+    line-height: 1.8;
+  }
+  .retry{
+    display:inline-block;
+    border: 1px solid var(--gold-soft);
+    background: transparent;
+    color: var(--gold);
+    padding: 12px 30px;
+    border-radius: 7px;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 14.5px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+  .retry:hover{ background: var(--gold); color: #0a0f1a; }
+
+  footer{
+    text-align:center;
+    margin-top: 60px;
+    color: var(--ink-faint);
+    font-size: 12px;
+    letter-spacing: 0.03em;
+  }
+
+  @media (max-width: 520px){
+    .wrap{ padding: 40px 16px 70px; }
+    .card{ padding: 22px 18px; }
+    .qtext{ font-size: 17px; }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="eyebrow">برنامج القيادة الرقمية — الدبلوم العالي</div>
+    <h1>الحوسبة السحابية الحكومية</h1>
+    <div class="byline">اختبار تفاعلي — إعداد: أ.م.د. أمير هادي</div>
+
+    <div id="quizArea">
+      <div class="progress-row">
+        <span id="qCounter">سؤال ١ / 27</span>
+        <span class="score-chip" id="scoreChip">النتيجة: 0</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+      <div class="card">
+        <div class="qnum" id="qNum">السؤال ١</div>
+        <div class="qtext" id="qText"></div>
+        <div class="options" id="optsArea"></div>
+        <div class="feedback" id="feedback"></div>
+        <div class="actions">
+          <button class="btn" id="nextBtn">السؤال التالي ←</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="results" id="resultsArea">
+      <div class="big" id="finalScore">0/0</div>
+      <div class="label">نتيجتك النهائية</div>
+      <div class="msg" id="finalMsg"></div>
+      <button class="retry" id="retryBtn">إعادة الاختبار</button>
+    </div>
+
+    <footer>
+      المعهد العالي لإعداد وتأهيل القادة · إعداد: أ.م.د. أمير هادي
+    </footer>
+  </div>
+
+<script>
+const DATA = [{"q": "الحوسبة تُعرَّف بأنها عملية:", "options": ["استقبال المعلومات ومعالجتها وتخزينها وإرسالها باستخدام الحاسوب", "بيع وشراء الأجهزة الإلكترونية عبر الإنترنت", "تصميم واجهات المستخدم للتطبيقات", "طباعة الوثائق الرسمية إلكترونياً"], "correct": "أ"}, {"q": "أي مما يلي ليس أحد المكونات الستة لنظام الحوسبة؟", "options": ["المعالج CPU", "الذاكرة العشوائية RAM", "الشبكة", "برنامج مكافحة الفيروسات"], "correct": "د"}, {"q": "الذاكرة العشوائية RAM تُوصف بأنها:", "options": ["تخزين دائم يحفظ الملفات حتى بعد إيقاف الجهاز", "دماغ الحاسوب الذي ينفذ العمليات الحسابية", "وسيلة اتصال بين الأجهزة عبر الإنترنت", "تخزين مؤقت سريع يحتفظ بالبيانات قيد المعالجة فقط"], "correct": "د"}, {"q": "سبب تسمية «الحوسبة السحابية» بهذا الاسم يعود إلى:", "options": ["عادة مهندسي الشبكات برسم الإنترنت على هيئة سحابة في مخططاتهم", "شكل مراكز البيانات الفعلي من الأعلى", "لون شعارات الشركات المزودة للخدمة", "استخدام تقنية استشعار الطقس في تبريد السيرفرات"], "correct": "أ"}, {"q": "أول من استخدم كلمة «السحابة» للدلالة على الخدمات الرقمية البعيدة، بحسب التسلسل التاريخي، هي شركة:", "options": ["Google", "Compaq", "Microsoft", "General Magic"], "correct": "د"}, {"q": "التعريف الرسمي للحوسبة السحابية المعتمد عالمياً صدر عن:", "options": ["شركة Compaq عام 1996", "منظمة الأمم المتحدة", "معهد NIST الأمريكي في وثيقة SP 800-145 عام 2011", "منظمة الصحة العالمية"], "correct": "ج"}, {"q": "في تشبيه الكهرباء المستخدم لتوضيح مفهوم الحوسبة السحابية، فإن دفع المستخدم مقابل ما يستهلكه فقط شهرياً يقابل في السحابة:", "options": ["الدفع فقط مقابل الموارد المُستهلكة من مزود السحابة", "شراء سيرفرات خاصة بالملايين", "الاشتراك السنوي الثابت بغض النظر عن الاستخدام", "تركيب مولد كهرباء احتياطي في كل مؤسسة"], "correct": "أ"}, {"q": "خاصية «الوصول الواسع عبر الشبكة» تعني أن الخدمة السحابية:", "options": ["تعمل على أي جهاز سواء حاسوب أو هاتف أو تابلت", "تحتاج موافقة موظف مختص قبل كل استخدام", "تُقدَّم فقط داخل حدود الدولة الواحدة", "تتطلب شراء جهاز خاص للوصول إليها"], "correct": "أ"}, {"q": "النوع الأنسب من الحوسبة السحابية للجهات الحكومية والقطاع المالي والبيانات بالغة الحساسية هو:", "options": ["السحابة العامة Public Cloud", "السحابة الهجينة Hybrid Cloud", "السحابة الخاصة Private Cloud", "لا فرق بين الأنواع من ناحية الأمان"], "correct": "ج"}, {"q": "السحابة الهجينة Hybrid Cloud تعني أن:", "options": ["كل البيانات بلا استثناء تبقى داخل المؤسسة", "البيانات الحساسة تبقى خاصة بينما الخدمات الأقل حساسية تعمل على السحابة العامة", "المؤسسة تستخدم مزوداً واحداً فقط بشكل حصري", "لا يمكن الجمع بين نوعين من السحابة في نفس المؤسسة"], "correct": "ب"}, {"q": "في نموذج IaaS، تكون مسؤولية إدارة نظام التشغيل والتطبيقات على عاتق:", "options": ["المزود وحده", "لا أحد، فهي مؤتمتة بالكامل", "العميل نفسه", "شركة طرف ثالث محايدة"], "correct": "ج"}, {"q": "مثال SaaS الذي يستخدمه المستخدم مباشرة من المتصفح دون أي إعداد هو:", "options": ["AWS Elastic Beanstalk", "AWS EC2", "خوادم افتراضية مخصصة", "Microsoft 365 وZoom وTeams"], "correct": "د"}, {"q": "المستوى الهندسي الذي يمثل مبنى فيزيائياً ضخماً يحتوي آلاف السيرفرات المترابطة يُسمى:", "options": ["Availability Zone", "مركز البيانات Data Center", "Region", "Cloud Node"], "correct": "ب"}, {"q": "بحسب الحصص السوقية المذكورة لمزودي السحابة العالميين في الربع الأول من 2024، تتصدر:", "options": ["Google Cloud Platform بحصة 25%", "Amazon Web Services بحصة 31%", "Microsoft Azure بحصة 40%", "IBM Cloud بحصة 20%"], "correct": "ب"}, {"q": "نموذج المسؤولية المشتركة Shared Responsibility Model يعني أن:", "options": ["المزود مسؤول عن كل شيء بما في ذلك بيانات العميل", "العميل مسؤول عن كل شيء بما في ذلك البنية التحتية الفيزيائية", "المزود يؤمّن البنية التحتية للسحابة والعميل يؤمّن بياناته وتطبيقاته وصلاحياته", "لا توجد مسؤولية على أي طرف لأن السحابة آمنة تلقائياً"], "correct": "ج"}, {"q": "السبب المباشر وراء اختراق مكتب إدارة شؤون الموظفين الأمريكي عام 2015 وسرقة بيانات 21 مليون موظف كان:", "options": ["هجوم برامج فدية Ransomware", "ضعف كلمة مرور أحد الموظفين وإدارة الهوية", "عطل في مركز بيانات AWS", "كارثة طبيعية أثّرت على السيرفرات"], "correct": "ب"}, {"q": "مدير عام يقول: «انتقلنا للسحابة، إذاً أكملنا التحول الرقمي». الرد الصحيح هو أن هذه العبارة:", "options": ["صحيحة تماماً لأن السحابة تساوي التحول الرقمي", "خاطئة، لأن السحابة أداة تُمكّن التحول الرقمي وليست هي التحول بحد ذاته", "صحيحة فقط إذا استخدموا AWS تحديداً", "غير مهمة، فالمهم فقط الانتقال للسحابة أياً كانت النتيجة"], "correct": "ب"}, {"q": "وزارة الصحة السعودية وسّعت خدمات التطبيب عن بُعد بسرعة خلال جائحة كوفيد-19 دون شراء أي معدات جديدة. بالربط مع خصائص NIST الخمس، أي خاصيتين فسّرتا هذا معاً؟", "options": ["المرونة السريعة وخدمة عند الطلب", "تجميع الموارد فقط دون غيرها", "الوصول الواسع عبر الشبكة فقط", "الخدمة القابلة للقياس فقط"], "correct": "أ"}, {"q": "فريق تقني متقدم يريد أقصى درجة تحكم بالبنية التحتية، ويقبل تحمّل مسؤولية إدارة نظام التشغيل والتطبيقات بنفسه. بالربط مع جدول المقارنة بين نماذج الخدمة، أي نموذج يناسبه؟", "options": ["SaaS لأنه الأسهل استخداماً", "IaaS لأنه يمنح أعلى درجة تحكم مقابل أكبر مسؤولية على العميل", "PaaS لأنه يدير كل شيء نيابة عن العميل", "لا فرق بين النماذج من ناحية التحكم"], "correct": "ب"}, {"q": "اختراق مكتب إدارة شؤون الموظفين الأمريكي عام 2015 حدث بسبب ضعف كلمة مرور أحد الموظفين. بالربط مع مبدأ المسؤولية المشتركة، أي طرف كان مسؤولاً عن منع هذا الاختراق تحديداً؟", "options": ["مزود السحابة وحده لأنه يدير كل شيء", "لا أحد، لأنه حادث لا يمكن تفاديه بأي حال", "العميل، لأن تأمين الهوية وكلمات المرور من ضمن مسؤوليته لا مسؤولية المزود", "شركة تصنيع السيرفرات المستخدمة"], "correct": "ج"}, {"q": "بالمقارنة بين IaaS وSaaS ضمن نموذج المسؤولية المشتركة، من يتحمل العبء الأكبر لتأمين النظام وإدارته في حالة SaaS مقارنة بـ IaaS؟", "options": ["العميل يتحمل نفس العبء تماماً في كلا النموذجين", "العميل يتحمل عبئاً أكبر في SaaS لأنه يدير التطبيق بنفسه", "لا علاقة إطلاقاً بين نموذج الخدمة ومسؤولية الأمان", "المزود يتحمل عبئاً أكبر في SaaS لأنه يدير كل شيء تقريباً بينما يتراجع دور العميل"], "correct": "د"}, {"q": "بالربط بين المراحل الأربع لرحلة التحول الرقمي (الرقمنة، الرقمية، التحول الرقمي، السحابة)، ما الترتيب الصحيح لتطورها التاريخي؟", "options": ["رقمنة ← رقمية ← تحول رقمي ← سحابة كبنية تحتية مُمكِّنة", "سحابة ← تحول رقمي ← رقمية ← رقمنة", "رقمية ← رقمنة ← سحابة ← تحول رقمي", "لا يوجد ترتيب محدد، جميعها تحدث معاً دائماً وفي وقت واحد"], "correct": "أ"}, {"q": "مستشفى حوّل سجلات المرضى الورقية إلى PDF، لكن الطبيب ما زال يملأ نفس النماذج يدوياً بنفس الإجراءات القديمة. بالربط بين تعريفي الرقمنة والرقمية، لماذا تُصنَّف هذه الحالة رقمنة وليست رقمية؟", "options": ["لأن المستشفى لم يستخدم حاسوباً على الإطلاق في العملية", "لأن الشكل فقط تغيّر إلى PDF بينما طريقة العمل والإجراءات بقيت كما هي تماماً", "لأن الرقمية تتطلب استخدام الذكاء الاصطناعي حصراً في كل حالة", "لأن المستشفيات لا يمكنها الوصول لمرحلة الرقمية أبداً"], "correct": "ب"}, {"q": "بالربط بين حصة AWS السوقية العالمية 31% وتوسّعها الإقليمي في البحرين 2019 والإمارات 2022 وخطتها للسعودية 2026، ما الاستنتاج الأدق؟", "options": ["AWS تنسحب تدريجياً من المنطقة العربية رغم ريادتها العالمية", "الحصة السوقية العالمية لا علاقة لها إطلاقاً بقرارات التوسع الإقليمي", "ريادة AWS العالمية تنعكس على استثمار متزايد في مناطق جغرافية جديدة بالمنطقة العربية لخدمة العملاء المحليين بأداء أسرع", "البحرين والإمارات والسعودية تستضيف مراكز بيانات لجميع المزودين الثلاثة بالتساوي"], "correct": "ج"}, {"q": "كيف تعمل خاصيتا «المرونة السريعة» و«الخدمة القابلة للقياس» معاً لتقليل الهدر المالي للمؤسسات الحكومية؟", "options": ["المرونة تلغي الحاجة للدفع نهائياً، والقياس لا علاقة له بالتكلفة", "القياس وحده يقلل الهدر، والمرونة لا علاقة لها بالتكلفة إطلاقاً", "كلتاهما خاصيتان تقنيتان بحتتان ولا تأثير مالي لهما على الإطلاق", "المرونة توسّع الموارد وتقلّصها تلقائياً حسب الطلب، والقياس يضمن الدفع فقط مقابل ما استُهلك فعلياً، فلا تدفع المؤسسة ثمن موارد خاملة"], "correct": "د"}, {"q": "بالربط بين خصائص السحابة العامة والخاصة والتوصية الختامية للمؤسسات الحكومية، لماذا يوصى بالسحابة الهجينة تحديداً بدلاً من الاكتفاء بنوع واحد؟", "options": ["لأن السحابة الهجينة أرخص من كليهما بشكل مطلق في كل الحالات", "لأن القانون يمنع الحكومات من استخدام أي سحابة عامة إطلاقاً", "لأنها تجمع أمان السحابة الخاصة للبيانات الحساسة مع مرونة وكفاءة السحابة العامة للخدمات الأقل حساسية، محققة توازناً لا يوفره أي نوع منفرد", "لأنها النوع الوحيد المعترف به رسمياً من NIST"], "correct": "ج"}, {"q": "بالربط بين مقولة «السحابة أداة تُمكّن التحول الرقمي وليست هي التحول بحد ذاته» وأركان التحول الرقمي الأربعة (الاستراتيجية، الثقافة، التقنية، نموذج العمل الجديد)، أي حالة تمثل تحولاً رقمياً حقيقياً؟", "options": ["وزارة أعادت تصميم خدماتها بالكامل حول احتياجات المواطن مستخدمة الذكاء الاصطناعي في اتخاذ القرار، مع تغيير ثقافة العمل ونموذج تقديم الخدمة", "بنك تقليدي أضاف تطبيق هاتف فقط دون تغيير باقي عملياته الداخلية", "وزارة انتقلت لاستضافة سيرفراتها على AWS دون أي تغيير في إجراءاتها", "دائرة حكومية حوّلت أرشيفها الورقي إلى ملفات PDF فقط لا غير"], "correct": "أ"}];
+const LETTERS = ["أ","ب","ج","د"];
+
+let current = 0;
+let score = 0;
+let answered = false;
+
+const qCounter = document.getElementById('qCounter');
+const scoreChip = document.getElementById('scoreChip');
+const progressFill = document.getElementById('progressFill');
+const qNum = document.getElementById('qNum');
+const qText = document.getElementById('qText');
+const optsArea = document.getElementById('optsArea');
+const feedback = document.getElementById('feedback');
+const nextBtn = document.getElementById('nextBtn');
+const quizArea = document.getElementById('quizArea');
+const resultsArea = document.getElementById('resultsArea');
+const finalScore = document.getElementById('finalScore');
+const finalMsg = document.getElementById('finalMsg');
+const retryBtn = document.getElementById('retryBtn');
+
+const ORDINALS = ["الأول","الثاني","الثالث","الرابع","الخامس","السادس","السابع","الثامن","التاسع","العاشر"];
+function ordinalWord(n){
+  if(n <= 10) return ORDINALS[n-1];
+  return n.toString();
+}
+
+function renderQuestion(){
+  answered = false;
+  feedback.textContent = "";
+  feedback.className = "feedback";
+  nextBtn.classList.remove("show");
+
+  const item = DATA[current];
+  qCounter.textContent = `سؤال ${current+1} / ${DATA.length}`;
+  scoreChip.textContent = `النتيجة: ${score}`;
+  progressFill.style.width = `${(current/DATA.length)*100}%`;
+  qNum.textContent = `السؤال ${ordinalWord(current+1)}`;
+  qText.textContent = item.q;
+
+  optsArea.innerHTML = "";
+  item.options.forEach((optText, idx) => {
+    const letter = LETTERS[idx];
+    const row = document.createElement('div');
+    row.className = 'opt';
+    row.innerHTML = `<div class="tag">${letter}</div><div class="txt">${optText}</div>`;
+    row.addEventListener('click', () => selectOption(letter, row));
+    optsArea.appendChild(row);
+  });
+}
+
+function selectOption(letter, row){
+  if(answered) return;
+  answered = true;
+  const item = DATA[current];
+  const isCorrect = letter === item.correct;
+
+  Array.from(optsArea.children).forEach((el, idx) => {
+    el.classList.add('disabled');
+    const elLetter = LETTERS[idx];
+    if(elLetter === item.correct){
+      el.classList.add('correct');
+    } else if(el === row){
+      el.classList.add('wrong');
+    } else {
+      el.classList.add('muted');
+    }
+  });
+
+  if(isCorrect){
+    score++;
+    feedback.textContent = "إجابة صحيحة";
+    feedback.classList.add('good');
+  } else {
+    feedback.textContent = `إجابة غير صحيحة — الصحيح هو (${item.correct})`;
+    feedback.classList.add('bad');
+  }
+  scoreChip.textContent = `النتيجة: ${score}`;
+  nextBtn.classList.add('show');
+}
+
+nextBtn.addEventListener('click', () => {
+  current++;
+  if(current >= DATA.length){
+    showResults();
+  } else {
+    renderQuestion();
+  }
+});
+
+function showResults(){
+  quizArea.style.display = "none";
+  resultsArea.classList.add('show');
+  progressFill.style.width = "100%";
+  finalScore.textContent = `${score}/${DATA.length}`;
+  const pct = Math.round((score/DATA.length)*100);
+  let msg = "";
+  if(pct >= 85) msg = "أداء ممتاز — إتقان واضح للمادة.";
+  else if(pct >= 70) msg = "أداء جيد جداً — بقيت نقاط بسيطة تحتاج مراجعة.";
+  else if(pct >= 50) msg = "أداء مقبول — يُنصح بمراجعة المحتوى مرة أخرى.";
+  else msg = "يُنصح بإعادة قراءة المادة ثم إعادة المحاولة.";
+  finalMsg.textContent = `${pct}% من الإجابات صحيحة. ${msg}`;
+}
+
+retryBtn.addEventListener('click', () => {
+  current = 0; score = 0;
+  quizArea.style.display = "";
+  resultsArea.classList.remove('show');
+  renderQuestion();
+});
+
+renderQuestion();
+</script>
+</body>
+</html>
