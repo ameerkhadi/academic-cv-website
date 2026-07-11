@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<!-- saved from url=(0045)https://ahmadmhailan-web.github.io/Lecture-9/ -->
+<html lang="ar" dir="rtl"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المنصّات الحكومية الرقمية - محاضرة أكاديمية</title>
+    <!-- Google Fonts for Arabic -->
+    <link rel="preconnect" href="https://fonts.googleapis.com/">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+    <link href="./المنصّات الحكومية الرقمية - محاضرة أكاديمية_files/css2" rel="stylesheet">
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="./المنصّات الحكومية الرقمية - محاضرة أكاديمية_files/all.min.css">
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: #f4f7fc;
+            color: #1a2a3a;
+            line-height: 1.8;
+            padding: 0;
+        }
+
+        /* ===== SCROLLBAR ===== */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #e8edf3;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2a6f97;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #1d4f6e;
+        }
+
+        /* ===== CONTAINER ===== */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px 60px;
+        }
+
+        /* ===== HEADER / HERO ===== */
+        .hero {
+            background: linear-gradient(135deg, #0b2a3e 0%, #1b4f6e 40%, #2a7a9c 100%);
+            color: #fff;
+            padding: 70px 20px 50px;
+            border-radius: 0 0 60px 60px;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 50px;
+            box-shadow: 0 12px 40px rgba(10, 40, 60, 0.25);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -40%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -5%;
+            width: 400px;
+            height: 400px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(6px);
+            padding: 6px 24px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: #d4edff;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .hero-badge i {
+            margin-left: 8px;
+        }
+
+        .hero h1 {
+            font-size: 3.2rem;
+            font-weight: 900;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .hero h1 i {
+            color: #ffd966;
+            margin-left: 12px;
+        }
+
+        .hero-sub {
+            font-size: 1.2rem;
+            font-weight: 300;
+            color: #d4e9ff;
+            max-width: 700px;
+            margin: 0 auto 10px;
+            line-height: 1.9;
+        }
+
+        .hero-credits {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #ffd966;
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(4px);
+            display: inline-block;
+            padding: 8px 32px;
+            border-radius: 50px;
+            margin: 16px auto 10px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            letter-spacing: 0.5px;
+        }
+
+        .hero-credits i {
+            margin-left: 10px;
+            color: #fff;
+        }
+
+        .hero-meta {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 28px;
+            font-size: 0.95rem;
+            color: #b8d8f0;
+        }
+
+        .hero-meta span i {
+            margin-left: 8px;
+            color: #ffd966;
+        }
+
+        .hero-icon-grid {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .hero-icon-item {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(6px);
+            padding: 14px 28px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 0.95rem;
+            font-weight: 400;
+            transition: 0.3s;
+        }
+
+        .hero-icon-item i {
+            font-size: 1.4rem;
+            margin-left: 10px;
+            color: #ffd966;
+        }
+
+        .hero-icon-item:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-3px);
+        }
+
+        /* ===== TABLE OF CONTENTS ===== */
+        .toc {
+            background: #fff;
+            border-radius: 28px;
+            padding: 35px 45px;
+            margin-bottom: 50px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+            border-right: 6px solid #2a7a9c;
+        }
+
+        .toc-title {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: #0b2a3e;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .toc-title i {
+            color: #2a7a9c;
+            font-size: 1.6rem;
+        }
+
+        .toc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px 25px;
+        }
+
+        .toc-grid a {
+            color: #1a3a4e;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 6px 0;
+            border-bottom: 2px solid transparent;
+            transition: 0.25s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.98rem;
+        }
+
+        .toc-grid a i {
+            color: #2a7a9c;
+            font-size: 0.9rem;
+            width: 22px;
+            text-align: center;
+        }
+
+        .toc-grid a:hover {
+            color: #0b2a3e;
+            border-bottom-color: #2a7a9c;
+            transform: translateX(-6px);
+        }
+
+        /* ===== SECTION ===== */
+        .section {
+            background: #fff;
+            border-radius: 28px;
+            padding: 40px 45px;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+            transition: 0.3s;
+            border: 1px solid rgba(42, 122, 156, 0.06);
+        }
+
+        .section:hover {
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.07);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            margin-bottom: 24px;
+            padding-bottom: 14px;
+            border-bottom: 3px solid #eaf0f6;
+        }
+
+        .section-header .num {
+            background: linear-gradient(135deg, #1b4f6e, #2a7a9c);
+            color: #fff;
+            width: 48px;
+            height: 48px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        .section-header h2 {
+            font-size: 1.7rem;
+            font-weight: 800;
+            color: #0b2a3e;
+            margin: 0;
+        }
+
+        .section-header h2 i {
+            color: #2a7a9c;
+            margin-left: 12px;
+            font-size: 1.5rem;
+        }
+
+        .section-header .sub-icon {
+            margin-right: auto;
+            font-size: 2.2rem;
+            color: #d0dce8;
+        }
+
+        /* ===== SUBHEADINGS ===== */
+        h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #1a4a62;
+            margin: 30px 0 16px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        h3 i {
+            color: #2a7a9c;
+            font-size: 1.2rem;
+            width: 28px;
+            text-align: center;
+        }
+
+        h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1f5570;
+            margin: 22px 0 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h4 i {
+            color: #3a8aaa;
+            font-size: 1rem;
+            width: 24px;
+            text-align: center;
+        }
+
+        /* ===== PARAGRAPHS & TEXT ===== */
+        p {
+            font-size: 1.02rem;
+            color: #1e3545;
+            margin-bottom: 16px;
+            font-weight: 400;
+        }
+
+        .text-muted {
+            color: #4f6f84;
+            font-size: 0.98rem;
+        }
+
+        /* ===== LISTS ===== */
+        ul,
+        ol {
+            padding-right: 28px;
+            margin-bottom: 18px;
+        }
+
+        ul li,
+        ol li {
+            font-size: 1.02rem;
+            color: #1e3545;
+            margin-bottom: 8px;
+            list-style-type: none;
+            position: relative;
+            padding-right: 30px;
+        }
+
+        ul li::before {
+            content: '\f0da';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            color: #2a7a9c;
+            position: absolute;
+            right: 0;
+            top: 2px;
+            font-size: 1rem;
+        }
+
+        ol {
+            counter-reset: item;
+        }
+
+        ol li {
+            counter-increment: item;
+            padding-right: 36px;
+        }
+
+        ol li::before {
+            content: counter(item) '.';
+            font-weight: 700;
+            color: #2a7a9c;
+            position: absolute;
+            right: 0;
+            top: 0;
+            font-size: 1rem;
+        }
+
+        /* ===== TABLES ===== */
+        .table-wrap {
+            overflow-x: auto;
+            margin: 20px 0 10px;
+            border-radius: 16px;
+            border: 1px solid #e5edf4;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+            min-width: 500px;
+        }
+
+        table thead {
+            background: linear-gradient(135deg, #0b2a3e, #1b4f6e);
+            color: #fff;
+        }
+
+        table th {
+            padding: 16px 18px;
+            text-align: right;
+            font-weight: 700;
+            font-size: 0.98rem;
+        }
+
+        table td {
+            padding: 14px 18px;
+            border-bottom: 1px solid #eaf0f6;
+            color: #1a3a4e;
+        }
+
+        table tbody tr:hover {
+            background: #f6faff;
+        }
+
+        table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* ===== CARDS ===== */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .card {
+            background: #f8faff;
+            border-radius: 20px;
+            padding: 22px 24px;
+            border-right: 5px solid #2a7a9c;
+            transition: 0.3s;
+            border: 1px solid #eaf0f6;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.07);
+            border-color: #2a7a9c;
+        }
+
+        .card i {
+            font-size: 1.8rem;
+            color: #2a7a9c;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .card h4 {
+            margin: 0 0 8px 0;
+            font-size: 1.1rem;
+            color: #0b2a3e;
+        }
+
+        .card p {
+            font-size: 0.95rem;
+            color: #2f5068;
+            margin: 0;
+        }
+
+        /* ===== HIGHLIGHT BOX ===== */
+        .highlight-box {
+            background: linear-gradient(135deg, #eef6fb, #e2edf7);
+            border-right: 8px solid #2a7a9c;
+            border-radius: 18px;
+            padding: 22px 30px;
+            margin: 25px 0;
+            position: relative;
+        }
+
+        .highlight-box .label {
+            font-weight: 800;
+            color: #0b2a3e;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .highlight-box .label i {
+            color: #2a7a9c;
+            font-size: 1.4rem;
+        }
+
+        .highlight-box p {
+            margin: 0;
+            font-size: 1.02rem;
+        }
+
+        /* ===== COMPARISON / FEATURE ROW ===== */
+        .feature-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin: 18px 0;
+        }
+
+        .feature-tag {
+            background: #eaf3fa;
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: #1a4a62;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .feature-tag i {
+            color: #2a7a9c;
+        }
+
+        /* ===== STATS ===== */
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .stat-item {
+            text-align: center;
+            background: #f8faff;
+            padding: 20px 10px;
+            border-radius: 18px;
+            border: 1px solid #eaf0f6;
+        }
+
+        .stat-item .number {
+            font-size: 2.4rem;
+            font-weight: 900;
+            color: #0b2a3e;
+            display: block;
+        }
+
+        .stat-item .number i {
+            color: #ffd966;
+            font-size: 1.8rem;
+            margin-left: 6px;
+        }
+
+        .stat-item .label {
+            font-size: 0.9rem;
+            color: #4f6f84;
+            font-weight: 600;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero-sub {
+                font-size: 1rem;
+            }
+
+            .hero-meta {
+                flex-direction: column;
+                gap: 10px;
+                align-items: center;
+            }
+
+            .hero-icon-grid {
+                gap: 14px;
+            }
+
+            .hero-icon-item {
+                padding: 10px 18px;
+                font-size: 0.85rem;
+            }
+
+            .section {
+                padding: 25px 18px;
+            }
+
+            .toc {
+                padding: 24px 18px;
+            }
+
+            .toc-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-header h2 {
+                font-size: 1.3rem;
+            }
+
+            .section-header .num {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stat-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            table {
+                font-size: 0.85rem;
+                min-width: 400px;
+            }
+
+            table th,
+            table td {
+                padding: 10px 12px;
+            }
+
+            .highlight-box {
+                padding: 18px 20px;
+            }
+
+            .hero-credits {
+                font-size: 0.9rem;
+                padding: 6px 18px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .stat-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-header {
+                flex-wrap: wrap;
+            }
+
+            .section-header .sub-icon {
+                margin-right: 0;
+            }
+        }
+
+        /* ===== FOOTER ===== */
+        .footer-note {
+            text-align: center;
+            padding: 30px 20px 10px;
+            color: #4f6f84;
+            font-size: 0.95rem;
+            border-top: 1px solid #dce6ef;
+            margin-top: 20px;
+        }
+
+        .footer-note i {
+            color: #2a7a9c;
+            margin: 0 6px;
+        }
+
+        .footer-note .credit-name {
+            font-weight: 700;
+            color: #0b2a3e;
+            font-size: 1.05rem;
+        }
+
+        /* ===== ANCHOR OFFSET ===== */
+        .anchor {
+            scroll-margin-top: 30px;
+        }
+
+        /* ===== MISC ===== */
+        .inline-icon {
+            color: #2a7a9c;
+            margin-left: 8px;
+        }
+
+        .badge-gold {
+            background: #ffd966;
+            color: #0b2a3e;
+            padding: 2px 14px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            display: inline-block;
+        }
+
+        .divider {
+            height: 2px;
+            background: linear-gradient(to left, #dce6ef, transparent);
+            margin: 30px 0 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== HERO ===== -->
+    <header class="hero">
+        <div class="hero-content container">
+            <div class="hero-badge">
+                <i class="fas fa-graduation-cap"></i> محاضرة أكاديمية
+            </div>
+            <h1>
+                <i class="fas fa-landmark"></i> المنصّات الحكومية الرقمية
+            </h1>
+            <p class="hero-sub">
+                دراسة علمية شاملة من الإطار المفاهيمي إلى النماذج التطبيقية والتحديات والمستقبل
+            </p>
+            <!-- ===== CREDITS ADDED HERE ===== -->
+            <div class="hero-credits">
+                <i class="fas fa-user-tie"></i> إعداد: أ.م.د أحمد محسن هيلان / أ.م.د أمير هادي
+            </div>
+            <div class="hero-meta">
+                <span><i class="fas fa-calendar-alt"></i> 2026</span>
+                <span><i class="fas fa-university"></i> الحكومة الإلكترونية والتحوّل الرقمي</span>
+                <span><i class="fas fa-file-alt"></i> 10 مباحث</span>
+            </div>
+            <div class="hero-icon-grid">
+                <span class="hero-icon-item"><i class="fas fa-cloud"></i> بنية رقمية</span>
+                <span class="hero-icon-item"><i class="fas fa-id-card"></i> هوية رقمية</span>
+                <span class="hero-icon-item"><i class="fas fa-exchange-alt"></i> تشغيل بيني</span>
+                <span class="hero-icon-item"><i class="fas fa-shield-alt"></i> أمن سيبراني</span>
+                <span class="hero-icon-item"><i class="fas fa-robot"></i> ذكاء اصطناعي</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- ===== TABLE OF CONTENTS ===== -->
+        <nav class="toc" aria-label="محتويات المحاضرة">
+            <div class="toc-title">
+                <i class="fas fa-list-ul"></i> محتويات المحاضرة
+            </div>
+            <div class="toc-grid">
+                <a href="https://ahmadmhailan-web.github.io/Lecture-9/#m1"><i class="fas fa-book-open"></i> الإطار المفاهيمي</a>
+                <a href="https://ahmadmhailan-web.github.io/Lecture-9/#m2"><i class="fas fa-history"></i> النشأة والتطوّر</a>
+                <a href="https://ahmadmhailan-web.github.io/Lecture-9/#m3"><i class="fas fa-cubes"></i> المكوّنات والأنواع</a>
+                <a href="https://ahmadmhailan-web.github.io/Lecture-9/#m4"><i class="fas fa-sitemap"></i> البنية التقنية</a>
+                <a href="https://ahmadmhailan-web.github.io/Lecture-9/#m5"><i class="fas fa-globe-americas"></i> النماذج التطبيقية</a>
+                <a href="https://ahmadmhailan-web.github.io/Lecture-9/#m6"><i class="fas fa-chart-line"></i> الفوائد والتحديات</a>
+                <a href="https://ahmadmhailan-web.github.io/Lecture-9/#m7"><i class="fas fa-check-circle"></i> عوامل النجاح</a>
+                <a href="https://ahmadmhailan-web.github.io/Lecture-9/#m8"><i class="fas fa-rocket"></i> المستقبل</a>
+            </div>
+        </nav>
+
+        <!-- ===== المحتوى ===== -->
+
+        <!-- ===== المبحث الأول ===== -->
+        <section id="m1" class="section anchor">
+            <div class="section-header">
+                <span class="num">١</span>
+                <h2><i class="fas fa-book-open"></i> الإطار المفاهيمي</h2>
+                <span class="sub-icon"><i class="fas fa-grip-lines-vertical"></i></span>
+            </div>
+
+            <h3><i class="fas fa-fingerprint"></i> ١-١ تعريف المنصّة الرقمية</h3>
+            <p>
+                <strong>المنصّة الرقمية (Digital Platform)</strong> في معناها العام هي بنية تقنية رقمية تعمل كوسيط يجمع بين مجموعات مختلفة من المستخدمين،
+                ويتيح لهم التفاعل وتبادل القيمة والمعلومات والخدمات عبر مجموعة موحّدة من القواعد والبروتوكولات والواجهات.
+                وتتميّز المنصّة عن مجرّد الموقع الإلكتروني أو التطبيق المنفرد بكونها <strong>«بيئة قابلة للتوسّع»</strong> تُبنى فوقها خدمات متعدّدة، وتتكامل معها أطراف متعدّدة.
+            </p>
+            <div class="feature-row">
+                <span class="feature-tag"><i class="fas fa-expand-arrows-alt"></i> قابلية التوسّع</span>
+                <span class="feature-tag"><i class="fas fa-link"></i> التشغيل البيني</span>
+                <span class="feature-tag"><i class="fas fa-sync"></i> إعادة استخدام المكوّنات</span>
+                <span class="feature-tag"><i class="fas fa-code"></i> واجهات APIs</span>
+                <span class="feature-tag"><i class="fas fa-database"></i> بيانات مركزية موثوقة</span>
+            </div>
+
+            <h3><i class="fas fa-university"></i> ٢-١ تعريف المنصّة الحكومية الرقمية</h3>
+            <p>
+                <strong>المنصّة الحكومية الرقمية (Digital Government Platform)</strong> هي منظومة تقنية متكاملة تُنشئها الدولة أو تُشرف عليها،
+                تُتيح تقديم الخدمات العامة والمعاملات الرسمية للمواطنين وقطاع الأعمال والجهات الحكومية إلكترونياً عبر نافذة رقمية موحّدة،
+                مع ربط قواعد البيانات والأنظمة الحكومية المختلفة بعضها ببعض لتمكين تبادل المعلومات الآمن وإنجاز الخدمات من طرف إلى طرف
+                دون الحاجة إلى الحضور الشخصي أو تكرار تقديم البيانات.
+            </p>
+
+            <div class="highlight-box">
+                <div class="label"><i class="fas fa-bullseye"></i> تعريف جامع مقترح</div>
+                <p>
+                    المنصّة الحكومية الرقمية هي منظومة رقمية موحّدة ومتكاملة تديرها الدولة، تجمع الخدمات العامة في نافذة واحدة،
+                    وتقوم على هوية رقمية موثوقة وتشغيل بيني بين الأنظمة وبنية تحتية آمنة، بهدف تقديم خدمات سهلة وشفّافة ومتاحة على مدار الساعة،
+                    وإعادة تصميم العلاقة بين الدولة والمستفيدين على أساس رقمي متمحور حول الإنسان.
+                </p>
+            </div>
+
+            <h3><i class="fas fa-arrows-left-right"></i> ٣-١ التمييز بين المنصّة والمصطلحات المجاورة</h3>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>المصطلح</th>
+                            <th>التعريف المختصر</th>
+                            <th>مستوى التكامل</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><i class="fas fa-globe inline-icon"></i> الموقع الإلكتروني (Website)</td>
+                            <td>صفحات تعرض معلومات عن جهة واحدة وخدماتها، غالباً للاطّلاع فقط.</td>
+                            <td>منخفض — جهة واحدة</td>
+                        </tr>
+                        <tr>
+                            <td><i class="fas fa-mobile-alt inline-icon"></i> التطبيق (Application)</td>
+                            <td>برنامج يؤدّي وظيفة محدّدة على الهاتف أو الحاسوب، قد يكون واجهة لمنصّة.</td>
+                            <td>متوسط — وظيفة محددة</td>
+                        </tr>
+                        <tr>
+                            <td><i class="fas fa-door-open inline-icon"></i> البوابة (Portal)</td>
+                            <td>نافذة تجمع روابط ومداخل خدمات من جهات متعددة في مكان واحد.</td>
+                            <td>متوسط/مرتفع — تجميع</td>
+                        </tr>
+                        <tr>
+                            <td><i class="fas fa-layer-group inline-icon"></i> المنصّة (Platform)</td>
+                            <td>بنية تحتية متكاملة تُبنى فوقها الخدمات وتتكامل معها الأنظمة والبيانات.</td>
+                            <td>مرتفع — تكامل وبناء</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3><i class="fas fa-network-wired"></i> ٤-١ العلاقة بالحكومة الإلكترونية والرقمية والتحوّل الرقمي</h3>
+            <div class="card-grid">
+                <div class="card">
+                    <i class="fas fa-laptop"></i>
+                    <h4>الحكومة الإلكترونية</h4>
+                    <p>استخدام تكنولوجيا المعلومات والاتصالات — وبخاصة الإنترنت — لتقديم الخدمات الحكومية وتحسين كفاءتها. تركيز على «أتمتة» الخدمات القائمة.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-microchip"></i>
+                    <h4>الحكومة الرقمية</h4>
+                    <p>مرحلة أنضج تتجاوز الأتمتة إلى إعادة التصميم الجذري للخدمات والإجراءات لتكون «رقمية بالأساس» (Digital by Design) ومتمحورة حول المستخدم.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-sync-alt"></i>
+                    <h4>التحوّل الرقمي</h4>
+                    <p>العملية الشاملة التي تتبنّى فيها المؤسسة الحكومية التقنيات الرقمية في ثقافتها وعملياتها ونماذج تقديمها للخدمة، بحيث يصبح الرقمي هو القاعدة.</p>
+                </div>
+            </div>
+            <p>
+                <i class="fas fa-arrow-left inline-icon"></i> تمثّل المنصّة الحكومية الرقمية الأداة التنفيذية والبنية التحتية التي تتحقّق من خلالها هذه المفاهيم على أرض الواقع؛ فهي الجسر الذي يحوّل رؤى التحوّل الرقمي إلى خدمات ملموسة.
+            </p>
+
+            <h3><i class="fas fa-crown"></i> ٥-١ مفهوم «الحكومة كمنصّة» (GaaP)</h3>
+            <p>
+                ظهر مفهوم <strong>«الحكومة كمنصّة» (Government as a Platform — GaaP)</strong> مطلع عام 2010 على يد المنظّر تيم أورايلي،
+                ويقوم على فكرة محورية مفادها أن على الحكومة أن تتوقف عن بناء أنظمة منعزلة ومكرّرة لكل جهة، وأن تبني بدلاً من ذلك <strong>«لَبِنات» (Building Blocks)</strong>
+                أو مكوّنات مشتركة قابلة لإعادة الاستخدام — مثل نظام الهوية الرقمية، وبوابة الدفع، وطبقة تبادل البيانات — تُبنى فوقها مختلف الخدمات.
+                وتُعدّ هذه الرؤية الأساس الفلسفي لأنجح المنصّات الحكومية في العالم، كنموذج إستونيا والهند.
+            </p>
+        </section>
+
+        <!-- ===== المبحث الثاني ===== -->
+        <section id="m2" class="section anchor">
+            <div class="section-header">
+                <span class="num">٢</span>
+                <h2><i class="fas fa-history"></i> نشأة المنصّات الحكومية الرقمية وتطوّرها</h2>
+                <span class="sub-icon"><i class="fas fa-grip-lines-vertical"></i></span>
+            </div>
+
+            <h3><i class="fas fa-chart-simple"></i> ٢-١ المراحل التطورية للخدمة الحكومية الرقمية</h3>
+            <div class="card-grid">
+                <div class="card">
+                    <i class="fas fa-info-circle"></i>
+                    <h4>مرحلة الحضور</h4>
+                    <p>تنشئ الجهات مواقع إلكترونية ثابتة تعرض معلومات عنها وعن خدماتها، دون تفاعل.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-envelope"></i>
+                    <h4>مرحلة التفاعل</h4>
+                    <p>يتاح للمستخدم تنزيل النماذج وملؤها والتواصل عبر البريد الإلكتروني، مع بقاء الإنجاز النهائي يدوياً.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-credit-card"></i>
+                    <h4>مرحلة المعاملات</h4>
+                    <p>يُنجز المستخدم الخدمة كاملةً إلكترونياً، بما في ذلك الدفع، عبر هوية رقمية موثوقة.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-plug"></i>
+                    <h4>مرحلة التكامل والترابط</h4>
+                    <p>تتكامل خدمات الجهات المختلفة في نافذة واحدة، وتتبادل الأنظمة البيانات تلقائياً وفق مبدأ «اسأل مرّةً واحدة».</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-brain"></i>
+                    <h4>الحكومة الاستباقية الذكية</h4>
+                    <p>تتنبّأ المنصّة باحتياجات المستفيد وتقدّم الخدمة قبل طلبها، مدعومةً بالذكاء الاصطناعي وتحليلات البيانات.</p>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <div class="label"><i class="fas fa-hand-holding-heart"></i> مبدأ «اسأل مرّةً واحدة» (Once-Only)</div>
+                <p>
+                    أحد أهم مبادئ المنصّات الناضجة؛ ومفاده أن على المواطن ألّا يُطالَب بتقديم المعلومة نفسها (كصورة هويته أو شهادته) أكثر من مرّة للحكومة،
+                    إذ ينبغي للأنظمة أن تتبادل البيانات فيما بينها بأمان نيابةً عنه. وهو مبدأ يقلّص البيروقراطية ويختصر الزمن والجهد بصورة جذرية.
+                </p>
+            </div>
+        </section>
+
+        <!-- ===== المبحث الثالث ===== -->
+        <section id="m3" class="section anchor">
+            <div class="section-header">
+                <span class="num">٣</span>
+                <h2><i class="fas fa-cubes"></i> مكوّنات المنصّات الحكومية الرقمية</h2>
+                <span class="sub-icon"><i class="fas fa-grip-lines-vertical"></i></span>
+            </div>
+
+            <p>تتألّف المنصّة الحكومية الرقمية الناضجة من مجموعة من المكوّنات (اللَّبِنات) المترابطة، يؤدّي كل منها وظيفة محدّدة، وتعمل مجتمعة لتقديم تجربة سلسة وآمنة للمستفيد.</p>
+
+            <div class="card-grid">
+                <div class="card"><i class="fas fa-desktop"></i><h4>طبقة الواجهة وتجربة المستخدم</h4><p>الوجه الظاهر: البوابة، التطبيق، الأكشاك الذكية. تصميم متمحور حول المستخدم مع إتاحة لذوي الإعاقة.</p></div>
+                <div class="card"><i class="fas fa-id-card"></i><h4>الهوية الرقمية والمصادقة</h4><p>حجر الزاوية. مصادقة متعدّدة العوامل (كلمة مرور، رمز، بصمة، بطاقات ذكية).</p></div>
+                <div class="card"><i class="fas fa-credit-card"></i><h4>بوابة الدفع الإلكتروني</h4><p>سداد الرسوم إلكترونياً عبر البطاقات والمحافظ الرقمية والتحويل المصرفي.</p></div>
+                <div class="card"><i class="fas fa-code-branch"></i><h4>طبقة التشغيل البيني وتبادل البيانات</h4><p>العمود الفقري غير المرئي. يربط الأنظمة بمعايير موحّدة (مثل X-Road الإستوني).</p></div>
+                <div class="card"><i class="fas fa-database"></i><h4>السجلّات والقواعد الأساسية</h4><p>قواعد البيانات المرجعية الموثوقة: السجل المدني، العقارات، المركبات، السجل التجاري.</p></div>
+                <div class="card"><i class="fas fa-plug"></i><h4>واجهات برمجة التطبيقات (APIs)</h4><p>«العقود» التقنية التي تسمح للأنظمة والتطبيقات بالتخاطب فيما بينها.</p></div>
+                <div class="card"><i class="fas fa-cloud"></i><h4>البنية التحتية والحوسبة السحابية</h4><p>القدرة الحاسوبية والتخزينية المرنة. السحابة الحكومية أو السيادية.</p></div>
+                <div class="card"><i class="fas fa-shield-alt"></i><h4>الأمن السيبراني والخصوصية</h4><p>سرّية البيانات وسلامتها وتوافرها عبر التشفير، الجدران، إدارة الصلاحيات.</p></div>
+                <div class="card"><i class="fas fa-bell"></i><h4>طبقة الإشعارات والتواصل</h4><p>إبلاغ المستفيد بحالة المعاملات وتذكيره بالمواعيد عبر الرسائل والإشعارات.</p></div>
+                <div class="card"><i class="fas fa-gavel"></i><h4>الحوكمة والإدارة</h4><p>الإطار التنظيمي والمؤسسي والتشريعي. جهة وطنية متخصّصة (GovTech Agency).</p></div>
+            </div>
+
+            <h3><i class="fas fa-table"></i> ملخص المكوّنات ووظائفها</h3>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>المكوّن</th><th>الوظيفة الأساسية</th><th>مثال تطبيقي</th></tr></thead>
+                    <tbody>
+                        <tr><td>طبقة الواجهة</td><td>نقطة تفاعل المستخدم مع الخدمات</td><td>بوابة موحّدة + تطبيق جوال</td></tr>
+                        <tr><td>الهوية الرقمية</td><td>التحقق الموثوق من هوية المستفيد</td><td>Nafath, UAE Pass, Aadhaar</td></tr>
+                        <tr><td>بوابة الدفع</td><td>سداد الرسوم إلكترونياً</td><td>ربط بالبنوك والمحافظ الرقمية</td></tr>
+                        <tr><td>التشغيل البيني</td><td>تبادل البيانات بين الأنظمة</td><td>نظام X-Road الإستوني</td></tr>
+                        <tr><td>السجلّات الأساسية</td><td>مصدر البيانات المرجعي الموثوق</td><td>السجل المدني، السجل العقاري</td></tr>
+                        <tr><td>واجهات APIs</td><td>ربط الأنظمة والتطبيقات</td><td>API Gateway</td></tr>
+                        <tr><td>البنية السحابية</td><td>القدرة الحاسوبية والتخزينية</td><td>السحابة الحكومية السيادية</td></tr>
+                        <tr><td>الأمن والخصوصية</td><td>حماية البيانات وضمان سلامتها</td><td>التشفير، إدارة الصلاحيات</td></tr>
+                        <tr><td>الإشعارات</td><td>إبلاغ المستفيد ومتابعة الحالة</td><td>رسائل نصية وإشعارات فورية</td></tr>
+                        <tr><td>الحوكمة</td><td>الإدارة والسياسات والاستدامة</td><td>هيئة وطنية للحكومة الرقمية</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ===== المبحث الرابع ===== -->
+        <section id="m3b" class="section anchor">
+            <div class="section-header">
+                <span class="num">٤</span>
+                <h2><i class="fas fa-tags"></i> أنواع المنصّات الحكومية الرقمية</h2>
+                <span class="sub-icon"><i class="fas fa-grip-lines-vertical"></i></span>
+            </div>
+
+            <h3><i class="fas fa-users"></i> ٤-١ التصنيف حسب الفئة المستفيدة</h3>
+            <div class="card-grid">
+                <div class="card"><i class="fas fa-user"></i><h4>G2C — حكومة إلى مواطن</h4><p>خدمات للأفراد: استخراج الوثائق، تسديد الفواتير، الصحة، التعليم.</p></div>
+                <div class="card"><i class="fas fa-briefcase"></i><h4>G2B — حكومة إلى أعمال</h4><p>خدمات للشركات: تأسيس الشركات، التراخيص، المشتريات، الضرائب.</p></div>
+                <div class="card"><i class="fas fa-building"></i><h4>G2G — حكومة إلى حكومة</h4><p>تبادل البيانات والتنسيق بين الجهات الحكومية، أساس التكامل.</p></div>
+                <div class="card"><i class="fas fa-user-tie"></i><h4>G2E — حكومة إلى موظف</h4><p>خدمات داخلية: إدارة الرواتب، الإجازات، التدريب.</p></div>
+            </div>
+
+            <h3><i class="fas fa-arrow-trend-up"></i> ٤-٢ التصنيف حسب مستوى التفاعل</h3>
+            <ul>
+                <li><strong>منصّات معلوماتية:</strong> تقدّم المعلومات والأدلّة دون تفاعل حقيقي.</li>
+                <li><strong>منصّات تفاعلية:</strong> تتيح تنزيل النماذج والتواصل وتقديم الطلبات الأولية.</li>
+                <li><strong>منصّات معاملاتية:</strong> تُنجز الخدمة كاملةً إلكترونياً بما فيها الدفع والتوثيق.</li>
+                <li><strong>منصّات تكاملية:</strong> تربط خدمات عدّة جهات وتتبادل بياناتها في رحلة موحّدة للمستفيد.</li>
+            </ul>
+
+            <h3><i class="fas fa-map"></i> ٤-٣ التصنيف حسب النطاق</h3>
+            <ul>
+                <li><strong>منصّات وطنية موحّدة (One-Stop Portals):</strong> نافذة مركزية واحدة لكل خدمات الدولة، كبوابة أور العراقية و GOV.UK البريطانية.</li>
+                <li><strong>منصّات قطاعية متخصّصة:</strong> مخصّصة لقطاع بعينه كالصحة، التعليم، القضاء، الجمارك.</li>
+                <li><strong>منصّات محلية/بلدية:</strong> تُقدّمها الحكومات المحلية والبلديات لخدمات المدينة كالتراخيص والنفايات والمواقف.</li>
+            </ul>
+
+            <h3><i class="fas fa-toolbox"></i> ٤-٤ التصنيف حسب الوظيفة (المنصّات التمكينية)</h3>
+            <ul>
+                <li><strong>منصّات الهوية الرقمية:</strong> كـ Nafath و UAE Pass، توفّر التحقّق لكل الخدمات الأخرى.</li>
+                <li><strong>منصّات الدفع الحكومي:</strong> تجمع وتوحّد قنوات السداد الحكومي.</li>
+                <li><strong>منصّات تبادل البيانات:</strong> كـ X-Road، توفّر طبقة التشغيل البيني.</li>
+                <li><strong>منصّات المشتريات الإلكترونية (e-Procurement):</strong> لإدارة المناقصات والعقود الحكومية بشفافية.</li>
+                <li><strong>منصّات البيانات المفتوحة (Open Data):</strong> تتيح للجمهور والباحثين الوصول إلى البيانات الحكومية غير الحسّاسة لإعادة استخدامها.</li>
+            </ul>
+        </section>
+
+        <!-- ===== المبحث الخامس ===== -->
+        <section id="m4" class="section anchor">
+            <div class="section-header">
+                <span class="num">٥</span>
+                <h2><i class="fas fa-sitemap"></i> البنية التقنية والمعمارية</h2>
+                <span class="sub-icon"><i class="fas fa-grip-lines-vertical"></i></span>
+            </div>
+
+            <p>تقوم المنصّة الحكومية الرقمية على معمارية طبقيّة (Layered Architecture) تفصل بين الواجهات والمنطق التشغيلي والبيانات، ما يتيح التطوير والصيانة والتوسّع دون التأثير في بقية المكوّنات.</p>
+
+            <div class="card-grid">
+                <div class="card"><i class="fas fa-tv"></i><h4>طبقة العرض</h4><p>الواجهات والتطبيقات التي يتفاعل معها المستخدم.</p></div>
+                <div class="card"><i class="fas fa-cogs"></i><h4>طبقة التطبيقات والخدمات</h4><p>منطق الأعمال ومحرّكات سير العمل التي تُدير الخدمات.</p></div>
+                <div class="card"><i class="fas fa-code-branch"></i><h4>طبقة التكامل</h4><p>واجهات APIs وناقل الخدمات الذي يربط الأنظمة ويتبادل البيانات.</p></div>
+                <div class="card"><i class="fas fa-database"></i><h4>طبقة البيانات والبنية التحتية</h4><p>السجلّات وقواعد البيانات والخوادم السحابية.</p></div>
+            </div>
+
+            <h3><i class="fas fa-ruler-combined"></i> ٥-١ معايير وأطر التشغيل البيني</h3>
+            <p>لتمكين الأنظمة المتباينة من التخاطب، تعتمد المنصّات على معايير موحّدة للبيانات (كصيغ XML و JSON)، وبروتوكولات اتصال آمنة، وأطر تشغيل بيني وطنية (National Interoperability Frameworks) تُحدّد قواعد التبادل دلالياً وتقنياً وتنظيمياً وقانونياً.</p>
+
+            <h3><i class="fas fa-cubes"></i> ٥-٢ البنية التحتية الرقمية العامة (DPI)</h3>
+            <p>
+                برز مؤخراً مفهوم <strong>البنية التحتية الرقمية العامة (Digital Public Infrastructure — DPI)</strong> بوصفه الإطار الأحدث الذي يجمع ثلاث لَبِنات أساسية قابلة لإعادة الاستخدام عبر القطاعات:
+                <strong>الهوية الرقمية، والمدفوعات الرقمية الفورية، وتبادل البيانات</strong>.
+                وتُعدّ مبادرة GovStack ومنظومة India Stack الهندية أبرز تجسيد عملي لهذا المفهوم.
+            </p>
+
+            <div class="highlight-box">
+                <div class="label"><i class="fas fa-lightbulb"></i> لماذا المعمارية الطبقيّة؟</div>
+                <p>
+                    تفصل المعمارية الطبقيّة بين «ما يراه المستخدم» و«ما يجري في الخلفية»، فيمكن تحديث واجهة الخدمة دون المساس بقاعدة البيانات،
+                    وإضافة خدمة جديدة بإعادة استخدام لَبِنات الهوية والدفع القائمة. وهذا ما يجعل المنصّة قابلة للتوسّع والاستدامة بتكلفة أقل.
+                </p>
+            </div>
+        </section>
+
+        <!-- ===== المبحث السادس ===== -->
+        <section id="m5" class="section anchor">
+            <div class="section-header">
+                <span class="num">٦</span>
+                <h2><i class="fas fa-globe-americas"></i> نماذج وأمثلة تطبيقية</h2>
+                <span class="sub-icon"><i class="fas fa-grip-lines-vertical"></i></span>
+            </div>
+
+            <h3><i class="fas fa-star"></i> ٦-١ النماذج الدولية الرائدة</h3>
+
+            <h4><i class="fas fa-flag"></i> أ) إستونيا — الرائدة عالمياً (e-Estonia &amp; X-Road)</h4>
+            <p>تُعدّ إستونيا النموذج الأكثر تطوراً في العالم؛ إذ يُنجَز نحو 99% من الخدمات الحكومية إلكترونياً. تقوم تجربتها على ثلاث لَبِنات: بطاقة الهوية الرقمية (e-ID)، ونظام تبادل البيانات X-Road الذي يربط مئات قواعد البيانات دون مركزية مفرطة، وبوابة الخدمات الموحّدة.</p>
+
+            <h4><i class="fas fa-flag"></i> ب) الهند — البنية الرقمية واسعة النطاق (India Stack)</h4>
+            <p>تُمثّل الهند أكبر تطبيق للبنية التحتية الرقمية العامة، عبر منظومة India Stack التي تقوم على: نظام الهوية الحيوية Aadhaar (يغطي أكثر من مليار شخص)، ونظام المدفوعات الفورية UPI، ومنصّة DigiLocker لحفظ الوثائق الرسمية رقمياً.</p>
+
+            <h4><i class="fas fa-flag"></i> ج) سنغافورة — التكامل الذكي (Singpass &amp; GovTech)</h4>
+            <p>تعتمد سنغافورة على نظام الهوية الرقمية الموحّد Singpass الذي يفتح بوابة مئات الخدمات، وتديره وكالة GovTech المتخصّصة. وتتميّز بخدمات استباقية ذكية متمحورة حول «أحداث الحياة» (الولادة، الزواج، التقاعد).</p>
+
+            <h4><i class="fas fa-flag"></i> د) المملكة المتحدة — توحيد التجربة (GOV.UK)</h4>
+            <p>نجحت بريطانيا في توحيد آلاف المواقع الحكومية المتفرّقة في بوابة واحدة هي GOV.UK، تديرها دائرة الخدمة الرقمية الحكومية (GDS). وتُعدّ نموذجاً عالمياً في معايير التصميم المتمحور حول المستخدم وبساطة اللغة.</p>
+
+            <h3><i class="fas fa-flag"></i> ٦-٢ النماذج العربية</h3>
+
+            <h4><i class="fas fa-flag"></i> أ) الإمارات العربية المتحدة</h4>
+            <p>تتصدّر الإمارات المنطقة العربية في التحوّل الرقمي، عبر منظومة متكاملة تشمل: الهوية الرقمية UAE Pass، ومنصّة TAMM في أبوظبي، وتطبيق Dubai Now الذي يجمع أكثر من مئة خدمة حكومية مدينية.</p>
+
+            <h4><i class="fas fa-flag"></i> ب) المملكة العربية السعودية</h4>
+            <p>طوّرت السعودية منظومة واسعة من المنصّات، أبرزها: منصّة «أبشر» (Absher) للخدمات المدنية والمرورية، ونظام الهوية الرقمية «نفاذ» (Nafath)، وتطبيق «توكلنا». وتُشرف برامج التحوّل الوطني ضمن «رؤية 2030» على هذا المسار.</p>
+
+            <h4><i class="fas fa-flag"></i> ج) مصر — منصّة «مصر الرقمية»</h4>
+            <p>أطلقت مصر منصّة «مصر الرقمية» بوصفها بوابة موحّدة تجمع خدمات الوثائق والمرافق والشهر العقاري والصحة، في إطار استراتيجية «مصر الرقمية».</p>
+
+            <h4><i class="fas fa-flag"></i> د) الأردن وبلدان عربية أخرى</h4>
+            <p>أطلق الأردن منصّة «سند» للهوية والخدمات الرقمية، فيما تمتلك البحرين بوابة وطنية متقدّمة (bahrain.bh)، وقطر بوابة «حكومي».</p>
+
+            <h3><i class="fas fa-flag"></i> ٦-٣ النموذج العراقي — بوابة أور الإلكترونية</h3>
+            <div class="highlight-box" style="border-right-color: #a67c00;">
+                <div class="label"><i class="fas fa-landmark"></i> بوابة أور في سطور</div>
+                <div class="stat-grid" style="margin: 10px 0;">
+                    <div class="stat-item"><span class="number">2022</span><span class="label">سنة التأسيس</span></div>
+                    <div class="stat-item"><span class="number">600+</span><span class="label">خدمة حكومية رقمية</span></div>
+                    <div class="stat-item"><span class="number"><i class="fas fa-globe"></i></span><span class="label">نافذة وطنية موحّدة</span></div>
+                </div>
+                <p>
+                    تُمثّل <strong>«بوابة أور الإلكترونية للخدمات الحكومية»</strong> المنصّة الحكومية الرسمية للخدمات الإلكترونية في جمهورية العراق، وقد أُسّست عام 2022 لتكون نواة مشروع الحكومة الإلكترونية ونقطة الوصول الرقمية الموحّدة لكافة الخدمات التي تقدّمها المؤسسات الحكومية للمواطنين والمقيمين.
+                    توسّع نطاق المنصّة حتى تجاوز عدد الخدمات المقدّمة عبرها <strong>600 خدمة</strong> حكومية رقمية تشمل مجالات متعددة كالاستعلام عن المخالفات المرورية، والخدمات التعليمية والتوظيفية، والتقديم على القروض.
+                </p>
+            </div>
+
+            <h3><i class="fas fa-table"></i> مقارنة موجزة بين النماذج</h3>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>الدولة/المنصّة</th><th>أبرز المكوّنات</th><th>أهم ما يميّزها</th></tr></thead>
+                    <tbody>
+                        <tr><td>إستونيا (X-Road)</td><td>هوية e-ID + تبادل بيانات + بوابة</td><td>نضج عالٍ؛ ~99% خدمات رقمية</td></tr>
+                        <tr><td>الهند (India Stack)</td><td>Aadhaar + UPI + DigiLocker</td><td>أوسع بنية رقمية عامة (DPI)</td></tr>
+                        <tr><td>سنغافورة (Singpass)</td><td>هوية موحّدة + خدمات استباقية</td><td>تكامل حول أحداث الحياة</td></tr>
+                        <tr><td>بريطانيا (GOV.UK)</td><td>بوابة موحّدة + معايير تصميم</td><td>توحيد التجربة وبساطتها</td></tr>
+                        <tr><td>الإمارات (UAE Pass)</td><td>هوية + TAMM + Dubai Now</td><td>ريادة عربية وخدمات ذكية</td></tr>
+                        <tr><td>السعودية (أبشر/نفاذ)</td><td>خدمات مدنية + هوية رقمية</td><td>اتساع القاعدة ضمن رؤية 2030</td></tr>
+                        <tr><td>العراق (بوابة أور)</td><td>نافذة موحّدة + دفع + متابعة</td><td>نواة الحكومة الإلكترونية (2022)</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ===== المبحث السابع ===== -->
+        <section id="m6" class="section anchor">
+            <div class="section-header">
+                <span class="num">٧</span>
+                <h2><i class="fas fa-chart-line"></i> الفوائد والتحديات</h2>
+                <span class="sub-icon"><i class="fas fa-grip-lines-vertical"></i></span>
+            </div>
+
+            <h3><i class="fas fa-check-circle" style="color:#2a7a9c;"></i> الفوائد والمزايا</h3>
+            <div class="card-grid">
+                <div class="card"><i class="fas fa-user-check"></i><h4>المواطن والمستفيد</h4><p>توفير الوقت والجهد، الإتاحة 24/7، الشفافية، تقليل الفساد.</p></div>
+                <div class="card"><i class="fas fa-building"></i><h4>الدولة والإدارة</h4><p>خفض التكاليف، رفع الكفاءة، تمكين صنع القرار المبني على البيانات، كسر الصوامع.</p></div>
+                <div class="card"><i class="fas fa-chart-pie"></i><h4>الاقتصاد والمجتمع</h4><p>تحسين بيئة الأعمال، الشمول المالي والرقمي، تعزيز الاستدامة البيئية.</p></div>
+            </div>
+
+            <h3><i class="fas fa-exclamation-triangle" style="color:#b8860b;"></i> التحدّيات والمخاطر</h3>
+            <ul>
+                <li><strong>الفجوة الرقمية (Digital Divide):</strong> تفاوت قدرة المواطنين على الوصول إلى الإنترنت والأجهزة والمهارات الرقمية.</li>
+                <li><strong>الأمن السيبراني وحماية الخصوصية:</strong> تركيز كم هائل من البيانات الحسّاسة يجعل المنصّات هدفاً جذّاباً للهجمات.</li>
+                <li><strong>الأنظمة القديمة والتشغيل البيني:</strong> معاناة كثير من الجهات من أنظمة قديمة (Legacy Systems) متباينة يصعب ربطها.</li>
+                <li><strong>التحديات التنظيمية والتشريعية:</strong> غياب التشريعات الناظمة، مقاومة التغيير، ضعف الحوكمة، استدامة التمويل.</li>
+                <li><strong>جودة البيانات والثقة:</strong> اعتماد جودة الخدمة على جودة السجلّات الأساسية وبناء ثقة المواطن.</li>
+            </ul>
+        </section>
+
+        <!-- ===== المبحث التاسع ===== -->
+        <section id="m7" class="section anchor">
+            <div class="section-header">
+                <span class="num">٨</span>
+                <h2><i class="fas fa-check-circle"></i> عوامل النجاح والمعايير الدولية</h2>
+                <span class="sub-icon"><i class="fas fa-grip-lines-vertical"></i></span>
+            </div>
+
+            <h3><i class="fas fa-key"></i> عوامل النجاح المشتركة</h3>
+            <div class="card-grid">
+                <div class="card"><i class="fas fa-handshake"></i><h4>الإرادة السياسية</h4><p>قيادة عليا داعمة ومستدامة.</p></div>
+                <div class="card"><i class="fas fa-gavel"></i><h4>الحوكمة المركزية</h4><p>هيئة وطنية متخصّصة توحّد المعايير.</p></div>
+                <div class="card"><i class="fas fa-puzzle-piece"></i><h4>لَبِنات مشتركة</h4><p>هوية، دفع، تبادل بيانات قابلة لإعادة الاستخدام.</p></div>
+                <div class="card"><i class="fas fa-user-edit"></i><h4>التصميم المتمحور حول المستخدم</h4><p>بساطة التجربة واللغة.</p></div>
+                <div class="card"><i class="fas fa-balance-scale"></i><h4>الإطار التشريعي</h4><p>التوقيع الإلكتروني، حماية البيانات.</p></div>
+                <div class="card"><i class="fas fa-shield-virus"></i><h4>الأمن السيبراني</h4><p>أساس لا إضافة.</p></div>
+                <div class="card"><i class="fas fa-universal-access"></i><h4>الشمول الرقمي</h4><p>معالجة الفجوة الرقمية.</p></div>
+                <div class="card"><i class="fas fa-chart-bar"></i><h4>القياس المستمر</h4><p>تحسين مرتكز على البيانات والتغذية الراجعة.</p></div>
+            </div>
+
+            <h3><i class="fas fa-trophy"></i> ٩-١ المؤشرات الدولية لقياس النضج</h3>
+            <div class="card-grid">
+                <div class="card"><i class="fas fa-united-nations"></i><h4>مؤشر الأمم المتحدة (EGDI)</h4><p>يجمع ثلاثة أبعاد: نطاق الخدمات الإلكترونية، البنية التحتية للاتصالات، رأس المال البشري.</p></div>
+                <div class="card"><i class="fas fa-vote-yea"></i><h4>مؤشر المشاركة الإلكترونية</h4><p>يقيس مدى إشراك المواطن في صنع القرار رقمياً.</p></div>
+            </div>
+
+            <div class="highlight-box" style="border-right-color: #c0392b;">
+                <div class="label"><i class="fas fa-gem"></i> قاعدة ذهبية</div>
+                <p>أنجح المنصّات لم تُبنَ بوصفها مشروعاً تقنياً فحسب، بل مشروع إصلاح إداري وتنظيمي وثقافي شامل. فالتقنية وسيلة، والإصلاح المؤسسي هو الغاية والشرط.</p>
+            </div>
+        </section>
+
+        <!-- ===== المبحث العاشر ===== -->
+        <section id="m8" class="section anchor">
+            <div class="section-header">
+                <span class="num">٩</span>
+                <h2><i class="fas fa-rocket"></i> مستقبل المنصّات الحكومية الرقمية</h2>
+                <span class="sub-icon"><i class="fas fa-grip-lines-vertical"></i></span>
+            </div>
+
+            <p>تتّجه المنصّات الحكومية نحو جيل جديد أكثر ذكاءً واستباقية، مدفوعاً بجملة من التقنيات والاتجاهات الناشئة:</p>
+
+            <div class="card-grid">
+                <div class="card"><i class="fas fa-robot"></i><h4>الذكاء الاصطناعي</h4><p>مساعدون افتراضيون أذكياء، أتمتة معالجة الطلبات، كشف الاحتيال، تحليلات تنبّؤية.</p></div>
+                <div class="card"><i class="fas fa-bullseye"></i><h4>الخدمات الاستباقية والتنبّؤية</h4><p>تقديم الخدمة قبل طلبها بناءً على «أحداث الحياة» (ولادة، زواج، تقاعد).</p></div>
+                <div class="card"><i class="fas fa-link"></i><h4>تقنية البلوك تشين</h4><p>توثيق السجلّات والعقود والوثائق بصورة غير قابلة للتلاعب، وتعزيز الثقة والشفافية.</p></div>
+                <div class="card"><i class="fas fa-user-secret"></i><h4>الهوية الرقمية اللامركزية</h4><p>تمكين المواطن من التحكّم في بياناته ومشاركتها بصورة انتقائية وآمنة.</p></div>
+                <div class="card"><i class="fas fa-user-cog"></i><h4>التخصيص المفرط (Hyper-personalization)</h4><p>تكييف الخدمات وفق احتياجات كل مستفيد وسياقه.</p></div>
+                <div class="card"><i class="fas fa-handshake"></i><h4>صعود قطاع GovTech</h4><p>شراكات متنامية مع شركات تقنية ناشئة متخصّصة في حلول القطاع العام.</p></div>
+            </div>
+
+            <p>
+                غير أنّ هذا التطور يفرض في المقابل تحدّيات أخلاقية وتنظيمية تتعلّق بشفافية الخوارزميات، والعدالة في الخدمة، وحوكمة الذكاء الاصطناعي، وحماية البيانات —
+                وهي قضايا ستتصدّر أجندة الحكومات الرقمية في السنوات المقبلة.
+            </p>
+        </section>
+
+        <!-- ===== FOOTER ===== -->
+        <div class="footer-note">
+            <i class="fas fa-graduation-cap"></i>  المحاضرة التاسعة — المنصّات الحكومية الرقمية  
+            <i class="fas fa-circle" style="font-size: 0.4rem; vertical-align: middle; margin: 0 8px;"></i>
+            <span class="credit-name">إعداد: أ.م.د أحمد محسن هيلان / أ.م.د أمير هادي</span>
+            <i class="fas fa-circle" style="font-size: 0.4rem; vertical-align: middle; margin: 0 8px;"></i>
+            جميع الحقوق محفوظة
+        </div>
+
+    </div>
+    <!-- end container -->
+
+
+
+</body></html>
