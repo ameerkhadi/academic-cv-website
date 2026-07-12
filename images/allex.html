@@ -105,16 +105,12 @@
   /* ===== Cards grid ===== */
   .grid{
     display:grid;
-    grid-template-columns:repeat(3, 1fr);
-    gap:20px;
+    grid-template-columns:repeat(2, 1fr);
+    gap:22px;
     margin-bottom:16px;
   }
 
-  @media (max-width:860px){
-    .grid{grid-template-columns:repeat(2, 1fr);}
-  }
-
-  @media (max-width:520px){
+  @media (max-width:640px){
     .grid{grid-template-columns:1fr;}
   }
 
@@ -215,25 +211,6 @@
     transform:translateX(-4px);
   }
 
-  /* ===== New exam badge ===== */
-  .card.is-new{
-    border-color:rgba(79,179,169,0.45);
-  }
-
-  .card.is-new .lecture-num{
-    color:#E2534A;
-  }
-
-  .card.is-new:hover{
-    border-color:var(--teal);
-    box-shadow:0 18px 34px -14px rgba(79,179,169,0.35);
-  }
-
-  .card.is-new:hover .arrow{
-    background:var(--teal);
-    color:var(--ink-navy);
-  }
-
   /* ===== Footer ===== */
   footer{
     margin-top:56px;
@@ -269,65 +246,10 @@
 
   <main class="grid">
 
-    <a class="card is-new" href="https://ameerkhadi.github.io/academic-cv-website/ex1" target="_blank" rel="noopener">
+    <a class="card" href="https://ameerkhadi.github.io/academic-cv-website/ex10" target="_blank" rel="noopener">
       <div class="card-top">
-        <div class="lecture-num">١</div>
-        <div class="card-title">مرشحات محاضرة ١</div>
-      </div>
-      <div class="card-foot">
-        <span class="go-label">ابدأ الاختبار</span>
-        <span class="arrow">←</span>
-      </div>
-    </a>
-
-    <a class="card is-new" href="https://ameerkhadi.github.io/academic-cv-website/ex2" target="_blank" rel="noopener">
-      <div class="card-top">
-        <div class="lecture-num">٢</div>
-        <div class="card-title">مرشحات محاضرة ٢</div>
-      </div>
-      <div class="card-foot">
-        <span class="go-label">ابدأ الاختبار</span>
-        <span class="arrow">←</span>
-      </div>
-    </a>
-
-    <a class="card is-new" href="https://ameerkhadi.github.io/academic-cv-website/ex3" target="_blank" rel="noopener">
-      <div class="card-top">
-        <div class="lecture-num">٣</div>
-        <div class="card-title">مرشحات محاضرة ٣</div>
-      </div>
-      <div class="card-foot">
-        <span class="go-label">ابدأ الاختبار</span>
-        <span class="arrow">←</span>
-      </div>
-    </a>
-
-    <a class="card" href="https://ameerkhadi.github.io/academic-cv-website/ex4" target="_blank" rel="noopener">
-      <div class="card-top">
-        <div class="lecture-num">٤</div>
-        <div class="card-title">مرشحات محاضرة ٤</div>
-      </div>
-      <div class="card-foot">
-        <span class="go-label">ابدأ الاختبار</span>
-        <span class="arrow">←</span>
-      </div>
-    </a>
-
-    <a class="card is-new" href="https://ameerkhadi.github.io/academic-cv-website/ex5" target="_blank" rel="noopener">
-      <div class="card-top">
-        <div class="lecture-num">٥</div>
-        <div class="card-title">مرشحات محاضرة ٥</div>
-      </div>
-      <div class="card-foot">
-        <span class="go-label">ابدأ الاختبار</span>
-        <span class="arrow">←</span>
-      </div>
-    </a>
-
-    <a class="card" href="https://ameerkhadi.github.io/academic-cv-website/ex6" target="_blank" rel="noopener">
-      <div class="card-top">
-        <div class="lecture-num">٦</div>
-        <div class="card-title">مرشحات محاضرة ٦</div>
+        <div class="lecture-num">١٠</div>
+        <div class="card-title">مرشحات محاضرة ١٠</div>
       </div>
       <div class="card-foot">
         <span class="go-label">ابدأ الاختبار</span>
@@ -346,10 +268,10 @@
       </div>
     </a>
 
-    <a class="card is-new" href="https://ameerkhadi.github.io/academic-cv-website/ex8" target="_blank" rel="noopener">
+    <a class="card" href="https://ameerkhadi.github.io/academic-cv-website/ex6" target="_blank" rel="noopener">
       <div class="card-top">
-        <div class="lecture-num">٨</div>
-        <div class="card-title">مرشحات محاضرة ٨</div>
+        <div class="lecture-num">٦</div>
+        <div class="card-title">مرشحات محاضرة ٦</div>
       </div>
       <div class="card-foot">
         <span class="go-label">ابدأ الاختبار</span>
@@ -357,21 +279,10 @@
       </div>
     </a>
 
-    <a class="card is-new" href="https://ameerkhadi.github.io/academic-cv-website/ex9" target="_blank" rel="noopener">
+    <a class="card" href="https://ameerkhadi.github.io/academic-cv-website/ex4" target="_blank" rel="noopener">
       <div class="card-top">
-        <div class="lecture-num">٩</div>
-        <div class="card-title">مرشحات محاضرة ٩</div>
-      </div>
-      <div class="card-foot">
-        <span class="go-label">ابدأ الاختبار</span>
-        <span class="arrow">←</span>
-      </div>
-    </a>
-
-    <a class="card" href="https://ameerkhadi.github.io/academic-cv-website/ex10" target="_blank" rel="noopener">
-      <div class="card-top">
-        <div class="lecture-num">١٠</div>
-        <div class="card-title">مرشحات محاضرة ١٠</div>
+        <div class="lecture-num">٤</div>
+        <div class="card-title">مرشحات محاضرة ٤</div>
       </div>
       <div class="card-foot">
         <span class="go-label">ابدأ الاختبار</span>
@@ -382,7 +293,7 @@
   </main>
 
   <footer>
-    <strong>المعهد العالي لإعداد وتأهيل القادة</strong> · إعداد: أ.م.د. أمير هادي و أ.م.د. أحمد محسن هيلان
+    <strong>المعهد العالي لإعداد وتأهيل القادة</strong> · إعداد: أ.م.د. أمير هادي
   </footer>
 
 </div>
