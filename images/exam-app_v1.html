@@ -31,16 +31,9 @@
     color:var(--paper);
     font-family:'Tajawal', sans-serif;
     min-height:100vh;
-    min-height:100svh;
-    -webkit-text-size-adjust:100%;
-    overscroll-behavior-y:contain;
   }
-  .screen{display:none;min-height:100vh;min-height:100svh;align-items:center;justify-content:center;padding:32px 16px;}
+  .screen{display:none;min-height:100vh;align-items:center;justify-content:center;padding:32px 16px;}
   .screen.active{display:flex;}
-  .shoba-btn, .option, .start-btn, #next-btn, .exit-btn{
-    touch-action:manipulation;
-    -webkit-user-select:none;user-select:none;
-  }
 
   /* ===================== GATE SCREEN ===================== */
   .gate-card{
@@ -70,7 +63,7 @@
   .field input[type=text], .field input[type=password]{
     width:100%;background:rgba(255,255,255,0.04);border:1px solid var(--line);
     border-radius:12px;padding:13px 15px;color:var(--paper);font-family:'Tajawal',sans-serif;
-    font-size:16px;outline:none;transition:border-color .2s ease, background .2s ease;
+    font-size:15px;outline:none;transition:border-color .2s ease, background .2s ease;
   }
   .field input:focus{border-color:var(--brass);background:rgba(255,255,255,0.06);}
 
@@ -154,7 +147,7 @@
 
   /* ===================== RESULT SCREEN ===================== */
   .result-card{
-    max-width:560px;width:100%;text-align:center;
+    max-width:460px;width:100%;text-align:center;
     background:linear-gradient(160deg, var(--panel-light), var(--panel));
     border:1px solid var(--brass);border-radius:22px;padding:44px 30px 34px;
   }
@@ -180,76 +173,11 @@
   .sync-dot.fail{background:var(--bad);animation:none;}
   @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
 
-  .exit-btn{
-    display:block;width:100%;margin-top:22px;
-    background:transparent;border:1.5px solid var(--brass);color:var(--brass-soft);
-    font-family:'Cairo',sans-serif;font-weight:800;font-size:15px;
-    border-radius:14px;padding:13px;cursor:pointer;
-    transition:background .2s ease, color .2s ease;
-  }
-  .exit-btn:hover{background:var(--brass);color:var(--bg);}
-
-  .review-toggle{
-    display:block;width:100%;margin-top:14px;
-    background:rgba(255,255,255,0.03);border:1px solid var(--line);color:var(--paper-dim);
-    font-family:'Cairo',sans-serif;font-weight:700;font-size:13.5px;
-    border-radius:12px;padding:11px;cursor:pointer;transition:border-color .2s ease, color .2s ease;
-  }
-  .review-toggle:hover{border-color:var(--brass);color:var(--brass-soft);}
-
-  .review-list{
-    display:none;text-align:right;margin-top:16px;
-    max-height:360px;overflow-y:auto;padding-left:4px;
-  }
-  .review-list.open{display:block;}
-
-  .mistake-item{
-    background:rgba(255,255,255,0.03);border:1px solid var(--line);border-radius:12px;
-    padding:14px 16px;margin-bottom:10px;
-  }
-  .mistake-q{font-family:'Cairo',sans-serif;font-weight:700;font-size:14px;line-height:1.7;margin-bottom:10px;color:var(--paper);}
-  .mistake-row{display:flex;gap:8px;font-size:13px;line-height:1.6;margin-bottom:4px;}
-  .mistake-row .tag{font-family:'Cairo',sans-serif;font-weight:800;flex-shrink:0;min-width:64px;}
-  .mistake-row.yours .tag{color:var(--bad);}
-  .mistake-row.correct .tag{color:var(--good);}
-  .mistake-row.yours span:last-child{color:#F0C4C0;}
-  .mistake-row.correct span:last-child{color:#BFE8D3;}
-
-  .no-mistakes{
-    margin-top:14px;font-size:14px;color:var(--good);font-family:'Cairo',sans-serif;font-weight:700;
-  }
-
-  .contact-footer{
-    margin-top:22px;padding-top:16px;border-top:1px dashed var(--line);
-    font-size:12.5px;color:var(--paper-dim);line-height:1.9;
-  }
-  .contact-footer strong{color:var(--brass-soft);}
-  .contact-footer a{color:var(--good);text-decoration:none;}
-  .contact-footer a:hover{text-decoration:underline;}
-
-  .closed-state{text-align:center;padding:20px 0;}
-  .closed-icon{font-size:44px;margin-bottom:14px;}
-  .closed-state h3{font-family:'Cairo',sans-serif;font-weight:900;font-size:19px;color:var(--brass-soft);margin:0 0 10px;}
-  .closed-state p{color:var(--paper-dim);font-size:14px;line-height:1.8;margin:0;}
-
   footer{margin-top:28px;text-align:center;color:var(--paper-dim);font-size:13px;}
 
   @media (max-width:480px){
-    .gate-card{padding:26px 18px 22px;}
-    .gate-card h1{font-size:24px;}
-    .qcard{padding:18px 14px 18px;}
-    .qtext{font-size:17px;}
-    .top-bar{gap:8px;}
-    .q-position{font-size:12.5px;}
-    .timer-badge{font-size:12.5px;padding:6px 12px 6px 8px;}
-    .result-card{padding:32px 20px 26px;}
-    .ring-wrap{width:140px;height:140px;}
-    .ring-score{font-size:28px;}
-  }
-
-  @media (max-width:340px){
-    .shoba-group{gap:6px;}
-    .shoba-btn{padding:11px 0;font-size:14px;}
+    .gate-card{padding:30px 22px 26px;}
+    .qcard{padding:22px 18px 20px;}
   }
 </style>
 </head>
@@ -324,34 +252,22 @@
 
 <!-- ===================== RESULT SCREEN ===================== -->
 <div class="screen" id="screen-result">
-  <div class="result-card" id="result-card">
-    <div id="result-body">
-      <div class="ring-wrap">
-        <svg viewBox="0 0 120 120">
-          <circle class="ring-bg" cx="60" cy="60" r="52"></circle>
-          <circle class="ring-fg" id="ring-fg" cx="60" cy="60" r="52" stroke-dasharray="326.7" stroke-dashoffset="326.7"></circle>
-        </svg>
-        <div class="ring-center">
-          <div class="ring-score" id="ring-score">0/50</div>
-          <div class="ring-pct" id="ring-pct">0%</div>
-        </div>
+  <div class="result-card">
+    <div class="ring-wrap">
+      <svg viewBox="0 0 120 120">
+        <circle class="ring-bg" cx="60" cy="60" r="52"></circle>
+        <circle class="ring-fg" id="ring-fg" cx="60" cy="60" r="52" stroke-dasharray="326.7" stroke-dashoffset="326.7"></circle>
+      </svg>
+      <div class="ring-center">
+        <div class="ring-score" id="ring-score">0/50</div>
+        <div class="ring-pct" id="ring-pct">0%</div>
       </div>
-      <h2 id="result-title">تم الانتهاء من الامتحان</h2>
-      <p class="result-note" id="result-note"></p>
-      <div class="sync-status" id="sync-status">
-        <span class="sync-dot" id="sync-dot"></span>
-        <span id="sync-text">جاري إرسال النتيجة...</span>
-      </div>
-
-      <button class="review-toggle" id="review-toggle" type="button" style="display:none;">عرض الأخطاء ↓</button>
-      <div class="review-list" id="review-list"></div>
-
-      <button class="exit-btn" id="exit-btn" type="button">خروج</button>
     </div>
-
-    <div class="contact-footer">
-      لأي استفسار بخصوص النتيجة، تواصل مع: <strong>أ.م.د. أمير هادي</strong><br>
-      <a href="mailto:amer.hadi@alshaab.edu.iq">amer.hadi@alshaab.edu.iq</a>
+    <h2 id="result-title">تم إنهاء الاختبار</h2>
+    <p class="result-note" id="result-note"></p>
+    <div class="sync-status" id="sync-status">
+      <span class="sync-dot" id="sync-dot"></span>
+      <span id="sync-text">جاري إرسال النتيجة...</span>
     </div>
   </div>
 </div>
@@ -367,32 +283,6 @@ const EXAM_MINUTES = 50;
 const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbzrAL0vI_q2TUcwJnghU7t2nt9JIuhUl9xEpSRQOvdZjmeQ0H94syfF4xat2dh2wgQQ/exec";
 
 const LETTERS = ["أ","ب","ج","د"];
-
-/**
- * إرسال طلب للسيرفر مع إعادة محاولة تلقائية عند الفشل — مفيد وقت
- * الازدحام (مثلاً عشرات الطلبة يبدأون أو ينهون الاختبار بنفس اللحظة
- * تقريباً وتُرفض بعض الطلبات مؤقتاً بسبب ضغط الطلبات على جوجل)
- */
-function postToServer(payload, attempt){
-  attempt = attempt || 1;
-  const maxAttempts = 4;
-
-  return fetch(WEBAPP_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-    body: JSON.stringify(payload)
-  })
-  .then(res => {
-    if(!res.ok) throw new Error('HTTP ' + res.status);
-    return res.json();
-  })
-  .catch(err => {
-    if(attempt >= maxAttempts) throw err;
-    const delay = attempt * 1500; // 1.5s، 3s، 4.5s
-    return new Promise(resolve => setTimeout(resolve, delay))
-      .then(() => postToServer(payload, attempt + 1));
-  });
-}
 
 /* ============ حالة الاختبار ============ */
 let studentName = "";
@@ -433,14 +323,12 @@ document.getElementById('start-btn').addEventListener('click', () => {
   startBtn.disabled = true;
   startBtn.textContent = 'جاري التحقق...';
 
-  // تأخير عشوائي خفي (حتى 8 ثوانٍ) قبل إرسال الطلب فعلياً — يوزّع
-  // اللحظة الحقيقية لوصول الطلبات للسيرفر تلقائياً حتى لو ضغط عشرات
-  // الطلبة الزر بنفس الثانية بالضبط، دون أن يلاحظوا أي فرق (نفس رسالة
-  // "جاري التحقق..." تبقى ظاهرة طول الوقت)
-  const jitter = Math.random() * 8000;
-
-  new Promise(resolve => setTimeout(resolve, jitter))
-  .then(() => postToServer({ action: 'start', password: pwd }))
+  fetch(WEBAPP_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify({ action: 'start', password: pwd })
+  })
+  .then(res => res.json())
   .then(data => {
     startBtn.disabled = false;
     startBtn.textContent = 'بدء الاختبار ←';
@@ -461,7 +349,7 @@ document.getElementById('start-btn').addEventListener('click', () => {
   .catch(() => {
     startBtn.disabled = false;
     startBtn.textContent = 'بدء الاختبار ←';
-    errorBox.textContent = 'تعذّر الاتصال بالسيرفر (قد يكون بسبب الازدحام)، أعد المحاولة خلال لحظات.';
+    errorBox.textContent = 'تعذّر الاتصال بالسيرفر، تحقق من الإنترنت وحاول مرة أخرى.';
     errorBox.style.display = 'block';
   });
 });
@@ -579,18 +467,18 @@ function finishExam(){
     selected: studentAnswers[id]
   }));
 
-  // تأخير خفي أصغر (حتى 3 ثوانٍ) قبل إرسال التصحيح فعلياً — إضافة
-  // بسيطة فوق القفل الموجود بالسيرفر لتقليل الازدحام أصلاً
-  const submitJitter = Math.random() * 3000;
-
-  new Promise(resolve => setTimeout(resolve, submitJitter))
-  .then(() => postToServer({
-    action: 'submit',
-    sessionId: sessionId,
-    name: studentName,
-    shoba: studentShoba,
-    answers: answersPayload
-  }))
+  fetch(WEBAPP_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify({
+      action: 'submit',
+      sessionId: sessionId,
+      name: studentName,
+      shoba: studentShoba,
+      answers: answersPayload
+    })
+  })
+  .then(res => res.json())
   .then(data => {
     if(data.status !== 'ok'){
       document.getElementById('result-title').textContent = 'تعذّر تصحيح الاختبار';
@@ -600,8 +488,8 @@ function finishExam(){
       return;
     }
 
-    const { score, total, percent, mistakes } = data;
-    document.getElementById('result-title').textContent = 'تم الانتهاء من الامتحان';
+    const { score, total, percent } = data;
+    document.getElementById('result-title').textContent = 'تم إنهاء الاختبار';
     document.getElementById('ring-score').textContent = `${score}/${total}`;
     document.getElementById('ring-pct').textContent = `${percent}%`;
 
@@ -611,13 +499,14 @@ function finishExam(){
       document.getElementById('ring-fg').style.strokeDashoffset = offset;
     });
 
-    document.getElementById('result-note').textContent =
-      `درجتك هي (${score}/${total}) — خذ صورة شاشة واحتفظ بها. يمكنك الآن إغلاق الصفحة.`;
+    let note = '';
+    if(percent >= 85) note = 'أداء ممتاز! 🌟';
+    else if(percent >= 60) note = 'أداء جيد.';
+    else note = 'يُنصح بمراجعة المحاضرات مرة أخرى.';
+    document.getElementById('result-note').textContent = `${studentName} — الشعبة ${studentShoba} — ${note}`;
 
     syncDot.classList.add('done');
     syncText.textContent = 'تم حفظ النتيجة والإجابات بنجاح';
-
-    renderMistakes(mistakes || []);
   })
   .catch(() => {
     document.getElementById('result-title').textContent = 'تعذّر الاتصال بالسيرفر';
@@ -626,58 +515,6 @@ function finishExam(){
     syncText.textContent = 'تعذّر حفظ النتيجة';
   });
 }
-
-/* ============ عرض مراجعة الأخطاء ============ */
-function renderMistakes(mistakes){
-  const toggleBtn = document.getElementById('review-toggle');
-  const listEl = document.getElementById('review-list');
-
-  if(mistakes.length === 0){
-    const note = document.createElement('div');
-    note.className = 'no-mistakes';
-    note.textContent = 'إجابات صحيحة بالكامل، لا توجد أخطاء لمراجعتها 🎉';
-    document.getElementById('sync-status').insertAdjacentElement('afterend', note);
-    return;
-  }
-
-  toggleBtn.style.display = 'block';
-  toggleBtn.textContent = `عرض الأخطاء (${mistakes.length}) ↓`;
-
-  listEl.innerHTML = '';
-  mistakes.forEach(m => {
-    const item = document.createElement('div');
-    item.className = 'mistake-item';
-    item.innerHTML = `
-      <div class="mistake-q">${m.question}</div>
-      <div class="mistake-row yours"><span class="tag">إجابتك:</span><span>${m.yourAnswer}</span></div>
-      <div class="mistake-row correct"><span class="tag">الصحيح:</span><span>${m.correctAnswer}</span></div>
-    `;
-    listEl.appendChild(item);
-  });
-
-  toggleBtn.addEventListener('click', () => {
-    const isOpen = listEl.classList.toggle('open');
-    toggleBtn.textContent = isOpen
-      ? `إخفاء الأخطاء (${mistakes.length}) ↑`
-      : `عرض الأخطاء (${mistakes.length}) ↓`;
-  });
-}
-
-/* ============ زر الخروج ============ */
-document.getElementById('exit-btn').addEventListener('click', () => {
-  // window.close() لا يعمل في أغلب المتصفحات إلا إذا فُتح التبويب
-  // عبر سكربت أصلاً — لذلك لا نعتمد عليه، ونستبدل المحتوى بشاشة
-  // واضحة تخبر الطالب إن الجلسة انتهت ويقدر يغلق التبويب بنفسه
-  window.close();
-
-  document.getElementById('result-body').innerHTML = `
-    <div class="closed-state">
-      <div class="closed-icon">✅</div>
-      <h3>انتهت الجلسة</h3>
-      <p>تم تسجيل نتيجتك بنجاح.<br>يمكنك الآن إغلاق هذا التبويب من متصفحك.</p>
-    </div>
-  `;
-});
 
 </script>
 
