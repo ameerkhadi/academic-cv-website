@@ -219,6 +219,19 @@
     margin-top:14px;font-size:14px;color:var(--good);font-family:'Cairo',sans-serif;font-weight:700;
   }
 
+  .contact-footer{
+    margin-top:22px;padding-top:16px;border-top:1px dashed var(--line);
+    font-size:12.5px;color:var(--paper-dim);line-height:1.9;
+  }
+  .contact-footer strong{color:var(--brass-soft);}
+  .contact-footer a{color:var(--good);text-decoration:none;}
+  .contact-footer a:hover{text-decoration:underline;}
+
+  .closed-state{text-align:center;padding:20px 0;}
+  .closed-icon{font-size:44px;margin-bottom:14px;}
+  .closed-state h3{font-family:'Cairo',sans-serif;font-weight:900;font-size:19px;color:var(--brass-soft);margin:0 0 10px;}
+  .closed-state p{color:var(--paper-dim);font-size:14px;line-height:1.8;margin:0;}
+
   footer{margin-top:28px;text-align:center;color:var(--paper-dim);font-size:13px;}
 
   @media (max-width:480px){
@@ -311,28 +324,35 @@
 
 <!-- ===================== RESULT SCREEN ===================== -->
 <div class="screen" id="screen-result">
-  <div class="result-card">
-    <div class="ring-wrap">
-      <svg viewBox="0 0 120 120">
-        <circle class="ring-bg" cx="60" cy="60" r="52"></circle>
-        <circle class="ring-fg" id="ring-fg" cx="60" cy="60" r="52" stroke-dasharray="326.7" stroke-dashoffset="326.7"></circle>
-      </svg>
-      <div class="ring-center">
-        <div class="ring-score" id="ring-score">0/50</div>
-        <div class="ring-pct" id="ring-pct">0%</div>
+  <div class="result-card" id="result-card">
+    <div id="result-body">
+      <div class="ring-wrap">
+        <svg viewBox="0 0 120 120">
+          <circle class="ring-bg" cx="60" cy="60" r="52"></circle>
+          <circle class="ring-fg" id="ring-fg" cx="60" cy="60" r="52" stroke-dasharray="326.7" stroke-dashoffset="326.7"></circle>
+        </svg>
+        <div class="ring-center">
+          <div class="ring-score" id="ring-score">0/50</div>
+          <div class="ring-pct" id="ring-pct">0%</div>
+        </div>
       </div>
-    </div>
-    <h2 id="result-title">تم الانتهاء من الامتحان</h2>
-    <p class="result-note" id="result-note"></p>
-    <div class="sync-status" id="sync-status">
-      <span class="sync-dot" id="sync-dot"></span>
-      <span id="sync-text">جاري إرسال النتيجة...</span>
+      <h2 id="result-title">تم الانتهاء من الامتحان</h2>
+      <p class="result-note" id="result-note"></p>
+      <div class="sync-status" id="sync-status">
+        <span class="sync-dot" id="sync-dot"></span>
+        <span id="sync-text">جاري إرسال النتيجة...</span>
+      </div>
+
+      <button class="review-toggle" id="review-toggle" type="button" style="display:none;">عرض الأخطاء ↓</button>
+      <div class="review-list" id="review-list"></div>
+
+      <button class="exit-btn" id="exit-btn" type="button">خروج</button>
     </div>
 
-    <button class="review-toggle" id="review-toggle" type="button" style="display:none;">عرض الأخطاء ↓</button>
-    <div class="review-list" id="review-list"></div>
-
-    <button class="exit-btn" id="exit-btn" type="button">خروج</button>
+    <div class="contact-footer">
+      لأي استفسار بخصوص النتيجة، تواصل مع: <strong>أ.م.د. أمير هادي</strong><br>
+      <a href="mailto:amer.hadi@alshaab.edu.iq">amer.hadi@alshaab.edu.iq</a>
+    </div>
   </div>
 </div>
 
@@ -645,10 +665,18 @@ function renderMistakes(mistakes){
 
 /* ============ زر الخروج ============ */
 document.getElementById('exit-btn').addEventListener('click', () => {
+  // window.close() لا يعمل في أغلب المتصفحات إلا إذا فُتح التبويب
+  // عبر سكربت أصلاً — لذلك لا نعتمد عليه، ونستبدل المحتوى بشاشة
+  // واضحة تخبر الطالب إن الجلسة انتهت ويقدر يغلق التبويب بنفسه
   window.close();
-  // بعض المتصفحات تمنع إغلاق التبويب برمجياً إن لم يُفتح عبر سكربت،
-  // فنعرض توضيحاً للطالب في هذه الحالة
-  document.getElementById('result-note').textContent = 'يمكنك الآن إغلاق هذا التبويب من متصفحك.';
+
+  document.getElementById('result-body').innerHTML = `
+    <div class="closed-state">
+      <div class="closed-icon">✅</div>
+      <h3>انتهت الجلسة</h3>
+      <p>تم تسجيل نتيجتك بنجاح.<br>يمكنك الآن إغلاق هذا التبويب من متصفحك.</p>
+    </div>
+  `;
 });
 
 </script>
