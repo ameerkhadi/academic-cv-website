@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تحليل الحدث الأمني 4625 - فشل تسجيل الدخول</title>
+<style>
+  :root{
+    --bg: #0f1420;
+    --panel: #161d2e;
+    --panel-2: #1c2438;
+    --border: #2a3450;
+    --text: #e6ebf5;
+    --text-dim: #9aa7c2;
+    --accent: #4d8dff;
+    --accent-2: #7c5cff;
+    --warn: #ffb020;
+    --danger: #ff5c72;
+    --ok: #35d08a;
+    --code-bg: #0b0f1a;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family: "Tahoma","Segoe UI",-apple-system,sans-serif;
+    background: radial-gradient(1200px 600px at 80% -10%, #1a2340 0%, transparent 60%),
+                radial-gradient(1000px 500px at -10% 110%, #201638 0%, transparent 55%),
+                var(--bg);
+    color: var(--text);
+    line-height: 1.8;
+    padding: 0 0 60px 0;
+  }
+  .wrap{max-width: 980px; margin: 0 auto; padding: 32px 24px;}
+  header.hero{
+    background: linear-gradient(135deg, rgba(77,141,255,0.15), rgba(124,92,255,0.12));
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 32px 28px;
+    margin-bottom: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  header.hero::before{
+    content:"";
+    position:absolute; inset:0;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    opacity:.06;
+  }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    background: rgba(255,92,114,0.14);
+    color: var(--danger);
+    border:1px solid rgba(255,92,114,0.35);
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 14px;
+  }
+  h1{font-size: 26px; margin: 0 0 8px 0;}
+  .subtitle{color: var(--text-dim); font-size: 15px; margin:0;}
+
+  section{margin-bottom: 26px;}
+  .card{
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 22px 24px;
+  }
+  h2{
+    font-size: 19px;
+    margin: 0 0 16px 0;
+    display:flex; align-items:center; gap:10px;
+  }
+  h2 .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);}
+  h3{font-size:16px; margin: 18px 0 8px 0; color: var(--text);}
+
+  table{width:100%; border-collapse: collapse; margin: 10px 0 4px 0;}
+  th, td{ text-align: right; padding: 12px 14px; border-bottom: 1px solid var(--border); font-size: 14.5px;}
+  th{ color: var(--text-dim); font-weight:700; background: var(--panel-2); }
+  tr:last-child td{border-bottom:none;}
+  td.mono, th.mono{font-family: Consolas, "Courier New", monospace; direction:ltr; text-align:left;}
+
+  .badge{
+    display:inline-block; padding:3px 10px; border-radius:999px; font-size:12.5px; font-weight:700;
+  }
+  .badge.danger{ background: rgba(255,92,114,.15); color:var(--danger); border:1px solid rgba(255,92,114,.4);}
+  .badge.warn{ background: rgba(255,176,32,.15); color:var(--warn); border:1px solid rgba(255,176,32,.4);}
+  .badge.ok{ background: rgba(53,208,138,.15); color:var(--ok); border:1px solid rgba(53,208,138,.4);}
+
+  ul{margin: 8px 0; padding-inline-start: 22px;}
+  li{margin-bottom:8px; color: var(--text);}
+  p{color: var(--text); margin: 8px 0;}
+  .dim{color:var(--text-dim);}
+
+  .callout{
+    border-radius: 12px; padding: 16px 18px; margin: 14px 0;
+    border-inline-start: 4px solid var(--accent);
+    background: rgba(77,141,255,0.08);
+  }
+  .callout.warn{ border-inline-start-color: var(--warn); background: rgba(255,176,32,0.08); }
+  .callout.danger{ border-inline-start-color: var(--danger); background: rgba(255,92,114,0.08); }
+  .callout.ok{ border-inline-start-color: var(--ok); background: rgba(53,208,138,0.08); }
+  .callout strong{display:block; margin-bottom:4px;}
+
+  .steps{counter-reset: step;}
+  .step{
+    display:flex; gap:14px; padding: 14px 0; border-bottom: 1px dashed var(--border);
+  }
+  .step:last-child{border-bottom:none;}
+  .step-num{
+    counter-increment: step;
+    flex: 0 0 34px; height:34px; border-radius:50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    display:flex; align-items:center; justify-content:center;
+    font-weight:800; font-size:15px; color:#fff;
+  }
+  .step-body strong{display:block; margin-bottom:3px; font-size:15px;}
+
+  pre{
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 18px;
+    overflow-x:auto;
+    direction: ltr;
+    text-align:left;
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: #cfe0ff;
+  }
+  .copy-btn{
+    display:inline-flex; align-items:center; gap:6px;
+    background: var(--panel-2); border:1px solid var(--border); color: var(--text);
+    padding: 7px 14px; border-radius: 8px; font-size: 13px; cursor:pointer;
+    margin-bottom: 8px;
+  }
+  .copy-btn:hover{border-color: var(--accent);}
+  .copy-btn.copied{color: var(--ok); border-color: var(--ok);}
+
+  .grid2{display:grid; grid-template-columns: 1fr 1fr; gap:16px;}
+  @media (max-width: 720px){ .grid2{grid-template-columns: 1fr;} }
+  .mini-card{
+    background: var(--panel-2); border:1px solid var(--border); border-radius: 12px; padding: 16px;
+  }
+  .mini-card h4{margin:0 0 8px 0; font-size:14.5px; color:var(--accent);}
+
+  footer{
+    text-align:center; color: var(--text-dim); font-size: 13px; margin-top: 40px;
+  }
+  .kicker{
+    display:flex; align-items:center; gap:8px; color:var(--text-dim); font-size:13px; margin-top:6px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <span class="eyebrow">⚠ Event ID 4625 — Audit Failure</span>
+    <h1>تحليل الحدث الرابع: فشل تسجيل الدخول</h1>
+    <p class="subtitle">Log: Security &nbsp;|&nbsp; Computer: DESKTOP-0EU0LTA &nbsp;|&nbsp; التاريخ: 7/22/2026 2:16:41 PM</p>
+  </header>
+
+  <section class="card">
+    <h2><span class="dot"></span> التفاصيل الأساسية</h2>
+    <table>
+      <thead><tr><th>العنصر</th><th>القيمة</th><th>التفسير</th></tr></thead>
+      <tbody>
+        <tr><td>الحساب المستهدف</td><td class="mono">user</td><td>حساب المستخدم المحلي نفسه على هذا الجهاز</td></tr>
+        <tr><td>Logon Type</td><td class="mono">2 (Interactive)</td><td>تسجيل دخول تفاعلي مباشر — محليًا من لوحة المفاتيح/الشاشة</td></tr>
+        <tr><td>Source Address</td><td class="mono">127.0.0.1</td><td>المحاولة جاءت من نفس الجهاز، ليست من مصدر بعيد</td></tr>
+        <tr><td>Failure Reason</td><td>Unknown user name or bad password</td><td>اسم مستخدم أو كلمة مرور خاطئة</td></tr>
+        <tr><td>Status / SubStatus</td><td class="mono">0xC000006D / 0xC000006A</td><td>الكود الفرعي يعني تحديدًا: كلمة المرور خاطئة</td></tr>
+        <tr><td>Caller Process</td><td class="mono">svchost.exe (User32)</td><td>عملية شاشة تسجيل الدخول القياسية في ويندوز</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="card">
+    <h2><span class="dot"></span> ماذا يعني هذا عمليًا؟</h2>
+    <p>هذا النمط (Logon Type 2 + Source 127.0.0.1 + svchost.exe + User32) هو <strong>التوقيع الكلاسيكي لشاشة قفل الجهاز (Lock Screen)</strong>:</p>
+    <ul>
+      <li>شخص ما (على الأرجح أنت) حاول فتح قفل الجهاز أو تسجيل الدخول محليًا</li>
+      <li>تم إدخال كلمة مرور خاطئة</li>
+      <li>الطلب جاء من نفس الشاشة/لوحة المفاتيح المتصلة بالجهاز، وليس عبر الشبكة</li>
+    </ul>
+
+    <div class="grid2">
+      <div class="mini-card">
+        <h4>✅ السيناريو الأرجح (بريء)</h4>
+        <p class="dim" style="margin:0;">أنت شخصيًا أخطأت في كتابة كلمة المرور عند فتح القفل — يحدث للجميع.</p>
+      </div>
+      <div class="mini-card">
+        <h4>⚠ سيناريو يستحق الانتباه</h4>
+        <p class="dim" style="margin:0;">إذا لم تكن أنت من حاول، فقد يعني وجود شخص آخر لديه وصول فعلي لجهازك.</p>
+      </div>
+    </div>
+
+    <div class="callout warn">
+      <strong>🔍 ملاحظة توقيت</strong>
+      حدث هذا الحدث الساعة 2:16:41 PM، أي قبل 8 ثوانٍ فقط من حدث حظر حزمة شبكية (2:16:49 PM). التقارب على الأرجح مجرد صدفة، لأن محاولة تسجيل الدخول كانت محلية (127.0.0.1) ولا علاقة مباشرة لها بحركة الشبكة الخارجية.
+    </div>
+  </section>
+
+  <section class="card">
+    <h2><span class="dot"></span> الخلاصة والتوصيات</h2>
+    <table>
+      <tbody>
+        <tr><td>نوع المحاولة</td><td>محلية (Interactive) من نفس الجهاز فعليًا</td></tr>
+        <tr><td>المصدر</td><td>127.0.0.1 — ليست هجومًا عن بُعد</td></tr>
+        <tr><td>مستوى الخطورة</td><td><span class="badge warn">منخفض إلى متوسط</span></td></tr>
+      </tbody>
+    </table>
+    <ul>
+      <li>تحقق من نفسك أولًا: هل تتذكر أنك أخطأت في كتابة كلمة المرور في هذا التوقيت؟</li>
+      <li>إذا لم يكن أنت: ابحث عن محاولات فاشلة متكررة بنفس التوقيت (قد تدل على محاولة تخمين متتالية)</li>
+      <li>تحقق مما إذا تلاها حدث <span class="mono badge ok">4624 (نجاح)</span> مباشرة بعدها</li>
+      <li>فعّل سياسة قفل الحساب بعد عدد محاولات فاشلة (Account Lockout Policy) إذا لم تكن مفعّلة</li>
+    </ul>
+  </section>
+
+  <!-- ============ Event Viewer Access ============ -->
+  <section class="card">
+    <h2><span class="dot"></span> كيف تصل إلى Event Viewer (عارض الأحداث)</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-body">
+          <strong>الطريقة الأولى: من شريط البحث</strong>
+          اضغط زر ويندوز <span class="mono">⊞ Win</span>، ثم اكتب <span class="mono">Event Viewer</span> أو بالعربي "عارض الأحداث"، ثم اضغط Enter.
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-body">
+          <strong>الطريقة الثانية: أمر Run</strong>
+          اضغط <span class="mono">Win + R</span> لفتح نافذة Run، ثم اكتب <span class="mono">eventvwr.msc</span> واضغط Enter.
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-body">
+          <strong>الطريقة الثالثة: من Control Panel</strong>
+          Control Panel ← System and Security ← Administrative Tools ← Event Viewer.
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-body">
+          <strong>الوصول لسجل Security</strong>
+          داخل عارض الأحداث، من الشجرة على اليسار: <span class="mono">Windows Logs → Security</span>.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Filter creation ============ -->
+  <section class="card">
+    <h2><span class="dot"></span> كيف تنشئ فلتر لعرض الحدث 4625 فقط</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-body">
+          <strong>افتح سجل Security</strong>
+          من الشجرة: <span class="mono">Windows Logs → Security</span>.
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-body">
+          <strong>افتح خيار الفلترة</strong>
+          من قائمة <span class="mono">Actions</span> على اليمين، اختر <span class="mono">Filter Current Log...</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-body">
+          <strong>أدخل رقم الحدث</strong>
+          في حقل <span class="mono">&lt;All Event IDs&gt;</span> اكتب: <span class="mono">4625</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-body">
+          <strong>(اختياري) حدد المدة الزمنية</strong>
+          من قائمة <span class="mono">Logged</span> اختر مدى زمني مثل "Last 24 hours" أو "Custom range" لتضييق النتائج.
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-body">
+          <strong>اضغط OK</strong>
+          سيعرض السجل الآن فقط الأحداث برقم 4625 (محاولات تسجيل دخول فاشلة).
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-body">
+          <strong>حفظ الفلتر (اختياري)</strong>
+          يمكنك حفظ هذا الفلتر كمهمة مخصصة عبر <span class="mono">Actions → Save Filter to Custom View...</span> لإعادة استخدامه لاحقًا بسرعة.
+        </div>
+      </div>
+    </div>
+
+    <div class="callout ok">
+      <strong>💡 نصيحة</strong>
+      يمكنك أيضًا استخدام XML مخصص داخل نفس نافذة الفلترة (تبويب XML) لدمج أكثر من شرط، مثلاً عرض 4625 و4624 معًا لمقارنة محاولات الفشل والنجاح.
+    </div>
+  </section>
+
+  <!-- ============ PowerShell ============ -->
+  <section class="card">
+    <h2><span class="dot"></span> استعلام PowerShell لسحب أحداث 4625</h2>
+    <p class="dim">بدلًا من الفلترة اليدوية، يمكنك استخدام PowerShell لسحب كل محاولات الفشل بسرعة وتصديرها.</p>
+
+    <h3>عرض آخر أحداث 4625</h3>
+    <pre>Get-WinEvent -FilterHashtable @{
+    LogName   = 'Security'
+    Id        = 4625
+} | Select-Object TimeCreated, Id, Message |
+    Format-List</pre>
+
+    <h3>سحب الأحداث ضمن آخر 24 ساعة فقط</h3>
+    <pre>Get-WinEvent -FilterHashtable @{
+    LogName   = 'Security'
+    Id        = 4625
+    StartTime = (Get-Date).AddHours(-24)
+} | Sort-Object TimeCreated -Descending |
+    Format-Table TimeCreated, Id -AutoSize</pre>
+
+    <h3>عرض 4625 و4624 معًا للمقارنة (فشل مقابل نجاح)</h3>
+    <pre>Get-WinEvent -FilterHashtable @{
+    LogName = 'Security'
+    Id      = 4624, 4625
+} | Sort-Object TimeCreated -Descending |
+    Select-Object TimeCreated, Id |
+    Format-Table -AutoSize</pre>
+
+    <h3>تصدير النتائج إلى ملف CSV</h3>
+    <pre>Get-WinEvent -FilterHashtable @{
+    LogName = 'Security'
+    Id      = 4625
+} | Select-Object TimeCreated, Id, Message |
+    Export-Csv -Path "$env:USERPROFILE\Desktop\failed_logons.csv" -NoTypeInformation -Encoding UTF8</pre>
+
+    <div class="callout">
+      <strong>ملاحظة</strong>
+      يجب تشغيل PowerShell كمسؤول (Run as Administrator) للوصول الكامل لسجل Security.
+    </div>
+  </section>
+
+  <!-- ============ USB Flash Drive Detection ============ -->
+  <section class="card">
+    <h2><span class="dot"></span> تجميع أدوات وتقنيات للكشف عن أنشطة الفلاش ميموري</h2>
+    <p>معرفة دخول وخروج الفلاش ميموري (USB) شيء، ومعرفة هل تم نسخ ملفات منها/إليها شيء آخر تمامًا وأصعب بكثير. خلي نشرح الاثنين:</p>
+
+    <h3>1️⃣ معرفة أن فلاشة دخلت وخرجت (سهل نسبيًا)</h3>
+
+    <p><strong>عبر Event Viewer</strong></p>
+    <p>افتح <span class="mono">eventvwr.msc</span> وراجع هذي السجلات:</p>
+    <table>
+      <thead><tr><th>السجل</th><th>الحدث</th><th>يدل على</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">System</td><td class="mono">Event ID 20001</td><td>تثبيت جهاز USB (Device Setup)</td></tr>
+        <tr><td class="mono">System</td><td class="mono">Event ID 2003 / 2010</td><td>(DriverFrameworks-UserMode) بداية/نهاية الاتصال</td></tr>
+        <tr><td class="mono">Microsoft-Windows-Kernel-PnP/Configuration</td><td class="mono">Event ID 410, 400</td><td>تعريف الجهاز وإزالته</td></tr>
+        <tr><td class="mono">Security</td><td class="mono">Event ID 6416</td><td>جهاز إدخال جديد تم التعرف عليه (لو مفعّل Audit)</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <strong>الأسهل عمليًا</strong>
+      الذهاب إلى: <span class="mono">Applications and Services Logs → Microsoft → Windows → DriverFrameworks-UserMode → Operational</span>. هذا السجل يعطيك بالضبط وقت التوصيل ووقت الفصل لأي جهاز USB.
+    </div>
+
+    <h3>عبر PowerShell (أسرع وأدق)</h3>
+    <pre>Get-WinEvent -FilterHashtable @{
+    LogName = 'System'
+    Id = 20001,20003
+} | Select-Object TimeCreated, Id, Message | Format-List</pre>
+
+    <h3>عبر الـ Registry (سجل تاريخي دائم حتى لو حُذفت الفلاش ميموري قبل فترة طويلة)</h3>
+    <pre>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Enum\USBSTOR</pre>
+    <p>هنا تلقى كل فلاشة اتصلت بالجهاز يومًا ما مع الرقم التسلسلي (Serial Number)، حتى لو مو موجودة الحين. لمعرفة آخر وقت اتصال لكل جهاز:</p>
+    <pre>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Enum\USBSTOR\...\Properties\{83da6326-97a6-4088-9453-a1923f573b29}\0066</pre>
+
+    <div class="callout ok">
+      <strong>أداة جاهزة (أسهل بكثير)</strong>
+      أداة <span class="mono">USBDeview</span> من NirSoft — مجانية، تعرض لك مباشرة: اسم الفلاشة، الرقم التسلسلي، تاريخ أول وآخر توصيل، وهل هي متصلة الآن أو لا. بدون تعقيد Registry يدوي.
+    </div>
+
+    <h3>2️⃣ معرفة هل صار نسخ/لصق فعلي (أصعب — Windows لا يسجله افتراضيًا)</h3>
+
+    <div class="callout warn">
+      <strong>⚠ مهم</strong>
+      ويندوز لا يسجل تلقائيًا عمليات نسخ الملفات (لا من الفلاش ميموري ولا إليها) إلا إذا تم تفعيل التدقيق مسبقًا.
+    </div>
+
+    <p><strong>أ) فعّلت تدقيق الوصول للملفات (Object Access Auditing) مسبقًا</strong></p>
+    <p>لازم يكون مفعّل قبل حدوث النسخ على المجلد المطلوب مراقبته:</p>
+    <ul>
+      <li><span class="mono">secpol.msc → Local Policies → Audit Policy</span> → فعّل "Audit object access"</li>
+      <li>على المجلد المستهدف: <span class="mono">Properties → Security → Advanced → Auditing</span> → أضف قاعدة على "Everyone" لـ Read/Write</li>
+      <li>بعدها راقب <span class="mono badge warn">Event ID 4663</span> (تم الوصول للكائن) في سجل Security</li>
+    </ul>
+    <p class="dim">إذا ما كان هذا مفعّل من قبل، ما راح تلقى دليل مباشر على عملية النسخ نفسها.</p>
+
+    <p><strong>ب) آثار غير مباشرة تدل على نشاط ملفات (متوفرة افتراضيًا)</strong></p>
+    <p>حتى بدون تفعيل Auditing، فيه بقايا (Artifacts) تساعدك تخمّن:</p>
+    <table>
+      <thead><tr><th>المصدر</th><th>يكشف</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">RecentDocs في الريجستري (HKCU\...\Explorer\RecentDocs)</td><td>أسماء آخر ملفات تم فتحها من أي مكان (يشمل الفلاشة)</td></tr>
+        <tr><td class="mono">Jump Lists (%AppData%\Microsoft\Windows\Recent\AutomaticDestinations)</td><td>ملفات فُتحت مؤخرًا ببرامج معينة</td></tr>
+        <tr><td class="mono">ShellBags (Registry)</td><td>يثبت أنك تصفحت مجلدًا على الفلاشة، حتى لو حُذف لاحقًا</td></tr>
+        <tr><td class="mono">LNK files في Recent folder</td><td>كل اختصار يحتوي أحيانًا على الرقم التسلسلي للفلاشة نفسها</td></tr>
+        <tr><td class="mono">$MFT / USN Journal (تحليل جنائي متقدم)</td><td>يعطي توقيت إنشاء/تعديل/نسخ الملفات على القرص، حتى بدون Auditing — يحتاج أدوات تحليل جنائي مثل MFTECmd أو Autopsy</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout ok">
+      <strong>🎯 خلاصة عملية</strong>
+      <ul style="margin-top:8px;">
+        <li>لمعرفة الدخول/الخروج فقط ← <span class="mono">USBDeview</span> أو <span class="mono">DriverFrameworks-UserMode Log</span>، وهذا متاح من الآن.</li>
+        <li>لمعرفة نسخ/لصق فعلي حصل في الماضي بدون Auditing مفعّل مسبقًا ← صعب تثبته بشكل قاطع، لكن تقدر تستدل من RecentDocs وShellBags.</li>
+        <li>لو تبي توثيق دقيق من الآن فصاعدًا ← فعّل Object Access Auditing على المجلدات الحساسة والآن راح يسجل كل نسخ/قراءة/كتابة بالتفصيل.</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    تقرير تحليل أمني — تم إنشاؤه لمراجعة سجلات Windows Security Event Log
+    <div class="kicker" style="justify-content:center; margin-top:10px;">إعداد دكتور امير هادي</div>
+  </footer>
+
+</div>
+</body>
+</html>
