@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Google Sheet Demo</title>
+<style>
+  body { font-family: Arial, sans-serif; max-width: 500px; margin: 40px auto; }
+  .tabs { display: flex; margin-bottom: 20px; }
+  .tab-btn {
+    flex: 1; padding: 10px; cursor: pointer; border: 1px solid #ccc;
+    background: #f2f2f2; text-align: center;
+  }
+  .tab-btn.active { background: #4a90d9; color: white; }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+  input, textarea { width: 100%; padding: 8px; margin: 6px 0; box-sizing: border-box; }
+  button.submit { padding: 10px 16px; margin-top: 8px; cursor: pointer; }
+  table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+  th, td { border: 1px solid #ddd; padding: 6px 8px; font-size: 14px; }
+  th { background: #f2f2f2; }
+  #status { margin-top: 8px; font-size: 14px; color: green; }
+</style>
+</head>
+<body>
+
+<h2>Google Sheet Demo</h2>
+
+<div class="tabs">
+  <div class="tab-btn active" onclick="showTab('add')">Add Data</div>
+  <div class="tab-btn" onclick="showTab('view')">View Data</div>
+</div>
+
+<!-- TAB 1: Add Data -->
+<div id="add" class="tab-content active">
+  <input id="name" placeholder="Name">
+  <input id="email" placeholder="Email">
+  <textarea id="message" placeholder="Message" rows="3"></textarea>
+  <button class="submit" onclick="saveData()">Save to Sheet</button>
+  <div id="status"></div>
+</div>
+
+<!-- TAB 2: View Data -->
+<div id="view" class="tab-content">
+  <button class="submit" onclick="loadData()">Refresh</button>
+  <table id="dataTable">
+    <thead>
+      <tr><th>Time</th><th>Name</th><th>Email</th><th>Message</th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
+
+<script>
+  // 👉 Replace with your Apps Script Web App URL
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzp6kPrA9P28NLdy6m-xoJy5gv82Qc-GZQ_cjBkZmxU8OEdhsheg47Hf19HiuYKv3bioQ/exec";
+
+  function showTab(id) {
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    event.target.classList.add('active');
+    if (id === 'view') loadData();
+  }
+
+  async function saveData() {
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const message = document.getElementById('message').value;
+    const status = document.getElementById('status');
+
+    status.textContent = "Saving...";
+    try {
+      await fetch(SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors", // Apps Script doesn't send CORS headers by default
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify({ name, email, message })
+      });
+      status.textContent = "Saved!";
+      document.getElementById('name').value = "";
+      document.getElementById('email').value = "";
+      document.getElementById('message').value = "";
+    } catch (err) {
+      status.textContent = "Error saving data.";
+      console.error(err);
+    }
+  }
+
+  async function loadData() {
+    const tbody = document.querySelector('#dataTable tbody');
+    tbody.innerHTML = "<tr><td colspan='4'>Loading...</td></tr>";
+    try {
+      const res = await fetch(SCRIPT_URL);
+      const rows = await res.json(); // array of arrays, row[0] is header row
+      tbody.innerHTML = "";
+      rows.slice(1).forEach(row => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${row[0]}</td><td>${row[1]}</td><td>${row[2]}</td><td>${row[3]}</td>`;
+        tbody.appendChild(tr);
+      });
+    } catch (err) {
+      tbody.innerHTML = "<tr><td colspan='4'>Error loading data.</td></tr>";
+      console.error(err);
+    }
+  }
+</script>
+
+</body>
+</html>
