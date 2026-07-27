@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>نظام مستحقات الدراسات العليا</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="header">
+    <h1>🎓 نظام مستحقات الدراسات العليا</h1>
+    <span class="badge" id="who-badge">جارِ التحقق...</span>
+  </div>
+  <div class="card">
+    <h2>شاشة dean قيد الإنشاء</h2>
+    <p class="muted">هذه الشاشة ستُبنى بالمرحلة القادمة ضمن الترتيب المتفق عليه. الرابط الخاص بك يعمل بشكل صحيح وجاهز للاستخدام فور اكتمال بناء هذه الشاشة.</p>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="api.js"></script>
+  <script>
+    (async function init() {
+      try {
+        const auth = await guardPage('dean');
+        document.getElementById('who-badge').textContent = 'مسجّل كـ: ' + auth.label;
+      } catch (e) {
+        // guardPage عرضت شاشة "وصول مرفوض" مسبقاً
+      }
+    })();
+  </script>
+</body>
+</html>

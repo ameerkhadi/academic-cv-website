@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>لوحة الأدمن</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="header">
+    <h1>🎓 نظام مستحقات الدراسات العليا — لوحة الأدمن</h1>
+    <span class="badge" id="who-badge">جارِ التحقق...</span>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active" data-tab="links">🔗 الروابط الخاصة</div>
+    <div class="tab" data-tab="programs">📚 البرامج والكورسات</div>
+    <div class="tab" data-tab="audit">🕵️ سجل التدقيق</div>
+  </div>
+
+  <!-- تبويب الروابط -->
+  <div id="tab-links" class="tab-content">
+    <div class="card">
+      <h2>روابط الوصول للحسابات الأربعة</h2>
+      <p class="muted" style="margin-bottom:14px;">كل حساب يدخل النظام عبر رابطه الخاص فقط. اضغط "توليد/تدوير" لإنشاء رابط جديد لأي حساب (الرابط القديم يتوقف فوراً).</p>
+      <div id="links-container" class="loading">جارِ التحميل...</div>
+    </div>
+  </div>
+
+  <!-- تبويب البرامج -->
+  <div id="tab-programs" class="tab-content" style="display:none;">
+    <div class="card">
+      <h2>إضافة برنامج جديد</h2>
+      <div class="row">
+        <input id="new-program-name" placeholder="اسم البرنامج (مثال: دبلوم القيادة 2026-2027)" style="flex:1;min-width:260px;">
+        <input id="new-program-year" placeholder="السنة الدراسية" style="width:150px;">
+        <button class="btn" onclick="addProgram()">➕ إضافة برنامج</button>
+      </div>
+    </div>
+    <div class="card">
+      <h2>البرامج والكورسات الحالية</h2>
+      <div id="programs-container" class="loading">جارِ التحميل...</div>
+    </div>
+  </div>
+
+  <!-- تبويب سجل التدقيق -->
+  <div id="tab-audit" class="tab-content" style="display:none;">
+    <div class="card">
+      <h2>سجل التدقيق (آخر 200 عملية)</h2>
+      <div id="audit-container" class="loading">جارِ التحميل...</div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="config.js"></script>
+  <script src="api.js"></script>
+  <script>
+    let TOKEN = "";
+    const ROLE_LABELS = { admin: 'الأدمن', graduate: 'مدير الدراسات العليا', finance: 'مدير المالية', dean: 'العميد' };
+
+    // ---------- تبديل التبويبات ----------
+    document.querySelectorAll('.tab').forEach(tabEl => {
+      tabEl.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.style.display = 'none');
+        tabEl.classList.add('active');
+        document.getElementById('tab-' + tabEl.dataset.tab).style.display = 'block';
+        if (tabEl.dataset.tab === 'links') loadLinks();
+        if (tabEl.dataset.tab === 'programs') loadPrograms();
+        if (tabEl.dataset.tab === 'audit') loadAudit();
+      });
+    });
+
+    function showToast(msg, isError) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.className = 'toast' + (isError ? ' error' : '');
+      t.style.display = 'block';
+      setTimeout(() => t.style.display = 'none', 3500);
+    }
+
+    // ---------- الروابط ----------
+    async function loadLinks() {
+      document.getElementById('links-container').innerHTML = '<div class="loading">جارِ التحميل...</div>';
+      try {
+        const tokens = await apiGet('getAllTokens', { token: TOKEN });
+        renderLinks(tokens);
+      } catch (err) {
+        showToast(err.message, true);
+      }
+    }
+
+    function renderLinks(tokens) {
+      const roles = ['admin', 'graduate', 'finance', 'dean'];
+      let html = '<table><thead><tr><th>الحساب</th><th>الحالة</th><th>الرابط</th><th>إجراء</th></tr></thead><tbody>';
+      roles.forEach(r => {
+        const existing = tokens.find(t => t.role === r);
+        html += '<tr>';
+        html += '<td><strong>' + ROLE_LABELS[r] + '</strong></td>';
+        if (existing && existing.active) {
+          html += '<td><span class="status-active">● نشط</span></td>';
+          html += '<td><span class="link-box">' + existing.fullUrl + '</span></td>';
+          html += '<td><button class="btn secondary" onclick="rotateToken(\'' + r + '\')">🔄 تدوير الرابط</button></td>';
+        } else {
+          html += '<td><span class="status-archived">○ لا يوجد رابط بعد</span></td>';
+          html += '<td class="muted">—</td>';
+          html += '<td><button class="btn" onclick="rotateToken(\'' + r + '\')">✨ توليد رابط</button></td>';
+        }
+        html += '</tr>';
+      });
+      html += '</tbody></table>';
+      document.getElementById('links-container').innerHTML = html;
+    }
+
+    async function rotateToken(role) {
+      if (!confirm('سيتم إبطال الرابط القديم فوراً (إن وجد) وتوليد رابط جديد لحساب: ' + ROLE_LABELS[role] + '. متابعة؟')) return;
+      try {
+        const tokens = await apiPost('rotateRoleToken', { token: TOKEN, targetRole: role, label: ROLE_LABELS[role] });
+        renderLinks(tokens);
+        showToast('تم توليد الرابط بنجاح ✅');
+      } catch (err) {
+        showToast(err.message, true);
+      }
+    }
+
+    // ---------- البرامج والكورسات ----------
+    async function loadPrograms() {
+      document.getElementById('programs-container').innerHTML = '<div class="loading">جارِ التحميل...</div>';
+      try {
+        const programs = await apiGet('getProgramsWithCourses', { token: TOKEN });
+        renderPrograms(programs);
+      } catch (err) {
+        showToast(err.message, true);
+      }
+    }
+
+    function renderPrograms(programs) {
+      if (!programs.length) {
+        document.getElementById('programs-container').innerHTML = '<div class="empty-state">لا توجد برامج بعد — أضف أول برنامج من الأعلى.</div>';
+        return;
+      }
+      let html = '';
+      programs.forEach(p => {
+        html += '<div style="border:1px solid #eee;border-radius:10px;padding:14px 16px;margin-bottom:14px;">';
+        html += '<div class="row" style="justify-content:space-between;">';
+        html += '<strong>' + p.name + '</strong><span class="muted">' + (p.startYear || '') + '</span>';
+        html += '</div>';
+
+        if (p.courses.length) {
+          html += '<table style="margin-top:10px;"><thead><tr><th>الكورس</th><th>عدد الأسابيع</th><th>الحالة</th><th>إجراء</th></tr></thead><tbody>';
+          p.courses.forEach(c => {
+            html += '<tr><td>' + c.name + '</td><td>' + c.weeksCount + '</td>';
+            html += '<td>' + (c.status === 'active' ? '<span class="status-active">نشط</span>' : '<span class="status-archived">مؤرشف</span>') + '</td>';
+            html += '<td>';
+            if (c.status === 'active') {
+              html += '<button class="btn danger" onclick="archiveCourse(\'' + c.id + '\')">🗄️ أرشفة</button>';
+            } else {
+              html += '<button class="btn success" onclick="reopenCourse(\'' + c.id + '\')">↩️ إعادة فتح</button>';
+            }
+            html += '</td></tr>';
+          });
+          html += '</tbody></table>';
+        } else {
+          html += '<p class="muted" style="margin-top:8px;">لا توجد كورسات لهذا البرنامج بعد.</p>';
+        }
+
+        html += '<div class="row" style="margin-top:12px;">';
+        html += '<input id="course-name-' + p.id + '" placeholder="اسم الكورس (مثال: الكورس الأول)" style="flex:1;min-width:200px;">';
+        html += '<input id="course-weeks-' + p.id + '" placeholder="عدد الأسابيع" value="15" style="width:110px;">';
+        html += '<button class="btn" onclick="addCourse(\'' + p.id + '\')">➕ إضافة كورس</button>';
+        html += '</div>';
+        html += '</div>';
+      });
+      document.getElementById('programs-container').innerHTML = html;
+    }
+
+    async function addProgram() {
+      const name = document.getElementById('new-program-name').value;
+      const year = document.getElementById('new-program-year').value;
+      if (!name.trim()) { showToast('اكتب اسم البرنامج أولاً', true); return; }
+      try {
+        const programs = await apiPost('addProgram', { token: TOKEN, name, startYear: year });
+        renderPrograms(programs);
+        document.getElementById('new-program-name').value = '';
+        document.getElementById('new-program-year').value = '';
+        showToast('تمت إضافة البرنامج ✅');
+      } catch (err) {
+        showToast(err.message, true);
+      }
+    }
+
+    async function addCourse(programId) {
+      const name = document.getElementById('course-name-' + programId).value;
+      const weeks = document.getElementById('course-weeks-' + programId).value;
+      if (!name.trim()) { showToast('اكتب اسم الكورس أولاً', true); return; }
+      try {
+        const programs = await apiPost('addCourse', { token: TOKEN, programId, name, weeksCount: parseInt(weeks) || 15 });
+        renderPrograms(programs);
+        showToast('تمت إضافة الكورس ✅');
+      } catch (err) {
+        showToast(err.message, true);
+      }
+    }
+
+    async function archiveCourse(courseId) {
+      if (!confirm('تأكيد أرشفة الكورس؟ (يمكن إعادة فتحه لاحقاً)')) return;
+      try {
+        const programs = await apiPost('setCourseStatus', { token: TOKEN, courseId, newStatus: 'archived' });
+        renderPrograms(programs);
+        showToast('تمت الأرشفة ✅');
+      } catch (err) {
+        showToast(err.message, true);
+      }
+    }
+
+    async function reopenCourse(courseId) {
+      try {
+        const programs = await apiPost('setCourseStatus', { token: TOKEN, courseId, newStatus: 'active' });
+        renderPrograms(programs);
+        showToast('تمت إعادة الفتح ✅');
+      } catch (err) {
+        showToast(err.message, true);
+      }
+    }
+
+    // ---------- سجل التدقيق ----------
+    async function loadAudit() {
+      document.getElementById('audit-container').innerHTML = '<div class="loading">جارِ التحميل...</div>';
+      try {
+        const rows = await apiGet('getAuditLog', { token: TOKEN, limit: 200 });
+        renderAudit(rows);
+      } catch (err) {
+        showToast(err.message, true);
+      }
+    }
+
+    function renderAudit(rows) {
+      if (!rows.length) {
+        document.getElementById('audit-container').innerHTML = '<div class="empty-state">لا توجد عمليات مسجّلة بعد.</div>';
+        return;
+      }
+      let html = '<table><thead><tr><th>التاريخ والوقت</th><th>الحساب</th><th>الإجراء</th><th>التفاصيل</th></tr></thead><tbody>';
+      rows.forEach(r => {
+        const dt = new Date(r.timestamp);
+        html += '<tr><td>' + dt.toLocaleString('ar-IQ') + '</td><td>' + (ROLE_LABELS[r.role] || r.role) + '</td><td>' + r.action + '</td><td class="muted">' + r.details + '</td></tr>';
+      });
+      html += '</tbody></table>';
+      document.getElementById('audit-container').innerHTML = html;
+    }
+
+    // ---------- تحقق الهوية عند فتح الصفحة ----------
+    (async function init() {
+      try {
+        const auth = await guardPage('admin'); // يوقف الكود إذا الرابط غير صالح
+        TOKEN = auth.token;
+        document.getElementById('who-badge').textContent = 'مسجّل كـ: ' + auth.label;
+        loadLinks();
+      } catch (e) {
+        // guardPage عرضت شاشة "وصول مرفوض" مسبقاً
+      }
+    })();
+  </script>
+</body>
+</html>
