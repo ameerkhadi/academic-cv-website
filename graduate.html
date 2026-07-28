@@ -15,6 +15,7 @@
   <div class="tabs">
     <div class="tab active" data-tab="instructors">👨‍🏫 الأساتذة</div>
     <div class="tab" data-tab="attendance">📅 الحضور الأسبوعي</div>
+    <div class="tab" data-tab="subjects">📖 مواد التدريس</div>
     <div class="tab" data-tab="supervision">📝 الإشراف والتقييم</div>
   </div>
 
@@ -52,6 +53,29 @@
     <div class="card">
       <h2>تسجيل الحضور</h2>
       <div id="attendance-container" class="loading">اختر كورساً أولاً...</div>
+    </div>
+  </div>
+
+  <!-- تبويب مواد التدريس -->
+  <div id="tab-subjects" class="tab-content" style="display:none;">
+    <div class="card">
+      <h2>اختر الكورس</h2>
+      <div class="row">
+        <select id="subj-course" style="flex:1;min-width:220px;" onchange="loadSubjects()"></select>
+        <button class="btn" onclick="loadSubjects()">🔄 تحميل</button>
+      </div>
+    </div>
+    <div class="card">
+      <h2>إضافة مادة جديدة</h2>
+      <div class="row">
+        <input id="new-subject-name" placeholder="اسم المادة" style="flex:1;min-width:200px;">
+        <select id="new-subject-instructor" style="min-width:200px;"></select>
+        <button class="btn" onclick="addSubjectHandler()">➕ إضافة مادة</button>
+      </div>
+    </div>
+    <div class="card">
+      <h2>المواد المضافة لهذا الكورس</h2>
+      <div id="subjects-container" class="loading">اختر كورساً أولاً...</div>
     </div>
   </div>
 
@@ -107,6 +131,7 @@
         document.getElementById('tab-' + tabEl.dataset.tab).style.display = 'block';
         if (tabEl.dataset.tab === 'instructors') loadInstructors();
         if (tabEl.dataset.tab === 'attendance') loadCoursesForAttendance();
+        if (tabEl.dataset.tab === 'subjects') loadCoursesForSubjects();
         if (tabEl.dataset.tab === 'supervision') loadSupervision();
       });
     });
@@ -292,6 +317,114 @@
         await apiPost('removeInstructorFromCourse', { token: TOKEN, linkId, courseId });
         showToast('تم الإلغاء ✅');
         loadAttendance();
+      } catch (err) {
+        showToast(err.message, true);
+      }
+    }
+
+    // ================= مواد التدريس =================
+    async function loadCoursesForSubjects() {
+      try {
+        if (!coursesCache.length) {
+          const programs = await apiGet('getProgramsWithCourses', { token: TOKEN });
+          coursesCache = [];
+          programs.forEach(p => {
+            p.courses.filter(c => c.status === 'active').forEach(c => {
+              coursesCache.push({ id: c.id, label: p.name + ' — ' + c.name });
+            });
+          });
+        }
+        const sel = document.getElementById('subj-course');
+        if (!coursesCache.length) {
+          sel.innerHTML = '<option value="">لا توجد كورسات نشطة</option>';
+          document.getElementById('subjects-container').innerHTML = '<div class="empty-state">أضف برنامجاً وكورساً من شاشة الأدمن أولاً.</div>';
+          return;
+        }
+        sel.innerHTML = coursesCache.map(c => '<option value="' + c.id + '">' + c.label + '</option>').join('');
+        if (!instructorsCache.length) await loadInstructorsQuiet();
+        fillSubjectInstructorSelect();
+        loadSubjects();
+      } catch (err) {
+        showToast(err.message, true);
+      }
+    }
+
+    function fillSubjectInstructorSelect() {
+      const sel = document.getElementById('new-subject-instructor');
+      if (!sel) return;
+      const options = instructorsCache.map(i => '<option value="' + i.id + '">' + i.fullName + '</option>').join('');
+      sel.innerHTML = '<option value="">-- بدون أستاذ حالياً --</option>' + options;
+    }
+
+    async function loadSubjects() {
+      const courseId = document.getElementById('subj-course').value;
+      if (!courseId) return;
+      document.getElementById('subjects-container').innerHTML = '<div class="loading">جارِ التحميل...</div>';
+      try {
+        const subjects = await apiGet('getSubjectsForCourse', { token: TOKEN, courseId });
+        renderSubjects(courseId, subjects);
+      } catch (err) {
+        showToast(err.message, true);
+      }
+    }
+
+    function renderSubjects(courseId, subjects) {
+      if (!subjects.length) {
+        document.getElementById('subjects-container').innerHTML = '<div class="empty-state">لا توجد مواد مضافة لهذا الكورس بعد.</div>';
+        return;
+      }
+      const options = instructorsCache.map(i => '<option value="' + i.id + '">' + i.fullName + '</option>').join('');
+      let html = '<table><thead><tr><th>اسم المادة</th><th>الأستاذ المسؤول</th><th>إجراء</th></tr></thead><tbody>';
+      subjects.forEach(s => {
+        html += '<tr><td>' + s.name + '</td>';
+        html += '<td><select id="subj-inst-' + s.id + '" onchange="changeSubjectInstructor(\'' + s.id + '\',\'' + courseId + '\')">';
+        html += '<option value="">-- بدون أستاذ --</option>' + options.replace('value="' + s.instructorId + '"', 'value="' + s.instructorId + '" selected');
+        html += '</select></td>';
+        html += '<td><button class="btn danger" onclick="deleteSubjectHandler(\'' + s.id + '\',\'' + courseId + '\')">🗑️ حذف</button></td></tr>';
+      });
+      html += '</tbody></table>';
+      document.getElementById('subjects-container').innerHTML = html;
+
+      // ضبط القيمة المختارة فعلياً لكل select (لأن replace أعلاه قد لا يطابق لو instructorId فارغ)
+      subjects.forEach(s => {
+        const sel = document.getElementById('subj-inst-' + s.id);
+        if (sel && s.instructorId) sel.value = s.instructorId;
+      });
+    }
+
+    async function addSubjectHandler() {
+      const courseId = document.getElementById('subj-course').value;
+      const name = document.getElementById('new-subject-name').value;
+      const instructorId = document.getElementById('new-subject-instructor').value;
+      if (!courseId) { showToast('اختر كورساً أولاً', true); return; }
+      if (!name.trim()) { showToast('اكتب اسم المادة أولاً', true); return; }
+      try {
+        const subjects = await apiPost('addSubject', { token: TOKEN, courseId, name, instructorId });
+        renderSubjects(courseId, subjects);
+        document.getElementById('new-subject-name').value = '';
+        showToast('تمت إضافة المادة ✅');
+      } catch (err) {
+        showToast(err.message, true);
+      }
+    }
+
+    async function changeSubjectInstructor(subjectId, courseId) {
+      const instructorId = document.getElementById('subj-inst-' + subjectId).value;
+      try {
+        const subjects = await apiPost('updateSubjectInstructor', { token: TOKEN, subjectId, instructorId, courseId });
+        renderSubjects(courseId, subjects);
+        showToast('تم تحديث الأستاذ ✅');
+      } catch (err) {
+        showToast(err.message, true);
+      }
+    }
+
+    async function deleteSubjectHandler(subjectId, courseId) {
+      if (!confirm('تأكيد حذف هذه المادة؟')) return;
+      try {
+        const subjects = await apiPost('deleteSubject', { token: TOKEN, subjectId, courseId });
+        renderSubjects(courseId, subjects);
+        showToast('تم الحذف ✅');
       } catch (err) {
         showToast(err.message, true);
       }
