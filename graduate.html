@@ -2,26 +2,369 @@
 <html dir="rtl" lang="ar">
 <head>
   <meta charset="UTF-8">
-  <title>نظام مستحقات الدراسات العليا</title>
+  <title>مدير الدراسات العليا</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+
   <div class="header">
-    <h1>🎓 نظام مستحقات الدراسات العليا</h1>
+    <h1>🎓 نظام مستحقات الدراسات العليا — مدير الدراسات العليا</h1>
     <span class="badge" id="who-badge">جارِ التحقق...</span>
   </div>
-  <div class="card">
-    <h2>شاشة graduate قيد الإنشاء</h2>
-    <p class="muted">هذه الشاشة ستُبنى بالمرحلة القادمة ضمن الترتيب المتفق عليه. الرابط الخاص بك يعمل بشكل صحيح وجاهز للاستخدام فور اكتمال بناء هذه الشاشة.</p>
+
+  <div class="tabs">
+    <div class="tab active" data-tab="instructors">👨‍🏫 الأساتذة</div>
+    <div class="tab" data-tab="attendance">📅 الحضور الأسبوعي</div>
+    <div class="tab" data-tab="supervision">📝 الإشراف والتقييم</div>
   </div>
+
+  <!-- تبويب الأساتذة -->
+  <div id="tab-instructors" class="tab-content">
+    <div class="card">
+      <h2>إضافة أستاذ جديد</h2>
+      <div class="row">
+        <input id="new-inst-name" placeholder="الاسم الكامل" style="flex:1;min-width:200px;">
+        <input id="new-inst-title" placeholder="اللقب العلمي (مثال: أستاذ مساعد)" style="width:200px;">
+        <input id="new-inst-hours" placeholder="الساعات الأسبوعية" style="width:150px;">
+        <button class="btn" onclick="addInstructor()">➕ إضافة</button>
+      </div>
+    </div>
+    <div class="card">
+      <h2>قائمة الأساتذة</h2>
+      <div id="instructors-container" class="loading">جارِ التحميل...</div>
+    </div>
+  </div>
+
+  <!-- تبويب الحضور -->
+  <div id="tab-attendance" class="tab-content" style="display:none;">
+    <div class="card">
+      <h2>اختر الكورس والأسبوع</h2>
+      <div class="row">
+        <select id="att-course" style="flex:1;min-width:220px;" onchange="onCourseChange()"></select>
+        <input id="att-week" placeholder="رقم الأسبوع" style="width:130px;" value="1" onchange="loadAttendance()">
+        <button class="btn" onclick="loadAttendance()">🔄 تحميل</button>
+      </div>
+      <div class="row" style="margin-top:6px;">
+        <select id="assign-instructor" style="flex:1;min-width:220px;"></select>
+        <button class="btn secondary" onclick="assignInstructor()">🔗 إسناد أستاذ لهذا الكورس</button>
+      </div>
+    </div>
+    <div class="card">
+      <h2>تسجيل الحضور</h2>
+      <div id="attendance-container" class="loading">اختر كورساً أولاً...</div>
+    </div>
+  </div>
+
+  <!-- تبويب الإشراف -->
+  <div id="tab-supervision" class="tab-content" style="display:none;">
+    <div class="card">
+      <h2>إضافة سجل إشراف/تقييم</h2>
+      <div class="row">
+        <select id="sup-instructor" style="min-width:200px;"></select>
+        <select id="sup-type" style="min-width:180px;">
+          <option value="supervision">إشراف رسائل</option>
+          <option value="scientific_review">مراجعة علمية</option>
+          <option value="language_review">مراجعة لغوية</option>
+          <option value="discussion_membership">عضوية مناقشة</option>
+        </select>
+      </div>
+      <div class="row">
+        <input id="sup-title" placeholder="العنوان / الوصف" style="flex:1;min-width:220px;">
+        <input id="sup-date" type="date" style="width:170px;">
+      </div>
+      <div class="row">
+        <button class="btn" onclick="addSupervision()">➕ إضافة السجل</button>
+      </div>
+    </div>
+    <div class="card">
+      <h2>سجلات الإشراف والتقييم</h2>
+      <div id="supervision-container" class="loading">جارِ التحميل...</div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
 
   <script src="config.js"></script>
   <script src="api.js"></script>
   <script>
+    let TOKEN = "";
+    let instructorsCache = [];
+    let coursesCache = []; // مسطّحة: كل كورس مع اسم برنامجه
+
+    const TYPE_LABELS = {
+      supervision: 'إشراف رسائل',
+      scientific_review: 'مراجعة علمية',
+      language_review: 'مراجعة لغوية',
+      discussion_membership: 'عضوية مناقشة'
+    };
+
+    // ---------- تبديل التبويبات ----------
+    document.querySelectorAll('.tab').forEach(tabEl => {
+      tabEl.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.style.display = 'none');
+        tabEl.classList.add('active');
+        document.getElementById('tab-' + tabEl.dataset.tab).style.display = 'block';
+        if (tabEl.dataset.tab === 'instructors') loadInstructors();
+        if (tabEl.dataset.tab === 'attendance') loadCoursesForAttendance();
+        if (tabEl.dataset.tab === 'supervision') loadSupervision();
+      });
+    });
+
+    function showToast(msg, isError) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.className = 'toast' + (isError ? ' error' : '');
+      t.style.display = 'block';
+      setTimeout(() => t.style.display = 'none', 3500);
+    }
+
+    // ================= الأساتذة =================
+    async function loadInstructors() {
+      document.getElementById('instructors-container').innerHTML = '<div class="loading">جارِ التحميل...</div>';
+      try {
+        instructorsCache = await apiGet('getInstructors', { token: TOKEN });
+        renderInstructors();
+        fillInstructorSelects();
+      } catch (err) {
+        showToast(err.message, true);
+      }
+    }
+
+    function renderInstructors() {
+      if (!instructorsCache.length) {
+        document.getElementById('instructors-container').innerHTML = '<div class="empty-state">لا يوجد أساتذة بعد.</div>';
+        return;
+      }
+      let html = '<table><thead><tr><th>الاسم</th><th>اللقب العلمي</th><th>الساعات الأسبوعية</th><th>التوثيق</th><th>إجراء</th></tr></thead><tbody>';
+      instructorsCache.forEach(i => {
+        html += '<tr><td>' + i.fullName + '</td><td>' + (i.academicTitle || '—') + '</td><td>' + i.weeklyHours + '</td>';
+        html += '<td>' + (i.verified === true ? '<span class="status-active">✔ موثّق</span>' : '<span class="status-archived">غير موثّق</span>') + '</td>';
+        html += '<td><button class="btn ' + (i.verified ? 'secondary' : 'success') + '" onclick="toggleVerify(\'' + i.id + '\',' + (!i.verified) + ')">' +
+                (i.verified ? 'إلغاء التوثيق' : 'توثيق') + '</button></td></tr>';
+      });
+      html += '</tbody></table>';
+      document.getElementById('instructors-container').innerHTML = html;
+    }
+
+    async function addInstructor() {
+      const fullName = document.getElementById('new-inst-name').value;
+      const academicTitle = document.getElementById('new-inst-title').value;
+      const weeklyHours = document.getElementById('new-inst-hours').value;
+      if (!fullName.trim()) { showToast('اكتب اسم الأستاذ أولاً', true); return; }
+      try {
+        instructorsCache = await apiPost('addInstructor', { token: TOKEN, fullName, academicTitle, weeklyHours });
+        renderInstructors();
+        fillInstructorSelects();
+        document.getElementById('new-inst-name').value = '';
+        document.getElementById('new-inst-title').value = '';
+        document.getElementById('new-inst-hours').value = '';
+        showToast('تمت إضافة الأستاذ ✅');
+      } catch (err) {
+        showToast(err.message, true);
+      }
+    }
+
+    async function toggleVerify(instructorId, verified) {
+      try {
+        instructorsCache = await apiPost('setInstructorVerified', { token: TOKEN, instructorId, verified });
+        renderInstructors();
+        showToast('تم التحديث ✅');
+      } catch (err) {
+        showToast(err.message, true);
+      }
+    }
+
+    function fillInstructorSelects() {
+      const options = instructorsCache.map(i => '<option value="' + i.id + '">' + i.fullName + '</option>').join('');
+      const assignSel = document.getElementById('assign-instructor');
+      const supSel = document.getElementById('sup-instructor');
+      if (assignSel) assignSel.innerHTML = '<option value="">-- اختر أستاذاً لإسناده --</option>' + options;
+      if (supSel) supSel.innerHTML = '<option value="">-- اختر أستاذاً --</option>' + options;
+    }
+
+    // ================= الحضور الأسبوعي =================
+    async function loadCoursesForAttendance() {
+      try {
+        const programs = await apiGet('getProgramsWithCourses', { token: TOKEN });
+        coursesCache = [];
+        programs.forEach(p => {
+          p.courses.filter(c => c.status === 'active').forEach(c => {
+            coursesCache.push({ id: c.id, label: p.name + ' — ' + c.name });
+          });
+        });
+        const sel = document.getElementById('att-course');
+        if (!coursesCache.length) {
+          sel.innerHTML = '<option value="">لا توجد كورسات نشطة</option>';
+          document.getElementById('attendance-container').innerHTML = '<div class="empty-state">أضف برنامجاً وكورساً من شاشة الأدمن أولاً.</div>';
+          return;
+        }
+        sel.innerHTML = coursesCache.map(c => '<option value="' + c.id + '">' + c.label + '</option>').join('');
+        if (!instructorsCache.length) await loadInstructorsQuiet();
+        onCourseChange();
+      } catch (err) {
+        showToast(err.message, true);
+      }
+    }
+
+    async function loadInstructorsQuiet() {
+      try {
+        instructorsCache = await apiGet('getInstructors', { token: TOKEN });
+        fillInstructorSelects();
+      } catch (err) { /* تجاهل بصمت هنا */ }
+    }
+
+    function onCourseChange() {
+      loadAttendance();
+    }
+
+    async function assignInstructor() {
+      const courseId = document.getElementById('att-course').value;
+      const instructorId = document.getElementById('assign-instructor').value;
+      if (!courseId) { showToast('اختر كورساً أولاً', true); return; }
+      if (!instructorId) { showToast('اختر أستاذاً أولاً', true); return; }
+      try {
+        await apiPost('assignInstructorToCourse', { token: TOKEN, courseId, instructorId });
+        showToast('تم إسناد الأستاذ ✅');
+        loadAttendance();
+      } catch (err) {
+        showToast(err.message, true);
+      }
+    }
+
+    async function loadAttendance() {
+      const courseId = document.getElementById('att-course').value;
+      const weekNumber = document.getElementById('att-week').value || 1;
+      if (!courseId) return;
+      document.getElementById('attendance-container').innerHTML = '<div class="loading">جارِ التحميل...</div>';
+      try {
+        const [assignments, attendance] = await Promise.all([
+          apiGet('getCourseAssignments', { token: TOKEN, courseId }),
+          apiGet('getAttendanceForCourseWeek', { token: TOKEN, courseId, weekNumber })
+        ]);
+        renderAttendance(courseId, weekNumber, assignments, attendance);
+      } catch (err) {
+        showToast(err.message, true);
+      }
+    }
+
+    function renderAttendance(courseId, weekNumber, assignments, attendance) {
+      if (!assignments.length) {
+        document.getElementById('attendance-container').innerHTML = '<div class="empty-state">لا يوجد أساتذة مُسندون لهذا الكورس بعد — أسند أستاذاً من الأعلى.</div>';
+        return;
+      }
+      let html = '<table><thead><tr><th>الأستاذ</th><th>الحالة</th><th>عدد الساعات</th><th>التاريخ</th><th>إجراء</th></tr></thead><tbody>';
+      assignments.forEach(a => {
+        const existing = attendance.find(r => r.instructorId === a.instructorId);
+        const status = existing ? existing.status : '';
+        const hours = existing ? existing.hours : '';
+        const dateVal = existing && existing.date ? new Date(existing.date).toISOString().substring(0, 10) : new Date().toISOString().substring(0, 10);
+        const rowId = 'att-' + a.instructorId;
+        html += '<tr>';
+        html += '<td>' + a.instructorName + '</td>';
+        html += '<td><select id="' + rowId + '-status"><option value="حضر"' + (status === 'حضر' ? ' selected' : '') + '>حضر</option><option value="غاب"' + (status === 'غاب' ? ' selected' : '') + '>غاب</option></select></td>';
+        html += '<td><input id="' + rowId + '-hours" value="' + hours + '" style="width:80px;"></td>';
+        html += '<td><input id="' + rowId + '-date" type="date" value="' + dateVal + '" style="width:150px;"></td>';
+        html += '<td><button class="btn" onclick="saveAttendance(\'' + a.instructorId + '\',\'' + courseId + '\',' + weekNumber + ')">💾 حفظ</button>' +
+                ' <button class="btn danger" onclick="unassignInstructor(\'' + a.id + '\',\'' + courseId + '\')">إلغاء الإسناد</button></td>';
+        html += '</tr>';
+      });
+      html += '</tbody></table>';
+      document.getElementById('attendance-container').innerHTML = html;
+    }
+
+    async function saveAttendance(instructorId, courseId, weekNumber) {
+      const rowId = 'att-' + instructorId;
+      const status = document.getElementById(rowId + '-status').value;
+      const hours = document.getElementById(rowId + '-hours').value;
+      const date = document.getElementById(rowId + '-date').value;
+      try {
+        await apiPost('recordAttendance', { token: TOKEN, instructorId, courseId, weekNumber, date, status, hours });
+        showToast('تم حفظ الحضور ✅');
+      } catch (err) {
+        showToast(err.message, true);
+      }
+    }
+
+    async function unassignInstructor(linkId, courseId) {
+      if (!confirm('تأكيد إلغاء إسناد هذا الأستاذ من الكورس؟')) return;
+      try {
+        await apiPost('removeInstructorFromCourse', { token: TOKEN, linkId, courseId });
+        showToast('تم الإلغاء ✅');
+        loadAttendance();
+      } catch (err) {
+        showToast(err.message, true);
+      }
+    }
+
+    // ================= الإشراف والتقييم =================
+    async function loadSupervision() {
+      document.getElementById('supervision-container').innerHTML = '<div class="loading">جارِ التحميل...</div>';
+      if (!instructorsCache.length) await loadInstructorsQuiet();
+      try {
+        const rows = await apiGet('getSupervisionRecords', { token: TOKEN });
+        renderSupervision(rows);
+      } catch (err) {
+        showToast(err.message, true);
+      }
+    }
+
+    function renderSupervision(rows) {
+      if (!rows.length) {
+        document.getElementById('supervision-container').innerHTML = '<div class="empty-state">لا توجد سجلات بعد.</div>';
+        return;
+      }
+      let html = '<table><thead><tr><th>الأستاذ</th><th>النوع</th><th>العنوان</th><th>التاريخ</th><th>الحالة</th><th>إجراء</th></tr></thead><tbody>';
+      rows.forEach(r => {
+        const dt = r.date ? new Date(r.date).toLocaleDateString('ar-IQ') : '—';
+        html += '<tr><td>' + r.instructorName + '</td><td>' + (TYPE_LABELS[r.type] || r.type) + '</td><td>' + r.title + '</td><td>' + dt + '</td>';
+        html += '<td>' + (r.status === 'active' ? '<span class="status-active">نشط</span>' : '<span class="status-archived">منتهٍ</span>') + '</td>';
+        html += '<td>';
+        if (r.status === 'active') {
+          html += '<button class="btn secondary" onclick="setSupStatus(\'' + r.id + '\',\'completed\')">إنهاء</button>';
+        } else {
+          html += '<button class="btn success" onclick="setSupStatus(\'' + r.id + '\',\'active\')">إعادة تنشيط</button>';
+        }
+        html += '</td></tr>';
+      });
+      html += '</tbody></table>';
+      document.getElementById('supervision-container').innerHTML = html;
+    }
+
+    async function addSupervision() {
+      const instructorId = document.getElementById('sup-instructor').value;
+      const type = document.getElementById('sup-type').value;
+      const title = document.getElementById('sup-title').value;
+      const date = document.getElementById('sup-date').value;
+      if (!instructorId) { showToast('اختر أستاذاً أولاً', true); return; }
+      if (!title.trim()) { showToast('اكتب العنوان/الوصف', true); return; }
+      try {
+        const rows = await apiPost('addSupervisionRecord', { token: TOKEN, type, instructorId, title, date });
+        renderSupervision(rows);
+        document.getElementById('sup-title').value = '';
+        showToast('تمت الإضافة ✅');
+      } catch (err) {
+        showToast(err.message, true);
+      }
+    }
+
+    async function setSupStatus(recordId, newStatus) {
+      try {
+        const rows = await apiPost('setSupervisionStatus', { token: TOKEN, recordId, newStatus });
+        renderSupervision(rows);
+        showToast('تم التحديث ✅');
+      } catch (err) {
+        showToast(err.message, true);
+      }
+    }
+
+    // ---------- تحقق الهوية عند فتح الصفحة ----------
     (async function init() {
       try {
         const auth = await guardPage('graduate');
+        TOKEN = auth.token;
         document.getElementById('who-badge').textContent = 'مسجّل كـ: ' + auth.label;
+        loadInstructors();
       } catch (e) {
         // guardPage عرضت شاشة "وصول مرفوض" مسبقاً
       }
