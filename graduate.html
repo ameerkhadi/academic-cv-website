@@ -161,15 +161,54 @@
         document.getElementById('instructors-container').innerHTML = '<div class="empty-state">لا يوجد أساتذة بعد.</div>';
         return;
       }
-      let html = '<table><thead><tr><th>الاسم</th><th>اللقب العلمي</th><th>الساعات الأسبوعية</th><th>التوثيق</th><th>إجراء</th></tr></thead><tbody>';
+      let html = '<table><thead><tr><th>الاسم</th><th>اللقب العلمي</th><th>الساعات الأسبوعية</th><th>التوثيق</th>' +
+                 '<th>البطاقة الموحدة</th><th>الشهادة</th><th>أمر التلقيب</th><th>إجراء</th></tr></thead><tbody>';
       instructorsCache.forEach(i => {
         html += '<tr><td>' + i.fullName + '</td><td>' + (i.academicTitle || '—') + '</td><td>' + i.weeklyHours + '</td>';
         html += '<td>' + (i.verified === true ? '<span class="status-active">✔ موثّق</span>' : '<span class="status-archived">غير موثّق</span>') + '</td>';
+        html += docCell(i, 'idCardFileUrl', 'idCard');
+        html += docCell(i, 'certificateFileUrl', 'certificate');
+        html += docCell(i, 'titleBookFileUrl', 'titleBook');
         html += '<td><button class="btn ' + (i.verified ? 'secondary' : 'success') + '" onclick="toggleVerify(\'' + i.id + '\',' + (!i.verified) + ')">' +
                 (i.verified ? 'إلغاء التوثيق' : 'توثيق') + '</button></td></tr>';
       });
       html += '</tbody></table>';
       document.getElementById('instructors-container').innerHTML = html;
+    }
+
+    function docCell(instructor, urlField, docType) {
+      const link = instructor[urlField]
+        ? '<a href="' + instructor[urlField] + '" target="_blank" style="display:block;margin-bottom:4px;">📄 عرض</a>'
+        : '<span class="muted" style="display:block;margin-bottom:4px;">غير مرفوع</span>';
+      return '<td>' + link +
+        '<input type="file" accept="image/*,application/pdf" style="width:120px;font-size:11px;" ' +
+        'onchange="uploadInstructorDoc(\'' + instructor.id + '\',\'' + docType + '\',this)"></td>';
+    }
+
+    async function uploadInstructorDoc(instructorId, docType, inputEl) {
+      const file = inputEl.files[0];
+      if (!file) return;
+      if (file.size > 5 * 1024 * 1024) {
+        showToast('الحجم الأقصى المسموح 5 ميغابايت', true);
+        inputEl.value = '';
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = async function() {
+        const base64Data = reader.result.split(',')[1];
+        try {
+          instructorsCache = await apiPost('uploadInstructorDocument', {
+            token: TOKEN, instructorId, docType,
+            fileName: file.name, mimeType: file.type, base64Data
+          });
+          renderInstructors();
+          fillInstructorSelects();
+          showToast('تم رفع الملف ✅');
+        } catch (err) {
+          showToast(err.message, true);
+        }
+      };
+      reader.readAsDataURL(file);
     }
 
     async function addInstructor() {

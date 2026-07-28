@@ -2,26 +2,288 @@
 <html dir="rtl" lang="ar">
 <head>
   <meta charset="UTF-8">
-  <title>نظام مستحقات الدراسات العليا</title>
+  <title>المالية</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+
   <div class="header">
-    <h1>🎓 نظام مستحقات الدراسات العليا</h1>
+    <h1>🎓 نظام مستحقات الدراسات العليا — المالية</h1>
     <span class="badge" id="who-badge">جارِ التحقق...</span>
   </div>
-  <div class="card">
-    <h2>شاشة finance قيد الإنشاء</h2>
-    <p class="muted">هذه الشاشة ستُبنى بالمرحلة القادمة ضمن الترتيب المتفق عليه. الرابط الخاص بك يعمل بشكل صحيح وجاهز للاستخدام فور اكتمال بناء هذه الشاشة.</p>
+
+  <div class="tabs">
+    <div class="tab active" data-tab="prices">💰 الأسعار</div>
+    <div class="tab" data-tab="report">📊 الجدول الشهري</div>
+    <div class="tab" data-tab="documents">📁 مستمسكات الأساتذة</div>
   </div>
+
+  <!-- تبويب الأسعار -->
+  <div id="tab-prices" class="tab-content">
+    <div class="card">
+      <h2>الأسعار الحالية</h2>
+      <div id="prices-container" class="loading">جارِ التحميل...</div>
+    </div>
+  </div>
+
+  <!-- تبويب الجدول الشهري -->
+  <div id="tab-report" class="tab-content" style="display:none;">
+    <div class="card">
+      <h2>اختر الشهر</h2>
+      <div class="row">
+        <input id="report-month" type="month" style="width:180px;">
+        <button class="btn" onclick="loadReport()">🔄 عرض</button>
+        <button class="btn secondary" onclick="generateReport()">🧮 احتساب / إعادة احتساب</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="row" style="justify-content:space-between;">
+        <h2 style="border:none;padding:0;margin:0;">تفاصيل التقرير</h2>
+        <span id="report-status-badge"></span>
+      </div>
+      <div id="report-container" class="loading">اختر شهراً واضغط "عرض" أو "احتساب"...</div>
+      <div class="row" id="report-actions" style="margin-top:14px;display:none;">
+        <button class="btn success" onclick="submitReport()">📤 إرسال للاعتماد</button>
+        <button class="btn secondary" onclick="exportCsv()">⬇️ تصدير CSV</button>
+        <button class="btn secondary" onclick="openPrintableReport(currentReport)">🖨️ طباعة للتوقيع</button>
+        <button class="btn" onclick="markPaid()" id="btn-mark-paid" style="display:none;">✅ تحديد كمصروف</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- تبويب مستمسكات الأساتذة -->
+  <div id="tab-documents" class="tab-content" style="display:none;">
+    <div class="card">
+      <h2>مستمسكات الأساتذة (للاطلاع فقط)</h2>
+      <p class="muted" style="margin-bottom:14px;">هذه الشاشة للعرض فقط — رفع المستمسكات يتم من شاشة مدير الدراسات العليا.</p>
+      <div id="documents-container" class="loading">جارِ التحميل...</div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
 
   <script src="config.js"></script>
   <script src="api.js"></script>
+  <script src="print.js"></script>
   <script>
+    let TOKEN = "";
+    let currentReport = null;
+
+    document.querySelectorAll('.tab').forEach(tabEl => {
+      tabEl.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.style.display = 'none');
+        tabEl.classList.add('active');
+        document.getElementById('tab-' + tabEl.dataset.tab).style.display = 'block';
+        if (tabEl.dataset.tab === 'prices') loadPrices();
+        if (tabEl.dataset.tab === 'documents') loadDocuments();
+      });
+    });
+
+    function showToast(msg, isError) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.className = 'toast' + (isError ? ' error' : '');
+      t.style.display = 'block';
+      setTimeout(() => t.style.display = 'none', 3500);
+    }
+
+    // ================= مستمسكات الأساتذة =================
+    async function loadDocuments() {
+      document.getElementById('documents-container').innerHTML = '<div class="loading">جارِ التحميل...</div>';
+      try {
+        const instructors = await apiGet('getInstructors', { token: TOKEN });
+        renderDocuments(instructors);
+      } catch (err) {
+        showToast(err.message, true);
+      }
+    }
+
+    function renderDocuments(instructors) {
+      if (!instructors.length) {
+        document.getElementById('documents-container').innerHTML = '<div class="empty-state">لا يوجد أساتذة بعد.</div>';
+        return;
+      }
+      let html = '<table><thead><tr><th>اسم الأستاذ</th><th>البطاقة الموحدة</th><th>الشهادة</th><th>أمر التلقيب</th></tr></thead><tbody>';
+      instructors.forEach(i => {
+        html += '<tr><td>' + i.fullName + '</td>';
+        html += '<td>' + docLink(i.idCardFileUrl) + '</td>';
+        html += '<td>' + docLink(i.certificateFileUrl) + '</td>';
+        html += '<td>' + docLink(i.titleBookFileUrl) + '</td></tr>';
+      });
+      html += '</tbody></table>';
+      document.getElementById('documents-container').innerHTML = html;
+    }
+
+    function docLink(url) {
+      return url ? '<a href="' + url + '" target="_blank">📄 عرض</a>' : '<span class="status-archived">غير مرفوع</span>';
+    }
+
+    // ================= الأسعار =================
+    async function loadPrices() {
+      document.getElementById('prices-container').innerHTML = '<div class="loading">جارِ التحميل...</div>';
+      try {
+        const prices = await apiGet('getPrices', { token: TOKEN });
+        renderPrices(prices);
+      } catch (err) {
+        showToast(err.message, true);
+      }
+    }
+
+    function renderPrices(p) {
+      let html = '<div class="row">';
+      html += field('hourly-rate', 'سعر الساعة', p.hourlyRate);
+      html += field('supervision-price', 'سعر الإشراف على رسالة', p.supervisionPrice);
+      html += '</div><div class="row">';
+      html += field('scientific-price', 'سعر المراجعة العلمية', p.scientificReviewPrice);
+      html += field('language-price', 'سعر المراجعة اللغوية', p.languageReviewPrice);
+      html += '</div><div class="row">';
+      html += field('discussion-price', 'سعر عضوية المناقشة', p.discussionMembershipPrice);
+      html += '</div>';
+      html += '<button class="btn" onclick="savePrices()" style="margin-top:10px;">💾 حفظ الأسعار</button>';
+      document.getElementById('prices-container').innerHTML = html;
+    }
+
+    function field(id, label, value) {
+      return '<div><label class="muted" style="display:block;margin-bottom:4px;">' + label + '</label>' +
+             '<input id="' + id + '" value="' + value + '" style="width:180px;"></div>';
+    }
+
+    async function savePrices() {
+      try {
+        const prices = await apiPost('updatePrices', {
+          token: TOKEN,
+          hourlyRate: document.getElementById('hourly-rate').value,
+          supervisionPrice: document.getElementById('supervision-price').value,
+          scientificReviewPrice: document.getElementById('scientific-price').value,
+          languageReviewPrice: document.getElementById('language-price').value,
+          discussionMembershipPrice: document.getElementById('discussion-price').value
+        });
+        renderPrices(prices);
+        showToast('تم حفظ الأسعار ✅');
+      } catch (err) {
+        showToast(err.message, true);
+      }
+    }
+
+    // ================= الجدول الشهري =================
+    function currentMonthValue() {
+      const el = document.getElementById('report-month');
+      return el.value || new Date().toISOString().substring(0, 7);
+    }
+
+    async function loadReport() {
+      const month = currentMonthValue();
+      document.getElementById('report-container').innerHTML = '<div class="loading">جارِ التحميل...</div>';
+      try {
+        const report = await apiGet('getMonthlyReport', { token: TOKEN, month });
+        renderReport(report);
+      } catch (err) {
+        showToast(err.message, true);
+      }
+    }
+
+    async function generateReport() {
+      const month = currentMonthValue();
+      document.getElementById('report-container').innerHTML = '<div class="loading">جارِ الاحتساب...</div>';
+      try {
+        const report = await apiPost('generateMonthlyReport', { token: TOKEN, month });
+        renderReport(report);
+        showToast('تم الاحتساب ✅');
+      } catch (err) {
+        showToast(err.message, true);
+        loadReport();
+      }
+    }
+
+    function renderReport(report) {
+      currentReport = report;
+      const badge = document.getElementById('report-status-badge');
+      const actions = document.getElementById('report-actions');
+      const btnPaid = document.getElementById('btn-mark-paid');
+
+      if (!report.exists) {
+        document.getElementById('report-container').innerHTML = '<div class="empty-state">لا يوجد تقرير محتسب لهذا الشهر — اضغط "احتساب".</div>';
+        badge.textContent = '';
+        actions.style.display = 'none';
+        return;
+      }
+
+      badge.innerHTML = '<span class="link-box" style="display:inline-block;margin-top:0;">' + report.statusLabel +
+        (report.paidAt ? ' — مصروف بتاريخ ' + new Date(report.paidAt).toLocaleDateString('ar-IQ') : '') + '</span>';
+
+      if (!report.rows.length) {
+        document.getElementById('report-container').innerHTML = '<div class="empty-state">لا توجد بيانات حضور أو إشراف مسجّلة لهذا الشهر.</div>';
+      } else {
+        let html = '<table><thead><tr><th>الأستاذ</th><th>ساعات</th><th>قيمة الساعات</th><th>إشراف</th><th>مراجعة علمية</th><th>مراجعة لغوية</th><th>عضوية مناقشة</th><th>الإجمالي</th></tr></thead><tbody>';
+        report.rows.forEach(r => {
+          html += '<tr><td>' + r.instructorName + '</td><td>' + r.hours + '</td><td>' + fmt(r.hourlyTotal) + '</td>';
+          html += '<td>' + (r.supervisionCount ? r.supervisionCount + ' (' + fmt(r.supervisionTotal) + ')' : '—') + '</td>';
+          html += '<td>' + (r.scientificReviewCount ? r.scientificReviewCount + ' (' + fmt(r.scientificReviewTotal) + ')' : '—') + '</td>';
+          html += '<td>' + (r.languageReviewCount ? r.languageReviewCount + ' (' + fmt(r.languageReviewTotal) + ')' : '—') + '</td>';
+          html += '<td>' + (r.discussionMembershipCount ? r.discussionMembershipCount + ' (' + fmt(r.discussionMembershipTotal) + ')' : '—') + '</td>';
+          html += '<td><strong>' + fmt(r.grandTotal) + '</strong></td></tr>';
+        });
+        html += '</tbody></table>';
+        html += '<p style="margin-top:12px;font-size:15px;"><strong>الإجمالي الكلي: ' + fmt(report.totalAll) + '</strong></p>';
+        document.getElementById('report-container').innerHTML = html;
+      }
+
+      actions.style.display = 'flex';
+      btnPaid.style.display = report.status === 'approved' && !report.paidAt ? 'inline-block' : 'none';
+    }
+
+    function fmt(n) {
+      return Number(n || 0).toLocaleString('ar-IQ');
+    }
+
+    async function submitReport() {
+      if (!currentReport || !currentReport.exists) return;
+      try {
+        const report = await apiPost('submitMonthlyReportForApproval', { token: TOKEN, month: currentReport.month });
+        renderReport(report);
+        showToast('تم الإرسال للاعتماد ✅');
+      } catch (err) {
+        showToast(err.message, true);
+      }
+    }
+
+    async function markPaid() {
+      if (!currentReport || !currentReport.exists) return;
+      if (!confirm('تأكيد تسجيل هذا التقرير كمصروف؟')) return;
+      try {
+        const report = await apiPost('markReportPaid', { token: TOKEN, month: currentReport.month });
+        renderReport(report);
+        showToast('تم التسجيل ✅');
+      } catch (err) {
+        showToast(err.message, true);
+      }
+    }
+
+    function exportCsv() {
+      if (!currentReport || !currentReport.rows.length) { showToast('لا توجد بيانات للتصدير', true); return; }
+      const headers = ['الأستاذ', 'ساعات', 'قيمة الساعات', 'إشراف', 'مراجعة علمية', 'مراجعة لغوية', 'عضوية مناقشة', 'الإجمالي'];
+      const lines = [headers.join(',')];
+      currentReport.rows.forEach(r => {
+        lines.push([r.instructorName, r.hours, r.hourlyTotal, r.supervisionTotal, r.scientificReviewTotal, r.languageReviewTotal, r.discussionMembershipTotal, r.grandTotal].join(','));
+      });
+      const blob = new Blob(['\uFEFF' + lines.join('\n')], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'compensation-' + currentReport.month + '.csv';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    // ---------- تحقق الهوية عند فتح الصفحة ----------
     (async function init() {
       try {
         const auth = await guardPage('finance');
+        TOKEN = auth.token;
         document.getElementById('who-badge').textContent = 'مسجّل كـ: ' + auth.label;
+        document.getElementById('report-month').value = new Date().toISOString().substring(0, 7);
+        loadPrices();
       } catch (e) {
         // guardPage عرضت شاشة "وصول مرفوض" مسبقاً
       }

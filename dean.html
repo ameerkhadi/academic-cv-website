@@ -2,26 +2,170 @@
 <html dir="rtl" lang="ar">
 <head>
   <meta charset="UTF-8">
-  <title>نظام مستحقات الدراسات العليا</title>
+  <title>العميد</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+
   <div class="header">
-    <h1>🎓 نظام مستحقات الدراسات العليا</h1>
+    <h1>🎓 نظام مستحقات الدراسات العليا — العميد</h1>
     <span class="badge" id="who-badge">جارِ التحقق...</span>
   </div>
+
   <div class="card">
-    <h2>شاشة dean قيد الإنشاء</h2>
-    <p class="muted">هذه الشاشة ستُبنى بالمرحلة القادمة ضمن الترتيب المتفق عليه. الرابط الخاص بك يعمل بشكل صحيح وجاهز للاستخدام فور اكتمال بناء هذه الشاشة.</p>
+    <h2>التقارير الشهرية</h2>
+    <div id="reports-container" class="loading">جارِ التحميل...</div>
   </div>
+
+  <div class="card" id="detail-card" style="display:none;">
+    <div class="row" style="justify-content:space-between;">
+      <h2 style="border:none;padding:0;margin:0;" id="detail-title">تفاصيل التقرير</h2>
+      <span id="detail-status-badge"></span>
+    </div>
+    <div id="detail-container" class="loading"></div>
+    <div class="row" id="detail-actions" style="margin-top:14px;"></div>
+  </div>
+
+  <div class="toast" id="toast"></div>
 
   <script src="config.js"></script>
   <script src="api.js"></script>
+  <script src="print.js"></script>
   <script>
+    let TOKEN = "";
+
+    function showToast(msg, isError) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.className = 'toast' + (isError ? ' error' : '');
+      t.style.display = 'block';
+      setTimeout(() => t.style.display = 'none', 3500);
+    }
+
+    function fmt(n) {
+      return Number(n || 0).toLocaleString('ar-IQ');
+    }
+
+    async function loadReportsList() {
+      document.getElementById('reports-container').innerHTML = '<div class="loading">جارِ التحميل...</div>';
+      try {
+        const reports = await apiGet('listReportsForDean', { token: TOKEN });
+        renderReportsList(reports);
+      } catch (err) {
+        showToast(err.message, true);
+      }
+    }
+
+    function renderReportsList(reports) {
+      if (!reports.length) {
+        document.getElementById('reports-container').innerHTML = '<div class="empty-state">لا توجد تقارير محتسبة بعد من المالية.</div>';
+        return;
+      }
+      let html = '<table><thead><tr><th>الشهر</th><th>الإجمالي</th><th>الحالة</th><th>إجراء</th></tr></thead><tbody>';
+      reports.forEach(r => {
+        html += '<tr><td>' + r.month + '</td><td>' + fmt(r.totalAll) + '</td>';
+        html += '<td>' + statusBadge(r.status, r.statusLabel) + '</td>';
+        html += '<td><button class="btn secondary" onclick="viewDetail(\'' + r.month + '\')">👁️ عرض التفاصيل</button></td></tr>';
+      });
+      html += '</tbody></table>';
+      document.getElementById('reports-container').innerHTML = html;
+    }
+
+    function statusBadge(status, label) {
+      if (status === 'approved') return '<span class="status-active">✔ ' + label + '</span>';
+      if (status === 'pending_approval') return '<span style="color:#c98a00;font-weight:bold;">' + label + '</span>';
+      return '<span class="status-archived">' + label + '</span>';
+    }
+
+    async function viewDetail(month) {
+      document.getElementById('detail-card').style.display = 'block';
+      document.getElementById('detail-title').textContent = 'تفاصيل تقرير: ' + month;
+      document.getElementById('detail-container').innerHTML = '<div class="loading">جارِ التحميل...</div>';
+      document.getElementById('detail-actions').innerHTML = '';
+      try {
+        const report = await apiGet('getMonthlyReport', { token: TOKEN, month });
+        renderDetail(report);
+      } catch (err) {
+        showToast(err.message, true);
+      }
+    }
+
+    function renderDetail(report) {
+      const badge = document.getElementById('detail-status-badge');
+      badge.innerHTML = statusBadge(report.status, report.statusLabel);
+
+      if (!report.rows || !report.rows.length) {
+        document.getElementById('detail-container').innerHTML = '<div class="empty-state">لا توجد بيانات لهذا الشهر.</div>';
+      } else {
+        let html = '<table><thead><tr><th>الأستاذ</th><th>ساعات</th><th>الإجمالي</th></tr></thead><tbody>';
+        report.rows.forEach(r => {
+          html += '<tr><td>' + r.instructorName + '</td><td>' + r.hours + '</td><td><strong>' + fmt(r.grandTotal) + '</strong></td></tr>';
+        });
+        html += '</tbody></table>';
+        html += '<p style="margin-top:12px;font-size:15px;"><strong>الإجمالي الكلي: ' + fmt(report.totalAll) + '</strong></p>';
+        document.getElementById('detail-container').innerHTML = html;
+      }
+
+      const actions = document.getElementById('detail-actions');
+      actions.innerHTML = '';
+
+      const printBtn = document.createElement('button');
+      printBtn.className = 'btn secondary';
+      printBtn.textContent = '🖨️ طباعة للتوقيع';
+      printBtn.onclick = () => openPrintableReport(report);
+      actions.appendChild(printBtn);
+
+      if (report.status === 'pending_approval') {
+        const btn = document.createElement('button');
+        btn.className = 'btn success';
+        btn.textContent = '✅ اعتماد التقرير';
+        btn.onclick = () => approveReport(report.month);
+        actions.appendChild(btn);
+      } else if (report.status === 'approved') {
+        const btn = document.createElement('button');
+        btn.className = 'btn danger';
+        btn.textContent = '↩️ سحب الاعتماد';
+        btn.onclick = () => revokeReport(report.month);
+        actions.appendChild(btn);
+      } else {
+        const note = document.createElement('span');
+        note.className = 'muted';
+        note.textContent = 'لا يمكن اتخاذ إجراء — التقرير ما زال مسودة عند المالية.';
+        actions.appendChild(note);
+      }
+    }
+
+    async function approveReport(month) {
+      if (!confirm('تأكيد اعتماد تقرير شهر ' + month + '؟')) return;
+      try {
+        const report = await apiPost('approveMonthlyReport', { token: TOKEN, month });
+        renderDetail(report);
+        loadReportsList();
+        showToast('تم الاعتماد ✅');
+      } catch (err) {
+        showToast(err.message, true);
+      }
+    }
+
+    async function revokeReport(month) {
+      if (!confirm('تأكيد سحب الاعتماد عن تقرير شهر ' + month + '؟')) return;
+      try {
+        const report = await apiPost('revokeApproval', { token: TOKEN, month });
+        renderDetail(report);
+        loadReportsList();
+        showToast('تم سحب الاعتماد ✅');
+      } catch (err) {
+        showToast(err.message, true);
+      }
+    }
+
+    // ---------- تحقق الهوية عند فتح الصفحة ----------
     (async function init() {
       try {
         const auth = await guardPage('dean');
+        TOKEN = auth.token;
         document.getElementById('who-badge').textContent = 'مسجّل كـ: ' + auth.label;
+        loadReportsList();
       } catch (e) {
         // guardPage عرضت شاشة "وصول مرفوض" مسبقاً
       }
