@@ -17,6 +17,7 @@
     <div class="tab" data-tab="attendance">📅 الحضور الأسبوعي</div>
     <div class="tab" data-tab="subjects">📖 مواد التدريس</div>
     <div class="tab" data-tab="supervision">📝 الإشراف والتقييم</div>
+    <div class="tab" data-tab="activity">📋 ملخص النشاطات</div>
   </div>
 
   <!-- تبويب الأساتذة -->
@@ -45,6 +46,7 @@
         <input id="att-week" placeholder="رقم الأسبوع" style="width:130px;" value="1" onchange="loadAttendance()">
         <button class="btn" onclick="loadAttendance()">🔄 تحميل</button>
       </div>
+      <p class="muted" style="margin-top:6px;">⚠️ بعد تغيير رقم الأسبوع، اضغط "تحميل" قبل حفظ أي بيانات — النظام يرفض الحفظ تلقائياً لو الجدول غير محدَّث لتفادي الخطأ.</p>
       <div class="row" style="margin-top:6px;">
         <select id="assign-instructor" style="flex:1;min-width:220px;"></select>
         <button class="btn secondary" onclick="assignInstructor()">🔗 إسناد أستاذ لهذا الكورس</button>
@@ -97,12 +99,27 @@
         <input id="sup-date" type="date" style="width:170px;">
       </div>
       <div class="row">
-        <button class="btn" onclick="addSupervision()">➕ إضافة السجل</button>
+        <button class="btn" id="sup-submit-btn" onclick="addSupervision()">➕ إضافة السجل</button>
       </div>
     </div>
     <div class="card">
       <h2>سجلات الإشراف والتقييم</h2>
       <div id="supervision-container" class="loading">جارِ التحميل...</div>
+    </div>
+  </div>
+
+  <!-- تبويب ملخص النشاطات -->
+  <div id="tab-activity" class="tab-content" style="display:none;">
+    <div class="card">
+      <h2>ملخص نشاطات الأساتذة</h2>
+      <div class="row">
+        <input id="activity-month" type="month" style="width:180px;">
+        <button class="btn" onclick="loadActivitySummary()">🔄 عرض الشهر المحدد</button>
+        <button class="btn secondary" onclick="loadActivitySummaryAll()">📅 عرض كل الأوقات</button>
+      </div>
+    </div>
+    <div class="card">
+      <div id="activity-container" class="loading">اختر شهراً أو اضغط "عرض كل الأوقات"...</div>
     </div>
   </div>
 
@@ -133,6 +150,7 @@
         if (tabEl.dataset.tab === 'attendance') loadCoursesForAttendance();
         if (tabEl.dataset.tab === 'subjects') loadCoursesForSubjects();
         if (tabEl.dataset.tab === 'supervision') loadSupervision();
+        if (tabEl.dataset.tab === 'activity') { /* ينتظر ضغط المستخدم لاختيار شهر أو الكل */ }
       });
     });
 
@@ -322,15 +340,21 @@
         const existing = attendance.find(r => r.instructorId === a.instructorId);
         const status = existing ? existing.status : '';
         const hours = existing ? existing.hours : '';
+        const locked = existing && existing.billedMonth;
         const dateVal = existing && existing.date ? new Date(existing.date).toISOString().substring(0, 10) : new Date().toISOString().substring(0, 10);
         const rowId = 'att-' + a.instructorId;
         html += '<tr>';
-        html += '<td>' + a.instructorName + '</td>';
-        html += '<td><select id="' + rowId + '-status"><option value="حضر"' + (status === 'حضر' ? ' selected' : '') + '>حضر</option><option value="غاب"' + (status === 'غاب' ? ' selected' : '') + '>غاب</option></select></td>';
-        html += '<td><input id="' + rowId + '-hours" value="' + hours + '" style="width:80px;"></td>';
-        html += '<td><input id="' + rowId + '-date" type="date" value="' + dateVal + '" style="width:150px;"></td>';
-        html += '<td><button class="btn" onclick="saveAttendance(\'' + a.instructorId + '\',\'' + courseId + '\',' + weekNumber + ')">💾 حفظ</button>' +
-                ' <button class="btn danger" onclick="unassignInstructor(\'' + a.id + '\',\'' + courseId + '\')">إلغاء الإسناد</button></td>';
+        html += '<td>' + a.instructorName + (locked ? '<br><span class="muted">🔒 مصروف (' + existing.billedMonth + ')</span>' : '') + '</td>';
+        if (locked) {
+          html += '<td>' + status + '</td><td>' + hours + '</td><td>' + dateVal + '</td>';
+          html += '<td><span class="muted">مقفول — لا يمكن التعديل</span></td>';
+        } else {
+          html += '<td><select id="' + rowId + '-status"><option value="حضر"' + (status === 'حضر' ? ' selected' : '') + '>حضر</option><option value="غاب"' + (status === 'غاب' ? ' selected' : '') + '>غاب</option></select></td>';
+          html += '<td><input id="' + rowId + '-hours" value="' + hours + '" style="width:80px;"></td>';
+          html += '<td><input id="' + rowId + '-date" type="date" value="' + dateVal + '" style="width:150px;"></td>';
+          html += '<td><button class="btn" onclick="saveAttendance(\'' + a.instructorId + '\',\'' + courseId + '\',' + weekNumber + ')">💾 حفظ</button>' +
+                  ' <button class="btn danger" onclick="unassignInstructor(\'' + a.id + '\',\'' + courseId + '\')">إلغاء الإسناد</button></td>';
+        }
         html += '</tr>';
       });
       html += '</tbody></table>';
@@ -338,6 +362,14 @@
     }
 
     async function saveAttendance(instructorId, courseId, weekNumber) {
+      // حماية من حالة السباق: لو تغيّر رقم الأسبوع بالخانة ولم يُحدَّث الجدول بعد،
+      // هذا الزر لسه يحمل رقم الأسبوع القديم — نرفض الحفظ ونطلب إعادة التحميل بدل الحفظ الخاطئ الصامت
+      const liveWeek = document.getElementById('att-week').value;
+      if (String(liveWeek) !== String(weekNumber)) {
+        showToast('⚠️ رقم الأسبوع تغيّر ولم يُحدَّث الجدول بعد — اضغط "🔄 تحميل" ثم أعد المحاولة', true);
+        return;
+      }
+
       const rowId = 'att-' + instructorId;
       const status = document.getElementById(rowId + '-status').value;
       const hours = document.getElementById(rowId + '-hours').value;
@@ -469,12 +501,52 @@
       }
     }
 
+    // ================= ملخص النشاطات =================
+    async function loadActivitySummary() {
+      const month = document.getElementById('activity-month').value;
+      if (!month) { showToast('اختر شهراً أولاً', true); return; }
+      document.getElementById('activity-container').innerHTML = '<div class="loading">جارِ التحميل...</div>';
+      try {
+        const rows = await apiGet('getInstructorActivitySummary', { token: TOKEN, month });
+        renderActivitySummary(rows);
+      } catch (err) {
+        showToast(err.message, true);
+      }
+    }
+
+    async function loadActivitySummaryAll() {
+      document.getElementById('activity-container').innerHTML = '<div class="loading">جارِ التحميل...</div>';
+      try {
+        const rows = await apiGet('getInstructorActivitySummary', { token: TOKEN });
+        renderActivitySummary(rows);
+      } catch (err) {
+        showToast(err.message, true);
+      }
+    }
+
+    function renderActivitySummary(rows) {
+      if (!rows.length) {
+        document.getElementById('activity-container').innerHTML = '<div class="empty-state">لا توجد أي نشاطات مسجّلة بهذه الفترة.</div>';
+        return;
+      }
+      let html = '<table><thead><tr><th>الأستاذ</th><th>حضر</th><th>غاب</th><th>مجموع الساعات</th>' +
+                 '<th>إشراف</th><th>مراجعة علمية</th><th>مراجعة لغوية</th><th>عضوية مناقشة</th></tr></thead><tbody>';
+      rows.forEach(r => {
+        html += '<tr><td>' + r.instructorName + '</td><td>' + r.presentCount + '</td><td>' + r.absentCount + '</td><td>' + r.hours + '</td>';
+        html += '<td>' + (r.supervision || '—') + '</td><td>' + (r.scientific_review || '—') + '</td>';
+        html += '<td>' + (r.language_review || '—') + '</td><td>' + (r.discussion_membership || '—') + '</td></tr>';
+      });
+      html += '</tbody></table>';
+      document.getElementById('activity-container').innerHTML = html;
+    }
+
     // ================= الإشراف والتقييم =================
     async function loadSupervision() {
       document.getElementById('supervision-container').innerHTML = '<div class="loading">جارِ التحميل...</div>';
       if (!instructorsCache.length) await loadInstructorsQuiet();
       try {
         const rows = await apiGet('getSupervisionRecords', { token: TOKEN });
+        supervisionRowsCache = rows;
         renderSupervision(rows);
       } catch (err) {
         showToast(err.message, true);
@@ -489,18 +561,80 @@
       let html = '<table><thead><tr><th>الأستاذ</th><th>النوع</th><th>العنوان</th><th>التاريخ</th><th>الحالة</th><th>إجراء</th></tr></thead><tbody>';
       rows.forEach(r => {
         const dt = r.date ? new Date(r.date).toLocaleDateString('ar-IQ') : '—';
+        const locked = !!r.billedMonth;
         html += '<tr><td>' + r.instructorName + '</td><td>' + (TYPE_LABELS[r.type] || r.type) + '</td><td>' + r.title + '</td><td>' + dt + '</td>';
-        html += '<td>' + (r.status === 'active' ? '<span class="status-active">نشط</span>' : '<span class="status-archived">منتهٍ</span>') + '</td>';
+        html += '<td>' + (r.status === 'active' ? '<span class="status-active">نشط</span>' : '<span class="status-archived">منتهٍ</span>') +
+                (locked ? '<br><span class="muted">🔒 مصروف (' + r.billedMonth + ')</span>' : '') + '</td>';
         html += '<td>';
-        if (r.status === 'active') {
-          html += '<button class="btn secondary" onclick="setSupStatus(\'' + r.id + '\',\'completed\')">إنهاء</button>';
+        if (locked) {
+          html += '<span class="muted">مقفول</span>';
         } else {
-          html += '<button class="btn success" onclick="setSupStatus(\'' + r.id + '\',\'active\')">إعادة تنشيط</button>';
+          if (r.status === 'active') {
+            html += '<button class="btn secondary" onclick="setSupStatus(\'' + r.id + '\',\'completed\')">إنهاء</button> ';
+          } else {
+            html += '<button class="btn success" onclick="setSupStatus(\'' + r.id + '\',\'active\')">إعادة تنشيط</button> ';
+          }
+          html += '<button class="btn secondary" onclick="startEditSupervision(\'' + r.id + '\')">✏️ تعديل</button> ';
+          html += '<button class="btn danger" onclick="deleteSupervisionHandler(\'' + r.id + '\')">🗑️ حذف</button>';
         }
         html += '</td></tr>';
       });
       html += '</tbody></table>';
       document.getElementById('supervision-container').innerHTML = html;
+    }
+
+    let editingSupervisionId = null;
+    let supervisionRowsCache = [];
+
+    function startEditSupervision(recordId) {
+      const r = supervisionRowsCache.find(x => x.id === recordId);
+      if (!r) return;
+      editingSupervisionId = recordId;
+      document.getElementById('sup-instructor').value = r.instructorId;
+      document.getElementById('sup-type').value = r.type;
+      document.getElementById('sup-title').value = r.title;
+      document.getElementById('sup-date').value = r.date ? new Date(r.date).toISOString().substring(0, 10) : '';
+      const btn = document.getElementById('sup-submit-btn');
+      btn.textContent = '💾 حفظ التعديل';
+      btn.onclick = saveEditedSupervision;
+      showToast('وضع التعديل — عدّل الحقول واضغط "حفظ التعديل"');
+    }
+
+    function resetSupervisionForm() {
+      editingSupervisionId = null;
+      document.getElementById('sup-title').value = '';
+      const btn = document.getElementById('sup-submit-btn');
+      btn.textContent = '➕ إضافة السجل';
+      btn.onclick = addSupervision;
+    }
+
+    async function saveEditedSupervision() {
+      const instructorId = document.getElementById('sup-instructor').value;
+      const type = document.getElementById('sup-type').value;
+      const title = document.getElementById('sup-title').value;
+      const date = document.getElementById('sup-date').value;
+      if (!title.trim()) { showToast('اكتب العنوان/الوصف', true); return; }
+      try {
+        const rows = await apiPost('editSupervisionRecord', { token: TOKEN, recordId: editingSupervisionId, type, instructorId, title, date });
+        supervisionRowsCache = rows;
+        renderSupervision(rows);
+        resetSupervisionForm();
+        showToast('تم حفظ التعديل ✅');
+      } catch (err) {
+        showToast(err.message, true);
+      }
+    }
+
+    async function deleteSupervisionHandler(recordId) {
+      if (!confirm('تأكيد حذف هذا السجل؟')) return;
+      try {
+        const rows = await apiPost('deleteSupervisionRecord', { token: TOKEN, recordId });
+        supervisionRowsCache = rows;
+        renderSupervision(rows);
+        showToast('تم الحذف ✅');
+      } catch (err) {
+        showToast(err.message, true);
+      }
     }
 
     async function addSupervision() {
@@ -512,6 +646,7 @@
       if (!title.trim()) { showToast('اكتب العنوان/الوصف', true); return; }
       try {
         const rows = await apiPost('addSupervisionRecord', { token: TOKEN, type, instructorId, title, date });
+        supervisionRowsCache = rows;
         renderSupervision(rows);
         document.getElementById('sup-title').value = '';
         showToast('تمت الإضافة ✅');
@@ -523,6 +658,7 @@
     async function setSupStatus(recordId, newStatus) {
       try {
         const rows = await apiPost('setSupervisionStatus', { token: TOKEN, recordId, newStatus });
+        supervisionRowsCache = rows;
         renderSupervision(rows);
         showToast('تم التحديث ✅');
       } catch (err) {

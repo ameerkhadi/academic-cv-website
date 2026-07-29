@@ -17,6 +17,16 @@
     <div id="reports-container" class="loading">جارِ التحميل...</div>
   </div>
 
+  <div class="card">
+    <h2>نشاطات الأساتذة (بدون أرقام مالية)</h2>
+    <div class="row">
+      <input id="activity-month" type="month" style="width:180px;">
+      <button class="btn" onclick="loadActivitySummary()">🔄 عرض الشهر المحدد</button>
+      <button class="btn secondary" onclick="loadActivitySummaryAll()">📅 عرض كل الأوقات</button>
+    </div>
+    <div id="activity-container" class="loading" style="margin-top:12px;">اختر شهراً أو اضغط "عرض كل الأوقات"...</div>
+  </div>
+
   <div class="card" id="detail-card" style="display:none;">
     <div class="row" style="justify-content:space-between;">
       <h2 style="border:none;padding:0;margin:0;" id="detail-title">تفاصيل التقرير</h2>
@@ -44,6 +54,45 @@
 
     function fmt(n) {
       return Number(n || 0).toLocaleString('ar-IQ');
+    }
+
+    // ================= نشاطات الأساتذة =================
+    async function loadActivitySummary() {
+      const month = document.getElementById('activity-month').value;
+      if (!month) { showToast('اختر شهراً أولاً', true); return; }
+      document.getElementById('activity-container').innerHTML = '<div class="loading">جارِ التحميل...</div>';
+      try {
+        const rows = await apiGet('getInstructorActivitySummary', { token: TOKEN, month });
+        renderActivitySummary(rows);
+      } catch (err) {
+        showToast(err.message, true);
+      }
+    }
+
+    async function loadActivitySummaryAll() {
+      document.getElementById('activity-container').innerHTML = '<div class="loading">جارِ التحميل...</div>';
+      try {
+        const rows = await apiGet('getInstructorActivitySummary', { token: TOKEN });
+        renderActivitySummary(rows);
+      } catch (err) {
+        showToast(err.message, true);
+      }
+    }
+
+    function renderActivitySummary(rows) {
+      if (!rows.length) {
+        document.getElementById('activity-container').innerHTML = '<div class="empty-state">لا توجد أي نشاطات مسجّلة بهذه الفترة.</div>';
+        return;
+      }
+      let html = '<table><thead><tr><th>الأستاذ</th><th>حضر</th><th>غاب</th><th>مجموع الساعات</th>' +
+                 '<th>إشراف</th><th>مراجعة علمية</th><th>مراجعة لغوية</th><th>عضوية مناقشة</th></tr></thead><tbody>';
+      rows.forEach(r => {
+        html += '<tr><td>' + r.instructorName + '</td><td>' + r.presentCount + '</td><td>' + r.absentCount + '</td><td>' + r.hours + '</td>';
+        html += '<td>' + (r.supervision || '—') + '</td><td>' + (r.scientific_review || '—') + '</td>';
+        html += '<td>' + (r.language_review || '—') + '</td><td>' + (r.discussion_membership || '—') + '</td></tr>';
+      });
+      html += '</tbody></table>';
+      document.getElementById('activity-container').innerHTML = html;
     }
 
     async function loadReportsList() {
