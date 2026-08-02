@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>المحاضرة الحادية عشرة — اختبار تفاعلي</title>
+<style>
+  :root{
+    --bg:#0f172a; --card:#1e293b; --accent:#6366f1; --accent2:#8b5cf6;
+    --true:#10b981; --false:#ef4444; --text:#f1f5f9; --muted:#94a3b8;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; min-height:100vh; font-family:'Segoe UI', Tahoma, Arial, sans-serif;
+    background:linear-gradient(135deg,#0f172a 0%,#1e1b4b 100%);
+    color:var(--text); display:flex; flex-direction:column; align-items:center;
+    padding:24px 14px 60px;
+  }
+  .wrap{width:100%; max-width:680px;}
+  header.top{text-align:center; margin-bottom:22px;}
+  header.top .kicker{color:var(--accent2); font-weight:600; font-size:14px; letter-spacing:.5px;}
+  header.top h1{margin:6px 0 2px; font-size:26px;}
+  header.top .sub{color:var(--muted); font-size:14px;}
+  .progress-wrap{margin:22px 0 10px; display:flex; justify-content:space-between; align-items:center; font-size:14px; color:var(--muted);}
+  .progress-bar{width:100%; height:8px; background:#334155; border-radius:6px; overflow:hidden; margin-bottom:6px;}
+  .progress-bar > div{height:100%; background:linear-gradient(90deg,var(--accent),var(--accent2)); transition:width .35s ease;}
+  .card{
+    background:var(--card); border-radius:18px; padding:28px 24px; box-shadow:0 12px 34px rgba(0,0,0,.35);
+    border:1px solid #334155;
+  }
+  .qnum{color:var(--accent2); font-weight:700; font-size:14px; margin-bottom:10px;}
+  .qtext{font-size:19px; line-height:1.8; margin-bottom:24px;}
+  .choices{display:flex; flex-direction:column; gap:12px; margin-bottom:8px;}
+  .choice-btn{
+    text-align:right; padding:15px 16px; border-radius:12px; border:2px solid #334155; background:#0f172a;
+    color:var(--text); font-size:15.5px; font-weight:600; cursor:pointer; transition:.15s; line-height:1.6;
+  }
+  .choice-btn:hover{border-color:var(--accent);}
+  .choice-btn:disabled{cursor:default;}
+  .choice-btn .tag{display:inline-block; width:26px; height:26px; border-radius:50%; background:#334155; color:var(--text);
+    text-align:center; line-height:26px; font-size:13px; font-weight:800; margin-left:10px;}
+  .choice-btn.selected-correct{background:rgba(16,185,129,.18); border-color:var(--true);}
+  .choice-btn.selected-correct .tag{background:var(--true); color:#0f172a;}
+  .choice-btn.selected-wrong{background:rgba(239,68,68,.18); border-color:var(--false);}
+  .choice-btn.selected-wrong .tag{background:var(--false); color:#0f172a;}
+  .choice-btn.reveal-correct{border-color:var(--true);}
+  .choice-btn.reveal-correct .tag{background:var(--true); color:#0f172a;}
+  .feedback{margin-top:18px; padding:16px 16px; border-radius:12px; font-size:15px; line-height:1.8; display:none;}
+  .feedback.show{display:block;}
+  .feedback.correct{background:rgba(16,185,129,.12); border:1px solid var(--true); color:#a7f3d0;}
+  .feedback.wrong{background:rgba(239,68,68,.12); border:1px solid var(--false); color:#fecaca;}
+  .next-btn{
+    margin-top:20px; width:100%; padding:14px; border:none; border-radius:12px; cursor:pointer;
+    background:linear-gradient(90deg,var(--accent),var(--accent2)); color:#fff; font-size:16px; font-weight:700;
+    display:none;
+  }
+  .next-btn.show{display:block;}
+  .result-card{text-align:center; display:none;}
+  .result-card.show{display:block;}
+  .result-card h2{font-size:22px; margin-bottom:6px;}
+  .score-circle{
+    width:150px; height:150px; border-radius:50%; margin:20px auto;
+    display:flex; align-items:center; justify-content:center; flex-direction:column;
+    background:conic-gradient(var(--accent) calc(var(--pct)*1%), #334155 0);
+  }
+  .score-circle .inner{
+    width:118px; height:118px; border-radius:50%; background:var(--card);
+    display:flex; align-items:center; justify-content:center; flex-direction:column;
+  }
+  .score-circle .inner b{font-size:30px;}
+  .score-circle .inner span{font-size:12px; color:var(--muted);}
+  .msg{color:var(--muted); margin:14px 0 22px; font-size:15px; line-height:1.8;}
+  .retry-btn{
+    padding:14px 30px; border:none; border-radius:12px; cursor:pointer;
+    background:linear-gradient(90deg,var(--accent),var(--accent2)); color:#fff; font-size:16px; font-weight:700;
+  }
+  .home-link{display:block; text-align:center; margin-top:26px; color:var(--muted); font-size:13px; text-decoration:none;}
+  .home-link:hover{color:var(--accent2);}
+  footer.foot{text-align:center; margin-top:30px; color:var(--muted); font-size:12.5px; line-height:1.9;}
+  #quizArea.hide{display:none;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="kicker">القيادة الرقمية · اختبار تفاعلي</div>
+    <h1>الأمن السيبراني</h1>
+    <div class="sub">المحاضرة الحادية عشرة</div>
+  </header>
+
+  <div id="quizArea">
+    <div class="progress-wrap">
+      <span id="qCounter">سؤال ١ / 10</span>
+      <span id="scoreCounter">النتيجة: 0</span>
+    </div>
+    <div class="progress-bar"><div id="progressFill" style="width:0%"></div></div>
+
+    <div class="card">
+      <div class="qnum" id="qLabel">السؤال ١</div>
+      <div class="qtext" id="qText"></div>
+      <div class="choices" id="choicesArea"></div>
+      <div class="feedback" id="feedback"></div>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">السؤال التالي ←</button>
+    </div>
+  </div>
+
+  <div class="card result-card" id="resultCard">
+    <h2>🎉 نتيجتك النهائية</h2>
+    <div class="score-circle" id="scoreCircle" style="--pct:0">
+      <div class="inner"><b id="finalScore">0/10</b><span>إجابات صحيحة</span></div>
+    </div>
+    <div class="msg" id="finalMsg"></div>
+    <button class="retry-btn" onclick="restartQuiz()">🔄 إعادة الاختبار</button>
+  </div>
+
+  <a class="home-link" href="./allex.html">↩ العودة إلى كل المرشحات</a>
+
+  <footer class="foot">
+    المعهد العالي لإعداد وتأهيل القادة · برنامج القيادة الرقمية — الدبلوم العالي<br>
+    إعداد: أ.م.د. أمير هادي و أ.م.د. أحمد محسن هيلان
+  </footer>
+</div>
+
+<script>
+const QUESTIONS = [{"q": "ما المقصود بالتهديد السيبراني (Cyber Threat)؟", "choices": ["نقطة ضعف في النظام يمكن استغلالها", "أي نشاط أو حدث أو جهة يمكن أن تستغل ثغرة أمنية للتأثير في سرية المعلومات أو سلامتها أو توافرها", "محاولة فعلية لاستغلال ثغرة أمنية", "احتمال حدوث خسائر نتيجة استغلال ثغرة"], "correct": 1}, {"q": "أي فرق الأمن السيبراني يمثل دور «المهاجم الأخلاقي» وينفّذ اختبارات الاختراق؟", "choices": ["الفريق الأزرق", "الفريق الأحمر", "الفريق البنفسجي", "فريق الدعم الفني"], "correct": 1}, {"q": "ما الوظيفة الأساسية للفريق الأزرق (Blue Team)؟", "choices": ["محاكاة الهجمات الإلكترونية على الأنظمة", "حماية الأنظمة ومراقبتها والاستجابة للحوادث الأمنية", "التنسيق فقط بين الفريق الأحمر والفريق الأزرق", "إجراء المقابلات الوظيفية للموظفين الجدد"], "correct": 1}, {"q": "ما اسم الهجوم الذي يستخدم عدداً كبيراً من الأجهزة لإغراق خادم بالطلبات وتعطيل الخدمة؟", "choices": ["Phishing", "DDoS (هجوم الحرمان الموزع من الخدمة)", "APT", "Ransomware"], "correct": 1}, {"q": "ما نوع البرمجيات الخبيثة التي تُشفّر ملفات الضحية وتطلب مبلغاً مالياً مقابل فك التشفير؟", "choices": ["Spyware", "Adware", "Ransomware (برامج الفدية)", "Trojan"], "correct": 2}, {"q": "ما هي المرحلة الأولى من مراحل التحليل الجنائي الرقمي؟", "choices": ["جمع الأدلة (Collection)", "تحديد الحادث (Identification)", "إعداد التقرير (Reporting)", "الفحص (Examination)"], "correct": 1}, {"q": "أي نوع من التشفير يعتمد على استخدام مفتاح واحد فقط لعمليتي التشفير وفك التشفير؟", "choices": ["التشفير غير المتماثل", "التوقيع الرقمي", "التشفير المتماثل", "التجزئة (Hashing)"], "correct": 2}, {"q": "ما الفرق الجوهري بين التشفير (Encryption) والتجزئة (Hashing)؟", "choices": ["لا يوجد فرق بينهما", "التجزئة عملية غير قابلة للعكس، بخلاف التشفير القابل لفك التشفير", "التشفير دائماً أسرع من التجزئة", "التجزئة تحتاج إلى مفتاحين بينما التشفير يحتاج مفتاحاً واحداً"], "correct": 1}, {"q": "ما أشهر أساليب الهندسة الاجتماعية الذي يعتمد على رسائل بريد إلكتروني مزيفة تبدو من جهة موثوقة؟", "choices": ["هجوم القوة الغاشمة (Brute Force)", "التصيد الإلكتروني (Phishing)", "هجوم الحرمان من الخدمة (DoS)", "اختراق كلمة المرور مباشرة"], "correct": 1}, {"q": "ما الهدف الرئيسي من المصادقة متعددة العوامل (Multi-Factor Authentication)؟", "choices": ["تسريع عملية تسجيل الدخول", "إلغاء الحاجة لاستخدام كلمة المرور نهائياً", "استخدام أكثر من وسيلة للتحقق من هوية المستخدم لرفع مستوى الأمان", "تقليل عدد الحسابات الإلكترونية للمستخدم"], "correct": 2}];
+const LETTERS = ['أ','ب','ج','د'];
+
+let current = 0;
+let score = 0;
+let answered = false;
+
+function toArabicNum(n){
+  const map = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+  return String(n).split('').map(d => map[+d] !== undefined ? map[+d] : d).join('');
+}
+
+function renderQuestion(){
+  const q = QUESTIONS[current];
+  document.getElementById('qLabel').textContent = 'السؤال ' + toArabicNum(current+1);
+  document.getElementById('qCounter').textContent = 'سؤال ' + toArabicNum(current+1) + ' / ' + toArabicNum(QUESTIONS.length);
+  document.getElementById('scoreCounter').textContent = 'النتيجة: ' + toArabicNum(score);
+  document.getElementById('progressFill').style.width = ((current)/QUESTIONS.length*100) + '%';
+  document.getElementById('qText').textContent = q.q;
+
+  const area = document.getElementById('choicesArea');
+  area.innerHTML = '';
+  q.choices.forEach((choiceText, idx) => {
+    const btn = document.createElement('button');
+    btn.className = 'choice-btn';
+    btn.innerHTML = '<span class="tag">' + LETTERS[idx] + '</span>' + choiceText;
+    btn.onclick = () => answer(idx);
+    area.appendChild(btn);
+  });
+
+  const fb = document.getElementById('feedback');
+  fb.className = 'feedback';
+  fb.textContent = '';
+  document.getElementById('nextBtn').className = 'next-btn';
+  answered = false;
+}
+
+function answer(choiceIdx){
+  if(answered) return;
+  answered = true;
+  const q = QUESTIONS[current];
+  const correct = (choiceIdx === q.correct);
+  if(correct) score++;
+
+  const buttons = document.querySelectorAll('.choice-btn');
+  buttons.forEach((btn, idx) => {
+    btn.disabled = true;
+    if(idx === q.correct){
+      btn.className += ' reveal-correct';
+    }
+    if(idx === choiceIdx && !correct){
+      btn.className += ' selected-wrong';
+    }
+    if(idx === choiceIdx && correct){
+      btn.className = btn.className.replace('reveal-correct','selected-correct');
+    }
+  });
+
+  const fb = document.getElementById('feedback');
+  fb.className = 'feedback show ' + (correct ? 'correct' : 'wrong');
+  fb.textContent = correct ? '✅ إجابة صحيحة!' : ('❌ إجابة غير صحيحة. الإجابة الصحيحة هي: ' + LETTERS[q.correct] + ') ' + q.choices[q.correct]);
+
+  document.getElementById('scoreCounter').textContent = 'النتيجة: ' + toArabicNum(score);
+  document.getElementById('nextBtn').className = 'next-btn show';
+  document.getElementById('progressFill').style.width = ((current+1)/QUESTIONS.length*100) + '%';
+}
+
+function nextQuestion(){
+  current++;
+  if(current >= QUESTIONS.length){
+    showResult();
+  } else {
+    renderQuestion();
+  }
+}
+
+function showResult(){
+  document.getElementById('quizArea').className = 'hide';
+  const card = document.getElementById('resultCard');
+  card.className = 'card result-card show';
+  const pct = Math.round(score/QUESTIONS.length*100);
+  document.getElementById('scoreCircle').style.setProperty('--pct', pct);
+  document.getElementById('finalScore').textContent = toArabicNum(score) + '/' + toArabicNum(QUESTIONS.length);
+  let msg;
+  if(pct >= 90) msg = 'ممتاز! إتقان كامل لمحتوى المحاضرة 🌟';
+  else if(pct >= 70) msg = 'جيد جداً! مراجعة سريعة لبعض النقاط وستتقن المادة تماماً.';
+  else if(pct >= 50) msg = 'مقبول — يُنصح بمراجعة المحاضرة مرة أخرى لتثبيت المفاهيم.';
+  else msg = 'يُنصح بإعادة قراءة المحاضرة بعناية قبل إعادة المحاولة.';
+  document.getElementById('finalMsg').textContent = msg;
+}
+
+function restartQuiz(){
+  current = 0; score = 0; answered = false;
+  document.getElementById('resultCard').className = 'card result-card';
+  document.getElementById('quizArea').className = '';
+  renderQuestion();
+}
+
+renderQuestion();
+</script>
+</body>
+</html>
