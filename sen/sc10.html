@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>المحاضرة العاشرة — أسئلة سيناريو تطبيقية</title>
+<style>
+  :root{
+    --bg:#0f172a; --card:#1e293b; --accent:#6366f1; --accent2:#8b5cf6;
+    --true:#10b981; --text:#f1f5f9; --muted:#94a3b8; --scenario-bg:#20294a;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; min-height:100vh; font-family:'Segoe UI', Tahoma, Arial, sans-serif;
+    background:linear-gradient(135deg,#0f172a 0%,#1e1b4b 100%);
+    color:var(--text); display:flex; flex-direction:column; align-items:center;
+    padding:24px 14px 60px;
+  }
+  .wrap{width:100%; max-width:720px;}
+  header.top{text-align:center; margin-bottom:30px;}
+  header.top .kicker{color:var(--accent2); font-weight:600; font-size:14px; letter-spacing:.5px;}
+  header.top h1{margin:6px 0 2px; font-size:26px;}
+  header.top .sub{color:var(--muted); font-size:14px;}
+
+  .scenario-card{
+    background:var(--card); border-radius:18px; padding:24px 22px; margin-bottom:26px;
+    box-shadow:0 10px 28px rgba(0,0,0,.3); border:1px solid #334155;
+  }
+  .scenario-tag{
+    display:inline-block; font-size:12.5px; font-weight:700; color:var(--accent2);
+    background:rgba(139,92,246,.12); border:1px solid var(--accent2);
+    padding:4px 12px; border-radius:20px; margin-bottom:12px;
+  }
+  .scenario-text{
+    background:var(--scenario-bg); border-right:4px solid var(--accent);
+    border-radius:10px; padding:14px 16px; font-size:15.5px; line-height:1.9; margin-bottom:20px;
+  }
+  .scenario-text b{color:var(--accent2);}
+  .q-block{margin-bottom:16px;}
+  .q-block:last-child{margin-bottom:0;}
+  .q-text{font-size:15px; font-weight:700; line-height:1.8; margin-bottom:8px;}
+  .q-text .qnum{color:var(--accent2); margin-left:4px;}
+  .reveal-btn{
+    background:none; border:1.5px solid #475569; color:var(--muted);
+    padding:7px 16px; border-radius:20px; font-size:13px; cursor:pointer; transition:.15s;
+  }
+  .reveal-btn:hover{border-color:var(--true); color:var(--true);}
+  .answer-box{
+    display:none; margin-top:10px; background:rgba(16,185,129,.1); border:1px solid var(--true);
+    border-radius:10px; padding:12px 14px; font-size:14.5px; line-height:1.8; color:#a7f3d0;
+  }
+  .answer-box.show{display:block;}
+  .answer-box b{color:var(--true);}
+
+  .home-link{display:block; text-align:center; margin-top:10px; color:var(--muted); font-size:13px; text-decoration:none;}
+  .home-link:hover{color:var(--accent2);}
+  footer.foot{text-align:center; margin-top:30px; color:var(--muted); font-size:12.5px; line-height:1.9;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="kicker">القيادة الرقمية · أسئلة سيناريو تطبيقية</div>
+    <h1>سيناريوهات محاضرة العاشرة</h1>
+    <div class="sub">الذكاء الاصطناعي — للمراجعة والتدرّب الذاتي</div>
+  </header>
+
+  <div class="scenario-card">
+  <span class="scenario-tag">السيناريو 1</span>
+  <div class="scenario-text"><b>الموقف: </b>مستشفى يريد بناء نموذج ذكاء اصطناعي يتنبأ إن كان المريض مصاباً بالسكري بناءً على بياناته.</div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">1.</span>هل هذا النموذج من النوع التنبؤي أم التوليدي؟ علّل إجابتك.</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans109')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans109"><b>الإجابة النموذجية: </b>تنبؤي (Predictive)، لأنه يصنّف بناءً على بيانات موجودة ولا يُنشئ محتوى جديداً.</div>
+  </div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">2.</span>ما نسبة البيانات التي يجب تخصيصها للتدريب مقابل الاختبار وفق التقسيم القياسي؟</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans110')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans110"><b>الإجابة النموذجية: </b>70% تدريب و30% اختبار.</div>
+  </div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">3.</span>ماذا يحدث إذا درّب المستشفى النموذج على 100% من البيانات دون تقسيم؟</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans111')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans111"><b>الإجابة النموذجية: </b>يحدث الأوفرفيتنج Overfitting؛ يحفظ النموذج البيانات بدل تعلّم النمط العام، ويفشل أمام حالات جديدة.</div>
+  </div>
+</div>
+<div class="scenario-card">
+  <span class="scenario-tag">السيناريو 2</span>
+  <div class="scenario-text"><b>الموقف: </b>نظام فرز آلي للسير الذاتية (ATS) في جهة حكومية يستبعد مرشحين من خلفيات معينة باستمرار دون سبب واضح.</div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">1.</span>ما المشكلة الأخلاقية التي يعاني منها هذا النظام على الأرجح؟</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans112')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans112"><b>الإجابة النموذجية: </b>التحيّز (Bias) — النموذج يرث تحيز البيانات التي دُرّب عليها.</div>
+  </div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">2.</span>بحسب مثال المحاضرة، من أصل 3000 سيرة ذاتية، كم مرشحاً نهائياً وصل لمرحلة القرار البشري الأخير؟</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans113')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans113"><b>الإجابة النموذجية: </b>20 مرشحاً نهائياً.</div>
+  </div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">3.</span>ما «الدرس الأخلاقي» الذي تؤكده المحاضرة بخصوص الاعتماد على مثل هذه الأنظمة؟</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans114')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans114"><b>الإجابة النموذجية: </b>الأتمتة تُسرّع القرار، لكنها لا تُعفي من مسؤولية مراجعته بشرياً.</div>
+  </div>
+</div>
+<div class="scenario-card">
+  <span class="scenario-tag">السيناريو 3</span>
+  <div class="scenario-text"><b>الموقف: </b>جهة حكومية تريد استخدام «عميل ذكاء اصطناعي» (AI Agent) لتنفيذ مهام كاملة بدل مجرد الإجابة عن أسئلة.</div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">1.</span>ما الفرق الجوهري بين النموذج التقليدي (يُجيب) والعميل (Agent) وفق المحاضرة؟</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans115')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans115"><b>الإجابة النموذجية: </b>العميل يخطط وينفذ المهام ويُقيّم نتائجه بنفسه، بينما النموذج التقليدي يجيب فقط عن سؤال يُطرح عليه.</div>
+  </div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">2.</span>اذكر مثالاً واحداً على «عميل ذكاء اصطناعي» ورد بالمحاضرة ووظيفته الأساسية.</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans116')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans116"><b>الإجابة النموذجية: </b>Manus — عميل مستقل ينفّذ المهام على خوادمه الخاصة: بحث، تصفح، كتابة كود، وتسليم نتيجة نهائية.</div>
+  </div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">3.</span>ما الفرق بين «Skills» و«Connectors» في توسعات منصة Claude؟</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans117')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans117"><b>الإجابة النموذجية: </b>Skills تعليمات مكتوبة يحمّلها Claude لتنفيذ مهمة محددة، بينما Connectors توفر وصولاً لتطبيقات وبيانات خارجية.</div>
+  </div>
+</div>
+<div class="scenario-card">
+  <span class="scenario-tag">السيناريو 4</span>
+  <div class="scenario-text"><b>الموقف: </b>مؤسسة إعلامية تكتشف انتشار فيديو مزيف لمسؤول حكومي يتحدث بكلام لم يقله فعلياً.</div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">1.</span>ما اسم هذه الظاهرة؟</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans118')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans118"><b>الإجابة النموذجية: </b>الديب فيك (Deepfake).</div>
+  </div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">2.</span>ما التقنية العامة المستخدمة لإنتاج هذا النوع من المحتوى؟</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans119')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans119"><b>الإجابة النموذجية: </b>الذكاء الاصطناعي التوليدي (Generative AI).</div>
+  </div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">3.</span>كيف تتحول الصورة أو الفيديو إلى بيانات يفهمها النموذج قبل توليد مثل هذا المحتوى؟</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans120')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans120"><b>الإجابة النموذجية: </b>تتحول إلى مصفوفة أرقام تمثل قيم البكسلات (Pixel Matrix) قبل إدخالها لطبقة النموذج.</div>
+  </div>
+</div>
+
+
+  <a class="home-link" href="./all-scenarios.html">↩ العودة إلى كل السيناريوهات</a>
+
+  <footer class="foot">
+    المعهد العالي لإعداد وتأهيل القادة · برنامج القيادة الرقمية — الدبلوم العالي<br>
+    إعداد: أ.م.د. أمير هادي و أ.م.د. أحمد محسن هيلان
+  </footer>
+</div>
+
+<script>
+function toggleAnswer(id){
+  const el = document.getElementById(id);
+  el.classList.toggle('show');
+}
+</script>
+</body>
+</html>

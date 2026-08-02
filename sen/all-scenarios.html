@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>أسئلة سيناريو تطبيقية — برنامج القيادة الرقمية</title>
+<style>
+  :root{--bg:#0f172a; --card:#1e293b; --accent:#6366f1; --accent2:#8b5cf6; --text:#f1f5f9; --muted:#94a3b8;}
+  *{box-sizing:border-box;}
+  body{margin:0; min-height:100vh; font-family:'Segoe UI', Tahoma, Arial, sans-serif;
+    background:linear-gradient(135deg,#0f172a 0%,#1e1b4b 100%); color:var(--text);
+    display:flex; flex-direction:column; align-items:center; padding:36px 16px 60px;}
+  .wrap{width:100%; max-width:680px;}
+  header{text-align:center; margin-bottom:30px;}
+  header .kicker{color:var(--accent2); font-weight:600; font-size:14px;}
+  header h1{font-size:28px; margin:8px 0 4px;}
+  header .sub{color:var(--muted); font-size:14px;}
+  .grid{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  @media (max-width:520px){ .grid{grid-template-columns:1fr;} }
+  a.item{
+    position:relative; overflow:hidden; display:flex; flex-direction:column; gap:8px;
+    background:var(--card); border:1px solid #334155; border-radius:16px;
+    padding:20px 18px 18px; text-decoration:none; color:var(--text); transition:.18s;
+    box-shadow:0 6px 18px rgba(0,0,0,.25);
+  }
+  a.item::before{content:""; position:absolute; top:0; right:0; left:0; height:5px; background:linear-gradient(90deg,var(--accent),var(--accent2));}
+  a.item:hover{border-color:var(--accent); transform:translateY(-3px); box-shadow:0 12px 26px rgba(0,0,0,.35);}
+  .num{width:32px; height:32px; border-radius:50%; background:rgba(99,102,241,.15); border:2px solid var(--accent);
+    display:flex; align-items:center; justify-content:center; font-weight:800; font-size:14px; color:#a5b4fc;}
+  .item .name{font-weight:700; font-size:15.5px; line-height:1.5;}
+  .item .name small{display:block; color:var(--muted); font-weight:400; font-size:12px; margin-top:4px;}
+  .item .arrow{color:var(--accent2); font-weight:700; font-size:13px; margin-top:4px;}
+  footer{text-align:center; margin-top:34px; color:var(--muted); font-size:12.5px; line-height:1.9;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="kicker">القيادة الرقمية · أسئلة سيناريو تطبيقية</div>
+    <h1>🧭 سيناريوهات تطبيقية للمراجعة</h1>
+    <div class="sub">4 سيناريوهات لكل محاضرة، 3 أسئلة قصيرة لكل سيناريو</div>
+  </header>
+  <div class="grid">
+    <a class="item" href="./sc1.html">
+      <span class="num">١</span>
+      <span class="name">سيناريوهات محاضرة الأولى<small>البنية التحتية الرقمية</small></span>
+      <span class="arrow">ابدأ المراجعة ←</span>
+    </a>
+<a class="item" href="./sc2.html">
+      <span class="num">٢</span>
+      <span class="name">سيناريوهات محاضرة الثانية<small>نظم المعلومات الحكومية</small></span>
+      <span class="arrow">ابدأ المراجعة ←</span>
+    </a>
+<a class="item" href="./sc3.html">
+      <span class="num">٣</span>
+      <span class="name">سيناريوهات محاضرة الثالثة<small>إدارة البيانات الحكومية</small></span>
+      <span class="arrow">ابدأ المراجعة ←</span>
+    </a>
+<a class="item" href="./sc4.html">
+      <span class="num">٤</span>
+      <span class="name">سيناريوهات محاضرة الرابعة<small>الحوسبة السحابية الحكومية</small></span>
+      <span class="arrow">ابدأ المراجعة ←</span>
+    </a>
+<a class="item" href="./sc5.html">
+      <span class="num">٥</span>
+      <span class="name">سيناريوهات محاضرة الخامسة<small>شبكات المعلومات الحكومية الرقمية</small></span>
+      <span class="arrow">ابدأ المراجعة ←</span>
+    </a>
+<a class="item" href="./sc6.html">
+      <span class="num">٦</span>
+      <span class="name">سيناريوهات محاضرة السادسة<small>قواعد البيانات</small></span>
+      <span class="arrow">ابدأ المراجعة ←</span>
+    </a>
+<a class="item" href="./sc7.html">
+      <span class="num">٧</span>
+      <span class="name">سيناريوهات محاضرة السابعة<small>تكامل الأنظمة الحكومية</small></span>
+      <span class="arrow">ابدأ المراجعة ←</span>
+    </a>
+<a class="item" href="./sc8.html">
+      <span class="num">٨</span>
+      <span class="name">سيناريوهات محاضرة الثامنة<small>الحكومة الإلكترونية</small></span>
+      <span class="arrow">ابدأ المراجعة ←</span>
+    </a>
+<a class="item" href="./sc9.html">
+      <span class="num">٩</span>
+      <span class="name">سيناريوهات محاضرة التاسعة<small>المنصّات الحكومية الرقمية</small></span>
+      <span class="arrow">ابدأ المراجعة ←</span>
+    </a>
+<a class="item" href="./sc10.html">
+      <span class="num">١٠</span>
+      <span class="name">سيناريوهات محاضرة العاشرة<small>الذكاء الاصطناعي</small></span>
+      <span class="arrow">ابدأ المراجعة ←</span>
+    </a>
+<a class="item" href="./sc11.html">
+      <span class="num">١١</span>
+      <span class="name">سيناريوهات محاضرة الحادية عشرة<small>الأمن السيبراني</small></span>
+      <span class="arrow">ابدأ المراجعة ←</span>
+    </a>
+
+  </div>
+  <footer>
+    المعهد العالي لإعداد وتأهيل القادة<br>
+    إعداد: أ.م.د. أمير هادي و أ.م.د. أحمد محسن هيلان
+  </footer>
+</div>
+</body>
+</html>

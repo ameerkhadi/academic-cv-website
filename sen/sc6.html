@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>المحاضرة السادسة — أسئلة سيناريو تطبيقية</title>
+<style>
+  :root{
+    --bg:#0f172a; --card:#1e293b; --accent:#6366f1; --accent2:#8b5cf6;
+    --true:#10b981; --text:#f1f5f9; --muted:#94a3b8; --scenario-bg:#20294a;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; min-height:100vh; font-family:'Segoe UI', Tahoma, Arial, sans-serif;
+    background:linear-gradient(135deg,#0f172a 0%,#1e1b4b 100%);
+    color:var(--text); display:flex; flex-direction:column; align-items:center;
+    padding:24px 14px 60px;
+  }
+  .wrap{width:100%; max-width:720px;}
+  header.top{text-align:center; margin-bottom:30px;}
+  header.top .kicker{color:var(--accent2); font-weight:600; font-size:14px; letter-spacing:.5px;}
+  header.top h1{margin:6px 0 2px; font-size:26px;}
+  header.top .sub{color:var(--muted); font-size:14px;}
+
+  .scenario-card{
+    background:var(--card); border-radius:18px; padding:24px 22px; margin-bottom:26px;
+    box-shadow:0 10px 28px rgba(0,0,0,.3); border:1px solid #334155;
+  }
+  .scenario-tag{
+    display:inline-block; font-size:12.5px; font-weight:700; color:var(--accent2);
+    background:rgba(139,92,246,.12); border:1px solid var(--accent2);
+    padding:4px 12px; border-radius:20px; margin-bottom:12px;
+  }
+  .scenario-text{
+    background:var(--scenario-bg); border-right:4px solid var(--accent);
+    border-radius:10px; padding:14px 16px; font-size:15.5px; line-height:1.9; margin-bottom:20px;
+  }
+  .scenario-text b{color:var(--accent2);}
+  .q-block{margin-bottom:16px;}
+  .q-block:last-child{margin-bottom:0;}
+  .q-text{font-size:15px; font-weight:700; line-height:1.8; margin-bottom:8px;}
+  .q-text .qnum{color:var(--accent2); margin-left:4px;}
+  .reveal-btn{
+    background:none; border:1.5px solid #475569; color:var(--muted);
+    padding:7px 16px; border-radius:20px; font-size:13px; cursor:pointer; transition:.15s;
+  }
+  .reveal-btn:hover{border-color:var(--true); color:var(--true);}
+  .answer-box{
+    display:none; margin-top:10px; background:rgba(16,185,129,.1); border:1px solid var(--true);
+    border-radius:10px; padding:12px 14px; font-size:14.5px; line-height:1.8; color:#a7f3d0;
+  }
+  .answer-box.show{display:block;}
+  .answer-box b{color:var(--true);}
+
+  .home-link{display:block; text-align:center; margin-top:10px; color:var(--muted); font-size:13px; text-decoration:none;}
+  .home-link:hover{color:var(--accent2);}
+  footer.foot{text-align:center; margin-top:30px; color:var(--muted); font-size:12.5px; line-height:1.9;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="kicker">القيادة الرقمية · أسئلة سيناريو تطبيقية</div>
+    <h1>سيناريوهات محاضرة السادسة</h1>
+    <div class="sub">قواعد البيانات — للمراجعة والتدرّب الذاتي</div>
+  </header>
+
+  <div class="scenario-card">
+  <span class="scenario-tag">السيناريو 1</span>
+  <div class="scenario-text"><b>الموقف: </b>موظف يبحث يدوياً بين آلاف الملفات الورقية لإيجاد سجل موظف معين، ويستغرق الأمر ساعات.</div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">1.</span>ما الحل التقني الذي تقدمه قواعد البيانات لهذه المشكلة تحديداً؟</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans61')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans61"><b>الإجابة النموذجية: </b>سرعة الوصول — البحث يستغرق ثوانٍ معدودة حتى في الملايين من السجلات بدلاً من ساعات.</div>
+  </div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">2.</span>ما هو «المفتاح الأساسي» وكيف كان سيسهّل هذا البحث لو استُخدم؟</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans62')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans62"><b>الإجابة النموذجية: </b>عمود يضمن أن كل سجل له هوية فريدة لا تتكرر، مما يسمح بإيجاد السجل المطلوب مباشرة.</div>
+  </div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">3.</span>اذكر نوع قاعدة بيانات واحد هو الأكثر ملاءمة لتخزين سجلات الموظفين هذه.</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans63')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans63"><b>الإجابة النموذجية: </b>قاعدة البيانات العلائقية (Relational Database).</div>
+  </div>
+</div>
+<div class="scenario-card">
+  <span class="scenario-tag">السيناريو 2</span>
+  <div class="scenario-text"><b>الموقف: </b>مدير قسم يريد تقريراً بأسماء ورواتب الموظفين المعينين بعد عام 2015 مرتبين تنازلياً حسب الراتب.</div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">1.</span>ما الأداة/اللغة التي يستخدمها النظام لتنفيذ هذا الطلب؟</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans64')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans64"><b>الإجابة النموذجية: </b>لغة الاستعلام الهيكلية SQL.</div>
+  </div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">2.</span>اذكر عنصرين من عناصر الاستعلام الأربعة ينطبقان على هذا المثال.</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans65')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans65"><b>الإجابة النموذجية: </b>الشرط (سنة التعيين أكبر من 2015)، والترتيب (تنازلياً حسب الراتب).</div>
+  </div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">3.</span>هل يحتاج المدير أن يكتب أوامر SQL بنفسه؟ علّل إجابتك.</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans66')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans66"><b>الإجابة النموذجية: </b>لا، لأن الواجهات الإلكترونية الحديثة تترجم النقرات والفلاتر تلقائياً إلى استعلامات SQL.</div>
+  </div>
+</div>
+<div class="scenario-card">
+  <span class="scenario-tag">السيناريو 3</span>
+  <div class="scenario-text"><b>الموقف: </b>مؤسسة تريد تتبع تاريخ تغيّر أسعار منتجاتها الحكومية عبر السنوات.</div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">1.</span>أي نوع من قواعد البيانات هو الأنسب لهذا الغرض؟</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans67')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans67"><b>الإجابة النموذجية: </b>قواعد البيانات الوقتية (Temporal Databases).</div>
+  </div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">2.</span>ما الفرق بين هذا النوع وقاعدة البيانات العلائقية التقليدية من حيث الغرض؟</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans68')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans68"><b>الإجابة النموذجية: </b>العلائقية تنظّم البيانات بجداول مترابطة للاستخدام العام، بينما الوقتية متخصصة بتسجيل التغيرات عبر الزمن.</div>
+  </div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">3.</span>اذكر مثالاً آخر (غير الأسعار) لاستخدام هذا النوع من قواعد البيانات وفق المحاضرة.</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans69')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans69"><b>الإجابة النموذجية: </b>تتبع مسار معاملة من لحظة فتحها حتى إغلاقها.</div>
+  </div>
+</div>
+<div class="scenario-card">
+  <span class="scenario-tag">السيناريو 4</span>
+  <div class="scenario-text"><b>الموقف: </b>حادثة أمنية كشفت أن موظفاً غير مخوّل اطّلع على بيانات موظفين آخرين بسهولة.</div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">1.</span>أي إجراء أمني من إجراءات حماية قواعد البيانات تم تجاهله هنا؟</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans70')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans70"><b>الإجابة النموذجية: </b>صلاحيات الوصول المتدرجة — كل مستخدم يرى فقط ما يحتاجه.</div>
+  </div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">2.</span>اذكر إجراءً آخر يساعد لاحقاً في تتبع من قام بهذا الاطلاع.</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans71')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans71"><b>الإجابة النموذجية: </b>تسجيل كل العمليات (كل تعديل أو إضافة أو حذف يُسجَّل مع اسم منفّذه وتوقيت تنفيذه).</div>
+  </div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">3.</span>ما الدور الذي يتحمل مسؤولية تصميم هذه الصلاحيات وضمان أمان البنية الأساسية؟</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans72')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans72"><b>الإجابة النموذجية: </b>مدير قاعدة البيانات (DBA).</div>
+  </div>
+</div>
+
+
+  <a class="home-link" href="./all-scenarios.html">↩ العودة إلى كل السيناريوهات</a>
+
+  <footer class="foot">
+    المعهد العالي لإعداد وتأهيل القادة · برنامج القيادة الرقمية — الدبلوم العالي<br>
+    إعداد: أ.م.د. أمير هادي و أ.م.د. أحمد محسن هيلان
+  </footer>
+</div>
+
+<script>
+function toggleAnswer(id){
+  const el = document.getElementById(id);
+  el.classList.toggle('show');
+}
+</script>
+</body>
+</html>

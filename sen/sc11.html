@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>المحاضرة الحادية عشرة — أسئلة سيناريو تطبيقية</title>
+<style>
+  :root{
+    --bg:#0f172a; --card:#1e293b; --accent:#6366f1; --accent2:#8b5cf6;
+    --true:#10b981; --text:#f1f5f9; --muted:#94a3b8; --scenario-bg:#20294a;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; min-height:100vh; font-family:'Segoe UI', Tahoma, Arial, sans-serif;
+    background:linear-gradient(135deg,#0f172a 0%,#1e1b4b 100%);
+    color:var(--text); display:flex; flex-direction:column; align-items:center;
+    padding:24px 14px 60px;
+  }
+  .wrap{width:100%; max-width:720px;}
+  header.top{text-align:center; margin-bottom:30px;}
+  header.top .kicker{color:var(--accent2); font-weight:600; font-size:14px; letter-spacing:.5px;}
+  header.top h1{margin:6px 0 2px; font-size:26px;}
+  header.top .sub{color:var(--muted); font-size:14px;}
+
+  .scenario-card{
+    background:var(--card); border-radius:18px; padding:24px 22px; margin-bottom:26px;
+    box-shadow:0 10px 28px rgba(0,0,0,.3); border:1px solid #334155;
+  }
+  .scenario-tag{
+    display:inline-block; font-size:12.5px; font-weight:700; color:var(--accent2);
+    background:rgba(139,92,246,.12); border:1px solid var(--accent2);
+    padding:4px 12px; border-radius:20px; margin-bottom:12px;
+  }
+  .scenario-text{
+    background:var(--scenario-bg); border-right:4px solid var(--accent);
+    border-radius:10px; padding:14px 16px; font-size:15.5px; line-height:1.9; margin-bottom:20px;
+  }
+  .scenario-text b{color:var(--accent2);}
+  .q-block{margin-bottom:16px;}
+  .q-block:last-child{margin-bottom:0;}
+  .q-text{font-size:15px; font-weight:700; line-height:1.8; margin-bottom:8px;}
+  .q-text .qnum{color:var(--accent2); margin-left:4px;}
+  .reveal-btn{
+    background:none; border:1.5px solid #475569; color:var(--muted);
+    padding:7px 16px; border-radius:20px; font-size:13px; cursor:pointer; transition:.15s;
+  }
+  .reveal-btn:hover{border-color:var(--true); color:var(--true);}
+  .answer-box{
+    display:none; margin-top:10px; background:rgba(16,185,129,.1); border:1px solid var(--true);
+    border-radius:10px; padding:12px 14px; font-size:14.5px; line-height:1.8; color:#a7f3d0;
+  }
+  .answer-box.show{display:block;}
+  .answer-box b{color:var(--true);}
+
+  .home-link{display:block; text-align:center; margin-top:10px; color:var(--muted); font-size:13px; text-decoration:none;}
+  .home-link:hover{color:var(--accent2);}
+  footer.foot{text-align:center; margin-top:30px; color:var(--muted); font-size:12.5px; line-height:1.9;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="kicker">القيادة الرقمية · أسئلة سيناريو تطبيقية</div>
+    <h1>سيناريوهات محاضرة الحادية عشرة</h1>
+    <div class="sub">الأمن السيبراني — للمراجعة والتدرّب الذاتي</div>
+  </header>
+
+  <div class="scenario-card">
+  <span class="scenario-tag">السيناريو 1</span>
+  <div class="scenario-text"><b>الموقف: </b>وزارة تكتشف أن أحد الموظفين فتح مرفق بريد إلكتروني خبيث أدى لتشفير كل ملفات الوزارة والمطالبة بفدية.</div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">1.</span>ما اسم هذا النوع من الهجمات؟</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans121')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans121"><b>الإجابة النموذجية: </b>هجوم الفدية (Ransomware).</div>
+  </div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">2.</span>ما الدرس المستفاد من هذه الحالة وفق المحاضرة بخصوص سبب نجاح الهجوم؟</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans122')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans122"><b>الإجابة النموذجية: </b>لم يكن السبب ضعف التقنية فقط بل خطأ بشري، مما يؤكد أهمية الجمع بين الحلول التقنية والتوعية الأمنية.</div>
+  </div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">3.</span>اذكر إجراء وقاية واحداً كان يمكن أن يقلل أثر هذا الهجوم بعد وقوعه.</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans123')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans123"><b>الإجابة النموذجية: </b>الاحتفاظ بنسخ احتياطية محدثة يمكن الاستعادة منها دون الحاجة لدفع الفدية.</div>
+  </div>
+</div>
+<div class="scenario-card">
+  <span class="scenario-tag">السيناريو 2</span>
+  <div class="scenario-text"><b>الموقف: </b>وزارة الداخلية تطلب من فريق متخصص اختبار بوابتها الإلكترونية الجديدة قبل إطلاقها للمواطنين لاكتشاف الثغرات.</div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">1.</span>أي فريق من فرق الأمن السيبراني هو المسؤول عن هذه المهمة؟</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans124')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans124"><b>الإجابة النموذجية: </b>الفريق الأحمر (Red Team).</div>
+  </div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">2.</span>ما الفرق بين مهمة هذا الفريق ومهمة الفريق الأزرق؟</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans125')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans125"><b>الإجابة النموذجية: </b>الفريق الأحمر يحاكي الهجمات لاكتشاف الثغرات (هجومي)، بينما الأزرق يراقب ويستجيب للحوادث (دفاعي).</div>
+  </div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">3.</span>من يتولى تحليل نتائج هذا الاختبار وتحويلها لتحسينات عملية بالتعاون مع الفريقين؟</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans126')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans126"><b>الإجابة النموذجية: </b>الفريق البنفسجي (Purple Team).</div>
+  </div>
+</div>
+<div class="scenario-card">
+  <span class="scenario-tag">السيناريو 3</span>
+  <div class="scenario-text"><b>الموقف: </b>بعد اكتشاف اختراق لأحد الأجهزة الحكومية، بدأ فريق التحقيق بجمع الأدلة الرقمية دون المساس بأي شيء في الجهاز.</div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">1.</span>ما اسم هذا التخصص الأمني؟</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans127')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans127"><b>الإجابة النموذجية: </b>التحليل الجنائي الرقمي (Digital Forensics).</div>
+  </div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">2.</span>ما المرحلة التي يمر بها الفريق حالياً، وما المرحلة التي تليها مباشرة؟</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans128')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans128"><b>الإجابة النموذجية: </b>جمع الأدلة (Collection)، تليها المحافظة على الأدلة (Preservation).</div>
+  </div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">3.</span>اذكر أداة واحدة يمكن أن يستخدمها الفريق لتحليل ذاكرة النظام (RAM) في هذا الجهاز.</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans129')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans129"><b>الإجابة النموذجية: </b>أداة Volatility.</div>
+  </div>
+</div>
+<div class="scenario-card">
+  <span class="scenario-tag">السيناريو 4</span>
+  <div class="scenario-text"><b>الموقف: </b>بنك حكومي يريد تأمين المعاملات المصرفية الإلكترونية بحيث يمكن إثبات هوية المرسل وعدم إنكاره لاحقاً إرسال المعاملة.</div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">1.</span>ما التقنية التي تحقق هذا الهدف؟</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans130')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans130"><b>الإجابة النموذجية: </b>التوقيع الرقمي (Digital Signature).</div>
+  </div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">2.</span>على أي نوع من التشفير يعتمد التوقيع الرقمي؟</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans131')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans131"><b>الإجابة النموذجية: </b>التشفير غير المتماثل (Asymmetric Encryption).</div>
+  </div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">3.</span>اذكر هدفاً واحداً آخر (غير منع الإنكار) يحققه التوقيع الرقمي.</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans132')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans132"><b>الإجابة النموذجية: </b>التحقق من هوية المرسل، أو ضمان سلامة البيانات وعدم تعديلها أثناء الإرسال.</div>
+  </div>
+</div>
+
+
+  <a class="home-link" href="./all-scenarios.html">↩ العودة إلى كل السيناريوهات</a>
+
+  <footer class="foot">
+    المعهد العالي لإعداد وتأهيل القادة · برنامج القيادة الرقمية — الدبلوم العالي<br>
+    إعداد: أ.م.د. أمير هادي و أ.م.د. أحمد محسن هيلان
+  </footer>
+</div>
+
+<script>
+function toggleAnswer(id){
+  const el = document.getElementById(id);
+  el.classList.toggle('show');
+}
+</script>
+</body>
+</html>

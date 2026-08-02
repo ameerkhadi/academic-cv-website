@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>المحاضرة السابعة — أسئلة سيناريو تطبيقية</title>
+<style>
+  :root{
+    --bg:#0f172a; --card:#1e293b; --accent:#6366f1; --accent2:#8b5cf6;
+    --true:#10b981; --text:#f1f5f9; --muted:#94a3b8; --scenario-bg:#20294a;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; min-height:100vh; font-family:'Segoe UI', Tahoma, Arial, sans-serif;
+    background:linear-gradient(135deg,#0f172a 0%,#1e1b4b 100%);
+    color:var(--text); display:flex; flex-direction:column; align-items:center;
+    padding:24px 14px 60px;
+  }
+  .wrap{width:100%; max-width:720px;}
+  header.top{text-align:center; margin-bottom:30px;}
+  header.top .kicker{color:var(--accent2); font-weight:600; font-size:14px; letter-spacing:.5px;}
+  header.top h1{margin:6px 0 2px; font-size:26px;}
+  header.top .sub{color:var(--muted); font-size:14px;}
+
+  .scenario-card{
+    background:var(--card); border-radius:18px; padding:24px 22px; margin-bottom:26px;
+    box-shadow:0 10px 28px rgba(0,0,0,.3); border:1px solid #334155;
+  }
+  .scenario-tag{
+    display:inline-block; font-size:12.5px; font-weight:700; color:var(--accent2);
+    background:rgba(139,92,246,.12); border:1px solid var(--accent2);
+    padding:4px 12px; border-radius:20px; margin-bottom:12px;
+  }
+  .scenario-text{
+    background:var(--scenario-bg); border-right:4px solid var(--accent);
+    border-radius:10px; padding:14px 16px; font-size:15.5px; line-height:1.9; margin-bottom:20px;
+  }
+  .scenario-text b{color:var(--accent2);}
+  .q-block{margin-bottom:16px;}
+  .q-block:last-child{margin-bottom:0;}
+  .q-text{font-size:15px; font-weight:700; line-height:1.8; margin-bottom:8px;}
+  .q-text .qnum{color:var(--accent2); margin-left:4px;}
+  .reveal-btn{
+    background:none; border:1.5px solid #475569; color:var(--muted);
+    padding:7px 16px; border-radius:20px; font-size:13px; cursor:pointer; transition:.15s;
+  }
+  .reveal-btn:hover{border-color:var(--true); color:var(--true);}
+  .answer-box{
+    display:none; margin-top:10px; background:rgba(16,185,129,.1); border:1px solid var(--true);
+    border-radius:10px; padding:12px 14px; font-size:14.5px; line-height:1.8; color:#a7f3d0;
+  }
+  .answer-box.show{display:block;}
+  .answer-box b{color:var(--true);}
+
+  .home-link{display:block; text-align:center; margin-top:10px; color:var(--muted); font-size:13px; text-decoration:none;}
+  .home-link:hover{color:var(--accent2);}
+  footer.foot{text-align:center; margin-top:30px; color:var(--muted); font-size:12.5px; line-height:1.9;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="kicker">القيادة الرقمية · أسئلة سيناريو تطبيقية</div>
+    <h1>سيناريوهات محاضرة السابعة</h1>
+    <div class="sub">تكامل الأنظمة الحكومية — للمراجعة والتدرّب الذاتي</div>
+  </header>
+
+  <div class="scenario-card">
+  <span class="scenario-tag">السيناريو 1</span>
+  <div class="scenario-text"><b>الموقف: </b>وزارتان حكوميتان تحتفظان بنسختين مختلفتين من بيانات المواطن نفسه، مما يسبب تعارضاً بالمعلومات.</div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">1.</span>ما نوع التكامل الحكومي المطلوب لحل هذه المشكلة؟</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans73')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans73"><b>الإجابة النموذجية: </b>تكامل البيانات Data Integration — توحيد قواعد البيانات وضمان اتساق السجلات.</div>
+  </div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">2.</span>اذكر نموذجاً معمارياً واحداً يمكن استخدامه لربط هذه الأنظمة بشكل مركزي.</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans74')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans74"><b>الإجابة النموذجية: </b>ناقل الخدمات المؤسسية ESB، أو بوابة API Gateway.</div>
+  </div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">3.</span>ما الفائدة الاقتصادية المحتملة لهذا التكامل وفق الأرقام الواردة بالمحاضرة؟</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans75')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans75"><b>الإجابة النموذجية: </b>خفض النفقات المرتبطة بإدخال البيانات يدوياً بنسبة قد تصل إلى 60%.</div>
+  </div>
+</div>
+<div class="scenario-card">
+  <span class="scenario-tag">السيناريو 2</span>
+  <div class="scenario-text"><b>الموقف: </b>مشروع تكامل حكومي كبير يواجه معارضة من عدة وزارات بسبب تعدد الجهات المسؤولة وتضارب الأولويات.</div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">1.</span>أي نوع من التحديات يصف هذا الموقف؟</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans76')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans76"><b>الإجابة النموذجية: </b>التعقيد التنظيمي والسياسي.</div>
+  </div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">2.</span>اذكر استراتيجية تخفيف واحدة يمكن أن تساعد على تجاوز هذه المعارضة.</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans77')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans77"><b>الإجابة النموذجية: </b>إدارة التغيير من خلال إشراك مبكر لجميع الأطراف المعنية.</div>
+  </div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">3.</span>كيف يساعد الإطار الأوروبي لقابلية التشغيل البيني EIF في معالجة الجانب التنظيمي لهذه المشكلة؟</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans78')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans78"><b>الإجابة النموذجية: </b>عبر مستواه «التنظيمي» الذي يعالج توحيد العمليات والمسؤوليات بين الجهات المختلفة.</div>
+  </div>
+</div>
+<div class="scenario-card">
+  <span class="scenario-tag">السيناريو 3</span>
+  <div class="scenario-text"><b>الموقف: </b>حكومة تريد بناء منصة تكامل تتيح للقطاع الخاص بناء خدمات ابتكارية فوق البنية الحكومية.</div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">1.</span>ما اسم هذا المفهوم؟</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans79')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans79"><b>الإجابة النموذجية: </b>الحكومة كمنصة (Government as a Platform - GaaP).</div>
+  </div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">2.</span>اذكر مثالاً دولياً واحداً نجح في تطبيق نموذج تكامل مشابه.</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans80')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans80"><b>الإجابة النموذجية: </b>إستونيا بمنصة X-Road التي تربط أكثر من 900 نظام حكومي وخاص.</div>
+  </div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">3.</span>ما الفائدة المزدوجة (اقتصادية وتشغيلية) التي حققتها إستونيا من هذا النموذج؟</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans81')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans81"><b>الإجابة النموذجية: </b>وفّر النظام ما يعادل 2% من الناتج المحلي الإجمالي سنوياً، مع إتاحة 99% من الخدمات إلكترونياً.</div>
+  </div>
+</div>
+<div class="scenario-card">
+  <span class="scenario-tag">السيناريو 4</span>
+  <div class="scenario-text"><b>الموقف: </b>نظام حكومي قديم مبني بتقنيات لا تدعم واجهات API الحديثة، ويصعب دمجه مع منصة التكامل الجديدة.</div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">1.</span>ما اسم هذا التحدي التقني؟</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans82')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans82"><b>الإجابة النموذجية: </b>الأنظمة القديمة (Legacy Systems).</div>
+  </div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">2.</span>اذكر استراتيجية تقنية واحدة تُستخدم للتعامل مع هذا النوع من الأنظمة دون استبدالها فوراً.</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans83')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans83"><b>الإجابة النموذجية: </b>طبقة الوساطة (Middleware Adapters).</div>
+  </div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">3.</span>لماذا يصعب ربط هذا النظام القديم بالطبقات العليا من النموذج المعماري الحكومي؟</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans84')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans84"><b>الإجابة النموذجية: </b>لأنه لا يدعم بروتوكولات وواجهات التكامل الحديثة (API) المطلوبة في طبقة التكامل.</div>
+  </div>
+</div>
+
+
+  <a class="home-link" href="./all-scenarios.html">↩ العودة إلى كل السيناريوهات</a>
+
+  <footer class="foot">
+    المعهد العالي لإعداد وتأهيل القادة · برنامج القيادة الرقمية — الدبلوم العالي<br>
+    إعداد: أ.م.د. أمير هادي و أ.م.د. أحمد محسن هيلان
+  </footer>
+</div>
+
+<script>
+function toggleAnswer(id){
+  const el = document.getElementById(id);
+  el.classList.toggle('show');
+}
+</script>
+</body>
+</html>

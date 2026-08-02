@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>المحاضرة الأولى — أسئلة سيناريو تطبيقية</title>
+<style>
+  :root{
+    --bg:#0f172a; --card:#1e293b; --accent:#6366f1; --accent2:#8b5cf6;
+    --true:#10b981; --text:#f1f5f9; --muted:#94a3b8; --scenario-bg:#20294a;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; min-height:100vh; font-family:'Segoe UI', Tahoma, Arial, sans-serif;
+    background:linear-gradient(135deg,#0f172a 0%,#1e1b4b 100%);
+    color:var(--text); display:flex; flex-direction:column; align-items:center;
+    padding:24px 14px 60px;
+  }
+  .wrap{width:100%; max-width:720px;}
+  header.top{text-align:center; margin-bottom:30px;}
+  header.top .kicker{color:var(--accent2); font-weight:600; font-size:14px; letter-spacing:.5px;}
+  header.top h1{margin:6px 0 2px; font-size:26px;}
+  header.top .sub{color:var(--muted); font-size:14px;}
+
+  .scenario-card{
+    background:var(--card); border-radius:18px; padding:24px 22px; margin-bottom:26px;
+    box-shadow:0 10px 28px rgba(0,0,0,.3); border:1px solid #334155;
+  }
+  .scenario-tag{
+    display:inline-block; font-size:12.5px; font-weight:700; color:var(--accent2);
+    background:rgba(139,92,246,.12); border:1px solid var(--accent2);
+    padding:4px 12px; border-radius:20px; margin-bottom:12px;
+  }
+  .scenario-text{
+    background:var(--scenario-bg); border-right:4px solid var(--accent);
+    border-radius:10px; padding:14px 16px; font-size:15.5px; line-height:1.9; margin-bottom:20px;
+  }
+  .scenario-text b{color:var(--accent2);}
+  .q-block{margin-bottom:16px;}
+  .q-block:last-child{margin-bottom:0;}
+  .q-text{font-size:15px; font-weight:700; line-height:1.8; margin-bottom:8px;}
+  .q-text .qnum{color:var(--accent2); margin-left:4px;}
+  .reveal-btn{
+    background:none; border:1.5px solid #475569; color:var(--muted);
+    padding:7px 16px; border-radius:20px; font-size:13px; cursor:pointer; transition:.15s;
+  }
+  .reveal-btn:hover{border-color:var(--true); color:var(--true);}
+  .answer-box{
+    display:none; margin-top:10px; background:rgba(16,185,129,.1); border:1px solid var(--true);
+    border-radius:10px; padding:12px 14px; font-size:14.5px; line-height:1.8; color:#a7f3d0;
+  }
+  .answer-box.show{display:block;}
+  .answer-box b{color:var(--true);}
+
+  .home-link{display:block; text-align:center; margin-top:10px; color:var(--muted); font-size:13px; text-decoration:none;}
+  .home-link:hover{color:var(--accent2);}
+  footer.foot{text-align:center; margin-top:30px; color:var(--muted); font-size:12.5px; line-height:1.9;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="kicker">القيادة الرقمية · أسئلة سيناريو تطبيقية</div>
+    <h1>سيناريوهات محاضرة الأولى</h1>
+    <div class="sub">البنية التحتية الرقمية — للمراجعة والتدرّب الذاتي</div>
+  </header>
+
+  <div class="scenario-card">
+  <span class="scenario-tag">السيناريو 1</span>
+  <div class="scenario-text"><b>الموقف: </b>وزارة تخطط لإنشاء مركز بيانات وطني جديد وتريد اختيار مستوى Tier مناسب لضمان استمرارية الخدمات الحكومية الحساسة على مدار الساعة.</div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">1.</span>ما مستوى Tier الذي يجب أن تختاره الوزارة لضمان أعلى نسبة توافر؟ ولماذا؟</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans1')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans1"><b>الإجابة النموذجية: </b>Tier IV، لأنه يوفر توافراً بنسبة 99.995% ويتحمّل فشل أي مكوّن دون التأثير في الخدمة.</div>
+  </div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">2.</span>اذكر مكوّناً واحداً من الطبقة المادية للبنية التحتية الرقمية يلزم توفره في هذا المركز.</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans2')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans2"><b>الإجابة النموذجية: </b>الخوادم، أو أنظمة التخزين، أو الكابلات، أو مراكز البيانات (أي مكوّن مادي مذكور بالمحاضرة).</div>
+  </div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">3.</span>كيف تسهم الحوسبة الطرفية (Edge Computing) في تحسين أداء خدمات هذا المركز للمناطق البعيدة؟</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans3')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans3"><b>الإجابة النموذجية: </b>بتقريب معالجة البيانات من مصادر توليدها بدلاً من إرسالها للمركز المركزي، مما يقلل زمن الاستجابة.</div>
+  </div>
+</div>
+<div class="scenario-card">
+  <span class="scenario-tag">السيناريو 2</span>
+  <div class="scenario-text"><b>الموقف: </b>شركة اتصالات حكومية تدرس التحول من شبكات الجيل الرابع إلى الجيل الخامس لدعم مشروع مدينة ذكية.</div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">1.</span>اذكر ميزتين تقنيتين يوفرهما الجيل الخامس 5G مقارنة بالجيل الرابع.</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans4')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans4"><b>الإجابة النموذجية: </b>زمن استجابة أقل من 1 مللي ثانية، وسرعة تصل حتى 20 Gbps.</div>
+  </div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">2.</span>ما دور الأقمار الاصطناعية منخفضة المدار مثل Starlink في دعم هذا المشروع بالمناطق النائية؟</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans5')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans5"><b>الإجابة النموذجية: </b>توسيع نطاق التغطية الرقمية في المناطق التي يصعب وصول الشبكات الأرضية إليها.</div>
+  </div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">3.</span>كيف يمكن لتقنية 6G المستقبلية أن تدعم توسّع المدينة الذكية لاحقاً؟</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans6')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans6"><b>الإجابة النموذجية: </b>توفر سرعات تصل حتى 1 Tbps، مما يتيح دعم عدد أكبر بكثير من أجهزة إنترنت الأشياء بزمن استجابة شبه معدوم.</div>
+  </div>
+</div>
+<div class="scenario-card">
+  <span class="scenario-tag">السيناريو 3</span>
+  <div class="scenario-text"><b>الموقف: </b>مؤسسة حكومية تعرّضت لهجوم إلكتروني أدى إلى تسريب بيانات بسبب ثغرة أمنية في تطبيقها السحابي.</div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">1.</span>اذكر إجراءً وقائياً واحداً من استراتيجيات الحماية السحابية كان يمكن أن يمنع هذا الاختراق.</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans7')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans7"><b>الإجابة النموذجية: </b>تطبيق نموذج الثقة الصفرية Zero Trust، أو التشفير الشامل End-to-End Encryption، أو المصادقة متعددة العوامل.</div>
+  </div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">2.</span>ما الفرق بين السحابة الخاصة والعامة من حيث ملاءمتها لتخزين بيانات حساسة كهذه؟</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans8')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans8"><b>الإجابة النموذجية: </b>الخاصة تمنح تحكماً كاملاً وأماناً أعلى لأنها مخصصة لجهة واحدة، بينما العامة مشتركة بين عملاء متعددين وأقل ملاءمة للبيانات الحساسة.</div>
+  </div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">3.</span>ما نموذج الخدمة السحابية الأنسب إذا أرادت المؤسسة أقصى درجة تحكم بإعدادات الأمان؟</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans9')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans9"><b>الإجابة النموذجية: </b>IaaS، لأنه يمنح العميل التحكم الكامل بنظام التشغيل والتطبيقات وإعدادات الأمان.</div>
+  </div>
+</div>
+<div class="scenario-card">
+  <span class="scenario-tag">السيناريو 4</span>
+  <div class="scenario-text"><b>الموقف: </b>دولة تسعى لتحقيق الاستدامة البيئية ضمن استراتيجيتها الرقمية بحلول عام 2030.</div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">1.</span>كيف تسهم مراكز البيانات الخضراء في تحقيق هذا الهدف؟</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans10')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans10"><b>الإجابة النموذجية: </b>بتقليل استهلاك الطاقة عبر تصميم فعّال للطاقة وتقنيات تبريد مستدامة كالتبريد بالغمر السائل.</div>
+  </div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">2.</span>اذكر رقماً واحداً من المحاضرة يوضح القيمة الاقتصادية المتوقعة عالمياً للبنية التحتية الرقمية بحلول 2030.</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans11')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans11"><b>الإجابة النموذجية: </b>أكثر من 25 تريليون دولار من القيمة الاقتصادية العالمية.</div>
+  </div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">3.</span>كيف يرتبط مفهوم الحوسبة الطرفية بتقليل البصمة الكربونية لمراكز البيانات؟</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans12')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans12"><b>الإجابة النموذجية: </b>بتقليل الحاجة لنقل كميات ضخمة من البيانات لمسافات طويلة لمعالجتها مركزياً، مما يوفر طاقة النقل والمعالجة.</div>
+  </div>
+</div>
+
+
+  <a class="home-link" href="./all-scenarios.html">↩ العودة إلى كل السيناريوهات</a>
+
+  <footer class="foot">
+    المعهد العالي لإعداد وتأهيل القادة · برنامج القيادة الرقمية — الدبلوم العالي<br>
+    إعداد: أ.م.د. أمير هادي و أ.م.د. أحمد محسن هيلان
+  </footer>
+</div>
+
+<script>
+function toggleAnswer(id){
+  const el = document.getElementById(id);
+  el.classList.toggle('show');
+}
+</script>
+</body>
+</html>

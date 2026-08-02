@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>المحاضرة الرابعة — أسئلة سيناريو تطبيقية</title>
+<style>
+  :root{
+    --bg:#0f172a; --card:#1e293b; --accent:#6366f1; --accent2:#8b5cf6;
+    --true:#10b981; --text:#f1f5f9; --muted:#94a3b8; --scenario-bg:#20294a;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; min-height:100vh; font-family:'Segoe UI', Tahoma, Arial, sans-serif;
+    background:linear-gradient(135deg,#0f172a 0%,#1e1b4b 100%);
+    color:var(--text); display:flex; flex-direction:column; align-items:center;
+    padding:24px 14px 60px;
+  }
+  .wrap{width:100%; max-width:720px;}
+  header.top{text-align:center; margin-bottom:30px;}
+  header.top .kicker{color:var(--accent2); font-weight:600; font-size:14px; letter-spacing:.5px;}
+  header.top h1{margin:6px 0 2px; font-size:26px;}
+  header.top .sub{color:var(--muted); font-size:14px;}
+
+  .scenario-card{
+    background:var(--card); border-radius:18px; padding:24px 22px; margin-bottom:26px;
+    box-shadow:0 10px 28px rgba(0,0,0,.3); border:1px solid #334155;
+  }
+  .scenario-tag{
+    display:inline-block; font-size:12.5px; font-weight:700; color:var(--accent2);
+    background:rgba(139,92,246,.12); border:1px solid var(--accent2);
+    padding:4px 12px; border-radius:20px; margin-bottom:12px;
+  }
+  .scenario-text{
+    background:var(--scenario-bg); border-right:4px solid var(--accent);
+    border-radius:10px; padding:14px 16px; font-size:15.5px; line-height:1.9; margin-bottom:20px;
+  }
+  .scenario-text b{color:var(--accent2);}
+  .q-block{margin-bottom:16px;}
+  .q-block:last-child{margin-bottom:0;}
+  .q-text{font-size:15px; font-weight:700; line-height:1.8; margin-bottom:8px;}
+  .q-text .qnum{color:var(--accent2); margin-left:4px;}
+  .reveal-btn{
+    background:none; border:1.5px solid #475569; color:var(--muted);
+    padding:7px 16px; border-radius:20px; font-size:13px; cursor:pointer; transition:.15s;
+  }
+  .reveal-btn:hover{border-color:var(--true); color:var(--true);}
+  .answer-box{
+    display:none; margin-top:10px; background:rgba(16,185,129,.1); border:1px solid var(--true);
+    border-radius:10px; padding:12px 14px; font-size:14.5px; line-height:1.8; color:#a7f3d0;
+  }
+  .answer-box.show{display:block;}
+  .answer-box b{color:var(--true);}
+
+  .home-link{display:block; text-align:center; margin-top:10px; color:var(--muted); font-size:13px; text-decoration:none;}
+  .home-link:hover{color:var(--accent2);}
+  footer.foot{text-align:center; margin-top:30px; color:var(--muted); font-size:12.5px; line-height:1.9;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="kicker">القيادة الرقمية · أسئلة سيناريو تطبيقية</div>
+    <h1>سيناريوهات محاضرة الرابعة</h1>
+    <div class="sub">الحوسبة السحابية الحكومية — للمراجعة والتدرّب الذاتي</div>
+  </header>
+
+  <div class="scenario-card">
+  <span class="scenario-tag">السيناريو 1</span>
+  <div class="scenario-text"><b>الموقف: </b>جهة حكومية صغيرة تريد تشغيل موقع خدمات إلكترونية للمواطنين دون استثمار كبير برأس المال.</div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">1.</span>أي نموذج نشر سحابي هو الأنسب لهذه الخدمة؟ ولماذا؟</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans37')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans37"><b>الإجابة النموذجية: </b>السحابة العامة، لأنها الأنسب للتطبيقات غير الحساسة والخدمات الموجهة للمواطنين وبتكلفة منخفضة نسبياً.</div>
+  </div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">2.</span>ما نموذج الخدمة الأنسب إذا أرادت الجهة التركيز على تطوير التطبيق فقط دون القلق بشأن البنية التحتية؟</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans38')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans38"><b>الإجابة النموذجية: </b>PaaS، لأنه يوفر بيئة تطوير جاهزة ويتولى العميل كتابة التطبيقات فقط.</div>
+  </div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">3.</span>اذكر فائدة اقتصادية واحدة موثقة بالأرقام من المحاضرة للتحول السحابي الحكومي.</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans39')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans39"><b>الإجابة النموذجية: </b>وفّرت المنصة الوطنية السعودية 5.6 مليار ريال (نحو 1.5 مليار دولار).</div>
+  </div>
+</div>
+<div class="scenario-card">
+  <span class="scenario-tag">السيناريو 2</span>
+  <div class="scenario-text"><b>الموقف: </b>بنك مركزي حكومي يريد تخزين بيانات مالية بالغة الحساسية بأعلى درجة تحكم وأمان.</div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">1.</span>أي نموذج سحابي يناسب هذه الحالة؟</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans40')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans40"><b>الإجابة النموذجية: </b>السحابة الخاصة Private Cloud، لأنها تمنح تحكماً كاملاً في البيانات والأمان.</div>
+  </div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">2.</span>وفق نموذج المسؤولية المشتركة، من يتحمل مسؤولية تأمين البيانات المالية نفسها؟</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans41')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans41"><b>الإجابة النموذجية: </b>العميل (البنك)، لأنه مسؤول عن تأمين ما يضعه داخل السحابة من بيانات وتطبيقات وصلاحيات.</div>
+  </div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">3.</span>اذكر إجراءً أمنياً واحداً من القواعد الذهبية الخمس للأمن السحابي ينبغي تطبيقه هنا.</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans42')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans42"><b>الإجابة النموذجية: </b>المصادقة الثنائية MFA لكل حساب، أو التشفير الدائم بمعيار AES-256.</div>
+  </div>
+</div>
+<div class="scenario-card">
+  <span class="scenario-tag">السيناريو 3</span>
+  <div class="scenario-text"><b>الموقف: </b>مؤسسة حكومية بدأت رحلة التحول الرقمي وحوّلت أرشيفها الورقي إلى ملفات PDF فقط دون تغيير إجراءات العمل.</div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">1.</span>في أي مرحلة من مراحل التحول الرقمي الأربع تقع هذه المؤسسة؟</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans43')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans43"><b>الإجابة النموذجية: </b>مرحلة الرقمنة Digitization — تحويل الشكل فقط دون تغيير طريقة العمل.</div>
+  </div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">2.</span>ما الخطوة التالية التي يجب أن تنتقل إليها المؤسسة لتحقيق تحسناً حقيقياً في الكفاءة؟</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans44')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans44"><b>الإجابة النموذجية: </b>مرحلة الرقمية Digitalization — استخدام التقنية لتغيير طريقة العمل كأتمتة سير العمل وأنظمة ERP.</div>
+  </div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">3.</span>هل انتقال هذه المؤسسة للسحابة يعني اكتمال تحولها الرقمي؟ علّل إجابتك.</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans45')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans45"><b>الإجابة النموذجية: </b>لا، فالسحابة أداة تُمكّن التحول الرقمي وتُسرّعه، لكنها ليست التحول بحد ذاته الذي يشمل تغيير الثقافة ونموذج العمل.</div>
+  </div>
+</div>
+<div class="scenario-card">
+  <span class="scenario-tag">السيناريو 4</span>
+  <div class="scenario-text"><b>الموقف: </b>مزوّد سحابة عالمي يفتح منطقة جغرافية جديدة في الخليج العربي لخدمة الحكومات هناك.</div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">1.</span>لماذا تحتاج كل منطقة جغرافية إلى ثلاث مناطق توفر Availability Zones على الأقل؟</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans46')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans46"><b>الإجابة النموذجية: </b>لضمان استمرارية الخدمة؛ فإذا تعطلت منطقة توفر، تستمر المنطقتان الأخريان في العمل دون انقطاع.</div>
+  </div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">2.</span>اذكر اسم مزوّد سحابي عالمي واحد وحصته السوقية التقريبية وفق المحاضرة.</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans47')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans47"><b>الإجابة النموذجية: </b>AWS بحصة سوقية 31%، أو Microsoft Azure بحصة 25%.</div>
+  </div>
+  <div class="q-block">
+    <div class="q-text"><span class="qnum">3.</span>ما الفائدة المباشرة لوجود منطقة سحابية إقليمية قريبة (كالبحرين) للجهات الحكومية بالعراق أو الخليج؟</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans48')">👁 إظهار / إخفاء الإجابة النموذجية</button>
+    <div class="answer-box" id="ans48"><b>الإجابة النموذجية: </b>تقليل زمن الاستجابة Latency وتحسين الأداء، إضافة لدعم متطلبات سيادة البيانات.</div>
+  </div>
+</div>
+
+
+  <a class="home-link" href="./all-scenarios.html">↩ العودة إلى كل السيناريوهات</a>
+
+  <footer class="foot">
+    المعهد العالي لإعداد وتأهيل القادة · برنامج القيادة الرقمية — الدبلوم العالي<br>
+    إعداد: أ.م.د. أمير هادي و أ.م.د. أحمد محسن هيلان
+  </footer>
+</div>
+
+<script>
+function toggleAnswer(id){
+  const el = document.getElementById(id);
+  el.classList.toggle('show');
+}
+</script>
+</body>
+</html>
