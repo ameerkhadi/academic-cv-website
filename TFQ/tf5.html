@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>المحاضرة الخامسة — اختبار صح وخطأ</title>
+<style>
+  :root{
+    --bg:#0f172a; --card:#1e293b; --accent:#6366f1; --accent2:#8b5cf6;
+    --true:#10b981; --false:#ef4444; --text:#f1f5f9; --muted:#94a3b8;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; min-height:100vh; font-family:'Segoe UI', Tahoma, Arial, sans-serif;
+    background:linear-gradient(135deg,#0f172a 0%,#1e1b4b 100%);
+    color:var(--text); display:flex; flex-direction:column; align-items:center;
+    padding:24px 14px 60px;
+  }
+  .wrap{width:100%; max-width:680px;}
+  header.top{text-align:center; margin-bottom:22px;}
+  header.top .kicker{color:var(--accent2); font-weight:600; font-size:14px; letter-spacing:.5px;}
+  header.top h1{margin:6px 0 2px; font-size:26px;}
+  header.top .sub{color:var(--muted); font-size:14px;}
+  .progress-wrap{margin:22px 0 10px; display:flex; justify-content:space-between; align-items:center; font-size:14px; color:var(--muted);}
+  .progress-bar{width:100%; height:8px; background:#334155; border-radius:6px; overflow:hidden; margin-bottom:6px;}
+  .progress-bar > div{height:100%; background:linear-gradient(90deg,var(--accent),var(--accent2)); transition:width .35s ease;}
+  .card{
+    background:var(--card); border-radius:18px; padding:28px 24px; box-shadow:0 12px 34px rgba(0,0,0,.35);
+    border:1px solid #334155;
+  }
+  .qnum{color:var(--accent2); font-weight:700; font-size:14px; margin-bottom:10px;}
+  .qtext{font-size:19px; line-height:1.8; margin-bottom:26px;}
+  .choices{display:flex; gap:14px; margin-bottom:8px;}
+  .choice-btn{
+    flex:1; padding:16px 10px; border-radius:12px; border:2px solid #334155; background:#0f172a;
+    color:var(--text); font-size:17px; font-weight:700; cursor:pointer; transition:.15s;
+  }
+  .choice-btn:hover{border-color:var(--accent);}
+  .choice-btn.true-btn{color:var(--true);}
+  .choice-btn.false-btn{color:var(--false);}
+  .choice-btn:disabled{cursor:default; opacity:.85;}
+  .choice-btn.selected-correct{background:rgba(16,185,129,.18); border-color:var(--true);}
+  .choice-btn.selected-wrong{background:rgba(239,68,68,.18); border-color:var(--false);}
+  .choice-btn.reveal-correct{border-color:var(--true);}
+  .feedback{margin-top:18px; padding:16px 16px; border-radius:12px; font-size:15px; line-height:1.8; display:none;}
+  .feedback.show{display:block;}
+  .feedback.correct{background:rgba(16,185,129,.12); border:1px solid var(--true); color:#a7f3d0;}
+  .feedback.wrong{background:rgba(239,68,68,.12); border:1px solid var(--false); color:#fecaca;}
+  .next-btn{
+    margin-top:20px; width:100%; padding:14px; border:none; border-radius:12px; cursor:pointer;
+    background:linear-gradient(90deg,var(--accent),var(--accent2)); color:#fff; font-size:16px; font-weight:700;
+    display:none;
+  }
+  .next-btn.show{display:block;}
+  .result-card{text-align:center; display:none;}
+  .result-card.show{display:block;}
+  .result-card h2{font-size:22px; margin-bottom:6px;}
+  .score-circle{
+    width:150px; height:150px; border-radius:50%; margin:20px auto;
+    display:flex; align-items:center; justify-content:center; flex-direction:column;
+    background:conic-gradient(var(--accent) calc(var(--pct)*1%), #334155 0);
+  }
+  .score-circle .inner{
+    width:118px; height:118px; border-radius:50%; background:var(--card);
+    display:flex; align-items:center; justify-content:center; flex-direction:column;
+  }
+  .score-circle .inner b{font-size:30px;}
+  .score-circle .inner span{font-size:12px; color:var(--muted);}
+  .msg{color:var(--muted); margin:14px 0 22px; font-size:15px; line-height:1.8;}
+  .retry-btn{
+    padding:14px 30px; border:none; border-radius:12px; cursor:pointer;
+    background:linear-gradient(90deg,var(--accent),var(--accent2)); color:#fff; font-size:16px; font-weight:700;
+  }
+  .home-link{display:block; text-align:center; margin-top:26px; color:var(--muted); font-size:13px; text-decoration:none;}
+  .home-link:hover{color:var(--accent2);}
+  footer.foot{text-align:center; margin-top:30px; color:var(--muted); font-size:12.5px; line-height:1.9;}
+  #quizArea.hide{display:none;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="kicker">القيادة الرقمية · اختبار صح / خطأ</div>
+    <h1>شبكات المعلومات الحكومية الرقمية</h1>
+    <div class="sub">المحاضرة الخامسة — 10 أسئلة</div>
+  </header>
+
+  <div id="quizArea">
+    <div class="progress-wrap">
+      <span id="qCounter">سؤال ١ / 10</span>
+      <span id="scoreCounter">النتيجة: 0</span>
+    </div>
+    <div class="progress-bar"><div id="progressFill" style="width:0%"></div></div>
+
+    <div class="card">
+      <div class="qnum" id="qLabel">السؤال ١</div>
+      <div class="qtext" id="qText"></div>
+      <div class="choices">
+        <button class="choice-btn true-btn" id="btnTrue" onclick="answer(true)">✓ صح</button>
+        <button class="choice-btn false-btn" id="btnFalse" onclick="answer(false)">✗ خطأ</button>
+      </div>
+      <div class="feedback" id="feedback"></div>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">السؤال التالي ←</button>
+    </div>
+  </div>
+
+  <div class="card result-card" id="resultCard">
+    <h2>🎉 نتيجتك النهائية</h2>
+    <div class="score-circle" id="scoreCircle" style="--pct:0">
+      <div class="inner"><b id="finalScore">0/10</b><span>إجابات صحيحة</span></div>
+    </div>
+    <div class="msg" id="finalMsg"></div>
+    <button class="retry-btn" onclick="restartQuiz()">🔄 إعادة الاختبار</button>
+  </div>
+
+  <a class="home-link" href="./all-tf.html">↩ العودة إلى كل المرشحات</a>
+
+  <footer class="foot">
+    المعهد العالي لإعداد وتأهيل القادة · برنامج القيادة الرقمية — الدبلوم العالي<br>
+    إعداد: أ.م.د. أمير هادي و أ.م.د. أحمد محسن هيلان
+  </footer>
+</div>
+
+<script>
+const QUESTIONS = [{"q": "مرّت شبكات المعلومات الحكومية بأربع مراحل تطورية فقط بدأت في السبعينيات.", "a": false, "exp": "خطأ — مرّت بست مراحل تطورية من السبعينيات (ARPANET) حتى اليوم (الذكاء الاصطناعي وإنترنت الأشياء)."}, {"q": "الإنترانت الحكومي شبكة داخلية مقيدة للمؤسسات الحكومية، بينما الإكسترانت يربط الحكومة بشركائها الخارجيين.", "a": true, "exp": "صحيح — هذا هو الفرق الأساسي بين النوعين."}, {"q": "شبكة SIPRNet التابعة لوزارة الدفاع الأمريكية تُصنَّف ضمن الشبكات العامة المتاحة لجميع المواطنين.", "a": false, "exp": "خطأ — تُصنَّف ضمن الشبكات السرية للغاية (Secret Government Network) المخصصة للأجهزة الأمنية والعسكرية."}, {"q": "بروتوكول BGP يُستخدم لإدارة التوجيه بين الشبكات الحكومية المختلفة.", "a": true, "exp": "صحيح — Border Gateway Protocol مخصص لهذا الغرض، بينما OSPF/IS-IS للتوجيه الداخلي."}, {"q": "معيار التوافر Tier IV لمراكز البيانات الحكومية يعني توافر بنسبة 99.999% (Five Nines).", "a": true, "exp": "صحيح — وهو أعلى مستوى توافر مطلوب في مراكز البيانات الحكومية الحساسة."}, {"q": "منصة X-Road الإستونية تربط أقل من 100 خدمة حكومية فقط.", "a": false, "exp": "خطأ — تربط أكثر من 900 خدمة حكومية وخاصة وتُعالج 1.4 مليار طلب سنوياً."}, {"q": "طبقة النواة (Core Layer) في المعمارية الهرمية الثلاثية هي نقطة الاتصال المباشرة للمستخدمين النهائيين.", "a": false, "exp": "خطأ — هذا وصف طبقة الوصول (Access Layer). أما طبقة النواة فهي العمود الفقري الذي يربط مراكز البيانات الرئيسية."}, {"q": "أوجبت الحكومة الأمريكية الوكالات الفيدرالية بالانتقال الكامل إلى IPv6 بحلول عام 2025.", "a": true, "exp": "صحيح — لتوفير عناوين كافية لملايين الأجهزة الحكومية."}, {"q": "أصدر معهد NIST عام 2024 أولى معايير التشفير ما بعد الكمّ مثل CRYSTALS-Kyber وCRYSTALS-Dilithium.", "a": true, "exp": "صحيح — استعداداً لمواجهة تهديد الحوسبة الكمية لخوارزميات التشفير الحالية."}, {"q": "تربط شبكة SGWAN في سنغافورة نحو 1,600 مبنى حكومي بالألياف الضوئية.", "a": true, "exp": "صحيح — وهي جزء من نموذج سنغافورة الرائد في الحكومة الرقمية المتكاملة."}];
+
+let current = 0;
+let score = 0;
+let answered = false;
+
+function renderQuestion(){
+  const q = QUESTIONS[current];
+  document.getElementById('qLabel').textContent = 'السؤال ' + toArabicNum(current+1);
+  document.getElementById('qCounter').textContent = 'سؤال ' + toArabicNum(current+1) + ' / ' + QUESTIONS.length;
+  document.getElementById('scoreCounter').textContent = 'النتيجة: ' + score;
+  document.getElementById('progressFill').style.width = ((current)/QUESTIONS.length*100) + '%';
+  document.getElementById('qText').textContent = q.q;
+  const fb = document.getElementById('feedback');
+  fb.className = 'feedback';
+  fb.textContent = '';
+  const bt = document.getElementById('btnTrue');
+  const bf = document.getElementById('btnFalse');
+  bt.disabled = false; bf.disabled = false;
+  bt.className = 'choice-btn true-btn';
+  bf.className = 'choice-btn false-btn';
+  document.getElementById('nextBtn').className = 'next-btn';
+  answered = false;
+}
+
+function toArabicNum(n){
+  const map = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+  return String(n).split('').map(d => map[+d] !== undefined ? map[+d] : d).join('');
+}
+
+function answer(choice){
+  if(answered) return;
+  answered = true;
+  const q = QUESTIONS[current];
+  const correct = (choice === q.a);
+  const bt = document.getElementById('btnTrue');
+  const bf = document.getElementById('btnFalse');
+  bt.disabled = true; bf.disabled = true;
+
+  if(correct){ score++; }
+
+  if(q.a === true){
+    bt.className += correct ? ' selected-correct' : ' reveal-correct';
+  } else {
+    bf.className += correct ? ' selected-correct' : ' reveal-correct';
+  }
+  if(!correct){
+    if(choice === true) bt.className += ' selected-wrong';
+    else bf.className += ' selected-wrong';
+  }
+
+  const fb = document.getElementById('feedback');
+  fb.className = 'feedback show ' + (correct ? 'correct' : 'wrong');
+  fb.textContent = (correct ? '✅ إجابة صحيحة! ' : '❌ إجابة غير صحيحة. ') + q.exp;
+
+  document.getElementById('scoreCounter').textContent = 'النتيجة: ' + score;
+  document.getElementById('nextBtn').className = 'next-btn show';
+  document.getElementById('progressFill').style.width = ((current+1)/QUESTIONS.length*100) + '%';
+}
+
+function nextQuestion(){
+  current++;
+  if(current >= QUESTIONS.length){
+    showResult();
+  } else {
+    renderQuestion();
+  }
+}
+
+function showResult(){
+  document.getElementById('quizArea').className = 'hide';
+  const card = document.getElementById('resultCard');
+  card.className = 'card result-card show';
+  const pct = Math.round(score/QUESTIONS.length*100);
+  document.getElementById('scoreCircle').style.setProperty('--pct', pct);
+  document.getElementById('finalScore').textContent = score + '/' + QUESTIONS.length;
+  let msg;
+  if(pct >= 90) msg = 'ممتاز! إتقان كامل لمحتوى المحاضرة 🌟';
+  else if(pct >= 70) msg = 'جيد جداً! مراجعة سريعة لبعض النقاط وستتقن المادة تماماً.';
+  else if(pct >= 50) msg = 'مقبول — يُنصح بمراجعة المحاضرة مرة أخرى لتثبيت المفاهيم.';
+  else msg = 'يُنصح بإعادة قراءة المحاضرة بعناية قبل إعادة المحاولة.';
+  document.getElementById('finalMsg').textContent = msg;
+}
+
+function restartQuiz(){
+  current = 0; score = 0; answered = false;
+  document.getElementById('resultCard').className = 'card result-card';
+  document.getElementById('quizArea').className = '';
+  renderQuestion();
+}
+
+renderQuestion();
+</script>
+</body>
+</html>
