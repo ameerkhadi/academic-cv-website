@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مرشحات المادة — برنامج القيادة الرقمية</title>
+<style>
+  :root{
+    --bg:#0f172a; --card:#1e293b; --accent:#6366f1; --accent2:#8b5cf6;
+    --true:#10b981; --false:#ef4444; --text:#f1f5f9; --muted:#94a3b8;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; min-height:100vh; font-family:'Segoe UI', Tahoma, Arial, sans-serif;
+    background:linear-gradient(135deg,#0f172a 0%,#1e1b4b 100%); color:var(--text);
+    display:flex; flex-direction:column; align-items:center; padding:44px 16px 60px;}
+  .wrap{width:100%; max-width:760px;}
+  header{text-align:center; margin-bottom:36px;}
+  header .kicker{color:var(--accent2); font-weight:600; font-size:14px; letter-spacing:.5px;}
+  header h1{font-size:30px; margin:10px 0 6px;}
+  header .sub{color:var(--muted); font-size:14.5px;}
+  .types{display:grid; grid-template-columns:1fr 1fr; gap:20px;}
+  @media (max-width:560px){ .types{grid-template-columns:1fr;} }
+  a.type-card, div.type-card{
+    position:relative; overflow:hidden; display:block;
+    background:var(--card); border:1px solid #334155; border-radius:20px;
+    padding:28px 22px; text-decoration:none; color:var(--text); transition:.18s;
+    box-shadow:0 8px 22px rgba(0,0,0,.28);
+  }
+  a.type-card:hover{border-color:var(--accent); transform:translateY(-4px); box-shadow:0 14px 30px rgba(0,0,0,.4);}
+  .type-card .icon{font-size:34px; margin-bottom:14px; display:block;}
+  .type-card h2{font-size:19px; margin:0 0 8px;}
+  .type-card p{color:var(--muted); font-size:13.5px; line-height:1.8; margin:0 0 16px;}
+  .type-card .count{
+    display:inline-block; font-size:12.5px; font-weight:700; padding:5px 12px; border-radius:20px;
+  }
+  .mcq-card::before{content:""; position:absolute; top:0; right:0; left:0; height:5px; background:linear-gradient(90deg,var(--accent),var(--accent2));}
+  .mcq-card .count{background:rgba(99,102,241,.15); color:#a5b4fc; border:1px solid var(--accent);}
+  .tf-card::before{content:""; position:absolute; top:0; right:0; left:0; height:5px; background:linear-gradient(90deg,var(--true) 0%, var(--true) 50%, var(--false) 50%, var(--false) 100%);}
+  .tf-card .count{background:rgba(16,185,129,.12); color:#6ee7b7; border:1px solid var(--true);}
+  .soon-card{opacity:.55; cursor:default;}
+  .soon-card::before{content:""; position:absolute; top:0; right:0; left:0; height:5px; background:#475569;}
+  .soon-card .count{background:rgba(148,163,184,.12); color:var(--muted); border:1px solid #475569;}
+  .type-card .arrow{color:var(--accent2); font-weight:700; font-size:13.5px;}
+  footer{text-align:center; margin-top:40px; color:var(--muted); font-size:12.5px; line-height:1.9;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="kicker">القيادة الرقمية · بنك مرشحات المادة</div>
+    <h1>🗂 مرشحات مادة أساسيات تكنولوجيا المعلومات</h1>
+    <div class="sub">اختر نوع المرشح المناسب لمراجعتك</div>
+  </header>
+
+  <div class="types">
+    <a class="type-card mcq-card" href="./allex.html">
+      <span class="icon">📝</span>
+      <h2>أسئلة الاختيار من متعدد</h2>
+      <p>مرشحات MCQ لكل محاضرة، أربعة خيارات لكل سؤال.</p>
+      <span class="count">11 محاضرة</span>
+      <div class="arrow" style="margin-top:14px;">تصفّح المرشحات ←</div>
+    </a>
+
+    <a class="type-card tf-card" href="./all-tf.html">
+      <span class="icon">✅❌</span>
+      <h2>أسئلة صح وخطأ</h2>
+      <p>10 أسئلة لكل محاضرة مع توضيح فوري لسبب الإجابة الصحيحة.</p>
+      <span class="count">11 محاضرة</span>
+      <div class="arrow" style="margin-top:14px;">تصفّح المرشحات ←</div>
+    </a>
+
+    <div class="type-card soon-card">
+      <span class="icon">🧩</span>
+      <h2>لاحقا</h2>
+      <p>قيد الإعداد حالياً — ستُضاف قريباً لنفس هذه الصفحة.</p>
+      <span class="count">قريباً</span>
+    </div>
+
+    <div class="type-card soon-card">
+      <span class="icon">🔗</span>
+      <h2>لاحقا</h2>
+      <p>قيد الإعداد حالياً — ستُضاف قريباً لنفس هذه الصفحة.</p>
+      <span class="count">قريباً</span>
+    </div>
+  </div>
+
+  <footer>
+    المعهد العالي لإعداد وتأهيل القادة · برنامج القيادة الرقمية — الدبلوم العالي<br>
+    إعداد: أ.م.د. أمير هادي و أ.م.د. أحمد محسن هيلان
+  </footer>
+</div>
+</body>
+</html>
