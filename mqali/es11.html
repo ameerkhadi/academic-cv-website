@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>المحاضرة الحادية عشرة — أسئلة مقالية</title>
+<style>
+  :root{
+    --bg:#0f172a; --card:#1e293b; --accent:#6366f1; --accent2:#8b5cf6;
+    --essay:#14b8a6; --essay2:#06b6d4; --text:#f1f5f9; --muted:#94a3b8; --qbg:#1c2c40;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; min-height:100vh; font-family:'Segoe UI', Tahoma, Arial, sans-serif;
+    background:linear-gradient(135deg,#0f172a 0%,#0b2a33 100%);
+    color:var(--text); display:flex; flex-direction:column; align-items:center;
+    padding:24px 14px 60px;
+  }
+  .wrap{width:100%; max-width:760px;}
+  header.top{text-align:center; margin-bottom:24px;}
+  header.top .kicker{color:var(--essay2); font-weight:600; font-size:14px; letter-spacing:.5px;}
+  header.top h1{margin:6px 0 2px; font-size:26px;}
+  header.top .sub{color:var(--muted); font-size:14px;}
+  .toolbar{display:flex; justify-content:center; gap:10px; margin-bottom:26px; flex-wrap:wrap;}
+  .tool-btn{
+    background:none; border:1.5px solid #334155; color:var(--muted);
+    padding:8px 18px; border-radius:20px; font-size:13px; cursor:pointer; transition:.15s;
+    font-family:inherit;
+  }
+  .tool-btn:hover{border-color:var(--essay); color:var(--essay);}
+  .q-card{
+    background:var(--card); border-radius:18px; padding:24px 22px; margin-bottom:24px;
+    box-shadow:0 10px 28px rgba(0,0,0,.3); border:1px solid #334155;
+    position:relative; overflow:hidden;
+  }
+  .q-card::before{content:""; position:absolute; top:0; right:0; left:0; height:5px;
+    background:linear-gradient(90deg,var(--essay),var(--essay2));}
+  .q-tag{
+    display:inline-block; font-size:12.5px; font-weight:700; color:var(--essay2);
+    background:rgba(6,182,212,.12); border:1px solid var(--essay2);
+    padding:4px 12px; border-radius:20px; margin-bottom:12px;
+  }
+  .q-text{
+    background:var(--qbg); border-right:4px solid var(--essay);
+    border-radius:10px; padding:15px 16px; font-size:16px; font-weight:700;
+    line-height:2; margin-bottom:16px;
+  }
+  .reveal-btn{
+    background:none; border:1.5px solid #475569; color:var(--muted);
+    padding:8px 18px; border-radius:20px; font-size:13px; cursor:pointer; transition:.15s;
+    font-family:inherit;
+  }
+  .reveal-btn:hover{border-color:var(--essay); color:var(--essay);}
+  .answer-box{
+    display:none; margin-top:12px; background:rgba(20,184,166,.08); border:1px solid var(--essay);
+    border-radius:12px; padding:16px 18px; font-size:15px; line-height:2.05; color:#ccfbf1;
+    text-align:justify;
+  }
+  .answer-box.show{display:block;}
+  .answer-box .lbl{display:block; color:var(--essay); font-weight:700; margin-bottom:8px; font-size:14px;}
+  .answer-box p{margin:0 0 12px;}
+  .answer-box p:last-child{margin-bottom:0;}
+  .nav{display:flex; justify-content:space-between; gap:10px; margin-top:6px; flex-wrap:wrap;}
+  .nav a{color:var(--muted); font-size:13px; text-decoration:none; border:1px solid #334155;
+    padding:8px 16px; border-radius:20px; transition:.15s;}
+  .nav a:hover{color:var(--essay2); border-color:var(--essay2);}
+  footer.foot{text-align:center; margin-top:30px; color:var(--muted); font-size:12.5px; line-height:1.9;}
+  @media print{
+    body{background:#fff; color:#000;}
+    .toolbar,.nav{display:none;}
+    .answer-box{display:block !important; color:#000; background:#f4f4f4;}
+    .q-card{box-shadow:none; background:#fff; border:1px solid #999;}
+    .q-text{background:#f9f9f9; color:#000;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="kicker">القيادة الرقمية · أسئلة مقالية تحليلية</div>
+    <h1>أسئلة مقالية — المحاضرة الحادية عشرة</h1>
+    <div class="sub">الأمن السيبراني — ٣ أسئلة مع إجابة نموذجية لكل سؤال</div>
+  </header>
+
+  <div class="toolbar">
+    <button class="tool-btn" id="allBtn" onclick="toggleAll()">👁 إظهار جميع الإجابات</button>
+    <button class="tool-btn" onclick="window.print()">🖨 طباعة</button>
+  </div>
+
+  <div class="q-card">
+    <span class="q-tag">السؤال ١</span>
+    <div class="q-text">حلّل العلاقة المنطقية بين المفاهيم الخمسة: الأصل، والتهديد، والثغرة، والهجوم، والمخاطرة؛ ثم ناقش سبب كون الهندسة الاجتماعية أنجح أساليب الاختراق رغم تطوّر وسائل الحماية التقنية.</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans1', this)">👁 إظهار الإجابة النموذجية</button>
+    <div class="answer-box" id="ans1">
+      <span class="lbl">الإجابة النموذجية</span>
+      <p>تتّصل هذه المفاهيم اتّصالاً سببياً محكماً. فالأصل هو المورد ذو القيمة للمؤسسة، كقواعد البيانات والخوادم والشبكات وحتى الموارد البشرية. والتهديد هو الجهة أو الحدث القادر على إلحاق الضرر بالأصل، سواء أكان مقصوداً كالمهاجم والبرمجية الخبيثة، أم غير مقصود كالخطأ البشري والعطل. والثغرة هي نقطة الضعف في النظام أو الإجراء التي يُمكن استغلالها. والهجوم هو المحاولة الفعلية لاستغلال الثغرة. أمّا المخاطرة فهي احتمال وقوع الخسارة نتيجة استغلال التهديد للثغرة في أصلٍ ذي قيمة.</p><p>والدلالة الإدارية لهذا التسلسل أنّ التهديد لا يُلغى؛ فوجوده معطًى ثابت خارج سيطرة المؤسسة. أمّا المتغيّر القابل للإدارة فهو الثغرة وقيمة الأصل؛ ولذلك تنصرف الجهود إلى تقليص الثغرات بتحديث الأنظمة وتطبيق السياسات وتدريب الموظفين. كما أنّ المخاطرة كمّية نسبية، فلا تُعالَج كل الأصول بالدرجة نفسها، بل تُرتَّب الأولويات بحسب القيمة واحتمال الوقوع.</p><p>وتُعدّ الهندسة الاجتماعية أنجح الأساليب لأنّها لا تستهدف الثغرة التقنية بل الثغرة البشرية، وهي الثغرة الوحيدة التي لا يُصلحها تحديث برمجي. فالمهاجم يخدع الضحية عبر التصيّد الإلكتروني أو انتحال الهوية أو المكالمات والرسائل الاحتيالية أو استغلال الثقة والعلاقات الشخصية، فيحصل على بيانات الدخول طوعاً؛ وعندئذٍ يدخل النظام بوصفه مستخدماً مشروعاً، فتُصبح جدران الحماية وأنظمة كشف التسلل عاجزة، لأنّ السلوك يبدو مصرّحاً به.</p><p>والمعالجة الجوهرية ثقافية لا تقنية: توعية دورية مستمرة، ومحاكاة عملية لهجمات التصيّد، وتبسيط قنوات الإبلاغ، وثقافة تُشجّع على الإبلاغ عن الخطأ بدل معاقبة مرتكبه.</p>
+    </div>
+  </div>
+  <div class="q-card">
+    <span class="q-tag">السؤال ٢</span>
+    <div class="q-text">قارن بين أدوار الفريق الأحمر والفريق الأزرق والفريق البنفسجي، وقيّم جدوى تبنّي هذا النموذج في مؤسسة حكومية محدودة الموارد البشرية والمالية.</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans2', this)">👁 إظهار الإجابة النموذجية</button>
+    <div class="answer-box" id="ans2">
+      <span class="lbl">الإجابة النموذجية</span>
+      <p>يقوم الفريق الأحمر بدور المهاجم؛ إذ يُحاكي أساليب الخصوم الفعليين لاكتشاف الثغرات قبل استغلالها، ويعمل باستقلالية ودون إخطار مسبق في كثير من الأحيان. ويقوم الفريق الأزرق بدور المدافع؛ إذ يتولّى المراقبة المستمرة وكشف الحوادث والاستجابة لها وتقوية الأنظمة وضبط السياسات. أمّا الفريق البنفسجي فليس فريقاً ثالثاً منفصلاً بالضرورة، بل آلية تنسيق تجمع خبرة الفريقين لتحويل نتائج الاختبار الهجومي إلى تحسينات دفاعية فورية قابلة للقياس.</p><p>وقيمة النموذج أنّه يُخرج تقييم الأمن من دائرة الافتراض إلى دائرة الاختبار العملي؛ فالتقارير الورقية عن الامتثال لا تُثبت المناعة، بينما يكشف الاختبار الهجومي الواقع الفعلي.</p><p>أمّا في مؤسسة حكومية محدودة الموارد فالتطبيق الكامل غير واقعي؛ إذ يقتضي كوادر متخصّصة نادرة ومكلفة، وقد يُنتج تشكيلها الشكلي فرقاً بلا كفاءة تمنح شعوراً زائفاً بالأمان. والأجدى اعتماد تدرّج عملي: البدء ببناء القدرة الدفاعية أوّلاً، أي فريق أزرق مصغّر يتولّى المراقبة والاستجابة وإدارة التحديثات وسجلّات التدقيق، لأنّ الدفاع أساس والهجوم اختبار له. ثم التعاقد مع جهة خارجية معتمَدة لإجراء اختبارات اختراق دورية بدل تشكيل فريق أحمر دائم، مع اشتراط السرّية والتصنيف الأمني. ثم مأسسة الوظيفة البنفسجية بوصفها إجراءً إدارياً: جلسة مراجعة منظّمة بعد كل اختبار تُترجم النتائج إلى خطة إصلاح بمهل زمنية ومسؤوليات محدّدة.</p><p>كما يُمكن اعتماد المشاركة المؤسسية عبر مركز عمليات أمنية وطني يخدم عدّة جهات، وهو حلّ اقتصادي يُعوّض ضعف الموارد الفردية.</p>
+    </div>
+  </div>
+  <div class="q-card">
+    <span class="q-tag">السؤال ٣</span>
+    <div class="q-text">ناقش مراحل التحليل الجنائي الرقمي ودور التشفير في حماية البيانات الحكومية، مبيّناً لماذا لا تكفي الوقاية وحدها، وما الشروط الواجب توافرها ليكون الدليل الرقمي مقبولاً.</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans3', this)">👁 إظهار الإجابة النموذجية</button>
+    <div class="answer-box" id="ans3">
+      <span class="lbl">الإجابة النموذجية</span>
+      <p>يمرّ التحليل الجنائي الرقمي بستّ مراحل متسلسلة: تحديد الحادث، ثم جمع الأدلّة، ثم المحافظة عليها، ثم الفحص، ثم التحليل، ثم إعداد التقرير. وغايته المزدوجة هي معرفة ما جرى وكيف جرى ومن نفّذه من جهة، وتوفير دليل صالح للاستناد إليه قانونياً وإدارياً من جهة أخرى.</p><p>أمّا التشفير فيحمي البيانات في حالتَي النقل والسكون. ويُفرّق بين التشفير المتماثل الذي يستخدم مفتاحاً واحداً فيمتاز بالسرعة ويُعاب عليه صعوبة تبادل المفتاح وحفظه؛ والتشفير غير المتماثل الذي يستخدم مفتاحين عامّاً وخاصّاً فيحلّ مشكلة تبادل المفاتيح ويُعاب عليه البطء وارتفاع كلفة المعالجة. وتُضاف إليهما التجزئة (Hashing) للتحقّق من سلامة البيانات، والتوقيع الرقمي لإثبات نسبة المستند إلى صاحبه ومنع الإنكار.</p><p>ولا تكفي الوقاية وحدها لثلاثة أسباب: أوّلها استحالة بلوغ أمن مطلق مع تجدّد الثغرات والثغرات الصفرية؛ وثانيها أنّ التهديد الداخلي يقع من داخل الصلاحيات المشروعة فلا تحجزه الضوابط المحيطية؛ وثالثها أنّ الهجمات المتقدّمة المستمرّة مصمَّمة أصلاً للبقاء غير مكتشفة مدّة طويلة. ومن هنا يقوم النهج الرشيد على ثلاثية متكاملة: الوقاية، والكشف، والاستجابة والتعافي.</p><p>أمّا شروط قبول الدليل الرقمي فأبرزها: سلامة سلسلة الحيازة وتوثيق كل من تعامل مع الدليل وتوقيت ذلك؛ والعمل على نسخة طبق الأصل دون المساس بالأصل؛ والتحقّق من عدم التغيير بالبصمة الرقمية (Hash) قبل الفحص وبعده؛ واستخدام أدوات معتمَدة وموثوقة؛ وتوثيق الإجراء توثيقاً يجعله قابلاً لإعادة الإنتاج من خبير مستقلّ. وأيّ إخلال بهذه الشروط يُسقط قيمة الدليل مهما كانت دقّة التحليل الفنّي.</p>
+    </div>
+  </div>
+
+  <div class="nav">
+    <a href="./es10.html">→ المحاضرة السابقة</a>
+    <a href="./all-essay.html">↩ كل الأسئلة المقالية</a>
+    <span></span>
+  </div>
+
+  <footer class="foot">
+    المعهد العالي لإعداد وتأهيل القادة · برنامج القيادة الرقمية — الدبلوم العالي<br>
+    إعداد: أ.م.د. أمير هادي و أ.م.د. أحمد محسن هيلان
+  </footer>
+</div>
+<script>
+function toggleAnswer(id, btn){
+  const el = document.getElementById(id);
+  el.classList.toggle('show');
+  if(btn){ btn.textContent = el.classList.contains('show') ? '🙈 إخفاء الإجابة النموذجية' : '👁 إظهار الإجابة النموذجية'; }
+}
+function toggleAll(){
+  const boxes = document.querySelectorAll('.answer-box');
+  const anyHidden = Array.from(boxes).some(b => !b.classList.contains('show'));
+  boxes.forEach(b => b.classList.toggle('show', anyHidden));
+  document.querySelectorAll('.reveal-btn').forEach(btn => {
+    btn.textContent = anyHidden ? '🙈 إخفاء الإجابة النموذجية' : '👁 إظهار الإجابة النموذجية';
+  });
+  document.getElementById('allBtn').textContent = anyHidden ? '🙈 إخفاء جميع الإجابات' : '👁 إظهار جميع الإجابات';
+}
+</script>
+</body>
+</html>

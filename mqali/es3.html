@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>المحاضرة الثالثة — أسئلة مقالية</title>
+<style>
+  :root{
+    --bg:#0f172a; --card:#1e293b; --accent:#6366f1; --accent2:#8b5cf6;
+    --essay:#14b8a6; --essay2:#06b6d4; --text:#f1f5f9; --muted:#94a3b8; --qbg:#1c2c40;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; min-height:100vh; font-family:'Segoe UI', Tahoma, Arial, sans-serif;
+    background:linear-gradient(135deg,#0f172a 0%,#0b2a33 100%);
+    color:var(--text); display:flex; flex-direction:column; align-items:center;
+    padding:24px 14px 60px;
+  }
+  .wrap{width:100%; max-width:760px;}
+  header.top{text-align:center; margin-bottom:24px;}
+  header.top .kicker{color:var(--essay2); font-weight:600; font-size:14px; letter-spacing:.5px;}
+  header.top h1{margin:6px 0 2px; font-size:26px;}
+  header.top .sub{color:var(--muted); font-size:14px;}
+  .toolbar{display:flex; justify-content:center; gap:10px; margin-bottom:26px; flex-wrap:wrap;}
+  .tool-btn{
+    background:none; border:1.5px solid #334155; color:var(--muted);
+    padding:8px 18px; border-radius:20px; font-size:13px; cursor:pointer; transition:.15s;
+    font-family:inherit;
+  }
+  .tool-btn:hover{border-color:var(--essay); color:var(--essay);}
+  .q-card{
+    background:var(--card); border-radius:18px; padding:24px 22px; margin-bottom:24px;
+    box-shadow:0 10px 28px rgba(0,0,0,.3); border:1px solid #334155;
+    position:relative; overflow:hidden;
+  }
+  .q-card::before{content:""; position:absolute; top:0; right:0; left:0; height:5px;
+    background:linear-gradient(90deg,var(--essay),var(--essay2));}
+  .q-tag{
+    display:inline-block; font-size:12.5px; font-weight:700; color:var(--essay2);
+    background:rgba(6,182,212,.12); border:1px solid var(--essay2);
+    padding:4px 12px; border-radius:20px; margin-bottom:12px;
+  }
+  .q-text{
+    background:var(--qbg); border-right:4px solid var(--essay);
+    border-radius:10px; padding:15px 16px; font-size:16px; font-weight:700;
+    line-height:2; margin-bottom:16px;
+  }
+  .reveal-btn{
+    background:none; border:1.5px solid #475569; color:var(--muted);
+    padding:8px 18px; border-radius:20px; font-size:13px; cursor:pointer; transition:.15s;
+    font-family:inherit;
+  }
+  .reveal-btn:hover{border-color:var(--essay); color:var(--essay);}
+  .answer-box{
+    display:none; margin-top:12px; background:rgba(20,184,166,.08); border:1px solid var(--essay);
+    border-radius:12px; padding:16px 18px; font-size:15px; line-height:2.05; color:#ccfbf1;
+    text-align:justify;
+  }
+  .answer-box.show{display:block;}
+  .answer-box .lbl{display:block; color:var(--essay); font-weight:700; margin-bottom:8px; font-size:14px;}
+  .answer-box p{margin:0 0 12px;}
+  .answer-box p:last-child{margin-bottom:0;}
+  .nav{display:flex; justify-content:space-between; gap:10px; margin-top:6px; flex-wrap:wrap;}
+  .nav a{color:var(--muted); font-size:13px; text-decoration:none; border:1px solid #334155;
+    padding:8px 16px; border-radius:20px; transition:.15s;}
+  .nav a:hover{color:var(--essay2); border-color:var(--essay2);}
+  footer.foot{text-align:center; margin-top:30px; color:var(--muted); font-size:12.5px; line-height:1.9;}
+  @media print{
+    body{background:#fff; color:#000;}
+    .toolbar,.nav{display:none;}
+    .answer-box{display:block !important; color:#000; background:#f4f4f4;}
+    .q-card{box-shadow:none; background:#fff; border:1px solid #999;}
+    .q-text{background:#f9f9f9; color:#000;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="kicker">القيادة الرقمية · أسئلة مقالية تحليلية</div>
+    <h1>أسئلة مقالية — المحاضرة الثالثة</h1>
+    <div class="sub">إدارة البيانات الحكومية — سؤالان مع إجابة نموذجية لكل سؤال</div>
+  </header>
+
+  <div class="toolbar">
+    <button class="tool-btn" id="allBtn" onclick="toggleAll()">👁 إظهار جميع الإجابات</button>
+    <button class="tool-btn" onclick="window.print()">🖨 طباعة</button>
+  </div>
+
+  <div class="q-card">
+    <span class="q-tag">السؤال ١</span>
+    <div class="q-text">حلّل العلاقة بين جودة البيانات وحوكمتها، وبيّن لماذا لا تُعالَج مشكلة رداءة البيانات الحكومية بالحلول التقنية وحدها.</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans1', this)">👁 إظهار الإجابة النموذجية</button>
+    <div class="answer-box" id="ans1">
+      <span class="lbl">الإجابة النموذجية</span>
+      <p>تُقاس جودة البيانات وفق معايير معروفة (ISO/IEC 25012) أبرزها: الدقّة، والاكتمال، والاتّساق، والحداثة، والصلاحية، وقابلية الوصول. أمّا حوكمة البيانات فهي منظومة السلطة والمسؤولية التي تُحدّد من يملك البيانات، ومن يُقرّر تعريفها ومعاييرها، ومن يُساءل عن جودتها. والعلاقة بينهما علاقة السبب بالنتيجة: الجودة مُخرَج، والحوكمة هي الآلية المُنتِجة له.</p><p>فرداءة البيانات ليست في الغالب خللاً في الخوارزميات، بل نتيجة أسباب تنظيمية: غياب مالك معرَّف لكل مجموعة بيانات، وتباين تعريف الحقل الواحد بين الجهات (كتعريف «المواطن المقيم» أو «المشروع المنجَز»)، وغياب معرّف موحّد يربط السجلّات، وانعدام حافز لدى مُدخِل البيانات على الدقّة، وضعف تدقيق المدخلات عند المصدر.</p><p>ولذلك تفشل الحلول التقنية المنفردة؛ إذ إنّ أدوات التنظيف والتحويل تُعالج الأعراض لا الأسباب، وتُعيد المنظومة إنتاج الخطأ في الدورة التالية. بل إنّ نقل بيانات رديئة إلى مستودع بيانات متقدّم أو منصّة ذكاء اصطناعي يُضخّم الخطأ ويمنحه مظهر الموثوقية.</p><p>والمسار الصحيح أن تُبنى الجودة عند المنشأ: تعيين مالك بيانات ومسؤول إشراف (Data Steward) لكل مجال؛ وإصدار قاموس بيانات وطني موحّد للمصطلحات؛ واعتماد سجلّ مرجعي واحد لكل كيان (مواطن، منشأة، عقار)؛ وضبط المدخلات آلياً وقت الإدخال؛ ونشر مؤشّرات جودة دورية تُبيّن أداء كل جهة. عندئذٍ تُصبح الأدوات التقنية مُعزِّزاً فعّالاً لا بديلاً مُعطَّلاً.</p>
+    </div>
+  </div>
+  <div class="q-card">
+    <span class="q-tag">السؤال ٢</span>
+    <div class="q-text">استعرض تحليلياً مستويات نضج حوكمة البيانات الخمسة، وحدّد المستوى الذي تقف عنده غالبية المؤسسات الحكومية في المنطقة مع تبرير حكمك، ثم اقترح مسار ارتقاء عملياً.</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans2', this)">👁 إظهار الإجابة النموذجية</button>
+    <div class="answer-box" id="ans2">
+      <span class="lbl">الإجابة النموذجية</span>
+      <p>يتدرّج نموذج النضج عبر خمسة مستويات: المستوى الأولي، حيث تُدار البيانات عشوائياً بلا سياسات مكتوبة؛ والمستوى المُدار، حيث توجد عمليات أساسية لكنّها غير موحّدة بين الجهات؛ والمستوى المحدَّد، حيث توجد سياسات موثّقة معتمَدة تُطبَّق بانتظام؛ والمستوى الكمّي، حيث تُقاس الجودة والأداء بمؤشّرات رقمية دقيقة؛ والمستوى المتحسِّن، حيث يقوم التحسين المستمر على القياس والتحليل المنهجي.</p><p>والتقدير الموضوعي أنّ غالبية المؤسسات الحكومية في المنطقة تقع بين المستويين الأول والثاني، مع جزر متقدّمة في جهات بعينها. ويستند هذا الحكم إلى ثلاث قرائن: استمرار طلب المستند الورقي ذاته من المواطن في أكثر من جهة، وهو دليل على غياب سجلّ مرجعي موحّد؛ وتعدّد الأرقام الرسمية للظاهرة الواحدة بين وزارتين، وهو دليل على غياب التعريف الموحّد؛ وغياب مؤشّرات معلَنة لجودة البيانات، وهو ما يمنع بلوغ المستوى الكمّي أصلاً.</p><p>ويُقترح مسار ارتقاء تدريجي: في المدى القصير، تشكيل مجلس لحوكمة البيانات بصلاحية مُلزِمة، وحصر مجموعات البيانات الوطنية وتعيين مالك لكل منها. وفي المدى المتوسط، إصدار قاموس بيانات وسياسات مكتوبة للتصنيف والمشاركة والاحتفاظ، وبناء السجلّات المرجعية للكيانات الأساسية بلوغاً للمستوى المحدَّد. وفي المدى البعيد، اعتماد مؤشّرات قياس دورية ولوحات متابعة تنفيذية بلوغاً للمستوى الكمّي، ثم مأسسة دورة التحسين المستمر.</p><p>والشرط الحاكم لهذا المسار كلّه هو الالتزام السياسي؛ فالنضج لا يُشترى بالتقنية بل يُبنى بالسلطة والمساءلة.</p>
+    </div>
+  </div>
+
+  <div class="nav">
+    <a href="./es2.html">→ المحاضرة السابقة</a>
+    <a href="./all-essay.html">↩ كل الأسئلة المقالية</a>
+    <a href="./es4.html">المحاضرة التالية ←</a>
+  </div>
+
+  <footer class="foot">
+    المعهد العالي لإعداد وتأهيل القادة · برنامج القيادة الرقمية — الدبلوم العالي<br>
+    إعداد: أ.م.د. أمير هادي و أ.م.د. أحمد محسن هيلان
+  </footer>
+</div>
+<script>
+function toggleAnswer(id, btn){
+  const el = document.getElementById(id);
+  el.classList.toggle('show');
+  if(btn){ btn.textContent = el.classList.contains('show') ? '🙈 إخفاء الإجابة النموذجية' : '👁 إظهار الإجابة النموذجية'; }
+}
+function toggleAll(){
+  const boxes = document.querySelectorAll('.answer-box');
+  const anyHidden = Array.from(boxes).some(b => !b.classList.contains('show'));
+  boxes.forEach(b => b.classList.toggle('show', anyHidden));
+  document.querySelectorAll('.reveal-btn').forEach(btn => {
+    btn.textContent = anyHidden ? '🙈 إخفاء الإجابة النموذجية' : '👁 إظهار الإجابة النموذجية';
+  });
+  document.getElementById('allBtn').textContent = anyHidden ? '🙈 إخفاء جميع الإجابات' : '👁 إظهار جميع الإجابات';
+}
+</script>
+</body>
+</html>

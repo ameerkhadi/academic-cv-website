@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>المحاضرة التاسعة — أسئلة مقالية</title>
+<style>
+  :root{
+    --bg:#0f172a; --card:#1e293b; --accent:#6366f1; --accent2:#8b5cf6;
+    --essay:#14b8a6; --essay2:#06b6d4; --text:#f1f5f9; --muted:#94a3b8; --qbg:#1c2c40;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; min-height:100vh; font-family:'Segoe UI', Tahoma, Arial, sans-serif;
+    background:linear-gradient(135deg,#0f172a 0%,#0b2a33 100%);
+    color:var(--text); display:flex; flex-direction:column; align-items:center;
+    padding:24px 14px 60px;
+  }
+  .wrap{width:100%; max-width:760px;}
+  header.top{text-align:center; margin-bottom:24px;}
+  header.top .kicker{color:var(--essay2); font-weight:600; font-size:14px; letter-spacing:.5px;}
+  header.top h1{margin:6px 0 2px; font-size:26px;}
+  header.top .sub{color:var(--muted); font-size:14px;}
+  .toolbar{display:flex; justify-content:center; gap:10px; margin-bottom:26px; flex-wrap:wrap;}
+  .tool-btn{
+    background:none; border:1.5px solid #334155; color:var(--muted);
+    padding:8px 18px; border-radius:20px; font-size:13px; cursor:pointer; transition:.15s;
+    font-family:inherit;
+  }
+  .tool-btn:hover{border-color:var(--essay); color:var(--essay);}
+  .q-card{
+    background:var(--card); border-radius:18px; padding:24px 22px; margin-bottom:24px;
+    box-shadow:0 10px 28px rgba(0,0,0,.3); border:1px solid #334155;
+    position:relative; overflow:hidden;
+  }
+  .q-card::before{content:""; position:absolute; top:0; right:0; left:0; height:5px;
+    background:linear-gradient(90deg,var(--essay),var(--essay2));}
+  .q-tag{
+    display:inline-block; font-size:12.5px; font-weight:700; color:var(--essay2);
+    background:rgba(6,182,212,.12); border:1px solid var(--essay2);
+    padding:4px 12px; border-radius:20px; margin-bottom:12px;
+  }
+  .q-text{
+    background:var(--qbg); border-right:4px solid var(--essay);
+    border-radius:10px; padding:15px 16px; font-size:16px; font-weight:700;
+    line-height:2; margin-bottom:16px;
+  }
+  .reveal-btn{
+    background:none; border:1.5px solid #475569; color:var(--muted);
+    padding:8px 18px; border-radius:20px; font-size:13px; cursor:pointer; transition:.15s;
+    font-family:inherit;
+  }
+  .reveal-btn:hover{border-color:var(--essay); color:var(--essay);}
+  .answer-box{
+    display:none; margin-top:12px; background:rgba(20,184,166,.08); border:1px solid var(--essay);
+    border-radius:12px; padding:16px 18px; font-size:15px; line-height:2.05; color:#ccfbf1;
+    text-align:justify;
+  }
+  .answer-box.show{display:block;}
+  .answer-box .lbl{display:block; color:var(--essay); font-weight:700; margin-bottom:8px; font-size:14px;}
+  .answer-box p{margin:0 0 12px;}
+  .answer-box p:last-child{margin-bottom:0;}
+  .nav{display:flex; justify-content:space-between; gap:10px; margin-top:6px; flex-wrap:wrap;}
+  .nav a{color:var(--muted); font-size:13px; text-decoration:none; border:1px solid #334155;
+    padding:8px 16px; border-radius:20px; transition:.15s;}
+  .nav a:hover{color:var(--essay2); border-color:var(--essay2);}
+  footer.foot{text-align:center; margin-top:30px; color:var(--muted); font-size:12.5px; line-height:1.9;}
+  @media print{
+    body{background:#fff; color:#000;}
+    .toolbar,.nav{display:none;}
+    .answer-box{display:block !important; color:#000; background:#f4f4f4;}
+    .q-card{box-shadow:none; background:#fff; border:1px solid #999;}
+    .q-text{background:#f9f9f9; color:#000;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="kicker">القيادة الرقمية · أسئلة مقالية تحليلية</div>
+    <h1>أسئلة مقالية — المحاضرة التاسعة</h1>
+    <div class="sub">المنصّات الحكومية الرقمية — سؤالان مع إجابة نموذجية لكل سؤال</div>
+  </header>
+
+  <div class="toolbar">
+    <button class="tool-btn" id="allBtn" onclick="toggleAll()">👁 إظهار جميع الإجابات</button>
+    <button class="tool-btn" onclick="window.print()">🖨 طباعة</button>
+  </div>
+
+  <div class="q-card">
+    <span class="q-tag">السؤال ١</span>
+    <div class="q-text">ميّز بين مفاهيم: المنصّة الحكومية الرقمية، والحكومة الإلكترونية، والحكومة الرقمية، والحكومة الذكية، والحكومة المفتوحة؛ ثم حلّل الآثار العملية المترتّبة على الخلط بينها في التخطيط الحكومي.</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans1', this)">👁 إظهار الإجابة النموذجية</button>
+    <div class="answer-box" id="ans1">
+      <span class="lbl">الإجابة النموذجية</span>
+      <p>الحكومة الإلكترونية هي المفهوم الأشمل الذي يضمّ كل توظيف لتكنولوجيا المعلومات والاتصالات في العمل الحكومي، والمنصّة الحكومية الرقمية هي أداته التنفيذية، أي النظام الإلكتروني المتكامل الذي يستضيف الخدمات ويربط المستخدمين بها. والحكومة الرقمية مصطلح أحدث يُشير إلى التحوّل الشامل نحو نماذج رقمية أصيلة لا إلى مجرّد رقمنة الأوراق القائمة. والحكومة الذكية مرحلة متقدّمة تعتمد الذكاء الاصطناعي والبيانات الضخمة للتنبّؤ بالحاجة وتخصيص الخدمة. والحكومة المفتوحة توجّه يُركّز على الشفافية وإتاحة البيانات للعموم، بينما قد تكون المنصّة نفسها محدودة الوصول ومقيَّدة الصلاحيات.</p><p>والفارق بين هذه المفاهيم ليس لفظياً؛ فلكلٍّ منها هدف ومؤشّر قياس مختلف: مؤشّر المنصّة عدد الخدمات ومعدّل الإنجاز، ومؤشّر الحكومة الرقمية عمق إعادة هندسة الإجراءات، ومؤشّر الحكومة الذكية دقّة التنبّؤ والاستباقية، ومؤشّر الحكومة المفتوحة حجم البيانات المتاحة ومستوى المساءلة.</p><p>ويُنتج الخلط بينها آثاراً عملية ضارّة. أوّلها الاكتفاء بالرقمنة الشكلية مع ادّعاء بلوغ التحوّل الرقمي، إذ يُنقل الإجراء الورقي إلى الشاشة دون تغيير جوهره. وثانيها القفز إلى تطبيقات الذكاء الاصطناعي قبل بناء أساس البيانات وجودتها، فتُنتج مخرجات غير موثوقة. وثالثها تحميل المنصّة عبء الشفافية وهي ليست مصمَّمة لها، أو العكس بنشر بيانات حسّاسة باسم الانفتاح. ورابعها اضطراب التقييم، إذ تُقاس المشاريع بمؤشّرات لا تخصّها فتُعلَن ناجحة وهي متعثّرة.</p><p>والمعالجة أن يُحدَّد المفهوم المستهدف وموقعه في تسلسل النضج، وأن تُشتقّ منه مؤشّرات القياس المناسبة له.</p>
+    </div>
+  </div>
+  <div class="q-card">
+    <span class="q-tag">السؤال ٢</span>
+    <div class="q-text">ناقش المقوّمات الأساسية لنجاح المنصّة الحكومية الرقمية، وبيّن لماذا يُعدّ تنظيم الخدمات حول «رحلة المستفيد» أجدى من تنظيمها حول الهيكل الإداري للجهات.</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans2', this)">👁 إظهار الإجابة النموذجية</button>
+    <div class="answer-box" id="ans2">
+      <span class="lbl">الإجابة النموذجية</span>
+      <p>تقوم المنصّة الحكومية الرقمية الناجحة على مقوّمات متلازمة لا يُغني أحدها عن الآخر: هوية رقمية وطنية موحّدة تُتيح دخولاً أحادياً إلى جميع الخدمات؛ وبوابة دفع إلكتروني موثوقة تُغلق دورة المعاملة دون مراجعة الشبّاك؛ وتكامل خلفي مع أنظمة الجهات يُغني المواطن عن تقديم مستند تملكه الدولة أصلاً؛ وتجربة مستخدم بسيطة تُصمَّم وفق معايير الإتاحة وتعمل على الهاتف المحمول؛ وإطار أمني وقانوني يمنح المستند الرقمي حجّيته ويحمي البيانات الشخصية؛ وأخيراً قنوات إسناد كالأكشاك ومراكز الاتصال لضمان الشمول.</p><p>أمّا تنظيم الخدمات حول رحلة المستفيد فيعني ترتيبها بحسب حاجة الإنسان في لحظات حياته — كالولادة والدراسة والتوظيف والزواج وتأسيس مشروع والتقاعد — لا بحسب الوزارة المختصّة بكل إجراء.</p><p>وأفضلية هذا المنطق تعود إلى ثلاثة أسباب. الأول أنّ المواطن لا يعرف الهيكل الإداري للدولة ولا يعنيه؛ فهو يطلب نتيجة لا إجراءً، وتوزيع الخدمة على واجهات وزارية يُحمّله عبء التنسيق بين الجهات. والثاني أنّ التنظيم حول الرحلة يكشف الازدواج والتكرار بين الجهات ويدفع إلى إعادة هندسة الإجراء بدل رقمنته كما هو. والثالث أنّه يُمهّد للخدمة الاستباقية، إذ تُشغَّل الخدمات المرتبطة بالحدث تلقائياً بمجرّد وقوعه.</p><p>غير أنّ هذا التنظيم يقتضي شرطاً حاكماً: تكاملاً خلفياً حقيقياً وحوكمة مركزية مُلزِمة؛ وإلّا صارت الواجهة الموحّدة قناعاً شكلياً على تجزئة إدارية باقية خلفه.</p>
+    </div>
+  </div>
+
+  <div class="nav">
+    <a href="./es8.html">→ المحاضرة السابقة</a>
+    <a href="./all-essay.html">↩ كل الأسئلة المقالية</a>
+    <a href="./es10.html">المحاضرة التالية ←</a>
+  </div>
+
+  <footer class="foot">
+    المعهد العالي لإعداد وتأهيل القادة · برنامج القيادة الرقمية — الدبلوم العالي<br>
+    إعداد: أ.م.د. أمير هادي و أ.م.د. أحمد محسن هيلان
+  </footer>
+</div>
+<script>
+function toggleAnswer(id, btn){
+  const el = document.getElementById(id);
+  el.classList.toggle('show');
+  if(btn){ btn.textContent = el.classList.contains('show') ? '🙈 إخفاء الإجابة النموذجية' : '👁 إظهار الإجابة النموذجية'; }
+}
+function toggleAll(){
+  const boxes = document.querySelectorAll('.answer-box');
+  const anyHidden = Array.from(boxes).some(b => !b.classList.contains('show'));
+  boxes.forEach(b => b.classList.toggle('show', anyHidden));
+  document.querySelectorAll('.reveal-btn').forEach(btn => {
+    btn.textContent = anyHidden ? '🙈 إخفاء الإجابة النموذجية' : '👁 إظهار الإجابة النموذجية';
+  });
+  document.getElementById('allBtn').textContent = anyHidden ? '🙈 إخفاء جميع الإجابات' : '👁 إظهار جميع الإجابات';
+}
+</script>
+</body>
+</html>

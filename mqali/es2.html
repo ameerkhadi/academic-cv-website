@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>المحاضرة الثانية — أسئلة مقالية</title>
+<style>
+  :root{
+    --bg:#0f172a; --card:#1e293b; --accent:#6366f1; --accent2:#8b5cf6;
+    --essay:#14b8a6; --essay2:#06b6d4; --text:#f1f5f9; --muted:#94a3b8; --qbg:#1c2c40;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; min-height:100vh; font-family:'Segoe UI', Tahoma, Arial, sans-serif;
+    background:linear-gradient(135deg,#0f172a 0%,#0b2a33 100%);
+    color:var(--text); display:flex; flex-direction:column; align-items:center;
+    padding:24px 14px 60px;
+  }
+  .wrap{width:100%; max-width:760px;}
+  header.top{text-align:center; margin-bottom:24px;}
+  header.top .kicker{color:var(--essay2); font-weight:600; font-size:14px; letter-spacing:.5px;}
+  header.top h1{margin:6px 0 2px; font-size:26px;}
+  header.top .sub{color:var(--muted); font-size:14px;}
+  .toolbar{display:flex; justify-content:center; gap:10px; margin-bottom:26px; flex-wrap:wrap;}
+  .tool-btn{
+    background:none; border:1.5px solid #334155; color:var(--muted);
+    padding:8px 18px; border-radius:20px; font-size:13px; cursor:pointer; transition:.15s;
+    font-family:inherit;
+  }
+  .tool-btn:hover{border-color:var(--essay); color:var(--essay);}
+  .q-card{
+    background:var(--card); border-radius:18px; padding:24px 22px; margin-bottom:24px;
+    box-shadow:0 10px 28px rgba(0,0,0,.3); border:1px solid #334155;
+    position:relative; overflow:hidden;
+  }
+  .q-card::before{content:""; position:absolute; top:0; right:0; left:0; height:5px;
+    background:linear-gradient(90deg,var(--essay),var(--essay2));}
+  .q-tag{
+    display:inline-block; font-size:12.5px; font-weight:700; color:var(--essay2);
+    background:rgba(6,182,212,.12); border:1px solid var(--essay2);
+    padding:4px 12px; border-radius:20px; margin-bottom:12px;
+  }
+  .q-text{
+    background:var(--qbg); border-right:4px solid var(--essay);
+    border-radius:10px; padding:15px 16px; font-size:16px; font-weight:700;
+    line-height:2; margin-bottom:16px;
+  }
+  .reveal-btn{
+    background:none; border:1.5px solid #475569; color:var(--muted);
+    padding:8px 18px; border-radius:20px; font-size:13px; cursor:pointer; transition:.15s;
+    font-family:inherit;
+  }
+  .reveal-btn:hover{border-color:var(--essay); color:var(--essay);}
+  .answer-box{
+    display:none; margin-top:12px; background:rgba(20,184,166,.08); border:1px solid var(--essay);
+    border-radius:12px; padding:16px 18px; font-size:15px; line-height:2.05; color:#ccfbf1;
+    text-align:justify;
+  }
+  .answer-box.show{display:block;}
+  .answer-box .lbl{display:block; color:var(--essay); font-weight:700; margin-bottom:8px; font-size:14px;}
+  .answer-box p{margin:0 0 12px;}
+  .answer-box p:last-child{margin-bottom:0;}
+  .nav{display:flex; justify-content:space-between; gap:10px; margin-top:6px; flex-wrap:wrap;}
+  .nav a{color:var(--muted); font-size:13px; text-decoration:none; border:1px solid #334155;
+    padding:8px 16px; border-radius:20px; transition:.15s;}
+  .nav a:hover{color:var(--essay2); border-color:var(--essay2);}
+  footer.foot{text-align:center; margin-top:30px; color:var(--muted); font-size:12.5px; line-height:1.9;}
+  @media print{
+    body{background:#fff; color:#000;}
+    .toolbar,.nav{display:none;}
+    .answer-box{display:block !important; color:#000; background:#f4f4f4;}
+    .q-card{box-shadow:none; background:#fff; border:1px solid #999;}
+    .q-text{background:#f9f9f9; color:#000;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="kicker">القيادة الرقمية · أسئلة مقالية تحليلية</div>
+    <h1>أسئلة مقالية — المحاضرة الثانية</h1>
+    <div class="sub">نظم المعلومات الحكومية — سؤالان مع إجابة نموذجية لكل سؤال</div>
+  </header>
+
+  <div class="toolbar">
+    <button class="tool-btn" id="allBtn" onclick="toggleAll()">👁 إظهار جميع الإجابات</button>
+    <button class="tool-btn" onclick="window.print()">🖨 طباعة</button>
+  </div>
+
+  <div class="q-card">
+    <span class="q-tag">السؤال ١</span>
+    <div class="q-text">قارن بين دورة حياة النظام الحكومي (SDLC) ودورة حياة نظم القطاع الخاص، وحلّل أثر تعدّد أصحاب المصلحة والقيود التشريعية في تعثّر المشاريع الحكومية.</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans1', this)">👁 إظهار الإجابة النموذجية</button>
+    <div class="answer-box" id="ans1">
+      <span class="lbl">الإجابة النموذجية</span>
+      <p>تمرّ نظم المعلومات الحكومية بستّ مراحل: التخطيط ودراسة الجدوى، وتحليل المتطلبات، والتصميم، والتطوير، والاختبار والقبول، ثم النشر والتشغيل. وهي في ظاهرها المراحل ذاتها المعتمدة في القطاع الخاص، لكنّ الفارق يكمن في شروط تنفيذها لا في تسلسلها. ففي القطاع الخاص يكون صاحب القرار محدوداً وواضحاً، والمعيار الحاكم هو العائد على الاستثمار، ويجوز إطلاق منتج أوّلي ثم تطويره تدريجياً.</p><p>أمّا في السياق الحكومي فأصحاب المصلحة متعدّدون ومتباينو المصالح: وزارات ذات صلاحيات متداخلة، وموظفون تتأثّر أنماط عملهم، ومواطنون تختلف قدراتهم الرقمية، وجهات رقابية وتشريعية. ويُضاف إلى ذلك قيود التشريع: اشتراط الموافقات الرسمية، والالتزام بمعايير الإتاحة لذوي الاحتياجات الخاصة، والامتثال لمعايير أمن المعلومات، والحصول على شهادة اعتماد أمني قبل التشغيل.</p><p>ويُنتج ذلك ثلاثة آثار: أوّلها تضخّم مرحلة تحليل المتطلبات وتغيّرها المستمرّ (Scope Creep) نتيجة تعارض المطالب؛ وثانيها إطالة زمن الاعتماد بما يجعل المتطلبات نفسها متقادمة قبل التسليم؛ وثالثها ارتفاع كلفة الخطأ، لأنّ فشل نظام حكومي يمسّ حقوق المواطنين لا أرباح شركة.</p><p>والمعالجة القيادية تكون بحسم ملكية المشروع في جهة واحدة ذات صلاحية، وتثبيت المتطلبات الجوهرية وثيقةً معتمَدة، واعتماد التنفيذ المرحلي الرشيق ضمن ضوابط الامتثال، وإشراك المستخدم النهائي منذ مرحلة التصميم لا عند التسليم.</p>
+    </div>
+  </div>
+  <div class="q-card">
+    <span class="q-tag">السؤال ٢</span>
+    <div class="q-text">يقوم أمن النظم الحكومية على ثالوث (السرّية – النزاهة – التوفّرية). ناقش: أيّ أضلاع هذا الثالوث أولى بالتقديم عند تعارضها في السياق الحكومي؟ وكيف يُدار هذا التعارض عملياً؟</div>
+    <button class="reveal-btn" onclick="toggleAnswer('ans2', this)">👁 إظهار الإجابة النموذجية</button>
+    <div class="answer-box" id="ans2">
+      <span class="lbl">الإجابة النموذجية</span>
+      <p>السرّية تعني قصر الوصول إلى البيانات على المخوَّلين، وتُطبَّق بالتشفير وضوابط الهوية. والنزاهة تعني ضمان عدم التعديل غير المصرّح به، وتُطبَّق بالتوقيع الرقمي وسجلّات التدقيق غير القابلة للتغيير. والتوفّرية تعني استمرار الخدمة دون انقطاع وفق مستوى خدمة متّفق عليه.</p><p>والتعارض بينها واقعيّ لا نظري: فتشديد السرّية بإجراءات مصادقة معقّدة يُقلّل التوفّرية العملية للمواطن؛ وضمان التوفّرية بالنسخ المتعدّدة يُوسّع سطح تعرّض البيانات؛ والتحقّق الصارم من النزاهة يُبطئ زمن الاستجابة.</p><p>ولا يصحّ الجواب المطلق بتقديم ضلع بعينه، بل الحكم مرهون بتصنيف النظام وطبيعة البيانات. ففي أنظمة الأمن الوطني والسجلّات الاستخبارية والدبلوماسية تُقدَّم السرّية؛ لأنّ التسريب ضرر لا يُستدرك. وفي السجلّات المدنية والعقارية والانتخابية والمالية تُقدَّم النزاهة؛ لأنّ تزوير سجلّ واحد يُسقط الثقة بالمنظومة كلّها ويترتّب عليه أثر قانوني دائم. وفي منظومات الطوارئ والصحة والكهرباء وأنظمة الخدمة اليومية تُقدَّم التوفّرية؛ لأنّ توقّف الخدمة ضرر مباشر على الأرواح والمعيشة.</p><p>وتُدار الموازنة عملياً بأربعة إجراءات: تصنيف البيانات والأنظمة تصنيفاً رسمياً مسبقاً؛ وإقرار سياسة مكتوبة تُحدّد الأولوية عند التعارض لكل تصنيف؛ واعتماد الدفاع في العمق بحيث لا تُشترى إحدى الخصائص بإسقاط الأخرى كليّاً؛ وتوثيق قرار المفاضلة وجهة المسؤولية عنه. فالأمن في جوهره قرار إداري مسؤول قبل أن يكون إعداداً تقنياً.</p>
+    </div>
+  </div>
+
+  <div class="nav">
+    <a href="./es1.html">→ المحاضرة السابقة</a>
+    <a href="./all-essay.html">↩ كل الأسئلة المقالية</a>
+    <a href="./es3.html">المحاضرة التالية ←</a>
+  </div>
+
+  <footer class="foot">
+    المعهد العالي لإعداد وتأهيل القادة · برنامج القيادة الرقمية — الدبلوم العالي<br>
+    إعداد: أ.م.د. أمير هادي و أ.م.د. أحمد محسن هيلان
+  </footer>
+</div>
+<script>
+function toggleAnswer(id, btn){
+  const el = document.getElementById(id);
+  el.classList.toggle('show');
+  if(btn){ btn.textContent = el.classList.contains('show') ? '🙈 إخفاء الإجابة النموذجية' : '👁 إظهار الإجابة النموذجية'; }
+}
+function toggleAll(){
+  const boxes = document.querySelectorAll('.answer-box');
+  const anyHidden = Array.from(boxes).some(b => !b.classList.contains('show'));
+  boxes.forEach(b => b.classList.toggle('show', anyHidden));
+  document.querySelectorAll('.reveal-btn').forEach(btn => {
+    btn.textContent = anyHidden ? '🙈 إخفاء الإجابة النموذجية' : '👁 إظهار الإجابة النموذجية';
+  });
+  document.getElementById('allBtn').textContent = anyHidden ? '🙈 إخفاء جميع الإجابات' : '👁 إظهار جميع الإجابات';
+}
+</script>
+</body>
+</html>
