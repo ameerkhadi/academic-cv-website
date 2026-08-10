@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تكنولوجيا المعلومات في العمل الإداري</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --accent:#1857a4;
+    --accent-dark:#123f7a;
+    --text:#222;
+    --muted:#5c5c5c;
+    --border:#e0e0e0;
+    --bg-soft:#f5f8fc;
+  }
+  *{box-sizing:border-box;}
+  body{
+    font-family:'Cairo', sans-serif;
+    color:var(--text);
+    line-height:1.9;
+    max-width:900px;
+    margin:0 auto;
+    padding:30px 24px 80px;
+    background:#fff;
+  }
+  header{
+    text-align:center;
+    border-bottom:3px solid var(--accent);
+    padding-bottom:20px;
+    margin-bottom:30px;
+  }
+  header h1{
+    color:var(--accent-dark);
+    font-size:28px;
+    margin:0 0 10px;
+  }
+  header .org{ font-size:17px; font-weight:600; color:var(--text); margin:4px 0; }
+  header .presenter{ font-size:15px; color:var(--muted); margin:2px 0; }
+  header .presenter a{ color:var(--accent); text-decoration:none; }
+
+  nav.toc{
+    background:var(--bg-soft);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:16px 20px;
+    margin-bottom:34px;
+  }
+  nav.toc h2{ font-size:16px; margin:0 0 10px; color:var(--accent-dark); }
+  nav.toc ol{ margin:0; padding-inline-start:22px; }
+  nav.toc li{ margin-bottom:4px; }
+  nav.toc a{ color:var(--text); text-decoration:none; }
+  nav.toc a:hover{ color:var(--accent); text-decoration:underline; }
+
+  section{ margin-bottom:38px; padding-top:6px; }
+
+  h2{
+    color:#fff;
+    background:var(--accent);
+    padding:8px 16px;
+    border-radius:6px;
+    font-size:20px;
+    margin:0 0 16px;
+  }
+  h3{
+    color:var(--accent-dark);
+    font-size:17px;
+    border-right:4px solid var(--accent);
+    padding-right:10px;
+    margin:22px 0 8px;
+  }
+  p{ margin:0 0 12px; }
+  ul, ol.plain{ margin:0 0 14px; padding-inline-start:24px; }
+  li{ margin-bottom:6px; }
+
+  .note{
+    background:var(--bg-soft);
+    border-right:4px solid var(--accent);
+    padding:12px 16px;
+    border-radius:4px;
+    font-size:15px;
+    color:var(--muted);
+    margin:14px 0;
+  }
+  .note strong{ color:var(--accent-dark); }
+
+  table{
+    width:100%;
+    border-collapse:collapse;
+    margin:14px 0;
+    font-size:15px;
+  }
+  table th, table td{
+    border:1px solid var(--border);
+    padding:9px 12px;
+    text-align:right;
+  }
+  table th{
+    background:var(--accent);
+    color:#fff;
+    font-weight:600;
+  }
+  table tr:nth-child(even){ background:var(--bg-soft); }
+
+  footer{
+    text-align:center;
+    margin-top:50px;
+    padding-top:20px;
+    border-top:1px solid var(--border);
+    color:var(--muted);
+    font-size:14px;
+  }
+
+  h4{
+    color:var(--accent-dark);
+    font-size:15.5px;
+    margin:16px 0 6px;
+  }
+
+  .example{
+    font-size:13.5px;
+    color:var(--muted);
+    margin:4px 0 12px;
+  }
+  .example strong{ color:var(--accent-dark); }
+
+  .scenario{
+    background:#fff8ee;
+    border-right:4px solid #e07a1f;
+    border-radius:4px;
+    padding:10px 16px;
+    margin:8px 0 16px;
+    font-size:14.5px;
+    color:var(--text);
+  }
+  .scenario strong{ color:#b35f10; }
+
+  .ai-type{
+    background:var(--bg-soft);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:14px 18px;
+    margin:6px 0 10px;
+  }
+  .ai-type h4{ margin:0 0 4px; }
+
+  .ai-example{ margin-bottom:18px; }
+  .ai-example h4{ margin-bottom:4px; }
+  .ai-example > p{ margin-bottom:6px; }
+
+  .flow-diagram{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    margin:14px 0 20px;
+  }
+  .flow-step{
+    background:var(--bg-soft);
+    border:2px solid var(--accent);
+    border-radius:10px;
+    padding:10px 12px;
+    font-size:13.5px;
+    text-align:center;
+    max-width:150px;
+    color:var(--text);
+  }
+  .flow-num{
+    display:block;
+    font-weight:700;
+    color:var(--accent-dark);
+    font-size:12.5px;
+    margin-bottom:3px;
+  }
+  .flow-arrow{
+    font-size:20px;
+    color:var(--accent);
+    font-weight:700;
+    flex:none;
+  }
+
+  .usecase-grid{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    justify-content:center;
+    margin:6px 0 22px;
+  }
+  .usecase-pill{
+    background:var(--accent);
+    color:#fff;
+    font-size:13px;
+    padding:6px 14px;
+    border-radius:20px;
+    white-space:nowrap;
+  }
+
+  @media print{
+    body{ max-width:100%; padding:0 16px; }
+    *{ -webkit-print-color-adjust:exact; print-color-adjust:exact; color-adjust:exact; }
+    .print-btn{ display:none !important; }
+    a{ color:inherit; text-decoration:none; }
+    h2{ page-break-before:always; }
+    #ch1 h2{ page-break-before:auto; }
+    .ai-example, .scenario, .flow-diagram, .note, .ai-type{ page-break-inside:avoid; }
+  }
+
+  @media (max-width:600px){
+    body{ padding:18px 14px 60px; line-height:1.8; }
+    header h1{ font-size:22px; }
+    header .org{ font-size:15px; }
+    header .presenter{ font-size:13px; line-height:1.7; }
+    h2{ font-size:17px; padding:7px 12px; }
+    h3{ font-size:15.5px; }
+    h4{ font-size:14.5px; }
+    p, li{ font-size:14.5px; }
+    .example, .scenario{ font-size:13px; padding:9px 12px; }
+    table{ font-size:13px; }
+    table th, table td{ padding:6px 8px; }
+    .flow-step{ font-size:12.5px; padding:8px 10px; max-width:120px; }
+    .flow-arrow{ font-size:16px; }
+    .usecase-pill{ font-size:11.5px; padding:5px 11px; }
+  }
+
+  .print-btn{
+    position:fixed;
+    bottom:20px;
+    left:20px;
+    z-index:100;
+    background:var(--accent);
+    color:#fff;
+    border:none;
+    border-radius:24px;
+    padding:12px 22px;
+    font-family:'Cairo', sans-serif;
+    font-weight:600;
+    font-size:14px;
+    cursor:pointer;
+    box-shadow:0 4px 14px rgba(0,0,0,0.25);
+  }
+  .print-btn:hover{ background:var(--accent-dark); }
+  @media (max-width:600px){
+    .print-btn{ bottom:14px; left:14px; padding:10px 18px; font-size:13px; }
+  }
+</style>
+</head>
+<body>
+
+<button class="print-btn" onclick="window.print()">🖨 طباعة / حفظ PDF</button>
+
+<header>
+  <h1>تكنولوجيا المعلومات في العمل الإداري</h1>
+  <div class="org">المعهد العالي لإعداد وتأهيل القادة</div>
+  <div class="presenter">إعداد: أ.م.د. أمير هادي &nbsp;|&nbsp; <a href="mailto:ameer.hadi@alshaab.edu.iq">ameer.hadi@alshaab.edu.iq</a></div>
+</header>
+
+
+<section id="intro">
+  <p>
+    تهدف هذه المحاضرة إلى تقديم رؤية عملية وتطبيقية لدور تكنولوجيا المعلومات في العمل الإداري، بعيداً عن الطرح النظري
+    المجرد، من خلال ربط كل تقنية بمهمة إدارية محددة وأمثلة واقعية يمكن تطبيقها مباشرة من قبل معاوني المدراء العامين
+    والمدراء العامين.
+  </p>
+</section>
+
+<section id="ch1">
+  <h2>المحور الأول: الإطار المفاهيمي</h2>
+
+  <h3>١. تعريف تكنولوجيا المعلومات</h3>
+  <p>
+    تُعرَّف تكنولوجيا المعلومات بأنها مجموعة من الأجهزة والبرامج والشبكات والبيانات التي تُستخدم لجمع المعلومات
+    ومعالجتها وتخزينها ونقلها واسترجاعها، بهدف دعم العمل الإداري وترشيد عملية اتخاذ القرار. وهي اليوم لم تعد أداة
+    مساندة هامشية، بل أصبحت جزءاً أساسياً من البنية التشغيلية لأي مؤسسة إدارية حديثة.
+  </p>
+  <div class="flow-diagram">
+    <div class="flow-step"><span class="flow-num">١</span>جمع المعلومات</div>
+    <div class="flow-arrow">←</div>
+    <div class="flow-step"><span class="flow-num">٢</span>معالجتها</div>
+    <div class="flow-arrow">←</div>
+    <div class="flow-step"><span class="flow-num">٣</span>تخزينها</div>
+    <div class="flow-arrow">←</div>
+    <div class="flow-step"><span class="flow-num">٤</span>نقلها</div>
+    <div class="flow-arrow">←</div>
+    <div class="flow-step"><span class="flow-num">٥</span>استرجاعها عند الحاجة</div>
+  </div>
+
+  <h3>٢. تصنيف الأعمال الإدارية</h3>
+  <p>قبل الحديث عن أي تقنية، لا بد من تحديد طبيعة العمل الإداري نفسه وتصنيفه إلى فئات واضحة، لأن كل تقنية سنتناولها لاحقاً ستُربط مباشرة بواحدة أو أكثر من هذه الفئات:</p>
+  <ol class="plain">
+    <li>المراسلات والمخاطبات الرسمية (الوارد والصادر، الكتب الرسمية، التعاميم)
+      <div class="example"><strong>مثال:</strong> تلقّي كتاب رسمي من وزارة المالية بخصوص تعليمات الموازنة، وإحالته إلى الدائرة المعنية مع تحديد الإجراء المطلوب خلال مدة زمنية محددة.</div>
+    </li>
+    <li>الاجتماعات ومحاضرها وقراراتها
+      <div class="example"><strong>مثال:</strong> عقد اجتماع أسبوعي لمديري الأقسام لمناقشة سير العمل، وتوثيق القرارات المتخذة في محضر رسمي يُوزَّع على المعنيين لمتابعة التنفيذ.</div>
+    </li>
+    <li>الملفات والأرشفة
+      <div class="example"><strong>مثال:</strong> حفظ ملف الموظف الوظيفي بجميع مستنداته (العقد، الترقيات، الإجازات) بطريقة منظمة يسهل الرجوع إليها عند الحاجة.</div>
+    </li>
+    <li>التخطيط الاستراتيجي والخطط السنوية
+      <div class="example"><strong>مثال:</strong> إعداد الخطة السنوية للدائرة وتحديد الأهداف والمؤشرات القابلة للقياس، ومتابعة نسبة تحقيقها كل ربع سنة.</div>
+    </li>
+    <li>متابعة تنفيذ القرارات والتوجيهات الصادرة
+      <div class="example"><strong>مثال:</strong> متابعة تنفيذ قرار صادر من المدير العام بشأن تحديث آلية العمل في دائرة معينة، والتأكد من إنجازه ضمن المدة المحددة.</div>
+    </li>
+    <li>إعداد ومتابعة التقارير الدورية
+      <div class="example"><strong>مثال:</strong> إعداد تقرير شهري يوضح حجم المعاملات المنجزة والمتأخرة في كل قسم، ورفعه إلى الإدارة العليا.</div>
+    </li>
+    <li>دعم عملية اتخاذ القرار
+      <div class="example"><strong>مثال:</strong> تزويد المدير العام بتحليل مقارن لأداء ثلاث دوائر تابعة قبل اتخاذ قرار بإعادة توزيع الموارد بينها.</div>
+    </li>
+    <li>المشتريات والعقود الحكومية
+      <div class="example"><strong>مثال:</strong> طرح مناقصة لشراء أجهزة حاسوب للدائرة، ومتابعة إجراءات الإحالة والتعاقد وفق ضوابط المشتريات الحكومية.</div>
+    </li>
+    <li>التنسيق الداخلي والخارجي بين الدوائر والجهات
+      <div class="example"><strong>مثال:</strong> التنسيق مع دائرة أخرى لتوفير الدعم اللوجستي لمؤتمر مشترك، أو التنسيق مع وزارة أخرى بخصوص مشروع مشترك بين الجهتين.</div>
+    </li>
+    <li>متابعة أداء الموظفين والدوائر التابعة
+      <div class="example"><strong>مثال:</strong> تقييم الأداء السنوي للموظفين وفق معايير محددة، وربط نتائج التقييم بالترقية أو التدريب.</div>
+    </li>
+    <li>الامتثال والرقابة المالية والإدارية
+      <div class="example"><strong>مثال:</strong> تجهيز المستندات والمعاملات المطلوبة استعداداً لزيارة تدقيق من ديوان الرقابة المالية، والتأكد من مطابقتها للتعليمات النافذة.</div>
+    </li>
+  </ol>
+
+  <div class="note">
+    <strong>ملاحظة:</strong> في أغلب المؤسسات الحكومية العراقية توجد "دائرة عامة للتخطيط والدراسات" مسؤولة عن إعداد
+    الخطط السنوية والاستراتيجية، لكنها غالباً ما تعاني من ضعف الملاكات الوظيفية. هنا بالتحديد تستطيع تكنولوجيا
+    المعلومات - وخصوصاً أدوات الذكاء الاصطناعي وذكاء الأعمال - أن تعزز قدرة هذه التشكيلات وتقلل اعتمادها على الجهد
+    البشري المحدود.
+  </div>
+</section>
+
+<section id="ch3">
+  <h2>المحور الثاني: الذكاء الاصطناعي والأتمتة الذكية</h2>
+
+  <h3>تعريف الذكاء الاصطناعي: التوليدي والتنبؤي</h3>
+  <p>يمكن تقسيم تطبيقات الذكاء الاصطناعي المستخدمة في العمل الإداري إلى نوعين رئيسيين:</p>
+  <div class="ai-type">
+    <h4>الذكاء الاصطناعي التوليدي (Generative AI)</h4>
+    <p>يُنتج محتوى جديداً (نصوصاً، تلخيصات، صوراً، أكواداً) بناءً على طلب المستخدم، مثل Claude. يُستخدم في صياغة الكتب الرسمية، تلخيص التقارير، وإعداد المراسلات والعروض التقديمية.</p>
+  </div>
+  <div class="ai-type">
+    <h4>الذكاء الاصطناعي التنبؤي (Predictive AI)</h4>
+    <p>يحلل البيانات التاريخية للتنبؤ باتجاهات أو نتائج مستقبلية، مثل التنبؤ بحجم الإنفاق الشهري القادم أو احتمالية تأخر مشروع معين استناداً إلى أدائه السابق. يُستخدم غالباً ضمن أنظمة ذكاء الأعمال (BI) ودعم اتخاذ القرار.</p>
+  </div>
+  <p>في العمل الإداري، غالباً ما يُستخدم النوعان معاً: التوليدي لإنجاز المهام الكتابية اليومية، والتنبؤي لدعم القرارات المبنية على البيانات والاتجاهات.</p>
+
+  <h3>العلاقة بين الذكاء الاصطناعي والأتمتة</h3>
+  <ul>
+    <li><strong>الأتمتة التقليدية:</strong> تنفيذ خطوات مبرمجة مسبقاً وثابتة (إن حدث كذا، نفّذ كذا) دون "فهم" أو "تفكير".</li>
+    <li><strong>الذكاء الاصطناعي:</strong> يفهم السياق، يحلل، يولّد نصوصاً وأفكاراً، ويتخذ قرارات بناءً على المعطيات المتاحة.</li>
+    <li><strong>التقارب الحديث:</strong> صار هناك ما يُعرف بـ "الأتمتة الذكية" أو "الوكلاء الذكيين (Agentic AI)"، حيث يتولى الذكاء الاصطناعي نفسه إدارة وتشغيل عمليات الأتمتة، بدل أن تبقى محدودة بقواعد ثابتة.</li>
+  </ul>
+
+  <h3>الذكاء الاصطناعي في العمل الإداري: أمثلة تطبيقية بـ Claude</h3>
+
+  <p>يتكرر النمط نفسه في كل الأمثلة التالية: مدخل خام يحتاج وقتاً وجهداً بشرياً، يمرّ عبر Claude، ليخرج بصيغة جاهزة للاستخدام المباشر:</p>
+  <div class="flow-diagram">
+    <div class="flow-step"><span class="flow-num">١</span>مدخل خام (نقاط، تقرير، بيانات، تسجيل)</div>
+    <div class="flow-arrow">←</div>
+    <div class="flow-step"><span class="flow-num">٢</span>توجيه Claude بالمطلوب بدقة</div>
+    <div class="flow-arrow">←</div>
+    <div class="flow-step"><span class="flow-num">٣</span>مخرج جاهز للاستخدام أو المراجعة السريعة</div>
+  </div>
+
+  <p>خريطة سريعة لأبرز الاستخدامات التي سنستعرضها بالتفصيل:</p>
+  <div class="usecase-grid">
+    <span class="usecase-pill">١ تنظيم البريد</span>
+    <span class="usecase-pill">٢ صياغة الكتب الرسمية</span>
+    <span class="usecase-pill">٣ تلخيص التقارير</span>
+    <span class="usecase-pill">٤ تحليل البيانات</span>
+    <span class="usecase-pill">٥ محاضر الاجتماعات</span>
+    <span class="usecase-pill">٦ العروض التقديمية</span>
+    <span class="usecase-pill">٧ الترجمة</span>
+    <span class="usecase-pill">٨ الرد على الاستفسارات</span>
+    <span class="usecase-pill">٩ تحليل العقود</span>
+    <span class="usecase-pill">١٠ الإجابة من الأرشيف</span>
+    <span class="usecase-pill">١١ خطط العمل</span>
+    <span class="usecase-pill">١٢ تحليل الشكاوى</span>
+  </div>
+
+  <div class="ai-example">
+    <h4>١. تنظيم البريد الإلكتروني</h4>
+    <p>تصنيف الرسائل حسب الأولوية، وصياغة ردود سريعة ودقيقة.</p>
+    <div class="scenario"><strong>سيناريو:</strong> بداية كل صباح تصل لمعاون المدير العام أكثر من ٦٠ رسالة بريد إلكتروني. بدلاً من فتحها واحدة تلو الأخرى، يطلب من Claude تلخيص الرسائل الواردة وترتيبها حسب الأولوية (عاجل - عادي - يمكن تأجيله)، وصياغة مسودة رد أولي للرسائل الروتينية، بحيث لا يحتاج المعاون سوى مراجعتها والموافقة عليها قبل الإرسال - مما يختصر وقتاً كان يستغرق ساعة كاملة إلى خمس عشرة دقيقة.</div>
+  </div>
+
+  <div class="ai-example">
+    <h4>٢. صياغة الكتب والتعاميم الرسمية</h4>
+    <p>تحويل نقاط متفرقة إلى كتاب رسمي متكامل الصياغة خلال دقائق.</p>
+    <div class="scenario"><strong>سيناريو:</strong> يطلب المدير العام من معاونه إصدار تعميم داخلي بخصوص تحديث دوام العمل خلال شهر رمضان. بدلاً من صياغته من الصفر، يزوّد المعاون Claude بالنقاط الأساسية (التوقيت الجديد، تاريخ البدء، الجهات المعنية)، فيحصل خلال دقائق على تعميم بصياغة رسمية متكاملة جاهز للمراجعة والتوقيع.</div>
+  </div>
+
+  <div class="ai-example">
+    <h4>٣. تلخيص التقارير الطويلة</h4>
+    <p>اختصار تقرير من عشرات الصفحات إلى نقاط رئيسية قابلة للعرض السريع على الإدارة العليا.</p>
+    <div class="scenario"><strong>سيناريو:</strong> يستلم المدير العام تقريراً سنوياً من إحدى الدوائر التابعة يمتد لأكثر من أربعين صفحة قبل ساعة من اجتماع مجلس الإدارة. يرفع التقرير إلى Claude ويطلب ملخصاً من صفحة واحدة يبرز أهم الإنجازات والتحديات والأرقام الرئيسية، ليتمكن من مناقشته بثقة دون الحاجة لقراءته كاملاً.</div>
+  </div>
+
+  <div class="ai-example">
+    <h4>٤. تحليل البيانات</h4>
+    <p>قراءة ملف Excel واستخراج رؤى وأنماط غير ظاهرة للعين المجردة (مثل تحليل النفقات الشهرية أو أداء الدوائر).</p>
+    <div class="scenario"><strong>سيناريو:</strong> تطلب دائرة الشؤون المالية تحليل ملف Excel يحتوي على نفقات الدائرة خلال الأشهر الستة الماضية. يرفع الموظف الملف إلى Claude، فيحدد الأشهر التي شهدت ارتفاعاً غير معتاد في الإنفاق، ويقترح بنوداً تحتاج مراجعة، ويولّد رسماً بيانياً يوضح الاتجاه العام - وهو ما كان سيتطلب سابقاً يوماً كاملاً من العمل اليدوي على الجداول.</div>
+  </div>
+
+  <div class="ai-example">
+    <h4>٥. تحضير محاضر الاجتماعات</h4>
+    <p>تحويل ملاحظات متفرقة أو تسجيل صوتي إلى محضر اجتماع منظم بالقرارات والمهام الموزعة.</p>
+    <div class="scenario"><strong>سيناريو:</strong> بعد اجتماع تنسيقي ضم خمس دوائر، يكون لدى السكرتير مجموعة ملاحظات متفرقة ونص تسجيل الاجتماع. يزوّد Claude بهذه الملاحظات، فيحصل على محضر اجتماع منظم يتضمن نقاط النقاش، القرارات المتخذة، والمهام الموزعة على كل دائرة مع المدة الزمنية المحددة لتنفيذها.</div>
+  </div>
+
+  <div class="ai-example">
+    <h4>٦. إعداد العروض التقديمية</h4>
+    <p>تحويل تقرير نصي إلى عرض تقديمي جاهز للمناقشة.</p>
+    <div class="scenario"><strong>سيناريو:</strong> قبل ساعتين من عرض الأداء الربعي أمام الوزير، يحتاج المدير العام تحويل تقرير نصي طويل إلى عرض تقديمي مختصر وواضح. يطلب من Claude تحويل التقرير إلى شرائح منظمة بعناوين ونقاط رئيسية، جاهزة للعرض مباشرة بعد مراجعة سريعة.</div>
+  </div>
+
+  <div class="ai-example">
+    <h4>٧. الترجمة الفورية للمراسلات والوثائق</h4>
+    <p>ترجمة كتاب أو تقرير وارد من جهة دولية إلى العربية والعكس، مع الحفاظ على الصياغة الرسمية.</p>
+    <div class="scenario"><strong>سيناريو:</strong> يصل كتاب من منظمة دولية شريكة باللغة الإنكليزية يتضمن تفاصيل فنية دقيقة عن مشروع مشترك، ويحتاج المدير العام رداً رسمياً باللغتين خلال يومين. يترجم Claude الكتاب الوارد بدقة، ويساعد في صياغة الرد باللغتين بصياغة رسمية متسقة، دون انتظار مكتب ترجمة خارجي.</div>
+  </div>
+
+  <div class="ai-example">
+    <h4>٨. صياغة الردود على استفسارات المواطنين والجهات الخارجية</h4>
+    <p>تحويل استفسار أو شكوى مكتوبة بلغة غير رسمية إلى رد إداري لبق ودقيق يحترم الأصول الرسمية.</p>
+    <div class="scenario"><strong>سيناريو:</strong> تصل عشرات الشكاوى الأسبوعية من المواطنين عبر منصة إلكترونية بصياغات متفاوتة الوضوح. يساعد Claude في تلخيص كل شكوى، تصنيفها حسب الجهة المختصة، وصياغة رد رسمي مبدئي يوضح الإجراء المتخذ، فيختصر عبء الرد اليدوي الذي كان يستغرق يوماً كاملاً من موظف واحد.</div>
+  </div>
+
+  <div class="ai-example">
+    <h4>٩. تحليل العقود وكشف نقاط المخاطرة</h4>
+    <p>مراجعة بنود عقد أو مناقصة واستخراج الشروط غير المتوازنة أو الغامضة قبل التوقيع.</p>
+    <div class="scenario"><strong>سيناريو:</strong> قبل توقيع عقد توريد مع شركة جديدة، يرفع مسؤول العقود نص العقد إلى Claude ويطلب تحديد أي بنود غير واضحة أو غير متوازنة (مثل شروط الفسخ أو الغرامات التأخيرية)، فيحصل على قائمة نقاط تحتاج مراجعة قانونية قبل المضي بالتوقيع، بدل اكتشافها لاحقاً عند حدوث نزاع.</div>
+  </div>
+
+  <div class="ai-example">
+    <h4>١٠. الإجابة عن الاستفسارات الداخلية بالاعتماد على أرشيف الدائرة</h4>
+    <p>تزويد Claude بتعليمات أو قرارات سابقة صادرة عن الدائرة، والسؤال عنها مباشرة بدل البحث اليدوي في الأرشيف.</p>
+    <div class="scenario"><strong>سيناريو:</strong> يحتاج موظف جديد معرفة آخر تعليمات صادرة بخصوص آلية صرف مستحقات السفر، لكنه لا يعرف أين يبحث بين عشرات الكتب المؤرشفة. برفع الكتب ذات الصلة إلى Claude، يحصل على إجابة مباشرة ومحددة المصدر خلال ثوانٍ، بدل التنقل بين ملفات ورقية أو مجلدات إلكترونية متفرقة.</div>
+  </div>
+
+  <div class="ai-example">
+    <h4>١١. صياغة خطط العمل والمبادرات التطويرية</h4>
+    <p>تحويل فكرة أو هدف عام إلى خطة عمل تفصيلية بخطوات ومسؤوليات وجدول زمني.</p>
+    <div class="scenario"><strong>سيناريو:</strong> يُكلَّف مدير دائرة بوضع خطة لتحسين زمن إنجاز المعاملات خلال ثلاثة أشهر. يزوّد Claude بالهدف العام والموارد المتاحة، فيحصل على مسودة خطة عمل منظمة بخطوات تنفيذية ومؤشرات قياس، جاهزة ليبني عليها ويعرضها على الإدارة العليا.</div>
+  </div>
+
+  <div class="ai-example">
+    <h4>١٢. تحليل الشكاوى المتكررة واستخراج الأنماط</h4>
+    <p>قراءة عشرات الشكاوى المتراكمة واكتشاف الأسباب الجذرية المتكررة بدل معالجة كل شكوى كحالة منفصلة.</p>
+    <div class="scenario"><strong>سيناريو:</strong> تتراكم لدى دائرة خدمة المواطنين مئات الشكاوى خلال شهر واحد. بدل قراءتها فردياً، يرفعها الموظف دفعة واحدة إلى Claude ليكتشف أن ٤٠٪ منها تعود لسبب واحد متكرر (مثل تأخر إجراء معين)، مما يوجّه الإدارة لمعالجة السبب الجذري بدل التعامل مع كل شكوى بمعزل عن غيرها.</div>
+  </div>
+
+  <h3>الأتمتة في العمل الإداري</h3>
+  <ul>
+    <li><strong>أتمتة الموافقات:</strong> تمرير المعاملة تلقائياً من موظف إلى آخر حسب مسار محدد مسبقاً دون تدخل يدوي.</li>
+    <li><strong>متابعة تنفيذ الأوامر والكتب الإدارية:</strong> تنبيهات آلية للدوائر المتأخرة عن تنفيذ توجيه صادر.</li>
+    <li><strong>الأرشفة الذكية:</strong> تصنيف وترتيب الوثائق تلقائياً فور استلامها.</li>
+    <li><strong>التذكيرات والجدولة التلقائية</strong> للاجتماعات والمواعيد.</li>
+  </ul>
+
+  <h4>الأتمتة عبر منصات بصرية: مثال n8n</h4>
+  <p>
+    منصة <strong>n8n</strong> نموذج جيد لهذا النوع من الأدوات: هي منصة أتمتة مفتوحة المصدر تتيح بناء "سير عمل" (Workflow)
+    بواجهة مرئية عبر ربط صناديق (Nodes) تمثل كل خطوة - مثل استلام بريد إلكتروني، استخراج بياناته، تحديث جدول بيانات،
+    وإرسال إشعار - دون الحاجة لكتابة برمجة معقدة. كما تدعم دمج نماذج الذكاء الاصطناعي ضمن هذه المسارات، ويمكن استضافتها
+    ذاتياً على خوادم الجهة نفسها، وهو ما يهم المؤسسات الحكومية بشكل خاص من ناحية التحكم بالبيانات والخصوصية.
+  </p>
+
+  <div class="scenario">
+    <strong>سيناريو يوفر الوقت:</strong> تستلم دائرة الموارد البشرية يومياً عشرات طلبات الإجازة عبر البريد الإلكتروني.
+    بدلاً من أن يقوم موظف بقراءة كل طلب وتسجيله يدوياً في جدول المتابعة وإرسال رد للموظف وتنبيه المدير المباشر، يُبنى
+    سير عمل آلي عبر n8n ينفّذ كل هذه الخطوات فور وصول الطلب تلقائياً. هذا يختصر عملاً كان يستغرق عشرين إلى ثلاثين دقيقة
+    لكل طلب إلى ثوانٍ معدودة.
+  </div>
+
+  <div class="flow-diagram">
+    <div class="flow-step"><span class="flow-num">١</span>وصول طلب إجازة بالبريد</div>
+    <div class="flow-arrow">←</div>
+    <div class="flow-step"><span class="flow-num">٢</span>استخراج البيانات تلقائياً</div>
+    <div class="flow-arrow">←</div>
+    <div class="flow-step"><span class="flow-num">٣</span>تسجيلها في قاعدة البيانات</div>
+    <div class="flow-arrow">←</div>
+    <div class="flow-step"><span class="flow-num">٤</span>إشعار المدير المباشر للموافقة</div>
+    <div class="flow-arrow">←</div>
+    <div class="flow-step"><span class="flow-num">٥</span>رد تلقائي للموظف</div>
+  </div>
+
+  <h3>حدود الاستخدام</h3>
+  <p>
+    رغم الفوائد الكبيرة، يبقى الذكاء الاصطناعي أداة مساعدة وليست بديلاً عن القرار الإداري النهائي. يجب دائماً مراجعة
+    المخرجات بشرياً قبل اعتمادها رسمياً، مع الانتباه لحماية خصوصية البيانات الحساسة عند استخدام أي أداة ذكاء اصطناعي.
+  </p>
+</section>
+
+<section id="ch4">
+  <h2>المحور الثالث: الحوسبة السحابية</h2>
+  <p>
+    الحوسبة السحابية تعني تخزين البيانات والوصول إلى البرامج عبر الإنترنت بدلاً من الاعتماد الكامل على أجهزة محلية.
+    أبرز فوائدها في العمل الإداري:
+  </p>
+  <ul>
+    <li>الوصول إلى الملفات والمعاملات من أي مكان وفي أي وقت.</li>
+    <li>التعاون اللحظي على نفس الوثيقة من قبل أكثر من موظف في وقت واحد.</li>
+    <li>تقليل تكاليف البنية التحتية للأجهزة والصيانة.</li>
+    <li>ضمان استمرارية العمل حتى في حالات الطوارئ أو انقطاع الأجهزة المحلية.</li>
+  </ul>
+  <p>أمثلة شائعة: Google Workspace، Microsoft 365.</p>
+  <div class="scenario">
+    <strong>سيناريو:</strong> مدير عام يحتاج مراجعة تقرير مالي عاجل وهو خارج مقر عمله لحضور مؤتمر خارج المحافظة. بدلاً
+    من الاتصال بمكتبه لطلب طباعة التقرير وإرساله، يفتح الملف مباشرة من هاتفه عبر النظام السحابي ويضيف ملاحظاته عليه،
+    فيراها فريقه فوراً في المكتب دون أي تأخير أو الحاجة للعودة إلى مقر العمل.
+  </div>
+  <div class="flow-diagram">
+    <div class="flow-step"><span class="flow-num">١</span>الموظف من أي جهاز ومكان</div>
+    <div class="flow-arrow">←</div>
+    <div class="flow-step"><span class="flow-num">٢</span>اتصال إنترنت</div>
+    <div class="flow-arrow">←</div>
+    <div class="flow-step"><span class="flow-num">٣</span>الخادم السحابي المركزي</div>
+    <div class="flow-arrow">←</div>
+    <div class="flow-step"><span class="flow-num">٤</span>نفس الملف متاح لكل المستخدمين فوراً</div>
+  </div>
+</section>
+
+<section id="ch5">
+  <h2>المحور الرابع: أنظمة تخطيط موارد المؤسسة (ERP)</h2>
+  <p>
+    نظام ERP يربط الوظائف الإدارية المختلفة (المالية، الموارد البشرية، المشتريات، المخزون) في منظومة واحدة متكاملة،
+    بدلاً من أنظمة منفصلة لكل قسم. أهميته لمعاوني المدراء العامين والمدراء العامين تكمن في توفير رؤية شاملة وفورية
+    لأداء المؤسسة، بدل انتظار تقارير متفرقة من كل دائرة على حدة. كما تشمل بعض أنظمة ERP وحدة مخصصة لإدارة المشتريات
+    والعقود، مما يعزز الشفافية في هذا الجانب الحساس من العمل الإداري.
+  </p>
+  <div class="scenario">
+    <strong>سيناريو:</strong> يطلب المدير العام في اجتماع طارئ تقريراً فورياً يوضح حالة الإنفاق مقابل الموازنة
+    المخصصة، وعدد الموظفين الحاليين مقارنة بالملاك المصادق، وحالة طلبات الشراء المعلقة. بدل انتظار كل دائرة (المالية،
+    الموارد البشرية، المشتريات) لإرسال تقريرها منفصلاً خلال أيام، يفتح نظام ERP ويحصل على الأرقام الثلاثة مجتمعة خلال
+    دقائق من شاشة واحدة.
+  </div>
+  <div class="flow-diagram">
+    <div class="flow-step"><span class="flow-num">١</span>بيانات الدوائر المنفصلة: مالية + موارد بشرية + مشتريات + مخزون</div>
+    <div class="flow-arrow">←</div>
+    <div class="flow-step"><span class="flow-num">٢</span>نظام ERP موحد</div>
+    <div class="flow-arrow">←</div>
+    <div class="flow-step"><span class="flow-num">٣</span>شاشة واحدة للمدير العام</div>
+  </div>
+</section>
+
+<section id="ch6">
+  <h2>المحور الخامس: إدارة الوثائق الإلكترونية والتوقيع الرقمي</h2>
+  <ul>
+    <li><strong>أنظمة إدارة الوثائق الإلكترونية (EDMS):</strong> تتيح حفظ وتصنيف واسترجاع الوثائق الرسمية إلكترونياً، مع صلاحيات وصول محددة لكل مستخدم.</li>
+    <li><strong>التوقيع الإلكتروني:</strong> يمنح المعاملات الرسمية مصداقية قانونية دون الحاجة إلى التوقيع الورقي التقليدي، مما يسرّع دورة اعتماد الكتب والمعاملات بشكل كبير.</li>
+  </ul>
+  <div class="scenario">
+    <strong>سيناريو:</strong> يحتاج كتاب رسمي موافقة ثلاث جهات متسلسلة (رئيس القسم، مدير الدائرة، المدير العام) قبل
+    الصدور. بالطريقة الورقية التقليدية قد يستغرق تنقّل الكتاب بين المكاتب الثلاثة يومين أو أكثر. باستخدام التوقيع
+    الإلكتروني، يوقّع كل مسؤول فور استلام إشعار الموافقة على جهازه، فيصدر الكتاب معتمداً خلال ساعات معدودة مهما كان
+    أحد الموقّعين خارج المكتب.
+  </div>
+  <div class="flow-diagram">
+    <div class="flow-step"><span class="flow-num">١</span>إعداد الكتاب إلكترونياً</div>
+    <div class="flow-arrow">←</div>
+    <div class="flow-step"><span class="flow-num">٢</span>توقيع رئيس القسم</div>
+    <div class="flow-arrow">←</div>
+    <div class="flow-step"><span class="flow-num">٣</span>توقيع مدير الدائرة</div>
+    <div class="flow-arrow">←</div>
+    <div class="flow-step"><span class="flow-num">٤</span>توقيع المدير العام وصدور الكتاب</div>
+  </div>
+</section>
+
+<section id="ch7">
+  <h2>المحور السادس: الحوكمة والامتثال الرقمي (GRC)</h2>
+  <p>
+    أنظمة الحوكمة وإدارة المخاطر والامتثال (Governance, Risk &amp; Compliance) أصبحت من أهم الأدوات التي تدعم عمل
+    الإدارة العليا في مواجهة متطلبات الرقابة الخارجية، وخاصة الرقابة المالية. تساعد هذه الأنظمة على:
+  </p>
+  <ul>
+    <li>بناء أثر رقمي موثّق لكل معاملة وقرار، يسهّل عملية التدقيق الخارجي ويقلل وقته.</li>
+    <li>ربط بيانات المخاطر من مختلف الدوائر (المالية، الموارد البشرية، المشتريات) في لوحة رقابة موحدة يطّلع عليها المدير العام مباشرة.</li>
+    <li>أتمتة إعداد تقارير الامتثال الدورية بدلاً من إعدادها يدوياً في كل مرة تطلبها جهة الرقابة.</li>
+  </ul>
+  <div class="scenario">
+    <strong>سيناريو:</strong> يصل إشعار من ديوان الرقابة المالية بزيارة تدقيق مفاجئة خلال ثلاثة أيام. بدلاً من تكليف
+    عدة موظفين بالبحث يدوياً عن المستندات والمعاملات المطلوبة من أرشيفات متفرقة، يستخرج نظام GRC تلقائياً كل المعاملات
+    ذات الصلة موثقة بتاريخها ومسار اعتمادها، جاهزة للعرض على فريق التدقيق دون أي تأخير أو نقص بالمستندات.
+  </div>
+  <div class="flow-diagram">
+    <div class="flow-step"><span class="flow-num">١</span>إشعار بزيارة تدقيق</div>
+    <div class="flow-arrow">←</div>
+    <div class="flow-step"><span class="flow-num">٢</span>استخراج المعاملات آلياً من النظام</div>
+    <div class="flow-arrow">←</div>
+    <div class="flow-step"><span class="flow-num">٣</span>مراجعة سريعة من المدير المعني</div>
+    <div class="flow-arrow">←</div>
+    <div class="flow-step"><span class="flow-num">٤</span>تسليم الملف الموثّق لفريق التدقيق</div>
+  </div>
+</section>
+
+<section id="ch8">
+  <h2>المحور السابع: الأمن السيبراني</h2>
+  <p>
+    الأمن السيبراني ليس شأناً تقنياً بحتاً يخص قسم تقنية المعلومات فقط، بل مسؤولية مباشرة تقع على عاتق المدير الإداري
+    نفسه، كونه المسؤول عن حماية بيانات ومراسلات دائرته. أبرز المخاطر الشائعة:
+  </p>
+  <ul>
+    <li>اختراق البريد الإلكتروني الرسمي وانتحال هوية المرسل.</li>
+    <li>تسريب الوثائق والملفات الحساسة.</li>
+    <li>الاحتيال عبر رسائل مزوّرة تحاكي مراسلات رسمية.</li>
+  </ul>
+  <h3>ممارسات عملية للمدير</h3>
+  <ul>
+    <li>اعتماد كلمات مرور قوية والتحقق بخطوتين على البريد الرسمي.</li>
+    <li>التحقق من مصدر أي طلب مالي أو إداري حساس قبل التنفيذ، حتى لو بدا صادراً من جهة معروفة.</li>
+    <li>التدريب الدوري للموظفين على التعرف على رسائل التصيّد الاحتيالي.</li>
+  </ul>
+  <div class="scenario">
+    <strong>سيناريو:</strong> يصل بريد إلكتروني لمعاون المدير العام يبدو صادراً من مصرف الدائرة، يطلب تحويل مبلغ مالي
+    بشكل عاجل لحساب "جديد" بذريعة تحديث بيانات الحساب. بدلاً من التنفيذ الفوري، يتحقق المعاون - وفق التدريب الذي تلقاه
+    - من رقم هاتف المصرف الرسمي المعروف مسبقاً وليس الرقم المذكور بالرسالة، فيتضح أن الرسالة مزوّرة، وتُحال فوراً إلى
+    الجهة المختصة، مما يجنّب الدائرة عملية احتيال مالي كانت ستكلفها خسارة كبيرة.
+  </div>
+  <div class="flow-diagram">
+    <div class="flow-step"><span class="flow-num">١</span>وصول طلب مالي "عاجل"</div>
+    <div class="flow-arrow">←</div>
+    <div class="flow-step"><span class="flow-num">٢</span>التحقق عبر قناة رسمية معروفة مسبقاً</div>
+    <div class="flow-arrow">←</div>
+    <div class="flow-step"><span class="flow-num">٣</span>رفض التنفيذ عند الشك وإبلاغ الجهة المختصة</div>
+    <div class="flow-arrow">←</div>
+    <div class="flow-step"><span class="flow-num">٤</span>التنفيذ فقط بعد التأكد الكامل</div>
+  </div>
+</section>
+
+<section id="ch9">
+  <h2>المحور الثامن: نظم الموارد البشرية الرقمية (HRIS)</h2>
+  <p>
+    تُعنى نظم الموارد البشرية الرقمية (Human Resource Information Systems) بأتمتة وإدارة كافة العمليات المرتبطة
+    بالموظف من لحظة التعيين وحتى نهاية الخدمة، وتشمل:
+  </p>
+  <ul>
+    <li><strong>الحضور والانصراف:</strong> تسجيل آلي عبر البصمة أو التطبيق، مع تنبيه تلقائي عند التأخر أو الغياب المتكرر.</li>
+    <li><strong>احتساب الرواتب والمستحقات:</strong> ربط الحضور والإجازات مباشرة براتب الموظف دون تدخل يدوي.</li>
+    <li><strong>تقييم الأداء الوظيفي:</strong> توثيق التقييمات الدورية وربطها بمسار الترقية والتدريب.</li>
+    <li><strong>إدارة الإجازات:</strong> تقديم الطلب والموافقة عليه إلكترونياً مع تحديث الرصيد تلقائياً.</li>
+    <li><strong>فرز طلبات التوظيف:</strong> يساعد الذكاء الاصطناعي في فرز مئات السير الذاتية عند إعلان وظيفي واحد، وترشيح الأنسب وفق معايير محددة مسبقاً.</li>
+    <li><strong>سجل التدريب والتطوير:</strong> متابعة الدورات التي حصل عليها كل موظف وربطها باحتياجات التطوير المستقبلية.</li>
+  </ul>
+  <div class="scenario">
+    <strong>سيناريو:</strong> يُعلن عن وظيفة شاغرة واحدة فتصل أكثر من ٣٠٠ سيرة ذاتية خلال أسبوع. بدلاً من أن تفرزها لجنة
+    مختصة يدوياً على مدى أيام، يستخدم نظام HRIS معايير مسبقة (الشهادة، سنوات الخبرة، الاختصاص) لترشيح أفضل عشرين
+    مرشحاً تلقائياً، فتختصر اللجنة وقتها للتركيز على المقابلات الشخصية فقط.
+  </div>
+  <div class="flow-diagram">
+    <div class="flow-step"><span class="flow-num">١</span>تعيين الموظف وإدخال بياناته</div>
+    <div class="flow-arrow">←</div>
+    <div class="flow-step"><span class="flow-num">٢</span>تسجيل الحضور والإجازات آلياً</div>
+    <div class="flow-arrow">←</div>
+    <div class="flow-step"><span class="flow-num">٣</span>احتساب الراتب تلقائياً</div>
+    <div class="flow-arrow">←</div>
+    <div class="flow-step"><span class="flow-num">٤</span>تقييم الأداء الدوري</div>
+    <div class="flow-arrow">←</div>
+    <div class="flow-step"><span class="flow-num">٥</span>قرار الترقية أو التدريب</div>
+  </div>
+</section>
+
+<section id="ch10">
+  <h2>المحور التاسع: نظام خدمة العملاء (نظام التذاكر)</h2>
+  <p>
+    نظام التذاكر (Ticketing System) هو نظام إلكتروني يُستخدم لاستقبال طلبات واستفسارات وشكاوى المواطنين أو الموظفين
+    الداخليين، وتحويل كل واحدة منها إلى "تذكرة" (Ticket) لها رقم مرجعي فريد، تُتابع من لحظة الاستلام حتى الإغلاق
+    النهائي - بدلاً من ضياعها بين رسائل بريد إلكتروني متناثرة أو مكالمات هاتفية غير موثقة.
+  </p>
+  <ul>
+    <li>توثيق كل طلب برقم مرجعي يسهل متابعته والرجوع إليه لاحقاً.</li>
+    <li>توزيع التذاكر تلقائياً على الموظف أو القسم المختص بحسب نوع الطلب.</li>
+    <li>قياس زمن الاستجابة والإنجاز لكل تذكرة، ومحاسبة الدوائر المتأخرة.</li>
+    <li>لوحة إحصائية توضح أكثر أنواع الطلبات تكراراً، مما يوجّه القرار لمعالجة الأسباب الجذرية.</li>
+    <li>شفافية للمواطن نفسه، إذ يمكنه متابعة حالة طلبه دون الحاجة للاتصال المتكرر بالدائرة.</li>
+  </ul>
+  <p>من الأمثلة الشائعة على هذه الأنظمة: Zendesk، Freshdesk، أو أنظمة تذاكر مدمجة ضمن حلول إدارة علاقات المواطنين الحكومية.</p>
+  <div class="scenario">
+    <strong>سيناريو:</strong> يقدّم مواطن شكوى بخصوص تأخر معاملة معينة عبر الموقع الإلكتروني للدائرة. يُنشئ النظام
+    تلقائياً تذكرة برقم مرجعي، يستلمها القسم المختص فوراً عبر إشعار، وتُحدَّد لها مهلة زمنية للرد وفق نوع الطلب. يستطيع
+    المواطن متابعة حالة تذكرته (قيد المعالجة / تم الحل) من نفس الرابط دون اتصال متكرر بالدائرة، بينما تتيح لوحة القسم
+    للمدير رؤية عدد التذاكر المتأخرة أولاً بأول.
+  </div>
+  <div class="flow-diagram">
+    <div class="flow-step"><span class="flow-num">١</span>استلام الطلب أو الشكوى</div>
+    <div class="flow-arrow">←</div>
+    <div class="flow-step"><span class="flow-num">٢</span>إنشاء تذكرة برقم مرجعي</div>
+    <div class="flow-arrow">←</div>
+    <div class="flow-step"><span class="flow-num">٣</span>توزيعها على القسم المختص</div>
+    <div class="flow-arrow">←</div>
+    <div class="flow-step"><span class="flow-num">٤</span>معالجة ضمن مهلة محددة</div>
+    <div class="flow-arrow">←</div>
+    <div class="flow-step"><span class="flow-num">٥</span>إغلاق التذكرة وتقييم رضا المواطن</div>
+  </div>
+</section>
+
+<footer>
+  نهاية المحاضرة — للنقاش والأسئلة
+</footer>
+
+</body>
+</html>
