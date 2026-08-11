@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تكنولوجيا المعلومات في العمل الإداري</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Aref+Ruqaa+Ink&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --red:#d1342b;
+    --green:#1f7a3d;
+    --blue:#1857a4;
+    --lightblue:#3f8fd6;
+    --orange:#e07a1f;
+    --purple:#7a2ea6;
+    --pink:#e0578f;
+    --paper:#fbf8ef;
+    --ruleline:rgba(63,143,214,0.28);
+    --ink:#1a3d8c;
+  }
+
+  *{box-sizing:border-box;}
+
+  html,body{
+    margin:0;
+    padding:0;
+    min-height:100vh;
+    font-family:'Aref Ruqaa', serif;
+  }
+
+  body{
+    background-color:#5e3a1f;
+    background-image:
+      linear-gradient(90deg, rgba(0,0,0,0.10) 0 2px, transparent 2px 18px),
+      repeating-linear-gradient(100deg, #6b4425 0, #6b4425 40px, #78502c 40px, #78502c 80px, #63401f 80px, #63401f 120px);
+    position:relative;
+  }
+
+  body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    background:radial-gradient(ellipse at center, rgba(0,0,0,0) 40%, rgba(0,0,0,0.35) 100%);
+    mix-blend-mode:multiply;
+  }
+
+  .stage{
+    position:relative;
+    z-index:1;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:clamp(20px,4vw,48px) 14px;
+    gap:0;
+  }
+
+  /* ---------- tabs ---------- */
+  .tabs{
+    display:flex;
+    gap:10px;
+    padding:0 8px;
+    position:relative;
+    z-index:3;
+  }
+
+  .tab{
+    font-family:'Aref Ruqaa', serif;
+    font-weight:700;
+    font-size:15px;
+    line-height:1.15;
+    color:#fff;
+    background:var(--blue);
+    border:none;
+    border-radius:10px 10px 0 0;
+    padding:8px 16px 12px;
+    cursor:pointer;
+    box-shadow:0 4px 8px rgba(0,0,0,0.35);
+    transform:rotate(-1.5deg) translateY(6px);
+    opacity:0.75;
+    transition:transform .15s ease, opacity .15s ease;
+  }
+
+  .tab:nth-child(2){background:var(--green); transform:rotate(1.2deg) translateY(6px);}
+  .tab:nth-child(3){background:var(--orange); transform:rotate(-1deg) translateY(6px);}
+  .tab:nth-child(4){background:var(--purple); transform:rotate(1.4deg) translateY(6px);}
+
+  .tab.active{
+    opacity:1;
+    transform:translateY(0) rotate(-0.6deg);
+    box-shadow:0 6px 10px rgba(0,0,0,0.4);
+  }
+
+  .tab:hover{opacity:0.95;}
+
+  /* ---------- paper ---------- */
+  .paper-wrapper{
+    position:relative;
+    z-index:2;
+  }
+
+  .tape{
+    position:absolute;
+    width:64px;
+    height:22px;
+    top:-11px;
+    opacity:0.6;
+    background:repeating-linear-gradient(45deg, rgba(255,255,255,0.55) 0 5px, rgba(255,255,255,0.15) 5px 10px);
+    box-shadow:0 2px 4px rgba(0,0,0,0.2);
+  }
+  .tape-left{ right:10%; background-color:#e8c14a; transform:rotate(-7deg); }
+  .tape-right{ left:12%; background-color:#e88ba3; transform:rotate(6deg); }
+
+  .paper{
+    position:relative;
+    width:min(92vw,720px);
+    min-height:min(calc(92vw * 1.32), 950px);
+    background-color:var(--paper);
+    background-image:repeating-linear-gradient(var(--paper), var(--paper) 27px, var(--ruleline) 28px);
+    border:2.5px solid var(--red);
+    box-shadow:0 22px 45px rgba(0,0,0,0.5), 0 6px 14px rgba(0,0,0,0.35);
+    transform:rotate(-0.5deg);
+    padding:clamp(18px,4vw,34px) clamp(20px,5vw,46px);
+    overflow:visible;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+  }
+
+  .slide{
+    display:none;
+    width:100%;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    position:relative;
+  }
+  .slide.active{display:flex;}
+
+  .content-slide.active{
+    align-items:stretch;
+    text-align:right;
+  }
+
+  /* ---------- doodles ---------- */
+  .corner-doodle{
+    position:absolute;
+    width:clamp(60px,16vw,120px);
+    z-index:1;
+  }
+  .monitor-pos{ top:8px; right:6px; transform:rotate(-4deg); }
+  .folder-pos{ top:12px; left:6px; transform:rotate(5deg); }
+
+  .star{ width:18px; height:18px; }
+
+  /* ---------- title ---------- */
+  .title-wrap{
+    margin-top:clamp(46px,10vw,72px);
+    position:relative;
+  }
+
+  .eyebrow-tag{
+    display:inline-block;
+    font-family:'Aref Ruqaa', serif;
+    font-weight:700;
+    font-size:clamp(13px,2.6vw,16px);
+    color:#fff;
+    background:var(--orange);
+    padding:4px 16px;
+    border-radius:255px 15px 225px 15px/15px 225px 15px 255px;
+    transform:rotate(-2deg);
+    box-shadow:0 3px 6px rgba(0,0,0,0.25);
+    margin-bottom:14px;
+  }
+
+  .main-title{
+    font-family:'Aref Ruqaa Ink','Aref Ruqaa',serif;
+    font-weight:700;
+    color:var(--green);
+    font-size:clamp(26px,6.4vw,44px);
+    line-height:1.35;
+    margin:0;
+    text-shadow:1px 1px 0 rgba(0,0,0,0.06);
+    transform:rotate(-0.5deg);
+  }
+
+  .title-underline{
+    width:min(88%,360px);
+    height:26px;
+    margin:2px auto 0;
+    display:block;
+  }
+
+  /* ---------- info box ---------- */
+  .info-box{
+    margin-top:clamp(26px,6vw,44px);
+    border:2.5px solid var(--blue);
+    border-radius:255px 15px 225px 15px/15px 225px 15px 255px;
+    background:rgba(255,255,255,0.45);
+    padding:clamp(16px,4vw,26px) clamp(22px,6vw,38px);
+    transform:rotate(0.6deg);
+    box-shadow:2px 3px 0 rgba(24,87,164,0.08);
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    max-width:92%;
+  }
+
+  .info-line{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    font-size:clamp(15px,3.4vw,20px);
+    color:var(--ink);
+  }
+
+  .icon-sm{ width:clamp(24px,6vw,34px); flex:none; }
+
+  .institute-name{
+    font-weight:700;
+    color:var(--blue);
+    font-size:clamp(16px,3.8vw,22px);
+  }
+
+  .divider{
+    width:70%;
+    align-self:center;
+    height:2px;
+    background-image:repeating-linear-gradient(90deg, var(--purple) 0 8px, transparent 8px 14px);
+    opacity:0.6;
+    border:none;
+    margin:0;
+  }
+
+  .presenter-line .label{
+    color:var(--purple);
+    font-weight:400;
+  }
+  .presenter-line .name{
+    font-weight:700;
+    color:var(--purple);
+  }
+
+  .email-line .email{
+    font-family:'Caveat',cursive;
+    font-weight:700;
+    font-size:clamp(18px,4.2vw,24px);
+    color:var(--blue);
+    direction:ltr;
+    unicode-bidi:isolate;
+    border-bottom:2px dashed var(--lightblue);
+    padding-bottom:2px;
+  }
+
+  .deco-stars{
+    position:absolute;
+    display:flex;
+    gap:6px;
+  }
+  .stars-a{ top:14%; left:8%; }
+  .stars-b{ bottom:10%; right:8%; }
+
+  .footer-note{
+    margin-top:clamp(20px,5vw,34px);
+    font-size:clamp(12px,2.6vw,14px);
+    color:var(--ink);
+    opacity:0.65;
+    transform:rotate(-1deg);
+  }
+
+  @media (max-width:420px){
+    .tab{ padding:6px 12px 10px; font-size:13px; }
+  }
+
+  /* ---------- content-slide building blocks ---------- */
+  .chip{
+    display:inline-block;
+    font-family:'Aref Ruqaa', serif;
+    font-weight:700;
+    font-size:clamp(12px,2.6vw,15px);
+    color:#fff;
+    padding:4px 16px;
+    border-radius:255px 15px 225px 15px/15px 225px 15px 255px;
+    box-shadow:0 3px 6px rgba(0,0,0,0.25);
+    align-self:center;
+    margin-bottom:8px;
+  }
+  .chip-ch1{ background:var(--blue); transform:rotate(-1.5deg); }
+
+  .page-title{
+    font-family:'Aref Ruqaa Ink','Aref Ruqaa',serif;
+    font-weight:700;
+    color:var(--green);
+    font-size:clamp(22px,5.2vw,30px);
+    margin:2px 0 0;
+    align-self:center;
+    text-align:center;
+  }
+
+  .page-underline{
+    width:min(70%,240px);
+    height:20px;
+    margin:0 auto 14px;
+    display:block;
+    align-self:center;
+  }
+
+  .section-heading{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    color:var(--red);
+    font-weight:700;
+    font-size:clamp(16px,3.8vw,20px);
+    border-bottom:2.5px solid var(--red);
+    padding-bottom:4px;
+    margin:16px 0 8px;
+    width:fit-content;
+    align-self:flex-start;
+  }
+  .arrow-icon{ width:20px; height:20px; flex:none; }
+
+  .lead-paragraph{
+    font-size:clamp(14px,3.4vw,17px);
+    color:var(--ink);
+    line-height:1.9;
+    margin:0 0 4px;
+  }
+
+  .hl{
+    padding:0 5px;
+    border-radius:3px;
+    box-decoration-break:clone;
+    -webkit-box-decoration-break:clone;
+  }
+  .hl-yellow{ background:rgba(255,224,102,0.65); }
+  .hl-green{ background:rgba(163,220,175,0.6); }
+  .hl-pink{ background:rgba(240,170,195,0.55); }
+  .hl-blue{ background:rgba(150,200,240,0.55); }
+
+  .tip-box{
+    border:2px solid var(--green);
+    border-radius:16px 4px 16px 4px/4px 16px 4px 16px;
+    background:rgba(200,240,210,0.35);
+    padding:10px 14px;
+    font-size:clamp(12.5px,3vw,14.5px);
+    color:var(--ink);
+    max-width:230px;
+    margin:6px auto 10px;
+    transform:rotate(-1.2deg);
+    align-self:center;
+    text-align:center;
+  }
+  .tip-box .tip-title{
+    color:var(--green);
+    font-weight:700;
+    display:flex;
+    align-items:center;
+    gap:6px;
+    margin-bottom:4px;
+    justify-content:center;
+  }
+  .tip-icon{ width:22px; height:22px; flex:none; }
+
+  .bullet-list{
+    list-style:none;
+    padding:0;
+    margin:0 0 6px;
+    display:flex;
+    flex-direction:column;
+    gap:7px;
+  }
+  .bullet-list li{
+    display:flex;
+    align-items:flex-start;
+    gap:8px;
+    font-size:clamp(14px,3.3vw,16.5px);
+    color:var(--ink);
+  }
+  .bullet-mark{
+    color:var(--green);
+    font-weight:700;
+    display:inline-block;
+    transform:rotate(-6deg);
+    flex:none;
+  }
+
+  .components-grid{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    justify-content:center;
+    margin:4px 0 6px;
+  }
+  .component-card{
+    flex:1 1 125px;
+    max-width:150px;
+    border:2px solid var(--blue);
+    border-radius:14px 4px 14px 4px/4px 14px 4px 14px;
+    background:rgba(255,255,255,0.5);
+    padding:10px 8px;
+    text-align:center;
+  }
+  .component-card .c-icon{ width:30px; height:30px; margin-bottom:4px; }
+  .component-card .c-name{
+    font-weight:700;
+    color:var(--blue);
+    font-size:clamp(13px,3.1vw,15px);
+    display:block;
+  }
+  .component-card .c-ex{
+    font-size:clamp(11px,2.7vw,12.5px);
+    color:var(--ink);
+    opacity:0.75;
+    display:block;
+    margin-top:2px;
+  }
+
+  .page-nav{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:20px;
+    padding-top:12px;
+    border-top:2px dashed var(--ruleline);
+    width:100%;
+  }
+  .nav-btn{
+    font-family:'Aref Ruqaa', serif;
+    font-weight:700;
+    font-size:14px;
+    background:#fff;
+    border:2px solid var(--blue);
+    border-radius:255px 15px 225px 15px/15px 225px 15px 255px;
+    padding:6px 16px;
+    color:var(--blue);
+    cursor:pointer;
+    box-shadow:1px 2px 0 rgba(24,87,164,0.15);
+  }
+  .nav-btn:hover{ background:var(--blue); color:#fff; }
+  .nav-btn:disabled{ opacity:0.3; cursor:default; box-shadow:none; }
+  .nav-btn:disabled:hover{ background:#fff; color:var(--blue); }
+
+  .content-slide::after{
+    content:"★";
+    position:absolute;
+    bottom:6px;
+    left:12px;
+    font-size:15px;
+    opacity:0.7;
+    color:var(--orange);
+    transform:rotate(-8deg);
+  }
+  .content-slide:nth-of-type(3n+2)::after{ color:var(--purple); transform:rotate(6deg); }
+  .content-slide:nth-of-type(3n)::after{ color:var(--green); transform:rotate(-4deg); }
+
+  .mini-note{
+    margin-top:10px;
+    align-self:center;
+    font-size:clamp(12px,2.8vw,14px);
+    color:var(--red);
+    opacity:0.85;
+    transform:rotate(0.8deg);
+    text-align:center;
+  }  .print-btn{
+    position:fixed;
+    bottom:18px;
+    left:18px;
+    z-index:200;
+    background:var(--red);
+    color:#fff;
+    border:none;
+    border-radius:24px;
+    padding:11px 20px;
+    font-family:'Aref Ruqaa', serif;
+    font-weight:700;
+    font-size:14px;
+    cursor:pointer;
+    box-shadow:0 4px 12px rgba(0,0,0,0.35);
+  }
+  .print-btn:hover{ background:var(--accent-dark,#b52a22); }
+
+  @media print{
+    *{ -webkit-print-color-adjust:exact; print-color-adjust:exact; color-adjust:exact; }
+    @page{ size:A4; margin:8mm; }
+    body{ background:#fff !important; }
+    .print-btn, .tabs, .tape{ display:none !important; }
+    .paper-wrapper{ transform:none !important; }
+    .paper{
+      display:block !important;
+      border:none !important;
+      box-shadow:none !important;
+      transform:none !important;
+      width:auto !important;
+      min-height:0 !important;
+      padding:0 !important;
+      background:none !important;
+    }
+    .slide{
+      display:flex !important;
+      flex-direction:column;
+      border:2.5px solid var(--red);
+      background-color:var(--paper);
+      background-image:repeating-linear-gradient(var(--paper), var(--paper) 27px, var(--ruleline) 28px);
+      padding:14mm 10mm;
+      min-height:277mm;
+      page-break-after:always;
+      break-after:page;
+      box-sizing:border-box;
+    }
+    .slide:last-child{ page-break-after:auto; break-after:auto; }
+    .content-slide{ align-items:stretch !important; text-align:right !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- reusable sketchy filter -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <filter id="sketchy" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="7" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="3.2"/>
+    </filter>
+  </defs>
+</svg>
+
+<button class="print-btn" onclick="window.print()">🖨 طباعة كل الصفحات PDF</button>
+
+<div class="stage">
+
+  <div class="tabs">
+    <button class="tab active" data-target="slide-1">١<br>الغلاف</button>
+    <button class="tab" data-target="slide-2">٢<br>التعريف</button>
+    <button class="tab" data-target="slide-3">٣<br>التصنيف</button>
+    <button class="tab" data-target="slide-4">٤<br>الذكاء الاصطناعي</button>
+    <button class="tab" data-target="slide-5">٥<br>أمثلة Claude</button>
+    <button class="tab" data-target="slide-6">٦<br>الأتمتة</button>
+    <button class="tab" data-target="slide-7">٧<br>الحوسبة السحابية</button>
+    <button class="tab" data-target="slide-8">٨<br>ERP</button>
+    <button class="tab" data-target="slide-9">٩<br>التوقيع الرقمي</button>
+    <button class="tab" data-target="slide-10">١٠<br>GRC</button>
+    <button class="tab" data-target="slide-11">١١<br>الأمن السيبراني</button>
+    <button class="tab" data-target="slide-12">١٢<br>HRIS</button>
+    <button class="tab" data-target="slide-13">١٣<br>نظام التذاكر</button>
+  </div>
+
+  <div class="paper-wrapper">
+    <div class="tape tape-left"></div>
+    <div class="tape tape-right"></div>
+
+    <div class="paper">
+
+      <!-- ============ SLIDE 1 : COVER ============ -->
+      <div id="slide-1" class="slide active">
+
+        <!-- corner doodles -->
+        <svg class="corner-doodle monitor-pos" viewBox="0 0 140 120">
+          <g filter="url(#sketchy)">
+            <rect x="15" y="10" width="95" height="68" rx="6" fill="#eaf4ff" stroke="var(--blue)" stroke-width="3"/>
+            <rect x="55" y="78" width="18" height="14" fill="var(--blue)"/>
+            <rect x="40" y="92" width="48" height="7" rx="3" fill="var(--blue)"/>
+            <rect x="25" y="52" width="10" height="18" fill="#1f7a3d"/>
+            <rect x="40" y="42" width="10" height="28" fill="#e07a1f"/>
+            <rect x="55" y="57" width="10" height="13" fill="#d1342b"/>
+            <circle cx="90" cy="35" r="15" fill="#fff" stroke="var(--purple)" stroke-width="2.5"/>
+            <path d="M90 35 L90 20 A15 15 0 0 1 103 42 Z" fill="var(--purple)" opacity="0.75"/>
+          </g>
+        </svg>
+
+        <svg class="corner-doodle folder-pos" viewBox="0 0 120 100">
+          <g filter="url(#sketchy)">
+            <path d="M10 30 L10 85 Q10 90 15 90 L105 90 Q110 90 110 85 L110 40 Q110 35 105 35 L60 35 L52 25 L15 25 Q10 25 10 30 Z"
+                  fill="#fdeeba" stroke="var(--blue)" stroke-width="3" stroke-linejoin="round"/>
+            <path d="M14 46 L106 46" stroke="var(--blue)" stroke-width="2" opacity="0.5"/>
+            <path d="M14 60 L100 60" stroke="var(--blue)" stroke-width="2" opacity="0.35"/>
+          </g>
+        </svg>
+
+        <div class="deco-stars stars-a">
+          <svg class="star" viewBox="0 0 24 24"><path d="M12 2 L14.5 9 L22 9.5 L16 14.5 L18 22 L12 17.5 L6 22 L8 14.5 L2 9.5 L9.5 9 Z" fill="#e07a1f"/></svg>
+        </div>
+        <div class="deco-stars stars-b">
+          <svg class="star" viewBox="0 0 24 24"><path d="M12 2 L14.5 9 L22 9.5 L16 14.5 L18 22 L12 17.5 L6 22 L8 14.5 L2 9.5 L9.5 9 Z" fill="#7a2ea6"/></svg>
+          <svg class="star" viewBox="0 0 24 24" style="width:13px;height:13px;transform:translateY(4px)"><path d="M12 2 L14.5 9 L22 9.5 L16 14.5 L18 22 L12 17.5 L6 22 L8 14.5 L2 9.5 L9.5 9 Z" fill="#d1342b"/></svg>
+        </div>
+
+        <div class="eyebrow-tag">محاضرة تدريبية</div>
+
+        <div class="title-wrap">
+          <h1 class="main-title">تكنولوجيا المعلومات<br>في العمل الإداري</h1>
+          <svg class="title-underline" viewBox="0 0 320 30" preserveAspectRatio="none">
+            <path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="4" stroke-linecap="round" filter="url(#sketchy)"/>
+            <path d="M10 18 Q90 12 165 18 T310 18" fill="none" stroke="var(--red)" stroke-width="2.5" stroke-linecap="round" filter="url(#sketchy)" opacity="0.8"/>
+          </svg>
+        </div>
+
+        <div class="info-box">
+
+          <div class="info-line">
+            <svg class="icon-sm" viewBox="0 0 40 30">
+              <path d="M20 4 L38 12 L20 20 L2 12 Z" fill="var(--blue)" opacity="0.85"/>
+              <path d="M10 15 L10 23 Q20 28 30 23 L30 15" fill="none" stroke="var(--blue)" stroke-width="2"/>
+            </svg>
+            <span class="institute-name">المعهد العالي لإعداد وتأهيل القادة</span>
+          </div>
+
+          <hr class="divider">
+
+          <div class="info-line presenter-line">
+            <span class="label">إعداد:</span>
+            <span class="name">أ.م.د. أمير هادي</span>
+          </div>
+
+          <div class="info-line email-line">
+            <svg class="icon-sm" viewBox="0 0 40 28">
+              <rect x="2" y="2" width="36" height="24" rx="3" fill="#eaf4ff" stroke="var(--blue)" stroke-width="2.5"/>
+              <path d="M4 4 L20 17 L36 4" fill="none" stroke="var(--blue)" stroke-width="2.5"/>
+            </svg>
+            <span class="email">ameer.hadi@alshaab.edu.iq</span>
+          </div>
+
+        </div>
+
+        <div class="page-nav">
+          <button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button>
+          <button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button>
+        </div>
+
+        <div class="footer-note">١</div>
+
+      </div>
+      <!-- ============ END SLIDE 1 ============ -->
+
+      <!-- ============ SLIDE 2 : تعريف تكنولوجيا المعلومات ============ -->
+      <div id="slide-2" class="slide content-slide">
+        <svg class="corner-doodle" style="position:absolute;top:6px;left:8px;width:58px;transform:rotate(-3deg);" viewBox="0 0 60 60">
+          <g filter="url(#sketchy)">
+            <rect x="10" y="34" width="40" height="10" rx="2" fill="#eaf4ff" stroke="var(--blue)" stroke-width="2"/>
+            <rect x="14" y="22" width="32" height="10" rx="2" fill="#e6f6ea" stroke="var(--green)" stroke-width="2"/>
+            <rect x="18" y="10" width="24" height="10" rx="2" fill="#fde3c4" stroke="var(--orange)" stroke-width="2"/>
+          </g>
+        </svg>
+
+        <span class="chip chip-ch1">المحور الأول: الإطار المفاهيمي</span>
+        <h2 class="page-title">تعريف تكنولوجيا المعلومات</h2>
+        <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none">
+          <path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/>
+        </svg>
+
+        <div class="section-heading">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>ما هي تكنولوجيا المعلومات؟</span>
+        </div>
+        <p class="lead-paragraph">
+          هي مجموعة من <span class="hl hl-blue">الأجهزة</span> و<span class="hl hl-green">البرامج</span> و<span class="hl hl-yellow">الشبكات</span> و<span class="hl hl-pink">البيانات</span>
+          التي تُستخدم لجمع المعلومات ومعالجتها وتخزينها ونقلها واسترجاعها، بهدف دعم العمل الإداري وترشيد اتخاذ القرارات.
+        </p>
+
+        <div class="tip-box">
+          <div class="tip-title">
+            <svg class="tip-icon" viewBox="0 0 24 24">
+              <circle cx="12" cy="9" r="6.5" fill="#fff3c4" stroke="var(--green)" stroke-width="2"/>
+              <rect x="9" y="16" width="6" height="4" rx="1.5" fill="none" stroke="var(--green)" stroke-width="2"/>
+              <line x1="9" y1="21" x2="15" y2="21" stroke="var(--green)" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            فكرة بسيطة
+          </div>
+          تكنولوجيا المعلومات مثل مساعد ذكي للإدارة… توفر المعلومة المناسبة في الوقت المناسب.
+        </div>
+
+        <div class="section-heading">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>أهميتها في العمل الإداري</span>
+        </div>
+        <ul class="bullet-list">
+          <li><span class="bullet-mark">✔</span> تسهيل إنجاز الأعمال الإدارية <span class="hl hl-yellow">بسرعة ودقة</span></li>
+          <li><span class="bullet-mark">✔</span> تحسين <span class="hl hl-blue">الاتصال والتواصل</span> داخل المنظمة وخارجها</li>
+          <li><span class="bullet-mark">✔</span> حفظ البيانات <span class="hl hl-green">وتنظيمها</span> واسترجاعها بسهولة</li>
+          <li><span class="bullet-mark">✔</span> دعم عملية <span class="hl hl-pink">اتخاذ القرار</span> بمعلومات دقيقة وحديثة</li>
+          <li><span class="bullet-mark">✔</span> تقليل <span class="hl hl-yellow">التكاليف والوقت</span> والجهد</li>
+        </ul>
+
+        <div class="section-heading">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>مكونات تكنولوجيا المعلومات</span>
+        </div>
+        <div class="components-grid">
+          <div class="component-card">
+            <svg class="c-icon" viewBox="0 0 40 40"><rect x="6" y="6" width="28" height="20" rx="3" fill="#eaf4ff" stroke="var(--blue)" stroke-width="2.5"/><rect x="15" y="28" width="10" height="6" fill="var(--blue)"/></svg>
+            <span class="c-name">الأجهزة</span>
+            <span class="c-ex">حاسوب، طابعة، خوادم</span>
+          </div>
+          <div class="component-card">
+            <svg class="c-icon" viewBox="0 0 40 40"><rect x="8" y="6" width="24" height="28" rx="3" fill="#e6f6ea" stroke="var(--green)" stroke-width="2.5"/><path d="M14 14 h12 M14 20 h12 M14 26 h8" stroke="var(--green)" stroke-width="2" stroke-linecap="round"/></svg>
+            <span class="c-name">البرامج</span>
+            <span class="c-ex">تشغيل، محاسبة، قواعد بيانات</span>
+          </div>
+          <div class="component-card">
+            <svg class="c-icon" viewBox="0 0 40 40"><path d="M8 30 L8 14 L18 8 L32 14 L32 30 Z" fill="#f6e8fb" stroke="var(--purple)" stroke-width="2.5"/><path d="M12 20 h16 M12 25 h16" stroke="var(--purple)" stroke-width="2"/></svg>
+            <span class="c-name">البيانات</span>
+            <span class="c-ex">حقائق وأرقام تُعالج</span>
+          </div>
+          <div class="component-card">
+            <svg class="c-icon" viewBox="0 0 40 40"><circle cx="10" cy="10" r="4" fill="#fde3c4" stroke="var(--orange)" stroke-width="2"/><circle cx="30" cy="10" r="4" fill="#fde3c4" stroke="var(--orange)" stroke-width="2"/><circle cx="20" cy="30" r="4" fill="#fde3c4" stroke="var(--orange)" stroke-width="2"/><path d="M10 14 L20 26 M30 14 L20 26" stroke="var(--orange)" stroke-width="2"/></svg>
+            <span class="c-name">الشبكات</span>
+            <span class="c-ex">إنترنت وشبكة داخلية</span>
+          </div>
+        </div>
+
+        <div class="mini-note">الخطوة الجاية: نصنف الأعمال الإدارية نفسها… وبعدين نربطها بكل تقنية ⟵</div>
+
+        <div class="page-nav">
+          <button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button>
+          <button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button>
+        </div>
+
+        <div class="footer-note">٢</div>
+
+      </div>
+      <!-- ============ END SLIDE 2 ============ -->
+
+      <!-- ============ SLIDE 3 : تصنيف الأعمال الإدارية ============ -->
+      <div id="slide-3" class="slide content-slide">
+        <svg class="corner-doodle" style="position:absolute;top:6px;left:6px;width:64px;transform:rotate(4deg);" viewBox="0 0 60 70">
+          <g filter="url(#sketchy)">
+            <rect x="10" y="8" width="40" height="55" rx="4" fill="#fff" stroke="var(--blue)" stroke-width="3"/>
+            <rect x="20" y="2" width="20" height="10" rx="2" fill="var(--blue)"/>
+            <path d="M18 25 l5 5 l10 -10" stroke="var(--green)" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <path d="M35 27 h8" stroke="var(--blue)" stroke-width="2"/>
+            <path d="M18 42 l5 5 l10 -10" stroke="var(--green)" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <path d="M35 44 h8" stroke="var(--blue)" stroke-width="2"/>
+          </g>
+        </svg>
+        <span class="chip chip-ch1">المحور الأول: الإطار المفاهيمي</span>
+        <h2 class="page-title">تصنيف الأعمال الإدارية</h2>
+        <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none">
+          <path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/>
+        </svg>
+        <p class="lead-paragraph">قبل أي تقنية، نحدد طبيعة الأعمال الإدارية نفسها - كل فئة راح نربطها لاحقاً بالتقنية الأنسب لها:</p>
+        <ul class="bullet-list">
+          <li><span class="bullet-mark">١</span><strong>المراسلات الرسمية</strong> — <span class="hl hl-yellow">كتاب من وزارة المالية</span></li>
+          <li><span class="bullet-mark">٢</span><strong>الاجتماعات ومحاضرها</strong> — اجتماع أسبوعي لمديري الأقسام</li>
+          <li><span class="bullet-mark">٣</span><strong>الملفات والأرشفة</strong> — <span class="hl hl-blue">ملف الموظف الوظيفي</span></li>
+          <li><span class="bullet-mark">٤</span><strong>التخطيط الاستراتيجي</strong> — خطة الدائرة السنوية ومؤشراتها</li>
+          <li><span class="bullet-mark">٥</span><strong>متابعة تنفيذ القرارات</strong> — متابعة قرار المدير العام</li>
+          <li><span class="bullet-mark">٦</span><strong>التقارير الدورية</strong> — <span class="hl hl-green">تقرير شهري للإدارة العليا</span></li>
+          <li><span class="bullet-mark">٧</span><strong>دعم اتخاذ القرار</strong> — تحليل مقارن لأداء الدوائر</li>
+          <li><span class="bullet-mark">٨</span><strong>المشتريات والعقود</strong> — مناقصة شراء أجهزة</li>
+          <li><span class="bullet-mark">٩</span><strong>التنسيق الداخلي والخارجي</strong> — تنسيق مؤتمر مشترك</li>
+          <li><span class="bullet-mark">١٠</span><strong>متابعة أداء الموظفين</strong> — <span class="hl hl-pink">تقييم الأداء السنوي</span></li>
+          <li><span class="bullet-mark">١١</span><strong>الامتثال والرقابة المالية</strong> — تجهيز مستندات لتدقيق الرقابة</li>
+        </ul>
+        <div class="mini-note">الخطوة الجاية: الذكاء الاصطناعي والأتمتة الذكية ⟵</div>
+        <div class="page-nav">
+          <button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button>
+          <button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button>
+        </div>
+
+        <div class="footer-note">٣</div>
+      </div>
+      <!-- END SLIDE 3 -->
+
+      <!-- ============ SLIDE 4 : الذكاء الاصطناعي توليدي وتنبؤي ============ -->
+      <div id="slide-4" class="slide content-slide">
+        <svg class="corner-doodle" style="position:absolute;top:8px;left:8px;width:60px;transform:rotate(-5deg);" viewBox="0 0 60 60">
+          <g filter="url(#sketchy)">
+            <rect x="15" y="15" width="30" height="30" rx="4" fill="#f6e8fb" stroke="var(--purple)" stroke-width="3"/>
+            <circle cx="30" cy="30" r="8" fill="none" stroke="var(--purple)" stroke-width="2.5"/>
+            <path d="M15 22 h-6 M15 38 h-6 M45 22 h6 M45 38 h6 M22 15 v-6 M38 15 v-6 M22 45 v6 M38 45 v6" stroke="var(--purple)" stroke-width="2.5"/>
+          </g>
+        </svg>
+        <span class="chip chip-ch1">المحور الثاني: الذكاء الاصطناعي والأتمتة</span>
+        <h2 class="page-title">الذكاء الاصطناعي: توليدي وتنبؤي</h2>
+        <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none">
+          <path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/>
+        </svg>
+
+        <div class="tip-box">
+          <div class="tip-title"><svg class="tip-icon" viewBox="0 0 24 24"><path d="M12 3 L14 9 L20 9 L15 13 L17 19 L12 15 L7 19 L9 13 L4 9 L10 9 Z" fill="#fde3c4" stroke="var(--orange)" stroke-width="1.5"/></svg> توليدي (Generative)</div>
+          يُنتج محتوى جديد - نص، ملخص، فكرة - مثل Claude
+        </div>
+        <div class="tip-box">
+          <div class="tip-title"><svg class="tip-icon" viewBox="0 0 24 24"><path d="M3 18 L9 12 L14 16 L21 6" stroke="var(--blue)" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 6 h6 v6" stroke="var(--blue)" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg> تنبؤي (Predictive)</div>
+          يحلل بيانات سابقة ويتوقع المستقبل - مثل توقع الإنفاق
+        </div>
+
+        <div class="section-heading">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>الذكاء الاصطناعي والأتمتة: العلاقة</span>
+        </div>
+        <ul class="bullet-list">
+          <li><span class="bullet-mark">✔</span><strong>الأتمتة التقليدية:</strong> خطوات ثابتة مبرمجة مسبقاً</li>
+          <li><span class="bullet-mark">✔</span><strong>الذكاء الاصطناعي:</strong> <span class="hl hl-blue">يفهم ويقرر</span> حسب السياق</li>
+          <li><span class="bullet-mark">✔</span><strong>التقارب الحديث:</strong> <span class="hl hl-yellow">Agentic AI</span> يدمج الاثنين</li>
+        </ul>
+
+        <div class="mini-note">الخطوة الجاية: أمثلة Claude التطبيقية ⟵</div>
+        <div class="page-nav">
+          <button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button>
+          <button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button>
+        </div>
+
+        <div class="footer-note">٤</div>
+      </div>
+      <!-- END SLIDE 4 -->
+
+      <!-- ============ SLIDE 5 : أمثلة Claude ============ -->
+      <div id="slide-5" class="slide content-slide">
+        <svg class="corner-doodle" style="position:absolute;top:8px;left:8px;width:66px;transform:rotate(4deg);" viewBox="0 0 60 50">
+          <g filter="url(#sketchy)">
+            <path d="M8 8 h44 a4 4 0 0 1 4 4 v20 a4 4 0 0 1 -4 4 h-28 l-10 10 v-10 h-6 a4 4 0 0 1 -4 -4 v-20 a4 4 0 0 1 4 -4 Z" fill="#eaf4ff" stroke="var(--blue)" stroke-width="3"/>
+            <circle cx="20" cy="22" r="2.5" fill="var(--blue)"/>
+            <circle cx="30" cy="22" r="2.5" fill="var(--blue)"/>
+            <circle cx="40" cy="22" r="2.5" fill="var(--blue)"/>
+          </g>
+        </svg>
+        <span class="chip chip-ch1">المحور الثاني: الذكاء الاصطناعي والأتمتة</span>
+        <h2 class="page-title">أمثلة تطبيقية بـ Claude</h2>
+        <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none">
+          <path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/>
+        </svg>
+        <p class="lead-paragraph">مدخل خام يمرّ عبر Claude ← مخرج جاهز للاستخدام:</p>
+        <ul class="bullet-list">
+          <li><span class="bullet-mark">١</span><strong>تنظيم البريد</strong> — <span class="hl hl-yellow">ترتيب حسب الأولوية</span></li>
+          <li><span class="bullet-mark">٢</span><strong>صياغة الكتب الرسمية</strong> — تعميم بدقائق</li>
+          <li><span class="bullet-mark">٣</span><strong>تلخيص التقارير</strong> — <span class="hl hl-blue">نقاط من ٤٠ صفحة</span></li>
+          <li><span class="bullet-mark">٤</span><strong>تحليل البيانات</strong> — رؤى من ملف Excel</li>
+          <li><span class="bullet-mark">٥</span><strong>محاضر الاجتماعات</strong> — من ملاحظات متفرقة</li>
+          <li><span class="bullet-mark">٦</span><strong>العروض التقديمية</strong> — من تقرير نصي</li>
+          <li><span class="bullet-mark">٧</span><strong>الترجمة</strong> — <span class="hl hl-green">كتب دولية بلغتين</span></li>
+          <li><span class="bullet-mark">٨</span><strong>الرد على استفسارات المواطنين</strong> — رد رسمي سريع</li>
+          <li><span class="bullet-mark">٩</span><strong>تحليل العقود</strong> — كشف نقاط المخاطرة</li>
+          <li><span class="bullet-mark">١٠</span><strong>الإجابة من الأرشيف</strong> — بدل بحث يدوي</li>
+          <li><span class="bullet-mark">١١</span><strong>خطط العمل</strong> — من هدف عام لخطوات تنفيذية</li>
+          <li><span class="bullet-mark">١٢</span><strong>تحليل الشكاوى</strong> — <span class="hl hl-pink">اكتشاف الأنماط المتكررة</span></li>
+          <li><span class="bullet-mark">١٣</span><strong>تلخيص الإيميلات</strong> — أهم النقاط من رسالة طويلة</li>
+          <li><span class="bullet-mark">١٤</span><strong>برمجة تطبيقات مفيدة</strong> — <span class="hl hl-yellow">أدوات وحاسبات صغيرة بدون مبرمج</span></li>
+        </ul>
+
+        <div class="section-heading">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>أمثلة مميزة</span>
+        </div>
+        <div class="components-grid">
+          <div class="component-card">
+            <svg class="c-icon" viewBox="0 0 40 40"><rect x="4" y="10" width="32" height="22" rx="3" fill="#eaf4ff" stroke="var(--blue)" stroke-width="2.5"/><path d="M6 12 L20 24 L34 12" fill="none" stroke="var(--blue)" stroke-width="2.5"/></svg>
+            <span class="c-name">تلخيص الإيميلات</span>
+            <span class="c-ex">أهم النقاط بثوانٍ</span>
+          </div>
+          <div class="component-card">
+            <svg class="c-icon" viewBox="0 0 40 40"><rect x="6" y="4" width="20" height="26" rx="2" fill="#e6f6ea" stroke="var(--green)" stroke-width="2.5"/><path d="M10 11 h12 M10 16 h12 M10 21 h8" stroke="var(--green)" stroke-width="2" stroke-linecap="round"/><circle cx="28" cy="28" r="6" fill="none" stroke="var(--orange)" stroke-width="2.5"/><path d="M32.2 32.2 L37 37" stroke="var(--orange)" stroke-width="2.5" stroke-linecap="round"/></svg>
+            <span class="c-name">تلخيص التقارير</span>
+            <span class="c-ex">من ٤٠ صفحة لنقاط</span>
+          </div>
+          <div class="component-card">
+            <svg class="c-icon" viewBox="0 0 40 40"><path d="M8 32 L8 26 L26 8 L32 14 L14 32 Z" fill="#fde3c4" stroke="var(--orange)" stroke-width="2.5" stroke-linejoin="round"/><path d="M22 12 L28 18" stroke="var(--orange)" stroke-width="2"/></svg>
+            <span class="c-name">صياغة الكتب</span>
+            <span class="c-ex">تعميم رسمي بدقائق</span>
+          </div>
+          <div class="component-card">
+            <svg class="c-icon" viewBox="0 0 40 40"><path d="M14 10 L6 20 L14 30" fill="none" stroke="var(--purple)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M26 10 L34 20 L26 30" fill="none" stroke="var(--purple)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="c-name">برمجة تطبيقات</span>
+            <span class="c-ex">أدوات صغيرة جاهزة</span>
+          </div>
+        </div>
+
+        <div class="mini-note">الخطوة الجاية: الأتمتة الذكية وn8n ⟵</div>
+        <div class="page-nav">
+          <button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button>
+          <button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button>
+        </div>
+
+        <div class="footer-note">٥</div>
+      </div>
+      <!-- END SLIDE 5 -->
+
+      <!-- ============ SLIDE 6 : الأتمتة n8n ============ -->
+      <div id="slide-6" class="slide content-slide">
+        <svg class="corner-doodle" style="position:absolute;top:8px;left:8px;width:60px;transform:rotate(6deg);" viewBox="0 0 60 60">
+          <g filter="url(#sketchy)">
+            <circle cx="30" cy="30" r="12" fill="#eaf4ff" stroke="var(--blue)" stroke-width="3"/>
+            <circle cx="30" cy="30" r="4" fill="var(--blue)"/>
+            <path d="M30 8 v8 M30 44 v8 M8 30 h8 M44 30 h8 M14 14 l6 6 M40 40 l6 6 M46 14 l-6 6 M20 40 l-6 6" stroke="var(--blue)" stroke-width="3" stroke-linecap="round"/>
+          </g>
+        </svg>
+        <span class="chip chip-ch1">المحور الثاني: الذكاء الاصطناعي والأتمتة</span>
+        <h2 class="page-title">الأتمتة الذكية: مثال n8n</h2>
+        <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none">
+          <path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/>
+        </svg>
+        <p class="lead-paragraph">n8n منصة أتمتة <span class="hl hl-blue">مفتوحة المصدر</span> تربط التطبيقات بسير عمل مرئي - بدون برمجة معقدة، ومع دمج الذكاء الاصطناعي.</p>
+
+        <div class="section-heading">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>سيناريو: طلب إجازة</span>
+        </div>
+        <div class="components-grid">
+          <div class="component-card"><span style="display:inline-block;width:22px;height:22px;border-radius:50%;background:var(--red);color:#fff;font-size:12px;line-height:22px;">١</span><br>طلب بالبريد</div>
+          <span style="align-self:center;font-size:22px;color:var(--red);">←</span>
+          <div class="component-card"><span style="display:inline-block;width:22px;height:22px;border-radius:50%;background:var(--red);color:#fff;font-size:12px;line-height:22px;">٢</span><br>استخراج البيانات</div>
+          <span style="align-self:center;font-size:22px;color:var(--red);">←</span>
+          <div class="component-card"><span style="display:inline-block;width:22px;height:22px;border-radius:50%;background:var(--red);color:#fff;font-size:12px;line-height:22px;">٣</span><br>تسجيل + إشعار المدير</div>
+          <span style="align-self:center;font-size:22px;color:var(--red);">←</span>
+          <div class="component-card"><span style="display:inline-block;width:22px;height:22px;border-radius:50%;background:var(--red);color:#fff;font-size:12px;line-height:22px;">٤</span><br>رد تلقائي للموظف</div>
+        </div>
+
+        <div class="tip-box">
+          <div class="tip-title">⏱ الفرق</div>
+          من <span style="position:relative;display:inline-block;">٣٠ دقيقة<svg style="position:absolute;inset:-6px -10px;width:calc(100% + 20px);height:calc(100% + 12px);" viewBox="0 0 100 40" preserveAspectRatio="none"><ellipse cx="50" cy="20" rx="47" ry="17" fill="none" stroke="var(--red)" stroke-width="3" filter="url(#sketchy)"/></svg></span> يدوياً إلى ثوانٍ معدودة آلياً
+        </div>
+
+        <div class="mini-note">الخطوة الجاية: الحوسبة السحابية ⟵</div>
+        <div class="page-nav">
+          <button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button>
+          <button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button>
+        </div>
+
+        <div class="footer-note">٦</div>
+      </div>
+      <!-- END SLIDE 6 -->
+
+      <!-- ============ SLIDE 7 : الحوسبة السحابية ============ -->
+      <div id="slide-7" class="slide content-slide">
+        <svg class="corner-doodle" style="position:absolute;top:6px;left:6px;width:72px;" viewBox="0 0 90 150">
+          <defs>
+            <g id="personDoodle"><circle r="4" fill="none" stroke="var(--blue)" stroke-width="1.5"/><path d="M-5 12 a5 7 0 0 1 10 0 Z" fill="none" stroke="var(--blue)" stroke-width="1.5"/></g>
+            <g id="mailDoodle"><rect x="-8" y="-5" width="16" height="10" rx="1.5" fill="#eaf4ff" stroke="var(--blue)" stroke-width="1.3"/><path d="M-8 -5 L0 1 L8 -5" fill="none" stroke="var(--blue)" stroke-width="1.3"/></g>
+            <g id="docDoodle"><rect x="-6" y="-8" width="12" height="16" rx="1.5" fill="#e6f6ea" stroke="var(--green)" stroke-width="1.3"/><line x1="-3" y1="-3" x2="3" y2="-3" stroke="var(--green)" stroke-width="1"/><line x1="-3" y1="1" x2="3" y2="1" stroke="var(--green)" stroke-width="1"/></g>
+            <g id="folderDoodle"><path d="M-8 -5 h6 l2 -2 h6 v10 h-14 Z" fill="#fdeeba" stroke="var(--orange)" stroke-width="1.3" stroke-linejoin="round"/></g>
+          </defs>
+          <g filter="url(#sketchy)">
+            <path d="M18 32 a10 10 0 0 1 1.6 -19.8 a13 13 0 0 1 25 -5.6 a11 11 0 0 1 3.8 25.4 Z" fill="#eaf4ff" stroke="var(--blue)" stroke-width="2.5"/>
+          </g>
+          <line x1="20" y1="34" x2="16" y2="48" stroke="var(--blue)" stroke-width="1.2" stroke-dasharray="2 2"/>
+          <line x1="35" y1="36" x2="35" y2="48" stroke="var(--blue)" stroke-width="1.2" stroke-dasharray="2 2"/>
+          <line x1="50" y1="34" x2="54" y2="48" stroke="var(--blue)" stroke-width="1.2" stroke-dasharray="2 2"/>
+          <use href="#mailDoodle" x="16" y="53"/>
+          <use href="#docDoodle" x="35" y="55"/>
+          <use href="#folderDoodle" x="54" y="53"/>
+          <line x1="16" y1="60" x2="14" y2="90" stroke="var(--blue)" stroke-width="1.2" stroke-dasharray="2 2"/>
+          <line x1="35" y1="62" x2="35" y2="90" stroke="var(--blue)" stroke-width="1.2" stroke-dasharray="2 2"/>
+          <line x1="54" y1="60" x2="56" y2="90" stroke="var(--blue)" stroke-width="1.2" stroke-dasharray="2 2"/>
+          <use href="#personDoodle" x="14" y="95"/>
+          <use href="#personDoodle" x="35" y="95"/>
+          <use href="#personDoodle" x="56" y="95"/>
+        </svg>
+        <span class="chip chip-ch1">المحور الثالث: الحوسبة السحابية</span>
+        <h2 class="page-title">الحوسبة السحابية</h2>
+        <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none">
+          <path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/>
+        </svg>
+        <p class="lead-paragraph">تخزين البيانات والوصول للبرامج عبر الإنترنت بدل الاعتماد الكامل على أجهزة محلية.</p>
+
+        <div class="components-grid">
+          <div class="component-card">
+            <svg class="c-icon" viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="#eaf4ff" stroke="var(--blue)" stroke-width="2.5"/><ellipse cx="20" cy="20" rx="6" ry="14" fill="none" stroke="var(--blue)" stroke-width="1.5"/><line x1="6" y1="20" x2="34" y2="20" stroke="var(--blue)" stroke-width="1.5"/></svg>
+            <span class="c-name">الوصول من أي مكان</span><span class="c-ex">أي وقت وأي جهاز</span>
+          </div>
+          <div class="component-card">
+            <svg class="c-icon" viewBox="0 0 40 40"><circle cx="14" cy="14" r="6" fill="#e6f6ea" stroke="var(--green)" stroke-width="2"/><path d="M6 32 a8 8 0 0 1 16 0" fill="none" stroke="var(--green)" stroke-width="2"/><circle cx="27" cy="14" r="6" fill="#e6f6ea" stroke="var(--green)" stroke-width="2"/><path d="M19 32 a8 8 0 0 1 16 0" fill="none" stroke="var(--green)" stroke-width="2"/></svg>
+            <span class="c-name">التعاون اللحظي</span><span class="c-ex">نفس الوثيقة سوية</span>
+          </div>
+          <div class="component-card">
+            <svg class="c-icon" viewBox="0 0 40 40"><circle cx="20" cy="16" r="12" fill="#fde3c4" stroke="var(--orange)" stroke-width="2.5"/><text x="20" y="21" font-size="13" text-anchor="middle" fill="var(--orange)" font-family="'Aref Ruqaa'">$</text><path d="M20 30 v7 M16 34 l4 4 l4 -4" stroke="var(--orange)" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+            <span class="c-name">تقليل التكاليف</span><span class="c-ex">أجهزة وصيانة أقل</span>
+          </div>
+          <div class="component-card">
+            <svg class="c-icon" viewBox="0 0 40 40"><path d="M20 4 L34 10 V22 Q34 34 20 38 Q6 34 6 22 V10 Z" fill="#f6e8fb" stroke="var(--purple)" stroke-width="2.5"/><circle cx="20" cy="20" r="7" fill="none" stroke="var(--purple)" stroke-width="1.5"/><line x1="20" y1="20" x2="20" y2="15" stroke="var(--purple)" stroke-width="1.5"/><line x1="20" y1="20" x2="23" y2="22" stroke="var(--purple)" stroke-width="1.5"/></svg>
+            <span class="c-name">استمرارية العمل</span><span class="c-ex">حتى بالطوارئ</span>
+          </div>
+        </div>
+
+        <div class="tip-box">
+          <div class="tip-title">مثال</div>
+          مدير خارج مقره يعدّل تقرير من هاتفه - يشوفه فريقه بالمكتب فوراً
+        </div>
+
+        <div class="section-heading">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>المرونة السحابية: Scale Out و Scale In</span>
+        </div>
+        <p class="lead-paragraph">قدرة النظام السحابي على <span class="hl hl-blue">إضافة أو إزالة خوادم تلقائياً</span> حسب حجم الحمل - بدل شراء أجهزة تكفي أعلى ذروة طول الوقت.</p>
+
+        <div style="border:2px solid var(--blue); border-radius:12px 3px 12px 3px/3px 12px 3px 12px; background:rgba(255,255,255,0.5); padding:14px 10px; margin:8px 0 14px;">
+          <svg viewBox="0 0 380 190" style="width:100%;max-width:460px;display:block;margin:0 auto;">
+            <defs>
+              <g id="srv" filter="url(#sketchy)">
+                <rect width="20" height="26" rx="2" fill="#eaf4ff" stroke="var(--blue)" stroke-width="2"/>
+                <line x1="3" y1="7" x2="17" y2="7" stroke="var(--blue)" stroke-width="1.3"/>
+                <line x1="3" y1="13" x2="17" y2="13" stroke="var(--blue)" stroke-width="1.3"/>
+                <circle cx="5" cy="21" r="1.6" fill="var(--green)"/>
+              </g>
+              <g id="srvnew" filter="url(#sketchy)">
+                <rect width="20" height="26" rx="2" fill="#e6f6ea" stroke="var(--green)" stroke-width="2" stroke-dasharray="3 2"/>
+                <line x1="3" y1="7" x2="17" y2="7" stroke="var(--green)" stroke-width="1.3"/>
+                <line x1="3" y1="13" x2="17" y2="13" stroke="var(--green)" stroke-width="1.3"/>
+                <circle cx="5" cy="21" r="1.6" fill="var(--green)"/>
+              </g>
+            </defs>
+
+            <text x="190" y="16" text-anchor="middle" font-size="14" font-weight="bold" fill="var(--blue)" font-family="'Aref Ruqaa'">Scale Out — توسّع أفقي</text>
+            <use href="#srv" x="14" y="26"/><use href="#srv" x="40" y="26"/>
+            <path d="M84 39 h32" stroke="var(--red)" stroke-width="2.5" fill="none" filter="url(#sketchy)"/>
+            <path d="M116 39 l-7 -4.5 v9 Z" fill="var(--red)"/>
+            <text x="100" y="58" text-anchor="middle" font-size="9.5" fill="var(--red)" font-family="'Aref Ruqaa'">عند زيادة الحمل</text>
+            <use href="#srv" x="130" y="26"/><use href="#srv" x="156" y="26"/>
+            <use href="#srvnew" x="182" y="26"/><use href="#srvnew" x="208" y="26"/>
+            <text x="180" y="66" font-size="9" fill="var(--green)" font-family="'Aref Ruqaa'">(منقّطة = خوادم مُضافة)</text>
+
+            <path d="M10 86 h360" stroke="var(--border)" stroke-width="1.5" stroke-dasharray="4 3" filter="url(#sketchy)"/>
+
+            <text x="190" y="105" text-anchor="middle" font-size="14" font-weight="bold" fill="var(--orange)" font-family="'Aref Ruqaa'">Scale In — تقلص أفقي</text>
+            <use href="#srv" x="14" y="115"/><use href="#srv" x="40" y="115"/>
+            <use href="#srv" x="66" y="115"/><use href="#srv" x="92" y="115"/>
+            <path d="M144 128 h32" stroke="var(--red)" stroke-width="2.5" fill="none" filter="url(#sketchy)"/>
+            <path d="M176 128 l-7 -4.5 v9 Z" fill="var(--red)"/>
+            <text x="160" y="147" text-anchor="middle" font-size="9.5" fill="var(--red)" font-family="'Aref Ruqaa'">عند انخفاض الحمل</text>
+            <use href="#srv" x="190" y="115"/><use href="#srv" x="216" y="115"/>
+          </svg>
+        </div>
+        <ul class="bullet-list">
+          <li><span class="bullet-mark">✔</span><strong>Scale Out:</strong> إضافة خوادم وقت الذروة (مثل موسم تقديم الطلبات)</li>
+          <li><span class="bullet-mark">✔</span><strong>Scale In:</strong> تقليلها بعد انتهاء الذروة لتوفير التكلفة</li>
+        </ul>
+
+        <div class="mini-note">الخطوة الجاية: أنظمة تخطيط الموارد ERP ⟵</div>
+        <div class="page-nav">
+          <button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button>
+          <button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button>
+        </div>
+
+        <div class="footer-note">٧</div>
+      </div>
+      <!-- END SLIDE 7 -->
+
+      <!-- ============ SLIDE 8 : ERP ============ -->
+      <div id="slide-8" class="slide content-slide">
+        <svg class="corner-doodle" style="position:absolute;top:8px;left:8px;width:66px;" viewBox="0 0 80 80">
+          <g filter="url(#sketchy)">
+            <rect x="30" y="30" width="20" height="20" rx="3" fill="#eaf4ff" stroke="var(--blue)" stroke-width="2.5"/>
+            <rect x="4" y="4" width="16" height="16" rx="2" fill="#fde3c4" stroke="var(--orange)" stroke-width="2"/>
+            <rect x="60" y="4" width="16" height="16" rx="2" fill="#e6f6ea" stroke="var(--green)" stroke-width="2"/>
+            <rect x="4" y="60" width="16" height="16" rx="2" fill="#f6e8fb" stroke="var(--purple)" stroke-width="2"/>
+            <rect x="60" y="60" width="16" height="16" rx="2" fill="#fde3c4" stroke="var(--red)" stroke-width="2"/>
+            <path d="M20 20 L30 30 M60 20 L50 30 M20 60 L30 50 M60 60 L50 50" stroke="var(--blue)" stroke-width="1.5" stroke-dasharray="2 2"/>
+          </g>
+        </svg>
+        <span class="chip chip-ch1">المحور الرابع: أنظمة تخطيط موارد المؤسسة</span>
+        <h2 class="page-title">ERP</h2>
+        <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
+        <p class="lead-paragraph">يربط <span class="hl hl-blue">المالية والموارد البشرية والمشتريات والمخزون</span> بمنظومة واحدة بدل أنظمة منفصلة لكل قسم.</p>
+        <div class="components-grid">
+          <div class="component-card">مالية</div>
+          <div class="component-card">موارد بشرية</div>
+          <div class="component-card">مشتريات</div>
+          <div class="component-card">مخزون</div>
+          <span style="align-self:center;font-size:22px;color:var(--red);">←</span>
+          <div class="component-card" style="border-color:var(--red);background:#fff0ee;"><strong>ERP</strong><br>شاشة واحدة</div>
+        </div>
+        <div class="tip-box"><div class="tip-title">سيناريو</div>اجتماع طارئ: المدير العام يفتح ERP ويشوف الإنفاق والملاك وطلبات الشراء بدقائق بدل انتظار كل دائرة أيام</div>
+        <div class="mini-note">الخطوة الجاية: التوقيع الإلكتروني ⟵</div>
+        <div class="page-nav">
+          <button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button>
+          <button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button>
+        </div>
+
+        <div class="footer-note">٨</div>
+      </div>
+
+      <!-- ============ SLIDE 9 : EDMS + التوقيع الرقمي ============ -->
+      <div id="slide-9" class="slide content-slide">
+        <svg class="corner-doodle" style="position:absolute;top:8px;left:8px;width:60px;transform:rotate(-4deg);" viewBox="0 0 70 60">
+          <g filter="url(#sketchy)">
+            <rect x="8" y="4" width="40" height="50" rx="3" fill="#fff" stroke="var(--blue)" stroke-width="2.5"/>
+            <path d="M14 16 h28 M14 24 h28 M14 32 h18" stroke="var(--blue)" stroke-width="1.5"/>
+            <path d="M15 44 q6 -10 12 0 q6 -10 12 0 q6 -10 12 0" stroke="var(--red)" stroke-width="2" fill="none"/>
+          </g>
+        </svg>
+        <span class="chip chip-ch1">المحور الخامس: الوثائق الإلكترونية</span>
+        <h2 class="page-title">التوقيع الإلكتروني</h2>
+        <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
+        <p class="lead-paragraph">أرشفة إلكترونية + توقيع رقمي = مصداقية قانونية <span class="hl hl-yellow">بدون ورق</span>، ودورة اعتماد أسرع.</p>
+        <div class="section-heading"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg><span>مسار اعتماد كتاب</span></div>
+        <div class="components-grid">
+          <div class="component-card"><span style="display:inline-block;width:20px;height:20px;border-radius:50%;background:var(--blue);color:#fff;font-size:11px;line-height:20px;">١</span><br>رئيس القسم</div>
+          <span style="align-self:center;font-size:20px;color:var(--red);">←</span>
+          <div class="component-card"><span style="display:inline-block;width:20px;height:20px;border-radius:50%;background:var(--blue);color:#fff;font-size:11px;line-height:20px;">٢</span><br>مدير الدائرة</div>
+          <span style="align-self:center;font-size:20px;color:var(--red);">←</span>
+          <div class="component-card"><span style="display:inline-block;width:20px;height:20px;border-radius:50%;background:var(--blue);color:#fff;font-size:11px;line-height:20px;">٣</span><br>المدير العام</div>
+          <span style="align-self:center;font-size:20px;color:var(--red);">←</span>
+          <div class="component-card" style="border-color:var(--green);"><span style="display:inline-block;width:20px;height:20px;border-radius:50%;background:var(--green);color:#fff;font-size:11px;line-height:20px;">✔</span><br>صدور الكتاب</div>
+        </div>
+        <div class="tip-box"><div class="tip-title">سيناريو</div>كتاب يحتاج ٣ توقيعات - بالورق يومين، إلكترونياً <span class="hl hl-green">ساعات معدودة</span> حتى لو أحدهم خارج المكتب</div>
+        <div class="mini-note">الخطوة الجاية: الحوكمة والامتثال GRC ⟵</div>
+        <div class="page-nav">
+          <button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button>
+          <button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button>
+        </div>
+
+        <div class="footer-note">٩</div>
+      </div>
+
+      <!-- ============ SLIDE 10 : GRC ============ -->
+      <div id="slide-10" class="slide content-slide">
+        <svg class="corner-doodle" style="position:absolute;top:8px;left:10px;width:52px;" viewBox="0 0 60 68">
+          <g filter="url(#sketchy)">
+            <path d="M30 4 L54 14 V34 Q54 54 30 64 Q6 54 6 34 V14 Z" fill="#eaf4ff" stroke="var(--blue)" stroke-width="2.5"/>
+            <path d="M18 32 l8 8 l16 -18" stroke="var(--green)" stroke-width="3" fill="none" stroke-linecap="round"/>
+          </g>
+        </svg>
+        <span class="chip chip-ch1">المحور السادس: الحوكمة والامتثال</span>
+        <svg style="position:absolute;top:10px;right:8px;width:42px;transform:rotate(8deg);" viewBox="0 0 40 40">
+          <g filter="url(#sketchy)">
+            <circle cx="16" cy="16" r="11" fill="none" stroke="var(--purple)" stroke-width="2.5"/>
+            <line x1="24" y1="24" x2="34" y2="34" stroke="var(--purple)" stroke-width="3" stroke-linecap="round"/>
+          </g>
+        </svg>
+        <h2 class="page-title">GRC</h2>
+        <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
+        <p class="lead-paragraph">أنظمة الحوكمة وإدارة المخاطر والامتثال تدعم الإدارة العليا أمام <span class="hl hl-pink">الرقابة الخارجية</span>، خصوصاً المالية.</p>
+        <div class="components-grid">
+          <div class="component-card">
+            <svg class="c-icon" viewBox="0 0 40 40"><rect x="8" y="4" width="20" height="28" rx="2" fill="#eaf4ff" stroke="var(--blue)" stroke-width="2"/><line x1="12" y1="11" x2="24" y2="11" stroke="var(--blue)" stroke-width="1.3"/><line x1="12" y1="16" x2="24" y2="16" stroke="var(--blue)" stroke-width="1.3"/><circle cx="27" cy="27" r="8" fill="none" stroke="var(--red)" stroke-width="2"/><path d="M23 27 l3 3 l6 -6" stroke="var(--red)" stroke-width="2" fill="none"/></svg>
+            <span class="c-name">أثر رقمي موثّق</span><span class="c-ex">يسهّل التدقيق الخارجي</span>
+          </div>
+          <div class="component-card">
+            <svg class="c-icon" viewBox="0 0 40 40"><path d="M6 28 A14 14 0 0 1 34 28" fill="none" stroke="var(--purple)" stroke-width="2.5"/><line x1="20" y1="28" x2="26" y2="18" stroke="var(--purple)" stroke-width="2.5" stroke-linecap="round"/><circle cx="20" cy="28" r="2" fill="var(--purple)"/></svg>
+            <span class="c-name">لوحة مخاطر موحدة</span><span class="c-ex">من كل الدوائر</span>
+          </div>
+          <div class="component-card">
+            <svg class="c-icon" viewBox="0 0 40 40"><rect x="6" y="8" width="18" height="24" rx="2" fill="#e6f6ea" stroke="var(--green)" stroke-width="2"/><line x1="10" y1="14" x2="20" y2="14" stroke="var(--green)" stroke-width="1.2"/><line x1="10" y1="19" x2="20" y2="19" stroke="var(--green)" stroke-width="1.2"/><circle cx="29" cy="26" r="6" fill="#fde3c4" stroke="var(--orange)" stroke-width="2"/><path d="M29 20v2M29 30v2M23 26h2M33 26h2" stroke="var(--orange)" stroke-width="1.5"/></svg>
+            <span class="c-name">تقارير آلية</span><span class="c-ex">بدل الإعداد اليدوي</span>
+          </div>
+        </div>
+        <div class="tip-box"><div class="tip-title">سيناريو</div>إشعار تدقيق مفاجئ خلال ٣ أيام - النظام يستخرج كل المعاملات الموثقة تلقائياً بدل بحث يدوي بالأرشيف</div>
+        <div class="mini-note">الخطوة الجاية: الأمن السيبراني ⟵</div>
+        <div class="page-nav">
+          <button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button>
+          <button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button>
+        </div>
+
+        <div class="footer-note">١٠</div>
+      </div>
+
+      <!-- ============ SLIDE 11 : الأمن السيبراني ============ -->
+      <div id="slide-11" class="slide content-slide">
+        <svg class="corner-doodle" style="position:absolute;top:8px;left:10px;width:50px;" viewBox="0 0 60 66">
+          <g filter="url(#sketchy)">
+            <rect x="10" y="28" width="40" height="32" rx="4" fill="#fde3c4" stroke="var(--orange)" stroke-width="2.5"/>
+            <path d="M18 28 v-10 a12 12 0 0 1 24 0 v10" fill="none" stroke="var(--orange)" stroke-width="3"/>
+            <circle cx="30" cy="42" r="4" fill="var(--red)"/>
+            <line x1="30" y1="46" x2="30" y2="52" stroke="var(--red)" stroke-width="2.5"/>
+          </g>
+        </svg>
+        <span class="chip chip-ch1">المحور السابع: الأمن السيبراني</span>
+        <svg style="position:absolute;top:10px;right:8px;width:42px;transform:rotate(-6deg);" viewBox="0 0 44 40">
+          <g filter="url(#sketchy)">
+            <path d="M22 4 L42 36 H2 Z" fill="#fde3c4" stroke="var(--red)" stroke-width="2.5" stroke-linejoin="round"/>
+            <line x1="22" y1="16" x2="22" y2="26" stroke="var(--red)" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="22" cy="31" r="1.6" fill="var(--red)"/>
+          </g>
+        </svg>
+        <h2 class="page-title">الأمن السيبراني</h2>
+        <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
+        <p class="lead-paragraph">مسؤولية <span class="hl hl-pink">المدير نفسه</span> مو بس قسم IT - هو المسؤول عن حماية بيانات دائرته.</p>
+        <div class="components-grid">
+          <div class="component-card">
+            <svg class="c-icon" viewBox="0 0 40 40"><rect x="4" y="10" width="26" height="18" rx="2" fill="#fde3c4" stroke="var(--red)" stroke-width="2"/><path d="M4 10 l13 10 l13 -10" fill="none" stroke="var(--red)" stroke-width="2"/><circle cx="32" cy="10" r="6" fill="var(--red)"/><text x="32" y="13" font-size="9" text-anchor="middle" fill="#fff" font-family="'Aref Ruqaa'">!</text></svg>
+            <span class="c-name">اختراق البريد</span><span class="c-ex">وانتحال الهوية</span>
+          </div>
+          <div class="component-card">
+            <svg class="c-icon" viewBox="0 0 40 40"><rect x="10" y="4" width="20" height="26" rx="2" fill="#eaf4ff" stroke="var(--blue)" stroke-width="2"/><line x1="14" y1="10" x2="26" y2="10" stroke="var(--blue)" stroke-width="1.2"/><line x1="14" y1="15" x2="26" y2="15" stroke="var(--blue)" stroke-width="1.2"/><path d="M20 30 q-4 6 0 9 q4 -3 0 -9 Z" fill="var(--red)" stroke="var(--red)" stroke-width="1"/></svg>
+            <span class="c-name">تسريب الوثائق</span><span class="c-ex">ملفات حساسة</span>
+          </div>
+          <div class="component-card">
+            <svg class="c-icon" viewBox="0 0 40 40"><rect x="4" y="10" width="32" height="20" rx="3" fill="#f6e8fb" stroke="var(--purple)" stroke-width="2.5"/><circle cx="14" cy="20" r="5" fill="none" stroke="var(--purple)" stroke-width="2"/><text x="14" y="24" font-size="7" text-anchor="middle" fill="var(--purple)" font-family="'Aref Ruqaa'">؟</text><line x1="23" y1="16" x2="32" y2="16" stroke="var(--purple)" stroke-width="1.5"/><line x1="23" y1="22" x2="32" y2="22" stroke="var(--purple)" stroke-width="1.5"/></svg>
+            <span class="c-name">احتيال مزوّر</span><span class="c-ex">رسائل منتحلة</span>
+          </div>
+        </div>
+        <ul class="bullet-list">
+          <li><span class="bullet-mark">✔</span><strong>الحل:</strong> تحقق من <span class="hl hl-yellow">رقم رسمي معروف مسبقاً</span> قبل أي تنفيذ</li>
+        </ul>
+        <div class="tip-box"><div class="tip-title">سيناريو</div>بريد "عاجل" من "المصرف" يطلب تحويل مبلغ - التحقق بالهاتف الرسمي كشف انه احتيال</div>
+        <div class="mini-note">الخطوة الجاية: الموارد البشرية الرقمية ⟵</div>
+        <div class="page-nav">
+          <button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button>
+          <button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button>
+        </div>
+
+        <div class="footer-note">١١</div>
+      </div>
+
+      <!-- ============ SLIDE 12 : HRIS ============ -->
+      <div id="slide-12" class="slide content-slide">
+        <svg class="corner-doodle" style="position:absolute;top:8px;left:8px;width:64px;transform:rotate(3deg);" viewBox="0 0 70 50">
+          <g filter="url(#sketchy)">
+            <rect x="4" y="6" width="62" height="38" rx="4" fill="#eaf4ff" stroke="var(--blue)" stroke-width="2.5"/>
+            <circle cx="20" cy="22" r="7" fill="#fff" stroke="var(--blue)" stroke-width="2"/>
+            <path d="M11 36 a9 8 0 0 1 18 0" fill="none" stroke="var(--blue)" stroke-width="2"/>
+            <path d="M36 16 h22 M36 24 h22 M36 32 h14" stroke="var(--blue)" stroke-width="1.6"/>
+          </g>
+        </svg>
+        <span class="chip chip-ch1">المحور الثامن: الموارد البشرية الرقمية</span>
+        <h2 class="page-title">HRIS</h2>
+        <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
+        <p class="lead-paragraph">أتمتة دورة حياة الموظف كاملة - من التعيين لحد التقييم والتدريب.</p>
+        <div class="components-grid">
+          <div class="component-card">حضور وانصراف</div>
+          <div class="component-card">احتساب الرواتب</div>
+          <div class="component-card">تقييم الأداء</div>
+          <div class="component-card" style="border-color:var(--purple);">فرز التوظيف بالـAI</div>
+        </div>
+        <div class="tip-box"><div class="tip-title">سيناريو</div>٣٠٠ سيرة ذاتية لوظيفة واحدة - النظام يرشح أفضل ٢٠ تلقائياً فتركّز اللجنة على المقابلات فقط</div>
+        <div class="mini-note">الخطوة الجاية: نظام خدمة العملاء ⟵</div>
+        <div class="page-nav">
+          <button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button>
+          <button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button>
+        </div>
+
+        <div class="footer-note">١٢</div>
+      </div>
+
+      <!-- ============ SLIDE 13 : نظام التذاكر ============ -->
+      <div id="slide-13" class="slide content-slide">
+        <svg class="corner-doodle" style="position:absolute;top:8px;left:8px;width:62px;transform:rotate(-4deg);" viewBox="0 0 80 44">
+          <g filter="url(#sketchy)">
+            <path d="M4 10 a5 5 0 0 1 0 -8 h72 a5 5 0 0 1 0 8 v24 a5 5 0 0 1 0 8 h-72 a5 5 0 0 1 0 -8 Z" fill="#fdeeba" stroke="var(--orange)" stroke-width="2.5"/>
+            <line x1="54" y1="2" x2="54" y2="42" stroke="var(--orange)" stroke-width="2" stroke-dasharray="3 3"/>
+          </g>
+        </svg>
+        <span class="chip chip-ch1">المحور التاسع: نظام خدمة العملاء</span>
+        <h2 class="page-title">نظام التذاكر</h2>
+        <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
+        <p class="lead-paragraph">كل طلب أو شكوى يتحول لـ<span class="hl hl-yellow">تذكرة برقم مرجعي</span> تُتابع لحد الإغلاق - بدل ضياعها بمكالمات وإيميلات متناثرة.</p>
+        <div class="components-grid">
+          <div class="component-card"><span style="display:inline-block;width:20px;height:20px;border-radius:50%;background:var(--orange);color:#fff;font-size:11px;line-height:20px;">١</span><br>استلام الطلب</div>
+          <span style="align-self:center;font-size:20px;color:var(--red);">←</span>
+          <div class="component-card"><span style="display:inline-block;width:20px;height:20px;border-radius:50%;background:var(--orange);color:#fff;font-size:11px;line-height:20px;">٢</span><br>تذكرة برقم</div>
+          <span style="align-self:center;font-size:20px;color:var(--red);">←</span>
+          <div class="component-card"><span style="display:inline-block;width:20px;height:20px;border-radius:50%;background:var(--orange);color:#fff;font-size:11px;line-height:20px;">٣</span><br>توزيع للقسم</div>
+          <span style="align-self:center;font-size:20px;color:var(--red);">←</span>
+          <div class="component-card" style="border-color:var(--green);"><span style="display:inline-block;width:20px;height:20px;border-radius:50%;background:var(--green);color:#fff;font-size:11px;line-height:20px;">✔</span><br>إغلاق وتقييم</div>
+        </div>
+        <div class="tip-box"><div class="tip-title">سيناريو</div>مواطن يقدّم شكوى - يتابع حالتها برقم التذكرة دون اتصال متكرر، والمدير يشوف المتأخرة بلوحة واحدة</div>
+        <div class="mini-note" style="color:var(--green);">نهاية المحاضرة - للنقاش والأسئلة ★</div>
+        <div class="page-nav">
+          <button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button>
+          <button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button>
+        </div>
+
+        <div class="footer-note">١٣</div>
+      </div>
+
+      <!-- NEW SLIDES GET ADDED HERE, right above this comment -->
+
+    </div>
+  </div>
+</div>
+
+<script>
+  var tabsList = Array.from(document.querySelectorAll('.tab'));
+
+  function activateTab(tab){
+    document.querySelectorAll('.tab').forEach(function(t){ t.classList.remove('active'); });
+    document.querySelectorAll('.slide').forEach(function(s){ s.classList.remove('active'); });
+    tab.classList.add('active');
+    document.getElementById(tab.dataset.target).classList.add('active');
+    updateNavButtons();
+  }
+
+  function navigateSlide(delta){
+    var activeTab = document.querySelector('.tab.active');
+    var idx = tabsList.indexOf(activeTab);
+    var newIdx = idx + delta;
+    if(newIdx < 0 || newIdx >= tabsList.length) return;
+    activateTab(tabsList[newIdx]);
+    tabsList[newIdx].scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'});
+  }
+
+  function updateNavButtons(){
+    var idx = tabsList.indexOf(document.querySelector('.tab.active'));
+    document.querySelectorAll('.nav-prev').forEach(function(b){ b.disabled = (idx <= 0); });
+    document.querySelectorAll('.nav-next').forEach(function(b){ b.disabled = (idx >= tabsList.length - 1); });
+  }
+
+  tabsList.forEach(function(tab){
+    tab.addEventListener('click', function(){ activateTab(tab); });
+  });
+
+  updateNavButtons();
+
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'ArrowRight'){ navigateSlide(-1); }
+    else if(e.key === 'ArrowLeft'){ navigateSlide(1); }
+  });
+</script>
+
+</body>
+</html>
