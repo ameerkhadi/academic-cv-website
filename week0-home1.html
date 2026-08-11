@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تكنولوجيا المعلومات في العمل الإداري</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#1B1330;
+    --panel:#241A42;
+    --panel-light:#2E2153;
+    --accent:#F0A83C;
+    --accent-soft:#F6C578;
+    --mint:#59D9B3;
+    --sky:#6EC1E4;
+    --plum:#B98BE8;
+    --rose:#E58BB0;
+    --paper:#F2EEF7;
+    --paper-dim:#B9AFD1;
+    --line:rgba(240,168,60,0.28);
+  }
+  *{box-sizing:border-box;}
+  html,body{
+    margin:0;padding:0;
+    background:
+      radial-gradient(circle at 12% 8%, rgba(89,217,179,0.10), transparent 45%),
+      radial-gradient(circle at 88% 92%, rgba(240,168,60,0.12), transparent 45%),
+      var(--bg);
+    color:var(--paper);
+    font-family:'Tajawal', sans-serif;
+    min-height:100vh;
+  }
+  .wrap{max-width:960px;margin:0 auto;padding:52px 20px 60px;}
+
+  header{text-align:center;margin-bottom:44px;}
+  .kicker{
+    display:inline-flex;align-items:center;gap:10px;
+    font-size:13px;letter-spacing:.5px;color:var(--accent-soft);
+    background:rgba(240,168,60,0.08);border:1px solid var(--line);
+    padding:6px 16px;border-radius:999px;margin-bottom:18px;
+  }
+  .kicker::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--mint);display:inline-block;}
+  h1{
+    font-family:'Cairo', sans-serif;font-weight:900;
+    font-size:clamp(25px,5vw,38px);margin:0 0 12px;line-height:1.35;
+    background:linear-gradient(90deg, var(--accent-soft), #FFFFFF 45%, var(--mint));
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  }
+  .subtitle{font-family:'Cairo',sans-serif;font-weight:700;font-size:15px;color:var(--paper);opacity:.85;margin:0;}
+
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:22px;
+    max-width:720px;
+    margin:0 auto;
+  }
+  @media (max-width:520px){ .grid{grid-template-columns:1fr;} }
+
+  a.card{
+    position:relative;overflow:hidden;
+    aspect-ratio:1 / 1;
+    display:flex;flex-direction:column;justify-content:center;align-items:center;
+    text-align:center;gap:12px;
+    background:linear-gradient(160deg, var(--panel-light), var(--panel));
+    border:1px solid var(--line);border-radius:22px;
+    padding:26px 22px;text-decoration:none;color:var(--paper);
+    transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  }
+  a.card::before{
+    content:"";position:absolute;top:0;right:0;left:0;height:6px;
+    background:linear-gradient(90deg, var(--c1), var(--c2));
+  }
+  a.card:hover{
+    transform:translateY(-6px);
+    border-color:var(--c1);
+    box-shadow:0 22px 40px -18px rgba(0,0,0,.75);
+  }
+  .card .icon{
+    width:64px;height:64px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-size:30px;margin-bottom:4px;
+    background:rgba(255,255,255,0.05);
+    border:2px solid var(--c1);
+  }
+  .card h2{
+    font-family:'Cairo',sans-serif;font-weight:900;font-size:21px;margin:0;
+    color:var(--c2);
+  }
+  .card p{
+    margin:0;font-size:14.5px;line-height:1.85;color:var(--paper-dim);
+    max-width:26ch;
+  }
+  .card .go{
+    font-family:'Cairo',sans-serif;font-weight:800;font-size:13.5px;
+    color:var(--c1);margin-top:4px;
+  }
+
+  .c-review{--c1:var(--mint);  --c2:#8FE9CF;}
+  .c-lesson{--c1:var(--accent);--c2:var(--accent-soft);}
+  .c-brief {--c1:#B98BE8;      --c2:#D3B4F2;}
+  .c-prezi {--c1:var(--sky);   --c2:#A6DBF2;}
+  .c-voice {--c1:var(--rose);  --c2:#F2B6CE;}
+  /* البطاقة الخامسة تتوسّط الصف الأخير */
+  a.card.center-last{grid-column:1 / -1;width:calc(50% - 11px);margin-inline:auto;}
+  @media (max-width:520px){ a.card.center-last{width:100%;} }
+
+  footer{
+    margin-top:46px;text-align:center;padding-top:24px;border-top:1px solid var(--line);
+    color:var(--paper-dim);font-size:14px;line-height:2;
+  }
+  footer strong{color:var(--accent-soft);font-family:'Cairo',sans-serif;font-weight:800;display:block;font-size:15px;}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header>
+    <span class="kicker">الوحدة التمهيدية</span>
+    <h1>تكنولوجيا المعلومات في العمل الإداري</h1>
+    <p class="subtitle">كل مصادر الموضوع في مكان واحد</p>
+  </header>
+
+  <div class="grid">
+
+    <a class="card c-review" href="https://ameerkhadi.github.io/academic-cv-website/P2C1/week0-quiz.html">
+      <span class="icon">📝</span>
+      <h2>مراجعة</h2>
+      <p>اختبار تفاعلي من ٥٠ سؤال اختيار من متعدد مع شرح الإجابة بعد كل اختيار.</p>
+      <span class="go">ابدأ الاختبار ←</span>
+    </a>
+
+    <a class="card c-lesson" href="https://ameerkhadi.github.io/academic-cv-website/P2C1/week0">
+      <span class="icon">📘</span>
+      <h2>المحاضرة</h2>
+      <p>المادة العلمية الكاملة بمحاورها التسعة مع الأمثلة والسيناريوهات التطبيقية.</p>
+      <span class="go">افتح المادة ←</span>
+    </a>
+
+    <a class="card c-brief" href="https://ameerkhadi.github.io/academic-cv-website/P2C1/week0abs">
+      <span class="icon">📄</span>
+      <h2>المحاضرة مختصرة</h2>
+      <p>نسخة موجزة تركّز على الخلاصات والنقاط الرئيسية للمراجعة السريعة.</p>
+      <span class="go">افتح المختصر ←</span>
+    </a>
+
+    <a class="card c-prezi" href="https://prezi.com/view/Q4FXmxH12eJCBiuk7f7G/" target="_blank" rel="noopener">
+      <span class="icon">🎬</span>
+      <h2>البرزي</h2>
+      <p>العرض التقديمي التفاعلي المرافق للموضوع على منصة Prezi.</p>
+      <span class="go">شاهد العرض ←</span>
+    </a>
+
+    <a class="card c-voice center-last" href="https://ameerkhadi.github.io/academic-cv-website/P2C1/week0-feedback.html">
+      <span class="icon">💬</span>
+      <h2>رأيك يهمّنا</h2>
+      <p>استمارة قصيرة لتقييم المادة وإبداء ملاحظاتك ومقترحاتك.</p>
+      <span class="go">شارك رأيك ←</span>
+    </a>
+
+  </div>
+
+  <footer>
+    <strong>المعهد العالي لإعداد وتأهيل القادة</strong>
+    إعداد: أ.م.د. أمير هادي
+  </footer>
+
+</div>
+
+</body>
+</html>
