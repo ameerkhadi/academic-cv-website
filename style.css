@@ -30,6 +30,7 @@
     --border:     #30363D;
     --border2:    #21262D;
     --font:   'Inter', -apple-system, sans-serif;
+    --font-ar: 'Tajawal', 'Inter', -apple-system, sans-serif;
     --mono:   'Fira Code', monospace;
     --radius: 8px;
     --shadow: 0 1px 6px rgba(0,0,0,0.4);
@@ -51,6 +52,8 @@ img{max-width:100%;display:block}
 .topbar-crumb{color:var(--text-muted)}
 .topbar-crumb.active{color:var(--orange)}
 .topbar-sep{color:var(--text-dim)}
+.lang-toggle-btn{font-family:var(--font);font-size:.68rem;font-weight:600;background:var(--bg-card2);color:var(--text);border:1px solid var(--border);border-radius:100px;padding:.28rem .8rem;cursor:pointer;transition:var(--trans)}
+.lang-toggle-btn:hover{border-color:var(--orange);color:var(--orange)}
 
 /* ── Navbar ── */
 #navbar{background:var(--bg-main);border-bottom:1px solid var(--border);position:sticky;top:27px;z-index:500;box-shadow:0 2px 12px rgba(0,0,0,.5)}
@@ -167,7 +170,7 @@ section.alt{background:var(--bg-main)}
 .pub-type-pill.conference{background:var(--green-box);color:var(--green);border:1px solid var(--green-border)}
 .pub-year-pill{font-family:var(--mono);font-size:.63rem;color:var(--text-muted);background:var(--bg-card2);border:1px solid var(--border);border-radius:100px;padding:.12rem .5rem}
 .pub-cite-pill{font-family:var(--mono);font-size:.63rem;background:rgba(255,153,0,.1);border:1px solid rgba(255,153,0,.3);border-radius:100px;padding:.12rem .55rem;color:var(--orange);font-weight:600}
-.pub-num{margin-left:auto;font-family:var(--mono);font-size:.68rem;color:var(--text-dim)}
+.pub-num{margin-inline-start:auto;font-family:var(--mono);font-size:.68rem;color:var(--text-dim)}
 .pub-title{font-size:.92rem;font-weight:600;color:var(--text);line-height:1.4;margin-bottom:.3rem}
 .pub-authors{font-size:.8rem;color:var(--text-muted);font-style:italic;margin-bottom:.25rem}
 .pub-venue{font-size:.8rem;color:var(--blue);font-weight:500}
@@ -296,4 +299,64 @@ footer{background:#010409;border-top:1px solid var(--border);padding:1.4rem 0}
     .awards-grid{grid-template-columns:1fr}
     .certs-grid{grid-template-columns:1fr}
     .hero-stats-row{flex-wrap:wrap;gap:1rem}
+}
+
+/* =============================================
+   RTL / ARABIC SUPPORT
+   Flexbox and Grid auto-mirror with [dir="rtl"];
+   these rules fix the handful of physical (left/right)
+   properties and swap in an Arabic-friendly font.
+   ============================================= */
+html[dir="rtl"] body,
+body.lang-ar{
+    font-family:var(--font-ar);
+}
+html[dir="rtl"] .mono,
+html[dir="rtl"] .hstat-num,
+html[dir="rtl"] .edu-year,
+html[dir="rtl"] .pub-num,
+html[dir="rtl"] .course-level-tag,
+html[dir="rtl"] .cert-year{
+    font-family:var(--mono);
+}
+
+/* breadcrumb arrow should point the other way in RTL */
+html[dir="rtl"] .topbar-sep{
+    display:inline-block;
+    transform:scaleX(-1);
+}
+
+/* accent bars: mirror left border to the visual start side (right in RTL) */
+html[dir="rtl"] .edu-card{
+    border-left:1px solid var(--border);
+    border-right:3px solid var(--orange);
+}
+html[dir="rtl"] .aws-info-box{
+    border-left:1px solid var(--blue-border);
+    border-right:3px solid var(--blue);
+}
+html[dir="rtl"] .edu-note{
+    font-style:normal;
+}
+
+/* profile link hover shift should move toward the start (right in RTL) */
+html[dir="rtl"] .profile-link:hover{
+    padding-left:0;
+    padding-right:.4rem;
+}
+
+/* media platform badge sits at inline-start automatically via 'left', flip to right */
+html[dir="rtl"] .media-platform-badge{
+    left:auto;
+    right:.6rem;
+}
+
+/* gallery caption slide direction is vertical, no change needed */
+
+/* keep numeric / Latin-script badges (IEEE, AWS, ORCID, etc.) LTR inline so they don't reverse */
+html[dir="rtl"] .svc-tag,
+html[dir="rtl"] .proj-tech,
+html[dir="rtl"] .pub-venue,
+html[dir="rtl"] .pub-authors{
+    unicode-bidi:plaintext;
 }
