@@ -40,74 +40,85 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  /* ===== Sticky App Header (brand + search + filters, all in one) ===== */
+  /* ===== Header (brand only, compact) ===== */
   .app-header {
-    position: sticky;
-    top: 0;
-    z-index: 30;
     background: linear-gradient(160deg, var(--navy) 0%, var(--navy-2) 55%, var(--navy-3) 100%);
-    padding: calc(14px + var(--safe-top)) 16px 14px;
-    box-shadow: 0 6px 20px rgba(10,18,26,0.25);
-    border-radius: 0 0 22px 22px;
+    padding: calc(20px + var(--safe-top)) 20px 46px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
   }
-  .brand-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 14px;
+  .app-header::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(45deg, rgba(195,154,99,0.05) 0 2px, transparent 2px 38px);
+    pointer-events: none;
   }
   .brand-icon {
-    flex-shrink: 0;
-    width: 38px; height: 38px;
-    border-radius: 12px;
+    width: 46px; height: 46px;
+    margin: 0 auto 12px;
+    border-radius: 14px;
     background: linear-gradient(135deg, var(--gold), var(--gold-dark));
     display: flex; align-items: center; justify-content: center;
     color: #fff;
     font-weight: 800;
-    font-size: 15px;
-    box-shadow: 0 3px 8px rgba(0,0,0,0.25);
+    font-size: 17px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.28);
+    position: relative;
   }
-  .brand-text { flex: 1; min-width: 0; }
   .brand-text .t1 {
+    position: relative;
     color: #fff;
-    font-size: 14.5px;
+    font-size: 17px;
     font-weight: 700;
-    line-height: 1.25;
+    line-height: 1.3;
   }
   .brand-text .t2 {
+    position: relative;
     color: #cdbfa0;
-    font-size: 11.5px;
-    margin-top: 1px;
+    font-size: 12.5px;
+    margin-top: 3px;
   }
 
+  /* ===== Floating big search card ===== */
+  .search-card {
+    max-width: 520px;
+    margin: -30px auto 0;
+    padding: 0 16px;
+    position: relative;
+    z-index: 10;
+  }
   .search-box {
     display: flex;
     align-items: center;
-    gap: 8px;
-    background: rgba(255,255,255,0.96);
-    border-radius: 14px;
-    padding: 12px 14px;
-    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06);
+    gap: 12px;
+    background: var(--card);
+    border-radius: 20px;
+    padding: 18px 20px;
+    box-shadow: 0 10px 30px rgba(20,33,47,0.16);
+    border: 1px solid rgba(255,255,255,0.6);
   }
-  .search-box svg { flex-shrink: 0; color: var(--gold-dark); }
+  .search-box svg { flex-shrink: 0; color: var(--gold-dark); width: 24px; height: 24px; }
   .search-box input {
     border: none;
     outline: none;
     background: transparent;
-    font-size: 16px;
+    font-size: 18px;
     width: 100%;
     color: var(--text);
     font-family: inherit;
+    font-weight: 500;
   }
-  .search-box input::placeholder { color: #a3aab5; }
+  .search-box input::placeholder { color: #a3aab5; font-weight: 400; }
   .clear-btn {
     display: none;
     background: var(--border);
     color: var(--muted);
     border: none;
-    width: 22px; height: 22px;
+    width: 26px; height: 26px;
     border-radius: 50%;
-    font-size: 12px;
+    font-size: 13px;
     align-items: center;
     justify-content: center;
     cursor: pointer;
@@ -119,10 +130,11 @@
   .chips-row {
     display: flex;
     gap: 8px;
-    margin-top: 12px;
+    margin-top: 14px;
     overflow-x: auto;
     scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
+    justify-content: center;
   }
   .chips-row::-webkit-scrollbar { display: none; }
   .chip {
@@ -130,42 +142,68 @@
     display: flex;
     align-items: center;
     gap: 6px;
-    padding: 7px 14px;
+    padding: 9px 16px;
     border-radius: 20px;
-    font-size: 12.5px;
+    font-size: 13px;
     font-weight: 600;
-    background: rgba(255,255,255,0.1);
-    color: #e8e2d3;
-    border: 1px solid rgba(255,255,255,0.14);
+    background: var(--card);
+    color: var(--muted);
+    border: 1px solid var(--border);
     cursor: pointer;
-    transition: background .15s, color .15s, transform .1s;
+    transition: background .15s, color .15s, transform .1s, border-color .15s;
     white-space: nowrap;
+    box-shadow: 0 2px 6px rgba(20,33,47,0.05);
   }
   .chip:active { transform: scale(0.96); }
   .chip .count {
-    background: rgba(255,255,255,0.18);
+    background: var(--bg);
     padding: 1px 7px;
     border-radius: 10px;
     font-size: 11px;
   }
   .chip.active {
-    background: var(--gold);
-    color: #1a1206;
-    border-color: var(--gold);
+    background: var(--navy);
+    color: #fff;
+    border-color: var(--navy);
   }
   .chip.active .count {
-    background: rgba(0,0,0,0.15);
-    color: #1a1206;
+    background: rgba(255,255,255,0.16);
+    color: #fff;
   }
-  .chip.room1.active { background: #3fae8a; border-color: #3fae8a; color: #06251b; }
-  .chip.room1.active .count { background: rgba(0,0,0,0.14); color: #06251b; }
-  .chip.room2.active { background: #d3835a; border-color: #d3835a; color: #2b1206; }
-  .chip.room2.active .count { background: rgba(0,0,0,0.14); color: #2b1206; }
+  .chip.room1.active { background: var(--room1); border-color: var(--room1); }
+  .chip.room2.active { background: var(--room2); border-color: var(--room2); }
 
   /* ===== Content ===== */
   main {
-    padding: 14px 14px calc(24px + var(--safe-bottom));
-    max-width: 560px;
+    padding: 18px 16px calc(24px + var(--safe-bottom));
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  /* ===== Empty prompt state ===== */
+  .empty-state {
+    text-align: center;
+    padding: 46px 20px 20px;
+    color: var(--muted);
+  }
+  .empty-state .icon {
+    width: 64px; height: 64px;
+    margin: 0 auto 16px;
+    border-radius: 50%;
+    background: rgba(195,154,99,0.12);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--gold-dark);
+  }
+  .empty-state .title {
+    font-size: 15.5px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+  .empty-state .desc {
+    font-size: 13px;
+    line-height: 1.7;
+    max-width: 260px;
     margin: 0 auto;
   }
 
@@ -173,7 +211,7 @@
     margin: 2px 4px 10px;
     font-size: 12.5px;
     color: var(--muted);
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: space-between;
   }
@@ -278,7 +316,7 @@
 
   .no-results {
     text-align: center;
-    padding: 60px 20px;
+    padding: 50px 20px;
     color: var(--muted);
     display: none;
   }
@@ -295,31 +333,24 @@
   .no-results .title { font-size: 14.5px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
   .no-results .desc { font-size: 12.5px; }
 
-  .end-note {
-    text-align: center;
-    padding: 20px 16px 4px;
-    color: #b9c0c8;
-    font-size: 11px;
-  }
-
   @media (min-width: 560px) {
-    .brand-text .t1 { font-size: 16px; }
+    .brand-text .t1 { font-size: 19px; }
   }
 </style>
 </head>
 <body>
 
 <div class="app-header">
-  <div class="brand-row">
-    <div class="brand-icon">ق م</div>
-    <div class="brand-text">
-      <div class="t1">دورة قادة المستقبل</div>
-      <div class="t2">المعهد العالي لإعداد وتأهيل القادة</div>
-    </div>
+  <div class="brand-icon">ق م</div>
+  <div class="brand-text">
+    <div class="t1">دورة قادة المستقبل</div>
+    <div class="t2">المعهد العالي لإعداد وتأهيل القادة</div>
   </div>
+</div>
 
+<div class="search-card">
   <div class="search-box">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
       <circle cx="11" cy="11" r="8"></circle>
       <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
     </svg>
@@ -328,13 +359,23 @@
   </div>
 
   <div class="chips-row" id="chipsRow">
-    <div class="chip active" data-room="all">الكل <span class="count" id="chipAllCount">0</span></div>
     <div class="chip room1" data-room="قاعة الانتصار">قاعة الانتصار <span class="count" id="chipR1Count">0</span></div>
     <div class="chip room2" data-room="قاعة بابل">قاعة بابل <span class="count" id="chipR2Count">0</span></div>
   </div>
 </div>
 
 <main>
+  <div id="emptyState" class="empty-state">
+    <div class="icon">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+    </div>
+    <div class="title">ابحث عن اسمك</div>
+    <div class="desc">اكتب اسمك أو رمز الدخول في مربع البحث أعلاه لمعرفة مكان امتحانك</div>
+  </div>
+
   <div class="result-count" id="resultCount"></div>
   <div class="results-list" id="resultsList"></div>
 
@@ -348,8 +389,6 @@
     <div class="title">لا توجد نتائج</div>
     <div class="desc">تأكد من كتابة الاسم أو الرمز بشكل صحيح</div>
   </div>
-
-  <div class="end-note" id="endNote"></div>
 </main>
 
 <script>
@@ -360,10 +399,10 @@ const clearBtn = document.getElementById('clearBtn');
 const resultsList = document.getElementById('resultsList');
 const resultCount = document.getElementById('resultCount');
 const noResults = document.getElementById('noResults');
-const endNote = document.getElementById('endNote');
+const emptyState = document.getElementById('emptyState');
 const chipsRow = document.getElementById('chipsRow');
 
-let activeRoom = 'all';
+let activeRoom = null;
 
 function toArabicNum(num) {
   const arabicDigits = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
@@ -373,7 +412,6 @@ function toArabicNum(num) {
 const room1List = students.filter(s => s.room === 'قاعة الانتصار');
 const room2List = students.filter(s => s.room === 'قاعة بابل');
 
-document.getElementById('chipAllCount').textContent = toArabicNum(students.length);
 document.getElementById('chipR1Count').textContent = toArabicNum(room1List.length);
 document.getElementById('chipR2Count').textContent = toArabicNum(room2List.length);
 
@@ -398,11 +436,25 @@ function render() {
   const q = searchInput.value.trim().toLowerCase();
   clearBtn.classList.toggle('show', q.length > 0);
 
+  const hasQuery = q.length > 0;
+  const hasRoomFilter = activeRoom !== null;
+
+  if (!hasQuery && !hasRoomFilter) {
+    emptyState.style.display = 'block';
+    resultCount.style.display = 'none';
+    resultsList.innerHTML = '';
+    resultsList.style.display = 'none';
+    noResults.classList.remove('show');
+    return;
+  }
+
+  emptyState.style.display = 'none';
+
   let filtered = students;
-  if (activeRoom !== 'all') {
+  if (hasRoomFilter) {
     filtered = filtered.filter(s => s.room === activeRoom);
   }
-  if (q) {
+  if (hasQuery) {
     filtered = filtered.filter(s => s.name.toLowerCase().includes(q) || s.code.includes(q));
   }
 
@@ -420,13 +472,11 @@ function render() {
     </div>
   `).join('');
 
-  resultCount.innerHTML = `<span>عرض <b>${toArabicNum(filtered.length)}</b> من <b>${toArabicNum(students.length)}</b> طالب</span>`;
-
   const isEmpty = filtered.length === 0;
-  noResults.classList.toggle('show', isEmpty);
-  resultsList.style.display = isEmpty ? 'none' : 'flex';
+  resultCount.innerHTML = `<span>تم العثور على <b>${toArabicNum(filtered.length)}</b> نتيجة</span>`;
   resultCount.style.display = isEmpty ? 'none' : 'flex';
-  endNote.textContent = isEmpty ? '' : (filtered.length === students.length ? 'نهاية القائمة' : '');
+  resultsList.style.display = isEmpty ? 'none' : 'flex';
+  noResults.classList.toggle('show', isEmpty);
 }
 
 searchInput.addEventListener('input', render);
@@ -439,9 +489,15 @@ clearBtn.addEventListener('click', () => {
 chipsRow.addEventListener('click', (e) => {
   const chip = e.target.closest('.chip');
   if (!chip) return;
-  chipsRow.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-  chip.classList.add('active');
-  activeRoom = chip.dataset.room;
+  const room = chip.dataset.room;
+  if (chip.classList.contains('active')) {
+    chip.classList.remove('active');
+    activeRoom = null;
+  } else {
+    chipsRow.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+    chip.classList.add('active');
+    activeRoom = room;
+  }
   render();
 });
 
