@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>نتائج توزيع القاعات - قادة المستقبل</title>
+<style>
+  :root {
+    --gold: #b8935f;
+    --gold-dark: #8a6d42;
+    --navy: #1a2a3d;
+    --navy-light: #24384f;
+    --bg: #f4f1ea;
+    --card: #ffffff;
+    --text: #23303f;
+    --muted: #6b7686;
+    --border: #e3ddd0;
+    --room1: #1a5f4a;
+    --room1-bg: #e6f2ee;
+    --room2: #8a3b1f;
+    --room2-bg: #f5e9e2;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Arial, sans-serif;
+    background: linear-gradient(180deg, var(--bg) 0%, #ece7db 100%);
+    color: var(--text);
+    min-height: 100vh;
+  }
+  header {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 55%, #2c4a63 100%);
+    color: #fff;
+    padding: 36px 20px 30px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.18);
+  }
+  header::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(45deg, rgba(184,147,95,0.06) 0 2px, transparent 2px 40px);
+    pointer-events: none;
+  }
+  .crest {
+    width: 64px; height: 64px;
+    margin: 0 auto 12px;
+    border: 2px solid var(--gold);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px;
+    background: rgba(184,147,95,0.12);
+    color: var(--gold);
+  }
+  header h1 {
+    margin: 0 0 6px;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: .3px;
+  }
+  header h2 {
+    margin: 0 0 4px;
+    font-size: 15px;
+    font-weight: 400;
+    color: #d8c9a9;
+  }
+  .divider {
+    width: 70px;
+    height: 3px;
+    background: var(--gold);
+    margin: 14px auto;
+    border-radius: 3px;
+  }
+  header .exam-title {
+    font-size: 19px;
+    font-weight: 700;
+    color: #fff;
+    background: rgba(184,147,95,0.18);
+    display: inline-block;
+    padding: 8px 22px;
+    border-radius: 30px;
+    border: 1px solid rgba(184,147,95,0.5);
+    margin-top: 6px;
+  }
+
+  main {
+    max-width: 1000px;
+    margin: -22px auto 40px;
+    padding: 0 16px;
+  }
+
+  .search-card {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 8px 28px rgba(26,42,61,0.12);
+    border: 1px solid var(--border);
+    position: relative;
+    z-index: 2;
+  }
+  .search-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--bg);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 10px 16px;
+    transition: border-color .2s, box-shadow .2s;
+  }
+  .search-box:focus-within {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(184,147,95,0.15);
+  }
+  .search-box svg { flex-shrink: 0; color: var(--gold-dark); }
+  .search-box input {
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 16px;
+    width: 100%;
+    color: var(--text);
+    font-family: inherit;
+  }
+  .search-box input::placeholder { color: #a3aab5; }
+
+  .stats-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+  }
+  .stat-pill {
+    flex: 1;
+    min-width: 140px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 14px;
+    text-align: center;
+  }
+  .stat-pill .num {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--navy);
+  }
+  .stat-pill .label {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+  .stat-pill.room1 .num { color: var(--room1); }
+  .stat-pill.room2 .num { color: var(--room2); }
+
+  .result-count {
+    margin: 18px 4px 10px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .result-count b { color: var(--navy); }
+
+  .table-wrap {
+    background: var(--card);
+    border-radius: 16px;
+    box-shadow: 0 8px 28px rgba(26,42,61,0.08);
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  thead th {
+    background: var(--navy);
+    color: #fff;
+    padding: 14px 12px;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: right;
+    position: sticky;
+    top: 0;
+  }
+  thead th:first-child { text-align: center; width: 50px; }
+  tbody td {
+    padding: 12px;
+    font-size: 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+  }
+  tbody td:first-child { text-align: center; color: var(--muted); font-size: 12px; }
+  tbody tr:hover { background: #faf8f3; }
+  tbody tr:last-child td { border-bottom: none; }
+
+  .code-badge {
+    display: inline-block;
+    font-family: 'Consolas', monospace;
+    font-weight: 700;
+    letter-spacing: 1px;
+    background: #fdf6ea;
+    color: var(--gold-dark);
+    border: 1px solid #ecd9b8;
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-size: 13px;
+  }
+  .room-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12.5px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .room-badge.r1 { background: var(--room1-bg); color: var(--room1); }
+  .room-badge.r2 { background: var(--room2-bg); color: var(--room2); }
+  .room-badge::before {
+    content: "";
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  mark {
+    background: rgba(184,147,95,0.35);
+    color: inherit;
+    border-radius: 3px;
+    padding: 0 2px;
+  }
+
+  .no-results {
+    text-align: center;
+    padding: 50px 20px;
+    color: var(--muted);
+    display: none;
+  }
+  .no-results.show { display: block; }
+  .no-results .icon { font-size: 40px; margin-bottom: 10px; opacity: .5; }
+
+  footer {
+    text-align: center;
+    padding: 24px 16px 30px;
+    color: var(--muted);
+    font-size: 12.5px;
+  }
+  footer .line1 { color: var(--navy); font-weight: 600; margin-bottom: 3px; }
+
+  @media (max-width: 560px) {
+    thead th, tbody td { padding: 9px 8px; font-size: 12.5px; }
+    header .exam-title { font-size: 16px; padding: 7px 16px; }
+    header h1 { font-size: 18px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="crest">&#9733;</div>
+  <h1>المعهد العالي لإعداد وتأهيل القادة</h1>
+  <h2>برنامج القيادة الرقمية</h2>
+  <div class="divider"></div>
+  <div class="exam-title">امتحان دورة قادة المستقبل — توزيع القاعات</div>
+</header>
+
+<main>
+  <div class="search-card">
+    <div class="search-box">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+      <input type="text" id="searchInput" placeholder="ابحث بالاسم أو رمز الدخول...">
+    </div>
+    <div class="stats-row">
+      <div class="stat-pill">
+        <div class="num" id="totalCount">0</div>
+        <div class="label">إجمالي الطلبة</div>
+      </div>
+      <div class="stat-pill room1">
+        <div class="num" id="room1Count">0</div>
+        <div class="label">قاعة الانتصار</div>
+      </div>
+      <div class="stat-pill room2">
+        <div class="num" id="room2Count">0</div>
+        <div class="label">قاعة بابل</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="result-count" id="resultCount"></div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>الاسم</th>
+          <th>رمز الدخول</th>
+          <th>مكان الامتحان</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+    <div class="no-results" id="noResults">
+      <div class="icon">&#128269;</div>
+      <div>لا توجد نتائج مطابقة للبحث</div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="line1">المعهد العالي لإعداد وتأهيل القادة · برنامج القيادة الرقمية</div>
+  <div>امتحان دورة قادة المستقبل</div>
+</footer>
+
+<script>
+const students = [{"n": 1, "name": "احمد إسماعيل علوان", "code": "417236", "room": "قاعة الانتصار"}, {"n": 2, "name": "احمد رزاق مايح", "code": "837553", "room": "قاعة الانتصار"}, {"n": 3, "name": "احمد صبيح مجيد", "code": "970461", "room": "قاعة الانتصار"}, {"n": 4, "name": "احمد عبد حسن رهيف", "code": "790019", "room": "قاعة الانتصار"}, {"n": 5, "name": "احمد عبد علي عباس", "code": "503835", "room": "قاعة الانتصار"}, {"n": 6, "name": "احمد مهدي حاشوش", "code": "358300", "room": "قاعة الانتصار"}, {"n": 7, "name": "احمد نزار حسين", "code": "879707", "room": "قاعة الانتصار"}, {"n": 8, "name": "اسعد فليح قاسم", "code": "422281", "room": "قاعة الانتصار"}, {"n": 9, "name": "اسلام حمزة علي", "code": "255788", "room": "قاعة الانتصار"}, {"n": 10, "name": "الهام سامي علي", "code": "802528", "room": "قاعة الانتصار"}, {"n": 11, "name": "اياد طارق جواد", "code": "469804", "room": "قاعة الانتصار"}, {"n": 12, "name": "ايمان زغير رحيم", "code": "811256", "room": "قاعة الانتصار"}, {"n": 13, "name": "ايمان ضيدان عزيز", "code": "112275", "room": "قاعة الانتصار"}, {"n": 14, "name": "ايناس عبد الكاظم محمد", "code": "687312", "room": "قاعة الانتصار"}, {"n": 15, "name": "إبراهيم نبيل عبدالكريم", "code": "363408", "room": "قاعة الانتصار"}, {"n": 16, "name": "إيهاب ظاهر حبيب", "code": "249874", "room": "قاعة الانتصار"}, {"n": 17, "name": "أسماء مصلح محمد", "code": "563572", "room": "قاعة الانتصار"}, {"n": 18, "name": "آفاق حميد حسن", "code": "154439", "room": "قاعة الانتصار"}, {"n": 19, "name": "باسم جلوب ازغير", "code": "777182", "room": "قاعة الانتصار"}, {"n": 20, "name": "باسم محمد هاشم", "code": "835741", "room": "قاعة الانتصار"}, {"n": 21, "name": "بسام خليل إبراهيم", "code": "464910", "room": "قاعة الانتصار"}, {"n": 22, "name": "بشرى شريف غضبان", "code": "335475", "room": "قاعة الانتصار"}, {"n": 23, "name": "ثائر حسين محمد", "code": "356711", "room": "قاعة الانتصار"}, {"n": 24, "name": "جميل عودة إبراهيم", "code": "632825", "room": "قاعة الانتصار"}, {"n": 25, "name": "جهاد منصور ناصح", "code": "245679", "room": "قاعة الانتصار"}, {"n": 26, "name": "حاتم عبد الكريم محمد", "code": "743696", "room": "قاعة الانتصار"}, {"n": 27, "name": "حسن جبار جاسم", "code": "325305", "room": "قاعة الانتصار"}, {"n": 28, "name": "حسن كريم ازميط", "code": "686961", "room": "قاعة الانتصار"}, {"n": 29, "name": "حسن هادي حسن", "code": "222887", "room": "قاعة الانتصار"}, {"n": 30, "name": "حسين فارس كاطع", "code": "813365", "room": "قاعة الانتصار"}, {"n": 31, "name": "حسين فاضل عباس", "code": "835971", "room": "قاعة الانتصار"}, {"n": 32, "name": "حقي إسماعيل محمد", "code": "904244", "room": "قاعة الانتصار"}, {"n": 33, "name": "حميد راضي محمد", "code": "963107", "room": "قاعة الانتصار"}, {"n": 34, "name": "حيدر جبار عبدالله", "code": "256778", "room": "قاعة الانتصار"}, {"n": 35, "name": "حيدر حسين مطلك", "code": "670950", "room": "قاعة الانتصار"}, {"n": 36, "name": "حيدر طارق حميد", "code": "302543", "room": "قاعة الانتصار"}, {"n": 37, "name": "حيدر عبد الكريم شويع", "code": "160139", "room": "قاعة الانتصار"}, {"n": 38, "name": "حيدر محمود مردان", "code": "716931", "room": "قاعة الانتصار"}, {"n": 39, "name": "حيدر موسى احمد", "code": "909534", "room": "قاعة الانتصار"}, {"n": 40, "name": "حيدر وثيج عجيل", "code": "461608", "room": "قاعة الانتصار"}, {"n": 41, "name": "خدر حسن ممند", "code": "290057", "room": "قاعة الانتصار"}, {"n": 42, "name": "خلدون إبراهيم عباس", "code": "783414", "room": "قاعة الانتصار"}, {"n": 43, "name": "خميس نصيف جاسم", "code": "287448", "room": "قاعة الانتصار"}, {"n": 44, "name": "داود سلمان داود", "code": "148340", "room": "قاعة الانتصار"}, {"n": 45, "name": "دنيا عبدالرضا هادي", "code": "748018", "room": "قاعة الانتصار"}, {"n": 46, "name": "رافد خيون دبيسان", "code": "351432", "room": "قاعة الانتصار"}, {"n": 47, "name": "رافد كاظم فياض", "code": "935121", "room": "قاعة الانتصار"}, {"n": 48, "name": "رائد عبد الحسن ضحك", "code": "135986", "room": "قاعة الانتصار"}, {"n": 49, "name": "رجاء سعيد فرج", "code": "562708", "room": "قاعة الانتصار"}, {"n": 50, "name": "رسل مظفر ناصر", "code": "514196", "room": "قاعة الانتصار"}, {"n": 51, "name": "رشا عبد محمد كفطان", "code": "515906", "room": "قاعة الانتصار"}, {"n": 52, "name": "رضوان يونس إسماعيل", "code": "413598", "room": "قاعة الانتصار"}, {"n": 53, "name": "رعد سعد الله علي", "code": "998628", "room": "قاعة الانتصار"}, {"n": 54, "name": "رند صباح حسين", "code": "524792", "room": "قاعة الانتصار"}, {"n": 55, "name": "زياد طارق حسين", "code": "659033", "room": "قاعة الانتصار"}, {"n": 56, "name": "زيتون فرج عبدالله", "code": "668926", "room": "قاعة الانتصار"}, {"n": 57, "name": "زينب حسن خيون", "code": "594417", "room": "قاعة الانتصار"}, {"n": 58, "name": "زينب رائد عبد حمودي", "code": "198348", "room": "قاعة الانتصار"}, {"n": 59, "name": "زينب عكلة عبد", "code": "202489", "room": "قاعة الانتصار"}, {"n": 60, "name": "سعد صاحب عبد", "code": "231276", "room": "قاعة الانتصار"}, {"n": 61, "name": "سلام حنون مناتي", "code": "854155", "room": "قاعة الانتصار"}, {"n": 62, "name": "سلوان كامل علوان", "code": "953206", "room": "قاعة الانتصار"}, {"n": 63, "name": "سليم جلوب بجاي فرج", "code": "614193", "room": "قاعة الانتصار"}, {"n": 64, "name": "سندس علي خليفة", "code": "443682", "room": "قاعة بابل"}, {"n": 65, "name": "سهد حسن امين", "code": "532042", "room": "قاعة بابل"}, {"n": 66, "name": "سوسن جبار إبراهيم", "code": "554631", "room": "قاعة بابل"}, {"n": 67, "name": "سيف محمد جاسم", "code": "666672", "room": "قاعة بابل"}, {"n": 68, "name": "شهلاء حسين سلمان", "code": "956166", "room": "قاعة بابل"}, {"n": 69, "name": "صادق فاضل علي", "code": "485006", "room": "قاعة بابل"}, {"n": 70, "name": "ضرغام هادي كيكو", "code": "734478", "room": "قاعة بابل"}, {"n": 71, "name": "ضمياء سلمان داود", "code": "612372", "room": "قاعة بابل"}, {"n": 72, "name": "طارق عزيز حسين", "code": "440931", "room": "قاعة بابل"}, {"n": 73, "name": "عادل محمد علاوي", "code": "311454", "room": "قاعة بابل"}, {"n": 74, "name": "عامر جميل حمود", "code": "467848", "room": "قاعة بابل"}, {"n": 75, "name": "عامر حسين علي", "code": "876237", "room": "قاعة بابل"}, {"n": 76, "name": "عامر محمود عكيل", "code": "320665", "room": "قاعة بابل"}, {"n": 77, "name": "عباس محمد علي", "code": "790714", "room": "قاعة بابل"}, {"n": 78, "name": "عبد الجبار حنون جبرة الله", "code": "915114", "room": "قاعة بابل"}, {"n": 79, "name": "عبد الستار جبار  زيارة", "code": "501974", "room": "قاعة بابل"}, {"n": 80, "name": "عصام جبر جاسم حسن", "code": "350449", "room": "قاعة بابل"}, {"n": 81, "name": "عقيل حسن عبد الكاظم", "code": "478136", "room": "قاعة بابل"}, {"n": 82, "name": "علاء سامي محمد", "code": "217895", "room": "قاعة بابل"}, {"n": 83, "name": "علاء فيصل زعيان", "code": "259315", "room": "قاعة بابل"}, {"n": 84, "name": "علاء كاظم صالح", "code": "733195", "room": "قاعة بابل"}, {"n": 85, "name": "علي رسول حسين", "code": "800590", "room": "قاعة بابل"}, {"n": 86, "name": "علي عادل محمد", "code": "914030", "room": "قاعة بابل"}, {"n": 87, "name": "علي عماد لطوفي", "code": "169711", "room": "قاعة بابل"}, {"n": 88, "name": "علي غانم حسين", "code": "810144", "room": "قاعة بابل"}, {"n": 89, "name": "علي فاروق فؤاد", "code": "868941", "room": "قاعة بابل"}, {"n": 90, "name": "علي كريم مجيد", "code": "856266", "room": "قاعة بابل"}, {"n": 91, "name": "علي ناظم كاطع", "code": "433889", "room": "قاعة بابل"}, {"n": 92, "name": "علي نجم عبد حسين", "code": "633841", "room": "قاعة بابل"}, {"n": 93, "name": "عماد عباس بنيان", "code": "335860", "room": "قاعة بابل"}, {"n": 94, "name": "عمار عبد الحسين جاسم", "code": "711006", "room": "قاعة بابل"}, {"n": 95, "name": "عمر عبد الكريم حميد", "code": "151934", "room": "قاعة بابل"}, {"n": 96, "name": "غزوان جبار عودة", "code": "845248", "room": "قاعة بابل"}, {"n": 97, "name": "غزوان عبد الأمير  كاظم", "code": "613436", "room": "قاعة بابل"}, {"n": 98, "name": "غسان سليم علي", "code": "919999", "room": "قاعة بابل"}, {"n": 99, "name": "فاروق غازي عبدالله", "code": "474959", "room": "قاعة بابل"}, {"n": 100, "name": "فاضل عبد الزهرة ناجي", "code": "654772", "room": "قاعة بابل"}, {"n": 101, "name": "فائق حميد حزام", "code": "548936", "room": "قاعة بابل"}, {"n": 102, "name": "فتيان حسين علي", "code": "116357", "room": "قاعة بابل"}, {"n": 103, "name": "فرح قاسم محمد", "code": "109615", "room": "قاعة بابل"}, {"n": 104, "name": "فريد كاظم سدرة", "code": "694000", "room": "قاعة بابل"}, {"n": 105, "name": "قاسم محمد علي", "code": "685279", "room": "قاعة بابل"}, {"n": 106, "name": "كرار محمد عبد الزهرة", "code": "162851", "room": "قاعة بابل"}, {"n": 107, "name": "ماهر حمدي رشيد", "code": "567697", "room": "قاعة بابل"}, {"n": 108, "name": "محمد جمال جاسم", "code": "365019", "room": "قاعة بابل"}, {"n": 109, "name": "محمد حسن علوان", "code": "888167", "room": "قاعة بابل"}, {"n": 110, "name": "محمد حمدي كريم", "code": "800641", "room": "قاعة بابل"}, {"n": 111, "name": "محمد خالد شهاب", "code": "772234", "room": "قاعة بابل"}, {"n": 112, "name": "محمد شوكت جاسم", "code": "164297", "room": "قاعة بابل"}, {"n": 113, "name": "محمد عبد السلام عبد العزيز", "code": "973543", "room": "قاعة بابل"}, {"n": 114, "name": "محمد عبد الصاحب حسن", "code": "780773", "room": "قاعة بابل"}, {"n": 115, "name": "محمد عبد الله محمود", "code": "321661", "room": "قاعة بابل"}, {"n": 116, "name": "محمد كامل دنبوس", "code": "499126", "room": "قاعة بابل"}, {"n": 117, "name": "مصطفى سعد خزعل", "code": "644824", "room": "قاعة بابل"}, {"n": 118, "name": "مصطفى فاروق خلف", "code": "997003", "room": "قاعة بابل"}, {"n": 119, "name": "مهند عبد الواحد نايف", "code": "136990", "room": "قاعة بابل"}, {"n": 120, "name": "ميثم حسين امين", "code": "986675", "room": "قاعة بابل"}, {"n": 121, "name": "ميعاد هاتو هاشم", "code": "207420", "room": "قاعة بابل"}, {"n": 122, "name": "نصير ماجد جابر", "code": "802226", "room": "قاعة بابل"}, {"n": 123, "name": "نغم داود سلمان", "code": "926841", "room": "قاعة بابل"}, {"n": 124, "name": "هيثم محسن حسين", "code": "943670", "room": "قاعة بابل"}, {"n": 125, "name": "وجدان قحطان فرحان", "code": "443284", "room": "قاعة بابل"}];
+
+const tableBody = document.getElementById('tableBody');
+const searchInput = document.getElementById('searchInput');
+const resultCount = document.getElementById('resultCount');
+const noResults = document.getElementById('noResults');
+const totalCount = document.getElementById('totalCount');
+const room1Count = document.getElementById('room1Count');
+const room2Count = document.getElementById('room2Count');
+
+totalCount.textContent = toArabicNum(students.length);
+room1Count.textContent = toArabicNum(students.filter(s => s.room === 'قاعة الانتصار').length);
+room2Count.textContent = toArabicNum(students.filter(s => s.room === 'قاعة بابل').length);
+
+function toArabicNum(num) {
+  const arabicDigits = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+  return String(num).replace(/[0-9]/g, d => arabicDigits[d]);
+}
+
+function escapeHtml(str) {
+  return str.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function highlight(text, query) {
+  if (!query) return escapeHtml(text);
+  const escaped = escapeHtml(text);
+  const escapedQuery = escapeHtml(query).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const re = new RegExp('(' + escapedQuery + ')', 'gi');
+  return escaped.replace(re, '<mark>$1</mark>');
+}
+
+function render(filter = '') {
+  const q = filter.trim().toLowerCase();
+  const filtered = students.filter(s =>
+    s.name.toLowerCase().includes(q) || s.code.includes(q)
+  );
+
+  tableBody.innerHTML = filtered.map(s => `
+    <tr>
+      <td>${toArabicNum(s.n)}</td>
+      <td>${highlight(s.name, filter.trim())}</td>
+      <td><span class="code-badge">${highlight(s.code, filter.trim())}</span></td>
+      <td><span class="room-badge ${s.room === 'قاعة الانتصار' ? 'r1' : 'r2'}">${s.room}</span></td>
+    </tr>
+  `).join('');
+
+  if (filter.trim()) {
+    resultCount.innerHTML = `تم العثور على <b>${toArabicNum(filtered.length)}</b> نتيجة من أصل <b>${toArabicNum(students.length)}</b>`;
+  } else {
+    resultCount.innerHTML = `عرض جميع الطلبة (<b>${toArabicNum(students.length)}</b>)`;
+  }
+
+  noResults.classList.toggle('show', filtered.length === 0);
+  tableBody.parentElement.style.display = filtered.length === 0 ? 'none' : 'table';
+}
+
+searchInput.addEventListener('input', e => render(e.target.value));
+
+render();
+</script>
+
+</body>
+</html>
