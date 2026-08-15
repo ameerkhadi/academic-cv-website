@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>امسح للبحث عن مكان امتحانك</title>
+<style>
+  :root {
+    --gold: #b8935f;
+    --gold-dark: #8a6d42;
+    --navy: #1a2a3d;
+    --navy-light: #24384f;
+    --bg: #f4f1ea;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Arial, sans-serif;
+  }
+  body {
+    background: linear-gradient(160deg, var(--navy) 0%, var(--navy-light) 55%, #2c4a63 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+
+  .poster {
+    position: relative;
+    background: #fffdf8;
+    width: 100%;
+    max-width: 520px;
+    border-radius: 26px;
+    padding: 40px 34px 34px;
+    text-align: center;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.35);
+    overflow: hidden;
+    border: 1px solid rgba(184,147,95,0.35);
+  }
+  .poster::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(45deg, rgba(184,147,95,0.045) 0 2px, transparent 2px 40px);
+    pointer-events: none;
+  }
+  .corner {
+    position: absolute;
+    width: 46px; height: 46px;
+    border: 2.5px solid var(--gold);
+  }
+  .corner.tl { top: 14px; left: 14px; border-width: 2.5px 0 0 2.5px; border-radius: 10px 0 0 0; }
+  .corner.tr { top: 14px; right: 14px; border-width: 2.5px 2.5px 0 0; border-radius: 0 10px 0 0; }
+  .corner.bl { bottom: 14px; left: 14px; border-width: 0 0 2.5px 2.5px; border-radius: 0 0 0 10px; }
+  .corner.br { bottom: 14px; right: 14px; border-width: 0 2.5px 2.5px 0; border-radius: 0 0 10px 0; }
+
+  .inst-name {
+    position: relative;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--navy);
+    letter-spacing: .2px;
+  }
+  .prog-name {
+    position: relative;
+    font-size: 12.5px;
+    color: var(--gold-dark);
+    margin-top: 3px;
+    font-weight: 600;
+  }
+  .divider {
+    width: 60px;
+    height: 3px;
+    background: var(--gold);
+    margin: 14px auto 16px;
+    border-radius: 3px;
+    position: relative;
+  }
+
+  .exam-tag {
+    position: relative;
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--navy);
+    background: rgba(184,147,95,0.14);
+    border: 1px solid rgba(184,147,95,0.4);
+    padding: 6px 20px;
+    border-radius: 30px;
+    margin-bottom: 26px;
+  }
+
+  .qr-frame {
+    position: relative;
+    width: 260px;
+    height: 260px;
+    margin: 0 auto 26px;
+    background: #fff;
+    border-radius: 20px;
+    padding: 16px;
+    box-shadow: 0 10px 30px rgba(26,42,61,0.15);
+    border: 3px solid var(--navy);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .qr-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    image-rendering: pixelated;
+  }
+  .qr-frame::before,
+  .qr-frame::after {
+    content: "";
+    position: absolute;
+    width: 22px; height: 22px;
+    border: 3px solid var(--gold);
+  }
+  .qr-frame::before { top: -8px; left: -8px; border-width: 3px 0 0 3px; border-radius: 6px 0 0 0; }
+  .qr-frame::after { bottom: -8px; right: -8px; border-width: 0 3px 3px 0; border-radius: 0 0 6px 0; }
+
+  .cta {
+    position: relative;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--navy);
+    line-height: 1.5;
+    margin-bottom: 10px;
+  }
+  .cta .highlight {
+    color: var(--gold-dark);
+  }
+  .sub-cta {
+    position: relative;
+    font-size: 13.5px;
+    color: #6b7686;
+    margin-bottom: 24px;
+    line-height: 1.6;
+  }
+
+  .link-box {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--bg);
+    border: 1px solid #e3ddd0;
+    border-radius: 10px;
+    padding: 9px 16px;
+    font-size: 12px;
+    color: var(--navy-light);
+    direction: ltr;
+    font-family: 'Consolas', monospace;
+    word-break: break-all;
+  }
+
+  footer {
+    position: relative;
+    margin-top: 26px;
+    font-size: 11px;
+    color: #a3aab5;
+  }
+
+  @media print {
+    body { background: #fff; padding: 0; }
+    .poster { box-shadow: none; border: 1px solid #ccc; max-width: 100%; }
+    @page { margin: 12mm; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="poster">
+    <div class="corner tl"></div>
+    <div class="corner tr"></div>
+    <div class="corner bl"></div>
+    <div class="corner br"></div>
+
+    <div class="inst-name">المعهد العالي لإعداد وتأهيل القادة</div>
+    <div class="divider"></div>
+
+    <div class="exam-tag">امتحان دورة قادة المستقبل</div>
+
+    <div class="qr-frame">
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA4QAAAOECAIAAAB2LGhsAAAXaElEQVR4nO3YwZGzMLpA0fGUsyAEciB4ciAE4uCt32rcVv++VnPOntKHBPYtHtd1/QcAAAr/rQcAAOC+xCgAABkxCgBARowCAJARowAAZMQoAAAZMQoAQEaMAgCQEaMAAGTEKAAAGTEKAEBGjAIAkBGjAABkxCgAABkxCgBARowCAJARowAAZMQoAAAZMQoAQEaMAgCQEaMAAGTEKAAAGTEKAEBGjAIAkBGjAABkxCgAABkxCgBARowCAJARowAAZMQoAAAZMQoAQEaMAgCQEaMAAGTEKAAAGTEKAEBGjAIAkBGjAABkxCgAABkxCgBA5lktvKxbtTQvOo89WXfk2ahmrlR7dbczuts+323dEdV/2d3eIz6jeq58GQUAICNGAQDIiFEAADJiFACAjBgFACAjRgEAyIhRAAAyYhQAgIwYBQAgI0YBAMiIUQAAMmIUAICMGAUAICNGAQDIiFEAADJiFACAjBgFACAjRgEAyIhRAAAyj+u6koWXdXv72vPYf3GSv80+f8bIPs9o5Nm42zNZ3e/d9nnEjGc0ojpfz+RnzLjPvowCAJARowAAZMQoAAAZMQoAQEaMAgCQEaMAAGTEKAAAGTEKAEBGjAIAkBGjAABkxCgAABkxCgBARowCAJARowAAZMQoAAAZMQoAQEaMAgCQEaMAAGTEKAAAmWc9wKct61aP8GPnsdcj/NjIPo/cb7VuNfOMZjzfyt3ud8SMe1W9CzPu1YgZf2Nn3OcRvowCAJARowAAZMQoAAAZMQoAQEaMAgCQEaMAAGTEKAAAGTEKAEBGjAIAkBGjAABkxCgAABkxCgBARowCAJARowAAZMQoAAAZMQoAQEaMAgCQEaMAAGTEKAAAmWc9APym89jfvnZZt2TdkWtHjNxvtVcjRmYeUT2TI2Y83xnf/RmfSfgXfBkFACAjRgEAyIhRAAAyYhQAgIwYBQAgI0YBAMiIUQAAMmIUAICMGAUAICNGAQDIiFEAADJiFACAjBgFACAjRgEAyIhRAAAyYhQAgIwYBQAgI0YBAMiIUQAAMs96AP6m89iTdZd1m27daq+qdSsj91s9VzPOPONeVfs84/nCv+DLKAAAGTEKAEBGjAIAkBGjAABkxCgAABkxCgBARowCAJARowAAZMQoAAAZMQoAQEaMAgCQEaMAAGTEKAAAGTEKAEBGjAIAkBGjAABkxCgAABkxCgBARowCAJB51gN82nns9Qj8D8u6JeuOPBvVzDPuVWVkr6r7rc63MuNzNWLGZ3JG9ur7+TIKAEBGjAIAkBGjAABkxCgAABkxCgBARowCAJARowAAZMQoAAAZMQoAQEaMAgCQEaMAAGTEKAAAGTEKAEBGjAIAkBGjAABkxCgAABkxCgBARowCAJARowAAZJ71AO9Y1q0egf9h5IzOY0/WvZtqn0fWHeF+Xzfj+3u3dUfM+Dz7bf/bfBkFACAjRgEAyIhRAAAyYhQAgIwYBQAgI0YBAMiIUQAAMmIUAICMGAUAICNGAQDIiFEAADJiFACAjBgFACAjRgEAyIhRAAAyYhQAgIwYBQAgI0YBAMiIUQAAMo/ruuoZ4P9Z1q0e4cfOY69H+LEZ97nifF9X7ZX7/YwZ3wW+ny+jAABkxCgAABkxCgBARowCAJARowAAZMQoAAAZMQoAQEaMAgCQEaMAAGTEKAAAGTEKAEBGjAIAkBGjAABkxCgAABkxCgBARowCAJARowAAZMQoAAAZMQoAQOZxXVc9wzSWdUvWPY/97WvvNvPd9orXVc/ViBnfhbutO8K7//08G5/hyygAABkxCgBARowCAJARowAAZMQoAAAZMQoAQEaMAgCQEaMAAGTEKAAAGTEKAEBGjAIAkBGjAABkxCgAABkxCgBARowCAJARowAAZMQoAAAZMQoAQEaMAgCQeVzXlSy8rNvb157H/ouTfMaM9zvjzCNG7pfXjTwbdzujaq/u9v7O+Bs74m7nO2LGvZqRL6MAAGTEKAAAGTEKAEBGjAIAkBGjAABkxCgAABkxCgBARowCAJARowAAZMQoAAAZMQoAQEaMAgCQEaMAAGTEKAAAGTEKAEBGjAIAkBGjAABkxCgAABkxCgBA5lkP8I5l3d6+9jz2X5zk+9et9mpk3REjMzujz6x7NzO+RzO+vxXv0etm/K0b4dl4nS+jAABkxCgAABkxCgBARowCAJARowAAZMQoAAAZMQoAQEaMAgCQEaMAAGTEKAAAGTEKAEBGjAIAkBGjAABkxCgAABkxCgBARowCAJARowAAZMQoAAAZMQoAQOZZLXwee7Lusm7JupWRfR7Zq+p8R1TPRrVXM57RiBnvt3p/72bGvZpx5hnfwep/8G7/v76MAgCQEaMAAGTEKAAAGTEKAEBGjAIAkBGjAABkxCgAABkxCgBARowCAJARowAAZMQoAAAZMQoAQEaMAgCQEaMAAGTEKAAAGTEKAEBGjAIAkBGjAABkxCgAAJnHdV31DD+2rFs9wo+dx/72tdX9jsw8Ysbz5XXVc3U33qPX3e2ZHHk2/Jd9xt32ypdRAAAyYhQAgIwYBQAgI0YBAMiIUQAAMmIUAICMGAUAICNGAQDIiFEAADJiFACAjBgFACAjRgEAyIhRAAAyYhQAgIwYBQAgI0YBAMiIUQAAMmIUAICMGAUAIPOsFl7W7e1rz2O/1bojZtyru+1zpTrfETO+vzM+G/bqM2b8vapmHjHjzHc7I19GAQDIiFEAADJiFACAjBgFACAjRgEAyIhRAAAyYhQAgIwYBQAgI0YBAMiIUQAAMmIUAICMGAUAICNGAQDIiFEAADJiFACAjBgFACAjRgEAyIhRAAAyYhQAgMyzHuAdy7q9fe157L84yWeMzDyyVzOq9qra5+p5nvEdvNvMM5rxPZpx5hnd7X7vxpdRAAAyYhQAgIwYBQAgI0YBAMiIUQAAMmIUAICMGAUAICNGAQDIiFEAADJiFACAjBgFACAjRgEAyIhRAAAyYhQAgIwYBQAgI0YBAMiIUQAAMmIUAICMGAUAIPOsFj6P/e1rl3VLrh2ZuVLNbJ9fVz3PI6r7ndGM70I1893WHTHjzDOe0d1+ryq+jAIAkBGjAABkxCgAABkxCgBARowCAJARowAAZMQoAAAZMQoAQEaMAgCQEaMAAGTEKAAAGTEKAEBGjAIAkBGjAABkxCgAABkxCgBARowCAJARowAAZMQoAACZZz3Ap53HXo/wY8u6JetWezVyvzOe7whn9LrqPRpxt3d/xIzPZGXGd6E6oxl/r2Z8nn0ZBQAgI0YBAMiIUQAAMmIUAICMGAUAICNGAQDIiFEAADJiFACAjBgFACAjRgEAyIhRAAAyYhQAgIwYBQAgI0YBAMiIUQAAMmIUAICMGAUAICNGAQDIiFEAADLPeoB3nMf+9rXLuiXrjqjWHdmrEdX5Vma83xmfSe/vZ67l+834mzPC78b382UUAICMGAUAICNGAQDIiFEAADJiFACAjBgFACAjRgEAyIhRAAAyYhQAgIwYBQAgI0YBAMiIUQAAMmIUAICMGAUAICNGAQDIiFEAADJiFACAjBgFACAjRgEAyDyrhZd1e/va89iTa6uZR1Qzj6xr5r/tbns142/diBnfX17njL7fjL+xvowCAJARowAAZMQoAAAZMQoAQEaMAgCQEaMAAGTEKAAAGTEKAEBGjAIAkBGjAABkxCgAABkxCgBARowCAJARowAAZMQoAAAZMQoAQEaMAgCQEaMAAGTEKAAAmWe18HnsybrLut1q3ZF9NvPrqud5RtX53u2M7NXrqt+NETP+To6Y8X6rd3DG99eXUQAAMmIUAICMGAUAICNGAQDIiFEAADJiFACAjBgFACAjRgEAyIhRAAAyYhQAgIwYBQAgI0YBAMiIUQAAMmIUAICMGAUAICNGAQDIiFEAADJiFACAjBgFACDzuK6rnuHHlnV7+9rz2Kdbd8SMM1dmfK5mdLfnqjLjuz/juzDjXpn5dZ7Jz/BlFACAjBgFACAjRgEAyIhRAAAyYhQAgIwYBQAgI0YBAMiIUQAAMmIUAICMGAUAICNGAQDIiFEAADJiFACAjBgFACAjRgEAyIhRAAAyYhQAgIwYBQAgI0YBAMg86wHecR7729cu6/aLk3y/kb2qOKPPuNs+j9zvjGd0t5lnXPdu7vZM8jpfRgEAyIhRAAAyYhQAgIwYBQAgI0YBAMiIUQAAMmIUAICMGAUAICNGAQDIiFEAADJiFACAjBgFACAjRgEAyIhRAAAyYhQAgIwYBQAgI0YBAMiIUQAAMmIUAIDM47quZOFl3ZJ1R5zH/va1I/dbrVuZ8X5HZh7hfl834/tbmfF3Y0beo+9ftzLj78YIX0YBAMiIUQAAMmIUAICMGAUAICNGAQDIiFEAADJiFACAjBgFACAjRgEAyIhRAAAyYhQAgIwYBQAgI0YBAMiIUQAAMmIUAICMGAUAICNGAQDIiFEAADJiFACAzLMe4NPOY59u3WXdplu3MuP9zni+1V7NeL4jZtznGc34bFTs1etm/N+v+DIKAEBGjAIAkBGjAABkxCgAABkxCgBARowCAJARowAAZMQoAAAZMQoAQEaMAgCQEaMAAGTEKAAAGTEKAEBGjAIAkBGjAABkxCgAABkxCgBARowCAJARowAAZB7XdSULL+uWrFs5j/3ta2fcq+p+Z9znGfeK13meX+d5ft3dznfEjM/G3fbKl1EAADJiFACAjBgFACAjRgEAyIhRAAAyYhQAgIwYBQAgI0YBAMiIUQAAMmIUAICMGAUAICNGAQDIiFEAADJiFACAjBgFACAjRgEAyIhRAAAyYhQAgIwYBQAg86wH4N86j/3ta5d1S64dmXlEtVcjZpx5RPVsjJjxjLyDr6tmnnGvKvb5+/kyCgBARowCAJARowAAZMQoAAAZMQoAQEaMAgCQEaMAAGTEKAAAGTEKAEBGjAIAkBGjAABkxCgAABkxCgBARowCAJARowAAZMQoAAAZMQoAQEaMAgCQEaMAAGQe13XVM/zYsm71CB91Hvvb147s1ci6I6qZ77ZXlbvt1YzP5Izrjphx5ruZ8Yxm/K2rZvZlFACAjBgFACAjRgEAyIhRAAAyYhQAgIwYBQAgI0YBAMiIUQAAMmIUAICMGAUAICNGAQDIiFEAADJiFACAjBgFACAjRgEAyIhRAAAyYhQAgIwYBQAgI0YBAMg8rutKFl7W7e1rz2Ofbt0Rd9urGc9oRnfbZ8/z62aceUYj+zxixjOq9qoy4xmN8GUUAICMGAUAICNGAQDIiFEAADJiFACAjBgFACAjRgEAyIhRAAAyYhQAgIwYBQAgI0YBAMiIUQAAMmIUAICMGAUAICNGAQDIiFEAADJiFACAjBgFACAjRgEAyDyrhc9jf/vaZd1+cZK/bWSvqjMaWbdyt32u3sEZn40Z93lGd/vNGXG3vbrbb+yMZ+TLKAAAGTEKAEBGjAIAkBGjAABkxCgAABkxCgBARowCAJARowAAZMQoAAAZMQoAQEaMAgCQEaMAAGTEKAAAGTEKAEBGjAIAkBGjAABkxCgAABkxCgBARowCAJB5Vgsv6/b2teex/+IknzFyvyNm3KsR1XM1cm31bIy42/3OqDqjGd/BEX7bv9+Mvzl3O19fRgEAyIhRAAAyYhQAgIwYBQAgI0YBAMiIUQAAMmIUAICMGAUAICNGAQDIiFEAADJiFACAjBgFACAjRgEAyIhRAAAyYhQAgIwYBQAgI0YBAMiIUQAAMmIUAIDM47quZOFl3ZJ1R5zH/va1M97viJG9mpHzfd3IXlXPlZn/thn3qpr5bntVudsZ+TIKAEBGjAIAkBGjAABkxCgAABkxCgBARowCAJARowAAZMQoAAAZMQoAQEaMAgCQEaMAAGTEKAAAGTEKAEBGjAIAkBGjAABkxCgAABkxCgBARowCAJARowAAZB7XdSULL+uWrDuj89jrEX7M+X6/kedq5HyrdUdU7+CM79Hd9srz/Lrqd6Pi/X2dL6MAAGTEKAAAGTEKAEBGjAIAkBGjAABkxCgAABkxCgBARowCAJARowAAZMQoAAAZMQoAQEaMAgCQEaMAAGTEKAAAGTEKAEBGjAIAkBGjAABkxCgAABkxCgBA5nFdV7Lwsm7JujM6j/3ta6t9Hpm5MrJXM57RiBnvd8aZR7jfz/A88y/M+B86wpdRAAAyYhQAgIwYBQAgI0YBAMiIUQAAMmIUAICMGAUAICNGAQDIiFEAADJiFACAjBgFACAjRgEAyIhRAAAyYhQAgIwYBQAgI0YBAMiIUQAAMmIUAICMGAUAIPO4rquegT9oWbe3rz2P/Rcned2MM48Yud8ZzfhczWhkn6u9mvHZqPb5br919vkzfBkFACAjRgEAyIhRAAAyYhQAgIwYBQAgI0YBAMiIUQAAMmIUAICMGAUAICNGAQDIiFEAADJiFACAjBgFACAjRgEAyIhRAAAyYhQAgIwYBQAgI0YBAMiIUQAAMs9q4WXdqqV50Xns9QjTuNvzPPJsjOzVjOvOOPPIunebuXK3mav/oxn3eUa+jAIAkBGjAABkxCgAABkxCgBARowCAJARowAAZMQoAAAZMQoAQEaMAgCQEaMAAGTEKAAAGTEKAEBGjAIAkBGjAABkxCgAABkxCgBARowCAJARowAAZMQoAACZZz3AO85jr0eYxrJuybrVGVX3O2LG57na5xnXHTnfGZ+NkZmrfR5Rzey37vvd7V0Y4csoAAAZMQoAQEaMAgCQEaMAAGTEKAAAGTEKAEBGjAIAkBGjAABkxCgAABkxCgBARowCAJARowAAZMQoAAAZMQoAQEaMAgCQEaMAAGTEKAAAGTEKAEBGjAIAkHnWA3zasm71CD92Hns9wo/dbZ+r+x1Zd+R+Z9wrXledb/VbN+P7W5lxZr6fL6MAAGTEKAAAGTEKAEBGjAIAkBGjAABkxCgAABkxCgBARowCAJARowAAZMQoAAAZMQoAQEaMAgCQEaMAAGTEKAAAGTEKAEBGjAIAkBGjAABkxCgAABkxCgBA5lkPAL/pPPa3r13W7Rcn+YzqfkfWvdsZVaq9GjnfEXe73xHVuz/ibjNX61Z75csoAAAZMQoAQEaMAgCQEaMAAGTEKAAAGTEKAEBGjAIAkBGjAABkxCgAABkxCgBARowCAJARowAAZMQoAAAZMQoAQEaMAgCQEaMAAGTEKAAAGTEKAEBGjAIAkHnWA/A3ncf+9rXLuiXXVu4288izMaJatzrf6h3kM6ozmvHd9w5+P19GAQDIiFEAADJiFACAjBgFACAjRgEAyIhRAAAyYhQAgIwYBQAgI0YBAMiIUQAAMmIUAICMGAUAICNGAQDIiFEAADJiFACAjBgFACAjRgEAyIhRAAAyYhQAgMzjuq5k4WXd3r72PPZfnORvs8+vq/ZqxnX5DOf7GTP+1vltf92M78KM/ykjfBkFACAjRgEAyIhRAAAyYhQAgIwYBQAgI0YBAMiIUQAAMmIUAICMGAUAICNGAQDIiFEAADJiFACAjBgFACAjRgEAyIhRAAAyYhQAgIwYBQAgI0YBAMiIUQAAMs96gHcs61aPwD9Une957Mm6I0b2auR+ndH3q87XGX0/5/u6Ge93xpl9GQUAICNGAQDIiFEAADJiFACAjBgFACAjRgEAyIhRAAAyYhQAgIwYBQAgI0YBAMiIUQAAMmIUAICMGAUAICNGAQDIiFEAADJiFACAjBgFACAjRgEAyIhRAAAyj+u66hkAALgpX0YBAMiIUQAAMmIUAICMGAUAICNGAQDIiFEAADJiFACAjBgFACAjRgEAyIhRAAAyYhQAgIwYBQAgI0YBAMiIUQAAMmIUAICMGAUAICNGAQDIiFEAADJiFACAjBgFACAjRgEAyIhRAAAyYhQAgIwYBQAgI0YBAMiIUQAAMmIUAICMGAUAICNGAQDIiFEAADJiFACAjBgFACAjRgEAyIhRAAAyYhQAgIwYBQAgI0YBAMiIUQAAMmIUAIDM/wHBAeIlHyfgLwAAAABJRU5ErkJggg==" alt="QR Code">
+    </div>
+
+    <div class="cta">امسح <span class="highlight">وابحث</span><br>عن مكان امتحانك ورقمك</div>
+    <div class="sub-cta">وجّه كاميرا هاتفك نحو الرمز أعلاه لفتح الرابط والبحث باسمك</div>
+
+    <footer>المعهد العالي لإعداد وتأهيل القادة</footer>
+  </div>
+
+</body>
+</html>
