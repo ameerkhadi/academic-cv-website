@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>شيت الإجابة النموذجية</title>
+<style>
+  :root {
+    --navy: #1F4E79;
+    --blue: #1565C0;
+    --green: #2E7D32;
+    --red: #C62828;
+    --gray-bg: #D9D9D9;
+    --light-blue-bg: #EAF1FB;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+    direction: rtl;
+    color: #222;
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 0 20px;
+    line-height: 1.8;
+  }
+  .header { text-align: center; margin-bottom: 30px; }
+  .header h1 { font-size: 20px; margin: 4px 0; }
+  .header h2 { font-size: 16px; font-weight: normal; margin: 4px 0; }
+  .header .title-main { font-size: 17px; font-weight: bold; color: var(--navy); margin: 8px 0; }
+  .header .model-tag { font-size: 13px; color: #666; font-style: italic; }
+
+  .section-title {
+    background: var(--navy);
+    color: #fff;
+    padding: 8px 14px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 36px;
+    margin-bottom: 6px;
+  }
+  .subtitle {
+    font-size: 13px;
+    color: #666;
+    font-style: italic;
+    margin-bottom: 12px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 10px;
+    font-size: 14px;
+  }
+  th, td {
+    border: 1px solid #999;
+    padding: 8px 10px;
+    text-align: right;
+    vertical-align: middle;
+  }
+  th {
+    background: var(--gray-bg);
+    font-weight: bold;
+  }
+  td.center, th.center { text-align: center; }
+
+  /* السؤال الأول: فرع + إجابة */
+  .q1-table td.label {
+    background: var(--light-blue-bg);
+    font-weight: bold;
+    font-size: 20px;
+    text-align: center;
+    color: var(--blue);
+    width: 50px;
+  }
+  .q1-table td.content p { margin: 0 0 6px 0; }
+  .q1-table td.content .q-text { font-weight: bold; }
+  .q1-table td.content .a-text { color: var(--blue); }
+
+  /* السؤال الثاني: مقالي */
+  .q2-block { margin-bottom: 18px; }
+  .q2-block .q-heading { font-weight: bold; color: var(--blue); font-size: 15px; margin-bottom: 6px; }
+  .q2-block .a-text { text-align: justify; }
+
+  /* صح / خطأ */
+  .answer-true { color: var(--green); font-weight: bold; }
+  .answer-false { color: var(--red); font-weight: bold; }
+
+  @media print {
+    body { margin: 0; }
+    .section-title { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    th { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .q1-table td.label { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    table, .q2-block { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>المعهد العالي لإعداد وتأهيل القادة</h1>
+    <h2>برنامج القيادة الرقمية — الدبلوم العالي المهني</h2>
+    <div class="title-main">شيت الإجابة النموذجية — امتحان الفصل الأول / الدور الأول / العام الدراسي 2026-2027</div>
+    <div class="model-tag">نموذج 1</div>
+  </div>
+
+  <!-- السؤال الأول -->
+  <div class="section-title">السؤال الأول — أسئلة قصيرة (15 درجة)</div>
+  <div class="subtitle">يجيب الطالب عن ثلاثة فروع من أصل أربعة</div>
+  <table class="q1-table">
+    <tr>
+      <td class="label">أ</td>
+      <td class="content">
+        <p class="q-text">مكوّن من الطبقة المادية للبنية التحتية الرقمية يلزم توفره في مركز البيانات الوطني</p>
+        <p class="a-text">أي عنصر واحد من: مراكز البيانات (Data Centers) — الخوادم (Servers) — الشبكات — كابلات الألياف الضوئية. (يُقبل أي مكوّن مادي واحد صحيح مذكور في المحاضرة الأولى).</p>
+      </td>
+    </tr>
+    <tr>
+      <td class="label">ب</td>
+      <td class="content">
+        <p class="q-text">إجراء أمني واحد من القواعد الذهبية الخمس للأمن السحابي</p>
+        <p class="a-text">أي إجراء واحد من: تشفير البيانات (Encryption) أثناء النقل والتخزين — المصادقة متعددة العوامل (MFA) — إدارة الهوية والصلاحيات وفق مبدأ الحد الأدنى من الصلاحية (Least Privilege) — تصنيف البيانات قبل ترحيلها للسحابة — النسخ الاحتياطي الدوري. (يُقبل أي إجراء واحد صحيح).</p>
+      </td>
+    </tr>
+    <tr>
+      <td class="label">ج</td>
+      <td class="content">
+        <p class="q-text">نوع التكامل الحكومي المطلوب لحل تعارض نسختي بيانات المواطن بين وزارتين</p>
+        <p class="a-text">التكامل الدلالي (Semantic Interoperability) — أي توحيد تعريف البيانات ومعناها بين الجهتين، بحيث تحمل الحقول والمصطلحات المعنى نفسه لدى كل جهة. (يُقبل أيضاً: إنشاء سجل مرجعي موحّد للمواطن يربط النسختين).</p>
+      </td>
+    </tr>
+    <tr>
+      <td class="label">د</td>
+      <td class="content">
+        <p class="q-text">المشكلة الأخلاقية في نظام ATS الذي يستبعد مرشحين من خلفيات معينة باستمرار</p>
+        <p class="a-text">التحيّز الخوارزمي (Algorithmic Bias) — إذ يرث النظام تحيّز البيانات التي دُرّب عليها فيُكرّر أنماط الاستبعاد السابقة بثقة رقمية دون قصد صريح من مصمّميه.</p>
+      </td>
+    </tr>
+  </table>
+
+  <!-- السؤال الثاني -->
+  <div class="section-title">السؤال الثاني (25 درجة)</div>
+  <div class="subtitle">يجيب الطالب عن أحد الفرعين</div>
+
+  <div class="q2-block">
+    <div class="q-heading">أ. جودة البيانات وحوكمتها ومحدودية الحلول التقنية وحدها</div>
+    <p class="a-text">تقوم البنية التحتية الرقمية على ثلاث طبقات متكاملة: مادية (شبكات، مراكز بيانات، خوادم، كابلات)، وبرمجية (أنظمة تشغيل ومنصّات وبروتوكولات)، وتنظيمية (سياسات وتشريعات ومعايير حوكمة وكفاءات بشرية). العلاقة بينها اشتراط متبادل: المادية تُوفّر القدرة، والبرمجية تُحوّلها إلى وظيفة، والتنظيمية تُحدّد الغاية والضوابط والمساءلة. وبخصوص جودة البيانات وحوكمتها: تُقاس الجودة وفق معايير (ISO/IEC 25012) كالدقّة والاكتمال والاتّساق والحداثة، بينما الحوكمة هي منظومة السلطة والمسؤولية التي تحدّد المالك والمعايير والمساءلة. العلاقة سبب بنتيجة: الجودة مُخرَج والحوكمة هي الآلية المنتجة له. رداءة البيانات غالباً سببها تنظيمي (غياب مالك بيانات، تباين تعريف الحقول، غياب معرّف موحّد) لا خلل في الخوارزميات، ولذلك تفشل الحلول التقنية المنفردة لأنها تعالج الأعراض لا الأسباب. الحل الصحيح: تعيين مالك بيانات ومسؤول إشراف (Data Steward)، وقاموس بيانات وطني موحّد، وسجل مرجعي واحد لكل كيان، وضبط المدخلات عند المصدر، ونشر مؤشرات جودة دورية — عندها تصبح الأدوات التقنية معزِّزاً لا بديلاً.</p>
+  </div>
+
+  <div class="q2-block">
+    <div class="q-heading">ب. تشبيه الحوسبة السحابية بشبكة الكهرباء العامة: أين يصمد وأين ينهار</div>
+    <p class="a-text">يصمد تشبيه الحوسبة السحابية بشبكة الكهرباء في خصائص NIST الخمس المشتركة: الخدمة الذاتية عند الطلب، والنفاذ الواسع، وتجميع الموارد، والمرونة السريعة، والدفع بحسب الاستهلاك. لكنه ينهار في نقاط جوهرية: البيانات (خلافاً للكهرباء) ذات محتوى سيادي وقانوني وأمني فتسرّبها لا يُستدرك؛ وينشأ ارتباط بالمورّد (Vendor Lock-in) يجعل تبديل المزوّد باهظاً بخلاف تبديل مزوّد الكهرباء؛ ونموذج المسؤولية المشتركة يُبقي على العميل مسؤولية جوهرية بخلاف مسؤولية المزوّد الكاملة في الكهرباء؛ وموقع تخزين البيانات يخضع لولاية قضائية أجنبية بخلاف الكهرباء. الدلالة: قرار الانتقال إلى السحابة قرار سيادي وقانوني لا قرار تقني محض، ويقتضي تصنيف البيانات قبل الترحيل، وإبقاء الفئات الحسّاسة في سحابة حكومية خاصة أو بيئة هجينة، واشتراط توطين البيانات، وتضمين العقد شروط خروج واسترجاع واضحة.</p>
+  </div>
+
+  <!-- السؤال الثالث -->
+  <div class="section-title">السؤال الثالث — صح أو خطأ (10 درجات)</div>
+  <div class="subtitle">يجيب الطالب عن عشرة من أصل اثني عشر</div>
+  <table>
+    <tr><th class="center">م</th><th>نص العبارة</th><th class="center">الإجابة</th></tr>
+    <tr><td class="center">1</td><td>الكابلات البحرية والأرضية تنقل أكثر من 97% من حركة البيانات العالمية.</td><td class="center answer-true">صح</td></tr>
+    <tr><td class="center">2</td><td>نظم TPS الحكومية هي النظم التحليلية المتقدمة التي تخدم صنّاع القرار في المستويات العليا.</td><td class="center answer-false">خطأ</td></tr>
+    <tr><td class="center">3</td><td>وفق إطار DAMA-DMBOK، حوكمة البيانات وأمن البيانات وجودة البيانات هي قرارات تقنية بحتة وليست إدارية.</td><td class="center answer-false">خطأ</td></tr>
+    <tr><td class="center">4</td><td>أول من استخدم مصطلح «السحابة» لوصف الخدمات الرقمية البعيدة كانت شركة جوجل عام 2006.</td><td class="center answer-false">خطأ</td></tr>
+    <tr><td class="center">5</td><td>مرّت شبكات المعلومات الحكومية بأربع مراحل تطورية فقط بدأت في السبعينيات.</td><td class="center answer-false">خطأ</td></tr>
+    <tr><td class="center">6</td><td>المفتاح الأساسي يضمن أن كل سجل له هوية فريدة لا تتكرر.</td><td class="center answer-true">صح</td></tr>
+    <tr><td class="center">7</td><td>تعتمد بنية ESB (ناقل الخدمات المؤسسية) على الربط المباشر نقطة لنقطة بين كل نظامين.</td><td class="center answer-false">خطأ</td></tr>
+    <tr><td class="center">8</td><td>أطلقت إدارة كلينتون مبادرة الحكومة الإلكترونية في الولايات المتحدة عام 1993.</td><td class="center answer-true">صح</td></tr>
+    <tr><td class="center">9</td><td>ظهر مفهوم «الحكومة كمنصّة» GaaP على يد المنظّر تيم أورايلي مطلع عام 2010.</td><td class="center answer-true">صح</td></tr>
+    <tr><td class="center">10</td><td>الذكاء الاصطناعي التوليدي (Generative) يصنّف أو يتنبأ بناءً على بيانات موجودة دون إنشاء محتوى جديد.</td><td class="center answer-false">خطأ</td></tr>
+    <tr><td class="center">11</td><td>الفريق الأحمر (Red Team) مسؤول عن مراقبة الأنظمة والاستجابة للحوادث الأمنية بشكل دائم.</td><td class="center answer-false">خطأ</td></tr>
+    <tr><td class="center">12</td><td>FTTH يعني توصيل الألياف الضوئية مباشرة إلى المنازل.</td><td class="center answer-true">صح</td></tr>
+  </table>
+
+  <!-- السؤال الرابع -->
+  <div class="section-title">السؤال الرابع — اختر الإجابة الصحيحة (10 درجات)</div>
+  <div class="subtitle">يجيب الطالب عن عشرة من أصل اثني عشر</div>
+  <table>
+    <tr><th class="center">م</th><th>موضوع السؤال</th><th>الإجابة الصحيحة</th></tr>
+    <tr><td class="center">1</td><td>المبدأ الذي يقوم عليه نموذج الثقة الصفرية (Zero Trust)</td><td>ب) «لا تثق بأحد، تحقّق من الجميع»</td></tr>
+    <tr><td class="center">2</td><td>كيف يُطبَّق مبدأ السرية (Confidentiality) في ثالوث CIA</td><td>ب) التشفير AES-256 وبروتوكول TLS 1.3</td></tr>
+    <tr><td class="center">3</td><td>بُعد جودة البيانات الذي يقيس مطابقة البيانات للواقع الفعلي</td><td>ب) الدقة (Accuracy)</td></tr>
+    <tr><td class="center">4</td><td>معنى خاصية «الوصول الواسع عبر الشبكة» في الخدمة السحابية</td><td>أ) تعمل على أي جهاز: حاسوب أو هاتف أو تابلت</td></tr>
+    <tr><td class="center">5</td><td>معيارا NIST 2024 لأول تشفير ما بعد الكمي</td><td>ب) CRYSTALS-Kyber و CRYSTALS-Dilithium</td></tr>
+    <tr><td class="center">6</td><td>المسؤول عن تصميم البنية الأساسية لقاعدة البيانات وصيانتها وأمانها</td><td>ج) مدير قاعدة البيانات</td></tr>
+    <tr><td class="center">7</td><td>الذي ليس أحد مستويات الإطار الأوروبي EIF الأربعة</td><td>ج) المستوى المالي</td></tr>
+    <tr><td class="center">8</td><td>المقصود بمفهوم الحكومة الذكية الاستباقية</td><td>ب) تتوقع احتياج المواطن وتقدّم الخدمة قبل طلبها</td></tr>
+    <tr><td class="center">9</td><td>الأبعاد الثلاثة التي يجمعها مؤشر EGDI الأممي</td><td>ب) نطاق الخدمات، البنية التحتية للاتصالات، رأس المال البشري</td></tr>
+    <tr><td class="center">10</td><td>عدد الخطوات المتسلسلة لبناء نموذج ذكاء اصطناعي</td><td>أ) سبع خطوات</td></tr>
+    <tr><td class="center">11</td><td>أسلوب الهندسة الاجتماعية عبر رسائل بريد مزيفة من جهة موثوقة</td><td>ب) التصيد الإلكتروني (Phishing)</td></tr>
+    <tr><td class="center">12</td><td>الترتيب التاريخي الصحيح لمراحل التحول الرقمي الأربع</td><td>أ) رقمنة ← رقمية ← تحول رقمي ← سحابة كبنية ممكِّنة</td></tr>
+  </table>
+
+</body>
+</html>
