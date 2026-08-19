@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>تقرير نتائج امتحان دورة قادة المستقبل</title>
+<style>
+:root{
+  --ink:#0F2438; --soft:#3A5570; --paper:#EDF1EE; --line:#CBD6D0;
+  --accent:#1F6F63; --gold:#A9812F; --gold-l:#F4EBD6;
+  --danger:#9B2C2C; --danger-l:#FDECEC; --card:#FFFFFF;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:"Segoe UI","Dubai",Tahoma,Arial,sans-serif;
+  line-height:1.6;
+}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px 60px}
+
+header{
+  background:linear-gradient(160deg,var(--ink) 0%,#173049 100%);
+  color:#fff; padding:44px 20px 90px; text-align:center; position:relative;
+}
+header .eyebrow{ font-size:13px; letter-spacing:2px; color:#9FB3C8; font-weight:600; text-transform:uppercase }
+header h1{ font-size:30px; margin:12px 0 6px; font-weight:800 }
+header .sub{ font-size:15px; color:#C7D3DE; max-width:640px; margin:0 auto }
+header .badge{
+  display:inline-flex; align-items:center; gap:6px; margin-top:18px;
+  background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18);
+  padding:7px 16px; border-radius:30px; font-size:12.5px; color:#E7EDF2;
+}
+
+.kpi-row{ display:flex; gap:16px; margin-top:-58px; position:relative; z-index:2; }
+.kpi{
+  flex:1; background:var(--card); border-radius:16px; padding:22px 16px;
+  box-shadow:0 10px 30px rgba(15,36,56,.12); border:1px solid var(--line);
+  text-align:center;
+}
+.kpi .num{ font-size:32px; font-weight:800; color:var(--ink); font-variant-numeric:tabular-nums }
+.kpi .num small{ font-size:16px; font-weight:700; color:var(--soft) }
+.kpi .lbl{ font-size:13px; color:var(--soft); margin-top:4px; font-weight:600 }
+.kpi.accent .num{ color:var(--accent) }
+.kpi.gold .num{ color:var(--gold) }
+
+section{ margin-top:46px }
+.sec-head{ margin-bottom:18px }
+.sec-head .eyebrow{ font-size:12px; color:var(--accent); font-weight:700; letter-spacing:1px }
+.sec-head h2{ font-size:21px; margin:4px 0 0; font-weight:800 }
+.sec-head p{ font-size:13.5px; color:var(--soft); margin:6px 0 0 }
+
+.card{
+  background:var(--card); border:1px solid var(--line); border-radius:14px;
+  padding:22px; box-shadow:0 2px 10px rgba(15,36,56,.04);
+}
+.grid2{ display:flex; gap:18px }
+.grid2 > div{ flex:1 }
+
+.dist-title{ font-size:13px; font-weight:700; color:var(--ink); margin-bottom:14px; text-align:center }
+.dist-chart{ display:flex; align-items:flex-end; gap:8px; padding:0 4px }
+.dbar{ flex:1; display:flex; flex-direction:column; align-items:center; }
+.dbar-val{ font-size:11px; font-weight:700; color:var(--soft); margin-bottom:4px }
+.dbar-track{ width:100%; display:flex; align-items:flex-end; justify-content:center; height:150px }
+.dbar-fill{ width:100%; background:var(--accent); border-radius:4px 4px 0 0; }
+.dbar-lbl{ font-size:9.5px; color:var(--soft); margin-top:6px }
+
+.pass-visual{ text-align:center; padding:10px 0 }
+.pass-big{ font-size:44px; font-weight:800; color:var(--accent) }
+.pass-sub{ font-size:13px; color:var(--soft); margin-top:2px }
+.pass-bar{ height:14px; border-radius:8px; background:var(--danger-l); overflow:hidden; margin-top:18px }
+.pass-bar > i{ display:block; height:100%; background:var(--accent); border-radius:8px }
+.pass-legend{ display:flex; justify-content:space-between; font-size:11.5px; color:var(--soft); margin-top:6px }
+
+.rooms{ display:flex; gap:16px }
+.room-card{ flex:1; border-radius:14px; padding:22px; position:relative; overflow:hidden; border:1px solid var(--line); background:var(--card); }
+.room-card::before{ content:""; position:absolute; inset-inline-start:0; top:0; bottom:0; width:5px; }
+.room-card.r1::before{ background:var(--accent) }
+.room-card.r2::before{ background:var(--gold) }
+.room-card .rname{ font-size:13px; font-weight:700; color:var(--soft) }
+.room-card .rscore{ font-size:30px; font-weight:800; margin-top:4px }
+.room-card.r1 .rscore{ color:var(--accent) }
+.room-card.r2 .rscore{ color:var(--gold) }
+.room-card .rmeta{ font-size:12.5px; color:var(--soft); margin-top:6px }
+
+table{ width:100%; border-collapse:collapse; font-size:13.5px }
+th,td{ padding:9px 10px; text-align:right; border-bottom:1px solid var(--line) }
+th{ color:var(--soft); font-weight:700; font-size:12.5px }
+tr:last-child td{ border-bottom:none }
+.rank{ display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px; border-radius:50%; background:var(--gold-l); color:var(--gold); font-size:11.5px; font-weight:800; margin-inline-end:6px; }
+.pct-pill{ display:inline-block; padding:2px 9px; border-radius:20px; font-size:12px; font-weight:700; }
+.pct-easy{ background:#EAF6EE; color:var(--accent) }
+
+.alert{ background:var(--danger-l); border:1px solid #F3C6C6; border-radius:14px; padding:18px 20px; display:flex; gap:14px; align-items:flex-start; }
+.alert .icon{ font-size:22px }
+.alert b{ color:var(--danger) }
+.alert p{ margin:4px 0 0; font-size:13.5px; color:#7A2323 }
+
+.qrow{ display:flex; align-items:center; gap:12px; padding:10px 0; border-bottom:1px solid var(--line) }
+.qrow:last-child{ border-bottom:none }
+.qrow .qn{ flex:0 0 26px; font-weight:800; color:var(--soft); font-size:13px }
+.qrow .qt{ flex:1; font-size:13px }
+.qrow .qbar{ flex:0 0 140px; height:8px; border-radius:6px; background:#EDEFEF; overflow:hidden }
+.qrow .qbar > i{ display:block; height:100% }
+.qrow .qpct{ flex:0 0 48px; font-size:12.5px; font-weight:700; text-align:left }
+
+footer{ text-align:center; padding:30px 20px; color:var(--soft); font-size:12px }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">تقرير تحليلي</div>
+  <h1>نتائج امتحان دورة قادة المستقبل</h1>
+  <div class="sub">تحليل مدمج لنتائج القاعتين كامتحان واحد — معدّ لأصحاب القرار بالمعهد</div>
+  <div class="badge">📍 قاعتان × سيرفران منفصلان &nbsp;·&nbsp; دُمجا هنا كامتحان واحد</div>
+</header>
+
+<div class="wrap">
+
+  <div class="kpi-row">
+  <div class="kpi"><div class="num">122<small>/125</small></div><div class="lbl">حضروا الامتحان</div></div>
+  <div class="kpi accent"><div class="num">98<small>%</small></div><div class="lbl">نسبة الحضور</div></div>
+  <div class="kpi gold"><div class="num">87.3<small>%</small></div><div class="lbl">المعدل العام</div></div>
+  <div class="kpi"><div class="num">99<small>%</small></div><div class="lbl">نسبة النجاح (٥٠٪ فأعلى)</div></div></div>
+
+  <section>
+    <div class="sec-head">
+      <div class="eyebrow">الحضور والأداء</div>
+      <h2>نظرة عامة</h2>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <div class="dist-title">توزيع درجات الطلبة (%)</div>
+        <div class="dist-chart">
+    <div class="dbar">
+      <div class="dbar-val">1</div>
+      <div class="dbar-track"><div class="dbar-fill" style="height:3px"></div></div>
+      <div class="dbar-lbl">٠-١٠</div>
+    </div>
+    <div class="dbar">
+      <div class="dbar-val">0</div>
+      <div class="dbar-track"><div class="dbar-fill" style="height:0px"></div></div>
+      <div class="dbar-lbl">١٠-٢٠</div>
+    </div>
+    <div class="dbar">
+      <div class="dbar-val">0</div>
+      <div class="dbar-track"><div class="dbar-fill" style="height:0px"></div></div>
+      <div class="dbar-lbl">٢٠-٣٠</div>
+    </div>
+    <div class="dbar">
+      <div class="dbar-val">0</div>
+      <div class="dbar-track"><div class="dbar-fill" style="height:0px"></div></div>
+      <div class="dbar-lbl">٣٠-٤٠</div>
+    </div>
+    <div class="dbar">
+      <div class="dbar-val">0</div>
+      <div class="dbar-track"><div class="dbar-fill" style="height:0px"></div></div>
+      <div class="dbar-lbl">٤٠-٥٠</div>
+    </div>
+    <div class="dbar">
+      <div class="dbar-val">0</div>
+      <div class="dbar-track"><div class="dbar-fill" style="height:0px"></div></div>
+      <div class="dbar-lbl">٥٠-٦٠</div>
+    </div>
+    <div class="dbar">
+      <div class="dbar-val">3</div>
+      <div class="dbar-track"><div class="dbar-fill" style="height:8px"></div></div>
+      <div class="dbar-lbl">٦٠-٧٠</div>
+    </div>
+    <div class="dbar">
+      <div class="dbar-val">6</div>
+      <div class="dbar-track"><div class="dbar-fill" style="height:16px"></div></div>
+      <div class="dbar-lbl">٧٠-٨٠</div>
+    </div>
+    <div class="dbar">
+      <div class="dbar-val">55</div>
+      <div class="dbar-track"><div class="dbar-fill" style="height:145px"></div></div>
+      <div class="dbar-lbl">٨٠-٩٠</div>
+    </div>
+    <div class="dbar">
+      <div class="dbar-val">57</div>
+      <div class="dbar-track"><div class="dbar-fill" style="height:150px"></div></div>
+      <div class="dbar-lbl">٩٠-١٠٠</div>
+    </div></div>
+      </div>
+      <div class="card">
+        <div class="pass-visual">
+          <div class="pass-big">121</div>
+          <div class="pass-sub">من أصل 122 ناجح (حد النجاح ٥٠٪)</div>
+          <div class="pass-bar"><i style="width:99.2%"></i></div>
+          <div class="pass-legend"><span>1 راسب</span><span>99.2% نسبة النجاح</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <div class="eyebrow">مقارنة القاعتين</div>
+      <h2>هل تفاوت الأداء بين القاعتين؟</h2>
+      <p>كل قاعة اعتمدت على سيرفر مستقل بشبكته الخاصة — مقارنة الأداء تكشف هل أثّر ذلك على النتائج.</p>
+    </div>
+    <div class="rooms">
+  <div class="room-card r1">
+    <div class="rname">القاعة الأولى — السيرفر الأول</div>
+    <div class="rscore">86.1%</div>
+    <div class="rmeta">60 طالباً · معدل الدرجة 51.7 من 60</div>
+  </div>
+  <div class="room-card r2">
+    <div class="rname">القاعة الثانية — السيرفر الثاني</div>
+    <div class="rscore">88.4%</div>
+    <div class="rmeta">62 طالباً · معدل الدرجة 53.0 من 60</div>
+  </div></div>
+  </section>
+
+  
+  <section>
+    <div class="sec-head">
+      <div class="eyebrow">يحتاج انتباهاً</div>
+      <h2>حالة تستحق مراجعة يدوية</h2>
+    </div>
+    <div class="alert">
+      <div class="icon">⚠️</div>
+      <div>
+        <b>الطالب "عادل محمد علاوي" — الدرجة 5.0 من 60 (8.3٪)</b>
+        <p>درجة أقل بكثير من نمط باقي الطلبة (المتوسط العام فوق ٨٥٪) — يُنصح بمراجعة سجل هذا الطالب تحديداً (هل واجه مشكلة تقنية أثناء الامتحان؟) قبل اعتماد النتيجة نهائياً.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <div class="eyebrow">جودة الأسئلة</div>
+      <h2>الأسئلة الأصعب على الطلبة</h2>
+      <p>نسبة النجاح مجمّعة من 122 طالباً بالقاعتين معاً — نسبة نجاح منخفضة قد تعني غموضاً بالسؤال، لا بالضرورة ضعف الطلبة.</p>
+    </div>
+    <div class="card">
+    <div class="qrow">
+      <div class="qn">س55</div>
+      <div class="qt">أيهما أهم للقيادي عند حدوث أزمة؟</div>
+      <div class="qbar"><i style="width:29.5%; background:#9B2C2C"></i></div>
+      <div class="qpct">29.5%</div>
+    </div>
+    <div class="qrow">
+      <div class="qn">س40</div>
+      <div class="qt">وفقًا لمعادلة الأداء الوظيفي، فإن ارتفاع مستوى الأداء يتطلب تكامل:</div>
+      <div class="qbar"><i style="width:32.8%; background:#9B2C2C"></i></div>
+      <div class="qpct">32.8%</div>
+    </div>
+    <div class="qrow">
+      <div class="qn">س14</div>
+      <div class="qt">يُراد بتدرج القواعد القانونية:</div>
+      <div class="qbar"><i style="width:37.7%; background:#9B2C2C"></i></div>
+      <div class="qpct">37.7%</div>
+    </div>
+    <div class="qrow">
+      <div class="qn">س18</div>
+      <div class="qt">يُعد ........ المسؤول عن ترسيخ الثقافة القانونية والتنظيمية، وتحقيق التكامل بين </div>
+      <div class="qbar"><i style="width:45.1%; background:#A9812F"></i></div>
+      <div class="qpct">45.1%</div>
+    </div>
+    <div class="qrow">
+      <div class="qn">س16</div>
+      <div class="qt">يتكون السلوك الوظيفي من عناصر احدها:</div>
+      <div class="qbar"><i style="width:55.7%; background:#A9812F"></i></div>
+      <div class="qpct">55.7%</div>
+    </div>
+    <div class="qrow">
+      <div class="qn">س17</div>
+      <div class="qt">تؤدي الثقافة التنظيمية دورًا محوريًا في توجيه:</div>
+      <div class="qbar"><i style="width:58.2%; background:#A9812F"></i></div>
+      <div class="qpct">58.2%</div>
+    </div>
+    <div class="qrow">
+      <div class="qn">س37</div>
+      <div class="qt">في التفكير المنظومي، أي مستوى يُعد الأكثر تأثيراً في معالجة المشكلات؟</div>
+      <div class="qbar"><i style="width:58.2%; background:#A9812F"></i></div>
+      <div class="qpct">58.2%</div>
+    </div>
+    <div class="qrow">
+      <div class="qn">س6</div>
+      <div class="qt">أيُّ العناصر الآتية يمثل القيمة الجوهرية للاستشراف الاستراتيجي؟</div>
+      <div class="qbar"><i style="width:64.8%; background:#A9812F"></i></div>
+      <div class="qpct">64.8%</div>
+    </div></div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <div class="eyebrow">التميّز</div>
+      <h2>الأوائل على مستوى الامتحان</h2>
+    </div>
+    <div class="card">
+      <table>
+        <thead><tr><th>الترتيب</th><th>الاسم</th><th>الدرجة</th><th>النسبة</th></tr></thead>
+        <tbody>
+      <tr>
+        <td><span class="rank">1</span></td>
+        <td>عماد عباس بنيان</td>
+        <td>59.0 / 60</td>
+        <td><span class="pct-pill pct-easy">98.3%</span></td>
+      </tr>
+      <tr>
+        <td><span class="rank">2</span></td>
+        <td>اسعد فليح قاسم</td>
+        <td>58.0 / 60</td>
+        <td><span class="pct-pill pct-easy">96.7%</span></td>
+      </tr>
+      <tr>
+        <td><span class="rank">3</span></td>
+        <td>رافد كاظم فياض</td>
+        <td>58.0 / 60</td>
+        <td><span class="pct-pill pct-easy">96.7%</span></td>
+      </tr>
+      <tr>
+        <td><span class="rank">4</span></td>
+        <td>رضوان يونس إسماعيل</td>
+        <td>58.0 / 60</td>
+        <td><span class="pct-pill pct-easy">96.7%</span></td>
+      </tr>
+      <tr>
+        <td><span class="rank">5</span></td>
+        <td>علاء كاظم صالح</td>
+        <td>58.0 / 60</td>
+        <td><span class="pct-pill pct-easy">96.7%</span></td>
+      </tr>
+      <tr>
+        <td><span class="rank">6</span></td>
+        <td>كرار محمد عبد الزهرة</td>
+        <td>58.0 / 60</td>
+        <td><span class="pct-pill pct-easy">96.7%</span></td>
+      </tr>
+      <tr>
+        <td><span class="rank">7</span></td>
+        <td>ايناس عبد الكاظم محمد</td>
+        <td>57.0 / 60</td>
+        <td><span class="pct-pill pct-easy">95.0%</span></td>
+      </tr>
+      <tr>
+        <td><span class="rank">8</span></td>
+        <td>حاتم عبد الكريم محمد</td>
+        <td>57.0 / 60</td>
+        <td><span class="pct-pill pct-easy">95.0%</span></td>
+      </tr>
+      <tr>
+        <td><span class="rank">9</span></td>
+        <td>حميد راضي محمد</td>
+        <td>57.0 / 60</td>
+        <td><span class="pct-pill pct-easy">95.0%</span></td>
+      </tr>
+      <tr>
+        <td><span class="rank">10</span></td>
+        <td>زينب حسن خيون</td>
+        <td>57.0 / 60</td>
+        <td><span class="pct-pill pct-easy">95.0%</span></td>
+      </tr></tbody>
+      </table>
+    </div>
+  </section>
+
+</div>
+
+<footer>تقرير مُولَّد آلياً من بيانات نظام الامتحان الإلكتروني — القاعتان مدموجتان كامتحان واحد</footer>
+
+</body>
+</html>
