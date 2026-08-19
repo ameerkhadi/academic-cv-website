@@ -190,14 +190,13 @@
   </div>
 
   <div class="footer-note">
-    استمارة تقييم داخلية &middot; جميع الإجابات تُحفظ بشكل آمن<br>
-    د. أمير هادي
+    استمارة تقييم داخلية &middot; جميع الإجابات تُحفظ بشكل آمن
   </div>
 
 </div>
 
 <script>
-  // ضع هنا رابط تطبيق الويب (Web App URL) الخاص بـ Google Apps Script بعد نشره
+  // رابط تطبيق الويب (Web App URL) الخاص بـ Google Apps Script
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwMxQ1mse20muhOdnjt-MSF3YHWdrM2Zo8XPu6dug7QX1qzrbVKgM74G_mgg9pvlt9F8w/exec";
 
   const form = document.getElementById('feedbackForm');
@@ -225,12 +224,6 @@
       return;
     }
 
-    if(SCRIPT_URL.indexOf("PASTE_YOUR") !== -1){
-      errorBox.textContent = "لم يتم ربط الصفحة بجوجل شيت بعد. الرجاء وضع رابط Google Apps Script في الكود.";
-      errorBox.style.display = 'block';
-      return;
-    }
-
     submitBtn.disabled = true;
     submitBtn.textContent = "جارٍ الإرسال...";
 
@@ -241,6 +234,8 @@
     };
 
     try{
+      // mode: 'no-cors' لازم لأن Apps Script ما يرجّع رؤوس CORS،
+      // فما نقدر نقرأ الرد لكن الطلب يوصل ويُنفذ فعليًا.
       await fetch(SCRIPT_URL, {
         method: 'POST',
         mode: 'no-cors',
