@@ -95,6 +95,14 @@ tr:last-child td{ border-bottom:none }
 .alert b{ color:var(--danger) }
 .alert p{ margin:4px 0 0; font-size:13.5px; color:#7A2323 }
 
+.agrid{ display:grid; grid-template-columns:repeat(10,1fr); gap:6px }
+.acell{
+  aspect-ratio:1; display:flex; align-items:center; justify-content:center;
+  border-radius:7px; font-size:12px; font-weight:700; cursor:default;
+}
+.acell.ok{ background:#EAF6EE; color:var(--accent) }
+.acell.no{ background:var(--danger-l); color:var(--danger) }
+
 .qrow{ display:flex; align-items:center; gap:12px; padding:10px 0; border-bottom:1px solid var(--line) }
 .qrow:last-child{ border-bottom:none }
 .qrow .qn{ flex:0 0 26px; font-weight:800; color:var(--soft); font-size:13px }
@@ -194,37 +202,15 @@ footer{ text-align:center; padding:30px 20px; color:var(--soft); font-size:12px 
     </div>
   </section>
 
-  <section>
-    <div class="sec-head">
-      <div class="eyebrow">مقارنة القاعتين</div>
-      <h2>هل تفاوت الأداء بين القاعتين؟</h2>
-      <p>كل قاعة اعتمدت على سيرفر مستقل بشبكته الخاصة — مقارنة الأداء تكشف هل أثّر ذلك على النتائج.</p>
-    </div>
-    <div class="rooms">
-  <div class="room-card r1">
-    <div class="rname">القاعة الأولى — السيرفر الأول</div>
-    <div class="rscore">86.1%</div>
-    <div class="rmeta">60 طالباً · معدل الدرجة 51.7 من 60</div>
-  </div>
-  <div class="room-card r2">
-    <div class="rname">القاعة الثانية — السيرفر الثاني</div>
-    <div class="rscore">88.4%</div>
-    <div class="rmeta">62 طالباً · معدل الدرجة 53.0 من 60</div>
-  </div></div>
-  </section>
-
   
   <section>
     <div class="sec-head">
-      <div class="eyebrow">يحتاج انتباهاً</div>
-      <h2>حالة تستحق مراجعة يدوية</h2>
+      <div class="eyebrow">تفصيل إجاباته</div>
+      <h2>إجابات عادل محمد علاوي على الأسئلة الستين</h2>
+      <p>أخضر = صحيحة (5 أسئلة) · أحمر = خاطئة (55 سؤالاً). مرّر المؤشر فوق أي رقم لرؤية إجابته والإجابة الصحيحة.</p>
     </div>
-    <div class="alert">
-      <div class="icon">⚠️</div>
-      <div>
-        <b>الطالب "عادل محمد علاوي" — الدرجة 5.0 من 60 (8.3٪)</b>
-        <p>درجة أقل بكثير من نمط باقي الطلبة (المتوسط العام فوق ٨٥٪) — يُنصح بمراجعة سجل هذا الطالب تحديداً (هل واجه مشكلة تقنية أثناء الامتحان؟) قبل اعتماد النتيجة نهائياً.</p>
-      </div>
+    <div class="card">
+      <div class="agrid"><div class="acell no" title="إجابته: 1 · الصحيح: 2">1</div><div class="acell no" title="إجابته: 1 · الصحيح: 2">2</div><div class="acell no" title="إجابته: 4 · الصحيح: 2">3</div><div class="acell no" title="إجابته: 3 · الصحيح: 2">4</div><div class="acell no" title="إجابته: 4 · الصحيح: 2">5</div><div class="acell no" title="إجابته: 3 · الصحيح: 2">6</div><div class="acell no" title="إجابته: 1 · الصحيح: 3">7</div><div class="acell no" title="إجابته: 2 · الصحيح: 3">8</div><div class="acell no" title="إجابته: 1 · الصحيح: 3">9</div><div class="acell no" title="إجابته: 1 · الصحيح: 2">10</div><div class="acell no" title="إجابته: 4 · الصحيح: 2">11</div><div class="acell no" title="إجابته: 4 · الصحيح: 3">12</div><div class="acell no" title="إجابته: 4 · الصحيح: 3">13</div><div class="acell no" title="إجابته: 3 · الصحيح: 4">14</div><div class="acell no" title="إجابته: 2 · الصحيح: 1">15</div><div class="acell ok" title="إجابته: 3 · الصحيح: 3">16</div><div class="acell ok" title="إجابته: 4 · الصحيح: 4">17</div><div class="acell no" title="إجابته: 3 · الصحيح: 4">18</div><div class="acell no" title="إجابته: 2 · الصحيح: 3">19</div><div class="acell no" title="إجابته: 1 · الصحيح: 2">20</div><div class="acell no" title="إجابته: 4 · الصحيح: 2">21</div><div class="acell no" title="إجابته: 3 · الصحيح: 4">22</div><div class="acell no" title="إجابته: 1 · الصحيح: 3">23</div><div class="acell no" title="إجابته: 2 · الصحيح: 4">24</div><div class="acell ok" title="إجابته: 3 · الصحيح: 3">25</div><div class="acell no" title="إجابته: 3 · الصحيح: 2">26</div><div class="acell no" title="إجابته: 4 · الصحيح: 1">27</div><div class="acell no" title="إجابته: 4 · الصحيح: 2">28</div><div class="acell no" title="إجابته: 1 · الصحيح: 2">29</div><div class="acell no" title="إجابته: 3 · الصحيح: 2">30</div><div class="acell ok" title="إجابته: 2 · الصحيح: 2">31</div><div class="acell no" title="إجابته: 1 · الصحيح: 2">32</div><div class="acell no" title="إجابته: 4 · الصحيح: 1">33</div><div class="acell no" title="إجابته: 2 · الصحيح: 3">34</div><div class="acell no" title="إجابته: 4 · الصحيح: 3">35</div><div class="acell no" title="إجابته: 1 · الصحيح: 3">36</div><div class="acell no" title="إجابته: 2 · الصحيح: 3">37</div><div class="acell no" title="إجابته: 1 · الصحيح: 4">38</div><div class="acell no" title="إجابته: 1 · الصحيح: 3">39</div><div class="acell no" title="إجابته: 3 · الصحيح: 2">40</div><div class="acell no" title="إجابته: 4 · الصحيح: 2">41</div><div class="acell no" title="إجابته: 1 · الصحيح: 3">42</div><div class="acell no" title="إجابته: 1 · الصحيح: 4">43</div><div class="acell no" title="إجابته: 2 · الصحيح: 3">44</div><div class="acell no" title="إجابته: 3 · الصحيح: 2">45</div><div class="acell no" title="إجابته: 2 · الصحيح: 3">46</div><div class="acell no" title="إجابته: 4 · الصحيح: 2">47</div><div class="acell no" title="إجابته: 2 · الصحيح: 3">48</div><div class="acell no" title="إجابته: 1 · الصحيح: 3">49</div><div class="acell ok" title="إجابته: 4 · الصحيح: 4">50</div><div class="acell no" title="إجابته: 3 · الصحيح: 1">51</div><div class="acell no" title="إجابته: 4 · الصحيح: 3">52</div><div class="acell no" title="إجابته: 1 · الصحيح: 2">53</div><div class="acell no" title="إجابته: 4 · الصحيح: 3">54</div><div class="acell no" title="إجابته: 1 · الصحيح: 2">55</div><div class="acell no" title="إجابته: 1 · الصحيح: 3">56</div><div class="acell no" title="إجابته: 3 · الصحيح: 2">57</div><div class="acell no" title="إجابته: 2 · الصحيح: 3">58</div><div class="acell no" title="إجابته: 3 · الصحيح: 2">59</div><div class="acell no" title="إجابته: 1 · الصحيح: 3">60</div></div>
     </div>
   </section>
 
