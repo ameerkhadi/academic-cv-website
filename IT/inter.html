@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ملف التحضير — Supervisory IT Specialist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;700;800&family=Tajawal:wght@300;400;500;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1C2333;
+    --parchment:#F6F3EA;
+    --card:#FFFFFF;
+    --brass:#A6813C;
+    --brass-dim:#C7AC74;
+    --slate:#5B6472;
+    --line:#E4DFCF;
+    --red:#A8452F;
+    --amber:#B4842A;
+    --olive:#5E6E45;
+    --red-bg:#F4E7E1;
+    --amber-bg:#F5EBD8;
+    --olive-bg:#E9EEE0;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--parchment);
+    color:var(--ink);
+    font-family:'Tajawal',sans-serif;
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    letter-spacing:.08em;
+    font-size:11px;
+    text-transform:uppercase;
+    color:var(--brass);
+    direction:ltr;
+    display:inline-block;
+  }
+  h1,h2,h3{font-family:'Noto Kufi Arabic',sans-serif;margin:0;}
+
+  /* ===== Header / dossier cover ===== */
+  header{
+    background:
+      radial-gradient(circle at 85% -10%, rgba(166,129,60,.14), transparent 55%),
+      var(--ink);
+    color:#EFE9D8;
+    padding:34px 20px 26px;
+    position:relative;
+    border-bottom:4px solid var(--brass);
+  }
+  header .tag{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    letter-spacing:.14em;
+    color:var(--brass-dim);
+    direction:ltr;
+    text-transform:uppercase;
+  }
+  header h1{
+    font-size:26px;
+    margin:10px 0 4px;
+    color:#FBF8EE;
+  }
+  header .sub{
+    font-size:14px;
+    color:#B9C0CE;
+    margin-bottom:18px;
+  }
+  .facts{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+    margin-top:16px;
+  }
+  .fact{
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:10px;
+    padding:10px 12px;
+  }
+  .fact .num{
+    font-family:'Noto Kufi Arabic',sans-serif;
+    font-size:20px;
+    font-weight:800;
+    color:var(--brass-dim);
+    direction:ltr;
+    display:block;
+  }
+  .fact .lbl{
+    font-size:12px;
+    color:#AEB6C4;
+  }
+  #countdown{
+    margin-top:18px;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:13px;
+    color:#EFE9D8;
+    background:rgba(166,129,60,.16);
+    border:1px dashed rgba(199,172,116,.5);
+    border-radius:8px;
+    padding:10px 14px;
+    direction:ltr;
+    text-align:center;
+  }
+
+  /* ===== Controls ===== */
+  .controls{
+    position:sticky;
+    top:0;
+    z-index:20;
+    background:var(--parchment);
+    padding:14px 16px 10px;
+    border-bottom:1px solid var(--line);
+  }
+  #search{
+    width:100%;
+    padding:12px 14px;
+    border-radius:10px;
+    border:1.5px solid var(--line);
+    background:#fff;
+    font-family:'Tajawal',sans-serif;
+    font-size:14px;
+    color:var(--ink);
+  }
+  #search:focus{outline:none;border-color:var(--brass);}
+  .filters{
+    display:flex;
+    gap:6px;
+    margin-top:10px;
+    overflow-x:auto;
+    padding-bottom:4px;
+  }
+  .filters::-webkit-scrollbar{display:none;}
+  .chip{
+    flex:none;
+    font-size:12.5px;
+    padding:7px 13px;
+    border-radius:999px;
+    border:1.5px solid var(--line);
+    background:#fff;
+    color:var(--slate);
+    cursor:pointer;
+    white-space:nowrap;
+    font-family:'Tajawal',sans-serif;
+    font-weight:500;
+  }
+  .chip.active{
+    background:var(--ink);
+    border-color:var(--ink);
+    color:#EFE9D8;
+  }
+  .practice-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-top:12px;
+    padding:10px 12px;
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:10px;
+  }
+  .practice-row span{font-size:13px;color:var(--slate);}
+  .switch{
+    position:relative;width:42px;height:24px;flex:none;
+  }
+  .switch input{opacity:0;width:0;height:0;}
+  .slider{
+    position:absolute;inset:0;background:#D8D2BE;border-radius:999px;transition:.2s;cursor:pointer;
+  }
+  .slider:before{
+    content:"";position:absolute;height:18px;width:18px;left:3px;top:3px;
+    background:#fff;border-radius:50%;transition:.2s;
+    box-shadow:0 1px 3px rgba(0,0,0,.2);
+  }
+  input:checked + .slider{background:var(--brass);}
+  input:checked + .slider:before{transform:translateX(-18px);}
+
+  /* ===== Main list ===== */
+  main{padding:16px 16px 60px;max-width:720px;margin:0 auto;}
+  .section-label{
+    font-family:'Noto Kufi Arabic',sans-serif;
+    font-size:14px;
+    font-weight:700;
+    color:var(--ink);
+    margin:22px 2px 10px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .section-label .count{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    color:var(--slate);
+    background:var(--line);
+    padding:2px 8px;
+    border-radius:999px;
+    direction:ltr;
+  }
+
+  .card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:14px;
+    margin-bottom:12px;
+    overflow:hidden;
+    position:relative;
+    transition:box-shadow .2s;
+  }
+  .card.hidden{display:none;}
+  .stamp{
+    position:absolute;
+    top:14px;
+    left:-30px;
+    transform:rotate(-38deg);
+    font-family:'IBM Plex Mono',monospace;
+    font-size:9.5px;
+    letter-spacing:.12em;
+    font-weight:600;
+    padding:2px 34px;
+    text-transform:uppercase;
+    opacity:.55;
+    pointer-events:none;
+  }
+  .p-red .stamp{background:var(--red);color:#fff;}
+  .p-amber .stamp{background:var(--amber);color:#fff;}
+  .p-olive .stamp{background:var(--olive);color:#fff;}
+
+  .card-head{
+    padding:16px 18px 14px;
+    cursor:pointer;
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+  }
+  .card-head .qnum{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    color:var(--brass);
+    direction:ltr;
+  }
+  .card-head .qtext-en{
+    font-family:'Source Serif 4',serif;
+    font-size:15px;
+    color:var(--ink);
+    direction:ltr;
+    text-align:left;
+    font-style:italic;
+    line-height:1.5;
+  }
+  .card-head .tests{
+    font-size:13px;
+    color:var(--slate);
+    margin-top:2px;
+  }
+  .card-head .tests b{color:var(--ink);}
+  .chev{
+    align-self:flex-end;
+    font-size:12px;
+    color:var(--brass);
+    font-family:'IBM Plex Mono',monospace;
+  }
+
+  .card-body{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .3s ease;
+    border-top:1px solid var(--line);
+  }
+  .card.open .card-body{max-height:2400px;}
+  .card.open .chev{transform:rotate(180deg);}
+
+  .blk{padding:14px 18px;border-bottom:1px dashed var(--line);}
+  .blk:last-child{border-bottom:none;}
+  .blk-label{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10.5px;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--brass);
+    margin-bottom:6px;
+    display:block;
+  }
+  .answer-en{
+    font-family:'Source Serif 4',serif;
+    font-size:14.5px;
+    line-height:1.75;
+    direction:ltr;
+    text-align:left;
+    color:#2A3040;
+  }
+  .short-en{
+    font-family:'Source Serif 4',serif;
+    font-size:14px;
+    line-height:1.7;
+    direction:ltr;
+    text-align:left;
+    color:var(--ink);
+    background:var(--olive-bg);
+    padding:10px 12px;
+    border-radius:8px;
+    border-right:none;
+    border-left:3px solid var(--olive);
+  }
+  .avoid{
+    font-size:13.5px;
+    color:var(--red);
+    background:var(--red-bg);
+    padding:10px 12px;
+    border-radius:8px;
+    border-right:3px solid var(--red);
+  }
+  .followup{
+    font-size:13.5px;
+    color:var(--ink);
+  }
+  .followup .fu-q{
+    direction:ltr;
+    display:block;
+    font-family:'Source Serif 4',serif;
+    font-style:italic;
+    color:var(--slate);
+    margin-top:4px;
+  }
+
+  .practice-mask{
+    padding:14px 18px;
+    text-align:center;
+    font-size:13px;
+    color:var(--brass);
+    background:var(--amber-bg);
+    cursor:pointer;
+  }
+
+  footer{
+    text-align:center;
+    padding:24px 16px 40px;
+    font-size:12px;
+    color:var(--slate);
+  }
+
+  @media(max-width:380px){
+    .facts{grid-template-columns:1fr 1fr;}
+    header h1{font-size:22px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <span class="tag">U.S. Embassy Baghdad · Diplomatic Technology / Customer Engagement</span>
+  <h1>ملف التحضير للمقابلة</h1>
+  <div class="sub">Supervisory Information Technology Specialist — FSN-10 · د. أمير كاظم هادي</div>
+
+  <div class="facts">
+    <div class="fact"><span class="num">Aug 24</span><span class="lbl">٩:١٥ ص بتوقيت بغداد · Teams</span></div>
+    <div class="fact"><span class="num">FSN-10</span><span class="lbl">Job Series 1805</span></div>
+    <div class="fact"><span class="num">8+4</span><span class="lbl">مرؤوسون مباشرون + متعاقدون</span></div>
+    <div class="fact"><span class="num">30</span><span class="lbl">موظفاً أدرتهم كمدير مركز</span></div>
+  </div>
+
+  <div id="countdown">جارِ الحساب…</div>
+</header>
+
+<div class="controls">
+  <input id="search" type="text" placeholder="ابحث عن سؤال، كلمة، أو مصطلح…">
+  <div class="filters">
+    <div class="chip active" data-f="all">الكل</div>
+    <div class="chip" data-f="red">🔴 مؤكدة</div>
+    <div class="chip" data-f="amber">🟠 عالية</div>
+    <div class="chip" data-f="olive">🟡 فنية</div>
+  </div>
+  <div class="practice-row">
+    <span>🎯 وضع التمرين — إخفاء الأجوبة حتى تضغط</span>
+    <label class="switch">
+      <input type="checkbox" id="practiceToggle">
+      <span class="slider"></span>
+    </label>
+  </div>
+</div>
+
+<main id="main"></main>
+
+<footer>ملف تفاعلي مبني على الـ Position Description الرسمية — راجعه بصوت عالٍ قبل ٢٤ آب</footer>
+
+<script>
+const DATA = [
+{
+  tier:"red", num:"Q1",
+  ar:"عرّف عن نفسك — تلخيص خلفيتك",
+  q:"Tell us about yourself / walk us through your background.",
+  tests:"هل تفهم أن هذه وظيفة <b>إشرافية على Help Desk</b>، لا وظيفة أكاديمية بحتة.",
+  answer:`For more than three years, from February 2020 to June 2023, I served as Director of the Electronic Computer Center at the University of Babylon, leading a center of around thirty staff. I was responsible for the IT services the whole university depends on — the electronic systems for registration, administration, payroll and email, network and computer maintenance, internet services, and a technical training unit. I managed the staff, assigned the daily work, and made sure the services were available when people needed them, including for senior university leadership.
+
+Before that I worked with three American organizations — IRD, RTI, and ADF — over nearly two years. My main role was as a Monitoring and Evaluation Officer with IRD, which taught me to work to American professional standards: setting indicators, measuring performance, and reporting regularly and honestly.
+
+Alongside this I am an academic in computer science specialized in cybersecurity, and an AWS Academy Instructor, so training and developing people is a large part of what I do.
+
+What attracts me to this position is that it brings all of that together: leading a technical team, delivering reliable customer service, and measuring whether we are actually meeting the standard. I understand this role supervises the DT Customer Engagement Help Desk, and that is exactly the kind of responsibility I enjoy.`,
+  short:`For over three years I was Director of the Electronic Computer Center at the University of Babylon, leading around thirty staff — responsible for the university's IT services, systems, network and computer maintenance, and a training unit. Before that I worked with three American organizations — IRD, RTI, and ADF — mainly as a Monitoring and Evaluation Officer with IRD. I am also a cybersecurity academic and an AWS Academy Instructor. This role combines team leadership with customer service, which is what I do best.`,
+  avoid:"لا تبدأ بالأستاذية والأبحاث. رتّب الأولوية: الإدارة أولاً ← المنظمات الأمريكية ثانياً ← الأكاديميا أخيراً وباختصار.",
+  fu:"How many people did you supervise, and for how long?"
+},
+{
+  tier:"red", num:"Q2",
+  ar:"خبرتك الإشرافية بالتفصيل",
+  q:"Tell us about your supervisory experience.",
+  tests:"سؤال تحقّق من الأهلية — الوثيقة تشترط سنة إشرافية واحدة فقط.",
+  answer:`I was Director of the Electronic Computer Center at the University of Babylon for more than three years, from February 2020 to June 2023, leading a center of around thirty staff. The Center had several specialized units — systems and software, the university website, technical training, and network and computer maintenance — and I was responsible for all of them.
+
+Day to day that meant assigning work according to priority and skill, following up on open issues, making sure services were available when the university needed them, and stepping in when something needed a decision.
+
+I also worked on developing the team — identifying where someone needed training, and making sure more than one person could handle each critical task, so we were never dependent on a single individual.
+
+During that period the Center delivered a large number of the electronic systems the university runs on, including registration, administration, payroll and email services. Several other Iraqi universities asked to install the systems we built, which I consider the best evidence of the team's work.`,
+  short:`I was Director of the Electronic Computer Center at the University of Babylon for more than three years, from February 2020 to June 2023, leading around thirty staff across several units. I assigned daily work by priority and skill, followed up on open issues, kept services available, and developed the team so no critical task depended on one person. Other universities asked to install the systems we built.`,
+  avoid:"لا تقل أبداً: 'I don't have formal supervisory experience'. لديك ٣ سنوات كمدير — فوق الشرط بثلاثة أضعاف.",
+  fu:"How did you handle someone who was not performing?"
+},
+{
+  tier:"red", num:"Q3",
+  ar:"توزيع العمل اليومي ومتابعة التذاكر",
+  q:"How do you assign daily work to your team and make sure tickets are completed on time?",
+  tests:"أول بندين حرفياً في الواجبات: توزيع العمل اليومي وإنجاز التذاكر في وقتها.",
+  answer:`I start the day by reviewing the open queue — what came in overnight, what is still open, and what is close to breaching our response time. Then I assign work based on three things: the priority and impact of the issue, the skill level required, and the current workload of each team member.
+
+During the day I monitor the queue rather than wait for the end of the day. If a ticket is not moving, I ask why early — sometimes the technician is blocked and needs help or an escalation, not pressure.
+
+At the end of the day I review what was closed and what is still open, and anything critical is handed over clearly. I also look at trends weekly — if the same type of ticket keeps repeating, that is usually a training issue or a system issue, and I address the root cause instead of just closing tickets.`,
+  short:`Review the queue first thing, assign by priority, skill, and current workload. Monitor during the day, not at the end — if a ticket is not moving I find out why early. Review trends weekly, because repeated tickets usually mean a training gap or a system problem.`,
+  avoid:"إن استطعت اذكر: 'I understand the Help Desk here uses MyServices for tickets, and iPost and PowerBI for reporting.' — يظهر أنك قرأت الوثيقة.",
+  fu:""
+},
+{
+  tier:"red", num:"Q4",
+  ar:"معنى خدمة الزبائن الممتازة ومعايير الخدمة",
+  q:"What does excellent customer service mean, and how do you enforce service standards?",
+  tests:"مرتبط مباشرة بـ ICASS Service Standards وقياس المؤشرات المذكورة في الوثيقة.",
+  answer:`For me good customer service in IT has three parts. First, response — the user must know quickly that their request was received and who is handling it. Silence is what frustrates people most, even more than the problem itself.
+
+Second, resolution — we fix the issue correctly the first time, and if it will take longer, we say so honestly and give an update rather than let the user chase us.
+
+Third, measurement — we set clear standards for response and resolution time, we track them, and we review the numbers and the customer feedback regularly. I have a background in monitoring and evaluation — I worked as an M&E Officer with IRD and other American organizations — and it taught me that a standard which is not measured is only a wish.
+
+As a supervisor, my job is to make sure my team understands the standard, has the training and tools to meet it, and knows that how they treat the customer matters as much as the technical fix.`,
+  short:`Fast acknowledgment, correct resolution, and honest communication if it takes longer. Then measure it — I have a background in monitoring and evaluation with IRD, and I know a standard that is not measured is only a wish. My job is to make sure the team has the training and tools to meet it.`,
+  avoid:"لا تختصر الجواب إلى 'أكون لطيفاً مع الزبون'. يريدون: معايير + قياس + تواصل.",
+  fu:"How would you measure it? → response time, resolution time, reopened tickets, backlog age, feedback."
+},
+{
+  tier:"red", num:"Q5",
+  ar:"موظف أداؤه ضعيف",
+  q:"You have a team member who is not performing well. What do you do?",
+  tests:"'Evaluates performance… counsels and disciplines of supervised personnel' من الوثيقة.",
+  answer:`First I talk to the person privately, not in front of the team, and I start by listening. Poor performance usually has a reason — a skills gap, unclear expectations, a personal issue, or workload — and the solution is different in each case.
+
+Then I make the expectation very specific: what needs to improve, what good looks like, and by when. If it is a skills gap I arrange training or pair them with a stronger colleague. I document the conversation and follow up on a set date, not just once.
+
+Most cases improve at this stage. If performance still does not improve after clear expectations and support, then I escalate through the proper channel — document it in the performance report and consult my supervisor and HR, following the official procedure rather than acting on my own.`,
+  short:`Speak privately first and listen — there is usually a reason. Set a specific expectation and a date, give the support or training needed, document it, and follow up. If it still does not improve, I document it and escalate through my supervisor and HR following the official procedure.`,
+  avoid:"لا تقل أبداً 'I would give him a warning' كأول خطوة. ولا 'I would do his work myself'.",
+  fu:""
+},
+{
+  tier:"red", num:"Q6",
+  ar:"خلاف بين عضوين في الفريق",
+  q:"Two members of your team have a conflict. How do you handle it?",
+  tests:"Conflict Resolution — كفاءة صريحة في القسم ١٤.",
+  answer:`I do not ignore it, because a conflict in a small team affects the service very quickly. I meet each person separately first, so I understand both sides without an audience and without either of them feeling attacked.
+
+Then I look at the real cause. In technical teams, most conflicts are not personal — they come from unclear responsibilities, unequal workload, or a misunderstanding about who owns a task. If that is the case, the fix is a management fix: clarify the roles.
+
+After that I bring them together, focus the discussion on the work and not on personalities, and we agree on how we will handle it going forward. Then I follow up after a period to make sure it is really resolved and not just quiet.`,
+  short:`Meet each person separately first, then find the real cause — usually unclear roles or unequal workload. Fix the cause, bring them together focused on the work, agree on a way forward, and follow up later to confirm it is really resolved.`,
+  avoid:"",
+  fu:"What if one of them is a contractor and not your direct employee? → 'I handle the work part directly through daily task guidance; anything beyond that I raise with the COR.'"
+},
+{
+  tier:"red", num:"Q7",
+  ar:"ترتيب الأولويات وقت الضغط",
+  q:"A senior official can't access email, three users report printer problems, and a conference room has a video conference in 30 minutes. How do you prioritize?",
+  tests:"أولويات + VIP support + تفويض — لا 'أذهب أنا وأحلها بنفسي'.",
+  answer:`I prioritize by impact and by deadline, not by who shouted loudest. The video conference has a fixed deadline in thirty minutes and affects an official activity, so it gets my strongest technician immediately — a missed meeting cannot be recovered later.
+
+The senior official's email is high impact, so I assign it next and make sure someone contacts him directly to say it is being worked on. Keeping him informed is part of the fix.
+
+The printers are lower impact and usually have a workaround — I direct those users to another printer while a technician handles them after the urgent items.
+
+Then I monitor all three, and if the video conference issue turns out to be bigger than we can fix in time, I escalate early and inform the requester so they have an alternative.`,
+  short:`By impact and deadline, not by who shouted loudest. The video conference has a fixed deadline and cannot be recovered, so it goes first. The senior official's email is next, and someone contacts him directly. Printers usually have a workaround. I monitor all three and escalate early if needed.`,
+  avoid:"",
+  fu:""
+},
+{
+  tier:"red", num:"Q8",
+  ar:"انقطاع خدمة كبير — إدارة الحادثة",
+  q:"There is a major outage affecting many users. Walk us through what you do.",
+  tests:"Tier III Oversight — التصعيد للأقسام المركزية عند الحاجة.",
+  answer:`My first step is to establish the scope — how many users, which systems, which locations, degraded or completely down. That determines everything else.
+
+Then I assign a technical lead to work the problem while I keep the management side. I notify users with a short, clear message that we are aware of the issue and when they will get the next update — that single message prevents dozens of tickets.
+
+I keep my supervisor, the DTO, informed, and if it is beyond what we can resolve at post, I escalate to Department resources early rather than late. I would rather escalate a problem we end up solving ourselves than escalate too late.
+
+Once service is restored I verify it with real users, not just the monitoring screen, send a closing notice, document the incident, and do a short review of the root cause to reduce the chance of recurrence.`,
+  short:`Establish scope first. Assign a technical lead while I manage communication. Send one clear notice with a next-update time. Keep the DTO informed and escalate to Department resources early rather than late. After restoration, verify with real users, send a closing notice, document, and review the root cause.`,
+  avoid:"",
+  fu:""
+},
+{
+  tier:"red", num:"Q9",
+  ar:"شرح مشكلة تقنية لمسؤول غير تقني",
+  q:"How do you explain a technical problem to a non-technical senior stakeholder?",
+  tests:"Communication + التقارير الأسبوعية للـ DTO المذكورة في الوثيقة.",
+  answer:`I start with what matters to them, not the technology. What is affected, how long it will take, what they can do meanwhile, and what we are doing about it. Technical detail comes only if they ask for it.
+
+I avoid jargon and use a simple comparison when it helps. Teaching has trained me for this — I spend my working life explaining technical subjects to people at very different levels, so I am used to adjusting the explanation to the audience instead of expecting the audience to adjust to me.
+
+And I never hide bad news. If something will be delayed, senior management would much rather hear it early with a plan than late with an apology.`,
+  short:`Start with what matters to them — impact, timeline, workaround, and what we are doing. Technical detail only if they ask. Teaching trained me to adjust the explanation to the audience. And never hide bad news — leadership prefers an early problem with a plan over a late apology.`,
+  avoid:"",
+  fu:""
+},
+{
+  tier:"red", num:"Q10",
+  ar:"تطوير الفريق ومنع فقدان المعرفة",
+  q:"How do you develop your team and make sure knowledge is not lost when someone is absent?",
+  tests:"Cross training + SOPs + How-Tos — مذكورة صراحة، وهذا سؤالك الأقوى بحكم خبرة التدريس.",
+  answer:`I plan it, I do not leave it to chance. First I look at where the gaps are — which tasks depend on only one person, and where recurring tickets show the team needs more skill.
+
+Then cross-training: I make sure at least two people can handle every critical task, and I rotate assignments so people build experience outside their comfort area. This protects the service when someone is on leave.
+
+I also insist on documentation. Every recurring procedure should have a written Standard Operating Procedure or a How-To, so knowledge stays with the team and not only in one person's head.
+
+Training is a large part of my professional life — I teach and I am an AWS Academy Instructor — so building people up is something I genuinely enjoy, not an administrative task I have to do.`,
+  short:`Identify where only one person can do a critical task, then cross-train so at least two people can. Rotate assignments. Insist on written SOPs and How-Tos so knowledge stays with the team, not one person's head. Training is a large part of my career, so I enjoy developing people.`,
+  avoid:"",
+  fu:""
+},
+{
+  tier:"amber", num:"Q11",
+  ar:"لماذا تترك الجامعة لهذه الوظيفة؟",
+  q:"Why do you want to leave a university position for this job?",
+  tests:"سؤال خطر — يقيس هل ستبقى أم تعود للجامعة بعد سنة.",
+  answer:`I am not looking to leave technology — I am looking to work in it full time and at a higher standard. My academic work and my IT work have always run together, and the part I enjoy most has always been the operational side: running services, leading a technical team, and solving real problems for real users.
+
+This position is a place where technology has to work every day, for a mission that matters, under professional standards. That is the environment I want to work in, and I want to build a long-term career in it — not a short experience.`,
+  short:`I am not leaving technology — I want to work in it full time. The part I enjoy most has always been the operational side: running services and leading a team. This is an environment where technology has to work every day, and I want a long-term career here.`,
+  avoid:"لا تذكر الراتب أو مشاكل الجامعة. الجواب يجب أن يبدو كخطة مهنية، لا هروباً.",
+  fu:""
+},
+{
+  tier:"amber", num:"Q11-B",
+  ar:"أدرت ٣٠ موظفاً — أليست هذه الوظيفة أصغر من مستواك؟",
+  q:"You managed around thirty staff as a Director. This position supervises eight. Aren't you overqualified?",
+  tests:"سؤال ناتج عن قوة سيرتك — يخشون أنك ستشعر بالملل وتترك المنصب.",
+  answer:`I do not measure a position by the number of people. I measure it by the standard it is held to.
+
+At the university I had more staff, but here the environment is completely different — a mission that operates every day under strict security and service standards, with tools and procedures I would need to learn and respect. That is more demanding, not less.
+
+Having managed a larger and more mixed team is an advantage for this role, not a reason to be restless. I would not be learning supervision here — I would be applying it, and focusing my energy on learning the Department's systems and standards properly.`,
+  short:`I do not measure a position by headcount, but by the standard it is held to. This environment operates every day under strict security and service standards — more demanding, not less. Managing a larger team before means I would not be learning supervision here; I would be applying it.`,
+  avoid:"لا تقل 'نعم أنا أكبر من الوظيفة'. هذا يؤكد مخاوفهم بدل أن يبددها.",
+  fu:""
+},
+{
+  tier:"amber", num:"Q12",
+  ar:"استعداد للعمل الإضافي والورديات",
+  q:"This position requires frequent overtime, shift work, and hours outside the normal schedule. Are you able to do that?",
+  tests:"سؤال إقصائي — القسم ١٩ من الوثيقة يذكره صراحة.",
+  answer:`Yes. I understand this is an operational role and the Embassy needs support outside normal hours. I have already worked this way — important university events and leadership meetings do not happen only between eight and four, and I have prepared and supported them in the evening and on weekends. I am fully available for that.`,
+  short:`Yes. I understand this is operational and needs support outside normal hours. I have already worked this way for important university events and leadership meetings, in the evening and on weekends. I am fully available.`,
+  avoid:"لا تقل 'Yes, but…' — أي 'but' هنا تُقرأ كـ 'لا'.",
+  fu:""
+},
+{
+  tier:"amber", num:"Q13",
+  ar:"دعم فعالية مهمة أو قيادة عليا تحت الضغط",
+  q:"Tell us about a time you supported an important event or senior leadership under pressure.",
+  tests:"VIP support — تدعمها قصة University Council الحقيقية.",
+  answer:`Situation: The university leadership was holding an important Council meeting that required a video conference with participants who were not physically present. The meeting could not be postponed.
+
+Task: I was responsible for making sure the technical environment was ready and that the meeting ran without interruption.
+
+Action: I did not wait for the day itself. I checked the connectivity, the video conference setup, the audio, and the display in advance, and I tested the full session end to end before the meeting. I coordinated with the organizers to confirm exactly what they needed, and I prepared a backup option in case the main connection failed. During the meeting I stayed present and monitored it, so anything would be handled in seconds instead of minutes.
+
+Result: The meeting ran successfully and leadership was able to focus on the discussion instead of the technology.
+
+Lesson: For high-visibility events, the work is done before the event, not during it. Testing in advance and having a backup plan is what makes the difference.`,
+  short:`For an important University Council meeting with video conferencing that could not be postponed, I tested connectivity, video, and audio end to end in advance, confirmed requirements with organizers, prepared a backup connection, and stayed present to monitor. It ran without interruption. The lesson: for important events, the work happens before the event, not during it.`,
+  avoid:"",
+  fu:""
+},
+{
+  tier:"amber", num:"Q14",
+  ar:"كيف تضمن التزام فريقك بسياسات الأمن؟",
+  q:"How do you make sure your team follows security policies?",
+  tests:"Systems Security Standards + 5/12 FAM + audits المذكورة في الوثيقة.",
+  answer:`Three things: the standard must be clear, it must be verified, and it must be part of the culture.
+
+Clear means every member of the team knows exactly what the policy requires — access rights, patching, configuration standards — and it is written down, not assumed.
+
+Verified means I do not rely on trust alone. Accounts, permissions, and patch status should be audited regularly, because the most common security problems are not sophisticated attacks — they are accounts never disabled, permissions never reviewed, and systems never updated.
+
+And culture means the team feels safe reporting a mistake immediately. A mistake reported in five minutes is a small incident. The same mistake hidden for a week is a serious one. My background is in cybersecurity, so I take this seriously, but as a supervisor the most valuable thing I can build is that reporting culture.`,
+  short:`The standard must be clear and written, verified through regular audits of accounts, permissions, and patching, and the team must feel safe reporting a mistake immediately. Most incidents are not sophisticated attacks — they are accounts never disabled and systems never updated.`,
+  avoid:"",
+  fu:""
+},
+{
+  tier:"amber", num:"Q15",
+  ar:"طلب خارج السياسة من مسؤول كبير",
+  q:"A senior official asks you for something that is against policy. What do you do?",
+  tests:"سؤال كلاسيكي في بيئة السفارة — التوازن بين الخدمة والقاعدة.",
+  answer:`I never say a flat no and stop there, and I never say yes to something outside policy. I explain politely and briefly why the policy exists, because most people accept a rule when they understand the reason.
+
+Then I look for a legitimate alternative that solves the actual need. Usually the person does not want to break a rule — they want to accomplish something, and there is often an approved way to do it.
+
+If there is no alternative and they still need it, I do not decide alone and I do not just refuse. I raise it to my supervisor and the appropriate authority so it can be reviewed through the proper channel.`,
+  short:`I never say a flat no, and never yes to something outside policy. I explain the reason briefly, then look for a legitimate alternative that meets the real need. If there is none, I raise it to my supervisor and the proper authority for review.`,
+  avoid:"",
+  fu:""
+},
+{
+  tier:"olive", num:"T1",
+  ar:"إنهاء عقد موظف — الإجراءات التقنية",
+  q:"An employee's contract ended. What IT actions do you take?",
+  tests:"سيناريو فني — أنت سبق أن سُئلت مشابهاً في المقابلة الأولى.",
+  answer:`Disable the account first — that is the immediate security step — before anything else. Then recover the equipment and mobile device, deactivate the SIM, handle the PKI card according to procedure, transfer or preserve his files and mailbox according to retention rules, remove his access from shared systems and folders, and update the inventory record.
+
+As a supervisor, my concern is that this runs as a documented checkout process every time, not from memory, because the item people forget is usually the one that matters most.`,
+  short:`Disable the account first for security, then recover equipment and mobile device, deactivate the SIM, handle the PKI card, preserve files per retention rules, remove access, and update inventory — as a documented checklist every time.`,
+  avoid:"",
+  fu:""
+},
+{
+  tier:"olive", num:"T2",
+  ar:"طابعة شبكية توقفت",
+  q:"A network printer stopped working. How do you troubleshoot it?",
+  tests:"نفس السؤال في المقابلة الأولى — منهجية تشخيص + تواصل، لا حل تقني فقط.",
+  answer:`I check scope first — is it one user or everyone, because that immediately tells me whether it is the printer, the queue, or the client. Then power and network connectivity, then the print server and spooler, then the driver and the queue. Meanwhile the users get a workaround printer so work does not stop. If it is a hardware failure we replace it from shelf spares.`,
+  short:`Check scope first (one user or everyone). Then power/network, then server and spooler, then driver and queue. Give users a workaround printer meanwhile. Replace from shelf spares if it's hardware failure.`,
+  avoid:"",
+  fu:""
+},
+{
+  tier:"olive", num:"T3",
+  ar:"شكوى من بطء الشبكة",
+  q:"A user complains the network is slow. What do you do?",
+  tests:"منهجية تشخيص منظمة بدل التخمين.",
+  answer:`First define 'slow' — everything, one application, one location, or one time of day. That single question eliminates most possibilities. Then I check whether it is local to the workstation, the segment, or the internet link. I check the monitoring tools before touching anything, because guessing wastes more time than measuring.`,
+  short:`Define 'slow' first — everything, one app, one location, or one time. Then check if it's local, segment, or internet. Check monitoring tools before touching anything — guessing wastes more time than measuring.`,
+  avoid:"",
+  fu:""
+},
+{
+  tier:"olive", num:"T4",
+  ar:"طلبات PKI / إعادة تعيين PIN",
+  q:"How do you handle PKI card / PIN reset requests?",
+  tests:"عملية أمنية روتينية لكنها حساسة.",
+  answer:`It is a routine Help Desk service, but it is also an identity operation, so verification of the user's identity comes before the reset, and it must follow the documented procedure exactly. My role is to make sure the team is trained on the procedure, that it is documented, and that it is available when users need it — a locked card means someone cannot work.`,
+  short:`Verify identity before the reset, follow the documented procedure exactly. My role is making sure the team is trained, the procedure is documented, and it's available fast — a locked card means someone cannot work.`,
+  avoid:"",
+  fu:""
+},
+{
+  tier:"olive", num:"T5",
+  ar:"مراقبة صحة الأنظمة",
+  q:"How do you monitor system health across the environment?",
+  tests:"Tier III Oversight — audits وأدوات المراقبة المذكورة بالاسم في الوثيقة.",
+  answer:`Through the reporting and monitoring tools rather than waiting for tickets — checking patch and configuration compliance, reviewing server and event logs, and watching for the pattern before it becomes an outage. If I only learn about a problem from a ticket, I am already late.`,
+  short:`Through monitoring tools, not waiting for tickets — checking patch compliance, reviewing logs, watching for patterns before they become outages. If I only learn from a ticket, I'm already late.`,
+  avoid:"",
+  fu:""
+}
+];
+
+const closingQuestions = [
+  "What would be the most important priorities for the person in this position during the first six months?",
+  "What are the main challenges the Help Desk team is facing right now that you would want the new supervisor to address?",
+  "How do you measure success for this position — which service metrics matter most to you?",
+  "How does the Help Desk team work with the other DT sub-units and with the contractors day to day?"
+];
+
+const tierMeta = {
+  red:   {label:"🔴 مؤكدة تقريباً", cls:"p-red"},
+  amber: {label:"🟠 عالية الاحتمال", cls:"p-amber"},
+  olive: {label:"🟡 سيناريوهات فنية", cls:"p-olive"}
+};
+
+function render(list){
+  const main = document.getElementById('main');
+  main.innerHTML = "";
+  const order = ["red","amber","olive"];
+  order.forEach(tier=>{
+    const items = list.filter(d=>d.tier===tier);
+    if(!items.length) return;
+    const label = document.createElement('div');
+    label.className = "section-label";
+    label.innerHTML = `${tierMeta[tier].label} <span class="count">${items.length}</span>`;
+    main.appendChild(label);
+    items.forEach(d=>{
+      const card = document.createElement('div');
+      card.className = `card ${tierMeta[tier].cls}`;
+      card.innerHTML = `
+        <div class="stamp">${tier==='red'?'HIGH':tier==='amber'?'LIKELY':'TECH'}</div>
+        <div class="card-head" onclick="toggleCard(this.parentElement)">
+          <span class="qnum">${d.num}</span>
+          <div class="qtext-en">"${d.q}"</div>
+          <div class="tests">🎯 ${d.tests}</div>
+          <span class="chev">▾ اضغط للجواب</span>
+        </div>
+        <div class="card-body">
+          <div class="blk practice-mask" style="display:none" onclick="revealCard(this)">🔒 اضغط لإظهار الجواب (وضع التمرين)</div>
+          <div class="blk answer-block">
+            <span class="blk-label">Full Answer</span>
+            <div class="answer-en">${d.answer.trim().replace(/\n\n/g,'<br><br>')}</div>
+          </div>
+          <div class="blk">
+            <span class="blk-label">نسخة قصيرة للحفظ</span>
+            <div class="short-en">${d.short}</div>
+          </div>
+          ${d.avoid ? `<div class="blk"><span class="blk-label">⚠️ تجنّب</span><div class="avoid">${d.avoid}</div></div>` : ""}
+          ${d.fu ? `<div class="blk"><span class="blk-label">↳ متابعة متوقعة</span><div class="followup"><span class="fu-q">${d.fu}</span></div></div>` : ""}
+        </div>
+      `;
+      main.appendChild(card);
+    });
+  });
+
+  // closing block
+  const closeLabel = document.createElement('div');
+  closeLabel.className = "section-label";
+  closeLabel.innerHTML = `📋 أسئلة تسألها أنت للجنة <span class="count">${closingQuestions.length}</span>`;
+  main.appendChild(closeLabel);
+  const closeCard = document.createElement('div');
+  closeCard.className = "card open";
+  closeCard.innerHTML = `<div class="card-body" style="max-height:none;">
+    <div class="blk">
+      <div class="answer-en">${closingQuestions.map(q=>`• ${q}`).join('<br><br>')}</div>
+    </div>
+  </div>`;
+  main.appendChild(closeCard);
+
+  applyPracticeMode();
+}
+
+function toggleCard(card){
+  card.classList.toggle('open');
+}
+
+let practiceMode = false;
+function applyPracticeMode(){
+  document.querySelectorAll('.practice-mask').forEach(m=>{
+    m.style.display = practiceMode ? 'block' : 'none';
+  });
+  document.querySelectorAll('.answer-block').forEach(a=>{
+    a.style.display = practiceMode ? 'none' : 'block';
+  });
+}
+function revealCard(mask){
+  mask.style.display = 'none';
+  mask.nextElementSibling.style.display = 'block';
+}
+
+document.getElementById('practiceToggle').addEventListener('change', e=>{
+  practiceMode = e.target.checked;
+  applyPracticeMode();
+});
+
+document.querySelectorAll('.chip').forEach(chip=>{
+  chip.addEventListener('click', ()=>{
+    document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+    chip.classList.add('active');
+    filterAndSearch();
+  });
+});
+
+document.getElementById('search').addEventListener('input', filterAndSearch);
+
+function filterAndSearch(){
+  const activeChip = document.querySelector('.chip.active').dataset.f;
+  const term = document.getElementById('search').value.trim().toLowerCase();
+  let filtered = DATA;
+  if(activeChip !== 'all') filtered = filtered.filter(d=>d.tier===activeChip);
+  if(term){
+    filtered = filtered.filter(d=>
+      d.ar.toLowerCase().includes(term) ||
+      d.q.toLowerCase().includes(term) ||
+      d.answer.toLowerCase().includes(term) ||
+      d.tests.toLowerCase().includes(term)
+    );
+  }
+  render(filtered);
+}
+
+// countdown
+function updateCountdown(){
+  const target = new Date("2026-08-24T09:15:00+03:00");
+  const now = new Date();
+  const diff = target - now;
+  const el = document.getElementById('countdown');
+  if(diff <= 0){ el.textContent = "🎯 وقت المقابلة الآن — بالتوفيق!"; return; }
+  const d = Math.floor(diff/(1000*60*60*24));
+  const h = Math.floor((diff/(1000*60*60))%24);
+  const m = Math.floor((diff/(1000*60))%60);
+  el.textContent = `⏳ ${d}d ${h}h ${m}m until the interview — Aug 24, 9:15 AM Baghdad`;
+}
+updateCountdown();
+setInterval(updateCountdown, 60000);
+
+render(DATA);
+</script>
+</body>
+</html>
