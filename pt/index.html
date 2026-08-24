@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>منصة المادة</title>
+
+<!-- ══════════════════════════════════════════════════════════
+     ضع هنا رابط نشر Apps Script (المنتهي بـ /exec)
+     ══════════════════════════════════════════════════════════ -->
+<script>
+  const API = "https://script.google.com/macros/s/AKfycbwtYQQ9644V-VI47qxtiSSsVjTbXRLv8Zgo-OBiXqwk08Uh_xOx4eS2MZse_ZPm23Pk7g/exec";
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#101c2b; --paper:#eef1f5; --surface:#fff;
+  --accent:#14566e; --accent-dark:#0e3f52; --accent-soft:#e2eef2;
+  --seal:#9c7c2b; --line:#d5dee6; --muted:#5a6875;
+  --ok:#2f7d5d; --warn:#a8601c; --danger:#a33131; --r:10px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);
+  font-family:'IBM Plex Sans Arabic',system-ui,'Segoe UI',sans-serif;
+  font-size:16px;line-height:1.7;-webkit-text-size-adjust:100%}
+h1,h2,h3{margin:0;font-weight:600;line-height:1.35}
+button{font-family:inherit;font-size:inherit;cursor:pointer}
+input,textarea,select{font-family:inherit;font-size:16px}
+a{color:var(--accent)}
+.wrap{max-width:940px;margin:0 auto;padding:0 16px 64px}
+
+.top{background:var(--accent);color:#fff;padding:18px 0 16px;margin-bottom:20px;border-bottom:3px solid var(--seal)}
+.top .wrap{padding-bottom:0}
+.top-row{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.brand{display:flex;flex-direction:column;gap:2px;min-width:0}
+.brand .inst{font-size:12px;letter-spacing:.04em;opacity:.8}
+.brand .course{font-family:'Amiri',serif;font-size:26px;font-weight:700;line-height:1.2}
+.who{font-size:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.who b{font-weight:600}
+.linkbtn{background:rgba(255,255,255,.16);color:#fff;border:0;border-radius:6px;padding:6px 12px;font-size:13px}
+.linkbtn:hover{background:rgba(255,255,255,.28)}
+
+.gate{max-width:400px;margin:8vh auto 0;padding:0 16px;text-align:center}
+.gate .seal-mark{width:64px;height:64px;margin:0 auto 18px;border:2px solid var(--seal);
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-family:'Amiri',serif;font-size:30px;color:var(--seal)}
+.gate h1{font-family:'Amiri',serif;font-size:30px;margin-bottom:6px}
+.gate p{color:var(--muted);margin:0 0 26px;font-size:15px}
+.codebox{width:100%;padding:16px;text-align:center;letter-spacing:.34em;font-size:22px;font-weight:600;
+  border:1.5px solid var(--line);border-radius:var(--r);background:var(--surface);text-transform:uppercase}
+.codebox:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+
+.btn{background:var(--accent);color:#fff;border:0;border-radius:var(--r);padding:14px 20px;font-weight:600;width:100%;margin-top:12px}
+.btn:hover{background:var(--accent-dark)}
+.btn:disabled{opacity:.55;cursor:default}
+.btn.sm{width:auto;padding:9px 16px;font-size:14px;margin:0}
+.btn.ghost{background:transparent;color:var(--accent);border:1.5px solid var(--line)}
+.btn.ghost:hover{background:var(--accent-soft)}
+
+.tabs{display:flex;gap:4px;border-bottom:1.5px solid var(--line);margin-bottom:22px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tab{background:none;border:0;padding:11px 16px;color:var(--muted);font-weight:500;
+  border-bottom:3px solid transparent;margin-bottom:-1.5px;white-space:nowrap}
+.tab[aria-selected="true"]{color:var(--accent);border-bottom-color:var(--accent);font-weight:600}
+.tab:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;margin-bottom:14px}
+.card h3{font-size:18px;margin-bottom:4px}
+.meta{font-size:13px;color:var(--muted)}
+.desc{margin:10px 0 0;white-space:pre-wrap}
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.stack{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+
+.pill{display:inline-block;font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px}
+.pill.ok{background:#e4f2eb;color:var(--ok)}
+.pill.wait{background:#fdf0e2;color:var(--warn)}
+.pill.none{background:#eceff2;color:var(--muted)}
+.pill.late{background:#f8e6e6;color:var(--danger)}
+
+.scorecard{margin-top:16px;border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.sc-head{background:var(--accent-soft);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:14px}
+.sc-title{font-weight:600;font-size:15px}
+.seal{width:74px;height:74px;flex:0 0 auto;border:2px solid var(--seal);border-radius:50%;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--seal);background:var(--surface)}
+.seal .n{font-family:'Amiri',serif;font-size:26px;font-weight:700;line-height:1}
+.seal .d{font-size:11px;letter-spacing:.06em;margin-top:2px}
+.sc-body{padding:8px 16px 16px}
+.crit{padding:12px 0;border-bottom:1px dashed var(--line)}
+.crit:last-child{border-bottom:0}
+.crit-top{display:flex;justify-content:space-between;gap:10px;font-size:15px}
+.crit-name{font-weight:500}
+.crit-pts{font-variant-numeric:tabular-nums;color:var(--muted);font-size:14px;white-space:nowrap}
+.bar{height:7px;background:#e8edf1;border-radius:99px;margin-top:8px;overflow:hidden}
+.bar span{display:block;height:100%;background:var(--accent);border-radius:99px}
+.crit-note{font-size:13px;color:var(--muted);margin-top:6px}
+.fb{margin:14px 16px 16px;padding:13px 15px;background:#f6f8fa;border-right:3px solid var(--seal);
+  border-radius:6px;font-size:14.5px;white-space:pre-wrap}
+
+table{width:100%;border-collapse:collapse;font-size:14.5px}
+th,td{text-align:right;padding:11px 10px;border-bottom:1px solid var(--line)}
+th{color:var(--muted);font-weight:600;font-size:13px}
+td.num,th.num{font-variant-numeric:tabular-nums}
+.tblwrap{overflow-x:auto}
+
+label{display:block;font-size:13.5px;font-weight:600;margin:14px 0 5px}
+input[type=text],input[type=number],input[type=date],textarea,select{
+  width:100%;padding:11px 12px;border:1.5px solid var(--line);border-radius:8px;background:var(--surface)}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--accent)}
+textarea{min-height:84px;resize:vertical;line-height:1.6}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.check{display:flex;align-items:center;gap:8px;margin-top:14px;font-size:14.5px}
+.check input{width:18px;height:18px}
+.crit-row{display:grid;grid-template-columns:1fr 90px 34px;gap:8px;align-items:center;margin-bottom:8px}
+.iconbtn{background:none;border:1.5px solid var(--line);border-radius:8px;height:42px;color:var(--danger);font-size:18px;line-height:1}
+
+.empty{text-align:center;color:var(--muted);padding:40px 16px;background:var(--surface);border:1px dashed var(--line);border-radius:var(--r)}
+.note{background:#fdf6e6;border:1px solid #ecdcb4;border-radius:8px;padding:12px 14px;font-size:14px;margin-bottom:14px}
+.err{background:#f9e8e8;border:1px solid #eccaca;color:var(--danger);border-radius:8px;padding:12px 14px;font-size:14.5px;margin-top:12px}
+.hide{display:none!important}
+.spin{display:inline-block;width:15px;height:15px;border:2px solid rgba(255,255,255,.4);
+  border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite;vertical-align:-2px}
+@keyframes sp{to{transform:rotate(360deg)}}
+.center{text-align:center;padding:50px;color:var(--muted)}
+.toast{position:fixed;bottom:20px;right:50%;transform:translateX(50%);background:var(--ink);color:#fff;
+  padding:12px 20px;border-radius:99px;font-size:14.5px;z-index:99;box-shadow:0 6px 22px rgba(0,0,0,.25)}
+.filebox{border:1.5px dashed var(--line);border-radius:var(--r);padding:18px;text-align:center;background:#fafcfd;margin-top:14px}
+.filebox input[type=file]{display:none}
+.filename{font-size:14px;color:var(--accent);font-weight:600;margin-top:8px;word-break:break-all}
+.prog{height:6px;background:#e8edf1;border-radius:99px;margin-top:12px;overflow:hidden}
+.prog span{display:block;height:100%;width:0;background:var(--accent);transition:width .25s}
+
+@media(max-width:560px){
+  .brand .course{font-size:21px}
+  .grid2{grid-template-columns:1fr}
+  .seal{width:64px;height:64px}
+  .seal .n{font-size:22px}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<div id="gate" class="gate">
+  <div class="seal-mark">م</div>
+  <h1 id="gateCourse">منصة المادة</h1>
+  <p id="gateInst">أدخل الرمز الذي وصلك</p>
+  <input id="code" class="codebox" maxlength="24" placeholder="XXXXXX" autocomplete="off">
+  <button id="enter" class="btn">دخول</button>
+  <div id="gateErr" class="err hide"></div>
+</div>
+
+<div id="app" class="hide">
+  <div class="top"><div class="wrap"><div class="top-row">
+    <div class="brand">
+      <span class="inst" id="instName"></span>
+      <span class="course" id="courseName"></span>
+    </div>
+    <div class="who"><span id="userName"></span>
+      <button class="linkbtn" onclick="signOut()">خروج</button></div>
+  </div></div></div>
+  <div class="wrap">
+    <div class="tabs" id="tabs" role="tablist"></div>
+    <div id="view"><div class="center">جارٍ التحميل…</div></div>
+  </div>
+</div>
+
+<script>
+var S = { role:null, code:null, name:'', tab:0, data:null, info:{maxMB:10} };
+
+function $(id){ return document.getElementById(id); }
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){
+  return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+function toast(m){ var t=document.createElement('div'); t.className='toast'; t.textContent=m;
+  document.body.appendChild(t); setTimeout(function(){ t.remove(); },2600); }
+function fmtDate(v){ if(!v) return '—'; var d=new Date(v);
+  if(isNaN(d)) return String(v).slice(0,10);
+  return d.toLocaleDateString('ar-IQ',{year:'numeric',month:'2-digit',day:'2-digit'}); }
+function pct(a,b){ return b>0 ? Math.round(a/b*100) : 0; }
+
+/* ═══ الاتصال بالخادم ═══
+   المحاولة الأولى: POST بنوع text/plain (يتجنّب فحص CORS المسبق).
+   إن فشلت لأي سبب، نستخدم JSONP عبر وسم script — يعمل دائماً للقراءة. */
+
+function post(payload){
+  return fetch(API,{
+    method:'POST',
+    headers:{'Content-Type':'text/plain;charset=utf-8'},
+    body:JSON.stringify(payload),
+    redirect:'follow'
+  }).then(function(r){ return r.json(); });
+}
+
+function jsonp(payload){
+  return new Promise(function(resolve,reject){
+    var cb='cb_'+Math.random().toString(36).slice(2);
+    var s=document.createElement('script');
+    var timer=setTimeout(function(){ done(); reject(new Error('انتهت المهلة. تحقّق من الاتصال.')); },25000);
+    function done(){ clearTimeout(timer); try{ delete window[cb]; }catch(e){ window[cb]=undefined; }
+      if(s.parentNode) s.parentNode.removeChild(s); }
+    window[cb]=function(j){ done(); resolve(j); };
+    s.onerror=function(){ done(); reject(new Error('تعذّر الاتصال بالخادم.')); };
+    s.src=API+'?action='+encodeURIComponent(payload.action)+
+          '&callback='+cb+'&payload='+encodeURIComponent(JSON.stringify(payload));
+    document.body.appendChild(s);
+  });
+}
+
+function api(action,payload){
+  payload = payload || {};
+  payload.action = action;
+  var heavy = (action === 'upload');   // الرفع لا يصلح عبر JSONP
+  return post(payload).catch(function(){
+    if(heavy) throw new Error('تعذّر رفع الملف. تحقّق من الاتصال وأعد المحاولة.');
+    return jsonp(payload);
+  }).then(function(j){
+    if(!j) throw new Error('لا يوجد رد من الخادم.');
+    if(!j.ok) throw new Error(j.error || 'خطأ غير متوقع.');
+    return j.data;
+  });
+}
+
+/* ═══ الإقلاع ═══ */
+
+api('info').then(function(i){
+  S.info=i;
+  $('gateCourse').textContent=i.course;
+  $('gateInst').textContent=i.institute+' — أدخل الرمز الذي وصلك';
+  $('courseName').textContent=i.course;
+  $('instName').textContent=i.institute;
+  var c=null; try{ c=localStorage.getItem('mcode'); }catch(e){}
+  if(c){ $('code').value=c; doLogin(); }
+}).catch(function(e){
+  $('gateErr').textContent='تعذّر الوصول إلى الخادم. تأكد أن الرابط في أعلى الملف صحيح وأن النشر مضبوط على Anyone.';
+  $('gateErr').className='err';
+});
+
+$('code').addEventListener('keydown',function(e){ if(e.key==='Enter') doLogin(); });
+$('enter').addEventListener('click',doLogin);
+
+function doLogin(){
+  var v=$('code').value.trim();
+  if(!v) return;
+  $('gateErr').className='err hide';
+  $('enter').disabled=true; $('enter').innerHTML='<span class="spin"></span> جارٍ التحقق';
+  api('login',{code:v}).then(function(r){
+    $('enter').disabled=false; $('enter').textContent='دخول';
+    if(!r.ok){ $('gateErr').textContent=r.message; $('gateErr').className='err'; return; }
+    S.role=r.role; S.code=r.code||v; S.name=r.name;
+    try{ localStorage.setItem('mcode',S.code); }catch(e){}
+    start();
+  }).catch(function(e){
+    $('enter').disabled=false; $('enter').textContent='دخول';
+    $('gateErr').textContent=e.message; $('gateErr').className='err';
+  });
+}
+
+function signOut(){ try{ localStorage.removeItem('mcode'); }catch(e){} location.reload(); }
+
+function start(){
+  $('gate').className='gate hide';
+  $('app').className='';
+  $('userName').innerHTML='<b>'+esc(S.role==='teacher'?'لوحة التحكم':S.name)+'</b>';
+  S.tab=0; renderTabs(); load();
+}
+
+function renderTabs(){
+  var names = S.role==='student'
+    ? ['المحاضرات','الواجبات','درجاتي']
+    : ['التسليمات','الواجبات','المحاضرات','الدرجات','الطلبة'];
+  $('tabs').innerHTML = names.map(function(n,i){
+    return '<button class="tab" role="tab" aria-selected="'+(i===S.tab)+'" onclick="go('+i+')">'+n+'</button>';
+  }).join('');
+}
+function go(i){ S.tab=i; renderTabs(); render(); }
+
+function load(){
+  $('view').innerHTML='<div class="center">جارٍ التحميل…</div>';
+  api(S.role==='student'?'studentData':'teacherData',{code:S.code})
+    .then(function(d){ S.data=d; render(); })
+    .catch(function(e){ $('view').innerHTML='<div class="err">'+esc(e.message)+'</div>'; });
+}
+
+function render(){
+  if(!S.data) return;
+  $('view').innerHTML = S.role==='student' ? studentView() : teacherView();
+}
+
+/* ═══════════ الطالب ═══════════ */
+
+function studentView(){
+  if(S.tab===0) return lecturesView();
+  if(S.tab===1) return assignmentsView();
+  return gradesView();
+}
+
+function lecturesView(){
+  var L=S.data.lectures||[];
+  if(!L.length) return '<div class="empty">لم تُنشر محاضرات بعد.</div>';
+  return L.map(function(l){
+    return '<div class="card"><div class="row"><h3>'+esc(l.title)+'</h3>'+
+      '<span class="meta">'+fmtDate(l.date)+'</span></div>'+
+      (l.note?'<p class="desc">'+esc(l.note)+'</p>':'')+
+      (l.url?'<div class="stack"><a class="btn sm" style="text-decoration:none;display:inline-block" href="'+
+        esc(l.url)+'" target="_blank" rel="noopener">فتح الملف</a></div>':'')+'</div>';
+  }).join('');
+}
+
+function assignmentsView(){
+  var A=S.data.assignments||[];
+  if(!A.length) return '<div class="empty">لا توجد واجبات منشورة.</div>';
+  return A.map(function(a,i){ return assignmentCard(a,i); }).join('');
+}
+
+function assignmentCard(a,i){
+  var s=a.submission;
+  var badge = !s ? '<span class="pill none">لم يُسلَّم</span>'
+    : (s.total!=null ? '<span class="pill ok">مصحح</span>'
+    : (s.status==='متأخر' ? '<span class="pill late">مستلم متأخراً</span>'
+    : '<span class="pill wait">قيد التصحيح</span>'));
+
+  var h='<div class="card"><div class="row"><h3>'+esc(a.title)+'</h3>'+badge+'</div>'+
+    '<div class="meta">آخر موعد: '+fmtDate(a.due)+' · الدرجة القصوى: '+a.maxScore+'</div>'+
+    (a.description?'<p class="desc">'+esc(a.description)+'</p>':'');
+
+  if(a.criteria.length && (!s || s.total==null)){
+    h+='<div class="scorecard"><div class="sc-head"><span class="sc-title">معايير التقييم</span></div>'+
+      '<div class="sc-body">'+a.criteria.map(function(c){
+        return '<div class="crit"><div class="crit-top"><span class="crit-name">'+esc(c.criterion)+
+          '</span><span class="crit-pts">'+c.maxPoints+' درجة</span></div>'+
+          (c.guide?'<div class="crit-note">'+esc(c.guide)+'</div>':'')+'</div>';
+      }).join('')+'</div></div>';
+  }
+
+  if(s && s.total!=null){
+    h+='<div class="scorecard"><div class="sc-head">'+
+      '<div><div class="sc-title">بطاقة التقييم</div><div class="meta">'+esc(s.fileName||'')+'</div></div>'+
+      '<div class="seal"><span class="n">'+s.total+'</span><span class="d">من '+a.maxScore+'</span></div></div>'+
+      '<div class="sc-body">'+a.criteria.map(function(c){
+        var got=Number(s.scores[c.criterionId]||0);
+        return '<div class="crit"><div class="crit-top"><span class="crit-name">'+esc(c.criterion)+
+          '</span><span class="crit-pts">'+got+' / '+c.maxPoints+'</span></div>'+
+          '<div class="bar"><span style="width:'+pct(got,c.maxPoints)+'%"></span></div></div>';
+      }).join('')+'</div>'+
+      (s.feedback?'<div class="fb">'+esc(s.feedback)+'</div>':'')+'</div>';
+  }
+
+  if(!s || s.total==null){
+    h+='<div class="filebox">'+
+      '<button class="btn sm ghost" onclick="document.getElementById(\'f'+i+'\').click()">'+
+        (s?'استبدال الملف':'اختيار الملف')+'</button>'+
+      '<input type="file" id="f'+i+'" onchange="pick('+i+')">'+
+      '<div class="filename" id="fn'+i+'">'+(s?esc(s.fileName):'')+'</div>'+
+      '<div class="meta" style="margin-top:8px">الحد الأقصى '+S.info.maxMB+' ميغابايت</div>'+
+      '<button class="btn sm hide" id="up'+i+'" style="margin-top:10px" onclick="upload('+i+',\''+a.id+'\')">رفع التسليم</button>'+
+      '<div class="prog hide" id="pg'+i+'"><span></span></div>'+
+      '<div id="uerr'+i+'"></div></div>';
+  } else {
+    h+='<div class="meta" style="margin-top:12px">سُلِّم في '+fmtDate(s.submittedAt)+' · '+esc(s.fileName)+'</div>';
+  }
+  return h+'</div>';
+}
+
+var picked={};
+function pick(i){
+  var f=$('f'+i).files[0]; if(!f) return;
+  var mb=f.size/1024/1024, err=$('uerr'+i);
+  if(mb>S.info.maxMB){
+    err.innerHTML='<div class="err">حجم الملف '+mb.toFixed(1)+' ميغابايت، والحد الأقصى '+
+      S.info.maxMB+'. اضغط الملف أو قسّمه.</div>';
+    return;
+  }
+  err.innerHTML=''; picked[i]=f;
+  $('fn'+i).textContent=f.name;
+  $('up'+i).className='btn sm';
+}
+
+function upload(i,aid){
+  var f=picked[i]; if(!f) return;
+  var b=$('up'+i), pg=$('pg'+i);
+  b.disabled=true; b.innerHTML='<span class="spin"></span> جارٍ الرفع';
+  pg.className='prog'; pg.firstChild.style.width='25%';
+
+  var r=new FileReader();
+  r.onload=function(){
+    pg.firstChild.style.width='60%';
+    api('upload',{code:S.code,assignmentId:aid,fileName:f.name,
+                  mimeType:f.type,base64:r.result.split(',')[1]})
+      .then(function(){ pg.firstChild.style.width='100%'; toast('تم رفع التسليم'); load(); })
+      .catch(function(e){
+        b.disabled=false; b.textContent='رفع التسليم'; pg.className='prog hide';
+        $('uerr'+i).innerHTML='<div class="err">'+esc(e.message)+'</div>';
+      });
+  };
+  r.onerror=function(){ b.disabled=false; b.textContent='رفع التسليم'; pg.className='prog hide'; };
+  r.readAsDataURL(f);
+}
+
+function gradesView(){
+  var A=(S.data.assignments||[]).filter(function(a){ return a.submission && a.submission.total!=null; });
+  var G=S.data.grades||[];
+  if(!A.length && !G.length) return '<div class="empty">لم تُرصد درجات بعد.</div>';
+
+  var tot=0,max=0;
+  A.forEach(function(a){ tot+=a.submission.total; max+=a.maxScore; });
+  G.forEach(function(g){ tot+=g.score; max+=g.maxScore; });
+
+  var h='<div class="card"><div class="row">'+
+    '<div><h3>مجموع السعي</h3><div class="meta">حاصل الواجبات والكويزات المرصودة</div></div>'+
+    '<div class="seal"><span class="n">'+tot+'</span><span class="d">من '+max+'</span></div></div></div>';
+
+  h+='<div class="card"><div class="tblwrap"><table><thead><tr>'+
+     '<th>البند</th><th>النوع</th><th class="num">الدرجة</th><th class="num">من</th><th>التاريخ</th>'+
+     '</tr></thead><tbody>';
+  A.forEach(function(a){
+    h+='<tr><td>'+esc(a.title)+'</td><td>واجب</td><td class="num">'+a.submission.total+
+       '</td><td class="num">'+a.maxScore+'</td><td>'+fmtDate(a.submission.submittedAt)+'</td></tr>';
+  });
+  G.forEach(function(g){
+    h+='<tr><td>'+esc(g.item)+'</td><td>'+esc(g.type)+'</td><td class="num">'+g.score+
+       '</td><td class="num">'+g.maxScore+'</td><td>'+fmtDate(g.date)+'</td></tr>';
+  });
+  return h+'</tbody></table></div></div>';
+}
+
+/* ═══════════ لوحة التحكم ═══════════ */
+
+function teacherView(){
+  if(S.tab===0) return gradingView();
+  if(S.tab===1) return asgAdminView();
+  if(S.tab===2) return lecAdminView();
+  if(S.tab===3) return gradesAdminView();
+  return studentsAdminView();
+}
+
+var curAsg=null, curSubs=[];
+
+function gradingView(){
+  var A=S.data.assignments||[];
+  if(!A.length) return '<div class="empty">أنشئ واجباً أولاً من تبويب «الواجبات».</div>';
+  return '<div class="card"><label for="asgSel">اختر الواجب</label>'+
+    '<select id="asgSel" onchange="loadSubs(this.value)"><option value="">— اختر —</option>'+
+    A.map(function(a){
+      return '<option value="'+a.id+'"'+(curAsg===a.id?' selected':'')+'>'+esc(a.title)+
+        ' — سُلّم '+a.submitted+' · صُحّح '+a.graded+'</option>';
+    }).join('')+'</select></div><div id="subsBox"></div>';
+}
+
+function loadSubs(id){
+  curAsg=id;
+  if(!id){ $('subsBox').innerHTML=''; return; }
+  $('subsBox').innerHTML='<div class="center">جارٍ التحميل…</div>';
+  api('submissions',{code:S.code,assignmentId:id}).then(function(list){
+    curSubs=list; $('subsBox').innerHTML=subsHtml();
+  }).catch(function(e){ $('subsBox').innerHTML='<div class="err">'+esc(e.message)+'</div>'; });
+}
+
+function asgById(id){ return (S.data.assignments||[]).filter(function(a){ return a.id===id; })[0]; }
+
+function subsHtml(){
+  if(!curSubs.length) return '<div class="empty">لا توجد تسليمات لهذا الواجب بعد.</div>';
+  var a=asgById(curAsg);
+  return curSubs.map(function(s,i){
+    var done=s.total!=null;
+    return '<div class="card"><div class="row">'+
+      '<div><h3>'+esc(s.name)+'</h3><div class="meta">'+esc(s.code)+' · '+
+      fmtDate(s.submittedAt)+' · '+esc(s.status||'')+'</div></div>'+
+      (done?'<span class="pill ok">'+s.total+' / '+a.maxScore+'</span>'
+           :'<span class="pill wait">بانتظار التصحيح</span>')+'</div>'+
+      '<div class="stack">'+
+        (s.fileUrl?'<a class="btn sm ghost" style="text-decoration:none" href="'+esc(s.fileUrl)+
+          '" target="_blank" rel="noopener">فتح الملف</a>':'')+
+        '<button class="btn sm ghost" onclick="toggleGrade('+i+')">'+(done?'تعديل التقييم':'تصحيح')+'</button>'+
+      '</div><div id="gr'+i+'" class="hide">'+gradeForm(a,s,i)+'</div></div>';
+  }).join('');
+}
+
+function toggleGrade(i){ var el=$('gr'+i); el.className = el.className==='hide' ? '' : 'hide'; }
+
+function gradeForm(a,s,i){
+  var h='<div class="scorecard" style="margin-top:14px"><div class="sc-body">';
+  a.criteria.forEach(function(c){
+    var v = s.scores[c.criterionId]!=null ? s.scores[c.criterionId] : '';
+    h+='<div class="crit"><div class="crit-top"><span class="crit-name">'+esc(c.criterion)+
+      '</span><span class="crit-pts">من '+c.maxPoints+'</span></div>'+
+      (c.guide?'<div class="crit-note">'+esc(c.guide)+'</div>':'')+
+      '<input type="number" min="0" max="'+c.maxPoints+'" step="0.5" style="margin-top:8px" id="p'+
+      i+'_'+c.criterionId+'" value="'+v+'" placeholder="0"></div>';
+  });
+  return h+'</div></div><label for="fb'+i+'">ملاحظاتك للطالب</label>'+
+    '<textarea id="fb'+i+'" placeholder="ما أحسنه، وما يحتاج تحسيناً تحديداً">'+esc(s.feedback||'')+'</textarea>'+
+    '<button class="btn sm" style="margin-top:12px" onclick="saveGradeSub('+i+')">حفظ التقييم</button>';
+}
+
+function saveGradeSub(i){
+  var s=curSubs[i], a=asgById(curAsg), scores={}, bad=false;
+  a.criteria.forEach(function(c){
+    var el=$('p'+i+'_'+c.criterionId), v=parseFloat(el.value);
+    if(isNaN(v)) v=0;
+    if(v>c.maxPoints){ bad=true; el.style.borderColor='var(--danger)'; }
+    scores[c.criterionId]=v;
+  });
+  if(bad){ toast('درجة تتجاوز الحد الأقصى للمعيار'); return; }
+
+  api('grade',{code:S.code,submissionId:s.id,scores:scores,feedback:$('fb'+i).value})
+    .then(function(r){
+      toast('حُفظ التقييم — المجموع '+r.total);
+      loadSubs(curAsg);
+      api('teacherData',{code:S.code}).then(function(d){ S.data=d; });
+    }).catch(function(e){ toast(e.message); });
+}
+
+function asgAdminView(){
+  var A=S.data.assignments||[];
+  var h='<div class="card"><h3>واجب جديد</h3>'+
+    '<label for="aT">العنوان</label><input type="text" id="aT" placeholder="مثال: تحليل بيانات القسم">'+
+    '<label for="aD">الوصف والمطلوب</label><textarea id="aD" placeholder="اكتب المطلوب بوضوح"></textarea>'+
+    '<div class="grid2"><div><label for="aDue">آخر موعد</label><input type="date" id="aDue"></div></div>'+
+    '<label>معايير التقييم (الروبرك)</label><div id="crits"></div>'+
+    '<button class="btn sm ghost" style="margin-top:8px" onclick="addCrit()">إضافة معيار</button>'+
+    '<div class="check"><input type="checkbox" id="aPub" checked>'+
+    '<label for="aPub" style="margin:0">نشره للطلبة الآن</label></div>'+
+    '<button class="btn" style="margin-top:16px" onclick="createAsg()">حفظ الواجب</button></div>';
+
+  h+=A.map(function(a){
+    return '<div class="card"><div class="row"><h3>'+esc(a.title)+'</h3>'+
+      (a.published?'<span class="pill ok">منشور</span>':'<span class="pill none">مسودة</span>')+'</div>'+
+      '<div class="meta">'+a.criteria.length+' معايير · '+a.maxScore+' درجة · آخر موعد '+
+      fmtDate(a.due)+' · سُلّم '+a.submitted+'</div><div class="stack">'+
+      '<button class="btn sm ghost" onclick="pubToggle(\'assignment\',\''+a.id+'\','+(!a.published)+')">'+
+      (a.published?'إيقاف النشر':'نشر')+'</button></div></div>';
+  }).join('');
+
+  setTimeout(function(){ if($('crits') && !$('crits').children.length){ addCrit(); addCrit(); } },0);
+  return h;
+}
+
+function addCrit(){
+  var d=document.createElement('div');
+  d.className='crit-row';
+  d.innerHTML='<input type="text" class="cName" placeholder="اسم المعيار">'+
+    '<input type="number" class="cMax" placeholder="الدرجة" min="0" step="0.5">'+
+    '<button class="iconbtn" onclick="this.parentNode.remove()" aria-label="حذف">×</button>';
+  $('crits').appendChild(d);
+}
+
+function createAsg(){
+  var title=$('aT').value.trim();
+  if(!title){ toast('اكتب عنوان الواجب'); return; }
+  var names=document.querySelectorAll('.cName'), maxs=document.querySelectorAll('.cMax'), criteria=[];
+  for(var i=0;i<names.length;i++){
+    var n=names[i].value.trim(), m=parseFloat(maxs[i].value);
+    if(n && !isNaN(m)) criteria.push({criterion:n,maxPoints:m,guide:''});
+  }
+  if(!criteria.length){ toast('أضف معياراً واحداً على الأقل'); return; }
+
+  api('saveAssignment',{code:S.code,obj:{
+    title:title, description:$('aD').value, due:$('aDue').value,
+    published:$('aPub').checked, criteria:criteria
+  }}).then(function(){ toast('حُفظ الواجب'); load(); })
+    .catch(function(e){ toast(e.message); });
+}
+
+function pubToggle(kind,id,val){
+  api('publish',{code:S.code,kind:kind,id:id,value:val})
+    .then(function(){ load(); }).catch(function(e){ toast(e.message); });
+}
+
+function lecAdminView(){
+  var L=S.data.lectures||[];
+  var h='<div class="card"><h3>محاضرة جديدة</h3>'+
+    '<div class="note">ارفع الملف إلى Google Drive، اجعل صلاحيته «كل من لديه الرابط يستطيع الاطلاع»، ثم الصق الرابط هنا.</div>'+
+    '<label for="lT">العنوان</label><input type="text" id="lT" placeholder="مثال: المحاضرة الأولى — الأساس">'+
+    '<label for="lN">وصف مختصر</label><textarea id="lN"></textarea>'+
+    '<label for="lU">رابط الملف</label><input type="text" id="lU" placeholder="https://drive.google.com/...">'+
+    '<div class="check"><input type="checkbox" id="lPub" checked>'+
+    '<label for="lPub" style="margin:0">نشرها للطلبة الآن</label></div>'+
+    '<button class="btn" style="margin-top:16px" onclick="createLec()">حفظ المحاضرة</button></div>';
+
+  h+=L.map(function(l){
+    return '<div class="card"><div class="row"><h3>'+esc(l.title)+'</h3>'+
+      (l.published?'<span class="pill ok">منشورة</span>':'<span class="pill none">مسودة</span>')+'</div>'+
+      '<div class="meta">'+fmtDate(l.date)+'</div><div class="stack">'+
+      (l.url?'<a class="btn sm ghost" style="text-decoration:none" href="'+esc(l.url)+
+        '" target="_blank" rel="noopener">فتح</a>':'')+
+      '<button class="btn sm ghost" onclick="pubToggle(\'lecture\',\''+l.id+'\','+(!l.published)+')">'+
+      (l.published?'إيقاف النشر':'نشر')+'</button></div></div>';
+  }).join('');
+  return h;
+}
+
+function createLec(){
+  var t=$('lT').value.trim();
+  if(!t){ toast('اكتب عنوان المحاضرة'); return; }
+  api('saveLecture',{code:S.code,obj:{title:t,note:$('lN').value,url:$('lU').value,published:$('lPub').checked}})
+    .then(function(){ toast('حُفظت المحاضرة'); load(); })
+    .catch(function(e){ toast(e.message); });
+}
+
+function gradesAdminView(){
+  return '<div class="card"><h3>رصد درجات دفعة واحدة</h3>'+
+    '<div class="note">اكتب كل طالب في سطر: <b>الرمز</b> ثم مسافة ثم <b>الدرجة</b>.<br>مثال:<br>AC34FG 8<br>KM7PQR 9.5</div>'+
+    '<label for="gI">اسم البند</label><input type="text" id="gI" placeholder="مثال: كويز الأسبوع الثالث">'+
+    '<div class="grid2"><div><label for="gT">النوع</label><select id="gT">'+
+    '<option>كويز</option><option>سعي</option><option>مشاركة</option><option>أخرى</option></select></div>'+
+    '<div><label for="gM">الدرجة القصوى</label><input type="number" id="gM" value="10" step="0.5"></div></div>'+
+    '<label for="gL">الرموز والدرجات</label>'+
+    '<textarea id="gL" style="min-height:150px" placeholder="AC34FG 8"></textarea>'+
+    '<button class="btn" style="margin-top:14px" onclick="bulkGrades()">رصد الدرجات</button></div>';
+}
+
+function bulkGrades(){
+  var item=$('gI').value.trim();
+  if(!item){ toast('اكتب اسم البند'); return; }
+  api('bulkGrades',{code:S.code,item:item,type:$('gT').value,maxScore:$('gM').value,text:$('gL').value})
+    .then(function(r){ toast('رُصدت '+r.count+' درجة'); $('gL').value=''; })
+    .catch(function(e){ toast(e.message); });
+}
+
+function studentsAdminView(){
+  var St=S.data.students||[];
+  var h='<div class="card"><h3>إضافة طلبة</h3>'+
+    '<div class="note">اكتب كل طالب في سطر: <b>الاسم</b> ثم فاصلة ثم <b>الشعبة</b> (اختيارية).<br>ستُولَّد الرموز تلقائياً.</div>'+
+    '<textarea id="stL" style="min-height:150px" placeholder="أحمد علي, أ&#10;سارة محمد, ب"></textarea>'+
+    '<button class="btn" style="margin-top:14px" onclick="addSt()">إضافة وتوليد الرموز</button>'+
+    '<div id="newCodes"></div></div>';
+
+  h+='<div class="card"><div class="row"><h3>الطلبة المسجلون</h3>'+
+    '<span class="meta">'+St.length+' طالب</span></div><div class="tblwrap"><table><thead><tr>'+
+    '<th>الرمز</th><th>الاسم</th><th>الشعبة</th></tr></thead><tbody>'+
+    St.map(function(s){
+      return '<tr><td style="font-weight:600;letter-spacing:.06em">'+esc(s.code)+'</td><td>'+
+        esc(s.name)+'</td><td>'+esc(s.section||'—')+'</td></tr>';
+    }).join('')+'</tbody></table></div></div>';
+  return h;
+}
+
+function addSt(){
+  var t=$('stL').value.trim();
+  if(!t){ toast('اكتب أسماء الطلبة'); return; }
+  api('addStudents',{code:S.code,text:t}).then(function(r){
+    var rows=r.added.map(function(a){ return a.name+'\t'+a.code; }).join('\n');
+    $('newCodes').innerHTML='<label>الرموز الجديدة — انسخها وأرسلها لكل طالب</label>'+
+      '<textarea style="min-height:160px;font-family:monospace" readonly>'+esc(rows)+'</textarea>';
+    $('stL').value='';
+    toast('أُضيف '+r.added.length+' طالب');
+    api('teacherData',{code:S.code}).then(function(d){ S.data=d; });
+  }).catch(function(e){ toast(e.message); });
+}
+</script>
+</body>
+</html>
