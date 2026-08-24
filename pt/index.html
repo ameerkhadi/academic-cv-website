@@ -227,9 +227,12 @@ function jsonp(payload){
 function api(action,payload){
   payload = payload || {};
   payload.action = action;
-  var heavy = (action === 'upload');   // الرفع لا يصلح عبر JSONP
+  // إجراءات الكتابة لا تمرّ عبر JSONP — الخادم يرفضها ويعيد رسالة غامضة
+  var WRITE = ['upload','grade','saveLecture','saveAssignment','publish',
+               'addStudents','bulkGrades','contact'];
+  var heavy = WRITE.indexOf(action) !== -1;
   return post(payload).catch(function(){
-    if(heavy) throw new Error('تعذّر رفع الملف. تحقّق من الاتصال وأعد المحاولة.');
+    if(heavy) throw new Error('تعذّر الاتصال بالخادم. تحقّق من الإنترنت وأعد المحاولة.');
     return jsonp(payload);
   }).then(function(j){
     if(!j) throw new Error('لا يوجد رد من الخادم.');
@@ -388,7 +391,7 @@ function assignmentCard(a,i){
     h+='<div class="filebox">'+
       '<button class="btn sm ghost" onclick="document.getElementById(\'f'+i+'\').click()">'+
         (s?'استبدال الملف':'اختيار الملف')+'</button>'+
-      '<input type="file" id="f'+i+'" onchange="pick('+i+')">'+
+      '<input type="file" id="f'+i+'" accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.zip,.png,.jpg,.jpeg" onchange="pick('+i+')">'+
       '<div class="filename" id="fn'+i+'">'+(s?esc(s.fileName):'')+'</div>'+
       '<div class="meta" style="margin-top:8px">الحد الأقصى '+S.info.maxMB+' ميغابايت</div>'+
       '<button class="btn sm hide" id="up'+i+'" style="margin-top:10px" onclick="upload('+i+',\''+a.id+'\')">رفع التسليم</button>'+
@@ -400,10 +403,17 @@ function assignmentCard(a,i){
   return h+'</div>';
 }
 
+var OK_EXT=['pdf','doc','docx','ppt','pptx','xls','xlsx','zip','png','jpg','jpeg'];
 var picked={};
 function pick(i){
   var f=$('f'+i).files[0]; if(!f) return;
   var mb=f.size/1024/1024, err=$('uerr'+i);
+  var ext=f.name.split('.').pop().toLowerCase();
+  if(OK_EXT.indexOf(ext)===-1){
+    err.innerHTML='<div class="err">نوع الملف غير مقبول. المسموح: '+OK_EXT.join('، ')+'</div>';
+    $('up'+i).className='btn sm hide';
+    return;
+  }
   if(mb>S.info.maxMB){
     err.innerHTML='<div class="err">حجم الملف '+mb.toFixed(1)+' ميغابايت، والحد الأقصى '+
       S.info.maxMB+'. اضغط الملف أو قسّمه.</div>';
@@ -491,7 +501,7 @@ function messagesAdminView(){
   }).join('');
 }
 
-var curAsg=null, curSubs=[];
+var curAsg=null, curSubs=[], curMissing=[];
 
 function gradingView(){
   var A=S.data.assignments||[];
@@ -508,9 +518,37 @@ function loadSubs(id){
   curAsg=id;
   if(!id){ $('subsBox').innerHTML=''; return; }
   $('subsBox').innerHTML='<div class="center">جارٍ التحميل…</div>';
-  api('submissions',{code:S.code,assignmentId:id}).then(function(list){
-    curSubs=list; $('subsBox').innerHTML=subsHtml();
+  Promise.all([
+    api('submissions',{code:S.code,assignmentId:id}),
+    api('missing',{code:S.code,assignmentId:id})
+  ]).then(function(res){
+    curSubs=res[0]; curMissing=res[1];
+    $('subsBox').innerHTML=missingHtml()+subsHtml();
   }).catch(function(e){ $('subsBox').innerHTML='<div class="err">'+esc(e.message)+'</div>'; });
+}
+
+function missingHtml(){
+  var a=asgById(curAsg);
+  var total=(S.data.students||[]).length;
+  if(!curMissing.length){
+    return '<div class="card"><div class="row"><h3>المتابعة</h3>'+
+      '<span class="pill ok">سلّم الجميع ('+total+')</span></div></div>';
+  }
+  var rows=curMissing.map(function(m){
+    return m.name+'\t'+m.code+(m.section?'\t'+m.section:'');
+  }).join('\n');
+  return '<div class="card"><div class="row"><h3>لم يسلّموا</h3>'+
+    '<span class="pill late">'+curMissing.length+' من '+total+'</span></div>'+
+    '<div class="meta">الواجب: '+esc(a?a.title:'')+'</div>'+
+    '<div class="tblwrap" style="margin-top:10px"><table><thead><tr>'+
+    '<th>الاسم</th><th>الرمز</th><th>الشعبة</th></tr></thead><tbody>'+
+    curMissing.map(function(m){
+      return '<tr><td>'+esc(m.name)+'</td><td style="letter-spacing:.06em">'+esc(m.code)+
+        '</td><td>'+esc(m.section||'—')+'</td></tr>';
+    }).join('')+'</tbody></table></div>'+
+    '<label style="margin-top:14px">نسخة للتذكير</label>'+
+    '<textarea readonly style="min-height:110px;font-family:monospace">'+esc(rows)+'</textarea>'+
+    '</div>';
 }
 
 function asgById(id){ return (S.data.assignments||[]).filter(function(a){ return a.id===id; })[0]; }
