@@ -159,9 +159,25 @@ textarea{min-height:84px;resize:vertical;line-height:1.6}
       <span class="course" id="courseName"></span>
     </div>
     <div class="who"><span id="userName"></span>
+      <button class="linkbtn hide" id="contactBtn" onclick="toggleContact()">راسلني</button>
       <button class="linkbtn" onclick="signOut()">خروج</button></div>
   </div></div></div>
   <div class="wrap">
+    <div id="contactPanel" class="card hide">
+      <h3>مراسلة الأستاذ</h3>
+      <div class="meta">تصل الرسالة مباشرة إلى بريده. اكتب بريدك إن رغبت برد.</div>
+      <label for="cSubj">الموضوع</label>
+      <input type="text" id="cSubj" placeholder="مثال: استفسار عن موعد الواجب">
+      <label for="cReply">بريدك (اختياري، للرد)</label>
+      <input type="text" id="cReply" placeholder="name@example.com">
+      <label for="cMsg">الرسالة</label>
+      <textarea id="cMsg" placeholder="اكتب رسالتك هنا"></textarea>
+      <div class="stack">
+        <button class="btn sm" onclick="sendContact()">إرسال</button>
+        <button class="btn sm ghost" onclick="toggleContact()">إلغاء</button>
+      </div>
+      <div id="cErr"></div>
+    </div>
     <div class="tabs" id="tabs" role="tablist"></div>
     <div id="view"><div class="center">جارٍ التحميل…</div></div>
   </div>
@@ -263,13 +279,34 @@ function start(){
   $('gate').className='gate hide';
   $('app').className='';
   $('userName').innerHTML='<b>'+esc(S.role==='teacher'?'لوحة التحكم':S.name)+'</b>';
+  $('contactBtn').className = S.role==='student' ? 'linkbtn' : 'linkbtn hide';
+  msgsLoaded=null;
   S.tab=0; renderTabs(); load();
+}
+
+function toggleContact(){
+  var p=$('contactPanel');
+  p.className = p.className==='card hide' ? 'card' : 'card hide';
+}
+
+function sendContact(){
+  var msg=$('cMsg').value.trim();
+  if(!msg){ $('cErr').innerHTML='<div class="err">اكتب رسالة أولاً.</div>'; return; }
+  $('cErr').innerHTML='';
+  api('contact',{code:S.code,replyEmail:$('cReply').value.trim(),
+    subject:$('cSubj').value.trim(),message:msg})
+    .then(function(){
+      toast('أُرسلت الرسالة');
+      $('cSubj').value=''; $('cReply').value=''; $('cMsg').value='';
+      toggleContact();
+    })
+    .catch(function(e){ $('cErr').innerHTML='<div class="err">'+esc(e.message)+'</div>'; });
 }
 
 function renderTabs(){
   var names = S.role==='student'
     ? ['المحاضرات','الواجبات','درجاتي']
-    : ['التسليمات','الواجبات','المحاضرات','الدرجات','الطلبة'];
+    : ['التسليمات','الواجبات','المحاضرات','الدرجات','الطلبة','الرسائل'];
   $('tabs').innerHTML = names.map(function(n,i){
     return '<button class="tab" role="tab" aria-selected="'+(i===S.tab)+'" onclick="go('+i+')">'+n+'</button>';
   }).join('');
@@ -432,7 +469,26 @@ function teacherView(){
   if(S.tab===1) return asgAdminView();
   if(S.tab===2) return lecAdminView();
   if(S.tab===3) return gradesAdminView();
-  return studentsAdminView();
+  if(S.tab===4) return studentsAdminView();
+  return messagesAdminView();
+}
+
+var msgsLoaded=null;
+function messagesAdminView(){
+  if(msgsLoaded===null){
+    api('messages',{code:S.code}).then(function(list){
+      msgsLoaded=list; if(S.tab===5) render();
+    }).catch(function(e){ toast(e.message); });
+    return '<div class="center">جارٍ التحميل…</div>';
+  }
+  if(!msgsLoaded.length) return '<div class="empty">لا رسائل بعد.</div>';
+  return msgsLoaded.map(function(m){
+    return '<div class="card"><div class="row"><h3>'+esc(m.subject||'بدون عنوان')+'</h3>'+
+      '<span class="meta">'+fmtDate(m.date)+'</span></div>'+
+      '<div class="meta">'+esc(m.name)+' ('+esc(m.code)+')'+
+      (m.replyEmail?' · '+esc(m.replyEmail):'')+'</div>'+
+      '<p class="desc">'+esc(m.message)+'</p></div>';
+  }).join('');
 }
 
 var curAsg=null, curSubs=[];
