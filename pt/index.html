@@ -60,6 +60,8 @@ a{color:var(--accent)}
 .btn.sm{width:auto;padding:9px 16px;font-size:14px;margin:0}
 .btn.ghost{background:transparent;color:var(--accent);border:1.5px solid var(--line)}
 .btn.ghost:hover{background:var(--accent-soft)}
+.btn.danger{background:transparent;color:var(--danger);border:1.5px solid #eccaca}
+.btn.danger:hover{background:#f9e8e8}
 
 .tabs{display:flex;gap:4px;border-bottom:1.5px solid var(--line);margin-bottom:22px;overflow-x:auto;-webkit-overflow-scrolling:touch}
 .tab{background:none;border:0;padding:11px 16px;color:var(--muted);font-weight:500;
@@ -229,7 +231,7 @@ function api(action,payload){
   payload.action = action;
   // إجراءات الكتابة لا تمرّ عبر JSONP — الخادم يرفضها ويعيد رسالة غامضة
   var WRITE = ['upload','grade','saveLecture','saveAssignment','publish',
-               'addStudents','bulkGrades','contact'];
+               'addStudents','bulkGrades','contact','deleteItem'];
   var heavy = WRITE.indexOf(action) !== -1;
   return post(payload).catch(function(){
     if(heavy) throw new Error('تعذّر الاتصال بالخادم. تحقّق من الإنترنت وأعد المحاولة.');
@@ -606,17 +608,23 @@ function saveGradeSub(i){
     }).catch(function(e){ toast(e.message); });
 }
 
+var editAsg=null, editLec=null;
+
 function asgAdminView(){
-  var A=S.data.assignments||[];
-  var h='<div class="card"><h3>واجب جديد</h3>'+
-    '<label for="aT">العنوان</label><input type="text" id="aT" placeholder="مثال: تحليل بيانات القسم">'+
-    '<label for="aD">الوصف والمطلوب</label><textarea id="aD" placeholder="اكتب المطلوب بوضوح"></textarea>'+
-    '<div class="grid2"><div><label for="aDue">آخر موعد</label><input type="date" id="aDue"></div></div>'+
+  var A=S.data.assignments||[], e=editAsg;
+  var h='<div class="card" id="asgForm">'+
+    (e?'<div class="row"><h3>تعديل الواجب</h3><span class="pill">وضع التعديل</span></div>':'<h3>واجب جديد</h3>')+
+    '<label for="aT">العنوان</label><input type="text" id="aT" placeholder="مثال: تحليل بيانات القسم" value="'+esc(e?e.title:'')+'">'+
+    '<label for="aD">الوصف والمطلوب</label><textarea id="aD" placeholder="اكتب المطلوب بوضوح">'+esc(e?(e.description||''):'')+'</textarea>'+
+    '<div class="grid2"><div><label for="aDue">آخر موعد</label><input type="date" id="aDue" value="'+esc(e?(e.due||''):'')+'"></div></div>'+
     '<label>معايير التقييم (الروبرك)</label><div id="crits"></div>'+
     '<button class="btn sm ghost" style="margin-top:8px" onclick="addCrit()">إضافة معيار</button>'+
-    '<div class="check"><input type="checkbox" id="aPub" checked>'+
+    '<div class="check"><input type="checkbox" id="aPub"'+((!e||e.published)?' checked':'')+'>'+
     '<label for="aPub" style="margin:0">نشره للطلبة الآن</label></div>'+
-    '<button class="btn" style="margin-top:16px" onclick="createAsg()">حفظ الواجب</button></div>';
+    '<div class="stack" style="margin-top:16px">'+
+    '<button class="btn" onclick="createAsg()">'+(e?'حفظ التعديلات':'حفظ الواجب')+'</button>'+
+    (e?'<button class="btn sm ghost" onclick="cancelEdit()">إلغاء</button>':'')+
+    '</div></div>';
 
   h+=A.map(function(a){
     return '<div class="card"><div class="row"><h3>'+esc(a.title)+'</h3>'+
@@ -624,18 +632,27 @@ function asgAdminView(){
       '<div class="meta">'+a.criteria.length+' معايير · '+a.maxScore+' درجة · آخر موعد '+
       fmtDate(a.due)+' · سُلّم '+a.submitted+'</div><div class="stack">'+
       '<button class="btn sm ghost" onclick="pubToggle(\'assignment\',\''+a.id+'\','+(!a.published)+')">'+
-      (a.published?'إيقاف النشر':'نشر')+'</button></div></div>';
+      (a.published?'إيقاف النشر':'نشر')+'</button>'+
+      '<button class="btn sm ghost" onclick="startEdit(\'assignment\',\''+a.id+'\')">تعديل</button>'+
+      '<button class="btn sm danger" onclick="delItem(\'assignment\',\''+a.id+'\')">حذف</button>'+
+      '</div></div>';
   }).join('');
 
-  setTimeout(function(){ if($('crits') && !$('crits').children.length){ addCrit(); addCrit(); } },0);
+  h+=trashView('assignment');
+
+  setTimeout(function(){
+    if(!$('crits') || $('crits').children.length) return;
+    if(e && e.criteria && e.criteria.length) e.criteria.forEach(function(c){ addCrit(c.criterion,c.maxPoints); });
+    else { addCrit(); addCrit(); }
+  },0);
   return h;
 }
 
-function addCrit(){
+function addCrit(n,m){
   var d=document.createElement('div');
   d.className='crit-row';
-  d.innerHTML='<input type="text" class="cName" placeholder="اسم المعيار">'+
-    '<input type="number" class="cMax" placeholder="الدرجة" min="0" step="0.5">'+
+  d.innerHTML='<input type="text" class="cName" placeholder="اسم المعيار" value="'+esc(n||'')+'">'+
+    '<input type="number" class="cMax" placeholder="الدرجة" min="0" step="0.5" value="'+(m==null?'':m)+'">'+
     '<button class="iconbtn" onclick="this.parentNode.remove()" aria-label="حذف">×</button>';
   $('crits').appendChild(d);
 }
@@ -650,10 +667,21 @@ function createAsg(){
   }
   if(!criteria.length){ toast('أضف معياراً واحداً على الأقل'); return; }
 
-  api('saveAssignment',{code:S.code,obj:{
-    title:title, description:$('aD').value, due:$('aDue').value,
-    published:$('aPub').checked, criteria:criteria
-  }}).then(function(){ toast('حُفظ الواجب'); load(); })
+  var obj={ title:title, description:$('aD').value, due:$('aDue').value,
+            published:$('aPub').checked, criteria:criteria };
+  var wasEdit=!!editAsg;
+  if(wasEdit){
+    obj.id=editAsg.id;
+    var old=editAsg.criteria||[], changed=(old.length!==criteria.length);
+    if(!changed) for(var k=0;k<old.length;k++)
+      if(old[k].criterion!==criteria[k].criterion || Number(old[k].maxPoints)!==Number(criteria[k].maxPoints)) changed=true;
+    if(changed && editAsg.graded &&
+       !confirm('غيّرت معايير الروبرك، ويوجد '+editAsg.graded+' تسليم مُصحَّح بالمعايير القديمة.\n\n'+
+                'الدرجات المرصودة لن تُحذف، لكنها ستبقى محسوبة على المعايير السابقة وقد لا تطابق الجديدة.\n\nالمتابعة؟')) return;
+  }
+
+  api('saveAssignment',{code:S.code,obj:obj})
+    .then(function(){ toast(wasEdit?'حُدّث الواجب':'حُفظ الواجب'); editAsg=null; load(); })
     .catch(function(e){ toast(e.message); });
 }
 
@@ -663,15 +691,19 @@ function pubToggle(kind,id,val){
 }
 
 function lecAdminView(){
-  var L=S.data.lectures||[];
-  var h='<div class="card"><h3>محاضرة جديدة</h3>'+
+  var L=S.data.lectures||[], e=editLec;
+  var h='<div class="card" id="lecForm">'+
+    (e?'<div class="row"><h3>تعديل المحاضرة</h3><span class="pill">وضع التعديل</span></div>':'<h3>محاضرة جديدة</h3>')+
     '<div class="note">ارفع الملف إلى Google Drive، اجعل صلاحيته «كل من لديه الرابط يستطيع الاطلاع»، ثم الصق الرابط هنا.</div>'+
-    '<label for="lT">العنوان</label><input type="text" id="lT" placeholder="مثال: المحاضرة الأولى — الأساس">'+
-    '<label for="lN">وصف مختصر</label><textarea id="lN"></textarea>'+
-    '<label for="lU">رابط الملف</label><input type="text" id="lU" placeholder="https://drive.google.com/...">'+
-    '<div class="check"><input type="checkbox" id="lPub" checked>'+
+    '<label for="lT">العنوان</label><input type="text" id="lT" placeholder="مثال: المحاضرة الأولى — الأساس" value="'+esc(e?e.title:'')+'">'+
+    '<label for="lN">وصف مختصر</label><textarea id="lN">'+esc(e?(e.note||''):'')+'</textarea>'+
+    '<label for="lU">رابط الملف</label><input type="text" id="lU" placeholder="https://drive.google.com/..." value="'+esc(e?(e.url||''):'')+'">'+
+    '<div class="check"><input type="checkbox" id="lPub"'+((!e||e.published)?' checked':'')+'>'+
     '<label for="lPub" style="margin:0">نشرها للطلبة الآن</label></div>'+
-    '<button class="btn" style="margin-top:16px" onclick="createLec()">حفظ المحاضرة</button></div>';
+    '<div class="stack" style="margin-top:16px">'+
+    '<button class="btn" onclick="createLec()">'+(e?'حفظ التعديلات':'حفظ المحاضرة')+'</button>'+
+    (e?'<button class="btn sm ghost" onclick="cancelEdit()">إلغاء</button>':'')+
+    '</div></div>';
 
   h+=L.map(function(l){
     return '<div class="card"><div class="row"><h3>'+esc(l.title)+'</h3>'+
@@ -680,17 +712,95 @@ function lecAdminView(){
       (l.url?'<a class="btn sm ghost" style="text-decoration:none" href="'+esc(l.url)+
         '" target="_blank" rel="noopener">فتح</a>':'')+
       '<button class="btn sm ghost" onclick="pubToggle(\'lecture\',\''+l.id+'\','+(!l.published)+')">'+
-      (l.published?'إيقاف النشر':'نشر')+'</button></div></div>';
+      (l.published?'إيقاف النشر':'نشر')+'</button>'+
+      '<button class="btn sm ghost" onclick="startEdit(\'lecture\',\''+l.id+'\')">تعديل</button>'+
+      '<button class="btn sm danger" onclick="delItem(\'lecture\',\''+l.id+'\')">حذف</button>'+
+      '</div></div>';
   }).join('');
+  h+=trashView('lecture');
   return h;
 }
 
 function createLec(){
   var t=$('lT').value.trim();
   if(!t){ toast('اكتب عنوان المحاضرة'); return; }
-  api('saveLecture',{code:S.code,obj:{title:t,note:$('lN').value,url:$('lU').value,published:$('lPub').checked}})
-    .then(function(){ toast('حُفظت المحاضرة'); load(); })
+  var obj={title:t,note:$('lN').value,url:$('lU').value,published:$('lPub').checked};
+  var wasEdit=!!editLec;
+  if(wasEdit) obj.id=editLec.id;
+  api('saveLecture',{code:S.code,obj:obj})
+    .then(function(){ toast(wasEdit?'حُدّثت المحاضرة':'حُفظت المحاضرة'); editLec=null; load(); })
     .catch(function(e){ toast(e.message); });
+}
+
+/* ═══ التعديل والحذف وسلة المحذوفات ═══ */
+
+function startEdit(kind,id){
+  var list=(kind==='lecture'?S.data.lectures:S.data.assignments)||[];
+  var item=list.filter(function(x){ return x.id===id; })[0];
+  if(!item){ toast('العنصر غير موجود'); return; }
+  if(kind==='lecture'){ editLec=item; editAsg=null; } else { editAsg=item; editLec=null; }
+  render();
+  setTimeout(function(){
+    var f=$(kind==='lecture'?'lecForm':'asgForm');
+    if(f) f.scrollIntoView({behavior:'smooth',block:'start'});
+  },30);
+}
+
+function cancelEdit(){ editAsg=null; editLec=null; render(); }
+
+function delItem(kind,id){
+  var isLec=(kind==='lecture');
+  var list=(isLec?S.data.lectures:S.data.assignments)||[];
+  var item=list.filter(function(x){ return x.id===id; })[0];
+  if(!item) return;
+  var msg='نقل '+(isLec?'المحاضرة':'الواجب')+' «'+item.title+'» إلى سلة المحذوفات؟';
+  if(!isLec && item.submitted)
+    msg+='\n\nتنبيه: مرتبط به '+item.submitted+' تسليم'+
+         (item.graded?' ('+item.graded+' مُصحَّح)':'')+'، وستُخفى معه.';
+  msg+='\n\nلا شيء يُمحى نهائياً — يمكن استرجاعه من سلة المحذوفات أسفل الصفحة.';
+  if(!confirm(msg)) return;
+
+  api('deleteItem',{code:S.code,kind:kind,id:id,value:true})
+    .then(function(){
+      toast('نُقل إلى سلة المحذوفات');
+      if(isLec && editLec && editLec.id===id) editLec=null;
+      if(!isLec && editAsg && editAsg.id===id) editAsg=null;
+      trashCache=null; load();
+    }).catch(function(e){ toast(e.message); });
+}
+
+function restoreItem(kind,id){
+  api('deleteItem',{code:S.code,kind:kind,id:id,value:false})
+    .then(function(){ toast('استُرجع كمسودة — انشره متى شئت'); trashCache=null; load(); })
+    .catch(function(e){ toast(e.message); });
+}
+
+var trashCache=null, trashOpen=false;
+
+function toggleTrash(){
+  trashOpen=!trashOpen;
+  if(trashOpen && trashCache===null){
+    api('trash',{code:S.code})
+      .then(function(d){ trashCache=d; render(); })
+      .catch(function(e){ toast(e.message); });
+  }
+  render();
+}
+
+function trashView(kind){
+  var head='<div class="card"><div class="row"><h3>سلة المحذوفات</h3>'+
+    '<button class="btn sm ghost" onclick="toggleTrash()">'+(trashOpen?'إخفاء':'عرض')+'</button></div>';
+  if(!trashOpen) return head+'</div>';
+  if(trashCache===null) return head+'<div class="meta">جارٍ التحميل…</div></div>';
+
+  var list=(kind==='lecture'?trashCache.lectures:trashCache.assignments)||[];
+  if(!list.length) return head+'<div class="meta">لا يوجد شيء محذوف.</div></div>';
+
+  return head+list.map(function(x){
+    return '<div class="row" style="margin-top:10px"><div><b>'+esc(x.title)+'</b>'+
+      '<div class="meta">'+(kind==='lecture'?fmtDate(x.date):'آخر موعد '+fmtDate(x.due)+' · '+x.submitted+' تسليم')+'</div></div>'+
+      '<button class="btn sm ghost" onclick="restoreItem(\''+kind+'\',\''+x.id+'\')">استرجاع</button></div>';
+  }).join('')+'</div>';
 }
 
 function gradesAdminView(){
