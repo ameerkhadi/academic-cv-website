@@ -1003,8 +1003,7 @@ function pickView(){
     '</div>';
 
   if(lastPick) h+='<div class="pickbox"><div class="nm">'+esc(lastPick.name)+'</div>'+
-    '<div class="sub">'+esc(lastPick.code)+(lastPick.section?' · شعبة '+esc(lastPick.section):'')+'</div></div>';
-
+    '<div class="sub">'+(lastPick.section?'شعبة '+esc(lastPick.section):'')+'</div></div>';
   if(picked.length>1){
     h+='<div class="meta" style="margin-top:14px">خرجت أسماؤهم ('+picked.length+'):</div>'+
       '<div style="font-size:14px;line-height:2">'+picked.map(function(c){
