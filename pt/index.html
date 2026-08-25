@@ -17,11 +17,30 @@
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --ink:#101c2b; --paper:#eef1f5; --surface:#fff;
-  --accent:#14566e; --accent-dark:#0e3f52; --accent-soft:#e2eef2;
-  --seal:#9c7c2b; --line:#d5dee6; --muted:#5a6875;
-  --ok:#2f7d5d; --warn:#a8601c; --danger:#a33131; --r:10px;
+  --ink:#0f1b29; --paper:#eef2f6; --surface:#fff;
+  --accent:#14566e; --accent-dark:#0e3f52; --accent-soft:#e4eff4;
+  --seal:#9c7c2b; --line:#dde5ec; --muted:#5b6a78;
+  --ok:#2f7d5d; --warn:#a8601c; --danger:#a33131; --r:12px;
+  --shadow:0 1px 2px rgba(16,28,43,.05), 0 4px 16px rgba(16,28,43,.05);
+  --shadow-lg:0 2px 6px rgba(16,28,43,.07), 0 12px 32px rgba(16,28,43,.08);
 }
+html[data-theme="dark"]{
+  --ink:#e6edf4; --paper:#0d1620; --surface:#152230;
+  --accent:#4a9cbd; --accent-dark:#5cb0d1; --accent-soft:#1c3444;
+  --seal:#c9a24d; --line:#26384a; --muted:#93a4b5;
+  --ok:#5cb98d; --warn:#d9944a; --danger:#d97070;
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 4px 16px rgba(0,0,0,.25);
+  --shadow-lg:0 2px 6px rgba(0,0,0,.35), 0 12px 32px rgba(0,0,0,.3);
+}
+html[data-theme="dark"] .pill.ok{background:#173528;color:#6ecb9e}
+html[data-theme="dark"] .pill.wait{background:#3a2a15;color:#e0a55f}
+html[data-theme="dark"] .pill.none{background:#20303f;color:var(--muted)}
+html[data-theme="dark"] .pill.late{background:#3a1e1e;color:#e08b8b}
+html[data-theme="dark"] .err{background:#3a1e1e;border-color:#5a2f2f;color:#e8a0a0}
+html[data-theme="dark"] .btn.danger{border-color:#5a2f2f}
+html[data-theme="dark"] .btn.danger:hover{background:#3a1e1e}
+html{transition:background .2s ease}
+body,.card,.btn,input,textarea,select{transition:background-color .2s ease,border-color .2s ease,color .2s ease}
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
 body{background:var(--paper);color:var(--ink);
@@ -60,6 +79,8 @@ a{color:var(--accent)}
 .btn.sm{width:auto;padding:9px 16px;font-size:14px;margin:0}
 .btn.ghost{background:transparent;color:var(--accent);border:1.5px solid var(--line)}
 .btn.ghost:hover{background:var(--accent-soft)}
+.btn{transition:background .18s ease,transform .06s ease}
+.btn:active{transform:translateY(1px)}
 .btn.danger{background:transparent;color:var(--danger);border:1.5px solid #eccaca}
 .btn.danger:hover{background:#f9e8e8}
 
@@ -69,7 +90,25 @@ a{color:var(--accent)}
 .tab[aria-selected="true"]{color:var(--accent);border-bottom-color:var(--accent);font-weight:600}
 .tab:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
 
-.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;margin-bottom:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;margin-bottom:14px;box-shadow:var(--shadow)}
+.codewrap{position:relative}
+.codewrap .eye{position:absolute;inset-inline-start:10px;top:50%;transform:translateY(-50%);
+  background:none;border:0;color:var(--muted);font-size:19px;padding:4px 6px;line-height:1}
+.codewrap .eye:hover{color:var(--accent)}
+.announce{background:linear-gradient(180deg,var(--accent-soft),transparent);
+  border:1px solid var(--line);border-inline-start:4px solid var(--seal);
+  border-radius:var(--r);padding:14px 16px;margin-bottom:16px;font-size:15px;line-height:1.75;white-space:pre-wrap}
+.announce b{display:block;font-size:12.5px;letter-spacing:.05em;color:var(--seal);margin-bottom:4px}
+.bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:16px}
+.quizcard{background:var(--surface);border:1px solid var(--line);border-inline-start:4px solid var(--accent);
+  border-radius:var(--r);padding:16px;margin-bottom:16px;box-shadow:var(--shadow)}
+.foot{text-align:center;color:var(--muted);font-size:12.5px;line-height:1.9;
+  padding:26px 16px 34px;border-top:1px solid var(--line);margin-top:34px}
+.foot b{font-weight:600;color:var(--ink)}
+.pickbox{background:var(--accent-soft);border-radius:var(--r);padding:22px;text-align:center;margin-top:12px}
+.pickbox .nm{font-size:26px;font-weight:700;line-height:1.4}
+.pickbox .sub{font-size:13px;color:var(--muted);margin-top:4px}
+.desc{white-space:pre-wrap}
 .card h3{font-size:18px;margin-bottom:4px}
 .meta{font-size:13px;color:var(--muted)}
 .desc{margin:10px 0 0;white-space:pre-wrap}
@@ -149,7 +188,12 @@ textarea{min-height:84px;resize:vertical;line-height:1.6}
   <div class="seal-mark">م</div>
   <h1 id="gateCourse">منصة المادة</h1>
   <p id="gateInst">أدخل الرمز الذي وصلك</p>
-  <input id="code" class="codebox" maxlength="24" placeholder="XXXXXX" autocomplete="off">
+  <div class="codewrap">
+    <input id="code" class="codebox" type="password" maxlength="24" placeholder="XXXXXX"
+           autocomplete="off" autocapitalize="characters" spellcheck="false">
+    <button class="eye" id="eyeBtn" type="button" onclick="toggleEye()"
+            aria-label="إظهار الرمز" title="إظهار الرمز">&#128065;</button>
+  </div>
   <button id="enter" class="btn">دخول</button>
   <div id="gateErr" class="err hide"></div>
 </div>
@@ -161,27 +205,20 @@ textarea{min-height:84px;resize:vertical;line-height:1.6}
       <span class="course" id="courseName"></span>
     </div>
     <div class="who"><span id="userName"></span>
-      <button class="linkbtn hide" id="contactBtn" onclick="toggleContact()">راسلني</button>
+      <button class="linkbtn" id="themeBtn" onclick="toggleTheme()" title="تبديل المظهر">&#9789;</button>
+      <button class="linkbtn hide" id="refreshBtn" onclick="doRefresh()">تحديث</button>
       <button class="linkbtn" onclick="signOut()">خروج</button></div>
   </div></div></div>
   <div class="wrap">
-    <div id="contactPanel" class="card hide">
-      <h3>مراسلة الأستاذ</h3>
-      <div class="meta">تصل الرسالة مباشرة إلى بريده. اكتب بريدك إن رغبت برد.</div>
-      <label for="cSubj">الموضوع</label>
-      <input type="text" id="cSubj" placeholder="مثال: استفسار عن موعد الواجب">
-      <label for="cReply">بريدك (اختياري، للرد)</label>
-      <input type="text" id="cReply" placeholder="name@example.com">
-      <label for="cMsg">الرسالة</label>
-      <textarea id="cMsg" placeholder="اكتب رسالتك هنا"></textarea>
-      <div class="stack">
-        <button class="btn sm" onclick="sendContact()">إرسال</button>
-        <button class="btn sm ghost" onclick="toggleContact()">إلغاء</button>
-      </div>
-      <div id="cErr"></div>
-    </div>
+    <div id="announceBox"></div>
+    <div id="quizBox"></div>
     <div class="tabs" id="tabs" role="tablist"></div>
     <div id="view"><div class="center">جارٍ التحميل…</div></div>
+  </div>
+  <div class="foot">
+    <div><b>منصة مادة الذكاء الاصطناعي وتحليل البيانات</b></div>
+    <div id="footInst">المعهد العالي للقيادة</div>
+    <div>تطوير: <b>د. أمير هادي</b> · 2026 · جميع الحقوق محفوظة</div>
   </div>
 </div>
 
@@ -231,7 +268,7 @@ function api(action,payload){
   payload.action = action;
   // إجراءات الكتابة لا تمرّ عبر JSONP — الخادم يرفضها ويعيد رسالة غامضة
   var WRITE = ['upload','grade','saveLecture','saveAssignment','publish',
-               'addStudents','bulkGrades','contact','deleteItem'];
+               'addStudents','bulkGrades','contact','deleteItem','saveSettings','unlockCode'];
   var heavy = WRITE.indexOf(action) !== -1;
   return post(payload).catch(function(){
     if(heavy) throw new Error('تعذّر الاتصال بالخادم. تحقّق من الإنترنت وأعد المحاولة.');
@@ -245,12 +282,16 @@ function api(action,payload){
 
 /* ═══ الإقلاع ═══ */
 
+initTheme();
+
 api('info').then(function(i){
   S.info=i;
   $('gateCourse').textContent=i.course;
   $('gateInst').textContent=i.institute+' — أدخل الرمز الذي وصلك';
   $('courseName').textContent=i.course;
   $('instName').textContent=i.institute;
+  $('footInst').textContent=i.institute;
+  var fc=document.querySelector('.foot b'); if(fc) fc.textContent='منصة مادة '+i.course;
   var c=null; try{ c=localStorage.getItem('mcode'); }catch(e){}
   if(c){ $('code').value=c; doLogin(); }
 }).catch(function(e){
@@ -284,33 +325,77 @@ function start(){
   $('gate').className='gate hide';
   $('app').className='';
   $('userName').innerHTML='<b>'+esc(S.role==='teacher'?'لوحة التحكم':S.name)+'</b>';
-  $('contactBtn').className = S.role==='student' ? 'linkbtn' : 'linkbtn hide';
+  $('refreshBtn').className='linkbtn';
   msgsLoaded=null;
   S.tab=0; renderTabs(); load();
 }
 
-function toggleContact(){
-  var p=$('contactPanel');
-  p.className = p.className==='card hide' ? 'card' : 'card hide';
+/* ═══ المظهر ═══ */
+function applyTheme(t){
+  document.documentElement.setAttribute('data-theme', t==='dark'?'dark':'light');
+  var b=$('themeBtn'); if(b) b.innerHTML = t==='dark' ? '&#9728;' : '&#9789;';
+  try{ localStorage.setItem('mtheme',t); }catch(e){}
+}
+function toggleTheme(){
+  var cur=document.documentElement.getAttribute('data-theme');
+  applyTheme(cur==='dark'?'light':'dark');
+}
+function initTheme(){
+  var t=null;
+  try{ t=localStorage.getItem('mtheme'); }catch(e){}
+  if(!t) t = (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark':'light';
+  applyTheme(t);
 }
 
-function sendContact(){
-  var msg=$('cMsg').value.trim();
-  if(!msg){ $('cErr').innerHTML='<div class="err">اكتب رسالة أولاً.</div>'; return; }
-  $('cErr').innerHTML='';
-  api('contact',{code:S.code,replyEmail:$('cReply').value.trim(),
-    subject:$('cSubj').value.trim(),message:msg})
-    .then(function(){
-      toast('أُرسلت الرسالة');
-      $('cSubj').value=''; $('cReply').value=''; $('cMsg').value='';
-      toggleContact();
+/* ═══ إظهار/إخفاء الرمز ═══ */
+function toggleEye(){
+  var i=$('code'), b=$('eyeBtn');
+  var show = i.type==='password';
+  i.type = show ? 'text' : 'password';
+  var lbl = show ? 'إخفاء الرمز' : 'إظهار الرمز';
+  b.title = lbl;
+  b.setAttribute('aria-label', lbl);
+  i.focus();
+}
+
+/* ═══ تحديث بلا خروج ═══ */
+var refreshing=false;
+function doRefresh(){
+  if(refreshing) return;
+  refreshing=true;
+  var b=$('refreshBtn'); if(b){ b.disabled=true; b.textContent='…'; }
+  api(S.role==='student'?'studentData':'teacherData',{code:S.code})
+    .then(function(d){
+      S.data=d; msgsLoaded=null; trashCache=null;
+      renderTop(); render(); toast('تم التحديث');
     })
-    .catch(function(e){ $('cErr').innerHTML='<div class="err">'+esc(e.message)+'</div>'; });
+    .catch(function(e){ toast(e.message); })
+    .then(function(){
+      refreshing=false;
+      if(b){ b.disabled=false; b.textContent='تحديث'; }
+    });
+}
+
+/* ═══ الإعلان ورابط الاختبار (يظهران للطالب) ═══ */
+function renderTop(){
+  var st=(S.data && S.data.settings) || null;
+  var a=$('announceBox'), q=$('quizBox');
+  if(!a||!q) return;
+  if(S.role!=='student' || !st){ a.innerHTML=''; q.innerHTML=''; return; }
+
+  a.innerHTML = (st.announceOn && st.announce)
+    ? '<div class="announce"><b>إعلان</b>'+esc(st.announce)+'</div>' : '';
+
+  q.innerHTML = (st.quizOn && st.quizUrl)
+    ? '<div class="quizcard"><div class="row"><h3>'+esc(st.quizLabel||'اختبار متاح الآن')+'</h3></div>'+
+      '<div class="meta">اضغط للفتح، ثم عد واضغط «تحديث» لمتابعة السؤال التالي.</div>'+
+      '<a class="btn sm" style="text-decoration:none;display:inline-block;margin-top:10px" href="'+
+      esc(st.quizUrl)+'" target="_blank" rel="noopener">فتح الاختبار</a></div>' : '';
 }
 
 function renderTabs(){
   var names = S.role==='student'
-    ? ['المحاضرات','الواجبات','درجاتي']
+    ? ['المحاضرات','الواجبات','درجاتي','التواصل']
     : ['التسليمات','الواجبات','المحاضرات','الدرجات','الطلبة','الرسائل'];
   $('tabs').innerHTML = names.map(function(n,i){
     return '<button class="tab" role="tab" aria-selected="'+(i===S.tab)+'" onclick="go('+i+')">'+n+'</button>';
@@ -327,6 +412,7 @@ function load(){
 
 function render(){
   if(!S.data) return;
+  renderTop();
   $('view').innerHTML = S.role==='student' ? studentView() : teacherView();
 }
 
@@ -335,7 +421,36 @@ function render(){
 function studentView(){
   if(S.tab===0) return lecturesView();
   if(S.tab===1) return assignmentsView();
-  return gradesView();
+  if(S.tab===2) return gradesView();
+  return contactView();
+}
+
+function contactView(){
+  var em=(S.info && S.info.teacherEmail) || '';
+  var nm=(S.info && S.info.teacherName) || 'أستاذ المادة';
+  var subj='['+((S.info&&S.info.course)||'المادة')+'] '+S.name;
+  var body='الاسم: '+S.name+'\nالرمز: '+S.code+
+           (S.data.section?('\nالشعبة: '+S.data.section):'')+'\n\n';
+  var href='mailto:'+em+'?subject='+encodeURIComponent(subj)+'&body='+encodeURIComponent(body);
+
+  return '<div class="card"><h3>التواصل مع أستاذ المادة</h3>'+
+    '<div class="note">المراسلة تكون عبر البريد الإلكتروني الرسمي. اذكر اسمك ورمزك في رسالتك.</div>'+
+    '<div style="margin-top:14px;font-size:15px;line-height:2">'+
+    '<div><b>'+esc(nm)+'</b></div>'+
+    '<div style="direction:ltr;text-align:right;font-family:monospace;font-size:14.5px">'+esc(em)+'</div>'+
+    '</div>'+
+    '<div class="stack" style="margin-top:16px">'+
+    '<a class="btn sm" style="text-decoration:none" href="'+esc(href)+'">فتح بريدي وكتابة رسالة</a>'+
+    '<button class="btn sm ghost" onclick="copyEmail()">نسخ البريد</button>'+
+    '</div></div>';
+}
+
+function copyEmail(){
+  var em=(S.info && S.info.teacherEmail) || '';
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(em).then(function(){ toast('نُسخ البريد'); },
+      function(){ toast(em); });
+  } else toast(em);
 }
 
 function lecturesView(){
@@ -823,9 +938,108 @@ function bulkGrades(){
     .catch(function(e){ toast(e.message); });
 }
 
+/* ═══ الإعلان ورابط الاختبار — تحكّم المدرّس ═══ */
+var stg=null;
+function settingsView(){
+  if(stg===null){
+    api('settings',{code:S.code}).then(function(d){ stg=d; render(); })
+      .catch(function(e){ toast(e.message); });
+    return '<div class="card"><div class="meta">جارٍ تحميل الإعدادات…</div></div>';
+  }
+  return '<div class="card"><h3>الإعلان العام</h3>'+
+    '<div class="note">يظهر شريطاً أعلى صفحة كل طالب. يراه عند فتح المنصة أو ضغط «تحديث».</div>'+
+    '<textarea id="annT" placeholder="مثال: محاضرة الأحد القادم في القاعة الكبرى">'+esc(stg.announce||'')+'</textarea>'+
+    '<div class="check"><input type="checkbox" id="annOn"'+(stg.announceOn?' checked':'')+'>'+
+    '<label for="annOn" style="margin:0">إظهاره للطلبة الآن</label></div>'+
+    '<button class="btn" style="margin-top:14px" onclick="saveAnn()">حفظ الإعلان</button></div>'+
+
+    '<div class="card"><h3>رابط الاختبار</h3>'+
+    '<div class="note">فعّله عند بدء السؤال، وعطّله بعد انتهاء الإجابة. الطالب يراه بعد ضغط «تحديث».</div>'+
+    '<label for="qzL">عنوان الزر</label>'+
+    '<input type="text" id="qzL" placeholder="السؤال الأول" value="'+esc(stg.quizLabel||'')+'">'+
+    '<label for="qzU">الرابط (Google Forms)</label>'+
+    '<input type="text" id="qzU" placeholder="https://forms.gle/..." value="'+esc(stg.quizUrl||'')+'">'+
+    '<div class="check"><input type="checkbox" id="qzOn"'+(stg.quizOn?' checked':'')+'>'+
+    '<label for="qzOn" style="margin:0">مفعّل الآن</label></div>'+
+    '<button class="btn" style="margin-top:14px" onclick="saveQuiz()">حفظ الرابط</button></div>';
+}
+
+function saveAnn(){
+  api('saveSettings',{code:S.code,obj:{announce:$('annT').value,announceOn:$('annOn').checked}})
+    .then(function(r){ stg=r.settings; toast('حُفظ الإعلان'); render(); })
+    .catch(function(e){ toast(e.message); });
+}
+function saveQuiz(){
+  api('saveSettings',{code:S.code,obj:{
+    quizUrl:$('qzU').value.trim(), quizLabel:$('qzL').value.trim(), quizOn:$('qzOn').checked}})
+    .then(function(r){ stg=r.settings; toast('حُفظ الرابط'); render(); })
+    .catch(function(e){ toast(e.message); });
+}
+
+/* ═══ الاختيار العشوائي ═══ */
+var picked=[], pickSec='';
+function pickView(){
+  var St=(S.data.students||[]).filter(function(s){ return s.active!==false; });
+  var secs=[]; St.forEach(function(s){ if(s.section && secs.indexOf(s.section)<0) secs.push(s.section); });
+  secs.sort();
+  var pool=St.filter(function(s){ return !pickSec || s.section===pickSec; });
+  var left=pool.filter(function(s){ return picked.indexOf(s.code)<0; });
+
+  var h='<div class="card"><div class="row"><h3>اختيار عشوائي</h3>'+
+    '<span class="meta">'+left.length+' من '+pool.length+' متبقٍ</span></div>'+
+    '<div class="note">لا يتكرر الاسم حتى تنتهي القائمة أو تُصفّرها.</div>';
+
+  if(secs.length>1){
+    h+='<label for="pkSec">الشعبة</label><select id="pkSec" onchange="pickSec=this.value;picked=[];render()">'+
+      '<option value=""'+(pickSec?'':' selected')+'>الكل</option>'+
+      secs.map(function(x){ return '<option value="'+esc(x)+'"'+(pickSec===x?' selected':'')+'>'+esc(x)+'</option>'; }).join('')+
+      '</select>';
+  }
+
+  h+='<div class="stack" style="margin-top:14px">'+
+    '<button class="btn sm" onclick="doPick()"'+(left.length?'':' disabled')+'>اسحب اسماً</button>'+
+    (picked.length?'<button class="btn sm ghost" onclick="picked.pop();render()">تراجع</button>'+
+                   '<button class="btn sm ghost" onclick="picked=[];render()">تصفير</button>':'')+
+    '</div>';
+
+  if(lastPick) h+='<div class="pickbox"><div class="nm">'+esc(lastPick.name)+'</div>'+
+    '<div class="sub">'+esc(lastPick.code)+(lastPick.section?' · شعبة '+esc(lastPick.section):'')+'</div></div>';
+
+  if(picked.length>1){
+    h+='<div class="meta" style="margin-top:14px">خرجت أسماؤهم ('+picked.length+'):</div>'+
+      '<div style="font-size:14px;line-height:2">'+picked.map(function(c){
+        var st=St.filter(function(x){return x.code===c;})[0];
+        return st?esc(st.name):esc(c);
+      }).join(' · ')+'</div>';
+  }
+  return h+'</div>';
+}
+
+var lastPick=null;
+function doPick(){
+  var St=(S.data.students||[]).filter(function(s){ return s.active!==false; });
+  var pool=St.filter(function(s){ return (!pickSec||s.section===pickSec) && picked.indexOf(s.code)<0; });
+  if(!pool.length){ toast('انتهت القائمة'); return; }
+  var p=pool[Math.floor(Math.random()*pool.length)];
+  picked.push(p.code); lastPick=p; render();
+}
+
+/* ═══ فكّ قفل رمز ═══ */
+function unlockPrompt(){
+  var c=prompt('اكتب رمز الطالب المراد فكّ قفله:');
+  if(!c) return;
+  api('unlockCode',{code:S.code,target:c.trim()})
+    .then(function(){ toast('فُكّ القفل عن '+c.trim().toUpperCase()); })
+    .catch(function(e){ toast(e.message); });
+}
+
 function studentsAdminView(){
   var St=S.data.students||[];
-  var h='<div class="card"><h3>إضافة طلبة</h3>'+
+  var h=settingsView()+pickView()+
+    '<div class="card"><div class="row"><h3>قفل الدخول</h3>'+
+    '<button class="btn sm ghost" onclick="unlockPrompt()">فكّ قفل رمز</button></div>'+
+    '<div class="note">يُقفل الرمز 30 دقيقة بعد 5 محاولات خاطئة. استخدم الزر للفكّ الفوري.</div></div>'+
+    '<div class="card"><h3>إضافة طلبة</h3>'+
     '<div class="note">اكتب كل طالب في سطر: <b>الاسم</b> ثم فاصلة ثم <b>الشعبة</b> (اختيارية).<br>ستُولَّد الرموز تلقائياً.</div>'+
     '<textarea id="stL" style="min-height:150px" placeholder="أحمد علي, أ&#10;سارة محمد, ب"></textarea>'+
     '<button class="btn" style="margin-top:14px" onclick="addSt()">إضافة وتوليد الرموز</button>'+
