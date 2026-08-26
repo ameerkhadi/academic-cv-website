@@ -131,6 +131,20 @@ a{color:var(--accent)}
 .qnum{display:inline-block;background:var(--accent);color:#fff;border-radius:999px;
   padding:5px 14px;font-size:13.5px;font-weight:600}
 .big{font-size:20px;font-weight:700;text-align:center;padding:26px 0}
+
+/* شاشة العرض — للبروجكتر */
+#proj{position:fixed;inset:0;z-index:9999;background:var(--surface);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:5vh 6vw}
+#proj.hide{display:none}
+#proj .pnum{font-size:clamp(18px,2.4vw,30px);font-weight:600;color:var(--accent);
+  background:var(--accent-soft);padding:10px 28px;border-radius:999px;margin-bottom:5vh}
+#proj .ptext{font-size:clamp(30px,5.2vw,76px);font-weight:700;line-height:1.55;
+  text-align:center;max-width:22ch;color:var(--ink)}
+#proj .pbar{position:fixed;bottom:26px;display:flex;gap:12px;align-items:center}
+#proj .pbar button{background:var(--accent);color:#fff;border:0;border-radius:10px;
+  padding:14px 26px;font-size:17px;font-weight:600;font-family:inherit}
+#proj .pbar button.g{background:transparent;color:var(--muted);border:1.5px solid var(--line)}
+#proj .pcount{position:fixed;top:26px;inset-inline-end:32px;font-size:16px;color:var(--muted)}
 .card h3{font-size:18px;margin-bottom:4px}
 .meta{font-size:13px;color:var(--muted)}
 .desc{margin:10px 0 0;white-space:pre-wrap}
@@ -342,6 +356,8 @@ function quizBankView(){
 
     if(z.status==='live'){
       var st=z.step||0;
+      h+='<div class="stack" style="margin-top:12px">'+
+        '<button class="btn sm" onclick="openProj(\''+z.id+'\')">عرض على الشاشة</button></div>';
       h+='<div class="pickbox"><div class="sub">السؤال المفتوح الآن</div>'+
         '<div class="nm">'+(st?st+' من '+z.questions.length:'لم يُفتح سؤال')+'</div>'+
         (st&&z.questions[st-1]?'<div class="sub" style="margin-top:10px">'+
@@ -442,6 +458,78 @@ function delQz(id){
   api('deleteQuiz',{code:S.code,id:id,value:true})
     .then(function(){ toast('حُذف'); quizzes=null; if(editQuiz&&editQuiz.id===id) editQuiz=null; render(); })
     .catch(function(e){ toast(e.message); });
+}
+
+/* ═══ شاشة العرض (البروجكتر) ═══ */
+
+var projId=null;
+
+function openProj(id){
+  projId=id;
+  if(!$('proj')){
+    var d=document.createElement('div');
+    d.id='proj'; d.className='hide';
+    document.body.appendChild(d);
+  }
+  drawProj();
+  if(document.documentElement.requestFullscreen)
+    document.documentElement.requestFullscreen().catch(function(){});
+}
+
+function drawProj(){
+  var z=(quizzes||[]).filter(function(x){ return x.id===projId; })[0];
+  var el=$('proj');
+  if(!z || !el) return;
+  var st=z.step||0;
+  var q=(st>0 && z.questions[st-1]) ? z.questions[st-1] : null;
+
+  el.className='';
+  el.innerHTML=
+    '<div class="pcount">'+esc(z.title)+'</div>'+
+    (q ? '<div class="pnum">السؤال '+st+' من '+z.questions.length+'</div>'+
+         '<div class="ptext">'+esc(q.text)+'</div>'
+       : '<div class="ptext" style="color:var(--muted)">لم يُفتح سؤال بعد</div>')+
+    '<div class="pbar">'+
+      (st<z.questions.length
+        ? '<button onclick="projStep('+(st+1)+')">'+(st?'السؤال التالي':'ابدأ بالسؤال 1')+'</button>'
+        : '<button onclick="projFinish()">إنهاء ورصد الدرجات</button>')+
+      (st?'<button class="g" onclick="projStep(0)">إخفاء السؤال</button>':'')+
+      '<button class="g" onclick="closeProj()">خروج</button>'+
+    '</div>';
+}
+
+function projStep(n){
+  api('quizStep',{code:S.code,id:projId,step:n})
+    .then(function(){
+      var z=(quizzes||[]).filter(function(x){ return x.id===projId; })[0];
+      if(z) z.step=n;
+      drawProj();
+    }).catch(function(e){ toast(e.message); });
+}
+
+function projFinish(){
+  if(!confirm('إنهاء الاختبار ورصد الدرجات؟')) return;
+  api('quizFinish',{code:S.code,id:projId})
+    .then(function(r){ closeProj(); toast('رُصدت درجات '+r.recorded+' طالب');
+      quizzes=null; doRefresh(); })
+    .catch(function(e){ toast(e.message); });
+}
+
+document.addEventListener('keydown',function(e){
+  if(!projId) return;
+  if(e.key==='Escape') closeProj();
+  if(e.key==='ArrowLeft'||e.key===' '){
+    var z=(quizzes||[]).filter(function(x){ return x.id===projId; })[0];
+    if(z && (z.step||0)<z.questions.length){ e.preventDefault(); projStep((z.step||0)+1); }
+  }
+});
+
+function closeProj(){
+  var el=$('proj'); if(el) el.className='hide';
+  projId=null;
+  if(document.fullscreenElement && document.exitFullscreen)
+    document.exitFullscreen().catch(function(){});
+  quizzes=null; render();
 }
 
 /* ═══ تشغيل الاختبار ═══ */
