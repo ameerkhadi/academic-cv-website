@@ -593,8 +593,13 @@ function drawQR(){
     var box=document.createElement('div'); box.className='qrbox';
     w.appendChild(box);
     try{
+
       new QRCode(box,{text:url,width:190,height:190,correctLevel:QRCode.CorrectLevel.M});
-    }catch(e){
+      // إزالة الرابط من سمات الصورة حتى لا يظهر عند مرور المؤشر
+      Array.prototype.forEach.call(box.querySelectorAll('img,canvas'), function(el){
+        el.removeAttribute('title'); el.setAttribute('alt','رمز الطالب');
+      });
+      box.removeAttribute('title');    }catch(e){
       w.innerHTML='<div class="qrfall">'+esc(S.code)+'</div>';
     }
   }
