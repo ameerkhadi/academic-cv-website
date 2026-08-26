@@ -283,7 +283,7 @@ function api(action,payload){
   payload.action = action;
   // إجراءات الكتابة لا تمرّ عبر JSONP — الخادم يرفضها ويعيد رسالة غامضة
   var WRITE = ['upload','grade','saveLecture','saveAssignment','publish',
-               'addStudents','bulkGrades','contact','deleteItem','saveSettings','unlockCode','addBonus','studentCard'];
+               'addStudents','bulkGrades','contact','deleteItem','saveSettings','unlockCode','addBonus','studentCard','saveQuiz','deleteQuiz'];
   var heavy = WRITE.indexOf(action) !== -1;
   return post(payload).catch(function(){
     if(heavy) throw new Error('تعذّر الاتصال بالخادم. تحقّق من الإنترنت وأعد المحاولة.');
@@ -293,6 +293,176 @@ function api(action,payload){
     if(!j.ok) throw new Error(j.error || 'خطأ غير متوقع.');
     return j.data;
   });
+}
+
+/* ═══════════ بنك الأسئلة ═══════════ */
+
+var quizzes=null, editQuiz=null, draftQ=[];
+
+function quizBankView(){
+  if(quizzes===null){
+    api('quizzes',{code:S.code}).then(function(d){ quizzes=d; if(S.tab===4) render(); })
+      .catch(function(e){ toast(e.message); });
+    return '<div class="card"><div class="meta">جارٍ التحميل…</div></div>';
+  }
+
+  var e=editQuiz;
+  var h='<div class="card" id="qzForm">'+
+    (e?'<div class="row"><h3>تعديل الاختبار</h3><span class="pill">وضع التعديل</span></div>':'<h3>اختبار جديد</h3>')+
+    '<label for="zT">العنوان</label>'+
+    '<input type="text" id="zT" placeholder="مثال: اختبار محاضرة 10" value="'+esc(e?e.title:'')+'">'+
+    '<label for="zL">المحاضرة أو الموضوع</label>'+
+    '<input type="text" id="zL" placeholder="مثال: الذكاء الاصطناعي — الأسبوع 10" value="'+esc(e?(e.lecture||''):'')+'">'+
+    '<label for="zU">رابط الفورم (اختياري)</label>'+
+    '<input type="text" id="zU" placeholder="https://docs.google.com/forms/..." value="'+esc(e?(e.formUrl||''):'')+'">'+
+    '<label for="zS">الحالة</label><select id="zS">'+
+    ['draft','active','closed'].map(function(v,i){
+      var lbl=['مسودة — لا يراها أحد','جارٍ — الأسئلة مخفية عن الطلبة','مغلق — يراجعها الطلبة بإجاباتها'][i];
+      return '<option value="'+v+'"'+((e&&e.status===v)||(!e&&v==='draft')?' selected':'')+'>'+lbl+'</option>';
+    }).join('')+'</select>'+
+    '<label style="margin-top:16px">الأسئلة</label><div id="qList"></div>'+
+    '<button class="btn sm ghost" style="margin-top:10px" onclick="addQ()">إضافة سؤال</button>'+
+    '<div class="stack" style="margin-top:16px">'+
+    '<button class="btn" onclick="saveQuizNow()">'+(e?'حفظ التعديلات':'حفظ الاختبار')+'</button>'+
+    (e?'<button class="btn sm ghost" onclick="cancelQuiz()">إلغاء</button>':'')+
+    '</div></div>';
+
+  h+=quizzes.map(function(z){
+    var lbl={draft:'مسودة',active:'جارٍ',closed:'مغلق'}[z.status]||z.status;
+    var cls={draft:'none',active:'wait',closed:'ok'}[z.status]||'none';
+    return '<div class="card"><div class="row"><h3>'+esc(z.title)+'</h3>'+
+      '<span class="pill '+cls+'">'+lbl+'</span></div>'+
+      '<div class="meta">'+z.questions.length+' أسئلة · '+z.maxScore+' درجة'+
+      (z.lecture?' · '+esc(z.lecture):'')+' · '+fmtDate(z.date)+'</div>'+
+      '<div class="stack">'+
+      '<button class="btn sm ghost" onclick="editQz(\''+z.id+'\')">تعديل</button>'+
+      '<button class="btn sm ghost" onclick="genForm(\''+z.id+'\')">توليد سكربت الفورم</button>'+
+      (z.formUrl?'<a class="btn sm ghost" style="text-decoration:none" href="'+esc(z.formUrl)+
+        '" target="_blank" rel="noopener">فتح الفورم</a>':'')+
+      '<button class="btn sm danger" onclick="delQz(\''+z.id+'\')">حذف</button>'+
+      '</div><div id="gen-'+z.id+'"></div></div>';
+  }).join('');
+
+  setTimeout(function(){
+    if(!$('qList') || $('qList').children.length) return;
+    var src = e ? e.questions : draftQ;
+    if(src && src.length) src.forEach(function(q){ addQ(q); });
+    else addQ();
+  },0);
+
+  return h;
+}
+
+function addQ(q){
+  var d=document.createElement('div');
+  d.className='card';
+  d.style.background='var(--paper)';
+  var n=$('qList').children.length+1;
+  d.innerHTML='<div class="row"><b>سؤال '+n+'</b>'+
+    '<button class="iconbtn" onclick="this.closest(\'.card\').remove()" aria-label="حذف">×</button></div>'+
+    '<textarea class="qText" placeholder="نص السؤال (يُعرض على الشاشة الكبيرة ويُؤرشف هنا)">'+
+      esc(q?q.text:'')+'</textarea>'+
+    '<div class="meta" style="margin-top:8px">الاختيارات — علّم الصحيح</div>'+
+    [0,1,2,3].map(function(i){
+      var v=q&&q.choices?(q.choices[i]||''):'';
+      return '<div style="display:flex;gap:8px;align-items:center;margin-top:6px">'+
+        '<input type="radio" name="c'+n+'" class="qCor" value="'+i+'"'+
+          ((q&&q.correct===i)||(!q&&i===0)?' checked':'')+'>'+
+        '<input type="text" class="qCh" style="margin:0" placeholder="الخيار '+(i+1)+'" value="'+esc(v)+'">'+
+      '</div>';
+    }).join('');
+  $('qList').appendChild(d);
+}
+
+function collectQs(){
+  var out=[], cards=$('qList').children;
+  for(var i=0;i<cards.length;i++){
+    var c=cards[i];
+    var text=c.querySelector('.qText').value.trim();
+    var chs=[], els=c.querySelectorAll('.qCh');
+    for(var j=0;j<els.length;j++){ var v=els[j].value.trim(); if(v) chs.push(v); }
+    var cor=0, rs=c.querySelectorAll('.qCor');
+    for(var k=0;k<rs.length;k++) if(rs[k].checked) cor=Number(rs[k].value);
+    if(!text || chs.length<2) continue;
+    if(cor>=chs.length) cor=0;
+    out.push({text:text,choices:chs,correct:cor,points:1});
+  }
+  return out;
+}
+
+function saveQuizNow(){
+  var t=$('zT').value.trim();
+  if(!t){ toast('اكتب عنوان الاختبار'); return; }
+  var qs=collectQs();
+  if(!qs.length){ toast('أضف سؤالاً بنصّه وخيارين على الأقل'); return; }
+
+  var obj={title:t, lecture:$('zL').value.trim(), formUrl:$('zU').value.trim(),
+           status:$('zS').value, questions:qs};
+  if(editQuiz) obj.id=editQuiz.id;
+  api('saveQuiz',{code:S.code,obj:obj})
+    .then(function(){ toast(editQuiz?'حُدّث الاختبار':'حُفظ الاختبار');
+      editQuiz=null; draftQ=[]; quizzes=null; render(); })
+    .catch(function(e){ toast(e.message); });
+}
+
+function editQz(id){
+  editQuiz=(quizzes||[]).filter(function(z){ return z.id===id; })[0]||null;
+  render();
+  setTimeout(function(){ var f=$('qzForm'); if(f) f.scrollIntoView({behavior:'smooth'}); },30);
+}
+function cancelQuiz(){ editQuiz=null; render(); }
+
+function delQz(id){
+  var z=(quizzes||[]).filter(function(x){ return x.id===id; })[0];
+  if(!z) return;
+  if(!confirm('حذف «'+z.title+'» من بنك الأسئلة؟\n\nيمكن استرجاعه لاحقاً.')) return;
+  api('deleteQuiz',{code:S.code,id:id,value:true})
+    .then(function(){ toast('حُذف'); quizzes=null; if(editQuiz&&editQuiz.id===id) editQuiz=null; render(); })
+    .catch(function(e){ toast(e.message); });
+}
+
+/* توليد سكربت الفورم من الأرشيف */
+function genForm(id){
+  var z=(quizzes||[]).filter(function(x){ return x.id===id; })[0];
+  if(!z) return;
+  var St=(S.data.students||[]).filter(function(s){ return s.active!==false; });
+
+  var lines=[];
+  lines.push('// '+z.title+' — مولَّد من بنك الأسئلة بالمنصة');
+  lines.push('// الصقه في مشروع Apps Script جديد وشغّل buildStudentForm()');
+  lines.push('');
+  lines.push('const QUIZ_TITLE = '+JSON.stringify(z.title)+';');
+  lines.push('');
+  lines.push('const STUDENTS = [');
+  lines.push(St.map(function(s){
+    return '  { code: '+JSON.stringify(s.code)+', name: '+JSON.stringify(s.name)+' }';
+  }).join(',\n'));
+  lines.push('];');
+  lines.push('');
+  lines.push('const QUESTIONS = [');
+  lines.push(z.questions.map(function(q,i){
+    return '  { key: '+JSON.stringify('q'+(i+1))+
+      ', choices: '+JSON.stringify(q.choices)+
+      ', correct: '+q.correct+' }';
+  }).join(',\n'));
+  lines.push('];');
+  lines.push('');
+  lines.push('// نصوص الأسئلة (للعرض على الشاشة الكبيرة — لا تدخل الفورم):');
+  z.questions.forEach(function(q,i){ lines.push('// '+(i+1)+'. '+q.text); });
+  lines.push('');
+  lines.push('// الصق بقية دوال QuizForm.gs أسفل هذا السطر.');
+
+  var box=$('gen-'+id);
+  box.innerHTML='<label style="margin-top:16px">سكربت الفورم — انسخه</label>'+
+    '<textarea id="genT" style="min-height:220px;font-family:monospace;font-size:12.5px;direction:ltr;text-align:left"></textarea>'+
+    '<button class="btn sm ghost" style="margin-top:8px" onclick="copyGen()">نسخ</button>';
+  $('genT').value=lines.join('\n');
+}
+
+function copyGen(){
+  var t=$('genT'); t.select();
+  if(navigator.clipboard) navigator.clipboard.writeText(t.value).then(function(){ toast('نُسخ'); });
+  else { document.execCommand('copy'); toast('نُسخ'); }
 }
 
 /* ═══════════ بطاقة الطالب (مسح QR) ═══════════ */
@@ -482,7 +652,7 @@ function doRefresh(){
   var b=$('refreshBtn'); if(b){ b.disabled=true; b.textContent='…'; }
   api(S.role==='student'?'studentData':'teacherData',{code:S.code})
     .then(function(d){
-      S.data=d; msgsLoaded=null; trashCache=null; bonusCache=null; stg=null;
+      S.data=d; msgsLoaded=null; trashCache=null; bonusCache=null; stg=null; quizzes=null;
       renderTop(); render(); toast('تم التحديث');
     })
     .catch(function(e){ toast(e.message); })
@@ -512,8 +682,8 @@ function renderTop(){
 function renderTabs(){
   if(scanCode && S.role==='teacher'){ $('tabs').innerHTML=''; return; }
   var names = S.role==='student'
-    ? ['المحاضرات','الواجبات','درجاتي','التواصل']
-    : ['التسليمات','الواجبات','المحاضرات','الدرجات','الطلبة','الرسائل'];
+    ? ['المحاضرات','الواجبات','درجاتي','مراجعة الاختبارات','التواصل']
+    : ['التسليمات','الواجبات','المحاضرات','الدرجات','بنك الأسئلة','الطلبة','الرسائل'];
   $('tabs').innerHTML = names.map(function(n,i){
     return '<button class="tab" role="tab" aria-selected="'+(i===S.tab)+'" onclick="go('+i+')">'+n+'</button>';
   }).join('');
@@ -545,7 +715,7 @@ function render(){
   }
 
   $('view').innerHTML = S.role==='student' ? studentView() : teacherView();
-  if(S.role==='student' && S.tab===3) setTimeout(drawQR,0);
+  if(S.role==='student' && S.tab===4) setTimeout(drawQR,0);
 }
 
 /* ═══════════ الطالب ═══════════ */
@@ -554,7 +724,32 @@ function studentView(){
   if(S.tab===0) return lecturesView();
   if(S.tab===1) return assignmentsView();
   if(S.tab===2) return gradesView();
+  if(S.tab===3) return quizReviewView();
   return contactView();
+}
+
+function quizReviewView(){
+  var Z=(S.data.quizzes||[]);
+  if(!Z.length) return '<div class="empty">لا توجد اختبارات متاحة للمراجعة بعد.</div>';
+
+  return Z.map(function(z){
+    var h='<div class="card"><div class="row"><h3>'+esc(z.title)+'</h3>'+
+      '<span class="pill ok">'+z.maxScore+' درجة</span></div>'+
+      (z.lecture?'<div class="meta">'+esc(z.lecture)+'</div>':'');
+
+    z.questions.forEach(function(q,i){
+      h+='<div style="margin-top:18px;padding-top:14px;border-top:1px solid var(--line)">'+
+         '<div style="font-weight:600">'+(i+1)+'. '+esc(q.text)+'</div>'+
+         '<div style="margin-top:8px">'+
+         q.choices.map(function(c,ci){
+           var ok=(ci===q.correct);
+           return '<div style="padding:7px 10px;margin-top:5px;border-radius:8px;font-size:14.5px;'+
+             (ok?'background:var(--accent-soft);font-weight:600':'')+'">'+
+             (ok?'✓ ':'') + esc(c) + '</div>';
+         }).join('')+'</div></div>';
+    });
+    return h+'</div>';
+  }).join('');
 }
 
 function contactView(){
@@ -593,13 +788,8 @@ function drawQR(){
     var box=document.createElement('div'); box.className='qrbox';
     w.appendChild(box);
     try{
-
       new QRCode(box,{text:url,width:190,height:190,correctLevel:QRCode.CorrectLevel.M});
-      // إزالة الرابط من سمات الصورة حتى لا يظهر عند مرور المؤشر
-      Array.prototype.forEach.call(box.querySelectorAll('img,canvas'), function(el){
-        el.removeAttribute('title'); el.setAttribute('alt','رمز الطالب');
-      });
-      box.removeAttribute('title');    }catch(e){
+    }catch(e){
       w.innerHTML='<div class="qrfall">'+esc(S.code)+'</div>';
     }
   }
@@ -785,7 +975,8 @@ function teacherView(){
   if(S.tab===1) return asgAdminView();
   if(S.tab===2) return lecAdminView();
   if(S.tab===3) return gradesAdminView();
-  if(S.tab===4) return studentsAdminView();
+  if(S.tab===4) return quizBankView();
+  if(S.tab===5) return studentsAdminView();
   return messagesAdminView();
 }
 
@@ -793,7 +984,7 @@ var msgsLoaded=null;
 function messagesAdminView(){
   if(msgsLoaded===null){
     api('messages',{code:S.code}).then(function(list){
-      msgsLoaded=list; if(S.tab===5) render();
+      msgsLoaded=list; if(S.tab===6) render();
     }).catch(function(e){ toast(e.message); });
     return '<div class="center">جارٍ التحميل…</div>';
   }
