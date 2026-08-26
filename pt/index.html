@@ -109,6 +109,19 @@ a{color:var(--accent)}
 .pickbox .nm{font-size:26px;font-weight:700;line-height:1.4}
 .pickbox .sub{font-size:13px;color:var(--muted);margin-top:4px}
 .desc{white-space:pre-wrap}
+.qrwrap{text-align:center;padding:18px 0}
+.qrbox{display:inline-block;background:#fff;padding:14px;border-radius:var(--r);border:1px solid var(--line)}
+.qrbox canvas,.qrbox img{display:block}
+.qrfall{font-family:monospace;font-size:30px;letter-spacing:.22em;font-weight:700;
+  background:#fff;color:#101c2b;padding:22px 18px;border-radius:var(--r);border:1px solid var(--line);display:inline-block}
+.cardhead{background:var(--accent);color:#fff;border-radius:var(--r) var(--r) 0 0;padding:18px;margin:-18px -18px 16px}
+.cardhead h3{color:#fff;margin:0}
+.cardhead .sub{color:rgba(255,255,255,.82);font-size:13.5px;margin-top:4px}
+.kv{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid var(--line);font-size:14.5px}
+.kv:last-child{border-bottom:0}
+.kv .k{color:var(--muted)}
+.kv .v{font-weight:600}
+.bonusrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
 .card h3{font-size:18px;margin-bottom:4px}
 .meta{font-size:13px;color:var(--muted)}
 .desc{margin:10px 0 0;white-space:pre-wrap}
@@ -181,6 +194,8 @@ textarea{min-height:84px;resize:vertical;line-height:1.6}
 }
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
+        onerror="window.__noQR=true"></script>
 </head>
 <body>
 
@@ -268,7 +283,7 @@ function api(action,payload){
   payload.action = action;
   // إجراءات الكتابة لا تمرّ عبر JSONP — الخادم يرفضها ويعيد رسالة غامضة
   var WRITE = ['upload','grade','saveLecture','saveAssignment','publish',
-               'addStudents','bulkGrades','contact','deleteItem','saveSettings','unlockCode'];
+               'addStudents','bulkGrades','contact','deleteItem','saveSettings','unlockCode','addBonus','studentCard'];
   var heavy = WRITE.indexOf(action) !== -1;
   return post(payload).catch(function(){
     if(heavy) throw new Error('تعذّر الاتصال بالخادم. تحقّق من الإنترنت وأعد المحاولة.');
@@ -278,6 +293,100 @@ function api(action,payload){
     if(!j.ok) throw new Error(j.error || 'خطأ غير متوقع.');
     return j.data;
   });
+}
+
+/* ═══════════ بطاقة الطالب (مسح QR) ═══════════ */
+
+var scanCode=null, cardData=null, cardErr='';
+
+function qsParam(k){
+  var m=new RegExp('[?&]'+k+'=([^&]*)').exec(location.search);
+  return m ? decodeURIComponent(m[1].replace(/\+/g,' ')) : null;
+}
+
+function clearScan(){
+  scanCode=null; cardData=null; cardErr='';
+  try{ history.replaceState({}, '', location.pathname); }catch(e){}
+  render();
+}
+
+function loadCard(){
+  cardData=null; cardErr='';
+  api('studentCard',{code:S.code,target:scanCode})
+    .then(function(d){ cardData=d; render(); })
+    .catch(function(e){ cardErr=e.message; render(); });
+}
+
+function cardView(){
+  if(cardErr) return '<div class="card"><h3>تعذّر فتح البطاقة</h3>'+
+    '<div class="err">'+esc(cardErr)+'</div>'+
+    '<button class="btn sm ghost" style="margin-top:12px" onclick="clearScan()">رجوع</button></div>';
+  if(!cardData) return '<div class="card"><div class="meta">جارٍ فتح البطاقة…</div></div>';
+
+  var d=cardData, B=d.breakdown;
+  var h='<div class="card"><div class="cardhead"><h3>'+esc(d.name)+'</h3>'+
+    '<div class="sub">'+esc(d.code)+(d.section?' · شعبة '+esc(d.section):'')+
+    (d.active?'':' · معطّل')+'</div></div>';
+
+  h+='<div class="kv"><span class="k">الدرجة الحالية</span>'+
+     '<span class="v">'+B.total+' من '+B.outOf+'</span></div>'+
+     '<div class="kv"><span class="k">امتحان / صفّية / واجبات</span>'+
+     '<span class="v">'+B.exam.earned+' · '+B.quiz.earned+' · '+B.assign.earned+'</span></div>'+
+     '<div class="kv"><span class="k">التسليمات</span>'+
+     '<span class="v">'+d.submittedCount+' من '+d.totalAssignments+
+     (d.lateCount?' · '+d.lateCount+' متأخر':'')+'</span></div>'+
+     '<div class="kv"><span class="k">المكافأة</span>'+
+     '<span class="v">'+d.bonusTotal+' من 2'+(d.bonusLeft?' (متاح '+d.bonusLeft+')':' — بلغ السقف')+'</span></div>'+
+     (d.locked?'<div class="kv"><span class="k">حالة الدخول</span>'+
+       '<span class="v" style="color:var(--danger)">مقفول '+d.locked+' دقيقة</span></div>':'');
+
+  if(d.bonusLeft>0){
+    h+='<div class="meta" style="margin-top:16px">منح مكافأة الآن:</div><div class="bonusrow">';
+    [0.5,1,1.5,2].forEach(function(v){
+      if(v<=d.bonusLeft) h+='<button class="btn sm ghost" onclick="quickBonus('+v+')">+'+v+'</button>';
+    });
+    h+='</div>';
+  }
+
+  h+='<div class="stack" style="margin-top:16px">'+
+     '<button class="btn sm ghost" onclick="loadCard()">تحديث</button>'+
+     (d.locked?'<button class="btn sm ghost" onclick="unlockThis()">فكّ القفل</button>':'')+
+     '<button class="btn sm ghost" onclick="clearScan()">إغلاق</button></div></div>';
+
+  if(d.submissions && d.submissions.length){
+    h+='<div class="card"><h3>التسليمات</h3><div class="tblwrap"><table><thead><tr>'+
+       '<th>الواجب</th><th>الحالة</th><th class="num">الدرجة</th></tr></thead><tbody>'+
+       d.submissions.map(function(x){
+         var st = !x.submitted ? '<span class="pill none">لم يسلّم</span>'
+                : (x.status==='متأخر' ? '<span class="pill late">متأخر</span>'
+                                      : '<span class="pill ok">مستلم</span>');
+         return '<tr><td>'+esc(x.title)+(x.counts===false?' <span class="meta">(لا يُحتسب)</span>':'')+
+           '</td><td>'+st+'</td><td class="num">'+
+           (x.total==null?'—':x.total+' / '+x.maxScore)+'</td></tr>';
+       }).join('')+'</tbody></table></div></div>';
+  }
+
+  if(d.lastMessage){
+    h+='<div class="card"><h3>آخر رسالة</h3>'+
+       '<div class="meta">'+fmtDate(d.lastMessage.date)+
+       (d.messageCount>1?' · '+d.messageCount+' رسالة إجمالاً':'')+'</div>'+
+       (d.lastMessage.subject?'<div style="font-weight:600;margin-top:8px">'+esc(d.lastMessage.subject)+'</div>':'')+
+       '<div class="desc" style="margin-top:6px">'+esc(d.lastMessage.message)+'</div></div>';
+  }
+  return h;
+}
+
+function quickBonus(v){
+  api('addBonus',{code:S.code,target:scanCode,amount:v,reason:''})
+    .then(function(r){ toast('+'+v+' لـ'+r.name+' — المجموع '+r.total);
+      bonusCache=null; loadCard(); })
+    .catch(function(e){ toast(e.message); });
+}
+
+function unlockThis(){
+  api('unlockCode',{code:S.code,target:scanCode})
+    .then(function(){ toast('فُكّ القفل'); loadCard(); })
+    .catch(function(e){ toast(e.message); });
 }
 
 /* ═══ الإقلاع ═══ */
@@ -292,8 +401,14 @@ api('info').then(function(i){
   $('instName').textContent=i.institute;
   $('footInst').textContent=i.institute;
   var fc=document.querySelector('.foot b'); if(fc) fc.textContent='منصة مادة '+i.course;
+  var sp=qsParam('s');
+  if(sp) scanCode=sp.trim().toUpperCase();
   var c=null; try{ c=localStorage.getItem('mcode'); }catch(e){}
   if(c){ $('code').value=c; doLogin(); }
+  else if(scanCode){
+    $('gateErr').textContent='بطاقة الطالب متاحة لحساب الإدارة فقط — أدخل رمز الإدارة.';
+    $('gateErr').className='err';
+  }
 }).catch(function(e){
   $('gateErr').textContent='تعذّر الوصول إلى الخادم. تأكد أن الرابط في أعلى الملف صحيح وأن النشر مضبوط على Anyone.';
   $('gateErr').className='err';
@@ -319,7 +434,8 @@ function doLogin(){
   });
 }
 
-function signOut(){ try{ localStorage.removeItem('mcode'); }catch(e){} location.reload(); }
+function signOut(){ try{ localStorage.removeItem('mcode'); }catch(e){}
+  location.href=location.pathname; }
 
 function start(){
   $('gate').className='gate hide';
@@ -366,7 +482,7 @@ function doRefresh(){
   var b=$('refreshBtn'); if(b){ b.disabled=true; b.textContent='…'; }
   api(S.role==='student'?'studentData':'teacherData',{code:S.code})
     .then(function(d){
-      S.data=d; msgsLoaded=null; trashCache=null;
+      S.data=d; msgsLoaded=null; trashCache=null; bonusCache=null; stg=null;
       renderTop(); render(); toast('تم التحديث');
     })
     .catch(function(e){ toast(e.message); })
@@ -394,6 +510,7 @@ function renderTop(){
 }
 
 function renderTabs(){
+  if(scanCode && S.role==='teacher'){ $('tabs').innerHTML=''; return; }
   var names = S.role==='student'
     ? ['المحاضرات','الواجبات','درجاتي','التواصل']
     : ['التسليمات','الواجبات','المحاضرات','الدرجات','الطلبة','الرسائل'];
@@ -413,7 +530,22 @@ function load(){
 function render(){
   if(!S.data) return;
   renderTop();
+
+  // مسح QR: البطاقة للأدمن فقط، ورسالة صريحة لغيره
+  if(scanCode){
+    if(S.role==='teacher'){
+      if(cardData===null && !cardErr) loadCard();
+      $('view').innerHTML = cardView();
+      return;
+    }
+    $('view').innerHTML='<div class="card"><h3>بطاقة الطالب</h3>'+
+      '<div class="err">بطاقة الطالب متاحة لحساب الإدارة فقط.</div>'+
+      '<button class="btn sm ghost" style="margin-top:12px" onclick="clearScan()">العودة إلى صفحتي</button></div>';
+    return;
+  }
+
   $('view').innerHTML = S.role==='student' ? studentView() : teacherView();
+  if(S.role==='student' && S.tab===3) setTimeout(drawQR,0);
 }
 
 /* ═══════════ الطالب ═══════════ */
@@ -442,7 +574,31 @@ function contactView(){
     '<div class="stack" style="margin-top:16px">'+
     '<a class="btn sm" style="text-decoration:none" href="'+esc(href)+'">فتح بريدي وكتابة رسالة</a>'+
     '<button class="btn sm ghost" onclick="copyEmail()">نسخ البريد</button>'+
-    '</div></div>';
+    '</div></div>'+
+
+    '<div class="card"><h3>رمزك المصوَّر</h3>'+
+    '<div class="note">اعرض هذا الرمز للأستاذ عند طلبه في المحاضرة.</div>'+
+    '<div class="qrwrap" id="qrWrap"></div></div>';
+}
+
+function drawQR(){
+  var w=$('qrWrap');
+  if(!w || w.getAttribute('data-done')==='1') return;
+  var url = location.origin + location.pathname + '?s=' + encodeURIComponent(S.code);
+  w.innerHTML='';
+  if(window.__noQR || typeof QRCode==='undefined'){
+    w.innerHTML='<div class="qrfall">'+esc(S.code)+'</div>'+
+      '<div class="meta" style="margin-top:10px">تعذّر تحميل الرمز المصوَّر — اعرض الرمز أعلاه.</div>';
+  } else {
+    var box=document.createElement('div'); box.className='qrbox';
+    w.appendChild(box);
+    try{
+      new QRCode(box,{text:url,width:190,height:190,correctLevel:QRCode.CorrectLevel.M});
+    }catch(e){
+      w.innerHTML='<div class="qrfall">'+esc(S.code)+'</div>';
+    }
+  }
+  w.setAttribute('data-done','1');
 }
 
 function copyEmail(){
@@ -563,30 +719,58 @@ function upload(i,aid){
 }
 
 function gradesView(){
-  var A=(S.data.assignments||[]).filter(function(a){ return a.submission && a.submission.total!=null; });
-  var G=S.data.grades||[];
-  if(!A.length && !G.length) return '<div class="empty">لم تُرصد درجات بعد.</div>';
-
-  var tot=0,max=0;
-  A.forEach(function(a){ tot+=a.submission.total; max+=a.maxScore; });
-  G.forEach(function(g){ tot+=g.score; max+=g.maxScore; });
+  var B=S.data.breakdown;
+  if(!B) return '<div class="empty">لم تُرصد درجات بعد.</div>';
 
   var h='<div class="card"><div class="row">'+
-    '<div><h3>مجموع السعي</h3><div class="meta">حاصل الواجبات والكويزات المرصودة</div></div>'+
-    '<div class="seal"><span class="n">'+tot+'</span><span class="d">من '+max+'</span></div></div></div>';
+    '<div><h3>الدرجة الحالية</h3><div class="meta">تُحدَّث تلقائياً كلما رُصدت درجة جديدة</div></div>'+
+    '<div class="seal"><span class="n">'+B.total+'</span><span class="d">من '+B.outOf+
+    (B.bonus.earned?' + '+B.bonus.earned+' مكافأة':'')+'</span></div></div></div>';
 
-  h+='<div class="card"><div class="tblwrap"><table><thead><tr>'+
-     '<th>البند</th><th>النوع</th><th class="num">الدرجة</th><th class="num">من</th><th>التاريخ</th>'+
-     '</tr></thead><tbody>';
-  A.forEach(function(a){
-    h+='<tr><td>'+esc(a.title)+'</td><td>واجب</td><td class="num">'+a.submission.total+
-       '</td><td class="num">'+a.maxScore+'</td><td>'+fmtDate(a.submission.submittedAt)+'</td></tr>';
-  });
-  G.forEach(function(g){
-    h+='<tr><td>'+esc(g.item)+'</td><td>'+esc(g.type)+'</td><td class="num">'+g.score+
-       '</td><td class="num">'+g.maxScore+'</td><td>'+fmtDate(g.date)+'</td></tr>';
-  });
-  return h+'</tbody></table></div></div>';
+  h+='<div class="card"><h3>التفصيل</h3><div class="tblwrap"><table><thead><tr>'+
+     '<th>البند</th><th class="num">المحصَّل</th><th class="num">الوزن</th></tr></thead><tbody>';
+
+  h+='<tr><td>امتحان نصف الفصل'+
+     (B.exam.max?'<div class="meta">'+B.exam.got+' من '+B.exam.max+'</div>':'<div class="meta">لم يُرصد بعد</div>')+
+     '</td><td class="num">'+B.exam.earned+'</td><td class="num">'+B.exam.weight+'</td></tr>';
+
+  h+='<tr><td>الاختبارات الصفّية'+
+     (B.quiz.max?'<div class="meta">'+B.quiz.got+' إجابة صحيحة من '+B.quiz.max+'</div>':'<div class="meta">لم تبدأ بعد</div>')+
+     '</td><td class="num">'+B.quiz.earned+'</td><td class="num">'+B.quiz.weight+'</td></tr>';
+
+  h+='<tr><td>الواجبات'+
+     (B.assign.countedCount
+        ? '<div class="meta">'+B.assign.countedCount+' واجب · لكل واجب '+B.assign.perAssignment+' درجة</div>'
+        : '<div class="meta">لا توجد واجبات محتسَبة بعد</div>')+
+     '</td><td class="num">'+B.assign.earned+'</td><td class="num">'+B.assign.weight+'</td></tr>';
+
+  if(B.bonus.earned)
+    h+='<tr><td>مكافأة</td><td class="num">'+B.bonus.earned+'</td><td class="num">حتى '+B.bonus.max+'</td></tr>';
+
+  h+='</tbody></table></div></div>';
+
+  if(B.assign.rows && B.assign.rows.length){
+    h+='<div class="card"><h3>تفصيل الواجبات</h3><div class="tblwrap"><table><thead><tr>'+
+       '<th>الواجب</th><th class="num">الدرجة</th><th class="num">المحصَّل</th></tr></thead><tbody>';
+    B.assign.rows.forEach(function(r){
+      var st = r.graded ? (r.raw+' من '+r.rawMax)
+             : (r.submitted ? 'بانتظار التصحيح' : 'لم يُسلَّم');
+      h+='<tr><td>'+esc(r.title)+'</td><td class="num">'+st+
+         '</td><td class="num">'+r.earned+' / '+r.weight+'</td></tr>';
+    });
+    h+='</tbody></table></div></div>';
+  }
+
+  if(B.other && B.other.length){
+    h+='<div class="card"><h3>درجات أخرى</h3><div class="meta">خارج التوزيع الرسمي</div>'+
+       '<div class="tblwrap"><table><thead><tr><th>البند</th><th>النوع</th>'+
+       '<th class="num">الدرجة</th><th class="num">من</th></tr></thead><tbody>'+
+       B.other.map(function(g){
+         return '<tr><td>'+esc(g.item)+'</td><td>'+esc(g.type)+'</td><td class="num">'+
+           g.score+'</td><td class="num">'+g.maxScore+'</td></tr>';
+       }).join('')+'</tbody></table></div></div>';
+  }
+  return h;
 }
 
 /* ═══════════ لوحة التحكم ═══════════ */
@@ -736,6 +920,8 @@ function asgAdminView(){
     '<button class="btn sm ghost" style="margin-top:8px" onclick="addCrit()">إضافة معيار</button>'+
     '<div class="check"><input type="checkbox" id="aPub"'+((!e||e.published)?' checked':'')+'>'+
     '<label for="aPub" style="margin:0">نشره للطلبة الآن</label></div>'+
+    '<div class="check"><input type="checkbox" id="aCnt"'+((!e||e.counts!==false)?' checked':'')+'>'+
+    '<label for="aCnt" style="margin:0">يُحتسب ضمن الدرجة النهائية (الـ10 تُقسَّم على المحتسَبة)</label></div>'+
     '<div class="stack" style="margin-top:16px">'+
     '<button class="btn" onclick="createAsg()">'+(e?'حفظ التعديلات':'حفظ الواجب')+'</button>'+
     (e?'<button class="btn sm ghost" onclick="cancelEdit()">إلغاء</button>':'')+
@@ -744,6 +930,7 @@ function asgAdminView(){
   h+=A.map(function(a){
     return '<div class="card"><div class="row"><h3>'+esc(a.title)+'</h3>'+
       (a.published?'<span class="pill ok">منشور</span>':'<span class="pill none">مسودة</span>')+'</div>'+
+      (a.counts===false?'<span class="pill none">لا يُحتسب</span>':'')+
       '<div class="meta">'+a.criteria.length+' معايير · '+a.maxScore+' درجة · آخر موعد '+
       fmtDate(a.due)+' · سُلّم '+a.submitted+'</div><div class="stack">'+
       '<button class="btn sm ghost" onclick="pubToggle(\'assignment\',\''+a.id+'\','+(!a.published)+')">'+
@@ -783,7 +970,7 @@ function createAsg(){
   if(!criteria.length){ toast('أضف معياراً واحداً على الأقل'); return; }
 
   var obj={ title:title, description:$('aD').value, due:$('aDue').value,
-            published:$('aPub').checked, criteria:criteria };
+            published:$('aPub').checked, counts:$('aCnt').checked, criteria:criteria };
   var wasEdit=!!editAsg;
   if(wasEdit){
     obj.id=editAsg.id;
@@ -918,16 +1105,65 @@ function trashView(kind){
   }).join('')+'</div>';
 }
 
+var bonusCache=null;
 function gradesAdminView(){
-  return '<div class="card"><h3>رصد درجات دفعة واحدة</h3>'+
+  if(bonusCache===null){
+    api('bonusList',{code:S.code}).then(function(d){ bonusCache=d; if(S.tab===3) render(); })
+      .catch(function(e){ toast(e.message); });
+  }
+
+  var h='<div class="card"><h3>التوزيع المعتمد</h3>'+
+    '<div class="tblwrap"><table><tbody>'+
+    '<tr><td>امتحان نصف الفصل</td><td class="num">25</td></tr>'+
+    '<tr><td>الاختبارات الصفّية</td><td class="num">5</td></tr>'+
+    '<tr><td>الواجبات (تُقسَّم على المحتسَبة)</td><td class="num">10</td></tr>'+
+    '<tr><td>مكافأة (سقف لكل طالب)</td><td class="num">2</td></tr>'+
+    '</tbody></table></div>'+
+    '<div class="note">النوع «امتحان» يدخل الـ25، والنوع «كويز» يدخل الـ5 كنسبة من مجموع كل الأسئلة. '+
+    'الأنواع الأخرى تُعرض للطالب خارج التوزيع.</div></div>';
+
+  h+='<div class="card"><h3>مكافأة</h3>'+
+    '<div class="note">بين 0.5 و2 لكل طالب. الخادم يرفض ما يتجاوز السقف.</div>'+
+    '<div class="grid2"><div><label for="bC">رمز الطالب</label>'+
+    '<input type="text" id="bC" placeholder="AC34FG" style="letter-spacing:.08em;text-transform:uppercase"></div>'+
+    '<div><label for="bA">المقدار</label><select id="bA">'+
+    '<option>0.5</option><option>1</option><option>1.5</option><option>2</option></select></div></div>'+
+    '<label for="bR">السبب (اختياري)</label>'+
+    '<input type="text" id="bR" placeholder="مثال: مشاركة متميزة في المحاضرة الثالثة">'+
+    '<button class="btn" style="margin-top:14px" onclick="giveBonus()">إضافة المكافأة</button>';
+
+  if(bonusCache && bonusCache.length){
+    h+='<div class="meta" style="margin-top:18px">الممنوحة حتى الآن ('+bonusCache.length+' طالب):</div>'+
+      '<div class="tblwrap"><table><thead><tr><th>الطالب</th><th class="num">المجموع</th>'+
+      '<th>الأسباب</th></tr></thead><tbody>'+
+      bonusCache.map(function(b){
+        return '<tr><td>'+esc(b.name)+'<div class="meta">'+esc(b.code)+'</div></td>'+
+          '<td class="num">'+b.total+'</td><td class="meta">'+
+          esc(b.items.map(function(i){ return i.amount+(i.reason?' ('+i.reason+')':''); }).join(' · '))+
+          '</td></tr>';
+      }).join('')+'</tbody></table></div>';
+  }
+  h+='</div>';
+
+  return h+'<div class="card"><h3>رصد درجات دفعة واحدة</h3>'+
     '<div class="note">اكتب كل طالب في سطر: <b>الرمز</b> ثم مسافة ثم <b>الدرجة</b>.<br>مثال:<br>AC34FG 8<br>KM7PQR 9.5</div>'+
     '<label for="gI">اسم البند</label><input type="text" id="gI" placeholder="مثال: كويز الأسبوع الثالث">'+
     '<div class="grid2"><div><label for="gT">النوع</label><select id="gT">'+
-    '<option>كويز</option><option>سعي</option><option>مشاركة</option><option>أخرى</option></select></div>'+
+    '<option>امتحان</option><option>كويز</option><option>مشاركة</option><option>أخرى</option></select></div>'+
     '<div><label for="gM">الدرجة القصوى</label><input type="number" id="gM" value="10" step="0.5"></div></div>'+
     '<label for="gL">الرموز والدرجات</label>'+
     '<textarea id="gL" style="min-height:150px" placeholder="AC34FG 8"></textarea>'+
     '<button class="btn" style="margin-top:14px" onclick="bulkGrades()">رصد الدرجات</button></div>';
+}
+
+function giveBonus(){
+  var c=$('bC').value.trim();
+  if(!c){ toast('اكتب رمز الطالب'); return; }
+  api('addBonus',{code:S.code,target:c,amount:$('bA').value,reason:$('bR').value.trim()})
+    .then(function(r){
+      toast('مكافأة '+r.name+' — مجموعه الآن '+r.total);
+      $('bC').value=''; $('bR').value=''; bonusCache=null; render();
+    }).catch(function(e){ toast(e.message); });
 }
 
 function bulkGrades(){
@@ -1003,7 +1239,8 @@ function pickView(){
     '</div>';
 
   if(lastPick) h+='<div class="pickbox"><div class="nm">'+esc(lastPick.name)+'</div>'+
-    '<div class="sub">'+(lastPick.section?'شعبة '+esc(lastPick.section):'')+'</div></div>';
+    '<div class="sub">'+esc(lastPick.code)+(lastPick.section?' · شعبة '+esc(lastPick.section):'')+'</div></div>';
+
   if(picked.length>1){
     h+='<div class="meta" style="margin-top:14px">خرجت أسماؤهم ('+picked.length+'):</div>'+
       '<div style="font-size:14px;line-height:2">'+picked.map(function(c){
