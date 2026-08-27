@@ -100,8 +100,6 @@ a{color:var(--accent)}
   border-radius:var(--r);padding:14px 16px;margin-bottom:16px;font-size:15px;line-height:1.75;white-space:pre-wrap}
 .announce b{display:block;font-size:12.5px;letter-spacing:.05em;color:var(--seal);margin-bottom:4px}
 .bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:16px}
-.quizcard{background:var(--surface);border:1px solid var(--line);border-inline-start:4px solid var(--accent);
-  border-radius:var(--r);padding:16px;margin-bottom:16px;box-shadow:var(--shadow)}
 .foot{text-align:center;color:var(--muted);font-size:12.5px;line-height:1.9;
   padding:26px 16px 34px;border-top:1px solid var(--line);margin-top:34px}
 .foot b{font-weight:600;color:var(--ink)}
@@ -109,6 +107,11 @@ a{color:var(--accent)}
 .pickbox .nm{font-size:26px;font-weight:700;line-height:1.4}
 .pickbox .sub{font-size:13px;color:var(--muted);margin-top:4px}
 .desc{white-space:pre-wrap}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--danger);
+  margin-inline-start:6px;vertical-align:middle}
+.msgin{border-inline-start:3px solid var(--accent);background:var(--accent-soft);
+  border-radius:var(--r);padding:14px 16px;margin-top:10px}
+.msgin.new{border-inline-start-color:var(--danger)}
 .qrwrap{text-align:center;padding:18px 0}
 .qrbox{display:inline-block;background:#fff;padding:14px;border-radius:var(--r);border:1px solid var(--line)}
 .qrbox canvas,.qrbox img{display:block}
@@ -306,7 +309,7 @@ function api(action,payload){
   payload.action = action;
   // إجراءات الكتابة لا تمرّ عبر JSONP — الخادم يرفضها ويعيد رسالة غامضة
   var WRITE = ['upload','grade','saveLecture','saveAssignment','publish',
-               'addStudents','bulkGrades','contact','deleteItem','saveSettings','unlockCode','addBonus','studentCard','saveQuiz','deleteQuiz','quizStart','quizStep','quizFinish','answer'];
+               'addStudents','bulkGrades','contact','deleteItem','saveSettings','unlockCode','addBonus','studentCard','saveQuiz','deleteQuiz','quizStart','quizStep','quizFinish','answer','sendToStudent','markSeen'];
   var heavy = WRITE.indexOf(action) !== -1;
   return post(payload).catch(function(){
     if(heavy) throw new Error('تعذّر الاتصال بالخادم. تحقّق من الإنترنت وأعد المحاولة.');
@@ -807,11 +810,12 @@ function renderTop(){
   a.innerHTML = (st.announceOn && st.announce)
     ? '<div class="announce"><b>إعلان</b>'+esc(st.announce)+'</div>' : '';
 
-  q.innerHTML = (st.quizOn && st.quizUrl)
-    ? '<div class="quizcard"><div class="row"><h3>'+esc(st.quizLabel||'اختبار متاح الآن')+'</h3></div>'+
-      '<div class="meta">اضغط للفتح، ثم عد واضغط «تحديث» لمتابعة السؤال التالي.</div>'+
-      '<a class="btn sm" style="text-decoration:none;display:inline-block;margin-top:10px" href="'+
-      esc(st.quizUrl)+'" target="_blank" rel="noopener">فتح الاختبار</a></div>' : '';
+  q.innerHTML = '';   // نظام الرابط الخارجي أُزيل — الاختبارات صارت داخل المنصة
+}
+
+function unreadCount(){
+  if(S.role!=='student') return 0;
+  return ((S.data&&S.data.inbox)||[]).filter(function(m){ return !m.seen; }).length;
 }
 
 function renderTabs(){
@@ -819,8 +823,12 @@ function renderTabs(){
   var names = S.role==='student'
     ? ['المحاضرات','الواجبات','درجاتي','الاختبارات','التواصل']
     : ['التسليمات','الواجبات','المحاضرات','الدرجات','بنك الأسئلة','الطلبة','الرسائل'];
+  var un=unreadCount();
   $('tabs').innerHTML = names.map(function(n,i){
-    return '<button class="tab" role="tab" aria-selected="'+(i===S.tab)+'" onclick="go('+i+')">'+n+'</button>';
+    // شارة الرسائل الجديدة على تبويب «التواصل» (الأخير عند الطالب)
+    var badge = (un && S.role==='student' && i===4) ? '<span class="dot"></span>' : '';
+    return '<button class="tab" role="tab" aria-selected="'+(i===S.tab)+'" onclick="go('+i+')">'+
+      n+badge+'</button>';
   }).join('');
 }
 function go(i){ S.tab=i; renderTabs(); render(); }
@@ -850,7 +858,10 @@ function render(){
   }
 
   $('view').innerHTML = S.role==='student' ? studentView() : teacherView();
-  if(S.role==='student' && S.tab===4) setTimeout(drawQR,0);
+  if(S.role==='student' && S.tab===4){
+    setTimeout(drawQR,0);
+    if(unreadCount()) markRead();
+  }
 }
 
 /* ═══════════ الطالب ═══════════ */
@@ -934,7 +945,19 @@ function contactView(){
            (S.data.section?('\nالشعبة: '+S.data.section):'')+'\n\n';
   var href='mailto:'+em+'?subject='+encodeURIComponent(subj)+'&body='+encodeURIComponent(body);
 
-  return '<div class="card"><h3>التواصل مع أستاذ المادة</h3>'+
+  var inb=S.data.inbox||[];
+  var box='';
+  if(inb.length){
+    box='<div class="card"><h3>رسائل من أستاذ المادة</h3>'+
+      inb.map(function(m){
+        return '<div class="msgin'+(m.seen?'':' new')+'">'+
+          '<div class="row"><b>'+esc(m.subject||'رسالة')+'</b>'+
+          '<span class="meta">'+fmtDate(m.date)+'</span></div>'+
+          '<div class="desc" style="margin-top:6px">'+esc(m.message)+'</div></div>';
+      }).join('')+'</div>';
+  }
+
+  return box+'<div class="card"><h3>التواصل مع أستاذ المادة</h3>'+
     '<div class="note">المراسلة تكون عبر البريد الإلكتروني الرسمي. اذكر اسمك ورمزك في رسالتك.</div>'+
     '<div style="margin-top:14px;font-size:15px;line-height:2">'+
     '<div><b>'+esc(nm)+'</b></div>'+
@@ -948,6 +971,14 @@ function contactView(){
     '<div class="card"><h3>رمزك المصوَّر</h3>'+
     '<div class="note">اعرض هذا الرمز للأستاذ عند طلبه في المحاضرة.</div>'+
     '<div class="qrwrap" id="qrWrap"></div></div>';
+}
+
+function markRead(){
+  api('markSeen',{code:S.code})
+    .then(function(){
+      ((S.data&&S.data.inbox)||[]).forEach(function(m){ m.seen=true; });
+      renderTabs();
+    }).catch(function(){});
 }
 
 function drawQR(){
@@ -1156,20 +1187,73 @@ function teacherView(){
 
 var msgsLoaded=null;
 function messagesAdminView(){
+  var St=(S.data.students||[]).filter(function(x){ return x.active!==false; })
+    .sort(function(a,b){ return String(a.name).localeCompare(String(b.name),'ar'); });
+
+  var h='<div class="card"><h3>إرسال رسالة إلى طالب</h3>'+
+    '<div class="note">تظهر بحسابه داخل المنصة مع إشارة تنبيه. لا يُرسل بريد.</div>'+
+    '<label for="mS">الطالب</label><select id="mS">'+
+    '<option value="">— اختر الطالب —</option>'+
+    St.map(function(x){
+      return '<option value="'+esc(x.code)+'">'+esc(x.name)+(x.section?' — '+esc(x.section):'')+'</option>';
+    }).join('')+'</select>'+
+    '<label for="mSub">الموضوع (اختياري)</label>'+
+    '<input type="text" id="mSub" placeholder="مثال: بخصوص واجبك">'+
+    '<label for="mB">الرسالة</label><textarea id="mB" placeholder="اكتب رسالتك"></textarea>'+
+    '<button class="btn" style="margin-top:14px" onclick="sendMsg()">إرسال</button></div>';
+
   if(msgsLoaded===null){
     api('messages',{code:S.code}).then(function(list){
       msgsLoaded=list; if(S.tab===6) render();
     }).catch(function(e){ toast(e.message); });
-    return '<div class="center">جارٍ التحميل…</div>';
+    return h+'<div class="center">جارٍ تحميل السجل…</div>';
   }
-  if(!msgsLoaded.length) return '<div class="empty">لا رسائل بعد.</div>';
-  return msgsLoaded.map(function(m){
-    return '<div class="card"><div class="row"><h3>'+esc(m.subject||'بدون عنوان')+'</h3>'+
-      '<span class="meta">'+fmtDate(m.date)+'</span></div>'+
-      '<div class="meta">'+esc(m.name)+' ('+esc(m.code)+')'+
-      (m.replyEmail?' · '+esc(m.replyEmail):'')+'</div>'+
-      '<p class="desc">'+esc(m.message)+'</p></div>';
-  }).join('');
+
+  var inc=msgsLoaded.filter(function(m){ return m.from!=='teacher'; });
+  var out=msgsLoaded.filter(function(m){ return m.from==='teacher'; });
+
+  h+='<div class="card"><h3>وارد من الطلبة ('+inc.length+')</h3>'+
+    (inc.length ? inc.map(function(m){
+      return '<div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--line)">'+
+        '<div class="row"><b>'+esc(m.subject||'بدون عنوان')+'</b>'+
+        '<span class="meta">'+fmtDate(m.date)+'</span></div>'+
+        '<div class="meta">'+esc(m.name)+' ('+esc(m.code)+')'+
+        (m.replyEmail?' · '+esc(m.replyEmail):'')+'</div>'+
+        '<p class="desc">'+esc(m.message)+'</p>'+
+        '<button class="btn sm ghost" onclick="replyTo(\''+esc(m.code)+'\')">راسله</button></div>';
+    }).join('') : '<div class="meta">لا رسائل واردة.</div>')+'</div>';
+
+  if(out.length){
+    h+='<div class="card"><h3>ما أرسلتَه ('+out.length+')</h3>'+
+      out.map(function(m){
+        return '<div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--line)">'+
+          '<div class="row"><b>'+esc(m.name)+'</b><span class="meta">'+fmtDate(m.date)+
+          (m.seen?' · قرأها':' · لم يقرأها بعد')+'</span></div>'+
+          (m.subject?'<div class="meta">'+esc(m.subject)+'</div>':'')+
+          '<p class="desc">'+esc(m.message)+'</p></div>';
+      }).join('')+'</div>';
+  }
+  return h;
+}
+
+function sendMsg(){
+  var t=$('mS').value;
+  if(!t){ toast('اختر الطالب أولاً'); return; }
+  var b=$('mB').value.trim();
+  if(!b){ toast('اكتب نص الرسالة'); return; }
+  api('sendToStudent',{code:S.code,target:t,subject:$('mSub').value.trim(),message:b})
+    .then(function(r){ toast('أُرسلت إلى '+r.name);
+      $('mB').value=''; $('mSub').value=''; $('mS').value='';
+      msgsLoaded=null; render(); })
+    .catch(function(e){ toast(e.message); });
+}
+
+function replyTo(code){
+  S.tab=6; render();
+  setTimeout(function(){
+    var sel=$('mS'); if(sel){ sel.value=code; sel.scrollIntoView({behavior:'smooth',block:'center'}); }
+    if($('mB')) $('mB').focus();
+  },60);
 }
 
 var curAsg=null, curSubs=[], curMissing=[];
@@ -1557,28 +1641,12 @@ function settingsView(){
     '<textarea id="annT" placeholder="مثال: محاضرة الأحد القادم في القاعة الكبرى">'+esc(stg.announce||'')+'</textarea>'+
     '<div class="check"><input type="checkbox" id="annOn"'+(stg.announceOn?' checked':'')+'>'+
     '<label for="annOn" style="margin:0">إظهاره للطلبة الآن</label></div>'+
-    '<button class="btn" style="margin-top:14px" onclick="saveAnn()">حفظ الإعلان</button></div>'+
-
-    '<div class="card"><h3>رابط الاختبار</h3>'+
-    '<div class="note">فعّله عند بدء السؤال، وعطّله بعد انتهاء الإجابة. الطالب يراه بعد ضغط «تحديث».</div>'+
-    '<label for="qzL">عنوان الزر</label>'+
-    '<input type="text" id="qzL" placeholder="السؤال الأول" value="'+esc(stg.quizLabel||'')+'">'+
-    '<label for="qzU">الرابط (Google Forms)</label>'+
-    '<input type="text" id="qzU" placeholder="https://forms.gle/..." value="'+esc(stg.quizUrl||'')+'">'+
-    '<div class="check"><input type="checkbox" id="qzOn"'+(stg.quizOn?' checked':'')+'>'+
-    '<label for="qzOn" style="margin:0">مفعّل الآن</label></div>'+
-    '<button class="btn" style="margin-top:14px" onclick="saveQuiz()">حفظ الرابط</button></div>';
+    '<button class="btn" style="margin-top:14px" onclick="saveAnn()">حفظ الإعلان</button></div>';
 }
 
 function saveAnn(){
   api('saveSettings',{code:S.code,obj:{announce:$('annT').value,announceOn:$('annOn').checked}})
     .then(function(r){ stg=r.settings; toast('حُفظ الإعلان'); render(); })
-    .catch(function(e){ toast(e.message); });
-}
-function saveQuiz(){
-  api('saveSettings',{code:S.code,obj:{
-    quizUrl:$('qzU').value.trim(), quizLabel:$('qzL').value.trim(), quizOn:$('qzOn').checked}})
-    .then(function(r){ stg=r.settings; toast('حُفظ الرابط'); render(); })
     .catch(function(e){ toast(e.message); });
 }
 
