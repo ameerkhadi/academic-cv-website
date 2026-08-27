@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>كلود ١٠١ — دليلك الشامل لتعلّم الذكاء الاصطناعي كلود من الصفر</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary:#B8503F; --primary-dark:#8C3A2D; --darkbg:#241B16; --darkbg2:#2E221B;
+  --sand:#F3EEE5; --sage:#839C82; --text-dark:#2B2320; --text-muted:#6E6459;
+  --white:#FFFFFF; --cream:#F2E9DE;
+  --font: "Tajawal","Segoe UI",Arial,sans-serif;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;height:100%;background:#111;font-family:var(--font);}
+body{overflow:hidden;}
+.deck{position:relative;width:100vw;height:100vh;}
+.slide{
+  position:absolute; inset:0; display:none; flex-direction:column;
+  background:var(--white); color:var(--text-dark);
+  padding:4.2vh 5vw 3vh 5vw; direction:rtl; text-align:right;
+}
+.slide.active{display:flex;}
+.slide.dark{background:var(--darkbg); color:var(--white);}
+.kicker{color:var(--primary); font-weight:700; font-size:1.05vw; letter-spacing:.5px; margin-bottom:.6vh;}
+.slide.dark .kicker{color:#E8B9A9;}
+h1{font-size:2.5vw; font-weight:800; margin:0 0 1.2vh 0; line-height:1.25;}
+h1.md{font-size:2.15vw;}
+.subtitle{font-size:1.05vw; color:var(--text-muted); max-width:90%; margin:0 0 2.2vh 0; line-height:1.5;}
+.slide.dark .subtitle{color:#C9BEB2;}
+.lead{font-size:1.15vw; line-height:1.6; margin:0 0 1.4vh 0;}
+.muted{color:var(--text-muted); font-size:1vw; line-height:1.55;}
+.muted.small{font-size:.85vw;}
+
+/* ---------- Title / Closing ---------- */
+.title-slide, .closing-slide{align-items:center; justify-content:center; text-align:center; position:relative; overflow:hidden;}
+.glow{position:absolute; top:-18vh; left:-8vw; width:42vw; height:42vw; border-radius:50%; background:var(--darkbg2); z-index:0;}
+.glow.bottom{top:auto; bottom:-25vh; left:-15vw;}
+.title-inner{position:relative; z-index:1; display:flex; flex-direction:column; align-items:center;}
+.hero{font-size:5.2vw; font-weight:800; margin:1.2vh 0 .6vh 0;}
+.hero-sm{font-size:2.6vw; font-weight:800; margin:1.4vh 0 1.2vh 0;}
+.hero-sub{font-size:1.7vw; color:#E8B9A9; margin:0 0 1.6vh 0;}
+.rule{width:12vw; height:2px; background:var(--primary); margin:0 0 2vh 0;}
+.hero-desc{font-size:.95vw; color:#C9BEB2; max-width:60vw; line-height:1.6;}
+.hero-desc.narrow{max-width:48vw;}
+.centered{text-align:center;}
+.icon-circle.xl{width:6.5vw; height:6.5vw; margin-bottom:1.5vh;}
+.icon-circle.xl svg{width:3.2vw; height:3.2vw;}
+.next-step-box{background:var(--darkbg2); border-radius:14px; padding:2.2vh 3vw; margin-top:3vh; max-width:55vw;}
+.closing-note{color:#9C8E80; font-style:italic; font-size:.95vw; margin-top:3vh;}
+
+/* ---------- Badges / Author credit (title & closing slides) ---------- */
+.badge-pill{
+  display:inline-flex; align-items:center; gap:.55vw;
+  background:rgba(184,80,63,.2); border:1px solid rgba(232,185,169,.45);
+  color:#E8B9A9; font-weight:700; font-size:.85vw; letter-spacing:.3px;
+  padding:.8vh 1.4vw; border-radius:999px; margin-bottom:1.8vh;
+}
+.badge-pill svg{width:.9vw; height:.9vw; min-width:12px; min-height:12px;}
+.author-pill{
+  display:inline-flex; align-items:center; gap:.6vw;
+  background:var(--darkbg2); color:var(--white); font-weight:700;
+  font-size:.95vw; padding:.9vh 1.7vw; border-radius:999px; margin-top:2.6vh;
+}
+.author-pill svg{width:1vw; height:1vw; min-width:13px; min-height:13px; fill:#E8B9A9;}
+.meta-row{display:flex; gap:.9vw; margin-top:1.4vh; flex-wrap:wrap; justify-content:center;}
+.meta-chip{
+  display:inline-flex; align-items:center; gap:.55vw; color:#C9BEB2;
+  font-size:.82vw; background:rgba(255,255,255,.06); padding:.75vh 1.3vw; border-radius:999px;
+}
+.meta-chip svg{width:.85vw; height:.85vw; min-width:11px; min-height:11px; fill:#E8B9A9;}
+.credit-block{display:flex; flex-direction:column; align-items:center; gap:.9vh; margin-top:2.6vh;}
+.credit-line{display:flex; align-items:center; gap:.6vw; color:#D8CCC0; font-size:.9vw;}
+.credit-line svg{width:.9vw; height:.9vw; min-width:12px; min-height:12px; fill:#E8B9A9;}
+.copyright-line{
+  display:flex; align-items:center; gap:.5vw; color:#8C8074; font-size:.78vw;
+  margin-top:2vh; padding-top:1.8vh; border-top:1px solid rgba(255,255,255,.1);
+}
+.copyright-line svg{width:.8vw; height:.8vw; min-width:11px; min-height:11px; fill:#8C8074;}
+
+@media (max-width:800px){
+  .badge-pill,.author-pill,.meta-chip,.credit-line,.copyright-line{font-size:2.2vw;}
+  .badge-pill svg,.author-pill svg,.meta-chip svg,.credit-line svg,.copyright-line svg{width:2.4vw;height:2.4vw;}
+}
+
+/* ---------- Icon circle ---------- */
+.icon-circle{
+  display:inline-flex; align-items:center; justify-content:center;
+  width:2.6vw; height:2.6vw; min-width:34px; min-height:34px; border-radius:50%;
+  background:var(--primary); color:var(--white); flex-shrink:0;
+}
+.icon-circle svg{width:1.35vw; height:1.35vw; min-width:16px; min-height:16px;}
+.icon-circle.sm{width:1.7vw; height:1.7vw;}
+.icon-circle.sm svg{width:.9vw; height:.9vw;}
+.icon-circle.lg{width:4vw; height:4vw;}
+.icon-circle.lg svg{width:2vw; height:2vw;}
+.icon-circle.white{background:var(--white); color:var(--primary);}
+
+/* ---------- Grids & Cards ---------- */
+.grid{display:grid; gap:1.4vh 1.6vw; flex:1; align-content:start;}
+.grid-2{grid-template-columns:1fr 1fr;}
+.grid-3{grid-template-columns:1fr 1fr 1fr;}
+.grid-4{grid-template-columns:1fr 1fr 1fr 1fr;}
+.grid.tall{align-content:stretch;}
+.grid.sm{grid-template-columns:repeat(4,1fr);}
+
+.card{
+  background:var(--sand); border-radius:14px; padding:1.8vh 1.5vw;
+  display:flex; flex-direction:column; gap:.6vh;
+}
+.card h3{font-size:1.15vw; margin:.4vh 0 0 0;}
+.card p{font-size:.85vw; color:var(--text-muted); line-height:1.5; margin:0;}
+.card.on-dark{background:var(--darkbg2);}
+.card.on-dark h3{color:var(--white);}
+.card.on-dark p{color:#D8CCC0;}
+.card.sage .icon-circle{background:var(--sage);}
+.card.dark-panel{background:var(--darkbg); color:var(--white);}
+.card.dark-panel h3{color:var(--white);}
+.card.dark-panel p{color:#D8CCC0;}
+.card.light-panel{background:var(--sand);}
+.card.solid-panel{background:var(--primary); color:var(--white);}
+.card.solid-panel h3{color:var(--white);}
+.card.solid-panel p{color:#F5E3DB;}
+
+.num-card{position:relative;}
+.num-row{display:flex; align-items:center; justify-content:space-between;}
+.num{font-size:1.7vw; font-weight:800; color:var(--primary);}
+
+/* ---------- Process row ---------- */
+.process-row{display:flex; align-items:stretch; gap:.5vw; flex:1;}
+.process-row .card{flex:1; align-items:center; text-align:center;}
+.process-row .num-row{flex-direction:column-reverse; gap:1vh; align-items:center;}
+.chevron{align-self:center; font-size:2vw; font-weight:800; color:var(--primary);}
+
+/* ---------- Tri row (desktop apps / models) ---------- */
+.tri-row{display:flex; gap:1.6vw; flex:1;}
+.tri-card{flex:1; background:var(--darkbg2); border-radius:14px; padding:2.2vh 1.4vw; display:flex; flex-direction:column; align-items:center;}
+.tri-card h3{color:var(--white); font-size:1.15vw;}
+.tri-card p{color:#D8CCC0; font-size:.85vw; line-height:1.55;}
+.tri-card.light{background:var(--sand);}
+.tri-card.light h3{color:var(--text-dark);}
+.tri-card.light p{color:var(--text-muted);}
+.tri-card .tag{color:var(--primary); font-weight:700; font-size:.8vw; margin:.6vh 0;}
+
+/* ---------- Pricing ---------- */
+.pricing-row{display:flex; gap:1.6vw; flex:1; align-items:stretch;}
+.price-card{flex:1; background:var(--sand); border-radius:14px; padding:3vh 1.4vw; text-align:center; display:flex; flex-direction:column; align-items:center; justify-content:center;}
+.price-card h3{font-size:1.2vw; margin:0 0 1vh 0;}
+.price-card .price{font-size:1.6vw; font-weight:800; color:var(--primary); margin-bottom:1.2vh;}
+.price-card p{font-size:.85vw; color:var(--text-muted); line-height:1.5;}
+.price-card.featured{background:var(--primary); color:var(--white); transform:scale(1.04);}
+.price-card.featured h3, .price-card.featured .price{color:var(--white);}
+.price-card.featured p{color:#F5E3DB;}
+
+/* ---------- Callout ---------- */
+.callout{background:var(--sand); border-radius:12px; padding:1.6vh 1.6vw; font-size:.9vw; color:var(--text-muted); margin-top:1.6vh; line-height:1.5;}
+.callout.dark{background:var(--darkbg); color:#E8B9A9;}
+.callout.solid{background:var(--primary); color:var(--white); font-weight:700;}
+.callout.with-icon{display:flex; align-items:center; gap:1.2vw;}
+.callout.big{padding:2.4vh 1.8vw;}
+.callout-text strong{display:block; color:var(--white); font-size:1.05vw; margin-bottom:.6vh;}
+.callout-text p{margin:0; font-size:.85vw; color:#D8CCC0; line-height:1.55;}
+.callout .tag.light{color:#E8B9A9; font-size:1.05vw; display:block; margin-bottom:.8vh;}
+
+/* ---------- Example box (slide 3) ---------- */
+.cols-70-30{display:flex; gap:1.8vw; flex:1;}
+.col-main{flex:2.2; display:flex; flex-direction:column;}
+.col-side{flex:1; border-radius:14px; padding:2.4vh 1.6vw; display:flex; flex-direction:column; align-items:center;}
+.dark-panel{background:var(--darkbg); color:var(--white);}
+.dark-panel p{font-size:.85vw; color:#D8CCC0; line-height:1.6;}
+.example-box{background:var(--sand); border-radius:12px; padding:1.8vh 1.6vw; margin-top:auto;}
+.example-box .tag{color:var(--primary); font-weight:700; font-size:.85vw; margin-bottom:.6vh;}
+.big-quote{font-size:1.6vw; font-weight:800; margin:.4vh 0 1vh 0;}
+
+/* ---------- Check rows ---------- */
+.check-row{display:flex; align-items:center; justify-content:space-between; gap:.8vw; padding:1vh 0; border-bottom:1px solid rgba(120,110,100,.15);}
+.check-row:last-child{border-bottom:none;}
+.check-row .text{font-size:.9vw;}
+.card.dark-panel .check-row{border-bottom-color:rgba(255,255,255,.1);}
+.card.dark-panel .check-row .text{color:#F0E8DF;}
+
+/* ---------- Mini callout inside card ---------- */
+.mini-callout{margin-top:auto; background:var(--darkbg2); border-radius:8px; padding:1.2vh 1vw; font-size:.75vw; font-style:italic; color:#E8B9A9; line-height:1.5;}
+.mini-callout.dark{background:#1c1512;}
+.card:not(.dark-panel) .mini-callout{background:var(--white); color:var(--primary-dark);}
+
+/* ---------- Footer ---------- */
+.foot{position:absolute; bottom:2.2vh; left:5vw; right:5vw; display:flex; justify-content:space-between; font-size:.7vw; color:#B0A79B;}
+.slide.dark .foot{color:#9C8E80;}
+.title-slide .foot, .closing-slide .foot{display:none;}
+
+/* ---------- Nav ---------- */
+.navbar{position:fixed; bottom:1.4vh; left:50%; transform:translateX(-50%); z-index:50; display:flex; gap:.8vw; align-items:center; background:rgba(20,15,12,.75); backdrop-filter:blur(6px); padding:.7vh 1.2vw; border-radius:999px; direction:ltr;}
+.navbar button{background:var(--primary); color:#fff; border:none; border-radius:50%; width:2.4vw; height:2.4vw; min-width:32px; min-height:32px; cursor:pointer; font-size:1vw; display:flex; align-items:center; justify-content:center;}
+.navbar button:disabled{opacity:.35; cursor:default;}
+.navbar .counter{color:#EDE6DE; font-size:.85vw; min-width:3.5vw; text-align:center;}
+
+@media (max-width:800px){
+  h1{font-size:5vw;} .kicker{font-size:2.6vw;} .subtitle,.lead{font-size:2.6vw;}
+  .grid-4{grid-template-columns:1fr 1fr;} .grid-3{grid-template-columns:1fr;}
+  .tri-row,.pricing-row,.cols-70-30{flex-direction:column;}
+  .card h3{font-size:2.4vw;} .card p{font-size:2vw;}
+  .process-row{flex-direction:column;} .chevron{transform:rotate(90deg);}
+}
+</style>
+</head>
+<body>
+<div class="deck">
+
+<section class="slide dark title-slide">
+  <div class="glow"></div>
+  <div class="title-inner">
+    <div class="badge-pill">
+      <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 640 512" xmlns="http://www.w3.org/2000/svg"><path d="M320 32c-8.1 0-16.1 1.4-23.7 4.1L15.8 137.4C6.3 140.9 0 149.9 0 160s6.3 19.1 15.8 22.6l57.9 20.9C57.3 229.3 48 259.8 48 291.9l0 28.1c0 28.4-10.8 57.7-22.3 80.8c-6.5 13-13.9 25.8-22.5 37.6C0 442.7-.9 448.3 .9 453.4s6 8.9 11.2 10.2l64 16c4.2 1.1 8.7 .3 12.4-2s6.3-6.1 7.1-10.4c8.6-42.8 4.3-81.2-2.1-108.7C90.3 344.3 86 329.8 80 316.5l0-24.6c0-30.2 10.2-58.7 27.9-81.5c12.9-15.5 29.6-28 49.2-35.7l157-61.7c8.2-3.2 17.5 .8 20.7 9s-.8 17.5-9 20.7l-157 61.7c-12.4 4.9-23.3 12.4-32.2 21.6l159.6 57.6c7.6 2.7 15.6 4.1 23.7 4.1s16.1-1.4 23.7-4.1L624.2 182.6c9.5-3.4 15.8-12.5 15.8-22.6s-6.3-19.1-15.8-22.6L343.7 36.1C336.1 33.4 328.1 32 320 32zM128 408c0 35.3 86 72 192 72s192-36.7 192-72L496.7 262.6 354.5 314c-11.1 4-22.8 6-34.5 6s-23.5-2-34.5-6L143.3 262.6 128 408z"></path></svg>
+      <span>دليل تدريبي</span>
+    </div>
+    <span class="icon-circle xl"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 640 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M32,224H64V416H32A31.96166,31.96166,0,0,1,0,384V256A31.96166,31.96166,0,0,1,32,224Zm512-48V448a64.06328,64.06328,0,0,1-64,64H160a64.06328,64.06328,0,0,1-64-64V176a79.974,79.974,0,0,1,80-80H288V32a32,32,0,0,1,64,0V96H464A79.974,79.974,0,0,1,544,176ZM264,256a40,40,0,1,0-40,40A39.997,39.997,0,0,0,264,256Zm-8,128H192v32h64Zm96,0H288v32h64ZM456,256a40,40,0,1,0-40,40A39.997,39.997,0,0,0,456,256Zm-8,128H384v32h64ZM640,256V384a31.96166,31.96166,0,0,1-32,32H576V224h32A31.96166,31.96166,0,0,1,640,256Z"></path></svg></span>
+    <h1 class="hero">كلود ١٠١</h1>
+    <p class="hero-sub">دليلك الشامل لتعلّم الذكاء الاصطناعي كلود من الصفر</p>
+    <div class="rule"></div>
+    <p class="hero-desc">نسخة عربية مُعدَّة عن كورس Claude 101 الصادر عن شركة Anthropic، مع إضافات وتبسيط ليناسب المتعلم العربي من الصفر حتى الاحتراف.</p>
+    <div class="author-pill">
+      <svg stroke="currentColor" stroke-width="0" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512l388.6 0c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304l-91.4 0z"></path></svg>
+      <span>إعداد: أ.م.د أمير هادي</span>
+    </div>
+    <div class="meta-row">
+      <span class="meta-chip">
+        <svg stroke="currentColor" stroke-width="0" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48L48 64zM0 176L0 384c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-208L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z"></path></svg>
+        amer.hadi@alshaab.edu.iq
+      </span>
+      <span class="meta-chip">
+        <svg stroke="currentColor" stroke-width="0" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M243.4 2.6l-224 96c-14 6-21.8 21-18.7 35.8S16.8 160 32 160l0 8c0 13.3 10.7 24 24 24l400 0c13.3 0 24-10.7 24-24l0-8c15.2 0 28.3-10.7 31.3-25.6s-4.8-29.9-18.7-35.8l-224-96c-8-3.4-17.2-3.4-25.2 0zM128 224l-64 0 0 196.3c-.6 .3-1.2 .7-1.8 1.1l-48 32c-11.7 7.8-17 22.4-12.9 35.9S17.9 512 32 512l448 0c14.1 0 26.5-9.2 30.6-22.7s-1.1-28.1-12.9-35.9l-48-32c-.6-.4-1.2-.7-1.8-1.1L448 224l-64 0 0 192-40 0 0-192-64 0 0 192-48 0 0-192-64 0 0 192-40 0 0-192zM256 64a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"></path></svg>
+        المعهد العالي لتأهيل وتدريب القادة
+      </span>
+    </div>
+  </div>
+  <div class="foot"><span class="brand">كلود ١٠١ &nbsp;•&nbsp; دليل تعلّم كلود من الصفر</span><span class="pagenum">01</span></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">مقدّمة الكورس</div>
+  <h1 class="">ماذا ستتعلّم في هذه المحاضرة؟</h1>
+  <p class="subtitle">كراش كورس مكثّف يأخذك خطوة بخطوة من فهم الذكاء الاصطناعي التوليدي، وصولًا إلى احتراف التعامل مع كلود عبر المشاريع والمهارات.</p>
+  <div class="grid grid-2">
+    <div class="card ">
+    <span class="icon-circle "><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 576 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M208 0c-29.9 0-54.7 20.5-61.8 48.2-.8 0-1.4-.2-2.2-.2-35.3 0-64 28.7-64 64 0 4.8.6 9.5 1.7 14C52.5 138 32 166.6 32 200c0 12.6 3.2 24.3 8.3 34.9C16.3 248.7 0 274.3 0 304c0 33.3 20.4 61.9 49.4 73.9-.9 4.6-1.4 9.3-1.4 14.1 0 39.8 32.2 72 72 72 4.1 0 8.1-.5 12-1.2 9.6 28.5 36.2 49.2 68 49.2 39.8 0 72-32.2 72-72V64c0-35.3-28.7-64-64-64zm368 304c0-29.7-16.3-55.3-40.3-69.1 5.2-10.6 8.3-22.3 8.3-34.9 0-33.4-20.5-62-49.7-74 1-4.5 1.7-9.2 1.7-14 0-35.3-28.7-64-64-64-.8 0-1.5.2-2.2.2C422.7 20.5 397.9 0 368 0c-35.3 0-64 28.6-64 64v376c0 39.8 32.2 72 72 72 31.8 0 58.4-20.7 68-49.2 3.9.7 7.9 1.2 12 1.2 39.8 0 72-32.2 72-72 0-4.8-.5-9.5-1.4-14.1 29-12 49.4-40.6 49.4-73.9z"></path></svg></span>
+    <h3>فهم أساسيات النماذج اللغوية الكبيرة</h3>
+    <p>كيف يفكّر الذكاء الاصطناعي التوليدي ولماذا لا يُعدّ ذلك تفكيرًا بالمعنى البشري.</p>
+  </div>
+    <div class="card ">
+    <span class="icon-circle "><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 576 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M416 192c0-88.4-93.1-160-208-160S0 103.6 0 192c0 34.3 14.1 65.9 38 92-13.4 30.2-35.5 54.2-35.8 54.5-2.2 2.3-2.8 5.7-1.5 8.7S4.8 352 8 352c36.6 0 66.9-12.3 88.7-25 32.2 15.7 70.3 25 111.3 25 114.9 0 208-71.6 208-160zm122 220c23.9-26 38-57.7 38-92 0-66.9-53.5-124.2-129.3-148.1.9 6.6 1.3 13.3 1.3 20.1 0 105.9-107.7 192-240 192-10.8 0-21.3-.8-31.7-1.9C207.8 439.6 281.8 480 368 480c41 0 79.1-9.2 111.3-25 21.8 12.7 52.1 25 88.7 25 3.2 0 6.1-1.9 7.3-4.8 1.3-2.9.7-6.3-1.5-8.7-.3-.3-22.4-24.2-35.8-54.5z"></path></svg></span>
+    <h3>إتقان هندسة الأوامر (Prompt Engineering)</h3>
+    <p>كتابة أوامر احترافية تُخرج من كلود أفضل نتيجة ممكنة من أول محاولة.</p>
+  </div>
+    <div class="card ">
+    <span class="icon-circle "><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 576 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M572.694 292.093L500.27 416.248A63.997 63.997 0 0 1 444.989 448H45.025c-18.523 0-30.064-20.093-20.731-36.093l72.424-124.155A64 64 0 0 1 152 256h399.964c18.523 0 30.064 20.093 20.73 36.093zM152 224h328v-48c0-26.51-21.49-48-48-48H272l-64-64H48C21.49 64 0 85.49 0 112v278.046l69.077-118.418C86.214 242.25 117.989 224 152 224z"></path></svg></span>
+    <h3>إنشاء المشاريع (Projects)</h3>
+    <p>بناء بيئات معزولة لكل مهمة، بذاكرة وتعليمات ثابتة خاصة بها.</p>
+  </div>
+    <div class="card ">
+    <span class="icon-circle "><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 576 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M519.442 288.651c-41.519 0-59.5 31.593-82.058 31.593C377.409 320.244 432 144 432 144s-196.288 80-196.288-3.297c0-35.827 36.288-46.25 36.288-85.985C272 19.216 243.885 0 210.539 0c-34.654 0-66.366 18.891-66.366 56.346 0 41.364 31.711 59.277 31.711 81.75C175.885 207.719 0 166.758 0 166.758v333.237s178.635 41.047 178.635-28.662c0-22.473-40-40.107-40-81.471 0-37.456 29.25-56.346 63.577-56.346 33.673 0 61.788 19.216 61.788 54.717 0 39.735-36.288 50.158-36.288 85.985 0 60.803 129.675 25.73 181.23 25.73 0 0-34.725-120.101 25.827-120.101 35.962 0 46.423 36.152 86.308 36.152C556.712 416 576 387.99 576 354.443c0-34.199-18.962-65.792-56.558-65.792z"></path></svg></span>
+    <h3>بناء ورفع المهارات (Skills)</h3>
+    <p>تصميم مهارات خاصة بك تُحسّن أداء كلود في مهام محدّدة ومتكرّرة.</p>
+  </div>
+  </div>
+  <div class="foot"><span class="brand">كلود ١٠١ &nbsp;•&nbsp; دليل تعلّم كلود من الصفر</span><span class="pagenum">02</span></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">الفصل الأول — الأساسيات</div>
+  <h1 class="">ما هو النموذج اللغوي الكبير؟ (LLM)</h1>
+  <div class="cols-70-30">
+    <div class="col-main">
+      <p class="lead">نموذج كلود، مثل غيره من أدوات الذكاء الاصطناعي التوليدي، مبني على ما يُعرف بالنماذج اللغوية الكبيرة (Large Language Models)، وهي نماذج تتعامل مع النصوص وتتوقّع النمط التالي للنص بناءً على السياق المُتاح لها.</p>
+      <p class="muted">وقد تدرّبت هذه النماذج على كمّ هائل من النصوص المتوفرة على الإنترنت، وهذا هو مصدر «معرفتها».</p>
+      <div class="example-box">
+        <div class="tag">مثال توضيحي</div>
+        <div class="big-quote">«الشمس تشرق في …»</div>
+        <p class="muted small">يتوقّع النموذج كلمة «الصباح» تاليةً — ليس لأنه يفهمها، بل لأنه رأى هذا النمط ملايين المرات في بيانات تدريبه.</p>
+      </div>
+    </div>
+    <div class="col-side dark-panel">
+      <span class="icon-circle lg centered"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 576 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"></path></svg></span>
+      <h3 class="centered">تنبيه مهم</h3>
+      <p>كلمة «تفكير» غير دقيقة هنا. فالاستنتاج والوعي البشري أمران لا يزال الذكاء الاصطناعي بعيدًا عنهما. ما يحدث فعليًا هو محاكاة إحصائية: يأخذ النص المُدخَل ويبحث فيما يُرجَّح أن يأتي بعده استنادًا إلى كلام البشر.</p>
+    </div>
+  </div>
+  <div class="foot"><span class="brand">كلود ١٠١ &nbsp;•&nbsp; دليل تعلّم كلود من الصفر</span><span class="pagenum">03</span></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">الفصل الأول — الأساسيات</div>
+  <h1 class="">كيف يتحوّل نصّك إلى إجابة؟</h1>
+  <p class="subtitle">تمامًا كما تتحول أي بيانات في البرمجة إلى أرقام يفهمها الحاسوب، يمرّ نصّك بأربع مراحل قبل أن يصلك الجواب:</p>
+  <div class="process-row">
+    <div class="card num-card ">
+    <div class="num-row"><span class="num">١</span><span class="icon-circle "><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M290.74 93.24l128.02 128.02-277.99 277.99-114.14 12.6C11.35 513.54-1.56 500.62.14 485.34l12.7-114.22 277.9-277.88zm207.2-19.06l-60.11-60.11c-18.75-18.75-49.16-18.75-67.91 0l-56.55 56.55 128.02 128.02 56.55-56.55c18.75-18.76 18.75-49.16 0-67.91z"></path></svg></span></div>
+    <h3>الأمر (Prompt)</h3>
+    <p>النص أو التعليمة التي تكتبها لتوضّح للذكاء الاصطناعي ما تريد إنجازه.</p>
+  </div>
+    <span class="chevron">‹</span>
+    <div class="card num-card alt">
+    <div class="num-row"><span class="num">٢</span><span class="icon-circle "><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M12.41 148.02l232.94 105.67c6.8 3.09 14.49 3.09 21.29 0l232.94-105.67c16.55-7.51 16.55-32.52 0-40.03L266.65 2.31a25.607 25.607 0 0 0-21.29 0L12.41 107.98c-16.55 7.51-16.55 32.53 0 40.04zm487.18 88.28l-58.09-26.33-161.64 73.27c-7.56 3.43-15.59 5.17-23.86 5.17s-16.29-1.74-23.86-5.17L70.51 209.97l-58.1 26.33c-16.55 7.5-16.55 32.5 0 40l232.94 105.59c6.8 3.08 14.49 3.08 21.29 0L499.59 276.3c16.55-7.5 16.55-32.5 0-40zm0 127.8l-57.87-26.23-161.86 73.37c-7.56 3.43-15.59 5.17-23.86 5.17s-16.29-1.74-23.86-5.17L70.29 337.87 12.41 364.1c-16.55 7.5-16.55 32.5 0 40l232.94 105.59c6.8 3.08 14.49 3.08 21.29 0L499.59 404.1c16.55-7.5 16.55-32.5 0-40z"></path></svg></span></div>
+    <h3>التقطيع (Tokenization)</h3>
+    <p>يُقسَّم النص إلى وحدات صغيرة تُسمّى «توكِنز» — كلمة أو جزء منها.</p>
+  </div>
+    <span class="chevron">‹</span>
+    <div class="card num-card ">
+    <div class="num-row"><span class="num">٣</span><span class="icon-circle "><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 576 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M208 0c-29.9 0-54.7 20.5-61.8 48.2-.8 0-1.4-.2-2.2-.2-35.3 0-64 28.7-64 64 0 4.8.6 9.5 1.7 14C52.5 138 32 166.6 32 200c0 12.6 3.2 24.3 8.3 34.9C16.3 248.7 0 274.3 0 304c0 33.3 20.4 61.9 49.4 73.9-.9 4.6-1.4 9.3-1.4 14.1 0 39.8 32.2 72 72 72 4.1 0 8.1-.5 12-1.2 9.6 28.5 36.2 49.2 68 49.2 39.8 0 72-32.2 72-72V64c0-35.3-28.7-64-64-64zm368 304c0-29.7-16.3-55.3-40.3-69.1 5.2-10.6 8.3-22.3 8.3-34.9 0-33.4-20.5-62-49.7-74 1-4.5 1.7-9.2 1.7-14 0-35.3-28.7-64-64-64-.8 0-1.5.2-2.2.2C422.7 20.5 397.9 0 368 0c-35.3 0-64 28.6-64 64v376c0 39.8 32.2 72 72 72 31.8 0 58.4-20.7 68-49.2 3.9.7 7.9 1.2 12 1.2 39.8 0 72-32.2 72-72 0-4.8-.5-9.5-1.4-14.1 29-12 49.4-40.6 49.4-73.9z"></path></svg></span></div>
+    <h3>التمثيل الرقمي (Embeddings)</h3>
+    <p>يتحوّل كل توكِن إلى أرقام، ويُحدَّد مدى أهمية كل جزء داخل أمرك.</p>
+  </div>
+    <span class="chevron">‹</span>
+    <div class="card num-card alt">
+    <div class="num-row"><span class="num">٤</span><span class="icon-circle "><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M224 96l16-32 32-16-32-16-16-32-16 32-32 16 32 16 16 32zM80 160l26.66-53.33L160 80l-53.34-26.67L80 0 53.34 53.33 0 80l53.34 26.67L80 160zm352 128l-26.66 53.33L352 368l53.34 26.67L432 448l26.66-53.33L512 368l-53.34-26.67L432 288zm70.62-193.77L417.77 9.38C411.53 3.12 403.34 0 395.15 0c-8.19 0-16.38 3.12-22.63 9.38L9.38 372.52c-12.5 12.5-12.5 32.76 0 45.25l84.85 84.85c6.25 6.25 14.44 9.37 22.62 9.37 8.19 0 16.38-3.12 22.63-9.37l363.14-363.15c12.5-12.48 12.5-32.75 0-45.24zM359.45 203.46l-50.91-50.91 86.6-86.6 50.91 50.91-86.6 86.6z"></path></svg></span></div>
+    <h3>التوليد (Generation)</h3>
+    <p>يُنتِج النموذج الإجابة النهائية بعد مطابقة أمرك بما تعلّمه من بيانات.</p>
+  </div>
+  </div>
+  <div class="foot"><span class="brand">كلود ١٠١ &nbsp;•&nbsp; دليل تعلّم كلود من الصفر</span><span class="pagenum">04</span></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">الفصل الأول — الأساسيات</div>
+  <h1 class="">الذكاء الاصطناعي التوليدي وتحدّياته</h1>
+  <p class="subtitle">لأن هذه النماذج «تولّد» إجابات جديدة — نصوصًا أو صورًا أو حتى مقاطع فيديو — تُعرف باسم أدوات الذكاء الاصطناعي التوليدي (Generative AI). ولأنها ليست كاملة، تواجه بعض التحدّيات الجوهرية:</p>
+  <div class="grid grid-2 tall">
+    <div class="card dark-panel">
+      <span class="icon-circle "><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 576 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"></path></svg></span>
+      <h3>الهلوسة (Hallucination)</h3>
+      <p>قد يجيب النموذج بثقة تامة عن معلومة خاطئة تمامًا، أو يخترع تفاصيل غير موجودة أصلًا — مثل تأكيده وجود ميزة في سيارة أو برنامج لا وجود لها فعليًا.</p>
+      <div class="mini-callout dark">القاعدة الذهبية: افترض دائمًا أنّ إجابة الذكاء الاصطناعي خاطئة حتى يثبت العكس — وتحقّق من المعلومات الحسّاسة عبر البحث في مصادر موثوقة.</div>
+    </div>
+    <div class="card">
+      <span class="icon-circle "><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 640 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M537.6 226.6c4.1-10.7 6.4-22.4 6.4-34.6 0-53-43-96-96-96-19.7 0-38.1 6-53.3 16.2C367 64.2 315.3 32 256 32c-88.4 0-160 71.6-160 160 0 2.7.1 5.4.2 8.1C40.2 219.8 0 273.2 0 336c0 79.5 64.5 144 144 144h368c70.7 0 128-57.3 128-128 0-61.9-44-113.6-102.4-125.4z"></path></svg></span>
+      <h3>فقدان السياق</h3>
+      <p>في المحادثات الطويلة، يبدأ النموذج تدريجيًا في «نسيان» التفاصيل التي ذُكرت في بداية الحديث، فتقلّ دقّة إجاباته اللاحقة كلما طال النقاش.</p>
+      <div class="mini-callout">الحل العملي: راقب طول المحادثة، ولخّص النقاط المهمة بين حين وآخر، وابدأ محادثة جديدة عند الشعور بتراجع دقّة الإجابات.</div>
+    </div>
+  </div>
+  <div class="foot"><span class="brand">كلود ١٠١ &nbsp;•&nbsp; دليل تعلّم كلود من الصفر</span><span class="pagenum">05</span></div>
+</section>
+
+<section class="slide dark">
+  <div class="kicker">الفصل الثاني — تعرّف على كلود</div>
+  <h1 class="md">لماذا يختلف كلود عن روبوتات الدردشة الأخرى؟</h1>
+  <div class="grid grid-2">
+    <div class="card on-dark">
+    <span class="icon-circle "><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M466.5 83.7l-192-80a48.15 48.15 0 0 0-36.9 0l-192 80C27.7 91.1 16 108.6 16 128c0 198.5 114.5 335.7 221.5 380.3 11.8 4.9 25.1 4.9 36.9 0C360.1 472.6 496 349.3 496 128c0-19.4-11.7-36.9-29.5-44.3zM256.1 446.3l-.1-381 175.9 73.3c-3.3 151.4-82.1 261.1-175.8 307.7z"></path></svg></span>
+    <h3>الذكاء الاصطناعي الدستوري</h3>
+    <p>دُرِّب كلود منذ البداية على مجموعة مبادئ (دستور) تجعله مفيدًا وصادقًا وآمنًا، ويتأكّد دائمًا أن إجابته لن تضرّك أو تضلّلك.</p>
+  </div>
+    <div class="card on-dark">
+    <span class="icon-circle "><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M12.41 148.02l232.94 105.67c6.8 3.09 14.49 3.09 21.29 0l232.94-105.67c16.55-7.51 16.55-32.52 0-40.03L266.65 2.31a25.607 25.607 0 0 0-21.29 0L12.41 107.98c-16.55 7.51-16.55 32.53 0 40.04zm487.18 88.28l-58.09-26.33-161.64 73.27c-7.56 3.43-15.59 5.17-23.86 5.17s-16.29-1.74-23.86-5.17L70.51 209.97l-58.1 26.33c-16.55 7.5-16.55 32.5 0 40l232.94 105.59c6.8 3.08 14.49 3.08 21.29 0L499.59 276.3c16.55-7.5 16.55-32.5 0-40zm0 127.8l-57.87-26.23-161.86 73.37c-7.56 3.43-15.59 5.17-23.86 5.17s-16.29-1.74-23.86-5.17L70.29 337.87 12.41 364.1c-16.55 7.5-16.55 32.5 0 40l232.94 105.59c6.8 3.08 14.49 3.08 21.29 0L499.59 404.1c16.55-7.5 16.55-32.5 0-40z"></path></svg></span>
+    <h3>نافذة سياق ضخمة</h3>
+    <p>يستوعب كلود ما يصل إلى ٢٠٠ ألف توكِن في المحادثة الواحدة — أي ما يعادل تقريبًا ٥٠٠ صفحة من النصوص.</p>
+  </div>
+    <div class="card on-dark">
+    <span class="icon-circle "><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"></path></svg></span>
+    <h3>المراجعة الذاتية</h3>
+    <p>يراجع كلود عمله قبل أن يسلّمك إياه، فإن وجد قصورًا أصلحه بنفسه قبل أن يعرض عليك النتيجة النهائية.</p>
+  </div>
+    <div class="card on-dark">
+    <span class="icon-circle "><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 576 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M416 192c0-88.4-93.1-160-208-160S0 103.6 0 192c0 34.3 14.1 65.9 38 92-13.4 30.2-35.5 54.2-35.8 54.5-2.2 2.3-2.8 5.7-1.5 8.7S4.8 352 8 352c36.6 0 66.9-12.3 88.7-25 32.2 15.7 70.3 25 111.3 25 114.9 0 208-71.6 208-160zm122 220c23.9-26 38-57.7 38-92 0-66.9-53.5-124.2-129.3-148.1.9 6.6 1.3 13.3 1.3 20.1 0 105.9-107.7 192-240 192-10.8 0-21.3-.8-31.7-1.9C207.8 439.6 281.8 480 368 480c41 0 79.1-9.2 111.3-25 21.8 12.7 52.1 25 88.7 25 3.2 0 6.1-1.9 7.3-4.8 1.3-2.9.7-6.3-1.5-8.7-.3-.3-22.4-24.2-35.8-54.5z"></path></svg></span>
+    <h3>شريك تفكير حقيقي</h3>
+    <p>يشاركك عملية التفكير (عصف ذهني) بدل الاكتفاء بإجابات مختصرة وجاهزة، فتشعر أنه يعمل معك لا لك فقط.</p>
+  </div>
+  </div>
+  <div class="foot"><span class="brand">كلود ١٠١ &nbsp;•&nbsp; دليل تعلّم كلود من الصفر</span><span class="pagenum">06</span></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">الفصل الثاني — تعرّف على كلود</div>
+  <h1 class="">أبرز استخدامات كلود</h1>
+  <div class="grid grid-4">
+    <div class="card ">
+    <span class="icon-circle "><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M290.74 93.24l128.02 128.02-277.99 277.99-114.14 12.6C11.35 513.54-1.56 500.62.14 485.34l12.7-114.22 277.9-277.88zm207.2-19.06l-60.11-60.11c-18.75-18.75-49.16-18.75-67.91 0l-56.55 56.55 128.02 128.02 56.55-56.55c18.75-18.76 18.75-49.16 0-67.91z"></path></svg></span>
+    <h3>كتابة المحتوى</h3>
+    <p>إيميلات احترافية، منشورات سوشيال ميديا، ومستندات متنوّعة.</p>
+  </div>
+    <div class="card ">
+    <span class="icon-circle "><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"></path></svg></span>
+    <h3>البحث وتحليل البيانات</h3>
+    <p>استخراج أرقام ورؤى من بيانات معقّدة، وتلخيص المحتوى الطويل.</p>
+  </div>
+    <div class="card ">
+    <span class="icon-circle "><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 640 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M278.9 511.5l-61-17.7c-6.4-1.8-10-8.5-8.2-14.9L346.2 8.7c1.8-6.4 8.5-10 14.9-8.2l61 17.7c6.4 1.8 10 8.5 8.2 14.9L293.8 503.3c-1.9 6.4-8.5 10.1-14.9 8.2zm-114-112.2l43.5-46.4c4.6-4.9 4.3-12.7-.8-17.2L117 256l90.6-79.7c5.1-4.5 5.5-12.3.8-17.2l-43.5-46.4c-4.5-4.8-12.1-5.1-17-.5L3.8 247.2c-5.1 4.7-5.1 12.8 0 17.5l144.1 135.1c4.9 4.6 12.5 4.4 17-.5zm327.2.6l144.1-135.1c5.1-4.7 5.1-12.8 0-17.5L492.1 112.1c-4.8-4.5-12.4-4.3-17 .5L431.6 159c-4.6 4.9-4.3 12.7.8 17.2L523 256l-90.6 79.7c-5.1 4.5-5.5 12.3-.8 17.2l43.5 46.4c4.5 4.9 12.1 5.1 17 .6z"></path></svg></span>
+    <h3>البرمجة (كلود كود)</h3>
+    <p>يُعدّ من الأقوى عالميًا في كتابة الأكواد وتصحيحها بمختلف اللغات.</p>
+  </div>
+    <div class="card ">
+    <span class="icon-circle "><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 640 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M622.34 153.2L343.4 67.5c-15.2-4.67-31.6-4.67-46.79 0L17.66 153.2c-23.54 7.23-23.54 38.36 0 45.59l48.63 14.94c-10.67 13.19-17.23 29.28-17.88 46.9C38.78 266.15 32 276.11 32 288c0 10.78 5.68 19.85 13.86 25.65L20.33 428.53C18.11 438.52 25.71 448 35.94 448h56.11c10.24 0 17.84-9.48 15.62-19.47L82.14 313.65C90.32 307.85 96 298.78 96 288c0-11.57-6.47-21.25-15.66-26.87.76-15.02 8.44-28.3 20.69-36.72L296.6 284.5c9.06 2.78 26.44 6.25 46.79 0l278.95-85.7c23.55-7.24 23.55-38.36 0-45.6zM352.79 315.09c-28.53 8.76-52.84 3.92-65.59 0l-145.02-44.55L128 384c0 35.35 85.96 64 192 64s192-28.65 192-64l-14.18-113.47-145.03 44.56z"></path></svg></span>
+    <h3>التعلّم والتدريس</h3>
+    <p>عبر «التفكير الممتد» و«وضع التعلّم» الذي يوجّهك للحل بدل إعطائه مباشرة.</p>
+  </div>
+  </div>
+  <div class="callout ">ملاحظة: حتى وقت إعداد هذا الكورس، لا يدعم كلود توليد الصور (Image Generation) — وهو المجال الوحيد الذي لا يزال غائبًا عن قدراته الواسعة.</div>
+  <div class="foot"><span class="brand">كلود ١٠١ &nbsp;•&nbsp; دليل تعلّم كلود من الصفر</span><span class="pagenum">07</span></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">الفصل الثالث — البداية العملية</div>
+  <h1 class="">طرق الوصول إلى كلود</h1>
+  <div class="grid grid-2">
+    <div class="card sage">
+    <span class="icon-circle "><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 320 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M272 0H48C21.5 0 0 21.5 0 48v416c0 26.5 21.5 48 48 48h224c26.5 0 48-21.5 48-48V48c0-26.5-21.5-48-48-48zM160 480c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32zm112-108c0 6.6-5.4 12-12 12H60c-6.6 0-12-5.4-12-12V60c0-6.6 5.4-12 12-12h200c6.6 0 12 5.4 12 12v312z"></path></svg></span>
+    <h3>تطبيق الجوال</h3>
+    <p>نسخة كاملة على iOS وAndroid، مناسبة للاستخدام أثناء التنقّل.</p>
+  </div>
+    <div class="card sage">
+    <span class="icon-circle "><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M464 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-16 160H64v-84c0-6.6 5.4-12 12-12h360c6.6 0 12 5.4 12 12v84z"></path></svg></span>
+    <h3>المتصفح (claude.ai)</h3>
+    <p>الوصول المباشر عبر أي متصفح دون الحاجة لتثبيت أي برنامج.</p>
+  </div>
+    <div class="card sage">
+    <span class="icon-circle "><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 576 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M528 0H48C21.5 0 0 21.5 0 48v320c0 26.5 21.5 48 48 48h192l-16 48h-72c-13.3 0-24 10.7-24 24s10.7 24 24 24h272c13.3 0 24-10.7 24-24s-10.7-24-24-24h-72l-16-48h192c26.5 0 48-21.5 48-48V48c0-26.5-21.5-48-48-48zm-16 352H64V64h448v288z"></path></svg></span>
+    <h3>تطبيق سطح المكتب</h3>
+    <p>لأنظمة Mac وWindows، مع اختصار وصول سريع ومحادثة صوتية.</p>
+  </div>
+    <div class="card sage">
+    <span class="icon-circle "><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 640 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M257.981 272.971L63.638 467.314c-9.373 9.373-24.569 9.373-33.941 0L7.029 444.647c-9.357-9.357-9.375-24.522-.04-33.901L161.011 256 6.99 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L257.981 239.03c9.373 9.372 9.373 24.568 0 33.941zM640 456v-32c0-13.255-10.745-24-24-24H312c-13.255 0-24 10.745-24 24v32c0 13.255 10.745 24 24 24h304c13.255 0 24-10.745 24-24z"></path></svg></span>
+    <h3>الطرفية (Terminal)</h3>
+    <p>عبر «كلود كود» — الطريقة المفضّلة لدى المبرمجين المحترفين.</p>
+  </div>
+  </div>
+  <div class="foot"><span class="brand">كلود ١٠١ &nbsp;•&nbsp; دليل تعلّم كلود من الصفر</span><span class="pagenum">08</span></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">الفصل الثالث — البداية العملية</div>
+  <h1 class="">خطط الاشتراك في كلود</h1>
+  <div class="pricing-row">
+    <div class="price-card">
+      <h3>الخطة المجانية</h3>
+      <div class="price">بلا مقابل</div>
+      <p>مناسبة للتجربة، والاستخدام البسيط، أو البحث السريع المتقطّع.</p>
+    </div>
+    <div class="price-card featured">
+      <h3>خطة برو (Pro)</h3>
+      <div class="price">١٧ دولارًا / شهريًا</div>
+      <p>محادثات شبه غير محدودة — الأنسب لغالبية المستخدمين والاستخدام اليومي المنتظم.</p>
+    </div>
+    <div class="price-card">
+      <h3>خطة ماكس (Max)</h3>
+      <div class="price">١٠٠ دولار / شهريًا</div>
+      <p>للمستخدمين الكثيفين الذين يحتاجون كمّيات ضخمة من التوكِنز، وللشركات.</p>
+    </div>
+  </div>
+  <div class="callout dark">نصيحة عملية: الاشتراك عبر تطبيق الجوال غالبًا ما يكون أرخص من الاشتراك مباشرة عبر المتصفح — قارن السعر قبل الدفع.</div>
+  <div class="foot"><span class="brand">كلود ١٠١ &nbsp;•&nbsp; دليل تعلّم كلود من الصفر</span><span class="pagenum">09</span></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">الفصل الثالث — البداية العملية</div>
+  <h1 class="">جولة سريعة في واجهة كلود</h1>
+  <p class="subtitle">عند فتح كلود لأول مرّة، تنقسم الواجهة إلى شريط جانبي للتحكم، ومساحة مركزية للمحادثة:</p>
+  <div class="grid grid-2">
+    <div class="card ">
+    <span class="icon-circle "><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 576 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M416 192c0-88.4-93.1-160-208-160S0 103.6 0 192c0 34.3 14.1 65.9 38 92-13.4 30.2-35.5 54.2-35.8 54.5-2.2 2.3-2.8 5.7-1.5 8.7S4.8 352 8 352c36.6 0 66.9-12.3 88.7-25 32.2 15.7 70.3 25 111.3 25 114.9 0 208-71.6 208-160zm122 220c23.9-26 38-57.7 38-92 0-66.9-53.5-124.2-129.3-148.1.9 6.6 1.3 13.3 1.3 20.1 0 105.9-107.7 192-240 192-10.8 0-21.3-.8-31.7-1.9C207.8 439.6 281.8 480 368 480c41 0 79.1-9.2 111.3-25 21.8 12.7 52.1 25 88.7 25 3.2 0 6.1-1.9 7.3-4.8 1.3-2.9.7-6.3-1.5-8.7-.3-.3-22.4-24.2-35.8-54.5z"></path></svg></span>
+    <h3>محادثة جديدة والبحث في المحادثات</h3>
+    <p>ابدأ محادثة من الصفر، أو ابحث في محادثاتك ومشاريعك السابقة.</p>
+  </div>
+    <div class="card ">
+    <span class="icon-circle "><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 576 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M572.694 292.093L500.27 416.248A63.997 63.997 0 0 1 444.989 448H45.025c-18.523 0-30.064-20.093-20.731-36.093l72.424-124.155A64 64 0 0 1 152 256h399.964c18.523 0 30.064 20.093 20.73 36.093zM152 224h328v-48c0-26.51-21.49-48-48-48H272l-64-64H48C21.49 64 0 85.49 0 112v278.046l69.077-118.418C86.214 242.25 117.989 224 152 224z"></path></svg></span>
+    <h3>المشاريع (Projects)</h3>
+    <p>نظّم محادثاتك ضمن مشاريع مستقلّة، كلٌّ منها بذاكرته وتعليماته.</p>
+  </div>
+    <div class="card ">
+    <span class="icon-circle "><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M464 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-16 160H64v-84c0-6.6 5.4-12 12-12h360c6.6 0 12 5.4 12 12v84z"></path></svg></span>
+    <h3>الأرتيفاكتس (Artifacts)</h3>
+    <p>مساحة معاينة تفاعلية لنتائجك — مواقع، أكواد، مستندات طويلة.</p>
+  </div>
+    <div class="card ">
+    <span class="icon-circle "><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M487.4 315.7l-42.6-24.6c4.3-23.2 4.3-47 0-70.2l42.6-24.6c4.9-2.8 7.1-8.6 5.5-14-11.1-35.6-30-67.8-54.7-94.6-3.8-4.1-10-5.1-14.8-2.3L380.8 110c-17.9-15.4-38.5-27.3-60.8-35.1V25.8c0-5.6-3.9-10.5-9.4-11.7-36.7-8.2-74.3-7.8-109.2 0-5.5 1.2-9.4 6.1-9.4 11.7V75c-22.2 7.9-42.8 19.8-60.8 35.1L88.7 85.5c-4.9-2.8-11-1.9-14.8 2.3-24.7 26.7-43.6 58.9-54.7 94.6-1.7 5.4.6 11.2 5.5 14L67.3 221c-4.3 23.2-4.3 47 0 70.2l-42.6 24.6c-4.9 2.8-7.1 8.6-5.5 14 11.1 35.6 30 67.8 54.7 94.6 3.8 4.1 10 5.1 14.8 2.3l42.6-24.6c17.9 15.4 38.5 27.3 60.8 35.1v49.2c0 5.6 3.9 10.5 9.4 11.7 36.7 8.2 74.3 7.8 109.2 0 5.5-1.2 9.4-6.1 9.4-11.7v-49.2c22.2-7.9 42.8-19.8 60.8-35.1l42.6 24.6c4.9 2.8 11 1.9 14.8-2.3 24.7-26.7 43.6-58.9 54.7-94.6 1.5-5.5-.7-11.3-5.6-14.1zM256 336c-44.1 0-80-35.9-80-80s35.9-80 80-80 80 35.9 80 80-35.9 80-80 80z"></path></svg></span>
+    <h3>الإعدادات (Settings)</h3>
+    <p>تخصيص اسمك، طريقة ردّ كلود عليك، ولغتك المفضّلة في المحادثة.</p>
+  </div>
+  </div>
+  <div class="foot"><span class="brand">كلود ١٠١ &nbsp;•&nbsp; دليل تعلّم كلود من الصفر</span><span class="pagenum">10</span></div>
+</section>
+
+<section class="slide dark">
+  <div class="kicker">الفصل الثالث — البداية العملية</div>
+  <h1 class="md">تطبيق سطح المكتب: ثلاث أدوات في مكان واحد</h1>
+  <div class="tri-row">
+    <div class="tri-card">
+      <span class="icon-circle lg centered"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 576 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M416 192c0-88.4-93.1-160-208-160S0 103.6 0 192c0 34.3 14.1 65.9 38 92-13.4 30.2-35.5 54.2-35.8 54.5-2.2 2.3-2.8 5.7-1.5 8.7S4.8 352 8 352c36.6 0 66.9-12.3 88.7-25 32.2 15.7 70.3 25 111.3 25 114.9 0 208-71.6 208-160zm122 220c23.9-26 38-57.7 38-92 0-66.9-53.5-124.2-129.3-148.1.9 6.6 1.3 13.3 1.3 20.1 0 105.9-107.7 192-240 192-10.8 0-21.3-.8-31.7-1.9C207.8 439.6 281.8 480 368 480c41 0 79.1-9.2 111.3-25 21.8 12.7 52.1 25 88.7 25 3.2 0 6.1-1.9 7.3-4.8 1.3-2.9.7-6.3-1.5-8.7-.3-.3-22.4-24.2-35.8-54.5z"></path></svg></span>
+      <h3 class="centered">كلود شات (Chat)</h3>
+      <p class="centered">للمهام السريعة: سؤال مباشر، وصول فوري باختصار لوحة المفاتيح، ومحادثة صوتية دون الحاجة لفتح المتصفح.</p>
+    </div>
+    <div class="tri-card">
+      <span class="icon-circle lg centered"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M501.1 395.7L384 278.6c-23.1-23.1-57.6-27.6-85.4-13.9L192 158.1V96L64 0 0 64l96 128h62.1l106.6 106.6c-13.6 27.8-9.2 62.3 13.9 85.4l117.1 117.1c14.6 14.6 38.2 14.6 52.7 0l52.7-52.7c14.5-14.6 14.5-38.2 0-52.7zM331.7 225c28.3 0 54.9 11 74.9 31l19.4 19.4c15.8-6.9 30.8-16.5 43.8-29.5 37.1-37.1 49.7-89.3 37.9-136.7-2.2-9-13.5-12.1-20.1-5.5l-74.4 74.4-67.9-11.3L334 98.9l74.4-74.4c6.6-6.6 3.4-17.9-5.7-20.2-47.4-11.7-99.6.9-136.6 37.9-28.5 28.5-41.9 66.1-41.2 103.6l82.1 82.1c8.1-1.9 16.5-2.9 24.7-2.9zm-103.9 82l-56.7-56.7L18.7 402.8c-25 25-25 65.5 0 90.5s65.5 25 90.5 0l123.6-123.6c-7.6-19.9-9.9-41.6-5-62.7zM64 472c-13.2 0-24-10.8-24-24 0-13.3 10.7-24 24-24s24 10.7 24 24c0 13.2-10.7 24-24 24z"></path></svg></span>
+      <h3 class="centered">كلود كوورك (Cowork)</h3>
+      <p class="centered">للمهام الأكبر التي تحتاج وصولًا حقيقيًا لملفاتك، مثل تنظيم مجلد، أو جدولة مهام تتكرر يوميًا تلقائيًا.</p>
+    </div>
+    <div class="tri-card">
+      <span class="icon-circle lg centered"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 640 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M257.981 272.971L63.638 467.314c-9.373 9.373-24.569 9.373-33.941 0L7.029 444.647c-9.357-9.357-9.375-24.522-.04-33.901L161.011 256 6.99 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L257.981 239.03c9.373 9.372 9.373 24.568 0 33.941zM640 456v-32c0-13.255-10.745-24-24-24H312c-13.255 0-24 10.745-24 24v32c0 13.255 10.745 24 24 24h304c13.255 0 24-10.745 24-24z"></path></svg></span>
+      <h3 class="centered">كلود كود (Claude Code)</h3>
+      <p class="centered">بيئة تطوير كاملة عبر الطرفية، لقراءة أكوادك الحالية، تحسينها، ومعالجة مشكلاتها، وإضافة مزايا جديدة إليها.</p>
+    </div>
+  </div>
+  <div class="foot"><span class="brand">كلود ١٠١ &nbsp;•&nbsp; دليل تعلّم كلود من الصفر</span><span class="pagenum">11</span></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">الفصل الرابع — هندسة الأوامر</div>
+  <h1 class="">القواعد الذهبية الأربع لكتابة أمرٍ ناجح</h1>
+  <div class="grid grid-2">
+    <div class="card num-card ">
+    <div class="num-row"><span class="num">١</span><span class="icon-circle "><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 496 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M248 8C111.03 8 0 119.03 0 256s111.03 248 248 248 248-111.03 248-248S384.97 8 248 8zm0 432c-101.69 0-184-82.29-184-184 0-101.69 82.29-184 184-184 101.69 0 184 82.29 184 184 0 101.69-82.29 184-184 184zm0-312c-70.69 0-128 57.31-128 128s57.31 128 128 128 128-57.31 128-128-57.31-128-128-128zm0 192c-35.29 0-64-28.71-64-64s28.71-64 64-64 64 28.71 64 64-28.71 64-64 64z"></path></svg></span></div>
+    <h3>تحديد الموقف والسياق</h3>
+    <p>عرّف كلود بمن أنت، وما هدفك، وما الظرف الذي تعمل فيه — قبل أي شيء آخر.</p>
+  </div>
+    <div class="card num-card ">
+    <div class="num-row"><span class="num">٢</span><span class="icon-circle "><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M139.61 35.5a12 12 0 0 0-17 0L58.93 98.81l-22.7-22.12a12 12 0 0 0-17 0L3.53 92.41a12 12 0 0 0 0 17l47.59 47.4a12.78 12.78 0 0 0 17.61 0l15.59-15.62L156.52 69a12.09 12.09 0 0 0 .09-17zm0 159.19a12 12 0 0 0-17 0l-63.68 63.72-22.7-22.1a12 12 0 0 0-17 0L3.53 252a12 12 0 0 0 0 17L51 316.5a12.77 12.77 0 0 0 17.6 0l15.7-15.69 72.2-72.22a12 12 0 0 0 .09-16.9zM64 368c-26.49 0-48.59 21.5-48.59 48S37.53 464 64 464a48 48 0 0 0 0-96zm432 16H208a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h288a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16zm0-320H208a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h288a16 16 0 0 0 16-16V80a16 16 0 0 0-16-16zm0 160H208a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h288a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16z"></path></svg></span></div>
+    <h3>تحديد المهمة بوضوح</h3>
+    <p>اذكر بدقّة ماذا تريد من كلود أن يفعل تحديدًا بناءً على الموقف الذي شرحته.</p>
+  </div>
+    <div class="card num-card ">
+    <div class="num-row"><span class="num">٣</span><span class="icon-circle "><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M487.4 315.7l-42.6-24.6c4.3-23.2 4.3-47 0-70.2l42.6-24.6c4.9-2.8 7.1-8.6 5.5-14-11.1-35.6-30-67.8-54.7-94.6-3.8-4.1-10-5.1-14.8-2.3L380.8 110c-17.9-15.4-38.5-27.3-60.8-35.1V25.8c0-5.6-3.9-10.5-9.4-11.7-36.7-8.2-74.3-7.8-109.2 0-5.5 1.2-9.4 6.1-9.4 11.7V75c-22.2 7.9-42.8 19.8-60.8 35.1L88.7 85.5c-4.9-2.8-11-1.9-14.8 2.3-24.7 26.7-43.6 58.9-54.7 94.6-1.7 5.4.6 11.2 5.5 14L67.3 221c-4.3 23.2-4.3 47 0 70.2l-42.6 24.6c-4.9 2.8-7.1 8.6-5.5 14 11.1 35.6 30 67.8 54.7 94.6 3.8 4.1 10 5.1 14.8 2.3l42.6-24.6c17.9 15.4 38.5 27.3 60.8 35.1v49.2c0 5.6 3.9 10.5 9.4 11.7 36.7 8.2 74.3 7.8 109.2 0 5.5-1.2 9.4-6.1 9.4-11.7v-49.2c22.2-7.9 42.8-19.8 60.8-35.1l42.6 24.6c4.9 2.8 11 1.9 14.8-2.3 24.7-26.7 43.6-58.9 54.7-94.6 1.5-5.5-.7-11.3-5.6-14.1zM256 336c-44.1 0-80-35.9-80-80s35.9-80 80-80 80 35.9 80 80-35.9 80-80 80z"></path></svg></span></div>
+    <h3>تحديد القواعد والشكل</h3>
+    <p>وضّح شكل الإجابة المطلوبة: النبرة، الطول، الصيغة (نص، جدول، عرض تقديمي...).</p>
+  </div>
+    <div class="card num-card ">
+    <div class="num-row"><span class="num">٤</span><span class="icon-circle "><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"></path></svg></span></div>
+    <h3>تقديم مثال (Example)</h3>
+    <p>أرفق نموذجًا لما تريده — هذه الخطوة وحدها توفّر عليك تكرارًا كثيرًا.</p>
+  </div>
+  </div>
+  <div class="foot"><span class="brand">كلود ١٠١ &nbsp;•&nbsp; دليل تعلّم كلود من الصفر</span><span class="pagenum">12</span></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">الفصل الرابع — هندسة الأوامر</div>
+  <h1 class="">اختيار النموذج المناسب للمهمّة</h1>
+  <p class="subtitle">ليس صحيحًا أن أقوى نموذج يعطي دائمًا أفضل نتيجة — الاختيار الصحيح يعتمد على مدى تعقيد مهمّتك:</p>
+  <div class="tri-row">
+    <div class="tri-card light">
+      <span class="icon-circle centered"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 320 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M296 160H180.6l42.6-129.8C227.2 15 215.7 0 200 0H56C44 0 33.8 8.9 32.2 20.8l-32 240C-1.7 275.2 9.5 288 24 288h118.7L96.6 482.5c-3.6 15.2 8 29.5 23.3 29.5 8.4 0 16.4-4.4 20.8-12l176-304c9.3-15.9-2.2-36-20.7-36z"></path></svg></span>
+      <div class="tag centered">الأسرع</div>
+      <h3 class="centered">هايكو (Haiku)</h3>
+      <p class="centered">للردود الفورية والمهام البسيطة جدًا التي لا تحتاج تعمّقًا.</p>
+    </div>
+    <div class="tri-card light">
+      <span class="icon-circle centered"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M12.41 148.02l232.94 105.67c6.8 3.09 14.49 3.09 21.29 0l232.94-105.67c16.55-7.51 16.55-32.52 0-40.03L266.65 2.31a25.607 25.607 0 0 0-21.29 0L12.41 107.98c-16.55 7.51-16.55 32.53 0 40.04zm487.18 88.28l-58.09-26.33-161.64 73.27c-7.56 3.43-15.59 5.17-23.86 5.17s-16.29-1.74-23.86-5.17L70.51 209.97l-58.1 26.33c-16.55 7.5-16.55 32.5 0 40l232.94 105.59c6.8 3.08 14.49 3.08 21.29 0L499.59 276.3c16.55-7.5 16.55-32.5 0-40zm0 127.8l-57.87-26.23-161.86 73.37c-7.56 3.43-15.59 5.17-23.86 5.17s-16.29-1.74-23.86-5.17L70.29 337.87 12.41 364.1c-16.55 7.5-16.55 32.5 0 40l232.94 105.59c6.8 3.08 14.49 3.08 21.29 0L499.59 404.1c16.55-7.5 16.55-32.5 0-40z"></path></svg></span>
+      <div class="tag centered">الافتراضي</div>
+      <h3 class="centered">سونيت (Sonnet)</h3>
+      <p class="centered">النموذج المتوازن، ويكفي لمعظم المهام اليومية دون تكلفة زائدة.</p>
+    </div>
+    <div class="tri-card light">
+      <span class="icon-circle centered"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 576 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M208 0c-29.9 0-54.7 20.5-61.8 48.2-.8 0-1.4-.2-2.2-.2-35.3 0-64 28.7-64 64 0 4.8.6 9.5 1.7 14C52.5 138 32 166.6 32 200c0 12.6 3.2 24.3 8.3 34.9C16.3 248.7 0 274.3 0 304c0 33.3 20.4 61.9 49.4 73.9-.9 4.6-1.4 9.3-1.4 14.1 0 39.8 32.2 72 72 72 4.1 0 8.1-.5 12-1.2 9.6 28.5 36.2 49.2 68 49.2 39.8 0 72-32.2 72-72V64c0-35.3-28.7-64-64-64zm368 304c0-29.7-16.3-55.3-40.3-69.1 5.2-10.6 8.3-22.3 8.3-34.9 0-33.4-20.5-62-49.7-74 1-4.5 1.7-9.2 1.7-14 0-35.3-28.7-64-64-64-.8 0-1.5.2-2.2.2C422.7 20.5 397.9 0 368 0c-35.3 0-64 28.6-64 64v376c0 39.8 32.2 72 72 72 31.8 0 58.4-20.7 68-49.2 3.9.7 7.9 1.2 12 1.2 39.8 0 72-32.2 72-72 0-4.8-.5-9.5-1.4-14.1 29-12 49.4-40.6 49.4-73.9z"></path></svg></span>
+      <div class="tag centered">الأدق</div>
+      <h3 class="centered">أوبس (Opus)</h3>
+      <p class="centered">للمهام المعقّدة جدًا التي تتطلّب دقّة عالية جدًا — يُستهلَك بحكمة.</p>
+    </div>
+  </div>
+  <div class="callout dark with-icon">
+    <span class="icon-circle "><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 352 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M96.06 454.35c.01 6.29 1.87 12.45 5.36 17.69l17.09 25.69a31.99 31.99 0 0 0 26.64 14.28h61.71a31.99 31.99 0 0 0 26.64-14.28l17.09-25.69a31.989 31.989 0 0 0 5.36-17.69l.04-38.35H96.01l.05 38.35zM0 176c0 44.37 16.45 84.85 43.56 115.78 16.52 18.85 42.36 58.23 52.21 91.45.04.26.07.52.11.78h160.24c.04-.26.07-.51.11-.78 9.85-33.22 35.69-72.6 52.21-91.45C335.55 260.85 352 220.37 352 176 352 78.61 272.91-.3 175.45 0 73.44.31 0 82.97 0 176zm176-80c-44.11 0-80 35.89-80 80 0 8.84-7.16 16-16 16s-16-7.16-16-16c0-61.76 50.24-112 112-112 8.84 0 16 7.16 16 16s-7.16 16-16 16z"></path></svg></span>
+    <div class="callout-text">
+      <strong>التفكير الممتد (Extended Thinking)</strong>
+      <p>ميزة تمنح النموذج وقتًا إضافيًا للتفكير خطوة بخطوة في المهام المعقّدة، مقابل استهلاك أكبر للتوكِنز ووقت استجابة أطول — فعّلها فقط عند الحاجة الفعلية.</p>
+    </div>
+  </div>
+  <div class="foot"><span class="brand">كلود ١٠١ &nbsp;•&nbsp; دليل تعلّم كلود من الصفر</span><span class="pagenum">13</span></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">الفصل الرابع — هندسة الأوامر</div>
+  <h1 class="">أخطاء شائعة تُضعف نتائج كلود</h1>
+  <div class="grid grid-3">
+    <div class="card ">
+    <span class="icon-circle "><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 576 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"></path></svg></span>
+    <h3>غموض السياق</h3>
+    <p>عدم توضيح من أنت وماذا تريد بدقّة يؤدّي إلى إجابات عامة لا تمتّ لحالتك بصلة.</p>
+  </div>
+    <div class="card ">
+    <span class="icon-circle "><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M12.41 148.02l232.94 105.67c6.8 3.09 14.49 3.09 21.29 0l232.94-105.67c16.55-7.51 16.55-32.52 0-40.03L266.65 2.31a25.607 25.607 0 0 0-21.29 0L12.41 107.98c-16.55 7.51-16.55 32.53 0 40.04zm487.18 88.28l-58.09-26.33-161.64 73.27c-7.56 3.43-15.59 5.17-23.86 5.17s-16.29-1.74-23.86-5.17L70.51 209.97l-58.1 26.33c-16.55 7.5-16.55 32.5 0 40l232.94 105.59c6.8 3.08 14.49 3.08 21.29 0L499.59 276.3c16.55-7.5 16.55-32.5 0-40zm0 127.8l-57.87-26.23-161.86 73.37c-7.56 3.43-15.59 5.17-23.86 5.17s-16.29-1.74-23.86-5.17L70.29 337.87 12.41 364.1c-16.55 7.5-16.55 32.5 0 40l232.94 105.59c6.8 3.08 14.49 3.08 21.29 0L499.59 404.1c16.55-7.5 16.55-32.5 0-40z"></path></svg></span>
+    <h3>عدم تحديد طول الإجابة</h3>
+    <p>بدون توضيح صريح، سيخمّن كلود الطول المناسب من وجهته هو، لا من وجهتك أنت.</p>
+  </div>
+    <div class="card ">
+    <span class="icon-circle "><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 576 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M416 192c0-88.4-93.1-160-208-160S0 103.6 0 192c0 34.3 14.1 65.9 38 92-13.4 30.2-35.5 54.2-35.8 54.5-2.2 2.3-2.8 5.7-1.5 8.7S4.8 352 8 352c36.6 0 66.9-12.3 88.7-25 32.2 15.7 70.3 25 111.3 25 114.9 0 208-71.6 208-160zm122 220c23.9-26 38-57.7 38-92 0-66.9-53.5-124.2-129.3-148.1.9 6.6 1.3 13.3 1.3 20.1 0 105.9-107.7 192-240 192-10.8 0-21.3-.8-31.7-1.9C207.8 439.6 281.8 480 368 480c41 0 79.1-9.2 111.3-25 21.8 12.7 52.1 25 88.7 25 3.2 0 6.1-1.9 7.3-4.8 1.3-2.9.7-6.3-1.5-8.7-.3-.3-22.4-24.2-35.8-54.5z"></path></svg></span>
+    <h3>إغفال النبرة والتنسيق</h3>
+    <p>قد تصلك إجابة رسمية بينما أردتها ودّية، أو العكس — فحدّد النبرة دائمًا.</p>
+  </div>
+  </div>
+  <div class="callout solid">القاعدة الذهبية: افترض دائمًا أن إجابة الذكاء الاصطناعي قد تكون خاطئة حتى تثبت العكس — لا تُسلِّم بالنتائج بثقة عمياء.</div>
+  <div class="foot"><span class="brand">كلود ١٠١ &nbsp;•&nbsp; دليل تعلّم كلود من الصفر</span><span class="pagenum">14</span></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">الفصل الرابع — هندسة الأوامر</div>
+  <h1 class="">عقلية «اللقطة الواحدة» مقابل «التكرار»</h1>
+  <div class="grid grid-2">
+    <div class="card light-panel">
+      <h3>اللقطة الواحدة</h3>
+      <p>أمر واحد غامض وتتوقّع نتيجة نهائية فورية — كلما كان الأمر غامضًا، زاد احتمال الخطأ وطال وقت الإصلاح.</p>
+    </div>
+    <div class="card solid-panel">
+      <h3>عقلية التكرار</h3>
+      <p>ابنِ السياق تدريجيًا، وقدّم ملاحظات (Feedback) واضحة بعد كل نتيجة حتى يصل كلود لما تريده بالضبط.</p>
+    </div>
+  </div>
+  <div class="callout dark with-icon big">
+    <span class="icon-circle "><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M512 176.001C512 273.203 433.202 352 336 352c-11.22 0-22.19-1.062-32.827-3.069l-24.012 27.014A23.999 23.999 0 0 1 261.223 384H224v40c0 13.255-10.745 24-24 24h-40v40c0 13.255-10.745 24-24 24H24c-13.255 0-24-10.745-24-24v-78.059c0-6.365 2.529-12.47 7.029-16.971l161.802-161.802C163.108 213.814 160 195.271 160 176 160 78.798 238.797.001 335.999 0 433.488-.001 512 78.511 512 176.001zM336 128c0 26.51 21.49 48 48 48s48-21.49 48-48-21.49-48-48-48-48 21.49-48 48z"></path></svg></span>
+    <div class="callout-text">
+      <strong>مهارة التفويض (Delegation)</strong>
+      <p>ركيزة أساسية في «الطلاقة مع الذكاء الاصطناعي» (AI Fluency): أن تُميّز بوضوح أيّ المهام يستحقّ تفويضه لكلود، وأيّها أسرع وأدق أن تُنجزه بنفسك يدويًا — لسببين رئيسيّين: السرعة والكفاءة، وحماية خصوصية بياناتك.</p>
+    </div>
+  </div>
+  <div class="foot"><span class="brand">كلود ١٠١ &nbsp;•&nbsp; دليل تعلّم كلود من الصفر</span><span class="pagenum">15</span></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">الفصل الخامس — المشاريع والمهارات</div>
+  <h1 class="">المشاريع (Projects): قاعدة معرفية لكل مهمة</h1>
+  <p class="subtitle">بيئة معزولة داخل كلود لكل موضوع تتعامل معه بانتظام — فتوفّر عليك تكرار الشرح في كل محادثة جديدة.</p>
+  <div class="grid grid-4 sm">
+    <div class="card ">
+    <span class="icon-circle "><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 576 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M416 192c0-88.4-93.1-160-208-160S0 103.6 0 192c0 34.3 14.1 65.9 38 92-13.4 30.2-35.5 54.2-35.8 54.5-2.2 2.3-2.8 5.7-1.5 8.7S4.8 352 8 352c36.6 0 66.9-12.3 88.7-25 32.2 15.7 70.3 25 111.3 25 114.9 0 208-71.6 208-160zm122 220c23.9-26 38-57.7 38-92 0-66.9-53.5-124.2-129.3-148.1.9 6.6 1.3 13.3 1.3 20.1 0 105.9-107.7 192-240 192-10.8 0-21.3-.8-31.7-1.9C207.8 439.6 281.8 480 368 480c41 0 79.1-9.2 111.3-25 21.8 12.7 52.1 25 88.7 25 3.2 0 6.1-1.9 7.3-4.8 1.3-2.9.7-6.3-1.5-8.7-.3-.3-22.4-24.2-35.8-54.5z"></path></svg></span>
+    <h3>المحادثة</h3>
+    <p>التحدّث مع كلود مباشرة داخل سياق المشروع فقط.</p>
+  </div>
+    <div class="card ">
+    <span class="icon-circle "><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 576 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M208 0c-29.9 0-54.7 20.5-61.8 48.2-.8 0-1.4-.2-2.2-.2-35.3 0-64 28.7-64 64 0 4.8.6 9.5 1.7 14C52.5 138 32 166.6 32 200c0 12.6 3.2 24.3 8.3 34.9C16.3 248.7 0 274.3 0 304c0 33.3 20.4 61.9 49.4 73.9-.9 4.6-1.4 9.3-1.4 14.1 0 39.8 32.2 72 72 72 4.1 0 8.1-.5 12-1.2 9.6 28.5 36.2 49.2 68 49.2 39.8 0 72-32.2 72-72V64c0-35.3-28.7-64-64-64zm368 304c0-29.7-16.3-55.3-40.3-69.1 5.2-10.6 8.3-22.3 8.3-34.9 0-33.4-20.5-62-49.7-74 1-4.5 1.7-9.2 1.7-14 0-35.3-28.7-64-64-64-.8 0-1.5.2-2.2.2C422.7 20.5 397.9 0 368 0c-35.3 0-64 28.6-64 64v376c0 39.8 32.2 72 72 72 31.8 0 58.4-20.7 68-49.2 3.9.7 7.9 1.2 12 1.2 39.8 0 72-32.2 72-72 0-4.8-.5-9.5-1.4-14.1 29-12 49.4-40.6 49.4-73.9z"></path></svg></span>
+    <h3>الذاكرة</h3>
+    <p>يحتفظ تلقائيًا بكل ما يدور من معلومات داخل المشروع.</p>
+  </div>
+    <div class="card ">
+    <span class="icon-circle "><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M448 360V24c0-13.3-10.7-24-24-24H96C43 0 0 43 0 96v320c0 53 43 96 96 96h328c13.3 0 24-10.7 24-24v-16c0-7.5-3.5-14.3-8.9-18.7-4.2-15.4-4.2-59.3 0-74.7 5.4-4.3 8.9-11.1 8.9-18.6zM128 134c0-3.3 2.7-6 6-6h212c3.3 0 6 2.7 6 6v20c0 3.3-2.7 6-6 6H134c-3.3 0-6-2.7-6-6v-20zm0 64c0-3.3 2.7-6 6-6h212c3.3 0 6 2.7 6 6v20c0 3.3-2.7 6-6 6H134c-3.3 0-6-2.7-6-6v-20zm253.4 250H96c-17.7 0-32-14.3-32-32 0-17.6 14.4-32 32-32h285.4c-1.9 17.1-1.9 46.9 0 64z"></path></svg></span>
+    <h3>التعليمات</h3>
+    <p>قواعد ثابتة تُخبر كلود كيف يتصرّف في هذا المشروع تحديدًا.</p>
+  </div>
+    <div class="card ">
+    <span class="icon-circle "><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 576 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M572.694 292.093L500.27 416.248A63.997 63.997 0 0 1 444.989 448H45.025c-18.523 0-30.064-20.093-20.731-36.093l72.424-124.155A64 64 0 0 1 152 256h399.964c18.523 0 30.064 20.093 20.73 36.093zM152 224h328v-48c0-26.51-21.49-48-48-48H272l-64-64H48C21.49 64 0 85.49 0 112v278.046l69.077-118.418C86.214 242.25 117.989 224 152 224z"></path></svg></span>
+    <h3>الملفات</h3>
+    <p>مستندات مرجعية يستعين بها كلود في كل ردّ داخل المشروع.</p>
+  </div>
+  </div>
+  <div class="callout dark big">
+    <strong class="tag light">مثال تطبيقي: مشروع «المدرّب الشخصي»</strong>
+    <p>تُضاف تعليمات ثابتة (المستوى، هدف اللياقة، عدد أيام التمرين، مكان التمرين)، وملفات مرجعية (مكتبة تمارين، سجلّ الأوزان، خطة ١٢ أسبوعًا). بعدها يبني كلود برنامجًا تدريجيًا، ويتذكّر كل تفاصيلك دون أن تكرّرها في كل محادثة — بل ويعدّل الخطة تلقائيًا عند إخباره بأي إصابة أو تغيّر في ظروفك.</p>
+  </div>
+  <div class="foot"><span class="brand">كلود ١٠١ &nbsp;•&nbsp; دليل تعلّم كلود من الصفر</span><span class="pagenum">16</span></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">الفصل الخامس — المشاريع والمهارات</div>
+  <h1 class="">الأرتيفاكتس (Artifacts): مساحة تفاعلية للنتائج</h1>
+  <p class="subtitle">بدل أن يكتفي كلود بالردّ عليك كنص عادي داخل المحادثة، يمكنه عرض ناتج عمله في نافذة تفاعلية مستقلّة.</p>
+  <div class="grid grid-2 tall">
+    <div class="card light-panel">
+      <h3>متى تظهر تلقائيًا؟</h3>
+      <div class="check-row"><span class="text">عند طلبك موقعًا إلكترونيًا أو تصميمًا مباشرًا</span><span class="icon-circle sm"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"></path></svg></span></div>
+      <div class="check-row"><span class="text">عندما تتجاوز الإجابة نحو ١٥ سطرًا من الكود</span><span class="icon-circle sm"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"></path></svg></span></div>
+      <div class="check-row"><span class="text">عند طلب مقال طويل (١٥٠٠ كلمة فأكثر)</span><span class="icon-circle sm"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"></path></svg></span></div>
+      <div class="check-row"><span class="text">عندما تطلب صراحة وضع الناتج داخل أرتيفاكت</span><span class="icon-circle sm"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"></path></svg></span></div>
+    </div>
+    <div class="card dark-panel">
+      <h3>ماذا تستطيع أن تفعل بالنتيجة؟</h3>
+      <div class="check-row"><span class="text">معاينة الموقع أو الكود مباشرة أمامك</span><span class="icon-circle sm"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"></path></svg></span></div>
+      <div class="check-row"><span class="text">نسخ الكود أو تنزيله على جهازك</span><span class="icon-circle sm"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"></path></svg></span></div>
+      <div class="check-row"><span class="text">نشر النتيجة برابط عام تشاركه مع الآخرين</span><span class="icon-circle sm"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"></path></svg></span></div>
+      <div class="check-row"><span class="text">إبقاء الأرتيفاكت خاصًا في أي وقت تشاء</span><span class="icon-circle sm"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"></path></svg></span></div>
+    </div>
+  </div>
+  <div class="foot"><span class="brand">كلود ١٠١ &nbsp;•&nbsp; دليل تعلّم كلود من الصفر</span><span class="pagenum">17</span></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">الفصل الخامس — المشاريع والمهارات</div>
+  <h1 class="">المهارات (Skills): خبرة قابلة لإعادة الاستخدام</h1>
+  <p class="subtitle">مجلّد يضمّ تعليمات وسكربتات ومصادر يحمّلها كلود ديناميكيًا لتحسين أدائه في مهمّة تحتاج خبرة محدّدة.</p>
+  <div class="grid grid-2">
+    <div class="card light-panel">
+      <span class="icon-circle "><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 576 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M572.694 292.093L500.27 416.248A63.997 63.997 0 0 1 444.989 448H45.025c-18.523 0-30.064-20.093-20.731-36.093l72.424-124.155A64 64 0 0 1 152 256h399.964c18.523 0 30.064 20.093 20.73 36.093zM152 224h328v-48c0-26.51-21.49-48-48-48H272l-64-64H48C21.49 64 0 85.49 0 112v278.046l69.077-118.418C86.214 242.25 117.989 224 152 224z"></path></svg></span>
+      <h3>المشروع = قاعدة معرفية</h3>
+      <p>ذاكرة تحفظ ما تعرفه عن موضوع معيّن (بياناتك، ملفاتك، سياق عملك).</p>
+    </div>
+    <div class="card solid-panel">
+      <span class="icon-circle white"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 576 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M519.442 288.651c-41.519 0-59.5 31.593-82.058 31.593C377.409 320.244 432 144 432 144s-196.288 80-196.288-3.297c0-35.827 36.288-46.25 36.288-85.985C272 19.216 243.885 0 210.539 0c-34.654 0-66.366 18.891-66.366 56.346 0 41.364 31.711 59.277 31.711 81.75C175.885 207.719 0 166.758 0 166.758v333.237s178.635 41.047 178.635-28.662c0-22.473-40-40.107-40-81.471 0-37.456 29.25-56.346 63.577-56.346 33.673 0 61.788 19.216 61.788 54.717 0 39.735-36.288 50.158-36.288 85.985 0 60.803 129.675 25.73 181.23 25.73 0 0-34.725-120.101 25.827-120.101 35.962 0 46.423 36.152 86.308 36.152C556.712 416 576 387.99 576 354.443c0-34.199-18.962-65.792-56.558-65.792z"></path></svg></span>
+      <h3>المهارة = طريقة التنفيذ</h3>
+      <p>الأسلوب والخطوات التي يتّبعها كلود لتنفيذ مهمّة معيّنة، بصرف النظر عن المشروع.</p>
+    </div>
+  </div>
+  <div class="callout dark with-icon big">
+    <span class="icon-circle "><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M501.1 395.7L384 278.6c-23.1-23.1-57.6-27.6-85.4-13.9L192 158.1V96L64 0 0 64l96 128h62.1l106.6 106.6c-13.6 27.8-9.2 62.3 13.9 85.4l117.1 117.1c14.6 14.6 38.2 14.6 52.7 0l52.7-52.7c14.5-14.6 14.5-38.2 0-52.7zM331.7 225c28.3 0 54.9 11 74.9 31l19.4 19.4c15.8-6.9 30.8-16.5 43.8-29.5 37.1-37.1 49.7-89.3 37.9-136.7-2.2-9-13.5-12.1-20.1-5.5l-74.4 74.4-67.9-11.3L334 98.9l74.4-74.4c6.6-6.6 3.4-17.9-5.7-20.2-47.4-11.7-99.6.9-136.6 37.9-28.5 28.5-41.9 66.1-41.2 103.6l82.1 82.1c8.1-1.9 16.5-2.9 24.7-2.9zm-103.9 82l-56.7-56.7L18.7 402.8c-25 25-25 65.5 0 90.5s65.5 25 90.5 0l123.6-123.6c-7.6-19.9-9.9-41.6-5-62.7zM64 472c-13.2 0-24-10.8-24-24 0-13.3 10.7-24 24-24s24 10.7 24 24c0 13.2-10.7 24-24 24z"></path></svg></span>
+    <div class="callout-text">
+      <strong>مهارات جاهزة، ومهارات من صُنعك</strong>
+      <p>توفّر Anthropic مهارات جاهزة (مثل تصميم الواجهات الأمامية، إنشاء المهارات، تصميم الملصقات)، بالإضافة إلى إمكانية استخدام «صانع المهارات» (Skill Creator) لبناء مهارة خاصة بك تمامًا — كأن تصمّم مهارة تكتب بها سكربتات فيديوهاتك بأسلوبك الخاص ولهجتك المفضّلة.</p>
+    </div>
+  </div>
+  <div class="foot"><span class="brand">كلود ١٠١ &nbsp;•&nbsp; دليل تعلّم كلود من الصفر</span><span class="pagenum">18</span></div>
+</section>
+
+<section class="slide dark closing-slide">
+  <div class="glow bottom"></div>
+  <span class="icon-circle xl"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 640 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M622.34 153.2L343.4 67.5c-15.2-4.67-31.6-4.67-46.79 0L17.66 153.2c-23.54 7.23-23.54 38.36 0 45.59l48.63 14.94c-10.67 13.19-17.23 29.28-17.88 46.9C38.78 266.15 32 276.11 32 288c0 10.78 5.68 19.85 13.86 25.65L20.33 428.53C18.11 438.52 25.71 448 35.94 448h56.11c10.24 0 17.84-9.48 15.62-19.47L82.14 313.65C90.32 307.85 96 298.78 96 288c0-11.57-6.47-21.25-15.66-26.87.76-15.02 8.44-28.3 20.69-36.72L296.6 284.5c9.06 2.78 26.44 6.25 46.79 0l278.95-85.7c23.55-7.24 23.55-38.36 0-45.6zM352.79 315.09c-28.53 8.76-52.84 3.92-65.59 0l-145.02-44.55L128 384c0 35.35 85.96 64 192 64s192-28.65 192-64l-14.18-113.47-145.03 44.56z"></path></svg></span>
+  <div class="credit-block">
+    <div class="credit-line">
+      <svg stroke="currentColor" stroke-width="0" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512l388.6 0c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304l-91.4 0z"></path></svg>
+      <span>إعداد: أ.م.د أمير هادي</span>
+    </div>
+    <div class="credit-line">
+      <svg stroke="currentColor" stroke-width="0" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48L48 64zM0 176L0 384c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-208L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z"></path></svg>
+      <span>amer.hadi@alshaab.edu.iq</span>
+    </div>
+    <div class="credit-line">
+      <svg stroke="currentColor" stroke-width="0" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M243.4 2.6l-224 96c-14 6-21.8 21-18.7 35.8S16.8 160 32 160l0 8c0 13.3 10.7 24 24 24l400 0c13.3 0 24-10.7 24-24l0-8c15.2 0 28.3-10.7 31.3-25.6s-4.8-29.9-18.7-35.8l-224-96c-8-3.4-17.2-3.4-25.2 0zM128 224l-64 0 0 196.3c-.6 .3-1.2 .7-1.8 1.1l-48 32c-11.7 7.8-17 22.4-12.9 35.9S17.9 512 32 512l448 0c14.1 0 26.5-9.2 30.6-22.7s-1.1-28.1-12.9-35.9l-48-32c-.6-.4-1.2-.7-1.8-1.1L448 224l-64 0 0 192-40 0 0-192-64 0 0 192-48 0 0-192-64 0 0 192-40 0 0-192zM256 64a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"></path></svg>
+      <span>المعهد العالي لتأهيل وتدريب القادة</span>
+    </div>
+  </div>
+  <div class="copyright-line">
+    <svg stroke="currentColor" stroke-width="0" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM199.4 312.6c31.2 31.2 81.9 31.2 113.1 0c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9c-50 50-131 50-181 0s-50-131 0-181s131-50 181 0c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0c-31.2-31.2-81.9-31.2-113.1 0s-31.2 81.9 0 113.1z"></path></svg>
+    <span>جميع الحقوق محفوظة</span>
+  </div>
+</section>
+</div>
+<div class="navbar">
+  <button id="nextBtn" title="التالي">›</button>
+  <span class="counter" id="counter"></span>
+  <button id="prevBtn" title="السابق">‹</button>
+</div>
+<script>
+let idx = 0;
+const slides = document.querySelectorAll('.slide');
+const total = slides.length;
+const counter = document.getElementById('counter');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+
+function render(){
+  slides.forEach((s,i)=> s.classList.toggle('active', i===idx));
+  counter.textContent = (idx+1) + ' / ' + total;
+  prevBtn.disabled = idx===0;
+  nextBtn.disabled = idx===total-1;
+}
+function next(){ if(idx<total-1){ idx++; render(); } }
+function prev(){ if(idx>0){ idx--; render(); } }
+
+prevBtn.addEventListener('click', prev);
+nextBtn.addEventListener('click', next);
+document.addEventListener('keydown', (e)=>{
+  if(e.key==='ArrowLeft' || e.key===' ') next();
+  else if(e.key==='ArrowRight') prev();
+});
+let touchStartX=null;
+document.addEventListener('touchstart', e=> touchStartX = e.touches[0].clientX);
+document.addEventListener('touchend', e=>{
+  if(touchStartX===null) return;
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  if(Math.abs(dx) > 50){ dx < 0 ? next() : prev(); }
+  touchStartX = null;
+});
+render();
+</script>
+</body>
+</html>
