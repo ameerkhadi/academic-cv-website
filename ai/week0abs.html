@@ -1,0 +1,1353 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مقرر الذكاء الاصطناعي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Aref+Ruqaa+Ink&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --red:#d1342b;
+    --green:#1f7a3d;
+    --blue:#1857a4;
+    --lightblue:#3f8fd6;
+    --orange:#e07a1f;
+    --purple:#7a2ea6;
+    --pink:#e0578f;
+    --paper:#fbf8ef;
+    --ruleline:rgba(63,143,214,0.28);
+    --ink:#1a3d8c;
+  }
+
+  *{box-sizing:border-box;}
+
+  html,body{
+    margin:0;
+    padding:0;
+    min-height:100vh;
+    font-family:'Aref Ruqaa', serif;
+  }
+
+  body{
+    background-color:#5e3a1f;
+    background-image:
+      linear-gradient(90deg, rgba(0,0,0,0.10) 0 2px, transparent 2px 18px),
+      repeating-linear-gradient(100deg, #6b4425 0, #6b4425 40px, #78502c 40px, #78502c 80px, #63401f 80px, #63401f 120px);
+    position:relative;
+  }
+
+  body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    background:radial-gradient(ellipse at center, rgba(0,0,0,0) 40%, rgba(0,0,0,0.35) 100%);
+    mix-blend-mode:multiply;
+  }
+
+  .stage{
+    position:relative;
+    z-index:1;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:flex-start;
+    padding:clamp(10px,2.2vw,22px) 10px clamp(14px,3vw,28px);
+    gap:0;
+  }
+
+  /* ---------- master header (on the wood background) ---------- */
+  .master-header{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    max-width:96vw;
+    margin:0 0 clamp(10px,2.4vw,16px);
+    padding:0 8px;
+  }
+  .mh-card{
+    display:flex;
+    flex-direction:column;
+    gap:3px;
+    text-align:center;
+  }
+  .mh-row{
+    font-size:clamp(12px,2.8vw,15px);
+    line-height:1.5;
+    text-shadow:0 1px 2px rgba(0,0,0,0.55);
+  }
+  .mh-row .mh-label{ font-weight:700; color:#e0a94e; }
+  .mh-row .mh-value{ font-weight:400; color:#fdf6e6; }
+  .mh-row.mh-subject .mh-value{
+    font-family:'Aref Ruqaa Ink','Aref Ruqaa',serif;
+    font-weight:700;
+    font-size:clamp(19px,4.4vw,30px);
+    color:#f0b400;
+  }
+  .mh-row .mh-blank{
+    display:inline-block;
+    min-width:120px;
+    border-bottom:1.5px dotted #dcc79c;
+    height:1em;
+  }
+  .mh-row .mh-email{
+    font-family:'Caveat',cursive;
+    font-weight:700;
+    font-size:1.15em;
+    direction:ltr;
+    unicode-bidi:isolate;
+    display:inline-block;
+  }
+
+  /* ---------- pinned platform badge ---------- */
+  .pin-badge{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    margin:8px auto 0;
+    padding:5px 12px 5px 12px;
+    background:#f7ecd2;
+    border:1.5px dashed var(--blue);
+    border-radius:4px;
+    color:var(--ink);
+    font-size:clamp(10.5px,2.3vw,13px);
+    font-weight:700;
+    text-decoration:none;
+    box-shadow:0 3px 6px rgba(0,0,0,0.35);
+    transform:rotate(-1.2deg);
+    direction:ltr;
+    unicode-bidi:isolate;
+  }
+  .pin-badge .pin-head{
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    background:var(--red);
+    box-shadow:0 1px 2px rgba(0,0,0,0.5), inset -1px -1px 2px rgba(0,0,0,0.3), inset 1px 1px 1px rgba(255,255,255,0.6);
+    flex:none;
+  }
+  .pin-badge:hover{ background:#fff; }
+
+  /* ---------- master footer (on the wood background) ---------- */
+  .master-footer{
+    margin-top:clamp(14px,3vw,26px);
+    margin-bottom:clamp(44px,8vw,56px);
+    text-align:center;
+    font-size:clamp(10.5px,2.3vw,13px);
+    color:#dcc79c;
+    text-shadow:0 1px 2px rgba(0,0,0,0.5);
+    opacity:0.9;
+  }
+  .master-footer .mf-email{
+    font-family:'Caveat',cursive;
+    font-weight:700;
+    font-size:1.15em;
+    color:#f0dcac;
+    direction:ltr;
+    unicode-bidi:isolate;
+  }
+
+  /* ---------- tabs ---------- */
+  .tabs{
+    display:flex;
+    flex-wrap:nowrap;
+    overflow-x:auto;
+    overscroll-behavior-x:contain;
+    -webkit-overflow-scrolling:touch;
+    scroll-snap-type:x proximity;
+    gap:8px;
+    padding:4px 8px 8px;
+    position:relative;
+    z-index:3;
+    max-width:96vw;
+    justify-content:flex-start;
+    scrollbar-width:thin;
+    scrollbar-color:rgba(255,255,255,0.35) transparent;
+  }
+  .tabs::-webkit-scrollbar{ height:5px; }
+  .tabs::-webkit-scrollbar-thumb{ background:rgba(255,255,255,0.35); border-radius:4px; }
+
+  .tab{
+    font-family:'Aref Ruqaa', serif;
+    font-weight:700;
+    font-size:14px;
+    line-height:1.15;
+    color:#fff;
+    background:var(--blue);
+    border:none;
+    border-radius:10px 10px 0 0;
+    padding:7px 14px 10px;
+    cursor:pointer;
+    box-shadow:0 4px 8px rgba(0,0,0,0.35);
+    transform:rotate(-1.5deg) translateY(6px);
+    opacity:0.75;
+    transition:transform .15s ease, opacity .15s ease;
+    flex:0 0 auto;
+    scroll-snap-align:start;
+    white-space:nowrap;
+  }
+
+  .tab:nth-child(1){background:var(--blue); transform:rotate(-1.5deg) translateY(6px);}
+  .tab:nth-child(2){background:var(--green); transform:rotate(1.2deg) translateY(6px);}
+  .tab:nth-child(3){background:var(--orange); transform:rotate(-1deg) translateY(6px);}
+  .tab:nth-child(4){background:var(--purple); transform:rotate(1.4deg) translateY(6px);}
+  .tab:nth-child(5){background:var(--red); transform:rotate(-1.5deg) translateY(6px);}
+  .tab:nth-child(6){background:var(--pink); transform:rotate(1.2deg) translateY(6px);}
+  .tab:nth-child(7){background:var(--lightblue); transform:rotate(-1deg) translateY(6px);}
+  .tab:nth-child(8){background:var(--blue); transform:rotate(1.4deg) translateY(6px);}
+  .tab:nth-child(9){background:var(--green); transform:rotate(-1.5deg) translateY(6px);}
+  .tab:nth-child(10){background:var(--orange); transform:rotate(1.2deg) translateY(6px);}
+  .tab:nth-child(11){background:var(--purple); transform:rotate(-1deg) translateY(6px);}
+  .tab:nth-child(12){background:var(--red); transform:rotate(1.4deg) translateY(6px);}
+  .tab:nth-child(13){background:var(--pink); transform:rotate(-1.5deg) translateY(6px);}
+  .tab:nth-child(14){background:var(--lightblue); transform:rotate(1.2deg) translateY(6px);}
+  .tab:nth-child(15){background:var(--blue); transform:rotate(-1deg) translateY(6px);}
+
+  .tab.active{
+    opacity:1;
+    transform:translateY(0) rotate(-0.6deg);
+    box-shadow:0 6px 10px rgba(0,0,0,0.4);
+  }
+
+  .tab:hover{opacity:0.95;}
+
+  /* ---------- paper ---------- */
+  .paper-wrapper{
+    position:relative;
+    z-index:2;
+  }
+
+  .tape{
+    position:absolute;
+    width:64px;
+    height:22px;
+    top:-11px;
+    opacity:0.6;
+    background:repeating-linear-gradient(45deg, rgba(255,255,255,0.55) 0 5px, rgba(255,255,255,0.15) 5px 10px);
+    box-shadow:0 2px 4px rgba(0,0,0,0.2);
+  }
+  .tape-left{ right:10%; background-color:#e8c14a; transform:rotate(-7deg); }
+  .tape-right{ left:12%; background-color:#e88ba3; transform:rotate(6deg); }
+
+  .paper{
+    position:relative;
+    width:min(94vw,780px);
+    min-height:min(calc(92vw * 1.1), 820px);
+    background-color:var(--paper);
+    background-image:repeating-linear-gradient(var(--paper), var(--paper) 27px, var(--ruleline) 28px);
+    border:2.5px solid var(--red);
+    box-shadow:0 22px 45px rgba(0,0,0,0.5), 0 6px 14px rgba(0,0,0,0.35);
+    transform:rotate(-0.5deg);
+    padding:clamp(16px,3.6vw,30px) clamp(18px,4.6vw,40px);
+    overflow:visible;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    transition:width .2s ease;
+  }
+
+  /* the week-1 tab carries the full lesson content, so its paper card grows wider */
+  .paper:has(.rich-slide.active){
+    width:min(97vw,900px);
+  }
+
+  .slide{
+    display:none;
+    width:100%;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    position:relative;
+  }
+  .slide.active{display:flex;}
+
+  .content-slide.active{
+    align-items:stretch;
+    text-align:right;
+  }
+
+  /* ---------- doodles ---------- */
+  .corner-doodle{
+    position:absolute;
+    width:clamp(60px,16vw,120px);
+    z-index:1;
+  }
+  .monitor-pos{ top:8px; right:6px; transform:rotate(-4deg); }
+  .folder-pos{ top:12px; left:6px; transform:rotate(5deg); }
+
+  .star{ width:18px; height:18px; }
+
+  /* ---------- title ---------- */
+  .title-wrap{
+    margin-top:clamp(46px,10vw,72px);
+    position:relative;
+  }
+
+  .eyebrow-tag{
+    display:inline-block;
+    font-family:'Aref Ruqaa', serif;
+    font-weight:700;
+    font-size:clamp(13px,2.6vw,16px);
+    color:#fff;
+    background:var(--orange);
+    padding:4px 16px;
+    border-radius:255px 15px 225px 15px/15px 225px 15px 255px;
+    transform:rotate(-2deg);
+    box-shadow:0 3px 6px rgba(0,0,0,0.25);
+    margin-bottom:14px;
+  }
+
+  .main-title{
+    font-family:'Aref Ruqaa Ink','Aref Ruqaa',serif;
+    font-weight:700;
+    color:var(--green);
+    font-size:clamp(26px,6.4vw,44px);
+    line-height:1.35;
+    margin:0;
+    text-shadow:1px 1px 0 rgba(0,0,0,0.06);
+    transform:rotate(-0.5deg);
+  }
+
+  .title-underline{
+    width:min(88%,360px);
+    height:26px;
+    margin:2px auto 0;
+    display:block;
+  }
+
+  /* ---------- info box ---------- */
+  .info-box{
+    margin-top:clamp(26px,6vw,44px);
+    border:2.5px solid var(--blue);
+    border-radius:255px 15px 225px 15px/15px 225px 15px 255px;
+    background:rgba(255,255,255,0.45);
+    padding:clamp(16px,4vw,26px) clamp(22px,6vw,38px);
+    transform:rotate(0.6deg);
+    box-shadow:2px 3px 0 rgba(24,87,164,0.08);
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    max-width:92%;
+  }
+
+  .info-line{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    font-size:clamp(15px,3.4vw,20px);
+    color:var(--ink);
+  }
+
+  .icon-sm{ width:clamp(24px,6vw,34px); flex:none; }
+
+  .institute-name{
+    font-weight:700;
+    color:var(--blue);
+    font-size:clamp(16px,3.8vw,22px);
+  }
+
+  .divider{
+    width:70%;
+    align-self:center;
+    height:2px;
+    background-image:repeating-linear-gradient(90deg, var(--purple) 0 8px, transparent 8px 14px);
+    opacity:0.6;
+    border:none;
+    margin:0;
+  }
+
+  .presenter-line .label{
+    color:var(--purple);
+    font-weight:400;
+  }
+  .presenter-line .name{
+    font-weight:700;
+    color:var(--purple);
+  }
+
+  .email-line .email{
+    font-family:'Caveat',cursive;
+    font-weight:700;
+    font-size:clamp(18px,4.2vw,24px);
+    color:var(--blue);
+    direction:ltr;
+    unicode-bidi:isolate;
+    border-bottom:2px dashed var(--lightblue);
+    padding-bottom:2px;
+  }
+
+  .deco-stars{
+    position:absolute;
+    display:flex;
+    gap:6px;
+  }
+  .stars-a{ top:14%; left:8%; }
+  .stars-b{ bottom:10%; right:8%; }
+
+  .footer-note{
+    margin-top:clamp(20px,5vw,34px);
+    font-size:clamp(12px,2.6vw,14px);
+    color:var(--ink);
+    opacity:0.65;
+    transform:rotate(-1deg);
+  }
+
+  @media (max-width:420px){
+    .tab{ padding:6px 12px 10px; font-size:13px; }
+  }
+
+  /* ---------- content-slide building blocks ---------- */
+  .chip{
+    display:inline-block;
+    font-family:'Aref Ruqaa', serif;
+    font-weight:700;
+    font-size:clamp(12px,2.6vw,15px);
+    color:#fff;
+    padding:4px 16px;
+    border-radius:255px 15px 225px 15px/15px 225px 15px 255px;
+    box-shadow:0 3px 6px rgba(0,0,0,0.25);
+    align-self:center;
+    margin-bottom:8px;
+  }
+  .chip-ch1{ background:var(--blue); transform:rotate(-1.5deg); }
+
+  .page-title{
+    font-family:'Aref Ruqaa Ink','Aref Ruqaa',serif;
+    font-weight:700;
+    color:var(--green);
+    font-size:clamp(22px,5.2vw,30px);
+    margin:2px 0 0;
+    align-self:center;
+    text-align:center;
+  }
+
+  .page-underline{
+    width:min(70%,240px);
+    height:20px;
+    margin:0 auto 14px;
+    display:block;
+    align-self:center;
+  }
+  .page-underline path{ stroke:#f0b400; }
+
+  .lead-paragraph{
+    font-size:clamp(14px,3.4vw,17px);
+    color:var(--ink);
+    line-height:1.9;
+    margin:0 0 4px;
+  }
+
+  .tip-box{
+    border:2px solid var(--green);
+    border-radius:16px 4px 16px 4px/4px 16px 4px 16px;
+    background:rgba(200,240,210,0.35);
+    padding:10px 14px;
+    font-size:clamp(12.5px,3vw,14.5px);
+    color:var(--ink);
+    max-width:230px;
+    margin:6px auto 10px;
+    transform:rotate(-1.2deg);
+    align-self:center;
+    text-align:center;
+  }
+  .tip-box .tip-title{
+    color:var(--green);
+    font-weight:700;
+    display:flex;
+    align-items:center;
+    gap:6px;
+    margin-bottom:4px;
+    justify-content:center;
+  }
+  .tip-icon{ width:22px; height:22px; flex:none; }
+
+  .page-nav{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:20px;
+    padding-top:12px;
+    border-top:2px dashed var(--ruleline);
+    width:100%;
+  }
+  .nav-btn{
+    font-family:'Aref Ruqaa', serif;
+    font-weight:700;
+    font-size:14px;
+    background:#fff;
+    border:2px solid var(--blue);
+    border-radius:255px 15px 225px 15px/15px 225px 15px 255px;
+    padding:6px 16px;
+    color:var(--blue);
+    cursor:pointer;
+    box-shadow:1px 2px 0 rgba(24,87,164,0.15);
+    text-decoration:none;
+    display:inline-block;
+  }
+  .nav-btn:hover{ background:var(--blue); color:#fff; }
+  .nav-btn:disabled{ opacity:0.3; cursor:default; box-shadow:none; }
+  .nav-btn:disabled:hover{ background:#fff; color:var(--blue); }
+
+  /* ---------- glossary (terms in plain Arabic) ---------- */
+  .glossary-list{
+    list-style:none;
+    padding:0;
+    margin:0 0 6px;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+  .glossary-list li{
+    font-size:clamp(12.5px,3vw,14.5px);
+    color:var(--ink);
+    line-height:1.7;
+    border-bottom:1px dashed var(--ruleline);
+    padding-bottom:6px;
+  }
+  .gloss-term{
+    font-weight:700;
+    color:var(--blue);
+    unicode-bidi:isolate;
+  }
+  .gloss-ar{
+    font-weight:700;
+    color:var(--green);
+  }
+
+  /* ---------- review questions (no answers shown) ---------- */
+  .quiz-note{
+    font-size:clamp(12px,2.8vw,14px);
+    color:var(--red);
+    margin:4px 0 10px;
+  }
+  .mcq-item{ margin:10px 0 14px; font-size:clamp(13px,3vw,15px); color:var(--ink); line-height:1.7; }
+  .mcq-item .q-num{ font-weight:700; color:var(--red); }
+  .mcq-options{ list-style:none; padding:0; margin:6px 0 0; display:flex; flex-direction:column; gap:4px; }
+  .mcq-options li{ font-size:clamp(12.5px,2.9vw,14.5px); color:var(--ink); }
+  .opt-letter{ font-weight:700; color:var(--blue); }
+
+  .blank-line{
+    display:block;
+    border-bottom:1.5px dotted var(--ruleline);
+    height:1.7em;
+    margin:2px 0 4px;
+  }
+
+  .tf-item{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    font-size:clamp(13px,3vw,15px);
+    color:var(--ink);
+    padding:6px 0;
+    border-bottom:1px dashed var(--ruleline);
+  }
+  .tf-boxes{
+    display:inline-flex;
+    gap:10px;
+    font-size:clamp(11px,2.5vw,13px);
+    color:var(--ink);
+    opacity:.85;
+    white-space:nowrap;
+    flex:none;
+  }
+  .tf-boxes span{ display:inline-flex; align-items:center; gap:3px; }
+  .tf-boxes .box{
+    display:inline-block;
+    width:13px;
+    height:13px;
+    border:1.5px solid var(--ink);
+    border-radius:2px;
+  }
+
+  .content-slide::after{
+    content:"★";
+    position:absolute;
+    bottom:6px;
+    left:12px;
+    font-size:15px;
+    opacity:0.7;
+    color:var(--orange);
+    transform:rotate(-8deg);
+  }
+  .content-slide:nth-of-type(3n+2)::after{ color:var(--purple); transform:rotate(6deg); }
+  .content-slide:nth-of-type(3n)::after{ color:var(--green); transform:rotate(-4deg); }
+
+  .mini-note{
+    margin-top:10px;
+    align-self:center;
+    font-size:clamp(12px,2.8vw,14px);
+    color:var(--red);
+    opacity:0.85;
+    transform:rotate(0.8deg);
+    text-align:center;
+  }
+
+  .print-btn{
+    position:fixed;
+    bottom:18px;
+    left:18px;
+    z-index:200;
+    background:var(--red);
+    color:#fff;
+    border:none;
+    border-radius:24px;
+    padding:11px 20px;
+    font-family:'Aref Ruqaa', serif;
+    font-weight:700;
+    font-size:14px;
+    cursor:pointer;
+    box-shadow:0 4px 12px rgba(0,0,0,0.35);
+  }
+  .print-btn:hover{ background:var(--accent-dark,#b52a22); }
+
+  /* ---------- section building blocks (used by the rich week-1 page) ---------- */
+  .section-heading{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    color:var(--red);
+    font-weight:700;
+    font-size:clamp(15px,3.6vw,19px);
+    border-bottom:2.5px solid var(--red);
+    padding-bottom:4px;
+    margin:16px 0 8px;
+    width:fit-content;
+    align-self:flex-start;
+  }
+  .section-heading:first-of-type{ margin-top:4px; }
+  .arrow-icon{ width:18px; height:18px; flex:none; }
+
+  .chapter-num{
+    display:flex;
+    align-items:baseline;
+    gap:10px;
+    border-bottom:3px solid currentColor;
+    padding:2px 4px 6px;
+    margin:20px 0 10px;
+    align-self:flex-start;
+    width:fit-content;
+  }
+  .chapter-num:first-of-type{ margin-top:4px; }
+  .chapter-num .cn-num{
+    font-family:'Aref Ruqaa Ink','Aref Ruqaa',serif;
+    font-weight:700;
+    font-size:clamp(30px,7.5vw,44px);
+    line-height:1;
+  }
+  .chapter-num .cn-title{
+    font-family:'Aref Ruqaa', serif;
+    font-weight:700;
+    font-size:clamp(15px,3.6vw,19px);
+  }
+
+  .bullet-list{
+    list-style:none;
+    padding:0;
+    margin:0 0 6px;
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+  }
+  .bullet-list li{
+    display:flex;
+    align-items:flex-start;
+    gap:8px;
+    font-size:clamp(13px,3.1vw,15.5px);
+    color:var(--ink);
+    line-height:1.7;
+  }
+  .bullet-mark{
+    color:var(--green);
+    font-weight:700;
+    display:inline-block;
+    transform:rotate(-6deg);
+    flex:none;
+  }
+
+  .hl{ padding:0 4px; border-radius:3px; box-decoration-break:clone; -webkit-box-decoration-break:clone; }
+  .hl-yellow{ background:rgba(255,224,102,0.65); }
+  .hl-green{ background:rgba(163,220,175,0.6); }
+  .hl-pink{ background:rgba(240,170,195,0.55); }
+  .hl-blue{ background:rgba(150,200,240,0.55); }
+
+  .components-grid{
+    display:flex;
+    flex-wrap:wrap;
+    gap:9px;
+    justify-content:center;
+    margin:6px 0 8px;
+  }
+  .component-card{
+    flex:1 1 115px;
+    max-width:145px;
+    border:2px solid var(--blue);
+    border-radius:14px 4px 14px 4px/4px 14px 4px 14px;
+    background:rgba(255,255,255,0.5);
+    padding:9px 7px;
+    text-align:center;
+  }
+  .component-card .c-icon{ width:26px; height:26px; margin-bottom:4px; }
+  .component-card .c-name{
+    font-weight:700;
+    color:var(--blue);
+    font-size:clamp(12.5px,3vw,14.5px);
+    display:block;
+  }
+  .component-card .c-ex{
+    font-size:clamp(10.5px,2.6vw,12px);
+    color:var(--ink);
+    opacity:0.75;
+    display:block;
+    margin-top:2px;
+  }
+
+  /* ---------- "coming later" placeholder ---------- */
+  .coming-soon{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:14px;
+    min-height:320px;
+    text-align:center;
+  }
+  .coming-soon .big-icon{
+    width:64px;
+    height:64px;
+  }
+  .coming-soon .cs-title{
+    font-family:'Aref Ruqaa Ink','Aref Ruqaa',serif;
+    font-weight:700;
+    color:var(--orange);
+    font-size:clamp(24px,5.6vw,32px);
+    margin:0;
+  }
+  .coming-soon .cs-sub{
+    color:var(--ink);
+    font-size:clamp(14px,3.2vw,17px);
+    max-width:85%;
+    line-height:1.8;
+    margin:0;
+  }
+
+  @media print{
+    *{ -webkit-print-color-adjust:exact; print-color-adjust:exact; color-adjust:exact; }
+    @page{ size:A4; margin:8mm; }
+    body{ background:#fff !important; }
+    .print-btn, .tabs, .tape, .master-header, .master-footer{ display:none !important; }
+    .paper-wrapper{ transform:none !important; }
+    .paper{
+      display:block !important;
+      border:none !important;
+      box-shadow:none !important;
+      transform:none !important;
+      width:auto !important;
+      min-height:0 !important;
+      padding:0 !important;
+      background:none !important;
+    }
+    .slide{
+      display:flex !important;
+      flex-direction:column;
+      border:2.5px solid var(--red);
+      background-color:var(--paper);
+      background-image:repeating-linear-gradient(var(--paper), var(--paper) 27px, var(--ruleline) 28px);
+      padding:14mm 10mm;
+      min-height:277mm;
+      page-break-after:always;
+      break-after:page;
+      box-sizing:border-box;
+    }
+    .slide:last-child{ page-break-after:auto; break-after:auto; }
+    .content-slide{ align-items:stretch !important; text-align:right !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- reusable sketchy filter -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <filter id="sketchy" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="7" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="3.2"/>
+    </filter>
+  </defs>
+</svg>
+
+<button class="print-btn" onclick="window.print()">🖨 طباعة كل الصفحات PDF</button>
+
+<div class="stage">
+
+  <div class="master-header">
+    <div class="mh-card">
+      <div class="mh-row mh-subject"><span class="mh-label">المادة:</span> <span class="mh-value">دفتر محاضرات الذكاء الاصطناعي وتحليل البيانات</span></div>
+      <div class="mh-row"><span class="mh-label">الاسم:</span> <span class="mh-value"><span class="mh-blank"></span></span></div>
+      <div class="mh-row"><span class="mh-label">المدرسة:</span> <span class="mh-value">المعهد العالي لتأهيل وتدريب القادة</span></div>
+      <div class="mh-row"><span class="mh-label">السنة:</span> <span class="mh-value">٢٠٢٦</span></div>
+      <div class="mh-row"><span class="mh-label">الإيميل:</span> <span class="mh-value mh-email">amer.hadi@alshaab.edu.iq</span></div>
+    </div>
+    <a class="pin-badge" href="https://ameerkhadi.github.io/academic-cv-website/pt/index" target="_blank" rel="noopener">
+      <span class="pin-head"></span>
+      <span>ameerkhadi.github.io/academic-cv-website/pt/index</span>
+    </a>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" data-target="slide-1">١<br>الأسبوع الأول</button>
+    <button class="tab" data-target="slide-2">٢<br>الأسبوع الثاني</button>
+    <button class="tab" data-target="slide-3">٣<br>الأسبوع الثالث</button>
+    <button class="tab" data-target="slide-4">٤<br>الأسبوع الرابع</button>
+    <button class="tab" data-target="slide-5">٥<br>الأسبوع الخامس</button>
+    <button class="tab" data-target="slide-6">٦<br>الأسبوع السادس</button>
+    <button class="tab" data-target="slide-7">٧<br>الأسبوع السابع</button>
+    <button class="tab" data-target="slide-8">٨<br>الأسبوع الثامن</button>
+    <button class="tab" data-target="slide-9">٩<br>الأسبوع التاسع</button>
+    <button class="tab" data-target="slide-10">١٠<br>الأسبوع العاشر</button>
+    <button class="tab" data-target="slide-11">١١<br>الأسبوع الحادي عشر</button>
+    <button class="tab" data-target="slide-12">١٢<br>الأسبوع الثاني عشر</button>
+    <button class="tab" data-target="slide-13">١٣<br>الأسبوع الثالث عشر</button>
+    <button class="tab" data-target="slide-14">١٤<br>الأسبوع الرابع عشر</button>
+    <button class="tab" data-target="slide-15">١٥<br>الأسبوع الخامس عشر</button>
+  </div>
+
+  <div class="paper-wrapper">
+    <div class="tape tape-left"></div>
+    <div class="tape tape-right"></div>
+
+    <div class="paper">
+
+      <!-- ============ SLIDE 1 : الأسبوع الأول — كلود Claude ============ -->
+      <div id="slide-1" class="slide content-slide rich-slide active">
+        <span class="chip chip-ch1">الأسبوع الأول</span>
+        <h2 class="page-title">كلود Claude — مدخل إلى الذكاء الاصطناعي</h2>
+        <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
+
+        <p class="lead-paragraph">
+          محاضرة تعريفية تأخذك خطوة بخطوة من فهم <span class="hl hl-blue">الذكاء الاصطناعي التوليدي</span>،
+          وصولًا إلى احتراف التعامل مع <span class="hl hl-yellow">كلود Claude</span> عبر المشاريع والمهارات.
+        </p>
+
+        <div class="chapter-num" style="color:var(--blue);"><span class="cn-num">١</span><span class="cn-title">الأساسيات</span></div>
+        <ul class="bullet-list">
+          <li><span class="bullet-mark">✔</span>كلود نموذج لغوي كبير (LLM) <span class="hl hl-blue">يتوقّع الكلمة التالية</span> بناءً على أنماط تعلّمها من نصوص هائلة — وهذا ليس «تفكيرًا» بالمعنى البشري.</li>
+          <li><span class="bullet-mark">✔</span>يمرّ نصّك بأربع مراحل: <strong>الأمر ← التقطيع ← التمثيل الرقمي ← التوليد</strong>.</li>
+          <li><span class="bullet-mark">✔</span>في المحادثات الطويلة يفقد النموذج تدريجيًا تفاصيل بداية الحديث — لخّص النقاط المهمة بين حين وآخر.</li>
+        </ul>
+        <div class="tip-box">
+          <div class="tip-title">
+            <svg class="tip-icon" viewBox="0 0 24 24"><circle cx="12" cy="9" r="6.5" fill="#fff3c4" stroke="var(--green)" stroke-width="2"/><rect x="9" y="16" width="6" height="4" rx="1.5" fill="none" stroke="var(--green)" stroke-width="2"/><line x1="9" y1="21" x2="15" y2="21" stroke="var(--green)" stroke-width="2" stroke-linecap="round"/></svg>
+            الهلوسة (Hallucination)
+          </div>
+          افترض دائمًا أنّ إجابة الذكاء الاصطناعي قد تكون خاطئة حتى يثبت العكس — وتحقّق من المعلومات الحسّاسة.
+        </div>
+
+        <div class="chapter-num" style="color:var(--green);"><span class="cn-num">٢</span><span class="cn-title">تعرّف على كلود</span></div>
+        <ul class="bullet-list">
+          <li><span class="bullet-mark">✔</span><span class="hl hl-green">ذكاء اصطناعي دستوري</span>: مبادئ ثابتة تجعله مفيدًا وصادقًا وآمنًا، ويراجع عمله ذاتيًا قبل تسليمه لك.</li>
+          <li><span class="bullet-mark">✔</span>نافذة سياق ضخمة تصل إلى <strong>٢٠٠ ألف توكِن</strong> (نحو ٥٠٠ صفحة نص) في المحادثة الواحدة.</li>
+          <li><span class="bullet-mark">✔</span>أبرز استخداماته: كتابة المحتوى، البحث وتحليل البيانات، البرمجة (كلود كود)، والتعلّم والتدريس.</li>
+        </ul>
+
+        <div class="chapter-num" style="color:var(--orange);"><span class="cn-num">٣</span><span class="cn-title">البداية العملية</span></div>
+        <div class="components-grid">
+          <div class="component-card">
+            <svg class="c-icon" viewBox="0 0 40 40"><rect x="11" y="4" width="18" height="32" rx="3" fill="#eaf4ff" stroke="var(--blue)" stroke-width="2.5"/><circle cx="20" cy="31" r="1.6" fill="var(--blue)"/></svg>
+            <span class="c-name">تطبيق الجوال</span>
+            <span class="c-ex">iOS وAndroid</span>
+          </div>
+          <div class="component-card">
+            <svg class="c-icon" viewBox="0 0 40 40"><rect x="4" y="8" width="32" height="20" rx="2" fill="#e6f6ea" stroke="var(--green)" stroke-width="2.5"/><rect x="14" y="32" width="12" height="3" fill="var(--green)"/></svg>
+            <span class="c-name">المتصفح</span>
+            <span class="c-ex">claude.ai</span>
+          </div>
+          <div class="component-card">
+            <svg class="c-icon" viewBox="0 0 40 40"><rect x="4" y="6" width="32" height="22" rx="2" fill="#fde3c4" stroke="var(--orange)" stroke-width="2.5"/><path d="M12 34 h16 M14 28 l-2 6 M26 28 l2 6" stroke="var(--orange)" stroke-width="2" stroke-linecap="round"/></svg>
+            <span class="c-name">تطبيق سطح المكتب</span>
+            <span class="c-ex">Mac وWindows</span>
+          </div>
+          <div class="component-card">
+            <svg class="c-icon" viewBox="0 0 40 40"><rect x="5" y="8" width="30" height="24" rx="3" fill="#f6e8fb" stroke="var(--purple)" stroke-width="2.5"/><path d="M11 16 l6 4 -6 4 M21 24 h8" stroke="var(--purple)" stroke-width="2" stroke-linecap="round"/></svg>
+            <span class="c-name">الطرفية</span>
+            <span class="c-ex">كلود كود</span>
+          </div>
+        </div>
+        <ul class="bullet-list">
+          <li><span class="bullet-mark">✔</span>خطط الاشتراك: <strong>مجانية</strong>، <strong>برو</strong> (٢٠$/شهريًا)، <strong>ماكس</strong> (١٠٠$/شهريًا).</li>
+        </ul>
+
+        <div class="section-heading">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>شات، كوورك، وكود: شنو الفرق؟</span>
+        </div>
+        <div class="components-grid">
+          <div class="component-card">
+            <svg class="c-icon" viewBox="0 0 40 40"><circle cx="20" cy="20" r="15" fill="#eaf4ff" stroke="var(--blue)" stroke-width="2.5"/><circle cx="14" cy="20" r="1.8" fill="var(--blue)"/><circle cx="20" cy="20" r="1.8" fill="var(--blue)"/><circle cx="26" cy="20" r="1.8" fill="var(--blue)"/></svg>
+            <span class="c-name">كلود شات</span>
+            <span class="c-ex">مهام سريعة: سؤال مباشر أو محادثة صوتية فورية</span>
+          </div>
+          <div class="component-card">
+            <svg class="c-icon" viewBox="0 0 40 40"><rect x="6" y="10" width="28" height="20" rx="3" fill="#e6f6ea" stroke="var(--green)" stroke-width="2.5"/><path d="M13 30 v4 M27 30 v4" stroke="var(--green)" stroke-width="2" stroke-linecap="round"/></svg>
+            <span class="c-name">كلود كوورك</span>
+            <span class="c-ex">مهام أكبر: وصول حقيقي لملفاتك وجدولة مهام تلقائية متكررة</span>
+          </div>
+          <div class="component-card">
+            <svg class="c-icon" viewBox="0 0 40 40"><path d="M14 12 L6 20 L14 28 M26 12 L34 20 L26 28" stroke="var(--purple)" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="c-name">كلود كود</span>
+            <span class="c-ex">بيئة تطوير كاملة: قراءة الأكواد وتحسينها ومعالجة مشكلاتها</span>
+          </div>
+        </div>
+        <ul class="bullet-list">
+          <li><span class="bullet-mark">✔</span><strong>الإرسال إلى وكلاء فرعيين (Dispatch / Subagents)</strong>: يقدر كلود كود يُرسل مهمة فرعية محدّدة إلى «وكيل» مستقل يشتغل بالتوازي أو بالخلفية، ويرجع لك بالنتيجة النهائية فقط — فتبقى المحادثة الأساسية مركّزة دون أن تمتلئ بتفاصيل البحث والاستكشاف الجانبية.</li>
+        </ul>
+
+        <div class="chapter-num" style="color:var(--purple);"><span class="cn-num">٤</span><span class="cn-title">هندسة الأوامر</span></div>
+        <ul class="bullet-list">
+          <li><span class="bullet-mark">✔</span>الخطوات الأربع لصياغة أمر: <strong>١) تحديد الموقف والسياق ← ٢) تحديد المهمة بوضوح ← ٣) تحديد القواعد والشكل ← ٤) تقديم مثال</strong>.</li>
+          <li><span class="bullet-mark">✔</span>اختيار النموذج: <strong>هايكو</strong> للسرعة، <strong>سونيت</strong> للتوازن (الافتراضي)، <strong>أوبس</strong> للدقّة العالية.</li>
+          <li><span class="bullet-mark">✔</span>أخطاء شائعة: غموض السياق، عدم تحديد طول الإجابة، إغفال النبرة والتنسيق.</li>
+          <li><span class="bullet-mark">✔</span><span class="hl hl-green">عقلية التكرار</span> أفضل من «اللقطة الواحدة»: ابنِ السياق تدريجيًا وقدّم ملاحظات واضحة بعد كل نتيجة.</li>
+        </ul>
+
+        <div class="chapter-num" style="color:var(--red);"><span class="cn-num">٥</span><span class="cn-title">المشاريع والمهارات</span></div>
+        <ul class="bullet-list">
+          <li><span class="bullet-mark">✔</span><strong>المشاريع (Projects)</strong>: بيئة معزولة بذاكرة وتعليمات وملفات ثابتة لكل موضوع تتعامل معه بانتظام.</li>
+          <li><span class="bullet-mark">✔</span><strong>الأرتيفاكتس (Artifacts)</strong>: نافذة تفاعلية مستقلّة لمعاينة الكود أو المواقع أو المستندات الطويلة، ومشاركتها برابط.</li>
+          <li><span class="bullet-mark">✔</span><strong>المهارات (Skills)</strong>: أسلوب تنفيذ قابل لإعادة الاستخدام — جاهزة من Anthropic أو مصمّمة خصيصًا لك عبر «صانع المهارات».</li>
+        </ul>
+
+        <div class="section-heading">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>مصطلحات هذا الأسبوع بالعربي</span>
+        </div>
+        <ul class="glossary-list">
+          <li><span class="gloss-ar">نموذج لغوي كبير</span> <span class="gloss-term">(LLM)</span>: برنامج "قرأ" كمية هائلة من النصوص فصار يتوقّع الكلمة المناسبة الجاية، من دون أن "يفهم" متل الإنسان.</li>
+          <li><span class="gloss-ar">الأمر/الطلب</span> <span class="gloss-term">(Prompt)</span>: الجملة اللي تكتبها للبرنامج توضّح فيها شنو تريد بالضبط.</li>
+          <li><span class="gloss-ar">التقطيع</span> <span class="gloss-term">(Tokenization)</span>: تقسيم جملتك إلى قطع صغيرة يتعامل معها البرنامج.</li>
+          <li><span class="gloss-ar">التمثيل الرقمي</span> <span class="gloss-term">(Embeddings)</span>: تحويل كل قطعة نص إلى أرقام تعكس معناها.</li>
+          <li><span class="gloss-ar">نافذة السياق</span> <span class="gloss-term">(Context Window)</span>: كمية النص اللي يقدر يتذكرها البرنامج بنفس المحادثة.</li>
+          <li><span class="gloss-ar">الهلوسة/الاختلاق</span> <span class="gloss-term">(Hallucination)</span>: إعطاء معلومة غلط بثقة تامة وكأنها صحيحة.</li>
+          <li><span class="gloss-ar">شات/كوورك/كود</span> <span class="gloss-term">(Chat / Cowork / Code)</span>: محادثة سريعة، أو تنفيذ مهام أكبر بالملفات، أو أداة برمجة متخصّصة.</li>
+          <li><span class="gloss-ar">الإرسال إلى وكلاء فرعيين</span> <span class="gloss-term">(Dispatch / Subagents)</span>: تفويض جزء من المهمة لمساعد مستقل يشتغل بالخلفية.</li>
+          <li><span class="gloss-ar">المشاريع</span> <span class="gloss-term">(Projects)</span>: مساحة تحتفظ بمعلومات وملفات ثابتة لموضوع معيّن.</li>
+          <li><span class="gloss-ar">الأرتيفاكتس/النواتج التفاعلية</span> <span class="gloss-term">(Artifacts)</span>: نافذة منفصلة تعرض نتيجة شغلك.</li>
+          <li><span class="gloss-ar">المهارات</span> <span class="gloss-term">(Skills)</span>: طريقة عمل جاهزة يستخدمها البرنامج تلقائيًا لتنفيذ مهمة معيّنة.</li>
+        </ul>
+
+        <div class="section-heading">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>أسئلة للمراجعة</span>
+        </div>
+        <p class="quiz-note">بدون حلول — فكّر بنفسك واكتب إجابتك بالمساحة الفارغة، والحل يُناقش بالمحاضرة الجاية.</p>
+
+        <div class="mcq-item">
+          <span class="q-num">١.</span> النموذج اللغوي الكبير (LLM) يعمل بشكل أساسي عن طريق:
+          <ul class="mcq-options">
+            <li><span class="opt-letter">أ)</span> فهم النص فهمًا بشريًا حقيقيًا</li>
+            <li><span class="opt-letter">ب)</span> توقّع الكلمة التالية بناءً على أنماط تعلّمها من نصوص سابقة</li>
+            <li><span class="opt-letter">ج)</span> البحث في الإنترنت لحظيًا عن كل إجابة</li>
+            <li><span class="opt-letter">د)</span> حفظ كل إجابة سبق أن أعطاها لأي مستخدم</li>
+          </ul>
+        </div>
+        <div class="mcq-item">
+          <span class="q-num">٢.</span> "الهلوسة" (Hallucination) في الذكاء الاصطناعي تعني:
+          <ul class="mcq-options">
+            <li><span class="opt-letter">أ)</span> توقّف البرنامج عن العمل فجأة</li>
+            <li><span class="opt-letter">ب)</span> إعطاء إجابة خاطئة بثقة تامة وكأنها صحيحة</li>
+            <li><span class="opt-letter">ج)</span> طلب البرنامج توضيحًا إضافيًا من المستخدم</li>
+            <li><span class="opt-letter">د)</span> رفض البرنامج الإجابة على سؤال معيّن</li>
+          </ul>
+        </div>
+        <div class="mcq-item">
+          <span class="q-num">٣.</span> أي أداة من أدوات كلود الأنسب لتنظيم ملفاتك وجدولة مهام تتكرر يوميًا تلقائيًا؟
+          <ul class="mcq-options">
+            <li><span class="opt-letter">أ)</span> كلود شات (Chat)</li>
+            <li><span class="opt-letter">ب)</span> كلود كوورك (Cowork)</li>
+            <li><span class="opt-letter">ج)</span> كلود كود (Claude Code)</li>
+            <li><span class="opt-letter">د)</span> كلها بنفس القدرة</li>
+          </ul>
+        </div>
+        <div class="mcq-item">
+          <span class="q-num">٤.</span> حسب "القواعد الذهبية الأربع" لكتابة أمر ناجح، أول خطوة هي:
+          <ul class="mcq-options">
+            <li><span class="opt-letter">أ)</span> تقديم مثال</li>
+            <li><span class="opt-letter">ب)</span> تحديد شكل الإجابة المطلوبة</li>
+            <li><span class="opt-letter">ج)</span> تحديد الموقف والسياق</li>
+            <li><span class="opt-letter">د)</span> تحديد طول الإجابة فقط</li>
+          </ul>
+        </div>
+        <div class="mcq-item">
+          <span class="q-num">٥.</span> أي نموذج من نماذج كلود هو "الافتراضي" المتوازن لمعظم المهام اليومية؟
+          <ul class="mcq-options">
+            <li><span class="opt-letter">أ)</span> هايكو (Haiku)</li>
+            <li><span class="opt-letter">ب)</span> سونيت (Sonnet)</li>
+            <li><span class="opt-letter">ج)</span> أوبس (Opus)</li>
+            <li><span class="opt-letter">د)</span> لا فرق بين النماذج</li>
+          </ul>
+        </div>
+
+        <div class="section-heading" style="margin-top:22px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>أسئلة سيناريو (إجابة قصيرة)</span>
+        </div>
+        <div class="mcq-item">
+          <span class="q-num">١.</span> موظف بدائرتك كتب لكلود: «اكتب لي كتاب رسمي» بدون أي تفاصيل أخرى، وحصل على نتيجة عامة جدًا ما تناسب طبيعة عمله. ما الخطأ بهذا الأمر، وكيف يصححه؟
+          <span class="blank-line"></span>
+          <span class="blank-line"></span>
+        </div>
+        <div class="mcq-item">
+          <span class="q-num">٢.</span> مدير يستخدم كلود لتلخيص تقرير طويل، وبعد ٤٠ دقيقة لاحظ أن الإجابات بدأت تفقد دقتها وتتجاهل تفاصيل ذكرها بالبداية. ما تفسير هذا، وما الإجراء المناسب؟
+          <span class="blank-line"></span>
+          <span class="blank-line"></span>
+        </div>
+        <div class="mcq-item">
+          <span class="q-num">٣.</span> موظف اعتمد على رقم مالي أعطاه كلود دون التحقق منه، وتبيّن لاحقًا أنه غير دقيق. أي مبدأ من مبادئ المحاضرة كان يجب اتّباعه؟
+          <span class="blank-line"></span>
+          <span class="blank-line"></span>
+        </div>
+
+        <div class="section-heading" style="margin-top:22px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>أسئلة مقالية</span>
+        </div>
+        <div class="mcq-item">
+          <span class="q-num">١.</span> اشرح بأسلوبك الخاص الفرق بين "عقلية اللقطة الواحدة" و"عقلية التكرار"، ومثّل لكل منهما بموقف من عملك اليومي.
+          <span class="blank-line"></span>
+          <span class="blank-line"></span>
+          <span class="blank-line"></span>
+        </div>
+        <div class="mcq-item">
+          <span class="q-num">٢.</span> ناقش كيف يمكن الاستفادة من أداة "المشاريع" (Projects) بتنظيم عمل دائرة حكومية تتعامل مع نفس نوع المعاملات بشكل متكرر.
+          <span class="blank-line"></span>
+          <span class="blank-line"></span>
+          <span class="blank-line"></span>
+        </div>
+
+        <div class="section-heading" style="margin-top:22px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>صح أو خطأ</span>
+        </div>
+        <div class="tf-item"><span>١. النموذج اللغوي الكبير "يفكّر" بنفس طريقة تفكير الإنسان.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+        <div class="tf-item"><span>٢. يجب دائمًا التحقق من المعلومات الحسّاسة اللي يقدّمها الذكاء الاصطناعي من مصدر موثوق.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+        <div class="tf-item"><span>٣. "التفكير الممتد" يُفضَّل تفعيله بكل سؤال لأنه لا يكلّف شيئًا إضافيًا.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+        <div class="tf-item"><span>٤. نافذة السياق الكبيرة تعني أن كلود يتذكر كل شيء للأبد حتى بعد إغلاق المحادثة.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+        <div class="tf-item"><span>٥. الإرسال إلى وكلاء فرعيين يساعد على إبقاء المحادثة الأساسية مركّزة.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+
+        <div class="mini-note">نهاية المحاضرة الأولى — إعداد: أ.م.د أمير هادي ★</div>
+        <div class="footer-note">١</div>
+      </div>
+      <!-- ============ END SLIDE 1 ============ -->
+
+      <!-- ============ SLIDE 2 : الأسبوع الثاني ============ -->
+      <div id="slide-2" class="slide content-slide">
+        <span class="chip chip-ch1">الأسبوع الثاني</span>
+        <h2 class="page-title">الأسبوع الثاني</h2>
+        <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
+        <div class="coming-soon">
+          <svg class="big-icon" viewBox="0 0 40 40"><g filter="url(#sketchy)"><circle cx="20" cy="20" r="15" fill="#fde3c4" stroke="var(--orange)" stroke-width="2.5"/><path d="M20 12 v9 l6 4" fill="none" stroke="var(--orange)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></g></svg>
+          <p class="cs-title">تنزل لاحقاً</p>
+          <p class="cs-sub">محتوى هذا الأسبوع سيُضاف قريباً.</p>
+        </div>
+        <div class="page-nav">
+          <button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button>
+          <button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button>
+        </div>
+        <div class="footer-note">٢</div>
+      </div>
+      <!-- ============ END SLIDE 2 ============ -->
+
+      <!-- ============ SLIDE 3 : الأسبوع الثالث ============ -->
+      <div id="slide-3" class="slide content-slide">
+        <span class="chip chip-ch1">الأسبوع الثالث</span>
+        <h2 class="page-title">الأسبوع الثالث</h2>
+        <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
+        <div class="coming-soon">
+          <svg class="big-icon" viewBox="0 0 40 40"><g filter="url(#sketchy)"><circle cx="20" cy="20" r="15" fill="#fde3c4" stroke="var(--orange)" stroke-width="2.5"/><path d="M20 12 v9 l6 4" fill="none" stroke="var(--orange)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></g></svg>
+          <p class="cs-title">تنزل لاحقاً</p>
+          <p class="cs-sub">محتوى هذا الأسبوع سيُضاف قريباً.</p>
+        </div>
+        <div class="page-nav">
+          <button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button>
+          <button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button>
+        </div>
+        <div class="footer-note">٣</div>
+      </div>
+      <!-- ============ END SLIDE 3 ============ -->
+
+      <!-- ============ SLIDE 4 : الأسبوع الرابع ============ -->
+      <div id="slide-4" class="slide content-slide">
+        <span class="chip chip-ch1">الأسبوع الرابع</span>
+        <h2 class="page-title">الأسبوع الرابع</h2>
+        <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
+        <div class="coming-soon">
+          <svg class="big-icon" viewBox="0 0 40 40"><g filter="url(#sketchy)"><circle cx="20" cy="20" r="15" fill="#fde3c4" stroke="var(--orange)" stroke-width="2.5"/><path d="M20 12 v9 l6 4" fill="none" stroke="var(--orange)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></g></svg>
+          <p class="cs-title">تنزل لاحقاً</p>
+          <p class="cs-sub">محتوى هذا الأسبوع سيُضاف قريباً.</p>
+        </div>
+        <div class="page-nav">
+          <button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button>
+          <button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button>
+        </div>
+        <div class="footer-note">٤</div>
+      </div>
+      <!-- ============ END SLIDE 4 ============ -->
+
+      <!-- ============ SLIDE 5 : الأسبوع الخامس ============ -->
+      <div id="slide-5" class="slide content-slide">
+        <span class="chip chip-ch1">الأسبوع الخامس</span>
+        <h2 class="page-title">الأسبوع الخامس</h2>
+        <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
+        <div class="coming-soon">
+          <svg class="big-icon" viewBox="0 0 40 40"><g filter="url(#sketchy)"><circle cx="20" cy="20" r="15" fill="#fde3c4" stroke="var(--orange)" stroke-width="2.5"/><path d="M20 12 v9 l6 4" fill="none" stroke="var(--orange)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></g></svg>
+          <p class="cs-title">تنزل لاحقاً</p>
+          <p class="cs-sub">محتوى هذا الأسبوع سيُضاف قريباً.</p>
+        </div>
+        <div class="page-nav">
+          <button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button>
+          <button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button>
+        </div>
+        <div class="footer-note">٥</div>
+      </div>
+      <!-- ============ END SLIDE 5 ============ -->
+
+      <!-- ============ SLIDE 6 : الأسبوع السادس ============ -->
+      <div id="slide-6" class="slide content-slide">
+        <span class="chip chip-ch1">الأسبوع السادس</span>
+        <h2 class="page-title">الأسبوع السادس</h2>
+        <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
+        <div class="coming-soon">
+          <svg class="big-icon" viewBox="0 0 40 40"><g filter="url(#sketchy)"><circle cx="20" cy="20" r="15" fill="#fde3c4" stroke="var(--orange)" stroke-width="2.5"/><path d="M20 12 v9 l6 4" fill="none" stroke="var(--orange)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></g></svg>
+          <p class="cs-title">تنزل لاحقاً</p>
+          <p class="cs-sub">محتوى هذا الأسبوع سيُضاف قريباً.</p>
+        </div>
+        <div class="page-nav">
+          <button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button>
+          <button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button>
+        </div>
+        <div class="footer-note">٦</div>
+      </div>
+      <!-- ============ END SLIDE 6 ============ -->
+
+      <!-- ============ SLIDE 7 : الأسبوع السابع ============ -->
+      <div id="slide-7" class="slide content-slide">
+        <span class="chip chip-ch1">الأسبوع السابع</span>
+        <h2 class="page-title">الأسبوع السابع</h2>
+        <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
+        <div class="coming-soon">
+          <svg class="big-icon" viewBox="0 0 40 40"><g filter="url(#sketchy)"><circle cx="20" cy="20" r="15" fill="#fde3c4" stroke="var(--orange)" stroke-width="2.5"/><path d="M20 12 v9 l6 4" fill="none" stroke="var(--orange)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></g></svg>
+          <p class="cs-title">تنزل لاحقاً</p>
+          <p class="cs-sub">محتوى هذا الأسبوع سيُضاف قريباً.</p>
+        </div>
+        <div class="page-nav">
+          <button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button>
+          <button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button>
+        </div>
+        <div class="footer-note">٧</div>
+      </div>
+      <!-- ============ END SLIDE 7 ============ -->
+
+      <!-- ============ SLIDE 8 : الأسبوع الثامن ============ -->
+      <div id="slide-8" class="slide content-slide">
+        <span class="chip chip-ch1">الأسبوع الثامن</span>
+        <h2 class="page-title">الأسبوع الثامن</h2>
+        <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
+        <div class="coming-soon">
+          <svg class="big-icon" viewBox="0 0 40 40"><g filter="url(#sketchy)"><circle cx="20" cy="20" r="15" fill="#fde3c4" stroke="var(--orange)" stroke-width="2.5"/><path d="M20 12 v9 l6 4" fill="none" stroke="var(--orange)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></g></svg>
+          <p class="cs-title">تنزل لاحقاً</p>
+          <p class="cs-sub">محتوى هذا الأسبوع سيُضاف قريباً.</p>
+        </div>
+        <div class="page-nav">
+          <button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button>
+          <button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button>
+        </div>
+        <div class="footer-note">٨</div>
+      </div>
+      <!-- ============ END SLIDE 8 ============ -->
+
+      <!-- ============ SLIDE 9 : الأسبوع التاسع ============ -->
+      <div id="slide-9" class="slide content-slide">
+        <span class="chip chip-ch1">الأسبوع التاسع</span>
+        <h2 class="page-title">الأسبوع التاسع</h2>
+        <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
+        <div class="coming-soon">
+          <svg class="big-icon" viewBox="0 0 40 40"><g filter="url(#sketchy)"><circle cx="20" cy="20" r="15" fill="#fde3c4" stroke="var(--orange)" stroke-width="2.5"/><path d="M20 12 v9 l6 4" fill="none" stroke="var(--orange)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></g></svg>
+          <p class="cs-title">تنزل لاحقاً</p>
+          <p class="cs-sub">محتوى هذا الأسبوع سيُضاف قريباً.</p>
+        </div>
+        <div class="page-nav">
+          <button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button>
+          <button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button>
+        </div>
+        <div class="footer-note">٩</div>
+      </div>
+      <!-- ============ END SLIDE 9 ============ -->
+
+      <!-- ============ SLIDE 10 : الأسبوع العاشر ============ -->
+      <div id="slide-10" class="slide content-slide">
+        <span class="chip chip-ch1">الأسبوع العاشر</span>
+        <h2 class="page-title">الأسبوع العاشر</h2>
+        <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
+        <div class="coming-soon">
+          <svg class="big-icon" viewBox="0 0 40 40"><g filter="url(#sketchy)"><circle cx="20" cy="20" r="15" fill="#fde3c4" stroke="var(--orange)" stroke-width="2.5"/><path d="M20 12 v9 l6 4" fill="none" stroke="var(--orange)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></g></svg>
+          <p class="cs-title">تنزل لاحقاً</p>
+          <p class="cs-sub">محتوى هذا الأسبوع سيُضاف قريباً.</p>
+        </div>
+        <div class="page-nav">
+          <button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button>
+          <button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button>
+        </div>
+        <div class="footer-note">١٠</div>
+      </div>
+      <!-- ============ END SLIDE 10 ============ -->
+
+      <!-- ============ SLIDE 11 : الأسبوع الحادي عشر ============ -->
+      <div id="slide-11" class="slide content-slide">
+        <span class="chip chip-ch1">الأسبوع الحادي عشر</span>
+        <h2 class="page-title">الأسبوع الحادي عشر</h2>
+        <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
+        <div class="coming-soon">
+          <svg class="big-icon" viewBox="0 0 40 40"><g filter="url(#sketchy)"><circle cx="20" cy="20" r="15" fill="#fde3c4" stroke="var(--orange)" stroke-width="2.5"/><path d="M20 12 v9 l6 4" fill="none" stroke="var(--orange)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></g></svg>
+          <p class="cs-title">تنزل لاحقاً</p>
+          <p class="cs-sub">محتوى هذا الأسبوع سيُضاف قريباً.</p>
+        </div>
+        <div class="page-nav">
+          <button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button>
+          <button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button>
+        </div>
+        <div class="footer-note">١١</div>
+      </div>
+      <!-- ============ END SLIDE 11 ============ -->
+
+      <!-- ============ SLIDE 12 : الأسبوع الثاني عشر ============ -->
+      <div id="slide-12" class="slide content-slide">
+        <span class="chip chip-ch1">الأسبوع الثاني عشر</span>
+        <h2 class="page-title">الأسبوع الثاني عشر</h2>
+        <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
+        <div class="coming-soon">
+          <svg class="big-icon" viewBox="0 0 40 40"><g filter="url(#sketchy)"><circle cx="20" cy="20" r="15" fill="#fde3c4" stroke="var(--orange)" stroke-width="2.5"/><path d="M20 12 v9 l6 4" fill="none" stroke="var(--orange)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></g></svg>
+          <p class="cs-title">تنزل لاحقاً</p>
+          <p class="cs-sub">محتوى هذا الأسبوع سيُضاف قريباً.</p>
+        </div>
+        <div class="page-nav">
+          <button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button>
+          <button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button>
+        </div>
+        <div class="footer-note">١٢</div>
+      </div>
+      <!-- ============ END SLIDE 12 ============ -->
+
+      <!-- ============ SLIDE 13 : الأسبوع الثالث عشر ============ -->
+      <div id="slide-13" class="slide content-slide">
+        <span class="chip chip-ch1">الأسبوع الثالث عشر</span>
+        <h2 class="page-title">الأسبوع الثالث عشر</h2>
+        <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
+        <div class="coming-soon">
+          <svg class="big-icon" viewBox="0 0 40 40"><g filter="url(#sketchy)"><circle cx="20" cy="20" r="15" fill="#fde3c4" stroke="var(--orange)" stroke-width="2.5"/><path d="M20 12 v9 l6 4" fill="none" stroke="var(--orange)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></g></svg>
+          <p class="cs-title">تنزل لاحقاً</p>
+          <p class="cs-sub">محتوى هذا الأسبوع سيُضاف قريباً.</p>
+        </div>
+        <div class="page-nav">
+          <button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button>
+          <button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button>
+        </div>
+        <div class="footer-note">١٣</div>
+      </div>
+      <!-- ============ END SLIDE 13 ============ -->
+
+      <!-- ============ SLIDE 14 : الأسبوع الرابع عشر ============ -->
+      <div id="slide-14" class="slide content-slide">
+        <span class="chip chip-ch1">الأسبوع الرابع عشر</span>
+        <h2 class="page-title">الأسبوع الرابع عشر</h2>
+        <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
+        <div class="coming-soon">
+          <svg class="big-icon" viewBox="0 0 40 40"><g filter="url(#sketchy)"><circle cx="20" cy="20" r="15" fill="#fde3c4" stroke="var(--orange)" stroke-width="2.5"/><path d="M20 12 v9 l6 4" fill="none" stroke="var(--orange)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></g></svg>
+          <p class="cs-title">تنزل لاحقاً</p>
+          <p class="cs-sub">محتوى هذا الأسبوع سيُضاف قريباً.</p>
+        </div>
+        <div class="page-nav">
+          <button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button>
+          <button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button>
+        </div>
+        <div class="footer-note">١٤</div>
+      </div>
+      <!-- ============ END SLIDE 14 ============ -->
+
+      <!-- ============ SLIDE 15 : الأسبوع الخامس عشر ============ -->
+      <div id="slide-15" class="slide content-slide">
+        <span class="chip chip-ch1">الأسبوع الخامس عشر</span>
+        <h2 class="page-title">الأسبوع الخامس عشر</h2>
+        <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
+        <div class="coming-soon">
+          <svg class="big-icon" viewBox="0 0 40 40"><g filter="url(#sketchy)"><circle cx="20" cy="20" r="15" fill="#fde3c4" stroke="var(--orange)" stroke-width="2.5"/><path d="M20 12 v9 l6 4" fill="none" stroke="var(--orange)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></g></svg>
+          <p class="cs-title">تنزل لاحقاً</p>
+          <p class="cs-sub">محتوى هذا الأسبوع سيُضاف قريباً.</p>
+        </div>
+        <div class="page-nav">
+          <button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button>
+          <button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button>
+        </div>
+        <div class="footer-note">١٥</div>
+      </div>
+      <!-- ============ END SLIDE 15 ============ -->
+
+      <!-- NEW SLIDES GET ADDED HERE, right above this comment -->
+
+    </div>
+  </div>
+
+  <div class="master-footer">
+    جميع الحقوق محفوظة © د. أمير هادي &nbsp;•&nbsp; <span class="mf-email">amer.hadi@alshaab.edu.iq</span> &nbsp;•&nbsp; ٢٠٢٦
+  </div>
+</div>
+
+<script>
+  var tabsList = Array.from(document.querySelectorAll('.tab'));
+
+  function activateTab(tab){
+    document.querySelectorAll('.tab').forEach(function(t){ t.classList.remove('active'); });
+    document.querySelectorAll('.slide').forEach(function(s){ s.classList.remove('active'); });
+    tab.classList.add('active');
+    document.getElementById(tab.dataset.target).classList.add('active');
+    updateNavButtons();
+  }
+
+  function navigateSlide(delta){
+    var activeTab = document.querySelector('.tab.active');
+    var idx = tabsList.indexOf(activeTab);
+    var newIdx = idx + delta;
+    if(newIdx < 0 || newIdx >= tabsList.length) return;
+    activateTab(tabsList[newIdx]);
+    tabsList[newIdx].scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'});
+  }
+
+  function updateNavButtons(){
+    var idx = tabsList.indexOf(document.querySelector('.tab.active'));
+    document.querySelectorAll('.nav-prev').forEach(function(b){ b.disabled = (idx <= 0); });
+    document.querySelectorAll('.nav-next').forEach(function(b){ b.disabled = (idx >= tabsList.length - 1); });
+  }
+
+  tabsList.forEach(function(tab){
+    tab.addEventListener('click', function(){
+      activateTab(tab);
+      tab.scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'});
+    });
+  });
+
+  updateNavButtons();
+  tabsList[0].scrollIntoView({inline:'start', block:'nearest'});
+
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'ArrowRight'){ navigateSlide(-1); }
+    else if(e.key === 'ArrowLeft'){ navigateSlide(1); }
+  });
+</script>
+
+</body>
+</html>

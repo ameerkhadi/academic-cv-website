@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>كلود ١٠١ — دليلك الشامل لتعلّم الذكاء الاصطناعي كلود من الصفر</title>
+<title>المحاضرة الأولى — كلود Claude — ذكاء اصطناعي وتحليل البيانات</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root{
-  --primary:#B8503F; --primary-dark:#8C3A2D; --darkbg:#241B16; --darkbg2:#2E221B;
-  --sand:#F3EEE5; --sage:#839C82; --text-dark:#2B2320; --text-muted:#6E6459;
-  --white:#FFFFFF; --cream:#F2E9DE;
+  --primary:#1857a4; --primary-dark:#123f6e; --darkbg:#16264a; --darkbg2:#1f3a63;
+  --sand:#fbf8ef; --sage:#1f7a3d; --text-dark:#1c2b3a; --text-muted:#5b6b7a;
+  --white:#FFFFFF; --cream:#fbf8ef;
   --font: "Tajawal","Segoe UI",Arial,sans-serif;
 }
 *{box-sizing:border-box;}
@@ -25,11 +25,11 @@ body{overflow:hidden;}
 .slide.active{display:flex;}
 .slide.dark{background:var(--darkbg); color:var(--white);}
 .kicker{color:var(--primary); font-weight:700; font-size:1.05vw; letter-spacing:.5px; margin-bottom:.6vh;}
-.slide.dark .kicker{color:#E8B9A9;}
+.slide.dark .kicker{color:#f2c98a;}
 h1{font-size:2.5vw; font-weight:800; margin:0 0 1.2vh 0; line-height:1.25;}
 h1.md{font-size:2.15vw;}
 .subtitle{font-size:1.05vw; color:var(--text-muted); max-width:90%; margin:0 0 2.2vh 0; line-height:1.5;}
-.slide.dark .subtitle{color:#C9BEB2;}
+.slide.dark .subtitle{color:#c3d0de;}
 .lead{font-size:1.15vw; line-height:1.6; margin:0 0 1.4vh 0;}
 .muted{color:var(--text-muted); font-size:1vw; line-height:1.55;}
 .muted.small{font-size:.85vw;}
@@ -41,21 +41,21 @@ h1.md{font-size:2.15vw;}
 .title-inner{position:relative; z-index:1; display:flex; flex-direction:column; align-items:center;}
 .hero{font-size:5.2vw; font-weight:800; margin:1.2vh 0 .6vh 0;}
 .hero-sm{font-size:2.6vw; font-weight:800; margin:1.4vh 0 1.2vh 0;}
-.hero-sub{font-size:1.7vw; color:#E8B9A9; margin:0 0 1.6vh 0;}
+.hero-sub{font-size:1.7vw; color:#f2c98a; margin:0 0 1.6vh 0;}
 .rule{width:12vw; height:2px; background:var(--primary); margin:0 0 2vh 0;}
-.hero-desc{font-size:.95vw; color:#C9BEB2; max-width:60vw; line-height:1.6;}
+.hero-desc{font-size:.95vw; color:#c3d0de; max-width:60vw; line-height:1.6;}
 .hero-desc.narrow{max-width:48vw;}
 .centered{text-align:center;}
 .icon-circle.xl{width:6.5vw; height:6.5vw; margin-bottom:1.5vh;}
 .icon-circle.xl svg{width:3.2vw; height:3.2vw;}
 .next-step-box{background:var(--darkbg2); border-radius:14px; padding:2.2vh 3vw; margin-top:3vh; max-width:55vw;}
-.closing-note{color:#9C8E80; font-style:italic; font-size:.95vw; margin-top:3vh;}
+.closing-note{color:#93a4b8; font-style:italic; font-size:.95vw; margin-top:3vh;}
 
 /* ---------- Badges / Author credit (title & closing slides) ---------- */
 .badge-pill{
   display:inline-flex; align-items:center; gap:.55vw;
   background:rgba(184,80,63,.2); border:1px solid rgba(232,185,169,.45);
-  color:#E8B9A9; font-weight:700; font-size:.85vw; letter-spacing:.3px;
+  color:#f2c98a; font-weight:700; font-size:.85vw; letter-spacing:.3px;
   padding:.8vh 1.4vw; border-radius:999px; margin-bottom:1.8vh;
 }
 .badge-pill svg{width:.9vw; height:.9vw; min-width:12px; min-height:12px;}
@@ -64,21 +64,21 @@ h1.md{font-size:2.15vw;}
   background:var(--darkbg2); color:var(--white); font-weight:700;
   font-size:.95vw; padding:.9vh 1.7vw; border-radius:999px; margin-top:2.6vh;
 }
-.author-pill svg{width:1vw; height:1vw; min-width:13px; min-height:13px; fill:#E8B9A9;}
+.author-pill svg{width:1vw; height:1vw; min-width:13px; min-height:13px; fill:#f2c98a;}
 .meta-row{display:flex; gap:.9vw; margin-top:1.4vh; flex-wrap:wrap; justify-content:center;}
 .meta-chip{
-  display:inline-flex; align-items:center; gap:.55vw; color:#C9BEB2;
+  display:inline-flex; align-items:center; gap:.55vw; color:#c3d0de;
   font-size:.82vw; background:rgba(255,255,255,.06); padding:.75vh 1.3vw; border-radius:999px;
 }
-.meta-chip svg{width:.85vw; height:.85vw; min-width:11px; min-height:11px; fill:#E8B9A9;}
+.meta-chip svg{width:.85vw; height:.85vw; min-width:11px; min-height:11px; fill:#f2c98a;}
 .credit-block{display:flex; flex-direction:column; align-items:center; gap:.9vh; margin-top:2.6vh;}
-.credit-line{display:flex; align-items:center; gap:.6vw; color:#D8CCC0; font-size:.9vw;}
-.credit-line svg{width:.9vw; height:.9vw; min-width:12px; min-height:12px; fill:#E8B9A9;}
+.credit-line{display:flex; align-items:center; gap:.6vw; color:#cbd6e3; font-size:.9vw;}
+.credit-line svg{width:.9vw; height:.9vw; min-width:12px; min-height:12px; fill:#f2c98a;}
 .copyright-line{
-  display:flex; align-items:center; gap:.5vw; color:#8C8074; font-size:.78vw;
+  display:flex; align-items:center; gap:.5vw; color:#7c8ba0; font-size:.78vw;
   margin-top:2vh; padding-top:1.8vh; border-top:1px solid rgba(255,255,255,.1);
 }
-.copyright-line svg{width:.8vw; height:.8vw; min-width:11px; min-height:11px; fill:#8C8074;}
+.copyright-line svg{width:.8vw; height:.8vw; min-width:11px; min-height:11px; fill:#7c8ba0;}
 
 @media (max-width:800px){
   .badge-pill,.author-pill,.meta-chip,.credit-line,.copyright-line{font-size:2.2vw;}
@@ -114,15 +114,15 @@ h1.md{font-size:2.15vw;}
 .card p{font-size:.85vw; color:var(--text-muted); line-height:1.5; margin:0;}
 .card.on-dark{background:var(--darkbg2);}
 .card.on-dark h3{color:var(--white);}
-.card.on-dark p{color:#D8CCC0;}
+.card.on-dark p{color:#cbd6e3;}
 .card.sage .icon-circle{background:var(--sage);}
 .card.dark-panel{background:var(--darkbg); color:var(--white);}
 .card.dark-panel h3{color:var(--white);}
-.card.dark-panel p{color:#D8CCC0;}
+.card.dark-panel p{color:#cbd6e3;}
 .card.light-panel{background:var(--sand);}
 .card.solid-panel{background:var(--primary); color:var(--white);}
 .card.solid-panel h3{color:var(--white);}
-.card.solid-panel p{color:#F5E3DB;}
+.card.solid-panel p{color:#eaf2fc;}
 
 .num-card{position:relative;}
 .num-row{display:flex; align-items:center; justify-content:space-between;}
@@ -138,7 +138,7 @@ h1.md{font-size:2.15vw;}
 .tri-row{display:flex; gap:1.6vw; flex:1;}
 .tri-card{flex:1; background:var(--darkbg2); border-radius:14px; padding:2.2vh 1.4vw; display:flex; flex-direction:column; align-items:center;}
 .tri-card h3{color:var(--white); font-size:1.15vw;}
-.tri-card p{color:#D8CCC0; font-size:.85vw; line-height:1.55;}
+.tri-card p{color:#cbd6e3; font-size:.85vw; line-height:1.55;}
 .tri-card.light{background:var(--sand);}
 .tri-card.light h3{color:var(--text-dark);}
 .tri-card.light p{color:var(--text-muted);}
@@ -152,24 +152,24 @@ h1.md{font-size:2.15vw;}
 .price-card p{font-size:.85vw; color:var(--text-muted); line-height:1.5;}
 .price-card.featured{background:var(--primary); color:var(--white); transform:scale(1.04);}
 .price-card.featured h3, .price-card.featured .price{color:var(--white);}
-.price-card.featured p{color:#F5E3DB;}
+.price-card.featured p{color:#eaf2fc;}
 
 /* ---------- Callout ---------- */
 .callout{background:var(--sand); border-radius:12px; padding:1.6vh 1.6vw; font-size:.9vw; color:var(--text-muted); margin-top:1.6vh; line-height:1.5;}
-.callout.dark{background:var(--darkbg); color:#E8B9A9;}
+.callout.dark{background:var(--darkbg); color:#f2c98a;}
 .callout.solid{background:var(--primary); color:var(--white); font-weight:700;}
 .callout.with-icon{display:flex; align-items:center; gap:1.2vw;}
 .callout.big{padding:2.4vh 1.8vw;}
 .callout-text strong{display:block; color:var(--white); font-size:1.05vw; margin-bottom:.6vh;}
-.callout-text p{margin:0; font-size:.85vw; color:#D8CCC0; line-height:1.55;}
-.callout .tag.light{color:#E8B9A9; font-size:1.05vw; display:block; margin-bottom:.8vh;}
+.callout-text p{margin:0; font-size:.85vw; color:#cbd6e3; line-height:1.55;}
+.callout .tag.light{color:#f2c98a; font-size:1.05vw; display:block; margin-bottom:.8vh;}
 
 /* ---------- Example box (slide 3) ---------- */
 .cols-70-30{display:flex; gap:1.8vw; flex:1;}
 .col-main{flex:2.2; display:flex; flex-direction:column;}
 .col-side{flex:1; border-radius:14px; padding:2.4vh 1.6vw; display:flex; flex-direction:column; align-items:center;}
 .dark-panel{background:var(--darkbg); color:var(--white);}
-.dark-panel p{font-size:.85vw; color:#D8CCC0; line-height:1.6;}
+.dark-panel p{font-size:.85vw; color:#cbd6e3; line-height:1.6;}
 .example-box{background:var(--sand); border-radius:12px; padding:1.8vh 1.6vw; margin-top:auto;}
 .example-box .tag{color:var(--primary); font-weight:700; font-size:.85vw; margin-bottom:.6vh;}
 .big-quote{font-size:1.6vw; font-weight:800; margin:.4vh 0 1vh 0;}
@@ -182,13 +182,13 @@ h1.md{font-size:2.15vw;}
 .card.dark-panel .check-row .text{color:#F0E8DF;}
 
 /* ---------- Mini callout inside card ---------- */
-.mini-callout{margin-top:auto; background:var(--darkbg2); border-radius:8px; padding:1.2vh 1vw; font-size:.75vw; font-style:italic; color:#E8B9A9; line-height:1.5;}
-.mini-callout.dark{background:#1c1512;}
+.mini-callout{margin-top:auto; background:var(--darkbg2); border-radius:8px; padding:1.2vh 1vw; font-size:.75vw; font-style:italic; color:#f2c98a; line-height:1.5;}
+.mini-callout.dark{background:#10203a;}
 .card:not(.dark-panel) .mini-callout{background:var(--white); color:var(--primary-dark);}
 
 /* ---------- Footer ---------- */
-.foot{position:absolute; bottom:2.2vh; left:5vw; right:5vw; display:flex; justify-content:space-between; font-size:.7vw; color:#B0A79B;}
-.slide.dark .foot{color:#9C8E80;}
+.foot{position:absolute; bottom:2.2vh; left:5vw; right:5vw; display:flex; justify-content:space-between; font-size:.7vw; color:#93a0ad;}
+.slide.dark .foot{color:#93a4b8;}
 .title-slide .foot, .closing-slide .foot{display:none;}
 
 /* ---------- Nav ---------- */
@@ -214,13 +214,12 @@ h1.md{font-size:2.15vw;}
   <div class="title-inner">
     <div class="badge-pill">
       <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 640 512" xmlns="http://www.w3.org/2000/svg"><path d="M320 32c-8.1 0-16.1 1.4-23.7 4.1L15.8 137.4C6.3 140.9 0 149.9 0 160s6.3 19.1 15.8 22.6l57.9 20.9C57.3 229.3 48 259.8 48 291.9l0 28.1c0 28.4-10.8 57.7-22.3 80.8c-6.5 13-13.9 25.8-22.5 37.6C0 442.7-.9 448.3 .9 453.4s6 8.9 11.2 10.2l64 16c4.2 1.1 8.7 .3 12.4-2s6.3-6.1 7.1-10.4c8.6-42.8 4.3-81.2-2.1-108.7C90.3 344.3 86 329.8 80 316.5l0-24.6c0-30.2 10.2-58.7 27.9-81.5c12.9-15.5 29.6-28 49.2-35.7l157-61.7c8.2-3.2 17.5 .8 20.7 9s-.8 17.5-9 20.7l-157 61.7c-12.4 4.9-23.3 12.4-32.2 21.6l159.6 57.6c7.6 2.7 15.6 4.1 23.7 4.1s16.1-1.4 23.7-4.1L624.2 182.6c9.5-3.4 15.8-12.5 15.8-22.6s-6.3-19.1-15.8-22.6L343.7 36.1C336.1 33.4 328.1 32 320 32zM128 408c0 35.3 86 72 192 72s192-36.7 192-72L496.7 262.6 354.5 314c-11.1 4-22.8 6-34.5 6s-23.5-2-34.5-6L143.3 262.6 128 408z"></path></svg>
-      <span>دليل تدريبي</span>
+      <span>المحاضرة الأولى</span>
     </div>
     <span class="icon-circle xl"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 640 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M32,224H64V416H32A31.96166,31.96166,0,0,1,0,384V256A31.96166,31.96166,0,0,1,32,224Zm512-48V448a64.06328,64.06328,0,0,1-64,64H160a64.06328,64.06328,0,0,1-64-64V176a79.974,79.974,0,0,1,80-80H288V32a32,32,0,0,1,64,0V96H464A79.974,79.974,0,0,1,544,176ZM264,256a40,40,0,1,0-40,40A39.997,39.997,0,0,0,264,256Zm-8,128H192v32h64Zm96,0H288v32h64ZM456,256a40,40,0,1,0-40,40A39.997,39.997,0,0,0,456,256Zm-8,128H384v32h64ZM640,256V384a31.96166,31.96166,0,0,1-32,32H576V224h32A31.96166,31.96166,0,0,1,640,256Z"></path></svg></span>
-    <h1 class="hero">كلود ١٠١</h1>
-    <p class="hero-sub">دليلك الشامل لتعلّم الذكاء الاصطناعي كلود من الصفر</p>
+    <h1 class="hero">كلود Claude</h1>
+    <p class="hero-sub">المادة: ذكاء اصطناعي وتحليل البيانات</p>
     <div class="rule"></div>
-    <p class="hero-desc">نسخة عربية مُعدَّة عن كورس Claude 101 الصادر عن شركة Anthropic، مع إضافات وتبسيط ليناسب المتعلم العربي من الصفر حتى الاحتراف.</p>
     <div class="author-pill">
       <svg stroke="currentColor" stroke-width="0" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512l388.6 0c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304l-91.4 0z"></path></svg>
       <span>إعداد: أ.م.د أمير هادي</span>
@@ -236,7 +235,7 @@ h1.md{font-size:2.15vw;}
       </span>
     </div>
   </div>
-  <div class="foot"><span class="brand">كلود ١٠١ &nbsp;•&nbsp; دليل تعلّم كلود من الصفر</span><span class="pagenum">01</span></div>
+  <div class="foot"><span class="brand">كلود Claude &nbsp;•&nbsp; ذكاء اصطناعي وتحليل البيانات</span><span class="pagenum">01</span></div>
 </section>
 
 <section class="slide">
@@ -265,7 +264,7 @@ h1.md{font-size:2.15vw;}
     <p>تصميم مهارات خاصة بك تُحسّن أداء كلود في مهام محدّدة ومتكرّرة.</p>
   </div>
   </div>
-  <div class="foot"><span class="brand">كلود ١٠١ &nbsp;•&nbsp; دليل تعلّم كلود من الصفر</span><span class="pagenum">02</span></div>
+  <div class="foot"><span class="brand">كلود Claude &nbsp;•&nbsp; ذكاء اصطناعي وتحليل البيانات</span><span class="pagenum">02</span></div>
 </section>
 
 <section class="slide">
@@ -287,7 +286,7 @@ h1.md{font-size:2.15vw;}
       <p>كلمة «تفكير» غير دقيقة هنا. فالاستنتاج والوعي البشري أمران لا يزال الذكاء الاصطناعي بعيدًا عنهما. ما يحدث فعليًا هو محاكاة إحصائية: يأخذ النص المُدخَل ويبحث فيما يُرجَّح أن يأتي بعده استنادًا إلى كلام البشر.</p>
     </div>
   </div>
-  <div class="foot"><span class="brand">كلود ١٠١ &nbsp;•&nbsp; دليل تعلّم كلود من الصفر</span><span class="pagenum">03</span></div>
+  <div class="foot"><span class="brand">كلود Claude &nbsp;•&nbsp; ذكاء اصطناعي وتحليل البيانات</span><span class="pagenum">03</span></div>
 </section>
 
 <section class="slide">
@@ -319,7 +318,7 @@ h1.md{font-size:2.15vw;}
     <p>يُنتِج النموذج الإجابة النهائية بعد مطابقة أمرك بما تعلّمه من بيانات.</p>
   </div>
   </div>
-  <div class="foot"><span class="brand">كلود ١٠١ &nbsp;•&nbsp; دليل تعلّم كلود من الصفر</span><span class="pagenum">04</span></div>
+  <div class="foot"><span class="brand">كلود Claude &nbsp;•&nbsp; ذكاء اصطناعي وتحليل البيانات</span><span class="pagenum">04</span></div>
 </section>
 
 <section class="slide">
@@ -340,7 +339,7 @@ h1.md{font-size:2.15vw;}
       <div class="mini-callout">الحل العملي: راقب طول المحادثة، ولخّص النقاط المهمة بين حين وآخر، وابدأ محادثة جديدة عند الشعور بتراجع دقّة الإجابات.</div>
     </div>
   </div>
-  <div class="foot"><span class="brand">كلود ١٠١ &nbsp;•&nbsp; دليل تعلّم كلود من الصفر</span><span class="pagenum">05</span></div>
+  <div class="foot"><span class="brand">كلود Claude &nbsp;•&nbsp; ذكاء اصطناعي وتحليل البيانات</span><span class="pagenum">05</span></div>
 </section>
 
 <section class="slide dark">
@@ -368,7 +367,7 @@ h1.md{font-size:2.15vw;}
     <p>يشاركك عملية التفكير (عصف ذهني) بدل الاكتفاء بإجابات مختصرة وجاهزة، فتشعر أنه يعمل معك لا لك فقط.</p>
   </div>
   </div>
-  <div class="foot"><span class="brand">كلود ١٠١ &nbsp;•&nbsp; دليل تعلّم كلود من الصفر</span><span class="pagenum">06</span></div>
+  <div class="foot"><span class="brand">كلود Claude &nbsp;•&nbsp; ذكاء اصطناعي وتحليل البيانات</span><span class="pagenum">06</span></div>
 </section>
 
 <section class="slide">
@@ -397,7 +396,7 @@ h1.md{font-size:2.15vw;}
   </div>
   </div>
   <div class="callout ">ملاحظة: حتى وقت إعداد هذا الكورس، لا يدعم كلود توليد الصور (Image Generation) — وهو المجال الوحيد الذي لا يزال غائبًا عن قدراته الواسعة.</div>
-  <div class="foot"><span class="brand">كلود ١٠١ &nbsp;•&nbsp; دليل تعلّم كلود من الصفر</span><span class="pagenum">07</span></div>
+  <div class="foot"><span class="brand">كلود Claude &nbsp;•&nbsp; ذكاء اصطناعي وتحليل البيانات</span><span class="pagenum">07</span></div>
 </section>
 
 <section class="slide">
@@ -425,7 +424,7 @@ h1.md{font-size:2.15vw;}
     <p>عبر «كلود كود» — الطريقة المفضّلة لدى المبرمجين المحترفين.</p>
   </div>
   </div>
-  <div class="foot"><span class="brand">كلود ١٠١ &nbsp;•&nbsp; دليل تعلّم كلود من الصفر</span><span class="pagenum">08</span></div>
+  <div class="foot"><span class="brand">كلود Claude &nbsp;•&nbsp; ذكاء اصطناعي وتحليل البيانات</span><span class="pagenum">08</span></div>
 </section>
 
 <section class="slide">
@@ -449,7 +448,7 @@ h1.md{font-size:2.15vw;}
     </div>
   </div>
   <div class="callout dark">نصيحة عملية: الاشتراك عبر تطبيق الجوال غالبًا ما يكون أرخص من الاشتراك مباشرة عبر المتصفح — قارن السعر قبل الدفع.</div>
-  <div class="foot"><span class="brand">كلود ١٠١ &nbsp;•&nbsp; دليل تعلّم كلود من الصفر</span><span class="pagenum">09</span></div>
+  <div class="foot"><span class="brand">كلود Claude &nbsp;•&nbsp; ذكاء اصطناعي وتحليل البيانات</span><span class="pagenum">09</span></div>
 </section>
 
 <section class="slide">
@@ -478,7 +477,7 @@ h1.md{font-size:2.15vw;}
     <p>تخصيص اسمك، طريقة ردّ كلود عليك، ولغتك المفضّلة في المحادثة.</p>
   </div>
   </div>
-  <div class="foot"><span class="brand">كلود ١٠١ &nbsp;•&nbsp; دليل تعلّم كلود من الصفر</span><span class="pagenum">10</span></div>
+  <div class="foot"><span class="brand">كلود Claude &nbsp;•&nbsp; ذكاء اصطناعي وتحليل البيانات</span><span class="pagenum">10</span></div>
 </section>
 
 <section class="slide dark">
@@ -501,7 +500,7 @@ h1.md{font-size:2.15vw;}
       <p class="centered">بيئة تطوير كاملة عبر الطرفية، لقراءة أكوادك الحالية، تحسينها، ومعالجة مشكلاتها، وإضافة مزايا جديدة إليها.</p>
     </div>
   </div>
-  <div class="foot"><span class="brand">كلود ١٠١ &nbsp;•&nbsp; دليل تعلّم كلود من الصفر</span><span class="pagenum">11</span></div>
+  <div class="foot"><span class="brand">كلود Claude &nbsp;•&nbsp; ذكاء اصطناعي وتحليل البيانات</span><span class="pagenum">11</span></div>
 </section>
 
 <section class="slide">
@@ -529,7 +528,7 @@ h1.md{font-size:2.15vw;}
     <p>أرفق نموذجًا لما تريده — هذه الخطوة وحدها توفّر عليك تكرارًا كثيرًا.</p>
   </div>
   </div>
-  <div class="foot"><span class="brand">كلود ١٠١ &nbsp;•&nbsp; دليل تعلّم كلود من الصفر</span><span class="pagenum">12</span></div>
+  <div class="foot"><span class="brand">كلود Claude &nbsp;•&nbsp; ذكاء اصطناعي وتحليل البيانات</span><span class="pagenum">12</span></div>
 </section>
 
 <section class="slide">
@@ -563,7 +562,7 @@ h1.md{font-size:2.15vw;}
       <p>ميزة تمنح النموذج وقتًا إضافيًا للتفكير خطوة بخطوة في المهام المعقّدة، مقابل استهلاك أكبر للتوكِنز ووقت استجابة أطول — فعّلها فقط عند الحاجة الفعلية.</p>
     </div>
   </div>
-  <div class="foot"><span class="brand">كلود ١٠١ &nbsp;•&nbsp; دليل تعلّم كلود من الصفر</span><span class="pagenum">13</span></div>
+  <div class="foot"><span class="brand">كلود Claude &nbsp;•&nbsp; ذكاء اصطناعي وتحليل البيانات</span><span class="pagenum">13</span></div>
 </section>
 
 <section class="slide">
@@ -587,7 +586,7 @@ h1.md{font-size:2.15vw;}
   </div>
   </div>
   <div class="callout solid">القاعدة الذهبية: افترض دائمًا أن إجابة الذكاء الاصطناعي قد تكون خاطئة حتى تثبت العكس — لا تُسلِّم بالنتائج بثقة عمياء.</div>
-  <div class="foot"><span class="brand">كلود ١٠١ &nbsp;•&nbsp; دليل تعلّم كلود من الصفر</span><span class="pagenum">14</span></div>
+  <div class="foot"><span class="brand">كلود Claude &nbsp;•&nbsp; ذكاء اصطناعي وتحليل البيانات</span><span class="pagenum">14</span></div>
 </section>
 
 <section class="slide">
@@ -610,7 +609,7 @@ h1.md{font-size:2.15vw;}
       <p>ركيزة أساسية في «الطلاقة مع الذكاء الاصطناعي» (AI Fluency): أن تُميّز بوضوح أيّ المهام يستحقّ تفويضه لكلود، وأيّها أسرع وأدق أن تُنجزه بنفسك يدويًا — لسببين رئيسيّين: السرعة والكفاءة، وحماية خصوصية بياناتك.</p>
     </div>
   </div>
-  <div class="foot"><span class="brand">كلود ١٠١ &nbsp;•&nbsp; دليل تعلّم كلود من الصفر</span><span class="pagenum">15</span></div>
+  <div class="foot"><span class="brand">كلود Claude &nbsp;•&nbsp; ذكاء اصطناعي وتحليل البيانات</span><span class="pagenum">15</span></div>
 </section>
 
 <section class="slide">
@@ -643,7 +642,7 @@ h1.md{font-size:2.15vw;}
     <strong class="tag light">مثال تطبيقي: مشروع «المدرّب الشخصي»</strong>
     <p>تُضاف تعليمات ثابتة (المستوى، هدف اللياقة، عدد أيام التمرين، مكان التمرين)، وملفات مرجعية (مكتبة تمارين، سجلّ الأوزان، خطة ١٢ أسبوعًا). بعدها يبني كلود برنامجًا تدريجيًا، ويتذكّر كل تفاصيلك دون أن تكرّرها في كل محادثة — بل ويعدّل الخطة تلقائيًا عند إخباره بأي إصابة أو تغيّر في ظروفك.</p>
   </div>
-  <div class="foot"><span class="brand">كلود ١٠١ &nbsp;•&nbsp; دليل تعلّم كلود من الصفر</span><span class="pagenum">16</span></div>
+  <div class="foot"><span class="brand">كلود Claude &nbsp;•&nbsp; ذكاء اصطناعي وتحليل البيانات</span><span class="pagenum">16</span></div>
 </section>
 
 <section class="slide">
@@ -666,7 +665,7 @@ h1.md{font-size:2.15vw;}
       <div class="check-row"><span class="text">إبقاء الأرتيفاكت خاصًا في أي وقت تشاء</span><span class="icon-circle sm"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" color="currentColor" style="color:currentColor"   xmlns="http://www.w3.org/2000/svg"><path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"></path></svg></span></div>
     </div>
   </div>
-  <div class="foot"><span class="brand">كلود ١٠١ &nbsp;•&nbsp; دليل تعلّم كلود من الصفر</span><span class="pagenum">17</span></div>
+  <div class="foot"><span class="brand">كلود Claude &nbsp;•&nbsp; ذكاء اصطناعي وتحليل البيانات</span><span class="pagenum">17</span></div>
 </section>
 
 <section class="slide">
@@ -692,7 +691,7 @@ h1.md{font-size:2.15vw;}
       <p>توفّر Anthropic مهارات جاهزة (مثل تصميم الواجهات الأمامية، إنشاء المهارات، تصميم الملصقات)، بالإضافة إلى إمكانية استخدام «صانع المهارات» (Skill Creator) لبناء مهارة خاصة بك تمامًا — كأن تصمّم مهارة تكتب بها سكربتات فيديوهاتك بأسلوبك الخاص ولهجتك المفضّلة.</p>
     </div>
   </div>
-  <div class="foot"><span class="brand">كلود ١٠١ &nbsp;•&nbsp; دليل تعلّم كلود من الصفر</span><span class="pagenum">18</span></div>
+  <div class="foot"><span class="brand">كلود Claude &nbsp;•&nbsp; ذكاء اصطناعي وتحليل البيانات</span><span class="pagenum">18</span></div>
 </section>
 
 <section class="slide dark closing-slide">
