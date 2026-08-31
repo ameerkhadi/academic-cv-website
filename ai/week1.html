@@ -19,6 +19,7 @@
     --paper:#fbf8ef;
     --ruleline:rgba(63,143,214,0.28);
     --ink:#1a3d8c;
+    --bark:#8a5a2b;
   }
 
   *{box-sizing:border-box;}
@@ -251,8 +252,11 @@
   }
 
   /* the week-1 tab carries the full lesson content, so its paper card grows wider */
+  /* long lecture pages: the tilt would shift content sideways the taller the page
+     gets (rotation widens the bounding box by height × sin θ), so drop it here */
   .paper:has(.rich-slide.active){
     width:min(97vw,900px);
+    transform:none;
   }
 
   .slide{
@@ -565,6 +569,529 @@
     border:1.5px solid var(--ink);
     border-radius:2px;
   }
+
+  /* ================= WEEK 2 VISUAL LANGUAGE ================= */
+
+  /* ---------- nav-pill section headings (look like the app's own nav item) ---------- */
+  .nav-pill{
+    display:inline-flex;
+    align-items:center;
+    gap:9px;
+    align-self:flex-start;
+    background:#2b2b2b;
+    color:#f2f2f2;
+    font-family:'Aref Ruqaa', serif;
+    font-weight:700;
+    font-size:clamp(14px,3.4vw,17.5px);
+    padding:8px 18px 9px;
+    border-radius:999px;
+    margin:28px 0 12px;
+    box-shadow:3px 4px 0 rgba(0,0,0,0.22);
+    max-width:100%;
+  }
+  .nav-pill:first-of-type{ margin-top:8px; }
+  .nav-pill .np-en{
+    font-family:'Caveat', cursive;
+    font-size:1.12em;
+    color:#f5c453;
+    direction:ltr;
+    unicode-bidi:isolate;
+  }
+
+  /* ---------- "try it" cards: action -> result ---------- */
+  .try-box{
+    width:100%;
+    border:2px solid var(--purple);
+    border-radius:14px 5px 14px 5px/5px 14px 5px 14px;
+    background:rgba(122,46,166,0.06);
+    padding:10px 13px 11px;
+    margin:4px 0 18px;
+  }
+  .try-title{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    color:var(--purple);
+    font-weight:700;
+    font-size:clamp(12.5px,3vw,14.5px);
+    margin-bottom:5px;
+  }
+  .try-line{
+    display:flex;
+    align-items:flex-start;
+    gap:8px;
+    font-size:clamp(12px,2.9vw,13.8px);
+    line-height:1.72;
+    color:var(--ink);
+    padding:3px 0;
+  }
+  .try-tag{
+    flex:none;
+    font-weight:700;
+    font-size:11px;
+    padding:2px 9px 3px;
+    border-radius:999px;
+    color:#fff;
+    margin-top:3px;
+  }
+  .try-do{ background:var(--blue); }
+  .try-see{ background:var(--green); }
+
+  /* ---------- scenario cards (situation -> solution) ---------- */
+  .scn{
+    width:100%;
+    border:2px solid var(--blue);
+    border-radius:14px;
+    background:rgba(255,255,255,0.55);
+    padding:12px 14px 13px;
+    margin:10px 0 16px;
+  }
+  .scn-head{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    flex-wrap:wrap;
+    margin-bottom:6px;
+  }
+  .scn-badge{
+    flex:none;
+    font-size:11px;
+    font-weight:700;
+    color:#fff;
+    padding:3px 11px 4px;
+    border-radius:999px;
+  }
+  .lv-easy{ background:var(--green); }
+  .lv-mid{  background:var(--orange); }
+  .lv-hard{ background:var(--red); }
+  .scn-title{
+    font-weight:700;
+    color:var(--blue);
+    font-size:clamp(13.5px,3.2vw,16px);
+  }
+  .scn-lbl{
+    display:block;
+    font-weight:700;
+    color:var(--red);
+    font-size:clamp(12px,2.9vw,13.5px);
+    margin:9px 0 3px;
+  }
+  .scn p{
+    margin:0;
+    font-size:clamp(12.5px,3vw,14px);
+    line-height:1.75;
+    color:var(--ink);
+  }
+  .scn ol{
+    margin:0;
+    padding:0 20px 0 0;
+    font-size:clamp(12.5px,3vw,14px);
+    line-height:1.75;
+    color:var(--ink);
+  }
+  .scn ol li{ padding:1px 0; }
+  .tool-chips{
+    display:flex;
+    flex-wrap:wrap;
+    gap:5px;
+    margin-top:9px;
+  }
+  .tool-chip{
+    font-size:11px;
+    font-weight:700;
+    color:var(--purple);
+    border:1.5px solid rgba(122,46,166,0.45);
+    background:rgba(122,46,166,0.07);
+    padding:2px 9px 3px;
+    border-radius:999px;
+  }
+
+  /* ---------- assignment cards ---------- */
+  .hw{
+    width:100%;
+    border-right:5px solid var(--orange);
+    border-top:1.5px solid rgba(224,122,31,0.3);
+    border-bottom:1.5px solid rgba(224,122,31,0.3);
+    border-left:1.5px solid rgba(224,122,31,0.3);
+    background:rgba(224,122,31,0.06);
+    border-radius:5px 13px 13px 5px;
+    padding:11px 13px 12px;
+    margin:8px 0 14px;
+  }
+  .hw-head{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    margin-bottom:5px;
+    flex-wrap:wrap;
+  }
+  .hw-num{
+    width:27px;
+    height:27px;
+    border-radius:50%;
+    background:var(--orange);
+    color:#fff;
+    font-weight:700;
+    font-size:14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex:none;
+  }
+  .hw-title{
+    font-weight:700;
+    color:var(--ink);
+    font-size:clamp(13.5px,3.2vw,15.5px);
+  }
+  .hw p{
+    margin:0;
+    font-size:clamp(12.5px,3vw,14px);
+    line-height:1.75;
+    color:var(--ink);
+  }
+  .hw-deliver{
+    display:flex;
+    gap:8px;
+    align-items:flex-start;
+    margin-top:7px;
+    font-size:clamp(12px,2.9vw,13.5px);
+    line-height:1.7;
+    color:var(--ink);
+  }
+  .hw-tag{
+    flex:none;
+    font-size:11px;
+    font-weight:700;
+    color:#fff;
+    background:var(--green);
+    padding:2px 9px 3px;
+    border-radius:999px;
+    margin-top:3px;
+  }
+
+  /* ---------- شجرة كلود: نفس محتوى الخريطة بشكل شجرة ---------- */
+  .ct-wrap{ margin:10px 0 4px; }
+  .ct-canopy{ max-width:720px; margin:8px auto 2px; }
+  /* التيجان على شبكة من أربعة أعمدة، ورسم الأغصان يتمدّد على نفس الشبكة؛
+     non-scaling-stroke يبقي سماكة الغصن ثابتة رغم التمدّد. */
+  .ct-crowns{ display:grid; grid-template-columns:repeat(4,1fr); gap:6px; align-items:end; }
+  .ct-crown{
+    border:2.5px solid var(--bc); background:color-mix(in srgb, var(--bc) 9%, #fff);
+    border-radius:14px; padding:7px 6px 8px; text-align:center; line-height:1.5;
+  }
+  .ct-crown b{ display:block; font-size:clamp(12.5px,3vw,17px); color:var(--bc); }
+  .ct-crown i{ display:block; font-style:normal; font-size:clamp(10.5px,2.4vw,13.5px); color:var(--bc); opacity:0.8; }
+  .ct-limbs{ display:block; width:100%; height:clamp(74px,17vw,116px); }
+  .ct-limbs path{ vector-effect:non-scaling-stroke; fill:none; stroke:var(--bark); stroke-linecap:round; }
+  .ct-trunkwrap{ display:flex; flex-direction:column; align-items:center; margin-top:-2px; }
+  .ct-stem{ width:13px; height:26px; background:var(--bark); border-radius:0 0 4px 4px; }
+  .ct-trunk{
+    background:var(--red); color:#fff; border-radius:16px; padding:7px 26px 8px;
+    text-align:center; box-shadow:3px 4px 0 rgba(0,0,0,0.2);
+  }
+  .ct-trunk b{ display:block; font-size:19px; }
+  .ct-trunk i{ font-style:normal; font-family:'Caveat',cursive; font-size:16px; color:#ffd9a8; direction:ltr; unicode-bidi:isolate; }
+
+  .ct-boughs{ display:flex; flex-direction:column; gap:24px; margin-top:20px; }
+  .ct-bough{ --bc:var(--blue); }
+  .ct-bough.g{ --bc:var(--green); } .ct-bough.o{ --bc:var(--orange); } .ct-bough.p{ --bc:var(--purple); }
+  .ct-head{
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--bc); color:#fff; font-weight:700; font-size:16px;
+    padding:6px 16px 7px; border-radius:255px 14px 225px 14px/14px 225px 14px 255px;
+    box-shadow:3px 4px 0 rgba(0,0,0,0.18);
+  }
+  .ct-limb{ position:relative; margin:10px 4px 0 0; padding:8px 30px 2px 0; }
+  .ct-limb::before{
+    content:""; position:absolute; top:0; bottom:16px; right:11px; width:3px; border-radius:3px;
+    background:linear-gradient(to bottom, var(--bark), rgba(138,90,43,0.22));
+  }
+  .ct-bud{ position:relative; margin-bottom:15px; }
+  /* الفرع المنحني: عمودي نازل من الجذع ثم ينعطف يسارًا إلى البرعم */
+  .ct-bud::before{
+    content:""; position:absolute; right:-19px; top:9px; width:17px; height:13px;
+    border-right:3px solid rgba(138,90,43,0.6);
+    border-bottom:3px solid rgba(138,90,43,0.6);
+    border-bottom-right-radius:13px;
+  }
+  .ct-name{
+    display:inline-block; font-weight:700; font-size:15px; color:var(--bc);
+    border-bottom:2px solid rgba(0,0,0,0.08); padding-bottom:1px;
+  }
+  .ct-en{ font-family:'Caveat',cursive; font-size:16px; color:var(--purple); margin-right:5px; direction:ltr; unicode-bidi:isolate; }
+  .ct-star{ color:#c99500; }
+  .ct-leaves{ display:flex; flex-wrap:wrap; gap:6px 7px; margin-top:7px; }
+  .ct-leaf{
+    font-size:13px; line-height:1.6; padding:3px 11px 4px;
+    border:1.5px solid color-mix(in srgb, var(--bc) 45%, transparent);
+    background:color-mix(in srgb, var(--bc) 7%, transparent);
+    border-radius:13px 0 13px 0;
+  }
+  .ct-leaf .ct-en{ font-size:14px; }
+  /* حدود متقطّعة = تفرّع من الورقة نفسها */
+  .ct-leaf.twig{ border-style:dashed; border-radius:0 13px 0 13px; background:transparent; }
+  .ct-key{
+    display:flex; flex-wrap:wrap; gap:8px 16px; margin-top:14px; font-size:13px;
+    color:rgba(26,61,140,0.8);
+  }
+
+  /* ---------- the full map of Claude ---------- */
+  .map-tree{
+    width:100%;
+    margin:8px 0 18px;
+    font-size:clamp(11.5px,2.8vw,13.5px);
+    color:var(--ink);
+    line-height:1.7;
+  }
+  .map-root{
+    display:inline-block;
+    background:var(--ink);
+    color:#fff;
+    font-family:'Aref Ruqaa Ink','Aref Ruqaa',serif;
+    font-weight:700;
+    font-size:clamp(16px,4vw,21px);
+    padding:6px 20px 8px;
+    border-radius:999px;
+    margin-bottom:8px;
+    box-shadow:3px 4px 0 rgba(26,61,140,0.2);
+  }
+  .map-tree ul{
+    list-style:none;
+    margin:0;
+    padding:0 15px 0 0;
+    position:relative;
+  }
+  .map-tree ul::before{
+    content:"";
+    position:absolute;
+    top:0;
+    bottom:11px;
+    right:2px;
+    border-right:1.5px solid rgba(63,143,214,0.3);
+  }
+  .map-tree li{
+    position:relative;
+    padding:2px 13px 2px 0;
+  }
+  .map-tree li::before{
+    content:"";
+    position:absolute;
+    top:13px;
+    right:2px;
+    width:9px;
+    border-top:1.5px solid rgba(63,143,214,0.3);
+  }
+  .m1{
+    display:inline-block;
+    font-weight:700;
+    color:#fff;
+    background:var(--blue);
+    padding:2px 12px 3px;
+    border-radius:8px;
+    font-size:1.06em;
+    margin:4px 0 2px;
+  }
+  .m1.g{ background:var(--green); }
+  .m1.o{ background:var(--orange); }
+  .m1.p{ background:var(--purple); }
+  .m2{ font-weight:700; color:var(--blue); }
+  .map-tree em{
+    font-style:normal;
+    direction:ltr;
+    unicode-bidi:isolate;
+    color:var(--lightblue);
+    font-size:0.92em;
+  }
+
+  /* ---------- app screens drawn into the notebook ---------- */
+  .screen-block{
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px;
+    align-items:flex-start;
+    margin:8px 0 16px;
+    width:100%;
+  }
+  .screen-frame{
+    flex:1 1 262px;
+    max-width:350px;
+    border:2.5px solid var(--ink);
+    border-radius:15px;
+    background:#fff;
+    box-shadow:4px 5px 0 rgba(26,61,140,0.13);
+    overflow:hidden;
+  }
+  .screen-frame.dark{ background:#1b1b1b; border-color:#3f3f3f; box-shadow:4px 5px 0 rgba(0,0,0,0.28); }
+  .sf-bar{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    padding:8px 12px;
+    background:#eef4fc;
+    border-bottom:2px solid rgba(26,61,140,0.2);
+    font-size:12.5px;
+    font-weight:700;
+    color:var(--blue);
+  }
+  .screen-frame.dark .sf-bar{ background:#262626; border-bottom-color:#3a3a3a; color:#ededed; }
+  .sf-bar .sf-en{ direction:ltr; unicode-bidi:isolate; }
+  .sf-row{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    padding:9px 12px;
+    border-bottom:1px solid rgba(26,61,140,0.1);
+    font-size:13.5px;
+    color:var(--ink);
+  }
+  .screen-frame.dark .sf-row{ border-bottom-color:rgba(255,255,255,0.09); color:#e6e6e6; }
+  .sf-row:last-child{ border-bottom:none; }
+  .sf-row.on{ background:rgba(31,122,61,0.08); }
+  .screen-frame.dark .sf-row.sel{ background:#3a3a3a; border-radius:999px; }
+  .sf-name{
+    flex:1;
+    font-weight:700;
+    direction:ltr;
+    unicode-bidi:isolate;
+    text-align:left;
+    min-width:0;
+  }
+  .sf-sub{
+    display:block;
+    font-size:11.5px;
+    opacity:0.72;
+    font-weight:400;
+    direction:ltr;
+    unicode-bidi:isolate;
+    text-align:left;
+  }
+  .sf-num{
+    width:20px;
+    height:20px;
+    border-radius:50%;
+    background:var(--red);
+    color:#fff;
+    font-size:11.5px;
+    font-weight:700;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex:none;
+  }
+
+  /* ---------- numbered legend beside a screen ---------- */
+  .screen-legend{
+    flex:1 1 235px;
+    display:flex;
+    flex-direction:column;
+    gap:7px;
+    min-width:0;
+  }
+  .leg-item{
+    display:flex;
+    align-items:flex-start;
+    gap:8px;
+    font-size:clamp(12.5px,3vw,14px);
+    line-height:1.7;
+    color:var(--ink);
+  }
+  .leg-num{
+    width:20px;
+    height:20px;
+    border-radius:50%;
+    background:var(--red);
+    color:#fff;
+    font-size:11.5px;
+    font-weight:700;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex:none;
+    margin-top:3px;
+  }
+  .leg-item b{ color:var(--blue); }
+
+  /* ---------- settings rows with drawn toggles ---------- */
+  .set-row{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:8px 11px;
+    margin:6px 0;
+    background:rgba(255,255,255,0.55);
+    border:1.5px solid rgba(24,87,164,0.3);
+    border-radius:11px;
+  }
+  .set-ic{ width:24px; height:24px; flex:none; }
+  .set-txt{ flex:1; min-width:0; }
+  .set-name{
+    font-weight:700;
+    color:var(--blue);
+    font-size:clamp(12.5px,3vw,15px);
+    display:block;
+  }
+  .set-desc{
+    font-size:clamp(11px,2.6vw,13px);
+    color:var(--ink);
+    opacity:.8;
+    display:block;
+    margin-top:1px;
+    line-height:1.6;
+  }
+  .toggle{
+    flex:none;
+    width:38px;
+    height:21px;
+    border-radius:999px;
+    border:2px solid var(--green);
+    background:rgba(163,220,175,0.55);
+    position:relative;
+    transform:rotate(-1deg);
+  }
+  .toggle::after{
+    content:"";
+    position:absolute;
+    top:1.5px;
+    left:1.5px;
+    width:14px;
+    height:14px;
+    border-radius:50%;
+    background:var(--green);
+  }
+  .toggle.off{ border-color:#9aa7b4; background:rgba(154,167,180,0.22); transform:rotate(1deg); }
+  .toggle.off::after{ left:auto; right:1.5px; background:#9aa7b4; }
+
+  /* ---------- before / after speech bubbles ---------- */
+  .ba-prompt{
+    font-size:clamp(12px,2.8vw,13.5px);
+    color:var(--purple);
+    font-weight:700;
+    margin:12px 0 3px;
+  }
+  .ba-pair{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin:4px 0 10px;
+  }
+  .bubble{
+    flex:1 1 235px;
+    border-radius:14px 14px 14px 5px;
+    padding:9px 12px 10px;
+    font-size:clamp(11.5px,2.8vw,13.5px);
+    line-height:1.7;
+    color:var(--ink);
+  }
+  .bubble .ba-tag{
+    display:block;
+    font-weight:700;
+    font-size:clamp(11px,2.5vw,12.5px);
+    margin-bottom:3px;
+  }
+  .b-before{ background:rgba(209,52,43,0.09); border:1.5px dashed rgba(209,52,43,0.55); }
+  .b-before .ba-tag{ color:var(--red); }
+  .b-after{ background:rgba(31,122,61,0.10); border:1.5px solid rgba(31,122,61,0.6); }
+  .b-after .ba-tag{ color:var(--green); }
 
   .content-slide::after{
     content:"★";
@@ -1046,19 +1573,1194 @@
       <!-- ============ END SLIDE 1 ============ -->
 
       <!-- ============ SLIDE 2 : الأسبوع الثاني ============ -->
-      <div id="slide-2" class="slide content-slide">
+      <div id="slide-2" class="slide content-slide rich-slide">
         <span class="chip chip-ch1">الأسبوع الثاني</span>
-        <h2 class="page-title">الأسبوع الثاني</h2>
+        <h2 class="page-title">جولة داخل كلود: الواجهات والإعدادات</h2>
         <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
-        <div class="coming-soon">
-          <svg class="big-icon" viewBox="0 0 40 40"><g filter="url(#sketchy)"><circle cx="20" cy="20" r="15" fill="#fde3c4" stroke="var(--orange)" stroke-width="2.5"/><path d="M20 12 v9 l6 4" fill="none" stroke="var(--orange)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></g></svg>
-          <p class="cs-title">تنزل لاحقاً</p>
-          <p class="cs-sub">محتوى هذا الأسبوع سيُضاف قريباً.</p>
+
+        <p class="lead-paragraph">
+          الأسبوع الأول عرّفنا على الأداة. هذا الأسبوع <span class="hl hl-blue">نفتح الشاشات واحدة واحدة</span> —
+          كل شاشة مرسومة كما تظهر عندك فعلًا، وبجانبها شرح عربي مرقّم لكل عنصر.
+        </p>
+        <div class="mini-note" style="color:var(--purple);">الأسماء الإنكليزية مكتوبة كما هي على الشاشة، وقد تختلف مواضعها قليلاً بين الهاتف والمتصفح.</div>
+
+        <div class="section-heading" style="margin-top:14px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>شجرة كلود</span>
         </div>
-        <div class="page-nav">
-          <button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button>
-          <button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button>
+
+        <div class="ct-wrap">
+          <div class="ct-canopy">
+            <div class="ct-crowns">
+              <div class="ct-crown" style="--bc:var(--blue);"><b>١ · كيف يشتغل</b><i>الأساسيات</i></div>
+              <div class="ct-crown" style="--bc:var(--green);"><b>٢ · الواجهات <span class="ct-star">★</span></b><i>أين تشتغل</i></div>
+              <div class="ct-crown" style="--bc:var(--orange);"><b>٣ · الإعدادات <span class="ct-star">★</span></b><i>كيف تضبطه</i></div>
+              <div class="ct-crown" style="--bc:var(--purple);"><b>٤ · الحوكمة</b><i>الاستخدام الآمن</i></div>
+            </div>
+
+            <svg class="ct-limbs" viewBox="0 0 800 110" preserveAspectRatio="none" aria-hidden="true">
+              <path d="M400 110 C 520 96, 600 70, 700 4"  stroke-width="7"/>
+              <path d="M400 110 C 444 82, 470 46, 500 4"  stroke-width="6"/>
+              <path d="M400 110 C 356 82, 330 46, 300 4"  stroke-width="6"/>
+              <path d="M400 110 C 280 96, 200 70, 100 4"  stroke-width="7"/>
+              <path d="M560 84 C 600 72, 622 54, 630 34"  stroke-width="2.5" opacity="0.5"/>
+              <path d="M240 84 C 200 72, 178 54, 170 34"  stroke-width="2.5" opacity="0.5"/>
+              <path d="M452 78 C 436 58, 430 44, 430 28"  stroke-width="2.5" opacity="0.45"/>
+              <path d="M348 78 C 364 58, 370 44, 370 28"  stroke-width="2.5" opacity="0.45"/>
+            </svg>
+
+            <div class="ct-trunkwrap">
+              <div class="ct-stem"></div>
+              <div class="ct-trunk"><b>كلود</b><i>Claude</i></div>
+            </div>
+          </div>
+
+          <div class="ct-key">
+            <span><span class="ct-star">★</span> = نغطّيه هذا الأسبوع</span>
+            <span><span class="ct-leaf twig" style="--bc:var(--ink);">حدود متقطّعة</span> = تفرّع من الورقة نفسها</span>
+          </div>
+
+          <div class="ct-boughs">
+
+            <div class="ct-bough">
+              <div class="ct-head">١ · كيف يشتغل — الأساسيات</div>
+              <div class="ct-limb">
+                <div class="ct-bud">
+                  <span class="ct-name">النموذج اللغوي الكبير <span class="ct-en">LLM</span></span>
+                  <div class="ct-leaves">
+                    <span class="ct-leaf">التدريب على النصوص ومصدر «المعرفة»</span>
+                    <span class="ct-leaf">توقّع الكلمة التالية — لا تفكير بشري</span>
+                  </div>
+                </div>
+                <div class="ct-bud">
+                  <span class="ct-name">رحلة الأمر</span>
+                  <div class="ct-leaves">
+                    <span class="ct-leaf">الأمر <span class="ct-en">Prompt</span></span>
+                    <span class="ct-leaf">التقطيع <span class="ct-en">Tokenization</span></span>
+                    <span class="ct-leaf">التمثيل الرقمي <span class="ct-en">Embeddings</span></span>
+                    <span class="ct-leaf">التوليد <span class="ct-en">Generation</span></span>
+                  </div>
+                </div>
+                <div class="ct-bud">
+                  <span class="ct-name">حدود النموذج</span>
+                  <div class="ct-leaves">
+                    <span class="ct-leaf">الهلوسة <span class="ct-en">Hallucination</span></span>
+                    <span class="ct-leaf">نافذة السياق <span class="ct-en">Context window</span></span>
+                    <span class="ct-leaf">التحيّز <span class="ct-en">Bias</span></span>
+                  </div>
+                </div>
+                <div class="ct-bud">
+                  <span class="ct-name">النماذج واختيارها</span>
+                  <div class="ct-leaves">
+                    <span class="ct-leaf">هايكو — السرعة</span>
+                    <span class="ct-leaf">سونيت — التوازن</span>
+                    <span class="ct-leaf">أوبس — الدقّة</span>
+                    <span class="ct-leaf">التفكير الممتد <span class="ct-en">Extended thinking</span></span>
+                  </div>
+                </div>
+                <div class="ct-bud">
+                  <span class="ct-name">هندسة الأوامر</span>
+                  <div class="ct-leaves">
+                    <span class="ct-leaf">القواعد الذهبية الأربع</span>
+                    <span class="ct-leaf">تعيين الدور · التعليم بالأمثلة</span>
+                    <span class="ct-leaf">التكرار مقابل اللقطة الواحدة</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="ct-bough g">
+              <div class="ct-head">٢ · واجهات الاستخدام <span class="ct-star">★</span></div>
+              <div class="ct-limb">
+                <div class="ct-bud">
+                  <span class="ct-name">المحادثة <span class="ct-en">Chat</span></span>
+                  <div class="ct-leaves">
+                    <span class="ct-leaf">محادثة جديدة <span class="ct-en">New chat</span></span>
+                    <span class="ct-leaf">المحادثات السابقة <span class="ct-en">Chats</span></span>
+                    <span class="ct-leaf twig">البحث فيها</span>
+                    <span class="ct-leaf twig">التثبيت والأرشفة</span>
+                    <span class="ct-leaf twig">المشاركة برابط</span>
+                    <span class="ct-leaf">تعديل الرسالة وإعادة التوليد</span>
+                    <span class="ct-leaf">تبديل النموذج داخل المحادثة</span>
+                    <span class="ct-leaf">رفع الملفات والصور</span>
+                    <span class="ct-leaf">المحادثة الصوتية <span class="ct-en">Voice</span></span>
+                  </div>
+                </div>
+                <div class="ct-bud">
+                  <span class="ct-name">المشاريع <span class="ct-en">Projects</span></span>
+                  <div class="ct-leaves">
+                    <span class="ct-leaf">التعليمات الثابتة</span>
+                    <span class="ct-leaf">الملفات المرجعية — قاعدة المعرفة</span>
+                    <span class="ct-leaf">محادثات داخل سياق المشروع</span>
+                  </div>
+                </div>
+                <div class="ct-bud">
+                  <span class="ct-name">الأرتيفاكتس <span class="ct-en">Artifacts</span></span>
+                  <div class="ct-leaves">
+                    <span class="ct-leaf">مستندات · صفحات · تصاميم · رسوم</span>
+                    <span class="ct-leaf">المعاينة والتعديل</span>
+                    <span class="ct-leaf">النشر برابط أو الإبقاء خاصًا</span>
+                  </div>
+                </div>
+                <div class="ct-bud">
+                  <span class="ct-name">كوورك <span class="ct-star">★</span> <span class="ct-en">Cowork</span></span>
+                  <div class="ct-leaves">
+                    <span class="ct-leaf">المهام وحالاتها</span>
+                    <span class="ct-leaf twig">قيد العمل <span class="ct-en">Working</span></span>
+                    <span class="ct-leaf twig">تحتاج ردّك <span class="ct-en">Needs input</span></span>
+                    <span class="ct-leaf twig">جاهزة للمراجعة <span class="ct-en">Ready for review</span></span>
+                    <span class="ct-leaf twig">مكتملة · مؤرشفة</span>
+                    <span class="ct-leaf">الوصول إلى ملفاتك</span>
+                    <span class="ct-leaf">الأجهزة الموثوقة والمتصفح المفضّل</span>
+                  </div>
+                </div>
+                <div class="ct-bud">
+                  <span class="ct-name">ديسباتش <span class="ct-star">★</span> <span class="ct-en">Dispatch</span></span>
+                </div>
+                <div class="ct-bud">
+                  <span class="ct-name">كلود كود <span class="ct-star">★</span> <span class="ct-en">Code</span></span>
+                  <div class="ct-leaves">
+                    <span class="ct-leaf">الأجهزة <span class="ct-en">Devices</span></span>
+                    <span class="ct-leaf">الجلسات <span class="ct-en">Sessions</span></span>
+                    <span class="ct-leaf">تصنيف حالة الجلسة · مظهر الكود</span>
+                  </div>
+                </div>
+                <div class="ct-bud">
+                  <span class="ct-name">المهام المجدولة <span class="ct-star">★</span> <span class="ct-en">Scheduled</span></span>
+                  <div class="ct-leaves">
+                    <span class="ct-leaf">المُشغِّل <span class="ct-en">Trigger</span></span>
+                    <span class="ct-leaf">سجلّ التشغيلات</span>
+                    <span class="ct-leaf">الإيقاف والحذف</span>
+                  </div>
+                </div>
+                <div class="ct-bud">
+                  <span class="ct-name">التخصيص <span class="ct-en">Customize</span></span>
+                </div>
+                <div class="ct-bud">
+                  <span class="ct-name">التصميم <span class="ct-star">★</span> <span class="ct-en">Design · Beta</span></span>
+                  <div class="ct-leaves">
+                    <span class="ct-leaf">القوالب — فارغ · تطبيق جوال · شرائح · مستند</span>
+                    <span class="ct-leaf">أنظمة التصميم <span class="ct-en">Design systems</span></span>
+                    <span class="ct-leaf">اختيار النموذج</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="ct-bough o">
+              <div class="ct-head">٣ · الإعدادات <span class="ct-star">★</span></div>
+              <div class="ct-limb">
+                <div class="ct-bud">
+                  <span class="ct-name">الملف الشخصي <span class="ct-en">Profile</span></span>
+                  <div class="ct-leaves">
+                    <span class="ct-leaf">بماذا يناديك · طبيعة عملك</span>
+                    <span class="ct-leaf">التعليمات الشخصية الدائمة</span>
+                  </div>
+                </div>
+                <div class="ct-bud">
+                  <span class="ct-name">عام <span class="ct-en">General</span></span>
+                  <div class="ct-leaves">
+                    <span class="ct-leaf">الصوت — اللغة · النمط · السرعة</span>
+                    <span class="ct-leaf">الإشعارات — اكتمال الردّ · إشعارات الكود</span>
+                  </div>
+                </div>
+                <div class="ct-bud">
+                  <span class="ct-name">الحساب <span class="ct-en">Account</span></span>
+                  <div class="ct-leaves">
+                    <span class="ct-leaf">الأجهزة المعتمدة</span>
+                    <span class="ct-leaf">الجلسات النشطة ومواقعها</span>
+                  </div>
+                </div>
+                <div class="ct-bud">
+                  <span class="ct-name">الخصوصية <span class="ct-en">Privacy</span></span>
+                  <div class="ct-leaves">
+                    <span class="ct-leaf">تصدير البيانات — المدّة والمحتوى</span>
+                    <span class="ct-leaf">حذف المحادثات أو الحساب</span>
+                  </div>
+                </div>
+                <div class="ct-bud">
+                  <span class="ct-name">القدرات <span class="ct-en">Capabilities</span></span>
+                  <div class="ct-leaves">
+                    <span class="ct-leaf">الأرتيفاكتس</span>
+                    <span class="ct-leaf">أرتيفاكتس ذكية</span>
+                    <span class="ct-leaf">الرسوم داخل المحادثة</span>
+                    <span class="ct-leaf">تنفيذ الكود وإنشاء الملفات</span>
+                  </div>
+                </div>
+                <div class="ct-bud">
+                  <span class="ct-name">الموصلات <span class="ct-en">Connectors</span></span>
+                  <div class="ct-leaves">
+                    <span class="ct-leaf">درايف · البريد · التقويم</span>
+                  </div>
+                </div>
+                <div class="ct-bud">
+                  <span class="ct-name">المهارات <span class="ct-en">Skills</span></span>
+                  <div class="ct-leaves">
+                    <span class="ct-leaf">تصفّح الجاهزة</span>
+                    <span class="ct-leaf">رفع مهارة</span>
+                    <span class="ct-leaf">إنشاء مهارة</span>
+                    <span class="ct-leaf">الإنشاء مع كلود</span>
+                  </div>
+                </div>
+                <div class="ct-bud">
+                  <span class="ct-name">الفوترة والاستخدام <span class="ct-en">Billing · Usage</span></span>
+                  <div class="ct-leaves">
+                    <span class="ct-leaf">أرصدة الاستخدام · إعادة الشحن التلقائي</span>
+                    <span class="ct-leaf">الفواتير · إلغاء الخطة</span>
+                  </div>
+                </div>
+                <div class="ct-bud">
+                  <span class="ct-name">الأذونات والمظهر</span>
+                  <div class="ct-leaves">
+                    <span class="ct-leaf">أذونات الجهاز</span>
+                    <span class="ct-leaf">وضع اللون · نمط الخط</span>
+                  </div>
+                </div>
+                <div class="ct-bud">
+                  <span class="ct-name">كلود في كروم <span class="ct-en">Claude in Chrome</span></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="ct-bough p">
+              <div class="ct-head">٤ · الحوكمة والاستخدام الآمن</div>
+              <div class="ct-limb">
+                <div class="ct-bud">
+                  <span class="ct-name">تصنيف البيانات</span>
+                  <div class="ct-leaves">
+                    <span class="ct-leaf">عام · داخلي · سرّي</span>
+                  </div>
+                </div>
+                <div class="ct-bud">
+                  <span class="ct-name">البيانات الشخصية المعرِّفة <span class="ct-en">PII</span></span>
+                  <div class="ct-leaves">
+                    <span class="ct-leaf">إخفاء الهوية <span class="ct-en">Anonymization</span></span>
+                  </div>
+                </div>
+                <div class="ct-bud">
+                  <span class="ct-name">الإشراف البشري <span class="ct-en">Human in the loop</span></span>
+                  <div class="ct-leaves">
+                    <span class="ct-leaf">المسؤولية والتوقيع</span>
+                    <span class="ct-leaf">التحقّق قبل الاعتماد</span>
+                  </div>
+                </div>
+                <div class="ct-bud">
+                  <span class="ct-name">سياسة استخدام مؤسسي</span>
+                  <div class="ct-leaves">
+                    <span class="ct-leaf">من يستخدم · لأي غرض · بأي صلاحية</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
         </div>
+
+        <div class="section-heading" style="margin-top:14px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>الخريطة الشاملة لكلود</span>
+        </div>
+        <p class="lead-paragraph">قبل التفاصيل، هذه خريطة كل ما في كلود — فروع وتفرّعات. ما نغطّيه هذا الأسبوع مُعلَّم بـ<span class="hl hl-yellow">★</span>، والباقي يأتي في الأسابيع القادمة.</p>
+
+        <div class="map-tree">
+          <div class="map-root">كلود <em>Claude</em></div>
+          <ul>
+            <li><span class="m1">١ · كيف يشتغل — الأساسيات</span>
+              <ul>
+                <li><span class="m2">النموذج اللغوي الكبير</span> <em>LLM</em>
+                  <ul>
+                    <li>التدريب على النصوص ومصدر «المعرفة»</li>
+                    <li>توقّع الكلمة التالية — لا تفكير بشري</li>
+                  </ul>
+                </li>
+                <li><span class="m2">رحلة الأمر</span>
+                  <ul>
+                    <li>الأمر <em>Prompt</em></li>
+                    <li>التقطيع <em>Tokenization</em></li>
+                    <li>التمثيل الرقمي <em>Embeddings</em></li>
+                    <li>التوليد <em>Generation</em></li>
+                  </ul>
+                </li>
+                <li><span class="m2">حدود النموذج</span>
+                  <ul>
+                    <li>الهلوسة <em>Hallucination</em></li>
+                    <li>نافذة السياق <em>Context window</em></li>
+                    <li>التحيّز <em>Bias</em></li>
+                  </ul>
+                </li>
+                <li><span class="m2">النماذج واختيارها</span>
+                  <ul>
+                    <li>هايكو — السرعة</li>
+                    <li>سونيت — التوازن</li>
+                    <li>أوبس — الدقّة</li>
+                    <li>التفكير الممتد <em>Extended thinking</em></li>
+                  </ul>
+                </li>
+                <li><span class="m2">هندسة الأوامر</span>
+                  <ul>
+                    <li>القواعد الذهبية الأربع</li>
+                    <li>تعيين الدور · التعليم بالأمثلة</li>
+                    <li>عقلية التكرار مقابل اللقطة الواحدة</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+
+            <li><span class="m1 g">٢ · واجهات الاستخدام ★</span>
+              <ul>
+                <li><span class="m2">المحادثة</span> <em>Chat</em>
+                  <ul>
+                    <li>محادثة جديدة <em>New chat</em></li>
+                    <li>المحادثات السابقة <em>Chats</em>
+                      <ul>
+                        <li>البحث فيها</li>
+                        <li>التثبيت والأرشفة</li>
+                        <li>المشاركة برابط</li>
+                      </ul>
+                    </li>
+                    <li>تعديل الرسالة وإعادة التوليد</li>
+                    <li>تبديل النموذج داخل المحادثة</li>
+                    <li>رفع الملفات والصور</li>
+                    <li>المحادثة الصوتية <em>Voice</em></li>
+                  </ul>
+                </li>
+                <li><span class="m2">المشاريع</span> <em>Projects</em>
+                  <ul>
+                    <li>التعليمات الثابتة</li>
+                    <li>الملفات المرجعية — قاعدة المعرفة</li>
+                    <li>محادثات داخل سياق المشروع</li>
+                  </ul>
+                </li>
+                <li><span class="m2">الأرتيفاكتس</span> <em>Artifacts</em>
+                  <ul>
+                    <li>مستندات · صفحات · تصاميم · رسوم</li>
+                    <li>المعاينة والتعديل</li>
+                    <li>النشر برابط أو الإبقاء خاصًا</li>
+                  </ul>
+                </li>
+                <li><span class="m2">كوورك ★</span> <em>Cowork</em>
+                  <ul>
+                    <li>المهام وحالاتها
+                      <ul>
+                        <li>قيد العمل <em>Working</em></li>
+                        <li>تحتاج ردّك <em>Needs input</em></li>
+                        <li>جاهزة للمراجعة <em>Ready for review</em></li>
+                        <li>مكتملة · مؤرشفة</li>
+                      </ul>
+                    </li>
+                    <li>الوصول إلى ملفاتك</li>
+                    <li>الأجهزة الموثوقة والمتصفح المفضّل</li>
+                  </ul>
+                </li>
+                <li><span class="m2">ديسباتش ★</span> <em>Dispatch</em></li>
+                <li><span class="m2">كلود كود ★</span> <em>Code</em>
+                  <ul>
+                    <li>الأجهزة <em>Devices</em></li>
+                    <li>الجلسات <em>Sessions</em></li>
+                    <li>تصنيف حالة الجلسة · مظهر الكود</li>
+                  </ul>
+                </li>
+                <li><span class="m2">المهام المجدولة ★</span> <em>Scheduled</em>
+                  <ul>
+                    <li>المُشغِّل <em>Trigger</em></li>
+                    <li>سجلّ التشغيلات</li>
+                    <li>الإيقاف والحذف</li>
+                  </ul>
+                </li>
+                <li><span class="m2">التخصيص</span> <em>Customize</em></li>
+                <li><span class="m2">التصميم ★</span> <em>Design · Beta</em>
+                  <ul>
+                    <li>القوالب — فارغ · تطبيق جوال · شرائح · مستند</li>
+                    <li>أنظمة التصميم <em>Design systems</em></li>
+                    <li>اختيار النموذج</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+
+            <li><span class="m1 o">٣ · الإعدادات ★</span>
+              <ul>
+                <li><span class="m2">الملف الشخصي</span> <em>Profile</em>
+                  <ul>
+                    <li>بماذا يناديك · طبيعة عملك</li>
+                    <li>التعليمات الشخصية الدائمة</li>
+                  </ul>
+                </li>
+                <li><span class="m2">عام</span> <em>General</em>
+                  <ul>
+                    <li>الصوت — اللغة · النمط · السرعة</li>
+                    <li>الإشعارات — اكتمال الردّ · إشعارات الكود</li>
+                  </ul>
+                </li>
+                <li><span class="m2">الحساب</span> <em>Account</em>
+                  <ul>
+                    <li>الأجهزة المعتمدة</li>
+                    <li>الجلسات النشطة ومواقعها</li>
+                  </ul>
+                </li>
+                <li><span class="m2">الخصوصية</span> <em>Privacy</em>
+                  <ul>
+                    <li>تصدير البيانات — المدّة والمحتوى</li>
+                    <li>حذف المحادثات أو الحساب</li>
+                  </ul>
+                </li>
+                <li><span class="m2">القدرات</span> <em>Capabilities</em>
+                  <ul>
+                    <li>الأرتيفاكتس</li>
+                    <li>أرتيفاكتس ذكية</li>
+                    <li>الرسوم داخل المحادثة</li>
+                    <li>تنفيذ الكود وإنشاء الملفات</li>
+                  </ul>
+                </li>
+                <li><span class="m2">الموصلات</span> <em>Connectors</em>
+                  <ul>
+                    <li>درايف · البريد · التقويم</li>
+                  </ul>
+                </li>
+                <li><span class="m2">المهارات</span> <em>Skills</em>
+                  <ul>
+                    <li>تصفّح الجاهزة</li>
+                    <li>رفع مهارة</li>
+                    <li>إنشاء مهارة</li>
+                    <li>الإنشاء مع كلود</li>
+                  </ul>
+                </li>
+                <li><span class="m2">الفوترة والاستخدام</span> <em>Billing · Usage</em>
+                  <ul>
+                    <li>أرصدة الاستخدام · إعادة الشحن التلقائي</li>
+                    <li>الفواتير · إلغاء الخطة</li>
+                  </ul>
+                </li>
+                <li><span class="m2">الأذونات والمظهر</span>
+                  <ul>
+                    <li>أذونات الجهاز</li>
+                    <li>وضع اللون · نمط الخط</li>
+                  </ul>
+                </li>
+                <li><span class="m2">كلود في كروم</span> <em>Claude in Chrome</em></li>
+              </ul>
+            </li>
+
+            <li><span class="m1 p">٤ · الحوكمة والاستخدام الآمن</span>
+              <ul>
+                <li><span class="m2">تصنيف البيانات</span>
+                  <ul>
+                    <li>عام · داخلي · سرّي</li>
+                  </ul>
+                </li>
+                <li><span class="m2">البيانات الشخصية المعرِّفة</span> <em>PII</em>
+                  <ul>
+                    <li>إخفاء الهوية <em>Anonymization</em></li>
+                  </ul>
+                </li>
+                <li><span class="m2">الإشراف البشري</span> <em>Human in the loop</em>
+                  <ul>
+                    <li>المسؤولية والتوقيع</li>
+                    <li>التحقّق قبل الاعتماد</li>
+                  </ul>
+                </li>
+                <li><span class="m2">سياسة استخدام مؤسسي</span>
+                  <ul>
+                    <li>من يستخدم · لأي غرض · بأي صلاحية</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+
+
+        <!-- ===== 1: SIDEBAR ===== -->
+        <div class="nav-pill">الشريط الجانبي <span class="np-en">Sidebar</span></div>
+        <p class="lead-paragraph">أول ما تفتح التطبيق، هذه الواجهات السبع تحت يدك:</p>
+        <div class="screen-block">
+          <div class="screen-frame dark">
+            <div class="sf-bar"><span class="sf-en">Claude</span></div>
+            <div class="sf-row"><span class="sf-num">١</span><span class="sf-name">New chat</span></div>
+            <div class="sf-row"><span class="sf-num">٢</span><span class="sf-name">Chats</span></div>
+            <div class="sf-row"><span class="sf-num">٣</span><span class="sf-name">Projects</span></div>
+            <div class="sf-row"><span class="sf-num">٤</span><span class="sf-name">Code</span></div>
+            <div class="sf-row"><span class="sf-num">٥</span><span class="sf-name">Artifacts</span></div>
+            <div class="sf-row sel"><span class="sf-num">٦</span><span class="sf-name">Cowork</span></div>
+            <div class="sf-row"><span class="sf-num">٧</span><span class="sf-name">Dispatch</span></div>
+          </div>
+          <div class="screen-legend">
+            <div class="leg-item"><span class="leg-num">١</span><span><b>محادثة جديدة</b> — تبدأ من الصفر.</span></div>
+            <div class="leg-item"><span class="leg-num">٢</span><span><b>المحادثات</b> — أرشيف كل نقاشاتك السابقة، قابل للبحث.</span></div>
+            <div class="leg-item"><span class="leg-num">٣</span><span><b>المشاريع</b> — بيئة لكل موضوع، بتعليماتها وملفاتها الثابتة.</span></div>
+            <div class="leg-item"><span class="leg-num">٤</span><span><b>كلود كود</b> — العمل على الأكواد والمستودعات البرمجية.</span></div>
+            <div class="leg-item"><span class="leg-num">٥</span><span><b>الأرتيفاكتس</b> — نواتجك التفاعلية: صفحات، مستندات، تصاميم.</span></div>
+            <div class="leg-item"><span class="leg-num">٦</span><span><b>كوورك</b> — مهام أكبر تصل لملفاتك وتشتغل بالخلفية.</span></div>
+            <div class="leg-item"><span class="leg-num">٧</span><span><b>ديسباتش</b> — إرسال مهمة لتُنفَّذ بعيدًا عنك ثم تعود بالنتيجة.</span></div>
+          </div>
+        </div>
+        <div class="tip-box" style="max-width:320px;">
+          <div class="tip-title">
+            <svg class="tip-icon" viewBox="0 0 24 24"><circle cx="12" cy="9" r="6.5" fill="#fff3c4" stroke="var(--green)" stroke-width="2"/><rect x="9" y="16" width="6" height="4" rx="1.5" fill="none" stroke="var(--green)" stroke-width="2"/><line x1="9" y1="21" x2="15" y2="21" stroke="var(--green)" stroke-width="2" stroke-linecap="round"/></svg>
+            من المتصفح
+          </div>
+          تظهر لك ثلاث واجهات إضافية: <strong>Scheduled</strong> (المهام المجدولة)، <strong>Customize</strong> (التخصيص)، و<strong>Design</strong> (التصميم).
+        </div>
+
+        <!-- ===== 2: COWORK ===== -->
+        <div class="try-box">
+          <div class="try-title">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2"><path d="M9 3h6v5l4 9a2 2 0 0 1-2 3H7a2 2 0 0 1-2-3l4-9z" stroke-linejoin="round"/><path d="M9 3h6" stroke-linecap="round"/></svg>
+            جرّب بنفسك — المشاريع
+          </div>
+          <div class="try-line"><span class="try-tag try-do">افعل</span><span>اضغط <strong>Projects</strong> ثم أنشئ مشروعًا باسم «مراسلات دائرتي»، واكتب في تعليماته: «صياغة رسمية موجزة، بلا مبالغة».</span></div>
+          <div class="try-line"><span class="try-tag try-see">سترى</span><span>كل محادثة تفتحها داخل هذا المشروع تبدأ وهي عارفة أسلوبك — بلا إعادة شرح.</span></div>
+        </div>
+        <div class="nav-pill">كوورك: إدارة المهام <span class="np-en">Cowork</span></div>
+        <p class="lead-paragraph">هنا تُدار المهام الطويلة. لكل مهمة <span class="hl hl-green">حالة</span>، وتُصفّى بالقائمة العلوية:</p>
+        <div class="screen-block">
+          <div class="screen-frame dark">
+            <div class="sf-bar"><span class="sf-en">Cowork</span></div>
+            <div class="sf-row"><span class="sf-num">١</span><span class="sf-name">All</span></div>
+            <div class="sf-row"><span class="sf-num">٢</span><span class="sf-name">Working</span></div>
+            <div class="sf-row"><span class="sf-num">٣</span><span class="sf-name">Needs input</span></div>
+            <div class="sf-row"><span class="sf-num">٤</span><span class="sf-name">Ready for review</span></div>
+            <div class="sf-row"><span class="sf-num">٥</span><span class="sf-name">Completed</span></div>
+            <div class="sf-row"><span class="sf-num">٦</span><span class="sf-name">Archived</span></div>
+            <div class="sf-row on"><span class="sf-num">٧</span><span class="sf-name">+ New task</span></div>
+          </div>
+          <div class="screen-legend">
+            <div class="leg-item"><span class="leg-num">١</span><span><b>الكل</b> — عرض جميع المهام بلا تصفية.</span></div>
+            <div class="leg-item"><span class="leg-num">٢</span><span><b>قيد العمل</b> — كلود يشتغل عليها الآن.</span></div>
+            <div class="leg-item"><span class="leg-num">٣</span><span><b>تحتاج ردّك</b> — متوقّفة بانتظار قرار منك. <span class="hl hl-pink">راجعها أولًا</span>.</span></div>
+            <div class="leg-item"><span class="leg-num">٤</span><span><b>جاهزة للمراجعة</b> — أنجزها ويريد اعتمادك.</span></div>
+            <div class="leg-item"><span class="leg-num">٥</span><span><b>مكتملة</b> — انتهت واعتُمدت.</span></div>
+            <div class="leg-item"><span class="leg-num">٦</span><span><b>مؤرشفة</b> — أُخفيت من القائمة دون حذف.</span></div>
+            <div class="leg-item"><span class="leg-num">٧</span><span><b>مهمة جديدة</b> — تبدأ عملًا جديدًا.</span></div>
+          </div>
+        </div>
+
+        <!-- ===== 3: CODE ===== -->
+        <div class="try-box">
+          <div class="try-title">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2"><path d="M9 3h6v5l4 9a2 2 0 0 1-2 3H7a2 2 0 0 1-2-3l4-9z" stroke-linejoin="round"/><path d="M9 3h6" stroke-linecap="round"/></svg>
+            جرّب بنفسك — تصفية المهام
+          </div>
+          <div class="try-line"><span class="try-tag try-do">افعل</span><span>افتح <strong>Cowork</strong>، اضغط أيقونة الفلتر أعلى اليمين، واختر <strong>Needs input</strong>.</span></div>
+          <div class="try-line"><span class="try-tag try-see">سترى</span><span>تختفي كل المهام إلا التي تنتظر قرارك — هذه قائمة عملك لهذا اليوم.</span></div>
+        </div>
+        <div class="nav-pill">كلود كود: الأجهزة والجلسات <span class="np-en">Code</span></div>
+        <div class="screen-block">
+          <div class="screen-frame dark">
+            <div class="sf-bar"><span class="sf-en">Code</span></div>
+            <div class="sf-row"><span class="sf-num">١</span><span class="sf-name">Devices<span class="sf-sub">+ Add device</span></span></div>
+            <div class="sf-row"><span class="sf-num">٢</span><span class="sf-name">Sessions<span class="sf-sub">All ⌄</span></span></div>
+            <div class="sf-row"><span class="sf-num">٣</span><span class="sf-name">‹/› session<span class="sf-sub">owner/repository · 15h</span></span></div>
+            <div class="sf-row"><span class="sf-num">٤</span><span class="sf-name">Disconnected</span></div>
+            <div class="sf-row on"><span class="sf-num">٥</span><span class="sf-name">+ New session</span></div>
+          </div>
+          <div class="screen-legend">
+            <div class="leg-item"><span class="leg-num">١</span><span><b>الأجهزة</b> — الحواسيب المربوطة بحسابك، تضيف منها جهازًا جديدًا.</span></div>
+            <div class="leg-item"><span class="leg-num">٢</span><span><b>الجلسات</b> — كل جلسة عمل مستقلة، مع فلتر لعرضها.</span></div>
+            <div class="leg-item"><span class="leg-num">٣</span><span><b>بطاقة الجلسة</b> — عنوانها، المستودع الذي تعمل عليه، ووقت آخر نشاط.</span></div>
+            <div class="leg-item"><span class="leg-num">٤</span><span><b>مفصولة</b> — انقطع اتصالها بالجهاز؛ تُستأنف أو تُغلق.</span></div>
+            <div class="leg-item"><span class="leg-num">٥</span><span><b>جلسة جديدة</b> — تبدأ عملًا برمجيًا جديدًا.</span></div>
+          </div>
+        </div>
+
+        <!-- ===== 4: SCHEDULED ===== -->
+        <div class="try-box">
+          <div class="try-title">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2"><path d="M9 3h6v5l4 9a2 2 0 0 1-2 3H7a2 2 0 0 1-2-3l4-9z" stroke-linejoin="round"/><path d="M9 3h6" stroke-linecap="round"/></svg>
+            جرّب بنفسك — جلسة جديدة
+          </div>
+          <div class="try-line"><span class="try-tag try-do">افعل</span><span>افتح <strong>Code</strong> واضغط <strong>+ New session</strong>.</span></div>
+          <div class="try-line"><span class="try-tag try-see">سترى</span><span>جلسة جديدة تظهر في القائمة بحالتها ووقت آخر نشاط، وتبقى محفوظة حتى بعد إغلاق الهاتف.</span></div>
+        </div>
+        <div class="nav-pill">المهام المجدولة <span class="np-en">Scheduled runs</span></div>
+        <p class="lead-paragraph">مهام تعمل <span class="hl hl-yellow">تلقائيًا في وقت محدّد</span> بلا تدخّل منك — أقوى ما في هذه الطبقة للعمل الإداري المتكرّر.</p>
+        <div class="screen-block">
+          <div class="screen-frame dark">
+            <div class="sf-bar"><span class="sf-en">Scheduled runs</span></div>
+            <div class="sf-row"><span class="sf-num">١</span><span class="sf-name">⚡ فحص ردود جديدة<span class="sf-sub">project · Aug 21</span></span></div>
+            <div class="sf-row"><span class="sf-num">٢</span><span class="sf-name">⚡ فحص ردود جديدة<span class="sf-sub">project · Aug 20</span></span></div>
+            <div class="sf-row"><span class="sf-num">٣</span><span class="sf-name">✋ إيقاف الفحص<span class="sf-sub">Delete Trigger</span></span></div>
+          </div>
+          <div class="screen-legend">
+            <div class="leg-item"><span class="leg-num">١</span><span><b>تشغيلة مجدولة</b> — نفّذت المهمة في موعدها وسجّلت النتيجة.</span></div>
+            <div class="leg-item"><span class="leg-num">٢</span><span><b>سجلّ التشغيلات</b> — تاريخ كل مرة اشتغلت فيها المهمة.</span></div>
+            <div class="leg-item"><span class="leg-num">٣</span><span><b>إيقاف الجدولة</b> — حذف المُشغِّل فتتوقّف المهمة نهائيًا.</span></div>
+          </div>
+        </div>
+        <div class="ba-prompt">مثال من العمل الإداري:</div>
+        <div class="ba-pair">
+          <div class="bubble b-before"><span class="ba-tag">بدون جدولة</span>تفتح الملف كل صباح بنفسك، تفحص الردود الجديدة، وتكتب الملخّص يدويًا — عشر دقائق يوميًا تضيع.</div>
+          <div class="bubble b-after"><span class="ba-tag">مع جدولة</span>تجدول المهمة مرة واحدة، فتشتغل كل صباح تلقائيًا ويصلك الملخّص جاهزًا.</div>
+        </div>
+
+        <!-- ===== 5: MOBILE SETTINGS ===== -->
+        <div class="try-box">
+          <div class="try-title">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2"><path d="M9 3h6v5l4 9a2 2 0 0 1-2 3H7a2 2 0 0 1-2-3l4-9z" stroke-linejoin="round"/><path d="M9 3h6" stroke-linecap="round"/></svg>
+            جرّب بنفسك — جدولة مهمة
+          </div>
+          <div class="try-line"><span class="try-tag try-do">افعل</span><span>اطلب من كلود: «راجع هذا الملف كل صباح الساعة ٨ وأرسل لي ملخّصًا».</span></div>
+          <div class="try-line"><span class="try-tag try-see">سترى</span><span>يظهر مُشغِّل جديد في <strong>Scheduled</strong>، وسجلّ التشغيلات يمتلئ يومًا بعد يوم بلا تدخّل منك.</span></div>
+        </div>
+        <div class="nav-pill">الإعدادات من الهاتف <span class="np-en">Settings</span></div>
+        <div class="screen-block">
+          <div class="screen-frame dark">
+            <div class="sf-bar"><span class="sf-en">Settings</span></div>
+            <div class="sf-row"><span class="sf-num">١</span><span class="sf-name">Profile</span></div>
+            <div class="sf-row"><span class="sf-num">٢</span><span class="sf-name">Billing</span></div>
+            <div class="sf-row"><span class="sf-num">٣</span><span class="sf-name">Usage</span></div>
+            <div class="sf-row"><span class="sf-num">٤</span><span class="sf-name">Capabilities<span class="sf-sub">5 enabled</span></span></div>
+            <div class="sf-row"><span class="sf-num">٥</span><span class="sf-name">Connectors<span class="sf-sub">4 connected</span></span></div>
+            <div class="sf-row"><span class="sf-num">٦</span><span class="sf-name">Permissions</span></div>
+            <div class="sf-row"><span class="sf-num">٧</span><span class="sf-name">Color mode<span class="sf-sub">Dark</span></span></div>
+            <div class="sf-row"><span class="sf-num">٨</span><span class="sf-name">Font style<span class="sf-sub">System</span></span></div>
+            <div class="sf-row"><span class="sf-num">٩</span><span class="sf-name">Voice</span></div>
+          </div>
+          <div class="screen-legend">
+            <div class="leg-item"><span class="leg-num">١</span><span><b>الملف الشخصي</b> — اسمك، وطبيعة عملك، وتعليماتك الدائمة.</span></div>
+            <div class="leg-item"><span class="leg-num">٢</span><span><b>الفوترة</b> — خطتك ورصيدك وفواتيرك.</span></div>
+            <div class="leg-item"><span class="leg-num">٣</span><span><b>الاستخدام</b> — كم استهلكت من حدّ خطتك.</span></div>
+            <div class="leg-item"><span class="leg-num">٤</span><span><b>القدرات</b> — تشغيل وإطفاء مزايا كلود نفسها.</span></div>
+            <div class="leg-item"><span class="leg-num">٥</span><span><b>الموصلات</b> — الحسابات المربوطة (Drive، البريد، التقويم).</span></div>
+            <div class="leg-item"><span class="leg-num">٦</span><span><b>الأذونات</b> — صلاحيات التطبيق على جهازك.</span></div>
+            <div class="leg-item"><span class="leg-num">٧</span><span><b>وضع اللون</b> — فاتح أو داكن.</span></div>
+            <div class="leg-item"><span class="leg-num">٨</span><span><b>نمط الخط</b> — شكل الخط داخل التطبيق.</span></div>
+            <div class="leg-item"><span class="leg-num">٩</span><span><b>الصوت</b> — لغة المحادثة الصوتية ونبرتها وسرعتها.</span></div>
+          </div>
+        </div>
+
+        <!-- ===== 6: WEB SETTINGS TABS ===== -->
+        <div class="try-box">
+          <div class="try-title">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2"><path d="M9 3h6v5l4 9a2 2 0 0 1-2 3H7a2 2 0 0 1-2-3l4-9z" stroke-linejoin="round"/><path d="M9 3h6" stroke-linecap="round"/></svg>
+            جرّب بنفسك — وضع اللون
+          </div>
+          <div class="try-line"><span class="try-tag try-do">افعل</span><span>الإعدادات ← <strong>Color mode</strong> ← بدّل بين Dark و Light.</span></div>
+          <div class="try-line"><span class="try-tag try-see">سترى</span><span>الواجهة تنقلب فورًا بلا إعادة تشغيل — جرّب أيّهما أوضح على شاشة العرض في القاعة.</span></div>
+        </div>
+        <div class="nav-pill">الإعدادات من المتصفح: التبويبات <span class="np-en">Settings tabs</span></div>
+        <div class="screen-block">
+          <div class="screen-frame">
+            <div class="sf-bar"><span class="sf-en">Settings</span></div>
+            <div class="sf-row"><span class="sf-num">١</span><span class="sf-name">General</span></div>
+            <div class="sf-row"><span class="sf-num">٢</span><span class="sf-name">Account</span></div>
+            <div class="sf-row"><span class="sf-num">٣</span><span class="sf-name">Privacy</span></div>
+            <div class="sf-row"><span class="sf-num">٤</span><span class="sf-name">Billing</span></div>
+            <div class="sf-row"><span class="sf-num">٥</span><span class="sf-name">Usage</span></div>
+            <div class="sf-row"><span class="sf-num">٦</span><span class="sf-name">Capabilities</span></div>
+            <div class="sf-row"><span class="sf-num">٧</span><span class="sf-name">Claude Code</span></div>
+            <div class="sf-row"><span class="sf-num">٨</span><span class="sf-name">Cowork</span></div>
+            <div class="sf-row"><span class="sf-num">٩</span><span class="sf-name">Claude in Chrome</span></div>
+            <div class="sf-row"><span class="sf-num">١٠</span><span class="sf-name">Skills</span></div>
+          </div>
+          <div class="screen-legend">
+            <div class="leg-item"><span class="leg-num">١</span><span><b>عام</b> — الصوت والإشعارات وشكل الواجهة.</span></div>
+            <div class="leg-item"><span class="leg-num">٢</span><span><b>الحساب</b> — أجهزتك وجلساتك النشطة.</span></div>
+            <div class="leg-item"><span class="leg-num">٣</span><span><b>الخصوصية</b> — تصدير بياناتك والتحكّم بها.</span></div>
+            <div class="leg-item"><span class="leg-num">٤</span><span><b>الفوترة</b> — الرصيد والفواتير وإلغاء الخطة.</span></div>
+            <div class="leg-item"><span class="leg-num">٥</span><span><b>الاستخدام</b> — استهلاكك مقابل حدّ الخطة.</span></div>
+            <div class="leg-item"><span class="leg-num">٦</span><span><b>القدرات</b> — مزايا الأرتيفاكتس والرسوم وتنفيذ الكود.</span></div>
+            <div class="leg-item"><span class="leg-num">٧</span><span><b>كلود كود</b> — إعدادات الجلسات البرمجية.</span></div>
+            <div class="leg-item"><span class="leg-num">٨</span><span><b>كوورك</b> — الأجهزة الموثوقة والمتصفح المفضّل.</span></div>
+            <div class="leg-item"><span class="leg-num">٩</span><span><b>كلود في كروم</b> — عمل كلود داخل المتصفح.</span></div>
+            <div class="leg-item"><span class="leg-num">١٠</span><span><b>المهارات</b> — رفع وإنشاء وإدارة مهاراتك.</span></div>
+          </div>
+        </div>
+
+        <!-- ===== 7: CAPABILITIES ===== -->
+        <div class="try-box">
+          <div class="try-title">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2"><path d="M9 3h6v5l4 9a2 2 0 0 1-2 3H7a2 2 0 0 1-2-3l4-9z" stroke-linejoin="round"/><path d="M9 3h6" stroke-linecap="round"/></svg>
+            جرّب بنفسك — تبويبات مخفية
+          </div>
+          <div class="try-line"><span class="try-tag try-do">افعل</span><span>افتح الإعدادات من <strong>المتصفح</strong> ومرّر شريط التبويبات إلى آخره.</span></div>
+          <div class="try-line"><span class="try-tag try-see">سترى</span><span>تبويبات لا تظهر على الهاتف: <strong>Claude Code</strong> و<strong>Cowork</strong> و<strong>Claude in Chrome</strong> و<strong>Skills</strong>.</span></div>
+        </div>
+        <div class="nav-pill">القدرات <span class="np-en">Capabilities</span></div>
+        <div class="screen-block">
+          <div class="screen-frame">
+            <div class="sf-bar"><span class="sf-en">Capabilities → Visuals</span></div>
+            <div class="sf-row on"><span class="sf-num">١</span><span class="sf-name">Artifacts</span><span class="toggle"></span></div>
+            <div class="sf-row on"><span class="sf-num">٢</span><span class="sf-name">AI-powered artifacts</span><span class="toggle"></span></div>
+            <div class="sf-row on"><span class="sf-num">٣</span><span class="sf-name">Inline visualizations</span><span class="toggle"></span></div>
+            <div class="sf-row"><span class="sf-num">٤</span><span class="sf-name">Code execution<span class="sf-sub">and file creation</span></span><span class="toggle"></span></div>
+          </div>
+          <div class="screen-legend">
+            <div class="leg-item"><span class="leg-num">١</span><span><b>الأرتيفاكتس</b> — إنتاج الكود والمستندات والتصاميم في نافذة مستقلّة بجانب المحادثة.</span></div>
+            <div class="leg-item"><span class="leg-num">٢</span><span><b>أرتيفاكتس ذكية</b> — بناء تطبيقات ومستندات تفاعلية <span class="hl hl-blue">تستخدم كلود بداخلها</span>.</span></div>
+            <div class="leg-item"><span class="leg-num">٣</span><span><b>الرسوم داخل المحادثة</b> — توليد رسوم بيانية ومخطّطات مباشرة أثناء النقاش.</span></div>
+            <div class="leg-item"><span class="leg-num">٤</span><span><b>تنفيذ الكود وإنشاء الملفات</b> — يشغّل كودًا فعليًا وينتج لك ملفات جاهزة.</span></div>
+          </div>
+        </div>
+
+        <!-- ===== 8: PRIVACY ===== -->
+        <div class="try-box">
+          <div class="try-title">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2"><path d="M9 3h6v5l4 9a2 2 0 0 1-2 3H7a2 2 0 0 1-2-3l4-9z" stroke-linejoin="round"/><path d="M9 3h6" stroke-linecap="round"/></svg>
+            جرّب بنفسك — أثر القدرات
+          </div>
+          <div class="try-line"><span class="try-tag try-do">افعل</span><span>أطفئ <strong>Artifacts</strong> ثم اطلب «اعمل لي جدول ميزانية»، ثم أعِد تشغيله واطلب الطلب نفسه.</span></div>
+          <div class="try-line"><span class="try-tag try-see">سترى</span><span>المرة الأولى يردّ بنصّ داخل المحادثة، والثانية يفتح نافذة مستقلّة تعاينها وتنزّلها — الفرق بعينك.</span></div>
+        </div>
+        <div class="nav-pill">الخصوصية وتصدير البيانات <span class="np-en">Privacy</span></div>
+        <div class="screen-block">
+          <div class="screen-frame">
+            <div class="sf-bar"><span class="sf-en">Privacy → Export data</span></div>
+            <div class="sf-row"><span class="sf-num">١</span><span class="sf-name">Export<span class="sf-sub">link sent to your email · 24h</span></span></div>
+            <div class="sf-row"><span class="sf-num">٢</span><span class="sf-name">All / 30 days / 90 days / Custom</span></div>
+            <div class="sf-row"><span class="sf-num">٣</span><span class="sf-name">✓ Conversations</span></div>
+            <div class="sf-row"><span class="sf-num">٣</span><span class="sf-name">✓ Users</span></div>
+            <div class="sf-row"><span class="sf-num">٣</span><span class="sf-name">✓ Projects</span></div>
+          </div>
+          <div class="screen-legend">
+            <div class="leg-item"><span class="leg-num">١</span><span><b>التصدير</b> — يصلك رابط تنزيل على بريدك، <span class="hl hl-pink">صالح ٢٤ ساعة فقط</span>.</span></div>
+            <div class="leg-item"><span class="leg-num">٢</span><span><b>المدّة</b> — تختار: الكل، أو آخر ٣٠ أو ٩٠ يومًا، أو مدة تحدّدها.</span></div>
+            <div class="leg-item"><span class="leg-num">٣</span><span><b>ما يشمله</b> — المحادثات والمستخدمين والمشاريع.</span></div>
+          </div>
+        </div>
+        <div class="tip-box" style="max-width:320px;">
+          <div class="tip-title">
+            <svg class="tip-icon" viewBox="0 0 24 24"><path d="M12 3 L21 19 H3 Z" fill="#fff3c4" stroke="var(--green)" stroke-width="2" stroke-linejoin="round"/><path d="M12 9 v4 M12 16 v.5" stroke="var(--green)" stroke-width="2" stroke-linecap="round"/></svg>
+            القاعدة الذهبية
+          </div>
+          إعدادات الخصوصية تحمي بياناتك من الاستخدام اللاحق، لكنها <strong>لا تجعل رفع البيانات السرّية مقبولًا</strong>. ما لا تريد خروجه من الدائرة، لا ترفعه أصلًا.
+        </div>
+
+        <!-- ===== 9: ACCOUNT ===== -->
+        <div class="try-box">
+          <div class="try-title">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2"><path d="M9 3h6v5l4 9a2 2 0 0 1-2 3H7a2 2 0 0 1-2-3l4-9z" stroke-linejoin="round"/><path d="M9 3h6" stroke-linecap="round"/></svg>
+            جرّب بنفسك — تصدير بياناتك
+          </div>
+          <div class="try-line"><span class="try-tag try-do">افعل</span><span>الخصوصية ← اختر المدّة <strong>All</strong> ← اضغط <strong>Export</strong>.</span></div>
+          <div class="try-line"><span class="try-tag try-see">سترى</span><span>يصلك بريد فيه رابط تنزيل أرشيفك كاملًا، ويبطل الرابط بعد ٢٤ ساعة.</span></div>
+        </div>
+        <div class="nav-pill">الحساب: الأجهزة والجلسات <span class="np-en">Account</span></div>
+        <div class="screen-block">
+          <div class="screen-frame">
+            <div class="sf-bar"><span class="sf-en">Account → Active sessions</span></div>
+            <div class="sf-row"><span class="sf-num">١</span><span class="sf-name">Device — Added<span class="sf-sub">Chrome on Windows · [التاريخ]</span></span></div>
+            <div class="sf-row on"><span class="sf-num">٢</span><span class="sf-name">Current<span class="sf-sub">[موقعك الحالي]</span></span></div>
+            <div class="sf-row"><span class="sf-num">٣</span><span class="sf-name">Android<span class="sf-sub">[مدينة] · [تاريخ]</span></span></div>
+            <div class="sf-row"><span class="sf-num">٣</span><span class="sf-name">Claude Desktop<span class="sf-sub">[مدينة] · [تاريخ]</span></span></div>
+          </div>
+          <div class="screen-legend">
+            <div class="leg-item"><span class="leg-num">١</span><span><b>الأجهزة الموثوقة</b> — الأجهزة التي اعتمدتها وتاريخ إضافتها.</span></div>
+            <div class="leg-item"><span class="leg-num">٢</span><span><b>الجلسة الحالية</b> — الجهاز الذي تستخدمه الآن.</span></div>
+            <div class="leg-item"><span class="leg-num">٣</span><span><b>الجلسات النشطة</b> — كل جهاز مفتوح على حسابك، مع موقعه وتاريخه.</span></div>
+          </div>
+        </div>
+        <div class="tip-box" style="max-width:320px;">
+          <div class="tip-title">
+            <svg class="tip-icon" viewBox="0 0 24 24"><path d="M12 3 L20 6 v6 c0 5 -4 8 -8 9 c-4 -1 -8 -4 -8 -9 V6 Z" fill="#fff3c4" stroke="var(--green)" stroke-width="2" stroke-linejoin="round"/></svg>
+            إجراء أمني دوري
+          </div>
+          راجع هذه القائمة من حين لآخر — أي جهاز أو موقع لا تعرفه يعني أن حسابك مفتوح في مكان لا تريده.
+        </div>
+
+        <!-- ===== 10: SKILLS ===== -->
+        <div class="try-box">
+          <div class="try-title">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2"><path d="M9 3h6v5l4 9a2 2 0 0 1-2 3H7a2 2 0 0 1-2-3l4-9z" stroke-linejoin="round"/><path d="M9 3h6" stroke-linecap="round"/></svg>
+            جرّب بنفسك — فحص أمني
+          </div>
+          <div class="try-line"><span class="try-tag try-do">افعل</span><span>الحساب ← انزل إلى <strong>Active sessions</strong> وقارن القائمة بأجهزتك الحقيقية.</span></div>
+          <div class="try-line"><span class="try-tag try-see">سترى</span><span>أي جهاز أو موقع لا تعرفه يعني أن حسابك مفتوح في مكان لا تريده — أنهِ تلك الجلسة فورًا.</span></div>
+        </div>
+        <div class="nav-pill">المهارات <span class="np-en">Skills</span></div>
+        <p class="lead-paragraph">المهارة أسلوب عمل جاهز يحمّله كلود عند الحاجة. من هنا تديرها:</p>
+        <div class="screen-block">
+          <div class="screen-frame">
+            <div class="sf-bar"><span class="sf-en">Skills</span></div>
+            <div class="sf-row"><span class="sf-num">١</span><span class="sf-name">Browse</span></div>
+            <div class="sf-row"><span class="sf-num">٢</span><span class="sf-name">Upload skill</span></div>
+            <div class="sf-row"><span class="sf-num">٣</span><span class="sf-name">Create a skill</span></div>
+            <div class="sf-row"><span class="sf-num">٤</span><span class="sf-name">Create with Claude</span></div>
+          </div>
+          <div class="screen-legend">
+            <div class="leg-item"><span class="leg-num">١</span><span><b>تصفّح</b> — مهارات جاهزة من Anthropic تضيفها بضغطة.</span></div>
+            <div class="leg-item"><span class="leg-num">٢</span><span><b>رفع مهارة</b> — تستورد مهارة أعدّها غيرك.</span></div>
+            <div class="leg-item"><span class="leg-num">٣</span><span><b>إنشاء مهارة</b> — تكتبها بنفسك من الصفر.</span></div>
+            <div class="leg-item"><span class="leg-num">٤</span><span><b>الإنشاء مع كلود</b> — تصفها له بالكلام <span class="hl hl-green">فيبنيها معك</span>. الأسهل للمبتدئ.</span></div>
+          </div>
+        </div>
+
+        <!-- ===== 11: CODE & COWORK SETTINGS ===== -->
+        <div class="try-box">
+          <div class="try-title">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2"><path d="M9 3h6v5l4 9a2 2 0 0 1-2 3H7a2 2 0 0 1-2-3l4-9z" stroke-linejoin="round"/><path d="M9 3h6" stroke-linecap="round"/></svg>
+            جرّب بنفسك — ابنِ مهارتك
+          </div>
+          <div class="try-line"><span class="try-tag try-do">افعل</span><span>المهارات ← <strong>Add</strong> ← <strong>Create with Claude</strong>، واكتب: «مهارة تصيغ كتبًا رسمية بأسلوب دائرتي».</span></div>
+          <div class="try-line"><span class="try-tag try-see">سترى</span><span>يسألك كلود أسئلة قليلة ثم يبني المهارة، فتظهر باسمها في القائمة ويستدعيها تلقائيًا عند الحاجة.</span></div>
+        </div>
+        <div class="nav-pill">إعدادات كود وكوورك <span class="np-en">Claude Code · Cowork</span></div>
+        <div class="screen-block">
+          <div class="screen-frame">
+            <div class="sf-bar"><span class="sf-en">Claude Code</span></div>
+            <div class="sf-row on"><span class="sf-num">١</span><span class="sf-name">Classify session states</span><span class="toggle"></span></div>
+            <div class="sf-row on"><span class="sf-num">٢</span><span class="sf-name">Switch models when flagged</span><span class="toggle"></span></div>
+            <div class="sf-row"><span class="sf-num">٣</span><span class="sf-name">Code appearance<span class="sf-sub">Claude Light / Claude Dark</span></span></div>
+          </div>
+          <div class="screen-legend">
+            <div class="leg-item"><span class="leg-num">١</span><span><b>تصنيف حالة الجلسة</b> — يحدّد تلقائيًا: متوقّفة، جاهزة للمراجعة، أو منتهية. <span class="hl hl-yellow">يُحتسب من رصيد استخدامك</span>.</span></div>
+            <div class="leg-item"><span class="leg-num">٢</span><span><b>تبديل النموذج عند التعليم</b> — إذا عُلِّمت رسالة، ينتقل لنموذج آخر ليكمل بدل أن تتوقّف الجلسة.</span></div>
+            <div class="leg-item"><span class="leg-num">٣</span><span><b>مظهر الكود</b> — ألوان عرض الكود في الوضعين الفاتح والداكن.</span></div>
+          </div>
+        </div>
+        <div class="screen-block">
+          <div class="screen-frame">
+            <div class="sf-bar"><span class="sf-en">Cowork</span></div>
+            <div class="sf-row on"><span class="sf-num">١</span><span class="sf-name">Require trusted devices</span><span class="toggle"></span></div>
+            <div class="sf-row"><span class="sf-num">٢</span><span class="sf-name">Only on your computer</span><span class="toggle off"></span></div>
+            <div class="sf-row"><span class="sf-num">٣</span><span class="sf-name">Preferred browser</span></div>
+          </div>
+          <div class="screen-legend">
+            <div class="leg-item"><span class="leg-num">١</span><span><b>طلب أجهزة موثوقة</b> — التحقّق من كل جهاز جديد قبل السماح له ببدء جلسة تصل لملفاتك. <span class="hl hl-pink">أبقِه مفعّلًا</span>.</span></div>
+            <div class="leg-item"><span class="leg-num">٢</span><span><b>على حاسوبك فقط</b> — المهام تبقى على جهازك وتتوقّف عند إغلاقه، ولا تكمل في السحابة.</span></div>
+            <div class="leg-item"><span class="leg-num">٣</span><span><b>المتصفح المفضّل</b> — المتصفح الذي يستخدمه كلود افتراضيًا.</span></div>
+          </div>
+        </div>
+
+        <!-- ===== 12: BILLING ===== -->
+        <div class="try-box">
+          <div class="try-title">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2"><path d="M9 3h6v5l4 9a2 2 0 0 1-2 3H7a2 2 0 0 1-2-3l4-9z" stroke-linejoin="round"/><path d="M9 3h6" stroke-linecap="round"/></svg>
+            جرّب بنفسك — محلي أم سحابي
+          </div>
+          <div class="try-line"><span class="try-tag try-do">افعل</span><span>كوورك ← فعّل <strong>Only on your computer</strong> ثم أغلق التطبيق أثناء تنفيذ مهمة.</span></div>
+          <div class="try-line"><span class="try-tag try-see">سترى</span><span>المهمة تتوقّف بدل أن تكمل في السحابة — هذا هو الفرق العملي بين التنفيذ المحلي والسحابي.</span></div>
+        </div>
+        <div class="nav-pill">الفوترة والرصيد <span class="np-en">Billing</span></div>
+        <div class="screen-block">
+          <div class="screen-frame">
+            <div class="sf-bar"><span class="sf-en">Billing</span></div>
+            <div class="sf-row"><span class="sf-num">١</span><span class="sf-name">Current balance<span class="sf-sub">$ [الرصيد] · Buy more</span></span></div>
+            <div class="sf-row"><span class="sf-num">٢</span><span class="sf-name">Auto-reload<span class="sf-sub">Turn on</span></span></div>
+            <div class="sf-row"><span class="sf-num">٣</span><span class="sf-name">Invoices<span class="sf-sub">Date · Total · Status</span></span></div>
+            <div class="sf-row"><span class="sf-num">٤</span><span class="sf-name">Cancel plan</span></div>
+          </div>
+          <div class="screen-legend">
+            <div class="leg-item"><span class="leg-num">١</span><span><b>الرصيد الحالي</b> — أرصدة استخدام إضافية تُشترى لتكمل العمل بعد بلوغ حدّ الخطة.</span></div>
+            <div class="leg-item"><span class="leg-num">٢</span><span><b>إعادة الشحن التلقائي</b> — يشتري رصيدًا تلقائيًا عند اقترابه من النفاد. <span class="hl hl-pink">انتبه للكلفة</span>.</span></div>
+            <div class="leg-item"><span class="leg-num">٣</span><span><b>الفواتير</b> — سجلّ المدفوعات مع إمكانية عرض كل فاتورة.</span></div>
+            <div class="leg-item"><span class="leg-num">٤</span><span><b>إلغاء الخطة</b> — إنهاء الاشتراك.</span></div>
+          </div>
+        </div>
+
+        <!-- ===== 13: DESIGN ===== -->
+        <div class="try-box">
+          <div class="try-title">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2"><path d="M9 3h6v5l4 9a2 2 0 0 1-2 3H7a2 2 0 0 1-2-3l4-9z" stroke-linejoin="round"/><path d="M9 3h6" stroke-linecap="round"/></svg>
+            جرّب بنفسك — اقرأ فاتورتك
+          </div>
+          <div class="try-line"><span class="try-tag try-do">افعل</span><span>الفوترة ← انظر <strong>Current balance</strong> ثم <strong>Invoices</strong> واضغط View على آخر فاتورة.</span></div>
+          <div class="try-line"><span class="try-tag try-see">سترى</span><span>تفاصيل ما دفعته ورصيدك المتبقّي — راجعهما قبل تفعيل <strong>Auto-reload</strong> حتى لا تُفاجأ بالكلفة.</span></div>
+        </div>
+        <div class="nav-pill">التصميم <span class="np-en">Design · Beta</span></div>
+        <p class="lead-paragraph">واجهة تصميم كاملة بلا برامج ولا خبرة: <span class="hl hl-green">تصف ما تريد بالكلام فيبنيه لك</span>، ثم تعدّله بيدك.</p>
+        <div class="screen-block">
+          <div class="screen-frame">
+            <div class="sf-bar"><span class="sf-en">Claude Design — Beta</span></div>
+            <div class="sf-row"><span class="sf-num">١</span><span class="sf-name">What should we create?<span class="sf-sub">describe what you want to make</span></span></div>
+            <div class="sf-row"><span class="sf-num">٢</span><span class="sf-name">+ Attach a file</span></div>
+            <div class="sf-row"><span class="sf-num">٣</span><span class="sf-name">Design system<span class="sf-sub">None ⌄</span></span></div>
+            <div class="sf-row"><span class="sf-num">٤</span><span class="sf-name">&lt;/&gt; Code</span></div>
+            <div class="sf-row"><span class="sf-num">٥</span><span class="sf-name">Model<span class="sf-sub">Opus 5 ⌄</span></span></div>
+          </div>
+          <div class="screen-legend">
+            <div class="leg-item"><span class="leg-num">١</span><span><b>صندوق الطلب</b> — تكتب فيه بالعربي ما تريد تصميمه، ويبدأ العمل بالسهم.</span></div>
+            <div class="leg-item"><span class="leg-num">٢</span><span><b>إرفاق ملف</b> — صورة أو مستند أو شعار الدائرة ليبني عليه.</span></div>
+            <div class="leg-item"><span class="leg-num">٣</span><span><b>نظام التصميم</b> — تربط هوية دائرتك البصرية (ألوان، خطوط) فيلتزم بها في كل تصميم.</span></div>
+            <div class="leg-item"><span class="leg-num">٤</span><span><b>الكود</b> — عرض الكود خلف التصميم لمن يريد التعديل برمجيًا.</span></div>
+            <div class="leg-item"><span class="leg-num">٥</span><span><b>النموذج</b> — تختار قوة النموذج المستخدم في التصميم.</span></div>
+          </div>
+        </div>
+        <div class="screen-block">
+          <div class="screen-frame">
+            <div class="sf-bar"><span class="sf-en">Templates</span></div>
+            <div class="sf-row"><span class="sf-num">١</span><span class="sf-name">Blank</span></div>
+            <div class="sf-row"><span class="sf-num">٢</span><span class="sf-name">Mobile app design</span></div>
+            <div class="sf-row"><span class="sf-num">٣</span><span class="sf-name">Slides</span></div>
+            <div class="sf-row"><span class="sf-num">٤</span><span class="sf-name">Document</span></div>
+            <div class="sf-row"><span class="sf-num">٥</span><span class="sf-name">Projects · Design systems · Templates</span></div>
+          </div>
+          <div class="screen-legend">
+            <div class="leg-item"><span class="leg-num">١</span><span><b>فارغ</b> — تبدأ من لوح أبيض: بوستر، إعلان، شهادة تقديرية.</span></div>
+            <div class="leg-item"><span class="leg-num">٢</span><span><b>تطبيق جوال</b> — تصميم شاشات تطبيق.</span></div>
+            <div class="leg-item"><span class="leg-num">٣</span><span><b>شرائح عرض</b> — عرض تقديمي جاهز للاجتماع أو المحاضرة.</span></div>
+            <div class="leg-item"><span class="leg-num">٤</span><span><b>مستند</b> — تقرير أو مذكّرة بتنسيق أنيق.</span></div>
+            <div class="leg-item"><span class="leg-num">٥</span><span><b>الأشرطة السفلية</b> — مشاريعك المحفوظة، أنظمة التصميم، والقوالب الجاهزة.</span></div>
+          </div>
+        </div>
+
+        <div class="try-box">
+          <div class="try-title">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2"><path d="M9 3h6v5l4 9a2 2 0 0 1-2 3H7a2 2 0 0 1-2-3l4-9z" stroke-linejoin="round"/><path d="M9 3h6" stroke-linecap="round"/></svg>
+            جرّب بنفسك — أول تصميم لك
+          </div>
+          <div class="try-line"><span class="try-tag try-do">افعل</span><span>افتح <strong>Design</strong>، اختر قالب <strong>Blank</strong>، واكتب: «بوستر إعلان دورة تدريبية للمعهد».</span></div>
+          <div class="try-line"><span class="try-tag try-see">سترى</span><span>يفتح لوح تصميم فيه البوستر جاهزًا — تضغط على أي عنصر لتغيّر نصّه أو لونه أو حجمه بيدك، بلا برامج تصميم.</span></div>
+        </div>
+
+        <div class="section-heading" style="margin-top:26px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>خمسة سيناريوهات من العمل الإداري</span>
+        </div>
+        <p class="lead-paragraph">من الأبسط إلى الأعقد — الموقف، ثم الحل خطوة بخطوة، ثم الأدوات المستخدمة.</p>
+
+        <div class="scn">
+          <div class="scn-head"><span class="scn-badge lv-easy">بسيط</span><span class="scn-title">١ · كتاب رسمي في دقيقتين</span></div>
+          <p><strong>الموقف:</strong> مدير قسم يكتب كتاب اعتذار عن تأخير معاملة من الصفر في كل مرة، فيستغرق نحو عشرين دقيقة، والصياغة تختلف من كتاب لآخر.</p>
+          <span class="scn-lbl">الحل</span>
+          <ol>
+            <li>يكتب مرة واحدة في <strong>التعليمات الدائمة</strong>: موقعه الوظيفي، واسم الدائرة، وأسلوب الصياغة المطلوب.</li>
+            <li>يعطي المعطيات فقط: رقم المعاملة، سبب التأخير، الموعد الجديد.</li>
+            <li>يحدّد الشكل: كتاب رسمي بثلاث فقرات، بلا عبارات مبالغة.</li>
+            <li>يراجع النصّ ويعدّل ما يلزم <strong>قبل التوقيع</strong>.</li>
+          </ol>
+          <div class="tool-chips"><span class="tool-chip">التعليمات الدائمة</span><span class="tool-chip">القواعد الذهبية الأربع</span></div>
+          <span class="scn-lbl">النتيجة</span>
+          <p>كتاب جاهز خلال دقيقتين بدل عشرين، وبأسلوب موحّد في كل مرة.</p>
+        </div>
+
+        <div class="scn">
+          <div class="scn-head"><span class="scn-badge lv-easy">بسيط</span><span class="scn-title">٢ · تلخيص محضر اجتماع</span></div>
+          <p><strong>الموقف:</strong> محضر اجتماع من اثنتي عشرة صفحة، والمطلوب ملخّص بصفحة واحدة يبيّن القرارات والجهات المكلّفة والمواعيد.</p>
+          <span class="scn-lbl">الحل</span>
+          <ol>
+            <li>يرفع ملف المحضر مباشرة إلى المحادثة.</li>
+            <li>يطلب <strong>جدولًا بثلاثة أعمدة</strong>: القرار · الجهة المكلّفة · الموعد.</li>
+            <li>يطلب فقرة ختامية تجمع البنود المؤجّلة.</li>
+            <li>يطابق الجدول بالمحضر الأصلي قبل التعميم.</li>
+          </ol>
+          <div class="tool-chips"><span class="tool-chip">رفع الملفات</span><span class="tool-chip">المخرجات المنسّقة</span><span class="tool-chip">التحقّق</span></div>
+          <span class="scn-lbl">النتيجة</span>
+          <p>ملخّص جاهز للتعميم، وجدول متابعة يُنسخ مباشرة إلى نظام المتابعة.</p>
+        </div>
+
+        <div class="scn">
+          <div class="scn-head"><span class="scn-badge lv-mid">متوسط</span><span class="scn-title">٣ · فرز شكاوى المواطنين وتصنيفها</span></div>
+          <p><strong>الموقف:</strong> نحو أربعمئة شكوى شهريًا بصيغ حرّة، والإدارة لا تعرف أي نوع من الشكاوى يتكرّر أكثر لتعالج سببه.</p>
+          <span class="scn-lbl">الحل</span>
+          <ol>
+            <li><strong>قبل أي شيء:</strong> حذف الأسماء وأرقام الهواتف والعناوين — <span class="hl hl-pink">إخفاء هوية إلزامي</span>.</li>
+            <li>رفع الملف بعد التنظيف.</li>
+            <li>طلب تصنيف الشكاوى إلى فئات يحدّدها هو مسبقًا، لا أن يخترعها البرنامج.</li>
+            <li>طلب جدول بعدد الشكاوى في كل فئة ونسبتها المئوية.</li>
+            <li>طلب رسم بياني يعرض النتيجة داخل أرتيفاكت.</li>
+            <li>مراجعة عيّنة عشوائية يدويًا للتأكّد من دقّة التصنيف.</li>
+          </ol>
+          <div class="tool-chips"><span class="tool-chip">إخفاء الهوية</span><span class="tool-chip">رفع الملفات</span><span class="tool-chip">التحليل الوصفي</span><span class="tool-chip">الأرتيفاكتس</span></div>
+          <span class="scn-lbl">النتيجة</span>
+          <p>تقرير شهري يبيّن أكثر ثلاث فئات تكرارًا — أساس لقرار إداري يعالج السبب لا العَرَض.</p>
+        </div>
+
+        <div class="scn">
+          <div class="scn-head"><span class="scn-badge lv-mid">متوسط</span><span class="scn-title">٤ · التقرير الشهري المتكرّر</span></div>
+          <p><strong>الموقف:</strong> تقرير شهري بالصيغة نفسها، يُعاد شرح متطلّباته في كل مرة، والشكل يختلف من شهر لآخر فيرفضه المدير.</p>
+          <span class="scn-lbl">الحل</span>
+          <ol>
+            <li>إنشاء <strong>مشروع</strong> باسم «التقرير الشهري».</li>
+            <li>في التعليمات الثابتة: الصيغة، النبرة، الطول، وأقسام التقرير بالترتيب.</li>
+            <li>في الملفات المرجعية: تقارير ثلاثة أشهر سابقة معتمدة كنموذج.</li>
+            <li>كل شهر: رفع بيانات ذلك الشهر فقط وطلب التقرير.</li>
+            <li>مراجعة الأرقام ومطابقتها بالسجلّات قبل الاعتماد.</li>
+          </ol>
+          <div class="tool-chips"><span class="tool-chip">المشاريع</span><span class="tool-chip">التعليمات الثابتة</span><span class="tool-chip">قاعدة المعرفة</span></div>
+          <span class="scn-lbl">النتيجة</span>
+          <p>تقرير موحّد الشكل بلا نقاش، وزمن الإعداد ينزل من ساعتين إلى ربع ساعة.</p>
+        </div>
+
+        <div class="scn">
+          <div class="scn-head"><span class="scn-badge lv-hard">معقّد</span><span class="scn-title">٥ · منظومة متابعة أداء أسبوعية</span></div>
+          <p><strong>الموقف:</strong> مدير عام يريد لوحة متابعة أسبوعية لأداء خمسة أقسام، تجمع بياناتها من ملفات متفرّقة، وتكون جاهزة على مكتبه صباح كل أحد بلا أن يطلبها.</p>
+          <span class="scn-lbl">الحل</span>
+          <ol>
+            <li><strong>مشروع</strong> «متابعة الأداء»: التعليمات + تعريف مؤشرات القياس + نماذج التقارير السابقة.</li>
+            <li><strong>مهارة</strong> خاصة تثبّت طريقة الحساب وشكل العرض، فلا تتغيّر من أسبوع لآخر.</li>
+            <li><strong>موصل</strong> إلى مجلّد التقارير — بحساب عمل مخصّص، وبعد تصنيف البيانات والتأكّد من خلوّها من السرّي.</li>
+            <li><strong>مهمة مجدولة</strong> كل أحد الساعة السابعة: تقرأ ملفات الأسبوع، تحسب المؤشرات، وتنتج اللوحة.</li>
+            <li><strong>مراجعة بشرية إلزامية</strong>: المدير يعتمد أو يعيد — لا تُعمّم اللوحة تلقائيًا.</li>
+            <li>متابعة <strong>سجلّ التشغيلات</strong> للتأكّد من عدم تفويت أي أسبوع.</li>
+          </ol>
+          <div class="tool-chips"><span class="tool-chip">المشاريع</span><span class="tool-chip">المهارات</span><span class="tool-chip">الموصلات</span><span class="tool-chip">المهام المجدولة</span><span class="tool-chip">الأرتيفاكتس</span><span class="tool-chip">الإشراف البشري</span></div>
+          <span class="scn-lbl">النتيجة</span>
+          <p>لوحة أسبوعية جاهزة صباح الأحد، ودور المدير يتحوّل من <span class="hl hl-yellow">جمع وحساب</span> إلى <span class="hl hl-green">مراجعة وقرار</span>.</p>
+        </div>
+
+        <!-- ===== قاموس ===== -->
+        <div class="section-heading" style="margin-top:26px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>مصطلحات هذا الأسبوع بالعربي</span>
+        </div>
+        <ul class="glossary-list">
+          <li><span class="gloss-ar">كوورك</span> <span class="gloss-term">(Cowork)</span>: واجهة المهام الكبيرة التي تصل لملفاتك وتعمل بالخلفية.</li>
+          <li><span class="gloss-ar">ديسباتش</span> <span class="gloss-term">(Dispatch)</span>: إرسال مهمة لتُنفَّذ بعيدًا عنك ثم تعود إليك بنتيجتها.</li>
+          <li><span class="gloss-ar">الجلسة</span> <span class="gloss-term">(Session)</span>: نافذة عمل مستقلّة لها سياقها وحالتها الخاصة.</li>
+          <li><span class="gloss-ar">تحتاج ردّك</span> <span class="gloss-term">(Needs input)</span>: حالة مهمة متوقّفة بانتظار قرار منك.</li>
+          <li><span class="gloss-ar">جاهزة للمراجعة</span> <span class="gloss-term">(Ready for review)</span>: أُنجزت المهمة وتنتظر اعتمادك.</li>
+          <li><span class="gloss-ar">المهام المجدولة</span> <span class="gloss-term">(Scheduled runs)</span>: مهام تعمل تلقائيًا في مواعيد محدّدة.</li>
+          <li><span class="gloss-ar">المُشغِّل</span> <span class="gloss-term">(Trigger)</span>: الشرط أو الموعد الذي يُطلق المهمة المجدولة.</li>
+          <li><span class="gloss-ar">القدرات</span> <span class="gloss-term">(Capabilities)</span>: مزايا كلود التي تشغّلها أو تطفئها من الإعدادات.</li>
+          <li><span class="gloss-ar">الموصلات</span> <span class="gloss-term">(Connectors)</span>: الحسابات الخارجية المربوطة مثل Drive والبريد والتقويم.</li>
+          <li><span class="gloss-ar">الأجهزة الموثوقة</span> <span class="gloss-term">(Trusted devices)</span>: أجهزة اعتمدتها ويُتحقّق منها قبل الوصول لملفاتك.</li>
+          <li><span class="gloss-ar">الجلسات النشطة</span> <span class="gloss-term">(Active sessions)</span>: كل جهاز مفتوح حاليًا على حسابك.</li>
+          <li><span class="gloss-ar">تصدير البيانات</span> <span class="gloss-term">(Export data)</span>: تنزيل أرشيف كامل لمحادثاتك ومشاريعك.</li>
+          <li><span class="gloss-ar">أرصدة الاستخدام</span> <span class="gloss-term">(Usage credits)</span>: رصيد إضافي يُشترى لمواصلة العمل بعد حدّ الخطة.</li>
+          <li><span class="gloss-ar">إعادة الشحن التلقائي</span> <span class="gloss-term">(Auto-reload)</span>: شراء رصيد تلقائيًا عند اقترابه من النفاد.</li>
+          <li><span class="gloss-ar">المهارات</span> <span class="gloss-term">(Skills)</span>: أسلوب عمل جاهز يُحمّل عند الحاجة، تستوردها أو تبنيها.</li>
+        </ul>
+
+        <!-- ===== أسئلة ===== -->
+        <div class="section-heading" style="margin-top:22px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>أسئلة للمراجعة</span>
+        </div>
+        <p class="quiz-note">بدون حلول — فكّر بنفسك واكتب إجابتك بالمساحة الفارغة، والحل يُناقش بالمحاضرة الجاية.</p>
+
+        <div class="mcq-item">
+          <span class="q-num">١.</span> مهمة في كوورك حالتها «تحتاج ردّك» (Needs input) تعني:
+          <ul class="mcq-options">
+            <li><span class="opt-letter">أ)</span> أنها فشلت ويجب حذفها</li>
+            <li><span class="opt-letter">ب)</span> أنها متوقّفة بانتظار قرار منك لتكمل</li>
+            <li><span class="opt-letter">ج)</span> أنها اكتملت واعتُمدت</li>
+            <li><span class="opt-letter">د)</span> أنها مؤرشفة</li>
+          </ul>
+        </div>
+        <div class="mcq-item">
+          <span class="q-num">٢.</span> إعداد «طلب أجهزة موثوقة» (Require trusted devices) وظيفته:
+          <ul class="mcq-options">
+            <li><span class="opt-letter">أ)</span> تسريع فتح التطبيق</li>
+            <li><span class="opt-letter">ب)</span> التحقّق من كل جهاز جديد قبل السماح له ببدء جلسة تصل لملفاتك</li>
+            <li><span class="opt-letter">ج)</span> تغيير لون الواجهة</li>
+            <li><span class="opt-letter">د)</span> زيادة رصيد الاستخدام</li>
+          </ul>
+        </div>
+        <div class="mcq-item">
+          <span class="q-num">٣.</span> رابط تصدير البيانات (Export data) يصلك:
+          <ul class="mcq-options">
+            <li><span class="opt-letter">أ)</span> على بريدك الإلكتروني، ويبطل بعد ٢٤ ساعة</li>
+            <li><span class="opt-letter">ب)</span> داخل المحادثة ويبقى دائمًا</li>
+            <li><span class="opt-letter">ج)</span> برسالة نصّية على هاتفك</li>
+            <li><span class="opt-letter">د)</span> لا يمكن تصدير البيانات إطلاقًا</li>
+          </ul>
+        </div>
+        <div class="mcq-item">
+          <span class="q-num">٤.</span> أي خيار في «المهارات» هو الأنسب لموظف مبتدئ يريد بناء مهارة أول مرة؟
+          <ul class="mcq-options">
+            <li><span class="opt-letter">أ)</span> Upload skill</li>
+            <li><span class="opt-letter">ب)</span> Create a skill</li>
+            <li><span class="opt-letter">ج)</span> Create with Claude</li>
+            <li><span class="opt-letter">د)</span> Browse فقط</li>
+          </ul>
+        </div>
+        <div class="mcq-item">
+          <span class="q-num">٥.</span> «إعادة الشحن التلقائي» (Auto-reload) في الفوترة تعني:
+          <ul class="mcq-options">
+            <li><span class="opt-letter">أ)</span> إعادة تحميل الصفحة تلقائيًا</li>
+            <li><span class="opt-letter">ب)</span> شراء أرصدة استخدام تلقائيًا عند اقتراب رصيدك من النفاد</li>
+            <li><span class="opt-letter">ج)</span> حفظ المحادثات تلقائيًا</li>
+            <li><span class="opt-letter">د)</span> تحديث التطبيق تلقائيًا</li>
+          </ul>
+        </div>
+
+        <div class="section-heading" style="margin-top:22px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>أسئلة سيناريو (إجابة قصيرة)</span>
+        </div>
+        <div class="mcq-item">
+          <span class="q-num">١.</span> موظف يفتح ملف الردود كل صباح، يفحصه يدويًا، ويكتب ملخّصًا — عشر دقائق يوميًا. أي واجهة تحلّ له هذا، وكيف يُعدّها؟
+          <span class="blank-line"></span>
+          <span class="blank-line"></span>
+        </div>
+        <div class="mcq-item">
+          <span class="q-num">٢.</span> مديرة فتحت «الجلسات النشطة» فوجدت جهازًا وموقعًا لا تعرفهما. ما دلالة ذلك، وما الإجراءات الواجبة فورًا؟
+          <span class="blank-line"></span>
+          <span class="blank-line"></span>
+        </div>
+        <div class="mcq-item">
+          <span class="q-num">٣.</span> موظف يريد أن تبقى مهامه على حاسوب الدائرة ولا تكمل في السحابة بعد إغلاق الجهاز. أي إعداد يستخدم، وما الأثر المترتّب عليه؟
+          <span class="blank-line"></span>
+          <span class="blank-line"></span>
+        </div>
+
+        <div class="section-heading" style="margin-top:22px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>أسئلة مقالية</span>
+        </div>
+        <div class="mcq-item">
+          <span class="q-num">١.</span> اختر مهمة إدارية متكرّرة في دائرتك واشرح كيف تحوّلها إلى مهمة مجدولة: ماذا تفعل، متى تعمل، وكيف تتحقّق من نتيجتها.
+          <span class="blank-line"></span>
+          <span class="blank-line"></span>
+          <span class="blank-line"></span>
+        </div>
+        <div class="mcq-item">
+          <span class="q-num">٢.</span> ناقش الإعدادات التي يجب على دائرة حكومية ضبطها قبل السماح لموظفيها باستخدام كلود في العمل الرسمي، ولماذا كل واحد منها.
+          <span class="blank-line"></span>
+          <span class="blank-line"></span>
+          <span class="blank-line"></span>
+        </div>
+
+        <div class="section-heading" style="margin-top:22px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>صح أو خطأ</span>
+        </div>
+        <div class="tf-item"><span>١. «ديسباتش» و«كوورك» واجهتان مستقلّتان في الشريط الجانبي.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+        <div class="tf-item"><span>٢. المهمة المؤرشفة تُحذف نهائيًا ولا يمكن استرجاعها.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+        <div class="tf-item"><span>٣. تصنيف حالة الجلسة تلقائيًا يُحتسب من رصيد استخدام خطتك.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+        <div class="tf-item"><span>٤. مراجعة الجلسات النشطة إجراء أمني ينبغي تكراره دوريًا.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+        <div class="tf-item"><span>٥. تفعيل إعدادات الخصوصية يبيح رفع البيانات السرّية للدائرة.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+
+        <div class="section-heading" style="margin-top:26px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>الواجبات التدريبية</span>
+        </div>
+        <p class="lead-paragraph">سبعة واجبات تطبّقها بنفسك على عملك الفعلي — لكل واجب مُخرَج محدّد يُسلَّم.</p>
+
+        <div class="hw">
+          <div class="hw-head"><span class="hw-num">١</span><span class="hw-title">تعليماتك الشخصية الدائمة</span><span class="scn-badge lv-easy">بسيط</span></div>
+          <p>اكتب نصًّا لا يتجاوز خمسة أسطر يعرّف بك: موقعك الوظيفي، طبيعة عملك، وأسلوب الردّ الذي تريده. ضعه في الإعدادات، ثم اطرح السؤال نفسه قبل وضعه وبعده.</p>
+          <div class="hw-deliver"><span class="hw-tag">المُسلَّم</span><span>نصّ التعليمات + الجوابان قبل وبعد، مع سطر يوضّح الفرق الذي لاحظته.</span></div>
+        </div>
+
+        <div class="hw">
+          <div class="hw-head"><span class="hw-num">٢</span><span class="hw-title">قارن بين الأنماط</span><span class="scn-badge lv-easy">بسيط</span></div>
+          <p>اطرح سؤالًا واحدًا من عملك بثلاثة أنماط: العادي، الموجز، والتفسيري.</p>
+          <div class="hw-deliver"><span class="hw-tag">المُسلَّم</span><span>جدول من ثلاثة صفوف: النمط · طول الجواب تقريبًا · متى تستخدمه في عملك.</span></div>
+        </div>
+
+        <div class="hw">
+          <div class="hw-head"><span class="hw-num">٣</span><span class="hw-title">أصلح أمرًا ضعيفًا</span><span class="scn-badge lv-easy">بسيط</span></div>
+          <p>خذ الأمر الضعيف: «اكتب لي تقرير»، وأعد صياغته بالقواعد الذهبية الأربع (الموقف · المهمة · الشكل · المثال).</p>
+          <div class="hw-deliver"><span class="hw-tag">المُسلَّم</span><span>الأمر قبل وبعد، والجوابان، مع تحديد أي قاعدة أحدثت أكبر فرق.</span></div>
+        </div>
+
+        <div class="hw">
+          <div class="hw-head"><span class="hw-num">٤</span><span class="hw-title">أنشئ مشروعًا لمهمة متكرّرة</span><span class="scn-badge lv-mid">متوسط</span></div>
+          <p>اختر مهمة تتكرّر عليك في دائرتك، وأنشئ لها مشروعًا بتعليمات ثابتة وملفَّين مرجعيَّين على الأقل.</p>
+          <div class="hw-deliver"><span class="hw-tag">المُسلَّم</span><span>اسم المشروع + نصّ التعليمات + قائمة الملفات + مثال واحد لناتج خرج منه.</span></div>
+        </div>
+
+        <div class="hw">
+          <div class="hw-head"><span class="hw-num">٥</span><span class="hw-title">تحليل بيانات مصغّر</span><span class="scn-badge lv-mid">متوسط</span></div>
+          <p>جهّز جدولًا لا يقلّ عن عشرين صفًّا من بيانات <span class="hl hl-pink">غير سرّية أو مُخفاة الهوية</span>، ثم استخرج منه ثلاثة مؤشرات ورسمًا بيانيًا واحدًا.</p>
+          <div class="hw-deliver"><span class="hw-tag">المُسلَّم</span><span>الجدول + المؤشرات الثلاثة + الرسم + جملة تشرح كيف تحقّقت من صحّة الأرقام.</span></div>
+        </div>
+
+        <div class="hw">
+          <div class="hw-head"><span class="hw-num">٦</span><span class="hw-title">اضبط مهمة مجدولة</span><span class="scn-badge lv-mid">متوسط</span></div>
+          <p>اختر عملًا يتكرّر أسبوعيًا على الأقل، واضبطه كمهمة مجدولة، وانتظر تشغيلة واحدة على الأقل ثم افحص نتيجتها.</p>
+          <div class="hw-deliver"><span class="hw-tag">المُسلَّم</span><span>وصف المهمة + وقت التشغيل + دليل من سجلّ التشغيلات + تقييمك لدقّة الناتج.</span></div>
+        </div>
+
+        <div class="hw">
+          <div class="hw-head"><span class="hw-num">٧</span><span class="hw-title">سياسة استخدام مصغّرة لقسمك</span><span class="scn-badge lv-hard">معقّد</span></div>
+          <p>اكتب وثيقة من صفحة واحدة تجيب على أربعة أسئلة: من يستخدم كلود في القسم؟ في أي مهام تحديدًا؟ ما الذي يُمنع رفعه منعًا باتًّا؟ ومن يعتمد المخرجات قبل خروجها من الدائرة؟</p>
+          <div class="hw-deliver"><span class="hw-tag">المُسلَّم</span><span>وثيقة صفحة واحدة، مكتوبة بصيغة قابلة للاعتماد الرسمي لا كمسودة نقاش.</span></div>
+        </div>
+
+        <div class="mini-note">نهاية المحاضرة الثانية — إعداد: أ.م.د أمير هادي ★</div>
         <div class="footer-note">٢</div>
       </div>
       <!-- ============ END SLIDE 2 ============ -->
