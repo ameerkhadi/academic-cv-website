@@ -1343,6 +1343,9 @@
   }
   body.ann-on .ann-hint{ display:block; }
 
+  /* هوية المطبوع: لا تظهر على الشاشة إطلاقاً */
+  .print-id, .print-foot{ display:none; }
+
   @media print{
     *{ -webkit-print-color-adjust:exact; print-color-adjust:exact; color-adjust:exact; }
     @page{ size:A4; margin:8mm; }
@@ -1376,6 +1379,39 @@
     }
     .slide:last-child{ page-break-after:auto; break-after:auto; }
     .content-slide{ align-items:stretch !important; text-align:right !important; }
+
+    /* الصناديق لا تُقصّ نصفين على حدّ الصفحة: إن لم تسع نزلت كاملة للتالية.
+       بدونها يبدأ أعلى الصفحة بصفوف يتيمة بلا إطار ولا عنوان. */
+    .screen-frame, .scn, .hw, .try-box, .callout, .ct-bud, .gloss-row,
+    .q-item, .sf-row, .leg-item, .mini-note, .map-tree li, li{
+      break-inside:avoid; page-break-inside:avoid;
+    }
+    /* عنوان في ذيل الصفحة ومحتواه في التي بعدها: يُدفع العنوان معه */
+    .section-heading, .chapter-heading, .nav-pill, .ct-head, .scn-head, .hw-head{
+      break-after:avoid; page-break-after:avoid;
+    }
+
+    /* هوية أعلى كل تبويب مطبوع */
+    .print-id{
+      display:block !important;
+      border-bottom:1.5px solid var(--red);
+      padding-bottom:5px; margin-bottom:12px;
+      font-size:9.5pt; line-height:1.7; color:var(--ink);
+    }
+    .print-id .pi-title{ font-weight:700; color:var(--red); }
+    .print-id .pi-meta{ display:block; font-size:8.5pt; opacity:0.85; }
+    .print-id .pi-url{ direction:ltr; unicode-bidi:isolate; font-family:'Caveat',cursive; font-size:10pt; }
+
+    /* شريط أسفل كل صفحة. العناصر الثابتة تتكرر على كل صفحة عند الطباعة في كروم. */
+    .print-foot{
+      display:block !important;
+      position:fixed; bottom:0; left:0; right:0;
+      z-index:9999;              /* بدونه ترسم خلفية الورقة فوقه فيختفي رغم وجوده */
+      font-size:8pt; text-align:center; color:var(--ink); opacity:0.85;
+      border-top:1px solid rgba(26,61,140,0.35);
+      padding-top:3px; background:transparent;
+    }
+    .slide{ padding-bottom:20mm !important; }   /* مكان للشريط فلا يركب النص */
   }
 </style>
 </head>
@@ -3131,6 +3167,36 @@
     if(e.key === 'ArrowRight'){ navigateSlide(-1); }
     else if(e.key === 'ArrowLeft'){ navigateSlide(1); }
   });
+
+  /* هوية المطبوع: تُبنى مرة هنا بدل تكرارها خمس عشرة مرة في الـHTML.
+     مخفية على الشاشة، وتظهر أعلى كل تبويب عند الطباعة. */
+  (function(){
+    var COURSE = 'دفتر محاضرات الذكاء الاصطناعي وتحليل البيانات';
+    var WHO    = 'د. أمير هادي · المعهد العالي لتأهيل وتدريب القادة · ٢٠٢٦';
+    var URL    = 'ameerkhadi.github.io/academic-cv-website/ai/week1';
+
+    document.querySelectorAll('.slide').forEach(function(slide){
+      var tab = document.querySelector('.tab[data-target="' + slide.id + '"]');
+      var box = document.createElement('div');
+      box.className = 'print-id';
+      box.innerHTML = '<span class="pi-title"></span>' +
+                      '<span class="pi-meta"></span>' +
+                      '<span class="pi-meta pi-url"></span>';
+      /* نصّ التبويب «١<br>الأسبوع الأول»، وtextContent يلصقهما بلا مسافة
+         لأن <br> لا يضيف حرفاً. نأخذ ما بعد الفاصل: اسم الأسبوع وحده. */
+      var name = tab ? tab.innerHTML.split(/<br\s*\/?>/i).pop()
+                          .replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim() : '';
+      box.children[0].textContent = COURSE + (name ? ' — ' + name : '');
+      box.children[1].textContent = WHO;
+      box.children[2].textContent = URL;
+      slide.insertBefore(box, slide.firstChild);
+    });
+
+    var foot = document.createElement('div');
+    foot.className = 'print-foot';
+    foot.textContent = COURSE + ' — د. أمير هادي — ' + URL;
+    document.body.appendChild(foot);
+  })();
 </script>
 
 <script>
