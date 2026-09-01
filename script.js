@@ -8,6 +8,7 @@ const uiText = {
     en: {
         crumbUni: "University of Babylon",
         crumbFac: "Faculty of IT",
+        crumbInst: "Higher Institute",
         updatedLabel: "Updated:",
         navBrand: "Dr. Ameer Hadi",
         navAbout: "About",
@@ -19,7 +20,7 @@ const uiText = {
         navContact: "Contact",
 
         heroBadge: "Assistant Professor · University of Babylon",
-        heroSub: "Faculty of Information Technology · Information Network Dept.",
+        heroSub: "Faculty of Information Technology · Information Network Dept. · Higher Institute for Training and Qualifying Leaders",
         tag1: "☁️ Cloud Computing",
         tag2: "🤖 Artificial Intelligence",
         tag3: "📡 IoT",
@@ -97,6 +98,7 @@ const uiText = {
     ar: {
         crumbUni: "جامعة بابل",
         crumbFac: "كلية تكنولوجيا المعلومات",
+        crumbInst: "المعهد العالي",
         updatedLabel: "آخر تحديث:",
         navBrand: "د. أمير هادي",
         navAbout: "نبذة",
@@ -108,7 +110,7 @@ const uiText = {
         navContact: "التواصل",
 
         heroBadge: "أستاذ مساعد · جامعة بابل",
-        heroSub: "كلية تكنولوجيا المعلومات · قسم شبكات المعلومات",
+        heroSub: "كلية تكنولوجيا المعلومات · قسم شبكات المعلومات · المعهد العالي لتدريب وتأهيل القادة",
         tag1: "☁️ الحوسبة السحابية",
         tag2: "🤖 الذكاء الاصطناعي",
         tag3: "📡 إنترنت الأشياء",
