@@ -1360,19 +1360,21 @@
   .ann-bar .lbl{ margin-inline-start:5px; }
   @media (max-width:560px){
     /* فوق زرّ الطباعة لا بجانبه: الشريط يعرض كامل الشاشة تقريباً فيغطّيه */
-    .ann-bar{ gap:4px; padding:5px 6px; bottom:72px; right:14px; }
+    .ann-bar{ gap:3px; padding:5px 5px; bottom:72px; right:14px; }
     .ann-bar .lbl{ display:none; }            /* الأيقونة تكفي، فيبقى سطراً واحداً */
-    .ann-bar button{ padding:5px 7px; }
-    .ann-bar .ann-main{ padding:5px 9px; }
-    .ann-bar .ann-sep{ height:17px; }
+    .ann-bar button{ padding:5px 6px; }
+    .ann-bar .ann-main{ padding:5px 8px; }
+    .ann-bar .ann-sep{ display:none; }        /* الفواصل ترف لا يتحمّله عرض الهاتف */
     .ann-bar .ann-size{ gap:0; }
-    .ann-swatch{ width:20px; height:20px; border-width:1.5px; }
+    .ann-bar .ann-grip{ padding:4px 1px; }
+    .ann-swatch{ width:19px; height:19px; border-width:1.5px; }
     .ann-hint{ bottom:120px; }
     .ann-hint .keys{ display:none; }
   }
 
   .ann-hint{
     position:fixed; bottom:60px; right:18px; z-index:299;
+    pointer-events:none;      /* يلامس الشريط عند تمدّده فيبتلع ضغطة اللون */
     background:rgba(28,22,16,0.9); color:#f3ece0;
     font-family:'Aref Ruqaa', serif; font-size:12px;
     padding:6px 12px; border-radius:14px;
@@ -1384,12 +1386,67 @@
   /* هوية المطبوع: لا تظهر على الشاشة إطلاقاً */
   .print-id, .print-foot{ display:none; }
 
+  /* مقبض سحب الشريط: السحب من المقبض وحده، وإلا صار كل ضغط على لون سحبًا */
+  .ann-grip{
+    cursor:grab; color:#cbbfae; font-size:16px; line-height:1;
+    padding:4px 3px; user-select:none; touch-action:none; flex:0 0 auto;
+  }
+  .ann-grip:active{ cursor:grabbing; }
+  .ann-bar.moved{ bottom:auto; right:auto; }
+
+  /* ---------- الورقة الفارغة العائمة ---------- */
+  .sheet{
+    position:fixed; z-index:320; display:none;
+    flex-direction:column;
+    border:2.5px solid var(--red); border-radius:10px;
+    box-shadow:0 16px 40px rgba(0,0,0,0.55);
+    overflow:hidden;
+  }
+  .sheet.open{ display:flex; }
+  .sheet-head{
+    display:flex; align-items:center; gap:6px;
+    background:#1c1610; color:#f3ece0;
+    padding:6px 8px; font-family:'Aref Ruqaa',serif; font-weight:700; font-size:13px;
+  }
+  .sheet-head .sh-grip{ cursor:grab; color:#cbbfae; font-size:16px; padding:2px 4px; touch-action:none; }
+  .sheet-head .sh-grip:active{ cursor:grabbing; }
+  .sheet-head .sh-title{ flex:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .sheet-head button{
+    font-family:'Aref Ruqaa',serif; font-size:12.5px; font-weight:700;
+    color:#f3ece0; background:transparent; border:1.5px solid transparent;
+    border-radius:13px; padding:4px 9px; cursor:pointer; white-space:nowrap;
+  }
+  .sheet-head button:hover{ background:rgba(255,255,255,0.14); }
+  .sheet-head button:focus-visible{ outline:2px solid #f0b400; outline-offset:2px; }
+  .sheet-head .sh-close{ color:#ffb4ab; }
+
+  /* الورق نفسه بنفس مسطّرة الدفتر */
+  .sheet-body{
+    position:relative; flex:1; overflow:hidden;
+    background-color:#fbf8ef;
+    background-image:repeating-linear-gradient(#fbf8ef, #fbf8ef 27px, rgba(63,143,214,0.28) 28px);
+    touch-action:none;
+  }
+  .sheet-body svg{ position:absolute; top:0; left:0; width:100%; height:100%; }
+  .sheet-body svg path{ fill:none; stroke-linecap:round; stroke-linejoin:round; }
+  .sheet-body svg path.hl{ mix-blend-mode:multiply; }
+
+  /* مقبض التحجيم في الزاوية السفلى اليسرى — جهة «النهاية» في صفحة عربية */
+  .sheet-resize{
+    position:absolute; bottom:0; left:0; width:22px; height:22px;
+    cursor:nesw-resize; touch-action:none;
+    background:linear-gradient(45deg, rgba(209,52,43,0.75) 0 32%, transparent 32%);
+  }
+
+  /* أيقونة الاستدعاء داخل شريط الأدوات */
+  .ann-bar .sheet-toggle.on{ background:rgba(255,255,255,0.2); border-color:rgba(255,255,255,0.4); }
+
   @media print{
     *{ -webkit-print-color-adjust:exact; print-color-adjust:exact; color-adjust:exact; }
     @page{ size:A4; margin:8mm; }
     body{ background:#fff !important; }
     .print-btn, .tabs, .tape, .master-header, .master-footer,
-    .ann-bar, .ann-hint{ display:none !important; }
+    .ann-bar, .ann-hint, .sheet{ display:none !important; }
     /* التأشير يُطبع لأنه داخل الشريحة، ولا يُطبع الشريط */
     .ann-layer{ display:block !important; }
     .paper-wrapper{ transform:none !important; }
@@ -3553,6 +3610,10 @@
   paintSize();
   tools.appendChild(sizeBtn);
 
+  var sheetBtn = tool('📄', 'ورقة', 'ورقة فارغة عائمة فوق المحاضرة (W)', function(){
+    setSheet(!sheet.classList.contains('open'));
+  });
+
   sep();
   var eraseBtn = tool('⌫', 'ممحاة', 'ممحاة — امسح الخط بمرور الممحاة عليه (E)', function(){
     erasing = !erasing;
@@ -3573,7 +3634,8 @@
   var hint = document.createElement('div');
   hint.className = 'ann-hint';
   hint.innerHTML = 'القلم يشتغل — للتمرير بالصفحة أوقف القلم.' +
-    '<span class="keys"><br>١–٥ للألوان · S أو + و − للسُمك · E ممحاة · Z تراجع · H إخفاء · Esc إيقاف</span>';
+    '<span class="keys"><br>١–٥ للألوان · S للسُمك · W ورقة فارغة · E ممحاة · Z تراجع · H إخفاء · Esc إيقاف' +
+    '<br>اسحب ⠿ لتحريك الشريط · وللتمرير اسحب من الحاشية البنية</span>';
 
   function setOn(on){
     document.body.classList.toggle('ann-on', on);
@@ -3590,6 +3652,296 @@
   }
   main.addEventListener('click', function(){ setOn(!document.body.classList.contains('ann-on')); });
 
+  // ============================================================
+  //  تحريك الشريط + الورقة الفارغة العائمة
+  // ============================================================
+
+  /* يبقي عنصراً ثابتاً داخل الشاشة. يُستدعى بعد كل سحب وعند تغيّر المقاس
+     أو الزوم، وإلا انزلق خارج الحافة ولم يعد يُسترجَع. */
+  function clampToView(el, pos){
+    var w = el.offsetWidth, h = el.offsetHeight;
+    var maxL = Math.max(0, window.innerWidth  - w);
+    var maxT = Math.max(0, window.innerHeight - h);
+    return { left: Math.min(Math.max(0, pos.left), maxL),
+             top:  Math.min(Math.max(0, pos.top ), maxT) };
+  }
+
+  /* يجعل عنصراً قابلاً للسحب من مقبض بعينه. onEnd يحفظ الموضع. */
+  function makeDraggable(el, handle, onEnd){
+    handle.addEventListener('pointerdown', function(ev){
+      if(ev.button !== undefined && ev.button !== 0) return;
+      ev.preventDefault(); ev.stopPropagation();
+      var r = el.getBoundingClientRect();
+      var dx = ev.clientX - r.left, dy = ev.clientY - r.top;
+      try{ handle.setPointerCapture(ev.pointerId); }catch(e){}
+
+      function move(e){
+        if(e.pointerId !== ev.pointerId) return;
+        var p = clampToView(el, { left: e.clientX - dx, top: e.clientY - dy });
+        el.style.left = p.left + 'px';
+        el.style.top  = p.top  + 'px';
+      }
+      function up(e){
+        if(e.pointerId !== ev.pointerId) return;
+        handle.removeEventListener('pointermove', move);
+        handle.removeEventListener('pointerup', up);
+        handle.removeEventListener('pointercancel', up);
+        if(onEnd) onEnd();
+      }
+      el.classList.add('moved');
+      el.style.left = r.left + 'px';
+      el.style.top  = r.top  + 'px';
+      handle.addEventListener('pointermove', move);
+      handle.addEventListener('pointerup', up);
+      handle.addEventListener('pointercancel', up);
+    });
+  }
+
+  // ---------- مقبض الشريط ----------
+
+  var grip = document.createElement('span');
+  grip.className = 'ann-grip';
+  grip.textContent = '⠿';
+  grip.title = 'اسحب لتحريك الشريط · نقرتان لإعادته مكانه';
+  bar.insertBefore(grip, bar.firstChild);
+
+  function saveBarPos(){
+    try{
+      localStorage.setItem(STORE + 'bar',
+        JSON.stringify({ left: parseFloat(bar.style.left), top: parseFloat(bar.style.top) }));
+    }catch(e){}
+  }
+  makeDraggable(bar, grip, saveBarPos);
+
+  grip.addEventListener('dblclick', function(){
+    bar.classList.remove('moved');
+    bar.style.left = bar.style.top = '';
+    try{ localStorage.removeItem(STORE + 'bar'); }catch(e){}
+  });
+
+  (function restoreBar(){
+    var raw = null;
+    try{ raw = localStorage.getItem(STORE + 'bar'); }catch(e){ return; }
+    if(!raw) return;
+    var p; try{ p = JSON.parse(raw); }catch(e){ return; }
+    if(!p || isNaN(p.left) || isNaN(p.top)) return;
+    bar.classList.add('moved');
+    var c = clampToView(bar, p);
+    bar.style.left = c.left + 'px';
+    bar.style.top  = c.top  + 'px';
+  })();
+
+  // ---------- الورقة الفارغة ----------
+
+  var sheet = document.createElement('div');
+  sheet.className = 'sheet';
+  sheet.innerHTML =
+    '<div class="sheet-head">' +
+      '<span class="sh-grip" title="اسحب لتحريك الورقة">⠿</span>' +
+      '<span class="sh-title">ورقة فارغة</span>' +
+      '<button type="button" class="sh-undo" title="تراجع عن آخر خطوة">↶</button>' +
+      '<button type="button" class="sh-clear" title="مسح الورقة">🗑</button>' +
+      '<button type="button" class="sh-png" title="حفظ الورقة صورة PNG لإرسالها للطلبة">💾 صورة</button>' +
+      '<button type="button" class="sh-close" title="إغلاق الورقة">✕</button>' +
+    '</div>' +
+    '<div class="sheet-body"><svg></svg><span class="sheet-resize" title="اسحب لتغيير الحجم"></span></div>';
+  document.body.appendChild(sheet);
+
+  var shBody   = sheet.querySelector('.sheet-body');
+  var shSvg    = sheet.querySelector('.sheet-body svg');
+  var shResize = sheet.querySelector('.sheet-resize');
+  var shHist   = [];
+
+  function sheetDefault(){
+    var w = Math.min(560, Math.round(window.innerWidth  * 0.72));
+    var h = Math.min(440, Math.round(window.innerHeight * 0.55));
+    return { w:w, h:h,
+             left: Math.round((window.innerWidth  - w) / 2),
+             top:  Math.round((window.innerHeight - h) / 2) };
+  }
+
+  function saveSheet(){
+    var strokes = [];
+    shSvg.querySelectorAll('path').forEach(function(p){
+      strokes.push({ d:p.getAttribute('d'), c:p.getAttribute('stroke'),
+                     w:p.getAttribute('stroke-width'), o:p.getAttribute('stroke-opacity'),
+                     h:p.classList.contains('hl') ? 1 : 0 });
+    });
+    try{
+      localStorage.setItem(STORE + 'sheet', JSON.stringify({
+        left: parseFloat(sheet.style.left), top: parseFloat(sheet.style.top),
+        w: sheet.offsetWidth, h: sheet.offsetHeight, strokes: strokes
+      }));
+    }catch(e){}
+  }
+
+  (function restoreSheet(){
+    var d = sheetDefault(), st = null;
+    try{ st = JSON.parse(localStorage.getItem(STORE + 'sheet') || 'null'); }catch(e){}
+    var w = (st && st.w) || d.w, h = (st && st.h) || d.h;
+    sheet.style.width  = w + 'px';
+    sheet.style.height = h + 'px';
+    var pos = clampToView(sheet, {
+      left: (st && !isNaN(st.left)) ? st.left : d.left,
+      top:  (st && !isNaN(st.top )) ? st.top  : d.top
+    });
+    sheet.style.left = pos.left + 'px';
+    sheet.style.top  = pos.top  + 'px';
+    if(st && st.strokes) st.strokes.forEach(function(s){
+      var p = document.createElementNS(SVGNS, 'path');
+      p.setAttribute('d', s.d); p.setAttribute('stroke', s.c);
+      p.setAttribute('stroke-width', s.w); p.setAttribute('stroke-opacity', s.o);
+      if(s.h) p.setAttribute('class', 'hl');
+      shSvg.appendChild(p);
+    });
+  })();
+
+  makeDraggable(sheet, sheet.querySelector('.sh-grip'), saveSheet);
+
+  shResize.addEventListener('pointerdown', function(ev){
+    ev.preventDefault(); ev.stopPropagation();
+    var r = sheet.getBoundingClientRect();
+    try{ shResize.setPointerCapture(ev.pointerId); }catch(e){}
+    function move(e){
+      if(e.pointerId !== ev.pointerId) return;
+      /* المقبض في الزاوية اليسرى: السحب يسارًا يوسّع والحافة اليمنى ثابتة */
+      var w = Math.max(240, r.right - e.clientX);
+      var h = Math.max(200, e.clientY - r.top);
+      sheet.style.width  = Math.min(w, window.innerWidth  - 8) + 'px';
+      sheet.style.height = Math.min(h, window.innerHeight - 8) + 'px';
+      sheet.style.left   = (r.right - sheet.offsetWidth) + 'px';
+    }
+    function up(e){
+      if(e.pointerId !== ev.pointerId) return;
+      shResize.removeEventListener('pointermove', move);
+      shResize.removeEventListener('pointerup', up);
+      saveSheet();
+    }
+    shResize.addEventListener('pointermove', move);
+    shResize.addEventListener('pointerup', up);
+  });
+
+  // الرسم على الورقة: نفس الأقلام والألوان والسُمك، بسجلّ تراجع مستقل
+  var shDrawing = false, shPointer = null, shCur = null, shPts = [];
+
+  shBody.addEventListener('pointerdown', function(ev){
+    if(ev.target === shResize) return;
+    if(shPointer !== null) return;
+    if(ev.button !== undefined && ev.button !== 0) return;
+    ev.preventDefault();
+    shPointer = ev.pointerId; shDrawing = true;
+    try{ shBody.setPointerCapture(ev.pointerId); }catch(e){}
+
+    if(erasing){
+      var hit = eraseAt(shSvg, ev);
+      if(hit.length){ shHist.push({ type:'erase', els:hit }); saveSheet(); }
+      return;
+    }
+    var s = PENS[pen];
+    var mul = SIZES[size].mul; if(s.hl) mul = 1 + (mul - 1) * 0.55;
+    shCur = document.createElementNS(SVGNS, 'path');
+    shCur.setAttribute('stroke', s.color);
+    shCur.setAttribute('stroke-width', (s.width * mul).toFixed(2));
+    shCur.setAttribute('stroke-opacity', String(s.alpha));
+    if(s.hl) shCur.setAttribute('class', 'hl');
+    shSvg.appendChild(shCur);
+    shPts = [toLocal(shSvg, ev)];
+    shCur.setAttribute('d', pathData(shPts));
+  });
+
+  shBody.addEventListener('pointermove', function(ev){
+    if(!shDrawing || ev.pointerId !== shPointer) return;
+    ev.preventDefault();
+    if(erasing){
+      var hit = eraseAt(shSvg, ev);
+      if(hit.length){ shHist.push({ type:'erase', els:hit }); saveSheet(); }
+      return;
+    }
+    var pt = toLocal(shSvg, ev), last = shPts[shPts.length - 1];
+    if(Math.abs(pt.x - last.x) + Math.abs(pt.y - last.y) < 1.4) return;
+    shPts.push(pt);
+    shCur.setAttribute('d', pathData(shPts));
+  });
+
+  function shEnd(ev){
+    if(ev.pointerId !== shPointer) return;
+    shPointer = null;
+    if(!shDrawing) return;
+    shDrawing = false;
+    if(!erasing && shCur){ shHist.push({ type:'add', el:shCur }); saveSheet(); }
+    shCur = null; shPts = [];
+  }
+  shBody.addEventListener('pointerup', shEnd);
+  shBody.addEventListener('pointercancel', shEnd);
+
+  sheet.querySelector('.sh-undo').addEventListener('click', function(){
+    var a = shHist.pop(); if(!a) return;
+    if(a.type === 'add' && a.el.parentNode) a.el.remove();
+    else if(a.type === 'erase') a.els.forEach(function(o){
+      shSvg.insertBefore(o.el, shSvg.children[o.i] || null);
+    });
+    saveSheet();
+  });
+
+  sheet.querySelector('.sh-clear').addEventListener('click', function(){
+    if(!confirm('مسح كل ما في الورقة؟')) return;
+    while(shSvg.firstChild) shSvg.removeChild(shSvg.firstChild);
+    shHist = []; saveSheet();
+  });
+
+  /* حفظ الورقة صورة: نرسم الورق والمسطّرة على canvas ثم نضع فوقهما الـSVG.
+     الخطوط لها stroke وwidth كسمات لا كأصناف، فتُرسم صحيحة خارج الصفحة. */
+  sheet.querySelector('.sh-png').addEventListener('click', function(){
+    var W = shBody.clientWidth, H = shBody.clientHeight, SCALE = 2;
+    var clone = shSvg.cloneNode(true);
+    clone.setAttribute('xmlns', SVGNS);
+    clone.setAttribute('width', W); clone.setAttribute('height', H);
+    clone.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+    clone.querySelectorAll('path').forEach(function(p){
+      p.setAttribute('fill', 'none');
+      p.setAttribute('stroke-linecap', 'round');
+      p.setAttribute('stroke-linejoin', 'round');
+    });
+    var xml = new XMLSerializer().serializeToString(clone);
+    var img = new Image();
+    img.onload = function(){
+      var c = document.createElement('canvas');
+      c.width = W * SCALE; c.height = H * SCALE;
+      var g = c.getContext('2d');
+      g.scale(SCALE, SCALE);
+      g.fillStyle = '#fbf8ef'; g.fillRect(0, 0, W, H);
+      g.strokeStyle = 'rgba(63,143,214,0.28)'; g.lineWidth = 1;
+      for(var y = 27.5; y < H; y += 28){
+        g.beginPath(); g.moveTo(0, y); g.lineTo(W, y); g.stroke();
+      }
+      g.drawImage(img, 0, 0, W, H);
+      c.toBlob(function(blob){
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        /* اسم لاتيني: الأسماء العربية تتشوّه في بعض برامج البريد وأنظمة الملفات */
+        a.download = 'lecture-board-' + new Date().toISOString().slice(0,16).replace(/[:T]/g,'-') + '.png';
+        document.body.appendChild(a); a.click(); a.remove();
+        setTimeout(function(){ URL.revokeObjectURL(a.href); }, 4000);
+      }, 'image/png');
+    };
+    img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(xml);
+  });
+
+  function setSheet(on){
+    sheet.classList.toggle('open', on);
+    sheetBtn.classList.toggle('on', on);
+    if(on && !document.body.classList.contains('ann-on')) setOn(true);
+  }
+  sheet.querySelector('.sh-close').addEventListener('click', function(){ setSheet(false); });
+
+  window.addEventListener('resize', function(){
+    [[bar, bar.classList.contains('moved')], [sheet, true]].forEach(function(pair){
+      var el = pair[0]; if(!pair[1] || !el.style.left) return;
+      var c = clampToView(el, { left: parseFloat(el.style.left), top: parseFloat(el.style.top) });
+      el.style.left = c.left + 'px'; el.style.top = c.top + 'px';
+    });
+  });
+
   document.addEventListener('keydown', function(e){
     if(!document.body.classList.contains('ann-on')) return;
     var t = e.target;
@@ -3602,6 +3954,7 @@
     else if(k === 'e' || k === 'E' || k === 'ث'){ eraseBtn.click(); }
     else if(k === 'z' || k === 'Z' || k === 'ء'){ undo(); }
     else if(k === 'h' || k === 'H' || k === 'ا'){ hideBtn.click(); }
+    else if(k === 'w' || k === 'W'){ setSheet(!sheet.classList.contains('open')); }
     else if(k === 'Escape'){ setOn(false); }
     else return;
     e.preventDefault();
