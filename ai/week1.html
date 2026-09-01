@@ -105,24 +105,56 @@
   }
 
   /* ---------- pinned platform badge ---------- */
+  /* ملصق المنصة: الرابط وحده لا يقول للطالب إلى أين يأخذه،
+     فالعنوان العربي هو ما يُقرأ والرابط سطر ثانوي تحته. */
   .pin-badge{
-    display:flex;
+    position:relative;
+    display:inline-flex;
     align-items:center;
-    gap:6px;
-    margin:8px auto 0;
-    padding:5px 12px 5px 12px;
-    background:#f7ecd2;
-    border:1.5px dashed var(--blue);
-    border-radius:4px;
+    gap:10px;
+    margin:12px auto 0;
+    padding:9px 16px 10px 14px;
+    background:
+      linear-gradient(#fdf6e6, #f4e6c8);
+    border:2px dashed var(--blue);
+    border-radius:6px;
     color:var(--ink);
-    font-size:clamp(10.5px,2.3vw,13px);
-    font-weight:700;
     text-decoration:none;
-    box-shadow:0 3px 6px rgba(0,0,0,0.35);
+    box-shadow:0 4px 10px rgba(0,0,0,0.4);
     transform:rotate(-1.2deg);
-    direction:ltr;
-    unicode-bidi:isolate;
+    transition:transform .15s ease, box-shadow .15s ease;
   }
+  .pin-badge:hover,
+  .pin-badge:focus-visible{
+    transform:rotate(0deg) translateY(-2px);
+    box-shadow:0 7px 16px rgba(0,0,0,0.45);
+  }
+  .pin-badge:focus-visible{ outline:3px solid #f0b400; outline-offset:3px; }
+
+  /* الدبوس نفسه: قرص أحمر ببريق صغير، مثبَّت على حافة الملصق */
+  .pin-badge .pin-head{
+    position:absolute; top:-9px; right:14px;
+    width:15px; height:15px; border-radius:50%;
+    background:radial-gradient(circle at 34% 30%, #ff8a7a 0 22%, var(--red) 60%, #8f221c 100%);
+    box-shadow:0 2px 4px rgba(0,0,0,0.5);
+  }
+  .pin-badge .pin-text{ display:flex; flex-direction:column; line-height:1.45; }
+  .pin-badge .pin-title{
+    font-family:'Aref Ruqaa Ink','Aref Ruqaa',serif;
+    font-weight:700; font-size:clamp(14px,3.2vw,18px); color:var(--red);
+  }
+  .pin-badge .pin-sub{
+    font-size:clamp(10px,2.2vw,12.5px); font-weight:700; color:var(--blue); opacity:0.9;
+  }
+  .pin-badge .pin-url{
+    font-family:'Caveat',cursive; font-size:clamp(10px,2.2vw,12.5px);
+    color:rgba(26,61,140,0.7); direction:ltr; unicode-bidi:isolate;
+  }
+  .pin-badge .pin-go{
+    font-size:19px; color:var(--green); font-weight:700;
+    transition:transform .15s ease;
+  }
+  .pin-badge:hover .pin-go{ transform:translateX(-4px); }
   .pin-badge .pin-head{
     width:10px;
     height:10px;
@@ -1445,9 +1477,15 @@
       <div class="mh-row"><span class="mh-label">السنة:</span> <span class="mh-value">٢٠٢٦</span></div>
       <div class="mh-row"><span class="mh-label">الإيميل:</span> <span class="mh-value mh-email">amer.hadi@alshaab.edu.iq</span></div>
     </div>
-    <a class="pin-badge" href="https://ameerkhadi.github.io/academic-cv-website/pt/index" target="_blank" rel="noopener">
-      <span class="pin-head"></span>
-      <span>ameerkhadi.github.io/academic-cv-website/pt/index</span>
+    <a class="pin-badge" href="https://ameerkhadi.github.io/academic-cv-website/pt/index"
+       target="_blank" rel="noopener" title="افتح منصة المادة في صفحة جديدة">
+      <span class="pin-head" aria-hidden="true"></span>
+      <span class="pin-go" aria-hidden="true">←</span>
+      <span class="pin-text">
+        <span class="pin-title">إلى منصة المادة</span>
+        <span class="pin-sub">الواجبات · الدرجات · الاختبارات · الإعلانات</span>
+        <span class="pin-url">ameerkhadi.github.io/academic-cv-website/pt/index</span>
+      </span>
     </a>
   </div>
 
