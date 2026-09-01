@@ -95,6 +95,18 @@
     border-bottom:1.5px dotted #dcc79c;
     height:1em;
   }
+  /* صفّ الموقع: نصّ عربي يقول ما وراء الرابط بدل عنوان لاتيني لا يدلّ على شيء */
+  .mh-row .mh-site{
+    color:#fdf6e6; text-decoration:none;
+    border-bottom:1px dashed rgba(253,246,230,0.45);
+    transition:color .15s ease, border-color .15s ease;
+  }
+  .mh-row .mh-site:hover,
+  .mh-row .mh-site:focus-visible{ color:#f0b400; border-bottom-color:#f0b400; }
+  .mh-row .mh-site:focus-visible{ outline:2px solid #f0b400; outline-offset:3px; }
+  .mh-row .mh-go{ color:#9ad6a8; margin-inline-start:3px; display:inline-block; transition:transform .15s ease; }
+  .mh-row .mh-site:hover .mh-go{ transform:translateX(-3px); }
+
   .mh-row .mh-email{
     font-family:'Caveat',cursive;
     font-weight:700;
@@ -1553,6 +1565,7 @@
       <div class="mh-row"><span class="mh-label">المدرسة:</span> <span class="mh-value">المعهد العالي لتأهيل وتدريب القادة</span></div>
       <div class="mh-row"><span class="mh-label">السنة:</span> <span class="mh-value">٢٠٢٦</span></div>
       <div class="mh-row"><span class="mh-label">الإيميل:</span> <span class="mh-value mh-email">amer.hadi@alshaab.edu.iq</span></div>
+      <div class="mh-row"><span class="mh-label">الموقع:</span> <a class="mh-value mh-site" href="https://ameerkhadi.github.io/academic-cv-website/" target="_blank" rel="noopener">الصفحة الأكاديمية للدكتور أمير هادي <span class="mh-go" aria-hidden="true">←</span></a></div>
     </div>
     <a class="pin-badge" href="https://ameerkhadi.github.io/academic-cv-website/pt/index"
        target="_blank" rel="noopener" title="افتح منصة المادة في صفحة جديدة">
@@ -3295,6 +3308,7 @@
     var COURSE = 'دفتر محاضرات الذكاء الاصطناعي وتحليل البيانات';
     var WHO    = 'د. أمير هادي · المعهد العالي لتأهيل وتدريب القادة · ٢٠٢٦';
     var URL    = 'ameerkhadi.github.io/academic-cv-website/ai/week1';
+    var SITE   = 'ameerkhadi.github.io/academic-cv-website';
 
     document.querySelectorAll('.slide').forEach(function(slide){
       var tab = document.querySelector('.tab[data-target="' + slide.id + '"]');
@@ -3302,6 +3316,7 @@
       box.className = 'print-id';
       box.innerHTML = '<span class="pi-title"></span>' +
                       '<span class="pi-meta"></span>' +
+                      '<span class="pi-meta pi-url"></span>' +
                       '<span class="pi-meta pi-url"></span>';
       /* نصّ التبويب «١<br>الأسبوع الأول»، وtextContent يلصقهما بلا مسافة
          لأن <br> لا يضيف حرفاً. نأخذ ما بعد الفاصل: اسم الأسبوع وحده. */
@@ -3310,6 +3325,7 @@
       box.children[0].textContent = COURSE + (name ? ' — ' + name : '');
       box.children[1].textContent = WHO;
       box.children[2].textContent = URL;
+      box.children[3].textContent = SITE;
       slide.insertBefore(box, slide.firstChild);
     });
 
