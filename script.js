@@ -72,7 +72,7 @@ const uiText = {
 
         panelContactInfo: "📬 &nbsp;Contact Information",
         panelAffiliation: "🏛 &nbsp;Affiliation",
-        affilUni: "Faculty of Information Technology<br>University of Babylon, Iraq",
+        affilUni: "Faculty of Information Technology<br>University of Babylon, Iraq<br><br>🎓 Lecturer — Higher Institute for Preparing and Qualifying Leaders<br><span style=\"color:var(--text-dim);font-size:.8em\">Higher Diploma in Digital Leadership</span>",
         panelProfiles: "🔗 &nbsp;Online Profiles",
 
         footerRights: "All rights reserved.",
@@ -168,7 +168,7 @@ const uiText = {
 
         panelContactInfo: "📬 &nbsp;معلومات التواصل",
         panelAffiliation: "🏛 &nbsp;الانتساب",
-        affilUni: "كلية تكنولوجيا المعلومات<br>جامعة بابل، العراق",
+        affilUni: "كلية تكنولوجيا المعلومات<br>جامعة بابل، العراق<br><br>🎓 محاضر — المعهد العالي لإعداد وتأهيل القادة<br><span style=\"color:var(--text-dim);font-size:.8em\">الدبلوم العالي في القيادة الرقمية</span>",
         panelProfiles: "🔗 &nbsp;الحسابات العلمية",
 
         footerRights: "جميع الحقوق محفوظة.",
@@ -380,6 +380,11 @@ function loadEducation() {
 }
 
 // ── PUBLICATIONS ──
+function pubLink(pub) {
+    const href = (pub.link && pub.link !== '#') ? pub.link : academicData.en.personal.googleScholar;
+    return `<a href="${href}" target="_blank" rel="noopener">${pub.title}</a>`;
+}
+
 function renderPublications() {
     const el = document.getElementById('publications-list');
     if (!el) return;
@@ -402,7 +407,7 @@ function renderPublications() {
                     ${pub.citations > 0 ? `<span class="pub-cite-pill">🔖 ${pub.citations} ${pub.citations > 1 ? t.citationsWord : t.citationWord}</span>` : ''}
                     <span class="pub-num">#${String(i + 1).padStart(2, '0')}</span>
                 </div>
-                <div class="pub-title">${pub.title}</div>
+                <div class="pub-title">${pubLink(pub)}</div>
                 <div class="pub-authors">${pub.authors}</div>
                 <div class="pub-venue">${pub.venue}</div>
             </div>
