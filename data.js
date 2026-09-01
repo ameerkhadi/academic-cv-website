@@ -14,10 +14,10 @@ const academicData = {
             title: "Assistant Professor",
             subtitle: "Cloud Computing, IoT & AI Expert",
             photo: "images/profile.jpg",
-            bio: "Dedicated Assistant Professor with over 15 years of experience in tertiary education, specializing in Computer Science and Mathematics at the University of Babylon, Iraq. Proven track record in developing and delivering curriculum for undergraduate and postgraduate levels in Cloud Computing, IoT, Network Security, and Programming. Strong background in academic research with recent publications in AI and Blockchain technology. Committed to pedagogical excellence, student mentorship, and contributing to the academic mission through continuous professional development and collaborative research.",
+            bio: "Dedicated Assistant Professor with over 15 years of experience in tertiary education, specializing in Computer Science and Mathematics at the University of Babylon, Iraq. Proven track record in developing and delivering curriculum for undergraduate and postgraduate levels in Cloud Computing, IoT, Network Security, and Programming. Strong background in academic research with recent publications in AI and Blockchain technology. Committed to pedagogical excellence, student mentorship, and contributing to the academic mission through continuous professional development and collaborative research. Currently also lecturing on Artificial Intelligence and IT fundamentals within the Higher Diploma in Digital Leadership at the Higher Institute for Preparing and Qualifying Leaders.",
             email: "ameer.hadi@uobabylon.edu.iq",
             linkedin: "https://linkedin.com/in/ameer-hadi",
-            googleScholar: "https://scholar.google.com/citations?user=YOURUSER",
+            googleScholar: "https://scholar.google.com/citations?user=S9uqKsIAAAAJ&hl=en",
             researchGate: "https://www.researchgate.net/profile/Ameer-Kadhim-Hadi",
             orcid: "https://orcid.org/0000-0001-7234-8346"
         },
@@ -88,6 +88,8 @@ const academicData = {
         ],
 
         courses: [
+            { code: "HILQ", title: "Artificial Intelligence for Administrative Leadership", description: "Delivered within the Higher Diploma in Digital Leadership at the Higher Institute for Preparing and Qualifying Leaders — applied AI concepts and tools for public-sector leadership and decision-making.", level: "Professional Diploma", semester: "Higher Institute for Preparing and Qualifying Leaders · Current" },
+            { code: "HILQ", title: "IT Fundamentals", description: "Core information technology concepts for senior public-sector leaders, delivered as part of the Higher Diploma program at the Higher Institute for Preparing and Qualifying Leaders.", level: "Professional Diploma", semester: "Higher Institute for Preparing and Qualifying Leaders · Current" },
             { code: "CS-PG", title: "Cloud Computing", description: "Postgraduate course covering cloud computing architectures, service models (IaaS, PaaS, SaaS), deployment strategies, and hands-on AWS cloud infrastructure.", level: "Postgraduate", semester: "Current" },
             { code: "CS-UG", title: "Internet of Things (IoT)", description: "Comprehensive coverage of IoT architectures, communication protocols, embedded systems, and real-world smart applications.", level: "Undergraduate", semester: "Current" },
             { code: "CS-UG", title: "Network Security", description: "Fundamentals and advanced topics in network security, including cryptography, firewalls, intrusion detection, and security protocols.", level: "Undergraduate", semester: "Current" },
@@ -137,10 +139,10 @@ const academicData = {
             title: "أستاذ مساعد",
             subtitle: "خبير في الحوسبة السحابية وإنترنت الأشياء والذكاء الاصطناعي",
             photo: "images/profile.jpg",
-            bio: "أستاذ مساعد متميز يتمتع بخبرة تزيد عن 15 عامًا في التعليم العالي، متخصص في علوم الحاسوب والرياضيات في جامعة بابل، العراق. يمتلك سجلاً حافلاً في تطوير وتقديم المناهج الدراسية لمرحلتي البكالوريوس والدراسات العليا في مجالات الحوسبة السحابية، وإنترنت الأشياء، وأمن الشبكات، والبرمجة. لديه خلفية قوية في البحث العلمي مع نشر أبحاث حديثة في الذكاء الاصطناعي وتقنية البلوكتشين. ملتزم بالتميز التربوي، وتوجيه الطلبة، والمساهمة في الرسالة الأكاديمية من خلال التطوير المهني المستمر والبحث العلمي التعاوني.",
+            bio: "أستاذ مساعد متميز يتمتع بخبرة تزيد عن 15 عامًا في التعليم العالي، متخصص في علوم الحاسوب والرياضيات في جامعة بابل، العراق. يمتلك سجلاً حافلاً في تطوير وتقديم المناهج الدراسية لمرحلتي البكالوريوس والدراسات العليا في مجالات الحوسبة السحابية، وإنترنت الأشياء، وأمن الشبكات، والبرمجة. لديه خلفية قوية في البحث العلمي مع نشر أبحاث حديثة في الذكاء الاصطناعي وتقنية البلوكتشين. ملتزم بالتميز التربوي، وتوجيه الطلبة، والمساهمة في الرسالة الأكاديمية من خلال التطوير المهني المستمر والبحث العلمي التعاوني. يُدرّس حاليًا أيضًا مادتي الذكاء الاصطناعي وأساسيات تكنولوجيا المعلومات ضمن الدبلوم العالي في القيادة الرقمية في المعهد العالي لإعداد وتأهيل القادة.",
             email: "ameer.hadi@uobabylon.edu.iq",
             linkedin: "https://linkedin.com/in/ameer-hadi",
-            googleScholar: "https://scholar.google.com/citations?user=YOURUSER",
+            googleScholar: "https://scholar.google.com/citations?user=S9uqKsIAAAAJ&hl=en",
             researchGate: "https://www.researchgate.net/profile/Ameer-Kadhim-Hadi",
             orcid: "https://orcid.org/0000-0001-7234-8346"
         },
@@ -211,6 +213,8 @@ const academicData = {
         ],
 
         courses: [
+            { code: "HILQ", title: "الذكاء الاصطناعي للقيادة الإدارية", description: "تُدرَّس ضمن الدبلوم العالي في القيادة الرقمية في المعهد العالي لإعداد وتأهيل القادة — مفاهيم وأدوات الذكاء الاصطناعي التطبيقية لدعم القيادة واتخاذ القرار في القطاع العام.", level: "دبلوم مهني عالٍ", semester: "المعهد العالي لإعداد وتأهيل القادة · الحالي" },
+            { code: "HILQ", title: "أساسيات تكنولوجيا المعلومات", description: "المفاهيم الأساسية لتكنولوجيا المعلومات لكبار القادة في القطاع العام، ضمن برنامج الدبلوم العالي في المعهد العالي لإعداد وتأهيل القادة.", level: "دبلوم مهني عالٍ", semester: "المعهد العالي لإعداد وتأهيل القادة · الحالي" },
             { code: "CS-PG", title: "الحوسبة السحابية", description: "مقرر دراسات عليا يغطي بنى الحوسبة السحابية، ونماذج الخدمة (IaaS, PaaS, SaaS)، واستراتيجيات النشر، والتطبيق العملي على بنية AWS السحابية.", level: "دراسات عليا", semester: "الحالي" },
             { code: "CS-UG", title: "إنترنت الأشياء (IoT)", description: "تغطية شاملة لبنى إنترنت الأشياء، وبروتوكولات الاتصال، والأنظمة المدمجة، والتطبيقات الذكية الواقعية.", level: "بكالوريوس", semester: "الحالي" },
             { code: "CS-UG", title: "أمن الشبكات", description: "أساسيات وموضوعات متقدمة في أمن الشبكات، تشمل التشفير، والجدران النارية، وأنظمة كشف التسلل، وبروتوكولات الأمان.", level: "بكالوريوس", semester: "الحالي" },
@@ -255,7 +259,7 @@ const academicData = {
     //  PUBLICATIONS — shared across languages (citations are not translated)
     // ══════════════════════════════════════════════════════════
     publications: [
-        { title: "Optimizing Blockchain Network Performance Using Blake3 Hash Function in POS Consensus Algorithm", authors: "ZA Jasim, AK Hadi", venue: "IEEE Access, vol. 13, pp. 44760–44774", year: 2025, citations: 7, type: "journal", link: "#" },
+        { title: "Optimizing Blockchain Network Performance Using Blake3 Hash Function in POS Consensus Algorithm", authors: "ZA Jasim, AK Hadi", venue: "IEEE Access, vol. 13, pp. 44760–44774", year: 2025, citations: 7, type: "journal", link: "https://ieeexplore.ieee.org/document/10908216/" },
         { title: "Deep Learning System for Network Anomaly Detection based Attention Mechanism and Sparse Autoencoder", authors: "FH Jassim, AK Hadi", venue: "2025 5th International Conference of Science and Information Technology in Smart Administration (ICITSA)", year: 2025, citations: 0, type: "conference", link: "#" },
         { title: "Hybrid Deep Learning Approach for Enhancing Network Security and Traffic Management", authors: "FH Jassim, AK Hadi", venue: "2025 3rd International Conference on Business Analytics for Technology and Security (ICBATS)", year: 2025, citations: 0, type: "conference", link: "#" },
         { title: "Study on Blockchain Scalability Methods Limitation and Solution", authors: "AK Hadi, ZA Jasim", venue: "2023 International Conference on Engineering, Science and Advanced Technology (ICESAT)", year: 2023, citations: 2, type: "conference", link: "#" },

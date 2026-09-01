@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /$
+Allow: /index.html
+Allow: /images/
+Allow: /style.css
+Allow: /script.js
+Allow: /data.js
+Disallow: /
+
+Sitemap: https://ameerkhadi.github.io/academic-cv-website/sitemap.xml
