@@ -96,8 +96,7 @@ const academicData = {
             { code: "CS-UG", title: "Software Engineering", description: "Software development lifecycle, design patterns, agile methodologies, requirements engineering, and software quality assurance.", level: "Undergraduate", semester: "Current" },
             { code: "CS-UG", title: "Database Systems", description: "Relational database design, SQL, normalization, transaction management, and introduction to NoSQL databases.", level: "Undergraduate", semester: "Current" },
             { code: "CS-UG", title: "Computer Networking Principles", description: "Core networking concepts including TCP/IP, OSI model, routing protocols, and network administration.", level: "Undergraduate", semester: "Current" },
-            { code: "CS-UG", title: "Programming (Python, C++, R, JavaScript)", description: "Multi-language programming instruction covering Python, C++, R, JavaScript, and VB.net with emphasis on practical problem-solving.", level: "Undergraduate", semester: "Current" },
-            { code: "MATH", title: "Numerical Analysis", description: "Numerical methods using FORTRAN/C++ for solving mathematical problems, including interpolation, integration, and differential equations.", level: "Undergraduate", semester: "Current" }
+            { code: "CS-UG", title: "Programming (Python, C++, R, JavaScript)", description: "Multi-language programming instruction covering Python, C++, R, JavaScript, and VB.net with emphasis on practical problem-solving.", level: "Undergraduate", semester: "Current" }
         ],
 
         certifications: [
@@ -112,15 +111,6 @@ const academicData = {
             { title: "Cloud Computing Ambassador Award", issuer: "AWS", year: 2020 },
             { title: "Science Day Award for Best Graduation Project", year: 2016 },
             { title: "Fulbright Scholarship", issuer: "U.S. Department of State", year: 2012 }
-        ],
-
-        media: [],
-
-        gallery: [
-            { src: "images/conference1.jpg", caption: "Presenting research at IEEE Conference 2025", alt: "Conference presentation" },
-            { src: "images/lab1.jpg", caption: "IoT Research Lab – Smart Farm Project", alt: "Research lab" },
-            { src: "images/students1.jpg", caption: "Working with graduate students on AI projects", alt: "Students collaboration" },
-            { src: "images/workshop1.jpg", caption: "AWS Cloud Computing Workshop", alt: "Workshop session" }
         ],
 
         skills: {
@@ -221,8 +211,7 @@ const academicData = {
             { code: "CS-UG", title: "هندسة البرمجيات", description: "دورة حياة تطوير البرمجيات، وأنماط التصميم، والمنهجيات الرشيقة (Agile)، وهندسة المتطلبات، وضمان جودة البرمجيات.", level: "بكالوريوس", semester: "الحالي" },
             { code: "CS-UG", title: "نظم قواعد البيانات", description: "تصميم قواعد البيانات العلائقية، ولغة SQL، والتسوية (Normalization)، وإدارة المعاملات، ومدخل إلى قواعد بيانات NoSQL.", level: "بكالوريوس", semester: "الحالي" },
             { code: "CS-UG", title: "مبادئ شبكات الحاسوب", description: "المفاهيم الأساسية للشبكات مثل TCP/IP، ونموذج OSI، وبروتوكولات التوجيه، وإدارة الشبكات.", level: "بكالوريوس", semester: "الحالي" },
-            { code: "CS-UG", title: "البرمجة (Python, C++, R, JavaScript)", description: "تدريس متعدد اللغات يشمل Python وC++ وR وJavaScript وVB.net مع التركيز على حل المشكلات العملية.", level: "بكالوريوس", semester: "الحالي" },
-            { code: "MATH", title: "التحليل العددي", description: "طرق عددية باستخدام FORTRAN/C++ لحل المسائل الرياضية، تشمل الاستيفاء والتكامل والمعادلات التفاضلية.", level: "بكالوريوس", semester: "الحالي" }
+            { code: "CS-UG", title: "البرمجة (Python, C++, R, JavaScript)", description: "تدريس متعدد اللغات يشمل Python وC++ وR وJavaScript وVB.net مع التركيز على حل المشكلات العملية.", level: "بكالوريوس", semester: "الحالي" }
         ],
 
         certifications: [
@@ -239,15 +228,6 @@ const academicData = {
             { title: "منحة فولبرايت", issuer: "وزارة الخارجية الأمريكية", year: 2012 }
         ],
 
-        media: [],
-
-        gallery: [
-            { src: "images/conference1.jpg", caption: "تقديم بحث في مؤتمر IEEE 2025", alt: "عرض في مؤتمر" },
-            { src: "images/lab1.jpg", caption: "مختبر بحوث إنترنت الأشياء – مشروع المزرعة الذكية", alt: "مختبر بحثي" },
-            { src: "images/students1.jpg", caption: "العمل مع طلبة الدراسات العليا على مشاريع الذكاء الاصطناعي", alt: "تعاون الطلبة" },
-            { src: "images/workshop1.jpg", caption: "ورشة عمل حول الحوسبة السحابية AWS", alt: "جلسة ورشة عمل" }
-        ],
-
         skills: {
             technical: ["التعلم العميق والشبكات العصبية", "نماذج اللغة الكبيرة (LLMs)", "إنترنت الأشياء (IoT)", "الحوسبة السحابية (AWS)", "تقنية البلوكتشين", "الحوسبة الطرفية (Edge Computing)", "Python, R, C++, Go", "TensorFlow و PyTorch", "Hadoop, Spark, MapReduce", "أمن الشبكات"],
             research: ["تصميم البحوث", "النشر العلمي (IEEE، المجلات)", "كتابة طلبات التمويل", "التحكيم العلمي", "العروض في المؤتمرات", "الإشراف على بحوث الطلبة"],
@@ -259,6 +239,7 @@ const academicData = {
     //  PUBLICATIONS — shared across languages (citations are not translated)
     // ══════════════════════════════════════════════════════════
     publications: [
+        { title: "Large Language Models and Hybrid Prompt Engineering for Emotional Text Steganography Based on Cloud", authors: "AK Hadi", venue: "New Trends in Information and Communications Technology Applications (NTICT 2025), Springer CCIS, pp. 438–463", year: 2025, citations: 0, type: "conference", link: "#" },
         { title: "Optimizing Blockchain Network Performance Using Blake3 Hash Function in POS Consensus Algorithm", authors: "ZA Jasim, AK Hadi", venue: "IEEE Access, vol. 13, pp. 44760–44774", year: 2025, citations: 7, type: "journal", link: "https://ieeexplore.ieee.org/document/10908216/" },
         { title: "Deep Learning System for Network Anomaly Detection based Attention Mechanism and Sparse Autoencoder", authors: "FH Jassim, AK Hadi", venue: "2025 5th International Conference of Science and Information Technology in Smart Administration (ICITSA)", year: 2025, citations: 0, type: "conference", link: "#" },
         { title: "Hybrid Deep Learning Approach for Enhancing Network Security and Traffic Management", authors: "FH Jassim, AK Hadi", venue: "2025 3rd International Conference on Business Analytics for Technology and Security (ICBATS)", year: 2025, citations: 0, type: "conference", link: "#" },
