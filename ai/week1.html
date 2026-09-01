@@ -1317,18 +1317,24 @@
     cursor:pointer; flex:0 0 auto;
   }
   .ann-swatch.sel{ border-color:#fff; box-shadow:0 0 0 2px rgba(255,255,255,0.35); }
+  .ann-size{ display:inline-flex; align-items:center; gap:6px; }
+  .ann-size .dot{
+    display:inline-block; border-radius:50%; background:#f3ece0;
+    transition:width .12s ease, height .12s ease; flex:0 0 auto;
+  }
   .ann-bar button.on{ background:rgba(255,255,255,0.2); border-color:rgba(255,255,255,0.4); }
 
   .ann-bar .ic{ font-size:15px; line-height:1; }
   .ann-bar .lbl{ margin-inline-start:5px; }
   @media (max-width:560px){
     /* فوق زرّ الطباعة لا بجانبه: الشريط يعرض كامل الشاشة تقريباً فيغطّيه */
-    .ann-bar{ gap:5px; padding:6px 7px; bottom:72px; right:14px; }
+    .ann-bar{ gap:4px; padding:5px 6px; bottom:72px; right:14px; }
     .ann-bar .lbl{ display:none; }            /* الأيقونة تكفي، فيبقى سطراً واحداً */
-    .ann-bar button{ padding:6px 8px; }
-    .ann-bar .ann-main{ padding:6px 10px; }
-    .ann-bar .ann-sep{ height:18px; }
-    .ann-swatch{ width:22px; height:22px; }
+    .ann-bar button{ padding:5px 7px; }
+    .ann-bar .ann-main{ padding:5px 9px; }
+    .ann-bar .ann-sep{ height:17px; }
+    .ann-bar .ann-size{ gap:0; }
+    .ann-swatch{ width:20px; height:20px; border-width:1.5px; }
     .ann-hint{ bottom:120px; }
     .ann-hint .keys{ display:none; }
   }
@@ -3216,13 +3222,22 @@
   var STORE = 'ann:week1:';
 
   var PENS = [
-    { name:'أحمر',  color:'#ff1f3d', width:3.2, alpha:1,    hl:false },
-    { name:'أزرق',  color:'#0057ff', width:3.2, alpha:1,    hl:false },
-    { name:'أخضر',  color:'#00a844', width:3.2, alpha:1,    hl:false },
-    { name:'مُظلِّل', color:'#ffd400', width:19,  alpha:0.45, hl:true  }
+    { name:'أحمر',       color:'#ff1f3d', width:3.2, alpha:1,    hl:false },
+    { name:'أزرق',       color:'#0057ff', width:3.2, alpha:1,    hl:false },
+    { name:'أخضر',       color:'#00a844', width:3.2, alpha:1,    hl:false },
+    { name:'وردي غامق',  color:'#d1006b', width:3.2, alpha:1,    hl:false },
+    { name:'مُظلِّل',      color:'#ffd400', width:19,  alpha:0.45, hl:true  }
   ];
 
-  var pen = 0, erasing = false, drawing = false, activePointer = null;
+  /* مضاعِف واحد يسري على كل الأقلام، فيكبر المُظلِّل بنسبته لا بمقدار القلم. */
+  var SIZES = [
+    { name:'رفيع', mul:0.7, dot:5  },
+    { name:'عادي', mul:1,   dot:8  },
+    { name:'عريض', mul:1.6, dot:12 },
+    { name:'أعرض', mul:2.4, dot:16 }
+  ];
+
+  var pen = 0, size = 1, erasing = false, drawing = false, activePointer = null;
   var cur = null, pts = [];
 
   // سجلّ الأفعال لكل شريحة: إضافة مسار أو محو مجموعة، ليعمل التراجع في الحالتين
@@ -3276,7 +3291,11 @@
     var s = PENS[pen];
     cur = document.createElementNS(SVGNS, 'path');
     cur.setAttribute('stroke', s.color);
-    cur.setAttribute('stroke-width', String(s.width * pressure));
+    /* المُظلِّل يكبر بنصف الوتيرة: سطر النصّ نحو ٢٨ بكسل، والمضاعِف الكامل
+       يجعله يغطّي سطراً ونصفاً فيحجب ما تحته بدل أن يبرزه. */
+    var mul = SIZES[size].mul;
+    if(s.hl) mul = 1 + (mul - 1) * 0.55;
+    cur.setAttribute('stroke-width', (s.width * mul * pressure).toFixed(2));
     cur.setAttribute('stroke-opacity', String(s.alpha));
     if(s.hl) cur.setAttribute('class', 'hl');
     layer.appendChild(cur);
@@ -3474,6 +3493,29 @@
   function setLabel(b, label){ b.lastChild.textContent = label; }
 
   sep();
+
+  /* زرّ واحد يدور على المستويات بدل أربعة أزرار — الشريط ضيّق على الهاتف.
+     النقطة داخله تكبر وتصغر فتُري السُمك قبل الرسم. */
+  var sizeBtn = document.createElement('button');
+  sizeBtn.type = 'button';
+  sizeBtn.className = 'ann-size';
+  sizeBtn.innerHTML = '<span class="dot"></span><span class="lbl"></span>';
+  function paintSize(){
+    var z = SIZES[size];
+    sizeBtn.firstChild.style.width  = z.dot + 'px';
+    sizeBtn.firstChild.style.height = z.dot + 'px';
+    sizeBtn.lastChild.textContent = z.name;
+    sizeBtn.title = 'سُمك القلم: ' + z.name + ' — اضغط للتالي (S أو + و −)';
+  }
+  function bumpSize(step){
+    size = (size + step + SIZES.length) % SIZES.length;
+    paintSize();
+  }
+  sizeBtn.addEventListener('click', function(){ bumpSize(1); });
+  paintSize();
+  tools.appendChild(sizeBtn);
+
+  sep();
   var eraseBtn = tool('⌫', 'ممحاة', 'ممحاة — امسح الخط بمرور الممحاة عليه (E)', function(){
     erasing = !erasing;
     eraseBtn.classList.toggle('on', erasing);
@@ -3493,7 +3535,7 @@
   var hint = document.createElement('div');
   hint.className = 'ann-hint';
   hint.innerHTML = 'القلم يشتغل — للتمرير بالصفحة أوقف القلم.' +
-    '<span class="keys"><br>١–٤ للألوان · E ممحاة · Z تراجع · H إخفاء · Esc إيقاف</span>';
+    '<span class="keys"><br>١–٥ للألوان · S أو + و − للسُمك · E ممحاة · Z تراجع · H إخفاء · Esc إيقاف</span>';
 
   function setOn(on){
     document.body.classList.toggle('ann-on', on);
@@ -3515,7 +3557,10 @@
     var t = e.target;
     if(t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
     var k = e.key;
-    if(k >= '1' && k <= '4'){ swatches[+k - 1].click(); }
+    if(k >= '1' && k <= '5'){ swatches[+k - 1].click(); }
+    else if(k === 's' || k === 'S'){ bumpSize(1); }
+    else if(k === '+' || k === '='){ bumpSize(1); }
+    else if(k === '-' || k === '_'){ bumpSize(-1); }
     else if(k === 'e' || k === 'E' || k === 'ث'){ eraseBtn.click(); }
     else if(k === 'z' || k === 'Z' || k === 'ء'){ undo(); }
     else if(k === 'h' || k === 'H' || k === 'ا'){ hideBtn.click(); }
