@@ -14,10 +14,10 @@ const academicData = {
             title: "Assistant Professor",
             subtitle: "Cloud Computing, IoT & AI Expert",
             photo: "images/profile.jpg",
-            bio: "Dedicated Assistant Professor with over 15 years of experience in tertiary education, specializing in Computer Science and Mathematics at the University of Babylon, Iraq. Proven track record in developing and delivering curriculum for undergraduate and postgraduate levels in Cloud Computing, IoT, Network Security, and Programming. Strong background in academic research with recent publications in AI and Blockchain technology. Committed to pedagogical excellence, student mentorship, and contributing to the academic mission through continuous professional development and collaborative research.",
+            bio: "Dedicated Assistant Professor with over 15 years of experience in tertiary education, specializing in Computer Science at the University of Babylon, Iraq. Proven track record in developing and delivering curriculum for undergraduate and postgraduate levels in Cloud Computing, IoT, Network Security, and Programming. Strong background in academic research with recent publications in AI and Blockchain technology. Committed to pedagogical excellence, student mentorship, and contributing to the academic mission through continuous professional development and collaborative research. Currently also lecturing on Artificial Intelligence and IT fundamentals within the Higher Diploma in Digital Leadership at the Higher Institute for Training and Qualifying Leaders in Baghdad, and teaching Cloud Computing and Virtual Networking to third-year Cybersecurity students at the University of Al-Shaab.",
             email: "ameer.hadi@uobabylon.edu.iq",
             linkedin: "https://linkedin.com/in/ameer-hadi",
-            googleScholar: "https://scholar.google.com/citations?user=YOURUSER",
+            googleScholar: "https://scholar.google.com/citations?user=S9uqKsIAAAAJ&hl=en",
             researchGate: "https://www.researchgate.net/profile/Ameer-Kadhim-Hadi",
             orcid: "https://orcid.org/0000-0001-7234-8346"
         },
@@ -49,6 +49,15 @@ const academicData = {
         ],
 
         projects: [
+            {
+                title: "AI-Assisted Digital Course Platform — Higher Institute for Training and Qualifying Leaders",
+                description: "Built, with AI-assisted engineering (Claude), a full digital learning platform for the 'Artificial Intelligence for Administrative Leadership' course: interactive lecture pages, exams and quizzes, and automated results dashboards for the Higher Diploma in Digital Leadership program.",
+                technologies: ["AI-Assisted Development", "Google Apps Script", "JavaScript", "Google Sheets", "E-Learning"],
+                duration: "2025 – Present",
+                funding: "Higher Institute for Training and Qualifying Leaders",
+                status: "Ongoing",
+                statusKey: "ongoing"
+            },
             {
                 title: "AI Innovation – Hydroponic Agriculture Device",
                 description: "Award-winning project developing an AI-powered hydroponic agriculture monitoring and control device, recognized with the AI Innovation Award in 2024.",
@@ -88,18 +97,22 @@ const academicData = {
         ],
 
         courses: [
+            { code: "HILQ", title: "Artificial Intelligence for Administrative Leadership", description: "Delivered within the Higher Diploma in Digital Leadership at the Higher Institute for Training and Qualifying Leaders — applied AI concepts and tools for public-sector leadership and decision-making.", level: "Professional Diploma", semester: "Higher Institute for Training and Qualifying Leaders · Current" },
+            { code: "HILQ", title: "IT Fundamentals", description: "Core information technology concepts for senior public-sector leaders, delivered as part of the Higher Diploma program at the Higher Institute for Training and Qualifying Leaders.", level: "Professional Diploma", semester: "Higher Institute for Training and Qualifying Leaders · Current" },
+            { code: "UOS", title: "Cloud Computing", description: "Cloud computing concepts and architectures for third-year Cybersecurity students.", level: "Undergraduate · Cybersecurity Dept.", semester: "University of Al-Shaab · Current" },
+            { code: "UOS", title: "Virtual Networking", description: "Virtual networking concepts and technologies for third-year Cybersecurity students.", level: "Undergraduate · Cybersecurity Dept.", semester: "University of Al-Shaab · Current" },
             { code: "CS-PG", title: "Cloud Computing", description: "Postgraduate course covering cloud computing architectures, service models (IaaS, PaaS, SaaS), deployment strategies, and hands-on AWS cloud infrastructure.", level: "Postgraduate", semester: "Current" },
             { code: "CS-UG", title: "Internet of Things (IoT)", description: "Comprehensive coverage of IoT architectures, communication protocols, embedded systems, and real-world smart applications.", level: "Undergraduate", semester: "Current" },
             { code: "CS-UG", title: "Network Security", description: "Fundamentals and advanced topics in network security, including cryptography, firewalls, intrusion detection, and security protocols.", level: "Undergraduate", semester: "Current" },
             { code: "CS-UG", title: "Software Engineering", description: "Software development lifecycle, design patterns, agile methodologies, requirements engineering, and software quality assurance.", level: "Undergraduate", semester: "Current" },
             { code: "CS-UG", title: "Database Systems", description: "Relational database design, SQL, normalization, transaction management, and introduction to NoSQL databases.", level: "Undergraduate", semester: "Current" },
             { code: "CS-UG", title: "Computer Networking Principles", description: "Core networking concepts including TCP/IP, OSI model, routing protocols, and network administration.", level: "Undergraduate", semester: "Current" },
-            { code: "CS-UG", title: "Programming (Python, C++, R, JavaScript)", description: "Multi-language programming instruction covering Python, C++, R, JavaScript, and VB.net with emphasis on practical problem-solving.", level: "Undergraduate", semester: "Current" },
-            { code: "MATH", title: "Numerical Analysis", description: "Numerical methods using FORTRAN/C++ for solving mathematical problems, including interpolation, integration, and differential equations.", level: "Undergraduate", semester: "Current" }
+            { code: "CS-UG", title: "Programming (Python, C++, R, JavaScript)", description: "Multi-language programming instruction covering Python, C++, R, JavaScript, and VB.net with emphasis on practical problem-solving.", level: "Undergraduate", semester: "Current" }
         ],
 
         certifications: [
             { title: "AWS Academy Educator Certification", issuer: "Amazon Web Services", year: 2025 },
+            { title: "AWS Academy Cloud Foundations", issuer: "Amazon Web Services", year: 2025 },
             { title: "Iraq E-Learning Professional Training (TOT)", issuer: "IREX", year: 2020 },
             { title: "Internet Computing Core (IC3) Instructor Certificate", issuer: "Certiport", year: 2010 },
             { title: "CCNA Exploration: Network Fundamentals", issuer: "Cisco", year: 2009 }
@@ -110,15 +123,6 @@ const academicData = {
             { title: "Cloud Computing Ambassador Award", issuer: "AWS", year: 2020 },
             { title: "Science Day Award for Best Graduation Project", year: 2016 },
             { title: "Fulbright Scholarship", issuer: "U.S. Department of State", year: 2012 }
-        ],
-
-        media: [],
-
-        gallery: [
-            { src: "images/conference1.jpg", caption: "Presenting research at IEEE Conference 2025", alt: "Conference presentation" },
-            { src: "images/lab1.jpg", caption: "IoT Research Lab – Smart Farm Project", alt: "Research lab" },
-            { src: "images/students1.jpg", caption: "Working with graduate students on AI projects", alt: "Students collaboration" },
-            { src: "images/workshop1.jpg", caption: "AWS Cloud Computing Workshop", alt: "Workshop session" }
         ],
 
         skills: {
@@ -137,10 +141,10 @@ const academicData = {
             title: "أستاذ مساعد",
             subtitle: "خبير في الحوسبة السحابية وإنترنت الأشياء والذكاء الاصطناعي",
             photo: "images/profile.jpg",
-            bio: "أستاذ مساعد متميز يتمتع بخبرة تزيد عن 15 عامًا في التعليم العالي، متخصص في علوم الحاسوب والرياضيات في جامعة بابل، العراق. يمتلك سجلاً حافلاً في تطوير وتقديم المناهج الدراسية لمرحلتي البكالوريوس والدراسات العليا في مجالات الحوسبة السحابية، وإنترنت الأشياء، وأمن الشبكات، والبرمجة. لديه خلفية قوية في البحث العلمي مع نشر أبحاث حديثة في الذكاء الاصطناعي وتقنية البلوكتشين. ملتزم بالتميز التربوي، وتوجيه الطلبة، والمساهمة في الرسالة الأكاديمية من خلال التطوير المهني المستمر والبحث العلمي التعاوني.",
+            bio: "أستاذ مساعد متميز يتمتع بخبرة تزيد عن 15 عامًا في التعليم العالي، متخصص في علوم الحاسوب في جامعة بابل، العراق. يمتلك سجلاً حافلاً في تطوير وتقديم المناهج الدراسية لمرحلتي البكالوريوس والدراسات العليا في مجالات الحوسبة السحابية، وإنترنت الأشياء، وأمن الشبكات، والبرمجة. لديه خلفية قوية في البحث العلمي مع نشر أبحاث حديثة في الذكاء الاصطناعي وتقنية البلوكتشين. ملتزم بالتميز التربوي، وتوجيه الطلبة، والمساهمة في الرسالة الأكاديمية من خلال التطوير المهني المستمر والبحث العلمي التعاوني. يُدرّس حاليًا أيضًا مادتي الذكاء الاصطناعي وأساسيات تكنولوجيا المعلومات ضمن الدبلوم العالي في القيادة الرقمية في المعهد العالي لتدريب وتأهيل القادة في بغداد، ويُدرّس مادتي الحوسبة السحابية والشبكات الافتراضية لطلبة المرحلة الثالثة قسم الأمن السيبراني في جامعة الشعب.",
             email: "ameer.hadi@uobabylon.edu.iq",
             linkedin: "https://linkedin.com/in/ameer-hadi",
-            googleScholar: "https://scholar.google.com/citations?user=YOURUSER",
+            googleScholar: "https://scholar.google.com/citations?user=S9uqKsIAAAAJ&hl=en",
             researchGate: "https://www.researchgate.net/profile/Ameer-Kadhim-Hadi",
             orcid: "https://orcid.org/0000-0001-7234-8346"
         },
@@ -172,6 +176,15 @@ const academicData = {
         ],
 
         projects: [
+            {
+                title: "منصة تعليمية رقمية بمساعدة الذكاء الاصطناعي — المعهد العالي لتدريب وتأهيل القادة",
+                description: "تطوير منصة تعلّم رقمية كاملة بمساعدة أدوات الذكاء الاصطناعي (Claude) لمادة \"الذكاء الاصطناعي للقيادة الإدارية\": صفحات محاضرات تفاعلية، اختبارات ومسابقات، ولوحات نتائج آلية ضمن برنامج الدبلوم العالي في القيادة الرقمية.",
+                technologies: ["تطوير بمساعدة الذكاء الاصطناعي", "Google Apps Script", "JavaScript", "Google Sheets", "التعليم الإلكتروني"],
+                duration: "2025 – حتى الآن",
+                funding: "المعهد العالي لتدريب وتأهيل القادة",
+                status: "قيد الاستمرار",
+                statusKey: "ongoing"
+            },
             {
                 title: "الابتكار بالذكاء الاصطناعي – جهاز الزراعة المائية",
                 description: "مشروع حائز على جائزة لتطوير جهاز ذكي لمراقبة والتحكم بالزراعة المائية باستخدام الذكاء الاصطناعي، حصل على جائزة الابتكار في الذكاء الاصطناعي عام 2024.",
@@ -211,18 +224,22 @@ const academicData = {
         ],
 
         courses: [
+            { code: "HILQ", title: "الذكاء الاصطناعي للقيادة الإدارية", description: "تُدرَّس ضمن الدبلوم العالي في القيادة الرقمية في المعهد العالي لتدريب وتأهيل القادة — مفاهيم وأدوات الذكاء الاصطناعي التطبيقية لدعم القيادة واتخاذ القرار في القطاع العام.", level: "دبلوم مهني عالٍ", semester: "المعهد العالي لتدريب وتأهيل القادة · الحالي" },
+            { code: "HILQ", title: "أساسيات تكنولوجيا المعلومات", description: "المفاهيم الأساسية لتكنولوجيا المعلومات لكبار القادة في القطاع العام، ضمن برنامج الدبلوم العالي في المعهد العالي لتدريب وتأهيل القادة.", level: "دبلوم مهني عالٍ", semester: "المعهد العالي لتدريب وتأهيل القادة · الحالي" },
+            { code: "UOS", title: "الحوسبة السحابية", description: "مفاهيم وبنى الحوسبة السحابية لطلبة المرحلة الثالثة، قسم الأمن السيبراني.", level: "بكالوريوس · قسم الأمن السيبراني", semester: "جامعة الشعب · الحالي" },
+            { code: "UOS", title: "الشبكات الافتراضية", description: "مفاهيم وتقنيات الشبكات الافتراضية لطلبة المرحلة الثالثة، قسم الأمن السيبراني.", level: "بكالوريوس · قسم الأمن السيبراني", semester: "جامعة الشعب · الحالي" },
             { code: "CS-PG", title: "الحوسبة السحابية", description: "مقرر دراسات عليا يغطي بنى الحوسبة السحابية، ونماذج الخدمة (IaaS, PaaS, SaaS)، واستراتيجيات النشر، والتطبيق العملي على بنية AWS السحابية.", level: "دراسات عليا", semester: "الحالي" },
             { code: "CS-UG", title: "إنترنت الأشياء (IoT)", description: "تغطية شاملة لبنى إنترنت الأشياء، وبروتوكولات الاتصال، والأنظمة المدمجة، والتطبيقات الذكية الواقعية.", level: "بكالوريوس", semester: "الحالي" },
             { code: "CS-UG", title: "أمن الشبكات", description: "أساسيات وموضوعات متقدمة في أمن الشبكات، تشمل التشفير، والجدران النارية، وأنظمة كشف التسلل، وبروتوكولات الأمان.", level: "بكالوريوس", semester: "الحالي" },
             { code: "CS-UG", title: "هندسة البرمجيات", description: "دورة حياة تطوير البرمجيات، وأنماط التصميم، والمنهجيات الرشيقة (Agile)، وهندسة المتطلبات، وضمان جودة البرمجيات.", level: "بكالوريوس", semester: "الحالي" },
             { code: "CS-UG", title: "نظم قواعد البيانات", description: "تصميم قواعد البيانات العلائقية، ولغة SQL، والتسوية (Normalization)، وإدارة المعاملات، ومدخل إلى قواعد بيانات NoSQL.", level: "بكالوريوس", semester: "الحالي" },
             { code: "CS-UG", title: "مبادئ شبكات الحاسوب", description: "المفاهيم الأساسية للشبكات مثل TCP/IP، ونموذج OSI، وبروتوكولات التوجيه، وإدارة الشبكات.", level: "بكالوريوس", semester: "الحالي" },
-            { code: "CS-UG", title: "البرمجة (Python, C++, R, JavaScript)", description: "تدريس متعدد اللغات يشمل Python وC++ وR وJavaScript وVB.net مع التركيز على حل المشكلات العملية.", level: "بكالوريوس", semester: "الحالي" },
-            { code: "MATH", title: "التحليل العددي", description: "طرق عددية باستخدام FORTRAN/C++ لحل المسائل الرياضية، تشمل الاستيفاء والتكامل والمعادلات التفاضلية.", level: "بكالوريوس", semester: "الحالي" }
+            { code: "CS-UG", title: "البرمجة (Python, C++, R, JavaScript)", description: "تدريس متعدد اللغات يشمل Python وC++ وR وJavaScript وVB.net مع التركيز على حل المشكلات العملية.", level: "بكالوريوس", semester: "الحالي" }
         ],
 
         certifications: [
             { title: "شهادة معتمد مدرّس أكاديمية AWS", issuer: "أمازون لخدمات الويب (AWS)", year: 2025 },
+            { title: "شهادة AWS Academy Cloud Foundations", issuer: "أمازون لخدمات الويب (AWS)", year: 2025 },
             { title: "تدريب محترفي التعليم الإلكتروني في العراق (TOT)", issuer: "IREX", year: 2020 },
             { title: "شهادة مدرّب أساسيات الحوسبة (IC3)", issuer: "Certiport", year: 2010 },
             { title: "CCNA Exploration: أساسيات الشبكات", issuer: "Cisco", year: 2009 }
@@ -233,15 +250,6 @@ const academicData = {
             { title: "جائزة سفير الحوسبة السحابية", issuer: "AWS", year: 2020 },
             { title: "جائزة يوم العلم لأفضل مشروع تخرج", year: 2016 },
             { title: "منحة فولبرايت", issuer: "وزارة الخارجية الأمريكية", year: 2012 }
-        ],
-
-        media: [],
-
-        gallery: [
-            { src: "images/conference1.jpg", caption: "تقديم بحث في مؤتمر IEEE 2025", alt: "عرض في مؤتمر" },
-            { src: "images/lab1.jpg", caption: "مختبر بحوث إنترنت الأشياء – مشروع المزرعة الذكية", alt: "مختبر بحثي" },
-            { src: "images/students1.jpg", caption: "العمل مع طلبة الدراسات العليا على مشاريع الذكاء الاصطناعي", alt: "تعاون الطلبة" },
-            { src: "images/workshop1.jpg", caption: "ورشة عمل حول الحوسبة السحابية AWS", alt: "جلسة ورشة عمل" }
         ],
 
         skills: {
@@ -255,7 +263,8 @@ const academicData = {
     //  PUBLICATIONS — shared across languages (citations are not translated)
     // ══════════════════════════════════════════════════════════
     publications: [
-        { title: "Optimizing Blockchain Network Performance Using Blake3 Hash Function in POS Consensus Algorithm", authors: "ZA Jasim, AK Hadi", venue: "IEEE Access, vol. 13, pp. 44760–44774", year: 2025, citations: 7, type: "journal", link: "#" },
+        { title: "Large Language Models and Hybrid Prompt Engineering for Emotional Text Steganography Based on Cloud", authors: "AK Hadi", venue: "New Trends in Information and Communications Technology Applications (NTICT 2025), Springer CCIS, pp. 438–463", year: 2025, citations: 0, type: "conference", link: "#" },
+        { title: "Optimizing Blockchain Network Performance Using Blake3 Hash Function in POS Consensus Algorithm", authors: "ZA Jasim, AK Hadi", venue: "IEEE Access, vol. 13, pp. 44760–44774", year: 2025, citations: 7, type: "journal", link: "https://ieeexplore.ieee.org/document/10908216/" },
         { title: "Deep Learning System for Network Anomaly Detection based Attention Mechanism and Sparse Autoencoder", authors: "FH Jassim, AK Hadi", venue: "2025 5th International Conference of Science and Information Technology in Smart Administration (ICITSA)", year: 2025, citations: 0, type: "conference", link: "#" },
         { title: "Hybrid Deep Learning Approach for Enhancing Network Security and Traffic Management", authors: "FH Jassim, AK Hadi", venue: "2025 3rd International Conference on Business Analytics for Technology and Security (ICBATS)", year: 2025, citations: 0, type: "conference", link: "#" },
         { title: "Study on Blockchain Scalability Methods Limitation and Solution", authors: "AK Hadi, ZA Jasim", venue: "2023 International Conference on Engineering, Science and Advanced Technology (ICESAT)", year: 2023, citations: 2, type: "conference", link: "#" },
