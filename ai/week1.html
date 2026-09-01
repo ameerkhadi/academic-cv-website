@@ -1264,11 +1264,93 @@
     margin:0;
   }
 
+  /* ---------- طبقة التأشير بالقلم ----------
+     الطبقة داخل الشريحة نفسها لا فوق الشاشة، فالرسم بإحداثيات المستند
+     ويتحرّك مع النص عند التمرير. وSVG لا canvas: صفحة بطول آلاف البكسلات
+     تكسر الـcanvas بحجم ذاكرته، أما المسارات فلا وزن لها. */
+  .ann-layer{
+    position:absolute; top:0; right:0; bottom:0; left:0;
+    /* svg عنصر مُستبدَل: inset:0 وحده يتركه بحجمه الأصلي 300×150 ولا يمدّده،
+       فلا بدّ من width/height صراحةً وإلا غطّى ركناً من الشريحة فقط. */
+    width:100%; height:100%;
+    overflow:visible;
+    z-index:6;
+    pointer-events:none;
+  }
+  .ann-layer path{ fill:none; stroke-linecap:round; stroke-linejoin:round; }
+  .ann-layer path.hl{ mix-blend-mode:multiply; }
+  body.ann-on  .slide.active > .ann-layer{ pointer-events:auto; touch-action:none; cursor:crosshair; }
+  body.ann-erase .slide.active > .ann-layer{ cursor:cell; }
+  body.ann-hide .ann-layer{ display:none; }
+
+  .ann-bar{
+    position:fixed; bottom:18px; right:18px; z-index:300;
+    display:flex; align-items:center; gap:7px;
+    padding:7px 9px;
+    background:rgba(28,22,16,0.92);
+    border:1.5px solid rgba(255,255,255,0.16);
+    border-radius:26px;
+    box-shadow:0 6px 18px rgba(0,0,0,0.45);
+    font-family:'Aref Ruqaa', serif;
+    backdrop-filter:blur(4px);
+    max-width:calc(100vw - 36px);
+    flex-wrap:wrap; justify-content:flex-end;
+  }
+  .ann-bar button{
+    font-family:'Aref Ruqaa', serif; font-size:13px; font-weight:700;
+    color:#f3ece0; background:transparent;
+    border:1.5px solid transparent; border-radius:16px;
+    padding:5px 11px; cursor:pointer; line-height:1.6;
+    white-space:nowrap;
+  }
+  .ann-bar button:hover{ background:rgba(255,255,255,0.12); }
+  .ann-bar button:focus-visible{ outline:2px solid #f0b400; outline-offset:2px; }
+  .ann-bar .ann-main{ background:var(--red); border-color:rgba(255,255,255,0.25); padding:6px 14px; }
+  .ann-bar .ann-main.on{ background:#1f7a3d; }
+  .ann-bar .ann-tools{ display:none; align-items:center; gap:6px; flex-wrap:wrap; }
+  body.ann-on .ann-bar .ann-tools{ display:flex; }
+  .ann-bar .ann-sep{ width:1px; height:20px; background:rgba(255,255,255,0.2); }
+
+  .ann-swatch{
+    width:24px; height:24px; padding:0; border-radius:50%;
+    border:2px solid rgba(255,255,255,0.35);
+    cursor:pointer; flex:0 0 auto;
+  }
+  .ann-swatch.sel{ border-color:#fff; box-shadow:0 0 0 2px rgba(255,255,255,0.35); }
+  .ann-bar button.on{ background:rgba(255,255,255,0.2); border-color:rgba(255,255,255,0.4); }
+
+  .ann-bar .ic{ font-size:15px; line-height:1; }
+  .ann-bar .lbl{ margin-inline-start:5px; }
+  @media (max-width:560px){
+    /* فوق زرّ الطباعة لا بجانبه: الشريط يعرض كامل الشاشة تقريباً فيغطّيه */
+    .ann-bar{ gap:5px; padding:6px 7px; bottom:72px; right:14px; }
+    .ann-bar .lbl{ display:none; }            /* الأيقونة تكفي، فيبقى سطراً واحداً */
+    .ann-bar button{ padding:6px 8px; }
+    .ann-bar .ann-main{ padding:6px 10px; }
+    .ann-bar .ann-sep{ height:18px; }
+    .ann-swatch{ width:22px; height:22px; }
+    .ann-hint{ bottom:120px; }
+    .ann-hint .keys{ display:none; }
+  }
+
+  .ann-hint{
+    position:fixed; bottom:60px; right:18px; z-index:299;
+    background:rgba(28,22,16,0.9); color:#f3ece0;
+    font-family:'Aref Ruqaa', serif; font-size:12px;
+    padding:6px 12px; border-radius:14px;
+    max-width:min(300px, calc(100vw - 36px));
+    line-height:1.8; display:none;
+  }
+  body.ann-on .ann-hint{ display:block; }
+
   @media print{
     *{ -webkit-print-color-adjust:exact; print-color-adjust:exact; color-adjust:exact; }
     @page{ size:A4; margin:8mm; }
     body{ background:#fff !important; }
-    .print-btn, .tabs, .tape, .master-header, .master-footer{ display:none !important; }
+    .print-btn, .tabs, .tape, .master-header, .master-footer,
+    .ann-bar, .ann-hint{ display:none !important; }
+    /* التأشير يُطبع لأنه داخل الشريحة، ولا يُطبع الشريط */
+    .ann-layer{ display:block !important; }
     .paper-wrapper{ transform:none !important; }
     .paper{
       display:block !important;
@@ -3049,6 +3131,343 @@
     if(e.key === 'ArrowRight'){ navigateSlide(-1); }
     else if(e.key === 'ArrowLeft'){ navigateSlide(1); }
   });
+</script>
+
+<script>
+/* ============================================================
+   التأشير بالقلم على المحاضرة
+   الرسم يعيش داخل الشريحة نفسها لا فوق الشاشة، فيتحرّك مع النص
+   عند التمرير بدل أن يبقى ملزوقاً بالعرض.
+   ============================================================ */
+(function(){
+  var SVGNS = 'http://www.w3.org/2000/svg';
+  var STORE = 'ann:week1:';
+
+  var PENS = [
+    { name:'أحمر',  color:'#ff1f3d', width:3.2, alpha:1,    hl:false },
+    { name:'أزرق',  color:'#0057ff', width:3.2, alpha:1,    hl:false },
+    { name:'أخضر',  color:'#00a844', width:3.2, alpha:1,    hl:false },
+    { name:'مُظلِّل', color:'#ffd400', width:19,  alpha:0.45, hl:true  }
+  ];
+
+  var pen = 0, erasing = false, drawing = false, activePointer = null;
+  var cur = null, pts = [];
+
+  // سجلّ الأفعال لكل شريحة: إضافة مسار أو محو مجموعة، ليعمل التراجع في الحالتين
+  var history = {};
+
+  // ---------- الطبقة ----------
+
+  function layerOf(slide){
+    var l = slide.querySelector(':scope > .ann-layer');
+    if(!l){
+      l = document.createElementNS(SVGNS, 'svg');
+      l.setAttribute('class', 'ann-layer');
+      slide.insertBefore(l, slide.firstChild);
+      restore(slide, l);
+    }
+    return l;
+  }
+
+  function activeSlide(){ return document.querySelector('.slide.active'); }
+
+  /* تحويل موضع الإصبع إلى إحداثيات الرسم.
+     نستعمل مصفوفة الشاشة لا طرح الحواف، لأن الورقة مائلة rotate(-0.5deg)
+     في بعض التبويبات، والطرح البسيط ينحرف معها. */
+  function toLocal(layer, ev){
+    var m = layer.getScreenCTM();
+    if(!m) return { x:0, y:0 };
+    var inv = m.inverse();
+    var p = layer.createSVGPoint ? layer.createSVGPoint() : new DOMPoint();
+    p.x = ev.clientX; p.y = ev.clientY;
+    var r = p.matrixTransform(inv);
+    return { x:r.x, y:r.y };
+  }
+
+  // ---------- الرسم ----------
+
+  /* منحنيات تربيعية عبر منتصف كل ضلعين: تعطي خطاً ناعماً بدل خطوط مكسّرة. */
+  function pathData(p){
+    if(p.length === 0) return '';
+    if(p.length === 1) return 'M' + p[0].x + ' ' + p[0].y + ' l0.01 0.01';
+    var d = 'M' + p[0].x + ' ' + p[0].y;
+    for(var i = 1; i < p.length - 1; i++){
+      var mx = (p[i].x + p[i+1].x) / 2, my = (p[i].y + p[i+1].y) / 2;
+      d += ' Q' + p[i].x + ' ' + p[i].y + ' ' + mx + ' ' + my;
+    }
+    var last = p[p.length-1];
+    d += ' L' + last.x + ' ' + last.y;
+    return d;
+  }
+
+  function startStroke(layer, pt, pressure){
+    var s = PENS[pen];
+    cur = document.createElementNS(SVGNS, 'path');
+    cur.setAttribute('stroke', s.color);
+    cur.setAttribute('stroke-width', String(s.width * pressure));
+    cur.setAttribute('stroke-opacity', String(s.alpha));
+    if(s.hl) cur.setAttribute('class', 'hl');
+    layer.appendChild(cur);
+    pts = [pt];
+    cur.setAttribute('d', pathData(pts));
+  }
+
+  function extendStroke(pt){
+    var last = pts[pts.length-1];
+    if(Math.abs(pt.x - last.x) + Math.abs(pt.y - last.y) < 1.4) return;
+    pts.push(pt);
+    cur.setAttribute('d', pathData(pts));
+  }
+
+  // ---------- الممحاة: تحذف المسار كاملاً عند لمسه ----------
+
+  function eraseAt(layer, ev){
+    var R = 10, ring = [[0,0],[R,0],[-R,0],[0,R],[0,-R],[7,7],[-7,7],[7,-7],[-7,-7]];
+    var hit = [];
+    for(var i = 0; i < ring.length; i++){
+      var els = document.elementsFromPoint(ev.clientX + ring[i][0], ev.clientY + ring[i][1]);
+      for(var j = 0; j < els.length; j++){
+        var el = els[j];
+        if(el.tagName === 'path' && el.parentNode === layer && hit.indexOf(el) === -1){
+          hit.push(el);
+        }
+      }
+    }
+    /* نسجّل ترتيب كل مسار قبل الحذف، وإلا أعاده التراجع إلى مقدّمة الطبقة
+       فتغيّر ما يعلو ما — وهو ظاهر مع المُظلِّل الشفّاف. */
+    var kids = Array.prototype.slice.call(layer.children);
+    var gone = hit.map(function(el){ return { el: el, i: kids.indexOf(el) }; })
+                  .sort(function(a, b){ return a.i - b.i; });
+    gone.forEach(function(o){ o.el.remove(); });
+    return gone;
+  }
+
+  // ---------- السجلّ والحفظ ----------
+
+  function push(slide, action){
+    (history[slide.id] = history[slide.id] || []).push(action);
+    save(slide);
+  }
+
+  function undo(){
+    var slide = activeSlide(); if(!slide) return;
+    var h = history[slide.id]; if(!h || !h.length) return;
+    var a = h.pop();
+    if(a.type === 'add' && a.el.parentNode){ a.el.remove(); }
+    else if(a.type === 'erase'){
+      var layer = layerOf(slide);
+      a.els.forEach(function(o){ layer.insertBefore(o.el, layer.children[o.i] || null); });
+    }
+    save(slide);
+  }
+
+  function clearAll(){
+    var slide = activeSlide(); if(!slide) return;
+    var layer = layerOf(slide);
+    while(layer.firstChild) layer.removeChild(layer.firstChild);
+    history[slide.id] = [];
+    save(slide);
+  }
+
+  function save(slide){
+    var layer = slide.querySelector(':scope > .ann-layer'); if(!layer) return;
+    var out = [];
+    layer.querySelectorAll('path').forEach(function(p){
+      out.push({
+        d: p.getAttribute('d'),
+        c: p.getAttribute('stroke'),
+        w: p.getAttribute('stroke-width'),
+        o: p.getAttribute('stroke-opacity'),
+        h: p.classList.contains('hl') ? 1 : 0
+      });
+    });
+    try{
+      if(out.length) localStorage.setItem(STORE + slide.id, JSON.stringify(out));
+      else localStorage.removeItem(STORE + slide.id);
+    }catch(e){}
+  }
+
+  function restore(slide, layer){
+    var raw = null;
+    try{ raw = localStorage.getItem(STORE + slide.id); }catch(e){ return; }
+    if(!raw) return;
+    var arr; try{ arr = JSON.parse(raw); }catch(e){ return; }
+    if(!Array.isArray(arr)) return;
+    arr.forEach(function(s){
+      var p = document.createElementNS(SVGNS, 'path');
+      p.setAttribute('d', s.d);
+      p.setAttribute('stroke', s.c);
+      p.setAttribute('stroke-width', s.w);
+      p.setAttribute('stroke-opacity', s.o);
+      if(s.h) p.setAttribute('class', 'hl');
+      layer.appendChild(p);
+    });
+  }
+
+  // ---------- أحداث المؤشّر ----------
+
+  function onDown(ev){
+    if(!document.body.classList.contains('ann-on')) return;
+    if(activePointer !== null) return;                 // إصبعان: اتركهما للتمرير
+    if(ev.button !== undefined && ev.button !== 0) return;
+    var slide = activeSlide(); if(!slide) return;
+    var layer = layerOf(slide);
+    if(ev.target !== layer && ev.target.parentNode !== layer) return;
+
+    activePointer = ev.pointerId;
+    ev.preventDefault();
+    try{ layer.setPointerCapture(ev.pointerId); }catch(e){}
+
+    if(erasing){
+      drawing = true;
+      var removed = eraseAt(layer, ev);
+      if(removed.length) push(slide, { type:'erase', els: removed });
+      return;
+    }
+    drawing = true;
+    var pr = (ev.pointerType === 'pen' && ev.pressure > 0) ? (0.55 + ev.pressure * 0.9) : 1;
+    startStroke(layer, toLocal(layer, ev), pr);
+  }
+
+  function onMove(ev){
+    if(!drawing || ev.pointerId !== activePointer) return;
+    ev.preventDefault();
+    var slide = activeSlide(); if(!slide) return;
+    var layer = layerOf(slide);
+    if(erasing){
+      var removed = eraseAt(layer, ev);
+      if(removed.length) push(slide, { type:'erase', els: removed });
+      return;
+    }
+    extendStroke(toLocal(layer, ev));
+  }
+
+  function onUp(ev){
+    if(ev.pointerId !== activePointer) return;
+    activePointer = null;
+    if(!drawing) return;
+    drawing = false;
+    var slide = activeSlide();
+    if(!erasing && cur && slide) push(slide, { type:'add', el: cur });
+    cur = null; pts = [];
+  }
+
+  // ---------- الشريط ----------
+
+  var bar = document.createElement('div');
+  bar.className = 'ann-bar';
+
+  var main = document.createElement('button');
+  main.className = 'ann-main';
+  main.type = 'button';
+  main.innerHTML = '<span class="ic"></span><span class="lbl"></span>';
+  main.firstChild.textContent = '✏️';
+  main.lastChild.textContent = 'قلم';
+  bar.appendChild(main);
+
+  var tools = document.createElement('div');
+  tools.className = 'ann-tools';
+  bar.appendChild(tools);
+
+  var swatches = PENS.map(function(s, i){
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'ann-swatch' + (i === 0 ? ' sel' : '');
+    b.title = s.name;
+    b.setAttribute('aria-label', s.name);
+    b.style.background = s.hl ? s.color : s.color;
+    if(s.hl) b.style.opacity = '0.75';
+    b.addEventListener('click', function(){
+      pen = i; erasing = false;
+      document.body.classList.remove('ann-erase');
+      eraseBtn.classList.remove('on');
+      swatches.forEach(function(x){ x.classList.remove('sel'); });
+      b.classList.add('sel');
+    });
+    tools.appendChild(b);
+    return b;
+  });
+
+  function sep(){ var s = document.createElement('span'); s.className = 'ann-sep'; tools.appendChild(s); }
+  function tool(icon, label, title, fn){
+    var b = document.createElement('button');
+    b.type = 'button'; b.title = title;
+    b.innerHTML = '<span class="ic"></span><span class="lbl"></span>';
+    b.firstChild.textContent = icon;
+    b.lastChild.textContent = label;
+    b.addEventListener('click', fn);
+    tools.appendChild(b);
+    return b;
+  }
+  function setLabel(b, label){ b.lastChild.textContent = label; }
+
+  sep();
+  var eraseBtn = tool('⌫', 'ممحاة', 'ممحاة — امسح الخط بمرور الممحاة عليه (E)', function(){
+    erasing = !erasing;
+    eraseBtn.classList.toggle('on', erasing);
+    document.body.classList.toggle('ann-erase', erasing);
+  });
+  tool('↶', 'تراجع', 'تراجع عن آخر خطوة (Z)', undo);
+  sep();
+  var hideBtn = tool('👁', 'إخفاء', 'إخفاء التأشير مؤقتاً بلا حذف (H)', function(){
+    var h = document.body.classList.toggle('ann-hide');
+    setLabel(hideBtn, h ? 'إظهار' : 'إخفاء');
+    hideBtn.classList.toggle('on', h);
+  });
+  tool('🗑', 'مسح الكل', 'يمسح تأشير هذا التبويب وحده', function(){
+    if(confirm('مسح كل التأشير في هذا التبويب؟')) clearAll();
+  });
+
+  var hint = document.createElement('div');
+  hint.className = 'ann-hint';
+  hint.innerHTML = 'القلم يشتغل — للتمرير بالصفحة أوقف القلم.' +
+    '<span class="keys"><br>١–٤ للألوان · E ممحاة · Z تراجع · H إخفاء · Esc إيقاف</span>';
+
+  function setOn(on){
+    document.body.classList.toggle('ann-on', on);
+    main.classList.toggle('on', on);
+    main.firstChild.textContent = on ? '■' : '✏️';
+    setLabel(main, on ? 'إيقاف القلم' : 'قلم');
+    var slide = activeSlide();
+    if(on && slide) layerOf(slide);
+    else {
+      erasing = false;
+      eraseBtn.classList.remove('on');
+      document.body.classList.remove('ann-erase');
+    }
+  }
+  main.addEventListener('click', function(){ setOn(!document.body.classList.contains('ann-on')); });
+
+  document.addEventListener('keydown', function(e){
+    if(!document.body.classList.contains('ann-on')) return;
+    var t = e.target;
+    if(t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
+    var k = e.key;
+    if(k >= '1' && k <= '4'){ swatches[+k - 1].click(); }
+    else if(k === 'e' || k === 'E' || k === 'ث'){ eraseBtn.click(); }
+    else if(k === 'z' || k === 'Z' || k === 'ء'){ undo(); }
+    else if(k === 'h' || k === 'H' || k === 'ا'){ hideBtn.click(); }
+    else if(k === 'Escape'){ setOn(false); }
+    else return;
+    e.preventDefault();
+  });
+
+  // ---------- التشغيل ----------
+
+  function attach(){
+    document.querySelectorAll('.slide').forEach(function(slide){
+      var layer = layerOf(slide);
+      layer.addEventListener('pointerdown', onDown);
+      layer.addEventListener('pointermove', onMove);
+      layer.addEventListener('pointerup', onUp);
+      layer.addEventListener('pointercancel', onUp);
+    });
+  }
+
+  document.body.appendChild(bar);
+  document.body.appendChild(hint);
+  attach();
+})();
 </script>
 
 </body>
