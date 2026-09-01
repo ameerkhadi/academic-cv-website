@@ -69,7 +69,7 @@ const uiText = {
 
         panelContactInfo: "📬 &nbsp;Contact Information",
         panelAffiliation: "🏛 &nbsp;Affiliation",
-        affilUni: "Faculty of Information Technology<br>University of Babylon, Iraq<br><br>🎓 Lecturer — Higher Institute for Preparing and Qualifying Leaders<br><span style=\"color:var(--text-dim);font-size:.8em\">Higher Diploma in Digital Leadership</span>",
+        affilUni: "🎓 Lecturer — Higher Institute for Training and Qualifying Leaders, Baghdad<br><span style=\"color:var(--text-dim);font-size:.8em\">Higher Diploma in Digital Leadership</span><br><br>Faculty of Information Technology<br>University of Babylon, Iraq",
         panelProfiles: "🔗 &nbsp;Online Profiles",
 
         footerRights: "All rights reserved.",
@@ -158,7 +158,7 @@ const uiText = {
 
         panelContactInfo: "📬 &nbsp;معلومات التواصل",
         panelAffiliation: "🏛 &nbsp;الانتساب",
-        affilUni: "كلية تكنولوجيا المعلومات<br>جامعة بابل، العراق<br><br>🎓 محاضر — المعهد العالي لإعداد وتأهيل القادة<br><span style=\"color:var(--text-dim);font-size:.8em\">الدبلوم العالي في القيادة الرقمية</span>",
+        affilUni: "🎓 محاضر — المعهد العالي لتدريب وتأهيل القادة، بغداد<br><span style=\"color:var(--text-dim);font-size:.8em\">الدبلوم العالي في القيادة الرقمية</span><br><br>كلية تكنولوجيا المعلومات<br>جامعة بابل، العراق",
         panelProfiles: "🔗 &nbsp;الحسابات العلمية",
 
         footerRights: "جميع الحقوق محفوظة.",

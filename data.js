@@ -14,7 +14,7 @@ const academicData = {
             title: "Assistant Professor",
             subtitle: "Cloud Computing, IoT & AI Expert",
             photo: "images/profile.jpg",
-            bio: "Dedicated Assistant Professor with over 15 years of experience in tertiary education, specializing in Computer Science and Mathematics at the University of Babylon, Iraq. Proven track record in developing and delivering curriculum for undergraduate and postgraduate levels in Cloud Computing, IoT, Network Security, and Programming. Strong background in academic research with recent publications in AI and Blockchain technology. Committed to pedagogical excellence, student mentorship, and contributing to the academic mission through continuous professional development and collaborative research. Currently also lecturing on Artificial Intelligence and IT fundamentals within the Higher Diploma in Digital Leadership at the Higher Institute for Preparing and Qualifying Leaders, and teaching Cloud Computing and Virtual Networking to third-year Cybersecurity students at the University of Al-Shaab.",
+            bio: "Dedicated Assistant Professor with over 15 years of experience in tertiary education, specializing in Computer Science at the University of Babylon, Iraq. Proven track record in developing and delivering curriculum for undergraduate and postgraduate levels in Cloud Computing, IoT, Network Security, and Programming. Strong background in academic research with recent publications in AI and Blockchain technology. Committed to pedagogical excellence, student mentorship, and contributing to the academic mission through continuous professional development and collaborative research. Currently also lecturing on Artificial Intelligence and IT fundamentals within the Higher Diploma in Digital Leadership at the Higher Institute for Training and Qualifying Leaders in Baghdad, and teaching Cloud Computing and Virtual Networking to third-year Cybersecurity students at the University of Al-Shaab.",
             email: "ameer.hadi@uobabylon.edu.iq",
             linkedin: "https://linkedin.com/in/ameer-hadi",
             googleScholar: "https://scholar.google.com/citations?user=S9uqKsIAAAAJ&hl=en",
@@ -50,11 +50,11 @@ const academicData = {
 
         projects: [
             {
-                title: "AI-Assisted Digital Course Platform — Higher Institute for Preparing and Qualifying Leaders",
+                title: "AI-Assisted Digital Course Platform — Higher Institute for Training and Qualifying Leaders",
                 description: "Built, with AI-assisted engineering (Claude), a full digital learning platform for the 'Artificial Intelligence for Administrative Leadership' course: interactive lecture pages, exams and quizzes, and automated results dashboards for the Higher Diploma in Digital Leadership program.",
                 technologies: ["AI-Assisted Development", "Google Apps Script", "JavaScript", "Google Sheets", "E-Learning"],
                 duration: "2025 – Present",
-                funding: "Higher Institute for Preparing and Qualifying Leaders",
+                funding: "Higher Institute for Training and Qualifying Leaders",
                 status: "Ongoing",
                 statusKey: "ongoing"
             },
@@ -97,8 +97,8 @@ const academicData = {
         ],
 
         courses: [
-            { code: "HILQ", title: "Artificial Intelligence for Administrative Leadership", description: "Delivered within the Higher Diploma in Digital Leadership at the Higher Institute for Preparing and Qualifying Leaders — applied AI concepts and tools for public-sector leadership and decision-making.", level: "Professional Diploma", semester: "Higher Institute for Preparing and Qualifying Leaders · Current" },
-            { code: "HILQ", title: "IT Fundamentals", description: "Core information technology concepts for senior public-sector leaders, delivered as part of the Higher Diploma program at the Higher Institute for Preparing and Qualifying Leaders.", level: "Professional Diploma", semester: "Higher Institute for Preparing and Qualifying Leaders · Current" },
+            { code: "HILQ", title: "Artificial Intelligence for Administrative Leadership", description: "Delivered within the Higher Diploma in Digital Leadership at the Higher Institute for Training and Qualifying Leaders — applied AI concepts and tools for public-sector leadership and decision-making.", level: "Professional Diploma", semester: "Higher Institute for Training and Qualifying Leaders · Current" },
+            { code: "HILQ", title: "IT Fundamentals", description: "Core information technology concepts for senior public-sector leaders, delivered as part of the Higher Diploma program at the Higher Institute for Training and Qualifying Leaders.", level: "Professional Diploma", semester: "Higher Institute for Training and Qualifying Leaders · Current" },
             { code: "UOS", title: "Cloud Computing", description: "Cloud computing concepts and architectures for third-year Cybersecurity students.", level: "Undergraduate · Cybersecurity Dept.", semester: "University of Al-Shaab · Current" },
             { code: "UOS", title: "Virtual Networking", description: "Virtual networking concepts and technologies for third-year Cybersecurity students.", level: "Undergraduate · Cybersecurity Dept.", semester: "University of Al-Shaab · Current" },
             { code: "CS-PG", title: "Cloud Computing", description: "Postgraduate course covering cloud computing architectures, service models (IaaS, PaaS, SaaS), deployment strategies, and hands-on AWS cloud infrastructure.", level: "Postgraduate", semester: "Current" },
@@ -141,7 +141,7 @@ const academicData = {
             title: "أستاذ مساعد",
             subtitle: "خبير في الحوسبة السحابية وإنترنت الأشياء والذكاء الاصطناعي",
             photo: "images/profile.jpg",
-            bio: "أستاذ مساعد متميز يتمتع بخبرة تزيد عن 15 عامًا في التعليم العالي، متخصص في علوم الحاسوب والرياضيات في جامعة بابل، العراق. يمتلك سجلاً حافلاً في تطوير وتقديم المناهج الدراسية لمرحلتي البكالوريوس والدراسات العليا في مجالات الحوسبة السحابية، وإنترنت الأشياء، وأمن الشبكات، والبرمجة. لديه خلفية قوية في البحث العلمي مع نشر أبحاث حديثة في الذكاء الاصطناعي وتقنية البلوكتشين. ملتزم بالتميز التربوي، وتوجيه الطلبة، والمساهمة في الرسالة الأكاديمية من خلال التطوير المهني المستمر والبحث العلمي التعاوني. يُدرّس حاليًا أيضًا مادتي الذكاء الاصطناعي وأساسيات تكنولوجيا المعلومات ضمن الدبلوم العالي في القيادة الرقمية في المعهد العالي لإعداد وتأهيل القادة، ويُدرّس مادتي الحوسبة السحابية والشبكات الافتراضية لطلبة المرحلة الثالثة قسم الأمن السيبراني في جامعة الشعب.",
+            bio: "أستاذ مساعد متميز يتمتع بخبرة تزيد عن 15 عامًا في التعليم العالي، متخصص في علوم الحاسوب في جامعة بابل، العراق. يمتلك سجلاً حافلاً في تطوير وتقديم المناهج الدراسية لمرحلتي البكالوريوس والدراسات العليا في مجالات الحوسبة السحابية، وإنترنت الأشياء، وأمن الشبكات، والبرمجة. لديه خلفية قوية في البحث العلمي مع نشر أبحاث حديثة في الذكاء الاصطناعي وتقنية البلوكتشين. ملتزم بالتميز التربوي، وتوجيه الطلبة، والمساهمة في الرسالة الأكاديمية من خلال التطوير المهني المستمر والبحث العلمي التعاوني. يُدرّس حاليًا أيضًا مادتي الذكاء الاصطناعي وأساسيات تكنولوجيا المعلومات ضمن الدبلوم العالي في القيادة الرقمية في المعهد العالي لتدريب وتأهيل القادة في بغداد، ويُدرّس مادتي الحوسبة السحابية والشبكات الافتراضية لطلبة المرحلة الثالثة قسم الأمن السيبراني في جامعة الشعب.",
             email: "ameer.hadi@uobabylon.edu.iq",
             linkedin: "https://linkedin.com/in/ameer-hadi",
             googleScholar: "https://scholar.google.com/citations?user=S9uqKsIAAAAJ&hl=en",
@@ -177,11 +177,11 @@ const academicData = {
 
         projects: [
             {
-                title: "منصة تعليمية رقمية بمساعدة الذكاء الاصطناعي — المعهد العالي لإعداد وتأهيل القادة",
+                title: "منصة تعليمية رقمية بمساعدة الذكاء الاصطناعي — المعهد العالي لتدريب وتأهيل القادة",
                 description: "تطوير منصة تعلّم رقمية كاملة بمساعدة أدوات الذكاء الاصطناعي (Claude) لمادة \"الذكاء الاصطناعي للقيادة الإدارية\": صفحات محاضرات تفاعلية، اختبارات ومسابقات، ولوحات نتائج آلية ضمن برنامج الدبلوم العالي في القيادة الرقمية.",
                 technologies: ["تطوير بمساعدة الذكاء الاصطناعي", "Google Apps Script", "JavaScript", "Google Sheets", "التعليم الإلكتروني"],
                 duration: "2025 – حتى الآن",
-                funding: "المعهد العالي لإعداد وتأهيل القادة",
+                funding: "المعهد العالي لتدريب وتأهيل القادة",
                 status: "قيد الاستمرار",
                 statusKey: "ongoing"
             },
@@ -224,8 +224,8 @@ const academicData = {
         ],
 
         courses: [
-            { code: "HILQ", title: "الذكاء الاصطناعي للقيادة الإدارية", description: "تُدرَّس ضمن الدبلوم العالي في القيادة الرقمية في المعهد العالي لإعداد وتأهيل القادة — مفاهيم وأدوات الذكاء الاصطناعي التطبيقية لدعم القيادة واتخاذ القرار في القطاع العام.", level: "دبلوم مهني عالٍ", semester: "المعهد العالي لإعداد وتأهيل القادة · الحالي" },
-            { code: "HILQ", title: "أساسيات تكنولوجيا المعلومات", description: "المفاهيم الأساسية لتكنولوجيا المعلومات لكبار القادة في القطاع العام، ضمن برنامج الدبلوم العالي في المعهد العالي لإعداد وتأهيل القادة.", level: "دبلوم مهني عالٍ", semester: "المعهد العالي لإعداد وتأهيل القادة · الحالي" },
+            { code: "HILQ", title: "الذكاء الاصطناعي للقيادة الإدارية", description: "تُدرَّس ضمن الدبلوم العالي في القيادة الرقمية في المعهد العالي لتدريب وتأهيل القادة — مفاهيم وأدوات الذكاء الاصطناعي التطبيقية لدعم القيادة واتخاذ القرار في القطاع العام.", level: "دبلوم مهني عالٍ", semester: "المعهد العالي لتدريب وتأهيل القادة · الحالي" },
+            { code: "HILQ", title: "أساسيات تكنولوجيا المعلومات", description: "المفاهيم الأساسية لتكنولوجيا المعلومات لكبار القادة في القطاع العام، ضمن برنامج الدبلوم العالي في المعهد العالي لتدريب وتأهيل القادة.", level: "دبلوم مهني عالٍ", semester: "المعهد العالي لتدريب وتأهيل القادة · الحالي" },
             { code: "UOS", title: "الحوسبة السحابية", description: "مفاهيم وبنى الحوسبة السحابية لطلبة المرحلة الثالثة، قسم الأمن السيبراني.", level: "بكالوريوس · قسم الأمن السيبراني", semester: "جامعة الشعب · الحالي" },
             { code: "UOS", title: "الشبكات الافتراضية", description: "مفاهيم وتقنيات الشبكات الافتراضية لطلبة المرحلة الثالثة، قسم الأمن السيبراني.", level: "بكالوريوس · قسم الأمن السيبراني", semester: "جامعة الشعب · الحالي" },
             { code: "CS-PG", title: "الحوسبة السحابية", description: "مقرر دراسات عليا يغطي بنى الحوسبة السحابية، ونماذج الخدمة (IaaS, PaaS, SaaS)، واستراتيجيات النشر، والتطبيق العملي على بنية AWS السحابية.", level: "دراسات عليا", semester: "الحالي" },
