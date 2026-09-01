@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>منصة حاضنة بابل التكنولوجية</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F6F1E4;
+    --surface:#FFFFFF;
+    --ink:#1B2431;
+    --ink-soft:#57616F;
+    --primary:#122A4E;
+    --primary-dark:#0A1B33;
+    --gold:#B98B2A;
+    --gold-light:#E4C878;
+    --terracotta:#9A5227;
+    --line:#E1D9C0;
+    --radius:6px;
+    --shadow:0 10px 28px -14px rgba(10,27,51,.28);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  section[id]{scroll-margin-top:78px;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Tajawal',sans-serif;
+    line-height:1.7;
+  }
+  h1,h2,h3,.display{
+    font-family:'Amiri',serif;
+    color:var(--primary-dark);
+    margin:0;
+  }
+  img{max-width:100%;}
+  .wrap{max-width:960px;margin:0 auto;padding:0 20px;}
+
+  /* ===== textured header band ===== */
+  .band{
+    height:6px;
+    background:linear-gradient(90deg,var(--primary-dark) 0%,var(--primary) 35%,var(--gold) 100%);
+  }
+
+  /* ===== nav ===== */
+  nav{
+    position:sticky;top:0;z-index:50;
+    background:var(--primary-dark);
+    border-bottom:3px solid var(--gold);
+  }
+  nav .wrap{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:14px 20px;flex-wrap:wrap;gap:10px;
+  }
+  .brand{color:#fff;font-family:'Amiri',serif;font-size:1.15rem;font-weight:700;}
+  .brand span{display:block;color:var(--gold-light);font-family:'Tajawal',sans-serif;font-size:.72rem;font-weight:400;margin-top:2px;}
+  .navlinks{display:flex;gap:4px;flex-wrap:wrap;}
+  .navlinks a{
+    color:#EFE7CE;text-decoration:none;font-size:.88rem;
+    padding:7px 12px;border-radius:var(--radius);transition:background .15s;
+  }
+  .navlinks a:hover,.navlinks a:focus-visible{background:rgba(201,162,39,.22);}
+
+  /* ===== hero ===== */
+  .hero{
+    background:linear-gradient(160deg,var(--primary) 0%,var(--primary-dark) 100%);
+    color:#fff;padding:64px 0 56px;position:relative;overflow:hidden;
+  }
+  .hero::after{
+    content:"";position:absolute;inset:auto -10% -60% auto;width:420px;height:420px;
+    background:radial-gradient(circle,rgba(201,162,39,.28) 0%,transparent 70%);
+  }
+  .hero .wrap{position:relative;}
+  .eyebrow-plain{color:var(--gold-light);font-size:.95rem;margin-bottom:10px;}
+  .hero h1{font-size:2.35rem;color:#fff;line-height:1.35;max-width:16ch;}
+  .hero p{max-width:56ch;color:#DCE3EE;margin-top:16px;font-size:1.02rem;}
+  .hero-meta{display:flex;gap:26px;margin-top:34px;flex-wrap:wrap;}
+  .hero-meta div{border-inline-start:2px solid var(--gold);padding-inline-start:14px;}
+  .hero-meta b{display:block;font-size:1.5rem;color:var(--gold-light);font-family:'Amiri',serif;}
+  .hero-meta small{color:#B9C4D4;font-size:.8rem;}
+
+  /* ===== sections ===== */
+  section{padding:56px 0;}
+  section.alt{background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .sec-head{margin-bottom:32px;max-width:60ch;}
+  .sec-head h2{font-size:1.7rem;}
+  .sec-head p{color:var(--ink-soft);margin-top:10px;}
+
+  /* vision/mission */
+  .vm-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+  .vm-card{background:var(--surface);border:1px solid var(--line);border-inline-start:4px solid var(--gold);padding:26px;border-radius:var(--radius);box-shadow:var(--shadow);}
+  .vm-card h3{font-size:1.15rem;margin-bottom:10px;}
+  .vm-card p{color:var(--ink-soft);font-size:.95rem;}
+
+  /* goals as annotated list */
+  .goal-list{list-style:none;margin:0;padding:0;counter-reset:g;}
+  .goal-list li{
+    counter-increment:g;position:relative;padding:16px 0 16px 0;padding-inline-start:52px;
+    border-bottom:1px solid var(--line);font-size:.97rem;color:var(--ink);
+  }
+  .goal-list li:last-child{border-bottom:none;}
+  .goal-list li::before{
+    content:counter(g);position:absolute;inset-inline-start:0;top:14px;
+    width:34px;height:34px;border:1.5px solid var(--gold);border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Amiri',serif;color:var(--primary);font-weight:700;font-size:.95rem;
+  }
+
+  /* values chips */
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px;}
+  .chip{
+    background:var(--primary-dark);color:var(--gold-light);
+    padding:8px 16px;border-radius:20px;font-size:.86rem;
+  }
+
+  /* services */
+  .svc-list{display:flex;flex-direction:column;border-top:1px solid var(--line);}
+  .svc-row{
+    display:flex;justify-content:space-between;align-items:center;gap:16px;
+    padding:18px 4px;border-bottom:1px solid var(--line);
+  }
+  .svc-row span{color:var(--ink-soft);font-size:.85rem;flex-shrink:0;}
+
+  /* ===== plan timeline ===== */
+  .phase{
+    display:flex;gap:18px;padding:22px 0;border-bottom:1px dashed var(--line);
+  }
+  .phase:last-child{border-bottom:none;}
+  .phase b{color:var(--terracotta);font-family:'Amiri',serif;font-size:1.05rem;display:block;margin-bottom:4px;}
+  .phase p{color:var(--ink-soft);font-size:.93rem;margin:0;}
+  .phase .tag{
+    flex-shrink:0;width:118px;font-size:.8rem;color:var(--primary);
+    padding-top:2px;font-weight:700;
+  }
+
+  /* ===== mockup shell ===== */
+  .mock-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:22px;}
+  .mock-tab{
+    background:transparent;border:1px solid var(--primary);color:var(--primary);
+    padding:9px 16px;border-radius:20px;font-family:'Tajawal',sans-serif;font-size:.85rem;
+    cursor:pointer;transition:all .15s;
+  }
+  .mock-tab.active,.mock-tab:hover{background:var(--primary);color:#fff;}
+
+  .device{
+    background:#ECE7D8;border:1px solid var(--line);border-radius:14px;
+    padding:14px;box-shadow:0 22px 48px -20px rgba(10,27,51,.4);
+  }
+  .screen{
+    background:#fff;border-radius:8px;overflow:hidden;min-height:420px;
+    display:none;
+  }
+  .screen.active{display:block;}
+
+  /* screen: dashboard */
+  .app-topbar{
+    background:var(--primary-dark);color:#fff;padding:14px 18px;
+    display:flex;justify-content:space-between;align-items:center;font-size:.85rem;
+  }
+  .app-topbar b{font-family:'Amiri',serif;color:var(--gold-light);font-size:.98rem;}
+  .stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);}
+  .stat{background:#fff;padding:20px 16px;}
+  .stat b{display:block;font-family:'Amiri',serif;font-size:1.7rem;color:var(--primary);}
+  .stat span{font-size:.78rem;color:var(--ink-soft);}
+  .panel-title{padding:16px 18px 4px;font-size:.92rem;font-weight:700;color:var(--ink);}
+  .track-list{padding:6px 18px 18px;}
+  .track-item{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:12px 0;border-bottom:1px solid var(--line);font-size:.86rem;
+  }
+  .badge{font-size:.72rem;padding:4px 10px;border-radius:12px;}
+  .badge.review{background:#FBEFD1;color:#8A6B10;}
+  .badge.active{background:#DCEBDD;color:#1E6B33;}
+  .badge.new{background:#E2E9F3;color:var(--primary);}
+
+  /* screen: form */
+  .form-body{padding:22px;}
+  .form-body h4{font-family:'Amiri',serif;font-size:1.15rem;color:var(--primary-dark);margin:0 0 4px;}
+  .form-body>p{color:var(--ink-soft);font-size:.83rem;margin:0 0 20px;}
+  .f-group{margin-bottom:16px;}
+  .f-group label{display:block;font-size:.82rem;color:var(--ink);margin-bottom:6px;}
+  .f-group input,.f-group select,.f-group textarea{
+    width:100%;border:1px solid var(--line);border-radius:6px;padding:10px 12px;
+    font-family:'Tajawal',sans-serif;font-size:.88rem;background:#FAF8F2;
+  }
+  .f-btn{
+    background:var(--primary);color:#fff;border:none;padding:11px 24px;
+    border-radius:6px;font-size:.88rem;font-family:'Tajawal',sans-serif;cursor:pointer;
+    box-shadow:0 8px 18px -8px rgba(18,42,78,.55);transition:transform .12s;
+  }
+  .f-btn:hover{transform:translateY(-1px);}
+
+  /* screen: projects */
+  .proj-grid{padding:18px;display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .proj-card{border:1px solid var(--line);border-radius:8px;padding:14px;}
+  .proj-card b{display:block;font-size:.9rem;margin-bottom:4px;}
+  .proj-card span{font-size:.75rem;color:var(--ink-soft);}
+  .proj-bar{height:5px;background:var(--line);border-radius:3px;margin-top:10px;overflow:hidden;}
+  .proj-bar i{display:block;height:100%;background:var(--gold);}
+
+  /* screen: partners/messages */
+  .msg-row{display:flex;gap:12px;padding:14px 18px;border-bottom:1px solid var(--line);align-items:flex-start;}
+  .avatar{width:36px;height:36px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.8rem;flex-shrink:0;font-family:'Amiri',serif;}
+  .msg-row b{font-size:.86rem;display:block;}
+  .msg-row p{margin:2px 0 0;font-size:.8rem;color:var(--ink-soft);}
+
+  footer{background:var(--primary-dark);color:#B9C4D4;padding:30px 0;text-align:center;font-size:.82rem;}
+  footer b{color:var(--gold-light);}
+
+  @media (max-width:680px){
+    .vm-grid{grid-template-columns:1fr;}
+    .hero h1{font-size:1.8rem;}
+    .stat-grid{grid-template-columns:1fr 1fr;}
+    .proj-grid{grid-template-columns:1fr;}
+    .phase{flex-direction:column;gap:4px;}
+    .phase .tag{width:auto;}
+  }
+</style>
+</head>
+<body>
+
+<div class="band"></div>
+<nav>
+  <div class="wrap">
+    <div class="brand">منصة حاضنة بابل<span>شعبة الحاضنات التكنولوجية — قسم حدائق العلوم والتكنولوجيا، جامعة بابل</span></div>
+    <div class="navlinks">
+      <a href="javascript:void(0)" data-scroll="nashaa">التعريف</a>
+      <a href="javascript:void(0)" data-scroll="ahdaf">الأهداف</a>
+      <a href="javascript:void(0)" data-scroll="khadamat">الخدمات</a>
+      <a href="javascript:void(0)" data-scroll="khutta">خطة الإطلاق</a>
+      <a href="javascript:void(0)" data-scroll="wajha">واجهات المنصة</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow-plain">مسودة تخطيط منصة إلكترونية</div>
+    <h1>من فكرة على الورق إلى مشروع قائم في بابل</h1>
+    <p>وثيقة تخطيط أولية لمنصة شعبة الحاضنات التكنولوجية التابعة لقسم حدائق العلوم والتكنولوجيا في جامعة بابل، إلى جانب معاينة أولية لواجهات المستخدم المقترحة لإدارة الأفكار الريادية ومتابعتها من التقديم حتى التخرّج من الحاضنة.</p>
+    <div class="hero-meta">
+      <div><b>4</b><small>مراحل الاحتضان المقترحة</small></div>
+      <div><b>واجهتان</b><small>لوحة الإدارة وبوابة رائد الأعمال</small></div>
+      <div><b>نموذج واحد</b><small>لتقديم الأفكار إلكترونياً</small></div>
+    </div>
+  </div>
+</header>
+
+<section id="nashaa">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>التعريف بالشعبة</h2>
+      <p>ملخص مقترح للتعريف المؤسسي كما سيظهر في الصفحة الرئيسية للمنصة.</p>
+    </div>
+    <p style="max-width:68ch;color:var(--ink-soft)">
+      تُعنى شعبة الحاضنات التكنولوجية في جامعة بابل، بوصفها جزءاً من قسم حدائق العلوم والتكنولوجيا، برعاية الأفكار الريادية ذات الطابع التقني لدى طلبة الجامعة وتدريسييها، عبر توفير مساحة عمل ومرافقة فنية وإدارية تمتد من مرحلة الفكرة الأولية وحتى تحوّلها إلى مشروع قادر على الاستمرار خارج أسوار الجامعة. تسعى الشعبة إلى أن تكون حلقة الوصل بين البحث العلمي داخل الجامعة وسوق العمل، بما يخدم اقتصاداً محلياً قائماً على المعرفة.
+    </p>
+    <div class="vm-grid" style="margin-top:26px">
+      <div class="vm-card">
+        <h3>الرؤية</h3>
+        <p>أن تكون الحاضنة التكنولوجية في جامعة بابل مرجعاً إقليمياً في تحويل الأفكار الطلابية والبحثية إلى مشاريع فعلية تخدم محافظة بابل ومحيطها.</p>
+      </div>
+      <div class="vm-card">
+        <h3>الرسالة</h3>
+        <p>توفير بيئة متكاملة من الإرشاد والتدريب والتمويل الأولي وربط أصحاب الأفكار بالمستثمرين والجهات الحكومية والصناعية ذات العلاقة.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="ahdaf">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>الأهداف التي تبنى عليها المنصة</h2>
+      <p>كل بند أدناه يقابله لاحقاً وظيفة أو صفحة محددة داخل المنصة الإلكترونية.</p>
+    </div>
+    <ol class="goal-list">
+      <li>استقبال الأفكار الريادية من طلبة وتدريسيي الجامعة عبر نموذج إلكتروني موحّد بدل المراسلات الورقية.</li>
+      <li>فرز الأفكار وتصنيفها حسب مجالها (تقني، صناعي، خدمي) وربطها بمرشد مختص من داخل الجامعة أو خارجها.</li>
+      <li>تتبّع كل مشروع محتضن بمراحل واضحة: تقديم، دراسة جدوى، احتضان فعلي، تخرّج من الحاضنة.</li>
+      <li>حماية الأفكار عبر تعريف أصحابها بإجراءات الملكية الفكرية وبراءات الاختراع قبل عرض المشروع على أي طرف خارجي.</li>
+      <li>ربط المشاريع الجاهزة بمستثمرين وجهات تمويل حكومية أو خاصة عبر بوابة تواصل داخل المنصة.</li>
+      <li>إصدار تقارير دورية عن أداء الحاضنة (عدد الأفكار، نسب النجاح، فرص العمل المستحدثة) لإدارة الجامعة والوزارة.</li>
+    </ol>
+    <div style="margin-top:30px">
+      <h3 style="font-size:1.05rem;margin-bottom:10px">القيم التي تحكم عمل الشعبة</h3>
+      <div class="chips">
+        <span class="chip">الابتكار</span>
+        <span class="chip">التمكين</span>
+        <span class="chip">الشراكة</span>
+        <span class="chip">الشفافية</span>
+        <span class="chip">الاستدامة</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="khadamat">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>الخدمات المعروضة على رائد الأعمال</h2>
+      <p>القائمة التي ستظهر في صفحة "خدماتنا" داخل المنصة.</p>
+    </div>
+    <div class="svc-list">
+      <div class="svc-row"><div>إرشاد فني وتقني لتطوير المنتج أو الخدمة</div><span>مرافقة فردية</span></div>
+      <div class="svc-row"><div>استشارات إدارية وقانونية لتأسيس المشروع</div><span>حسب الطلب</span></div>
+      <div class="svc-row"><div>دراسة جدوى اقتصادية للفكرة المقدَّمة</div><span>قبل القبول بالحاضنة</span></div>
+      <div class="svc-row"><div>ورش تدريبية في ريادة الأعمال ونماذج العمل</div><span>دوري</span></div>
+      <div class="svc-row"><div>مساحة عمل ودعم لوجستي داخل الجامعة</div><span>لمدة الاحتضان</span></div>
+      <div class="svc-row"><div>الربط بالمستثمرين وصناديق التمويل</div><span>عند النضج</span></div>
+      <div class="svc-row"><div>متابعة ما بعد التخرّج من الحاضنة</div><span>مستمر</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="khutta">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>خطة الإطلاق المقترحة على مراحل</h2>
+      <p>تسلسل عملي لبناء المنصة بدل إطلاقها دفعة واحدة.</p>
+    </div>
+    <div class="phase">
+      <div class="tag">المرحلة الأولى</div>
+      <div><b>استقبال الأفكار</b><p>نشر نموذج تقديم إلكتروني بسيط، وصفحة تعريفية بالشعبة، دون الحاجة إلى حسابات دخول معقّدة.</p></div>
+    </div>
+    <div class="phase">
+      <div class="tag">المرحلة الثانية</div>
+      <div><b>لوحة إدارة داخلية</b><p>واجهة لموظفي الشعبة لفرز الطلبات الواردة، إسناد مرشدين، وتحديث حالة كل فكرة.</p></div>
+    </div>
+    <div class="phase">
+      <div class="tag">المرحلة الثالثة</div>
+      <div><b>بوابة رائد الأعمال</b><p>حساب خاص لكل صاحب مشروع مقبول لمتابعة مراحل مشروعه ورفع مستنداته والتواصل مع مرشده.</p></div>
+    </div>
+    <div class="phase">
+      <div class="tag">المرحلة الرابعة</div>
+      <div><b>الربط الخارجي</b><p>فتح قناة تواصل مع المستثمرين والجهات الداعمة، وتقارير أداء دورية تُرفع لإدارة الجامعة.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="wajha">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>معاينة أولية لواجهات المنصة</h2>
+      <p>تصوّر بصري سريع لثلاث واجهات رئيسية — للمراجعة والتعديل قبل التنفيذ الفعلي.</p>
+    </div>
+
+    <div class="mock-tabs">
+      <button class="mock-tab active" data-target="scr-dash">لوحة إدارة الشعبة</button>
+      <button class="mock-tab" data-target="scr-form">نموذج تقديم فكرة</button>
+      <button class="mock-tab" data-target="scr-proj">المشاريع المحتضنة</button>
+      <button class="mock-tab" data-target="scr-msg">التواصل مع المستثمرين</button>
+    </div>
+
+    <div class="device">
+      <!-- Dashboard -->
+      <div class="screen active" id="scr-dash">
+        <div class="app-topbar">
+          <b>حاضنة بابل التكنولوجية</b>
+          <span>أ. م. .د أمير هادي — مدير الشعبة</span>
+        </div>
+        <div class="stat-grid">
+          <div class="stat"><b>52</b><span>فكرة مقدَّمة هذا العام</span></div>
+          <div class="stat"><b>17</b><span>مشروع قيد الاحتضان حالياً</span></div>
+          <div class="stat"><b>9</b><span>مشاريع تخرّجت من الحاضنة</span></div>
+          <div class="stat"><b>6</b><span>مرشدون فنيون معتمدون</span></div>
+        </div>
+        <div class="panel-title">أحدث الأفكار المقدَّمة</div>
+        <div class="track-list">
+          <div class="track-item"><span>نظام ري ذكي للحقول الصغيرة</span><span class="badge review">قيد الدراسة</span></div>
+          <div class="track-item"><span>تطبيق لمتابعة النفايات الطبية</span><span class="badge new">جديدة</span></div>
+          <div class="track-item"><span>منصة تسويق للحرف اليدوية البابلية</span><span class="badge active">محتضَنة</span></div>
+          <div class="track-item"><span>حساس لجودة مياه الشرب</span><span class="badge review">قيد الدراسة</span></div>
+        </div>
+      </div>
+
+      <!-- Form -->
+      <div class="screen" id="scr-form">
+        <div class="form-body">
+          <h4>قدّم فكرتك إلى الحاضنة</h4>
+          <p>الحقول التالية هي الحد الأدنى المقترح لتقديم أولي، دون تعقيد.</p>
+          <div class="f-group"><label>اسم المشروع أو الفكرة</label><input type="text" placeholder="مثال: نظام ري ذكي"></div>
+          <div class="f-group"><label>مجال الفكرة</label>
+            <select><option>تقني / برمجي</option><option>صناعي</option><option>زراعي</option><option>خدمي</option></select>
+          </div>
+          <div class="f-group"><label>وصف مختصر للفكرة</label><textarea rows="3" placeholder="ما المشكلة التي تحلّها فكرتك؟"></textarea></div>
+          <div class="f-group"><label>البريد الجامعي ورقم التواصل</label><input type="text" placeholder="name@uobabylon.edu.iq"></div>
+          <button class="f-btn">إرسال الفكرة للمراجعة</button>
+        </div>
+      </div>
+
+      <!-- Projects -->
+      <div class="screen" id="scr-proj">
+        <div class="panel-title" style="padding-top:18px">المشاريع المحتضنة حالياً</div>
+        <div class="proj-grid">
+          <div class="proj-card"><b>منصة تسويق الحرف البابلية</b><span>مرحلة: نمو وتوسّع</span><div class="proj-bar"><i style="width:80%"></i></div></div>
+          <div class="proj-card"><b>تطبيق مواعيد العيادات الشعبية</b><span>مرحلة: دراسة جدوى</span><div class="proj-bar"><i style="width:35%"></i></div></div>
+          <div class="proj-card"><b>حساس جودة مياه الشرب</b><span>مرحلة: نموذج أولي</span><div class="proj-bar"><i style="width:55%"></i></div></div>
+          <div class="proj-card"><b>نظام ري ذكي للحقول الصغيرة</b><span>مرحلة: احتضان فعلي</span><div class="proj-bar"><i style="width:65%"></i></div></div>
+        </div>
+      </div>
+
+      <!-- Messages -->
+      <div class="screen" id="scr-msg">
+        <div class="panel-title" style="padding-top:18px">التواصل مع المستثمرين والشركاء</div>
+        <div class="msg-row">
+          <div class="avatar">غ.ك</div>
+          <div><b>غرفة تجارة بابل</b><p>مهتمّون بزيارة مشروع "منصة الحرف البابلية" الأسبوع القادم لتقييم فرصة الشراكة.</p></div>
+        </div>
+        <div class="msg-row">
+          <div class="avatar">ص.ت</div>
+          <div><b>صندوق تمويل المشاريع الصغيرة</b><p>يرجى تزويدنا بدراسة الجدوى المحدَّثة لمشروع نظام الري قبل جلسة اللجنة.</p></div>
+        </div>
+        <div class="msg-row">
+          <div class="avatar">ق.ح</div>
+          <div><b>قسم حدائق العلوم والتكنولوجيا</b><p>تم اعتماد الموازنة التشغيلية للربع القادم لدعم أربعة مشاريع إضافية.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    مسودة تخطيط داخلية — <b>شعبة الحاضنات التكنولوجية</b> · قسم حدائق العلوم والتكنولوجيا · جامعة بابل
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('.navlinks a[data-scroll]').forEach(function(link){
+    link.addEventListener('click', function(){
+      var target = document.getElementById(link.dataset.scroll);
+      if(target){ target.scrollIntoView({behavior:'smooth', block:'start'}); }
+    });
+  });
+  document.querySelectorAll('.mock-tab').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('.mock-tab').forEach(b=>b.classList.remove('active'));
+      document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.target).classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>
