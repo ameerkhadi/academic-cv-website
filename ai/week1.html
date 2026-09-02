@@ -1475,6 +1475,58 @@
   /* أيقونة الاستدعاء داخل شريط الأدوات */
   .ann-bar .sheet-toggle.on{ background:rgba(255,255,255,0.2); border-color:rgba(255,255,255,0.4); }
 
+  /* ---------- توضيح القواعد الذهبية الأربع ---------- */
+  .pe-rules{ display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:12px 0 4px; width:100%; }
+  @media (max-width:600px){ .pe-rules{ grid-template-columns:1fr; } }
+
+  .pe-card{
+    --pc:var(--blue);
+    border:2px solid var(--pc); border-radius:14px 5px 14px 5px/5px 14px 5px 14px;
+    background:rgba(255,255,255,0.5); padding:10px 13px 12px; min-width:0;
+  }
+  .pe-card.g{ --pc:var(--green); } .pe-card.o{ --pc:var(--orange); } .pe-card.p{ --pc:var(--purple); }
+  .pe-head{ display:flex; align-items:center; gap:8px; margin-bottom:5px; }
+  .pe-n{
+    flex:0 0 auto; width:25px; height:25px; border-radius:50%;
+    background:var(--pc); color:#fff; font-weight:700; font-size:13px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .pe-t{ font-weight:700; font-size:15px; color:var(--pc); }
+  .pe-m{ font-size:13.5px; line-height:1.9; margin-bottom:7px; }
+
+  /* السطران: الضعيف ثم القويّ، وبينهما الفرق كلّه */
+  .pe-line{ display:flex; gap:7px; align-items:flex-start; font-size:13px; line-height:1.85; margin-top:5px; }
+  .pe-line .pe-mk{ flex:0 0 auto; font-weight:700; font-size:14px; }
+  .pe-line.bad  .pe-mk{ color:var(--red); }
+  .pe-line.good .pe-mk{ color:var(--green); }
+  .pe-line.bad{  background:rgba(209,52,43,0.07); }
+  .pe-line.good{ background:rgba(31,122,61,0.07); }
+  .pe-line{ padding:5px 8px; border-radius:7px; }
+  .pe-why{ font-size:12.5px; line-height:1.85; color:rgba(26,61,140,0.78); margin-top:7px; }
+
+  /* الأمر كاملًا: كل قاعدة مقطع ملوّن فتُرى القواعد الأربع مركّبة */
+  .pe-full{ margin:18px 0 4px; width:100%; }
+  .pe-weak{
+    border:2px dashed rgba(209,52,43,0.6); background:rgba(209,52,43,0.06);
+    border-radius:10px; padding:9px 13px 11px; margin-bottom:12px; font-size:13.5px; line-height:1.9;
+  }
+  .pe-built{ border:2px solid var(--green); border-radius:12px; overflow:hidden; }
+  .pe-seg{
+    --sc:var(--blue);
+    border-right:6px solid var(--sc);
+    background:color-mix(in srgb, var(--sc) 7%, transparent);
+    padding:8px 12px 9px; font-size:13.5px; line-height:1.95;
+  }
+  .pe-seg.g{ --sc:var(--green); } .pe-seg.o{ --sc:var(--orange); } .pe-seg.p{ --sc:var(--purple); }
+  .pe-tag{
+    display:inline-block; font-size:11px; font-weight:700; color:#fff;
+    background:var(--sc); padding:2px 9px 3px; border-radius:999px; margin-inline-end:7px;
+  }
+  .pe-out{
+    background:rgba(31,122,61,0.1); border-top:2px solid var(--green);
+    padding:8px 12px 9px; font-size:13px; line-height:1.9;
+  }
+
   /* ---------- مثال عقلية التكرار مقابل اللقطة الواحدة ---------- */
   .ex-iter{ width:100%; margin:10px 0 6px; }
   .ex-iter .ex-lead{ font-size:14.5px; line-height:2; margin:0 0 12px; }
@@ -1588,7 +1640,8 @@
     /* الصناديق لا تُقصّ نصفين على حدّ الصفحة: إن لم تسع نزلت كاملة للتالية.
        بدونها يبدأ أعلى الصفحة بصفوف يتيمة بلا إطار ولا عنوان. */
     .screen-frame, .scn, .hw, .try-box, .callout, .ct-bud, .gloss-row,
-    .q-item, .sf-row, .leg-item, .mini-note, .map-tree li, .ex-card, .fb-grid, li{
+    .q-item, .sf-row, .leg-item, .mini-note, .map-tree li, .ex-card, .fb-grid,
+    .pe-card, .pe-built, li{
       break-inside:avoid; page-break-inside:avoid;
     }
     /* عنوان في ذيل الصفحة ومحتواه في التي بعدها: يُدفع العنوان معه */
@@ -1771,6 +1824,60 @@
           <li><span class="bullet-mark">✔</span>أخطاء شائعة: غموض السياق، عدم تحديد طول الإجابة، إغفال النبرة والتنسيق.</li>
           <li><span class="bullet-mark">✔</span><span class="hl hl-green">عقلية التكرار</span> أفضل من «اللقطة الواحدة»: ابنِ السياق تدريجيًا وقدّم ملاحظات واضحة بعد كل نتيجة.</li>
         </ul>
+
+        <p class="ex-lead" style="margin:10px 0 0;"><strong>القواعد الأربع بالتفصيل:</strong> كل قاعدة تُجيب عن سؤال يجهله كلود عنك، وحذفها يجعله يخمّن — والتخمين هو مصدر كل نتيجة «عامة».</p>
+
+        <div class="pe-rules">
+          <div class="pe-card">
+            <div class="pe-head"><span class="pe-n">١</span><span class="pe-t">الموقف والسياق</span></div>
+            <div class="pe-m">من أنت؟ ولمن تكتب؟ وما خلفية الموضوع؟</div>
+            <div class="pe-line bad"><span class="pe-mk">✗</span><span>«اكتب كتابًا رسميًا.»</span></div>
+            <div class="pe-line good"><span class="pe-mk">✓</span><span>«أنا مدير شعبة الأرشفة في المعهد، أكتب إلى دائرة الموارد البشرية بخصوص تأخير معاملة تقاعد.»</span></div>
+            <div class="pe-why">بلا سياق يخترع جهةً ونبرةً لا تشبهان دائرتك.</div>
+          </div>
+
+          <div class="pe-card g">
+            <div class="pe-head"><span class="pe-n">٢</span><span class="pe-t">المهمة بوضوح</span></div>
+            <div class="pe-m">فعل واحد محدّد، وما المطلوب بالضبط.</div>
+            <div class="pe-line bad"><span class="pe-mk">✗</span><span>«شوف هذا التقرير.»</span></div>
+            <div class="pe-line good"><span class="pe-mk">✓</span><span>«استخرج من التقرير ثلاث مشكلات متكرّرة، ورتّبها من الأكثر تكرارًا.»</span></div>
+            <div class="pe-why">«شوف» ليست مهمة — قد يلخّص أو ينتقد أو يعيد الكتابة، وكلها «تنفيذ» لأمرك.</div>
+          </div>
+
+          <div class="pe-card o">
+            <div class="pe-head"><span class="pe-n">٣</span><span class="pe-t">القواعد والشكل</span></div>
+            <div class="pe-m">الطول · النبرة · التنسيق · والممنوعات.</div>
+            <div class="pe-line bad"><span class="pe-mk">✗</span><span>لا شيء — تترك الشكل له.</span></div>
+            <div class="pe-line good"><span class="pe-mk">✓</span><span>«ثلاث فقرات، صيغة رسمية، بلا عبارات مجاملة، وأنهِ بجملة طلب واحدة.»</span></div>
+            <div class="pe-why">بلا شكل تحصل على نصّ تُعيد تحريره — فيضيع الوقت الذي وفّرته.</div>
+          </div>
+
+          <div class="pe-card p">
+            <div class="pe-head"><span class="pe-n">٤</span><span class="pe-t">المثال</span></div>
+            <div class="pe-m">نموذج واحد يريه ما تقصده بدل أن تصفه.</div>
+            <div class="pe-line bad"><span class="pe-mk">✗</span><span>«بالأسلوب المعتمد عندنا.»</span></div>
+            <div class="pe-line good"><span class="pe-mk">✓</span><span>«هذا نموذج من كتبنا السابقة: [ألصق كتابًا]. احتذِ نبرته وترتيبه.»</span></div>
+            <div class="pe-why">مثال واحد أقوى من عشر صفات — فـ«رسمي» تعني عند كل دائرة شيئًا مختلفًا.</div>
+          </div>
+        </div>
+
+        <div class="pe-full">
+          <p class="ex-lead" style="margin:4px 0 8px;"><strong>والأمر نفسه مبنيًّا بالقواعد الأربع:</strong></p>
+
+          <div class="pe-weak"><strong style="color:var(--red);">✗ الأمر الضعيف:</strong> «اكتب لي كتاب اعتذار عن تأخير معاملة.»</div>
+
+          <div class="pe-built">
+            <div class="pe-seg"><span class="pe-tag">١ الموقف</span>أنا مدير شعبة الأرشفة في المعهد العالي لتأهيل وتدريب القادة. الكتاب موجّه إلى دائرة الموارد البشرية، وسبب التأخير تعطّل منظومة الأرشفة أسبوعًا كاملًا.</div>
+            <div class="pe-seg g"><span class="pe-tag">٢ المهمة</span>اكتب كتاب اعتذار رسميًّا عن تأخير المعاملة رقم ٤٥٧، يوضّح السبب ويحدّد موعدًا جديدًا للإنجاز هو العشرون من الشهر الحالي.</div>
+            <div class="pe-seg o"><span class="pe-tag">٣ الشكل</span>ثلاث فقرات لا أكثر · صيغة رسمية بضمير الغائب · بلا عبارات مجاملة أو مبالغة · وأنهِ بجملة طلب واحدة.</div>
+            <div class="pe-seg p"><span class="pe-tag">٤ المثال</span>هذا نموذج من كتبنا السابقة، احتذِ نبرته وترتيبه: [ألصق هنا كتابًا سابقًا من دائرتك].</div>
+            <div class="pe-out"><strong>النتيجة:</strong> كتاب جاهز للتوقيع من المحاولة الأولى غالبًا — وما يبقى تعديله يُصلَح بجولة أو جولتين، لا بإعادة الكتابة من الصفر.</div>
+          </div>
+
+          <p class="ex-lead" style="margin:14px 0 0;">لاحظ أن الأمر <span class="hl hl-yellow">أطول</span> — وهذا هو الثمن الوحيد. تكتبه مرة، وتحفظه في <strong>مشروع</strong> أو <strong>التعليمات الدائمة</strong>، فلا تكتبه ثانيةً أبدًا.</p>
+
+          <p class="ex-lead" style="margin:12px 0 0;"><strong>وأخطاء المحاضرة الثلاثة</strong> ليست إلا القواعد نفسها مقلوبة: غموض السياق = سقوط القاعدة ١ · عدم تحديد طول الإجابة = سقوط ٣ · إغفال النبرة والتنسيق = سقوط ٣ أيضًا. فمن ضبط القواعد الأربع نجا من الأخطاء الثلاثة.</p>
+        </div>
 
         <div class="ex-iter">
           <p class="ex-lead"><strong>مثال عملي:</strong> تريد تقريرًا شهريًا عن أداء شعبة الأرشفة الإلكترونية.</p>
