@@ -1475,6 +1475,67 @@
   /* أيقونة الاستدعاء داخل شريط الأدوات */
   .ann-bar .sheet-toggle.on{ background:rgba(255,255,255,0.2); border-color:rgba(255,255,255,0.4); }
 
+  /* ---------- مثال عقلية التكرار مقابل اللقطة الواحدة ---------- */
+  .ex-iter{ width:100%; margin:10px 0 6px; }
+  .ex-iter .ex-lead{ font-size:14.5px; line-height:2; margin:0 0 12px; }
+
+  /* لكلٍّ ارتفاعه: بطاقة اللقطة الواحدة أقصر، ومدّها لطول جارتها يترك فراغًا */
+  .ex-pair{ display:flex; flex-wrap:wrap; gap:14px; align-items:flex-start; }
+  .ex-card{
+    flex:1 1 280px; min-width:0;
+    border-radius:14px 5px 14px 5px/5px 14px 5px 14px;
+    padding:11px 14px 13px;
+  }
+  .ex-card.bad{  border:2px dashed rgba(209,52,43,0.6); background:rgba(209,52,43,0.06); }
+  .ex-card.good{ border:2px solid  rgba(31,122,61,0.7); background:rgba(31,122,61,0.06); }
+
+  .ex-chip{
+    display:inline-flex; align-items:center; gap:6px;
+    font-size:12px; font-weight:700; color:#fff;
+    padding:3px 11px 4px; border-radius:999px; margin-bottom:8px;
+  }
+  .ex-card.bad  .ex-chip{ background:var(--red); }
+  .ex-card.good .ex-chip{ background:var(--green); }
+
+  /* الأمر كما يُكتب: خطّ جانبي يميّزه عن الشرح حوله */
+  .ex-prompt{
+    border-right:4px solid rgba(26,61,140,0.35);
+    background:rgba(255,255,255,0.55);
+    border-radius:4px 10px 10px 4px;
+    padding:7px 11px 8px; margin:6px 0 8px;
+    font-size:13.5px; line-height:1.95;
+  }
+  .ex-note{ font-size:13px; line-height:1.95; }
+
+  /* جولات التكرار: رقم الجولة ثم ما تكتبه ثم ما يحدث */
+  .ex-rounds{ list-style:none; margin:4px 0 0; padding:0; display:flex; flex-direction:column; gap:8px; }
+  .ex-rounds li{ display:flex; gap:9px; align-items:flex-start; font-size:13.5px; line-height:1.9; }
+  .ex-rn{
+    flex:0 0 auto; width:23px; height:23px; margin-top:2px;
+    border-radius:50%; background:var(--green); color:#fff;
+    display:flex; align-items:center; justify-content:center;
+    font-size:12.5px; font-weight:700;
+  }
+  .ex-rounds .ex-said{ font-weight:700; }
+  .ex-rounds .ex-got{ color:rgba(26,61,140,0.75); }
+
+  /* جدول الملاحظة: عقيمة مقابل تعمل */
+  .fb-grid{
+    display:grid; grid-template-columns:1fr 1fr; gap:0;
+    border:2px solid rgba(26,61,140,0.45); border-radius:10px;
+    overflow:hidden; margin:14px 0 6px; font-size:13px;
+  }
+  .fb-grid > div{ padding:8px 11px; line-height:1.85; border-bottom:1px solid rgba(26,61,140,0.16); }
+  .fb-grid > div:nth-child(2n){ border-inline-start:1px solid rgba(26,61,140,0.16); }
+  .fb-grid > div:nth-last-child(-n+2){ border-bottom:none; }
+  .fb-grid .fb-h{ font-weight:700; color:#fff; }
+  .fb-grid .fb-h.bad{  background:var(--red); }
+  .fb-grid .fb-h.good{ background:var(--green); }
+  @media (max-width:520px){
+    .fb-grid{ grid-template-columns:1fr; }
+    .fb-grid > div:nth-child(2n){ border-inline-start:none; }
+  }
+
   @media print{
     *{ -webkit-print-color-adjust:exact; print-color-adjust:exact; color-adjust:exact; }
     @page{ size:A4; margin:8mm; }
@@ -1512,7 +1573,7 @@
     /* الصناديق لا تُقصّ نصفين على حدّ الصفحة: إن لم تسع نزلت كاملة للتالية.
        بدونها يبدأ أعلى الصفحة بصفوف يتيمة بلا إطار ولا عنوان. */
     .screen-frame, .scn, .hw, .try-box, .callout, .ct-bud, .gloss-row,
-    .q-item, .sf-row, .leg-item, .mini-note, .map-tree li, li{
+    .q-item, .sf-row, .leg-item, .mini-note, .map-tree li, .ex-card, .fb-grid, li{
       break-inside:avoid; page-break-inside:avoid;
     }
     /* عنوان في ذيل الصفحة ومحتواه في التي بعدها: يُدفع العنوان معه */
@@ -1695,6 +1756,48 @@
           <li><span class="bullet-mark">✔</span>أخطاء شائعة: غموض السياق، عدم تحديد طول الإجابة، إغفال النبرة والتنسيق.</li>
           <li><span class="bullet-mark">✔</span><span class="hl hl-green">عقلية التكرار</span> أفضل من «اللقطة الواحدة»: ابنِ السياق تدريجيًا وقدّم ملاحظات واضحة بعد كل نتيجة.</li>
         </ul>
+
+        <div class="ex-iter">
+          <p class="ex-lead"><strong>مثال عملي:</strong> تريد تقريرًا شهريًا عن أداء شعبة الأرشفة الإلكترونية.</p>
+
+          <div class="ex-pair">
+            <div class="ex-card bad">
+              <span class="ex-chip">✗ اللقطة الواحدة</span>
+              <div class="ex-prompt">«اكتب لي تقريرًا شهريًا عن أداء شعبة الأرشفة الإلكترونية لشهر آب، يتضمّن الإنجازات والمعوّقات والتوصيات، بأسلوب رسمي.»</div>
+              <div class="ex-note">كلام عام، وأرقام غير موجودة في بياناتك، وأسلوب لا يشبه مراسلاتك. فتقرأه ولا يعجبك، فتفتح محادثة جديدة وتعيد الصياغة — <span class="hl hl-pink">وتبدأ من الصفر كل مرة</span>.</div>
+            </div>
+
+            <div class="ex-card good">
+              <span class="ex-chip">✓ عقلية التكرار</span>
+              <ol class="ex-rounds">
+                <li><span class="ex-rn">١</span><span><span class="ex-said">«هذه بيانات آب: [الجدول]. لخّصها بخمس نقاط، بلا مقدمة.»</span> <span class="ex-got">← تقرأ النتيجة.</span></span></li>
+                <li><span class="ex-rn">٢</span><span><span class="ex-said">«النقطة الثالثة عامة. اربطها بالرقم: المتأخرات نزلت من ٤٠ إلى ١٢.»</span> <span class="ex-got">← تُصلَح نقطة واحدة.</span></span></li>
+                <li><span class="ex-rn">٣</span><span><span class="ex-said">«الأسلوب رسمي أكثر من اللازم. اكتبها بلغة مذكّرة داخلية.»</span> <span class="ex-got">← تُضبَط النبرة.</span></span></li>
+                <li><span class="ex-rn">٤</span><span><span class="ex-said">«أضف ثلاث توصيات قابلة للتنفيذ خلال شهر.»</span> <span class="ex-got">← يُبنى فوق ما سبق.</span></span></li>
+                <li><span class="ex-rn">٥</span><span><span class="ex-said">«صِغ العنوان.»</span> <span class="ex-got">← ينتهي التقرير.</span></span></li>
+              </ol>
+            </div>
+          </div>
+
+          <p class="ex-lead" style="margin:14px 0 0;">لاحظ الجولة الرابعة: <span class="hl hl-yellow">لم تُعِد شرح البيانات ولا الأسلوب</span> — هو يتذكّرهما مما سبق. أنت <strong>تراكم السياق</strong> لا تعيد بناءه، وهذا هو المكسب كلّه.</p>
+
+          <p class="ex-lead" style="margin:14px 0 0;">وشرط نجاحها ملاحظة <strong>محدّدة</strong>: قُل أي جزء فيه خلل وما الصواب، لا حكمًا عامًا على النصّ كله.</p>
+
+          <div class="fb-grid">
+            <div class="fb-h bad">ملاحظة عقيمة</div>
+            <div class="fb-h good">ملاحظة تعمل</div>
+            <div>«ما عجبني»</div>
+            <div>«الفقرة الثانية طويلة — اختصرها لسطرين»</div>
+            <div>«خليه أحسن»</div>
+            <div>«احذف عبارات المجاملة وابدأ بالنتيجة»</div>
+            <div>«غلط»</div>
+            <div>«الرقم خطأ، الصحيح ١٢ لا ٢٠»</div>
+            <div>«مو رسمي»</div>
+            <div>«استعمل صيغة الغائب، وابدأ بـ: تشير المؤشرات إلى…»</div>
+          </div>
+
+          <p class="ex-lead" style="margin:14px 0 0;"><strong>ومتى تنفع اللقطة الواحدة؟</strong> في المهام القصيرة المعروفة مثل «صحّح إملاء هذه الفقرة». أما ما فيه أسلوب أو حكم أو بيانات — تقرير، كتاب رسمي، تحليل — فالتكرار أسرع وأدقّ <span class="hl hl-blue">حتى لو بدا أطول</span>، لأن اللقطة الواحدة تنتهي عادةً بخمس محاولات من الصفر، والتكرار بخمس جولات تبني كلٌّ منها على التي قبلها.</p>
+        </div>
 
         <div class="chapter-num" style="color:var(--red);"><span class="cn-num">٥</span><span class="cn-title">المشاريع والمهارات</span></div>
         <ul class="bullet-list">
