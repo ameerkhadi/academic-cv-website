@@ -3309,6 +3309,7 @@
     var COURSE = 'دفتر محاضرات الذكاء الاصطناعي وتحليل البيانات';
     var WHO    = 'د. أمير هادي · المعهد العالي لتأهيل وتدريب القادة · ٢٠٢٦';
     var URL    = 'ameerkhadi.github.io/academic-cv-website/ai/week1';
+    var SITE   = 'ameerkhadi.github.io/academic-cv-website';
 
     document.querySelectorAll('.slide').forEach(function(slide){
       var tab = document.querySelector('.tab[data-target="' + slide.id + '"]');
@@ -3329,7 +3330,7 @@
 
     var foot = document.createElement('div');
     foot.className = 'print-foot';
-    foot.textContent = COURSE + ' — د. أمير هادي — ' + URL;
+    foot.textContent = COURSE + ' — د. أمير هادي — ' + SITE;
     document.body.appendChild(foot);
   })();
 </script>
