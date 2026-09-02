@@ -1559,6 +1559,102 @@
   .lab-again:hover{ background:#5f2183; }
   .lab-again:focus-visible{ outline:2px solid #f0b400; outline-offset:2px; }
 
+  /* الأنواع التي تحتاج العرض كاملًا: الميدان فوق، والتصحيح تحته */
+  .lab-body.stack{ display:block; }
+  .lab-body.stack .lab-main{ min-width:0; }
+  .lab-body.stack .lab-side{ margin-top:11px; }
+
+  /* أنواع التمارين الأخرى — نفس منطق التصحيح: أخضر/أحمر مع بيان السبب */
+  .lab-hint{ font-size:12.5px; color:rgba(26,61,140,0.7); margin-bottom:9px; }
+
+  /* قرصا «صح» و«خطأ» يُسحبان */
+  .tf-chips{ display:flex; gap:10px; margin-bottom:12px; }
+  .tf-chip{
+    font-family:'Aref Ruqaa',serif; font-weight:700; font-size:16px; color:#fff;
+    padding:9px 22px 10px; border-radius:999px; cursor:grab;
+    touch-action:none; user-select:none;
+    box-shadow:3px 4px 0 rgba(0,0,0,0.2);
+  }
+  .tf-chip.yes{ background:var(--green); } .tf-chip.no{ background:var(--red); }
+  .tf-chip.lifted{ opacity:0.35; }
+  .lab-ghost{ position:fixed; z-index:9999; pointer-events:none; opacity:0.92; cursor:grabbing; }
+
+  .tf-list{ display:flex; flex-direction:column; gap:9px; }
+  .tf-st{
+    border:2px dashed rgba(26,61,140,0.35); border-radius:11px;
+    background:rgba(255,255,255,0.5); padding:11px 13px 12px;
+    font-size:14px; line-height:1.9; transition:background .15s ease, border-color .15s ease;
+  }
+  .tf-st.over{ border-color:var(--purple); background:rgba(122,46,166,0.1); }
+  .tf-st.ok{  border:2px solid var(--green); background:rgba(31,122,61,0.09); }
+  .tf-st.bad{ border:2px solid var(--red);   background:rgba(209,52,43,0.08); }
+  .tf-st .tf-why{ display:none; font-size:13px; line-height:1.9; margin-top:6px; padding-top:6px;
+                  border-top:1px dashed rgba(26,61,140,0.25); }
+  .tf-st.ok .tf-why, .tf-st.bad .tf-why{ display:block; }
+  .tf-st .tf-v{ font-weight:700; }
+  .tf-st.ok  .tf-v{ color:var(--green); } .tf-st.bad .tf-v{ color:var(--red); }
+
+  /* سلال التصنيف */
+  .sort-cards{ display:flex; flex-wrap:wrap; gap:9px; margin-bottom:12px; }
+  .sort-card{
+    border:2px solid var(--blue); background:rgba(255,255,255,0.65);
+    border-radius:10px; padding:8px 13px 9px; font-size:13.5px; font-weight:700;
+    cursor:grab; touch-action:none; user-select:none;
+  }
+  .sort-card.lifted{ opacity:0.35; }
+  .sort-card.placed{ cursor:default; border-color:var(--green); background:rgba(31,122,61,0.12); }
+  .sort-bins{ display:flex; flex-wrap:wrap; gap:11px; }
+  .sort-bin{
+    --bg:var(--green);
+    flex:1 1 170px; min-height:112px;
+    border:2.5px dashed color-mix(in srgb, var(--bg) 60%, transparent);
+    background:color-mix(in srgb, var(--bg) 6%, transparent);
+    border-radius:13px; padding:9px 11px 11px;
+  }
+  .sort-bin.mid{ --bg:var(--orange); } .sort-bin.hi{ --bg:var(--red); }
+  .sort-bin.over{ border-style:solid; background:color-mix(in srgb, var(--bg) 16%, transparent); }
+  .sort-bin > b{ display:block; color:var(--bg); font-size:14.5px; margin-bottom:7px; }
+  .sort-bin .bin-in{ display:flex; flex-wrap:wrap; gap:6px; }
+
+  /* ترتيب الخطوات بالضغط */
+  .ord-list{ display:flex; flex-direction:column; gap:8px; }
+  .ord-step{
+    display:flex; gap:10px; align-items:flex-start;
+    border:2px solid rgba(26,61,140,0.3); background:rgba(255,255,255,0.55);
+    border-radius:11px; padding:10px 12px 11px; font-size:14px; line-height:1.9;
+    cursor:pointer; transition:background .15s ease;
+  }
+  .ord-step:hover{ background:rgba(24,87,164,0.06); }
+  .ord-step .ord-n{
+    flex:0 0 auto; width:27px; height:27px; border-radius:50%;
+    background:rgba(26,61,140,0.15); color:rgba(26,61,140,0.6);
+    display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13px;
+  }
+  .ord-step.ok{ border-color:var(--green); background:rgba(31,122,61,0.09); cursor:default; }
+  .ord-step.ok .ord-n{ background:var(--green); color:#fff; }
+  .ord-step.bad{ border-color:var(--red); background:rgba(209,52,43,0.08); }
+  .ord-step.bad .ord-n{ background:var(--red); color:#fff; }
+
+  /* اختيارات */
+  .mcq-stem{
+    border-right:5px solid var(--blue); background:rgba(24,87,164,0.07);
+    border-radius:5px 12px 12px 5px; padding:10px 13px 11px; margin-bottom:11px;
+    font-size:14px; line-height:1.95;
+  }
+  .mcq-opts{ display:flex; flex-direction:column; gap:8px; }
+  .mcq-opt{
+    display:flex; gap:10px; align-items:flex-start;
+    border:2px solid rgba(26,61,140,0.3); background:rgba(255,255,255,0.55);
+    border-radius:11px; padding:10px 12px 11px; font-size:14px; line-height:1.9; cursor:pointer;
+  }
+  .mcq-opt:hover{ background:rgba(24,87,164,0.06); }
+  .mcq-opt .mo-k{ flex:0 0 auto; font-weight:700; color:var(--blue); }
+  .mcq-opt.ok{  border-color:var(--green); background:rgba(31,122,61,0.09); }
+  .mcq-opt.bad{ border-color:var(--red);   background:rgba(209,52,43,0.08); }
+  .mcq-opt .mo-why{ display:none; }
+
+
+
   /* ---------- مهمة واحدة عبر أربع واجهات ---------- */
   .pick{ width:100%; margin:14px 0 6px; }
   .pick-task{
@@ -1773,7 +1869,8 @@
        بدونها يبدأ أعلى الصفحة بصفوف يتيمة بلا إطار ولا عنوان. */
     .screen-frame, .scn, .hw, .try-box, .callout, .ct-bud, .gloss-row,
     .q-item, .sf-row, .leg-item, .mini-note, .map-tree li, .ex-card, .fb-grid,
-    .pe-card, .pe-built, .pick-row, .cost-item, .pick-rule, li{
+    .pe-card, .pe-built, .pick-row, .cost-item, .pick-rule,
+    .lab, .tf-st, .sort-bin, .ord-step, .mcq-opt, li{
       break-inside:avoid; page-break-inside:avoid;
     }
     /* عنوان في ذيل الصفحة ومحتواه في التي بعدها: يُدفع العنوان معه */
@@ -3187,6 +3284,110 @@
               </div>
             </div>
           </div>
+
+          <div class="lab" data-kind="tf">
+            <span class="lab-tag">تمرين ٢ · اسحب الحكم</span>
+            <div class="lab-q">اسحب قرص <strong>صح</strong> أو <strong>خطأ</strong> وأفلِته فوق كل عبارة.</div>
+            <p class="lab-hint">القرصان يبقيان مكانهما — تسحب منهما مرة بعد مرة حتى تُحكم العبارات الأربع.</p>
+            <div class="lab-body stack">
+              <div class="lab-main">
+                <div class="tf-chips">
+                  <span class="tf-chip yes" data-v="y">صح</span>
+                  <span class="tf-chip no"  data-v="n">خطأ</span>
+                </div>
+                <div class="tf-list">
+                  <div class="tf-st" data-a="y" data-why="سجلّ التشغيلات هو ما يثبت أنّ المهمة عملت فعلًا في موعدها — وبه تكتشف أنها توقّفت قبل أن يسألك أحد.">
+                    <span class="tf-s">١ · سجلّ التشغيلات في «المهام المجدولة» يبيّن كل مرة اشتغلت فيها المهمة.</span>
+                    <div class="tf-why"></div>
+                  </div>
+                  <div class="tf-st" data-a="n" data-why="رابط التصدير يصلك على بريدك لكنه يبطل بعد ٢٤ ساعة. إن تأخّرت، تطلب تصديرًا جديدًا.">
+                    <span class="tf-s">٢ · رابط تصدير البيانات يصلك على بريدك ويبقى صالحًا للتنزيل متى شئت.</span>
+                    <div class="tf-why"></div>
+                  </div>
+                  <div class="tf-st" data-a="y" data-why="حذف المُشغِّل يُنهي الجدولة نهائيًّا: لا تشغيلة بعده. ولو أردت إيقافًا مؤقّتًا فالحذف ليس أداته.">
+                    <span class="tf-s">٣ · حذف المُشغِّل (Trigger) يوقف المهمة المجدولة نهائيًّا.</span>
+                    <div class="tf-why"></div>
+                  </div>
+                  <div class="tf-st" data-a="n" data-why="هما واجهتان مختلفتان: «التخصيص» يضبط أسلوب كلود معك، و«التصميم» لوحُ تصميمٍ بصريّ تُخرج منه بوسترًا أو شعارًا.">
+                    <span class="tf-s">٤ · «التخصيص» (Customize) و«التصميم» (Design) اسمان لواجهة واحدة.</span>
+                    <div class="tf-why"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="lab-side">
+                <div class="lab-fb"></div>
+                <button type="button" class="lab-again">أعد التمرين</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="lab" data-kind="sort">
+            <span class="lab-tag">تمرين ٣ · صنّف قبل أن ترفع</span>
+            <div class="lab-q">اسحب كل بطاقة إلى سلّتها. <strong>ما لا تريد خروجه من الدائرة، لا ترفعه أصلًا.</strong></div>
+            <p class="lab-hint">البطاقة الخاطئة لا تدخل السلّة — تُردّ ويُبيَّن لك السبب.</p>
+            <div class="lab-body stack">
+              <div class="lab-main">
+                <div class="sort-cards">
+                  <span class="sort-card" data-bin="int" data-why="مسوّدة لم تُوقَّع قرارٌ لم يُولد بعد: تتداولها الأقسام، ولا تُنشر ولا تُرفع خارج الدائرة.">مسوّدة قرار لم تُوقَّع</span>
+                  <span class="sort-card" data-bin="sec" data-why="كشف الرواتب بالأسماء بياناتٌ شخصية ومالية معًا — أعلى ما يُصان، ولا يُرفع على أي أداة خارجية.">كشف رواتب الموظفين بالأسماء</span>
+                  <span class="sort-card" data-bin="pub" data-why="تعميمٌ نُشر على موقع المعهد صار في متناول الناس — رفعه لا يكشف شيئًا جديدًا.">تعميم منشور على موقع المعهد</span>
+                  <span class="sort-card" data-bin="sec" data-why="أرقام هواتف المراجعين بيانات مواطنين ائتُمنت عليها الدائرة — لا تُرفع، ولو لغرض «تنظيم جدول».">أرقام هواتف المواطنين المراجعين</span>
+                  <span class="sort-card" data-bin="pub" data-why="جدول الدورات أُعلن للمتدرّبين أصلًا، فهو محتوى عام لا ضرر في معالجته.">جدول الدورات المعلَن للمتدرّبين</span>
+                  <span class="sort-card" data-bin="int" data-why="دليل الإجراءات يُتداول بين الموظفين ولا يُنشر — داخليّ لا عامّ ولا سرّي.">دليل الإجراءات الداخلي للأقسام</span>
+                </div>
+                <div class="sort-bins">
+                  <div class="sort-bin" data-bin="pub"><b>عام</b><div class="bin-in"></div></div>
+                  <div class="sort-bin mid" data-bin="int"><b>داخلي</b><div class="bin-in"></div></div>
+                  <div class="sort-bin hi" data-bin="sec"><b>سرّي</b><div class="bin-in"></div></div>
+                </div>
+              </div>
+              <div class="lab-side">
+                <div class="lab-fb"></div>
+                <button type="button" class="lab-again">أعد التمرين</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="lab" data-kind="ord">
+            <span class="lab-tag">تمرين ٤ · رتّب الخطوات</span>
+            <div class="lab-q">تريد جدولة مهمة تفحص ملفًّا كل صباح. اضغط الخطوات <strong>بترتيب تنفيذها</strong>.</div>
+            <p class="lab-hint">الضغطة الصحيحة تأخذ رقمها وتثبت، والخاطئة تُردّ ويُبيَّن لك ما موضعها.</p>
+            <div class="lab-body stack">
+              <div class="lab-main">
+                <div class="ord-list">
+                  <div class="ord-step" data-o="3" data-why="المُشغِّل يُضبط بعد أن يصير هناك نصّ مهمة يُشغَّل — لا قبله."><span class="ord-n">؟</span><span>تضبط المُشغِّل: الموعد والتكرار.</span></div>
+                  <div class="ord-step" data-o="5" data-why="مراجعة السجلّ آخر الخطوات: تتحقّق بعد يوم أو يومين أنّ المهمة ما زالت تعمل ولم تتوقّف بصمت."><span class="ord-n">؟</span><span>تفتح «المهام المجدولة» وتراجع سجلّ التشغيلات بعد أول يوم.</span></div>
+                  <div class="ord-step" data-o="1" data-why="المشروع أولًا: هو المكان الذي تعيش فيه الملفات والتعليمات، وبدونه لا تعرف المهمة على أي شيء تشتغل."><span class="ord-n">؟</span><span>تُنشئ مشروعًا وتضع فيه الملفات التي ستُراجَع.</span></div>
+                  <div class="ord-step" data-o="4" data-why="تشغيلة يدوية واحدة قبل النوم أرخص من اكتشاف الخلل بعد أسبوع من رسائل فارغة."><span class="ord-n">؟</span><span>تشغّلها مرة واحدة يدويًّا وتتحقّق من ناتجها.</span></div>
+                  <div class="ord-step" data-o="2" data-why="نصّ المهمة قبل الجدولة: ماذا يفحص، وماذا يرسل لك، وبأي صيغة. الجدولة تكرّر ما كتبته لا تُصلحه."><span class="ord-n">؟</span><span>تكتب نصّ المهمة بوضوح: ماذا يفحص وماذا يرسل لك.</span></div>
+                </div>
+              </div>
+              <div class="lab-side">
+                <div class="lab-fb"></div>
+                <button type="button" class="lab-again">أعد التمرين</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="lab" data-kind="mcq" data-answer="ب">
+            <span class="lab-tag">تمرين ٥ · سيناريو واختيارات</span>
+            <div class="lab-q">اقرأ الحالة واختر التصرّف الصحيح.</div>
+            <div class="lab-body stack">
+              <div class="lab-main">
+                <div class="mcq-stem">موظفة في شعبة التدريب فتحت <strong>«الجلسات النشطة»</strong> في حسابها، فوجدت سطرًا لجهازٍ وموقعٍ لا تعرفهما، مفتوحًا منذ أيام. ماذا تفعل أولًا؟</div>
+                <div class="mcq-opts">
+                  <div class="mcq-opt" data-k="أ" data-why="المسألة ليست محادثة قد تُقرأ. الجلسة المفتوحة تصل إلى ملفاتك ومجلّداتك، فالتجاهل هنا تركُ بابٍ مفتوح لا تركُ ورقةٍ على الطاولة."><span class="mo-k">أ)</span><span>تتجاهل الأمر ما دامت محادثاتها ليست سرّية.</span></div>
+                  <div class="mcq-opt" data-k="ب" data-why="هذا الترتيب هو الصحيح: إنهاء الجلسة يقطع الوصول الآن، وتغيير كلمة المرور يمنع فتح جلسة جديدة، ثم تراجع القائمة لتتأكّد أنّ ما بقي أجهزتُك وحدها."><span class="mo-k">ب)</span><span>تُنهي الجلسة فورًا، ثم تغيّر كلمة المرور، ثم تراجع القائمة ثانيةً.</span></div>
+                  <div class="mcq-opt" data-k="ج" data-why="حذف المحادثات لا يُخرج الجهاز من حسابك. الجلسة تبقى مفتوحة، ويبقى صاحبها يرى ما يأتي بعد الحذف."><span class="mo-k">ج)</span><span>تحذف محادثاتها القديمة حتى لا يراها أحد.</span></div>
+                  <div class="mcq-opt" data-k="د" data-why="التصدير يأخذ لك نسخة من بياناتك، ولا علاقة له بإغلاق جلسةٍ مفتوحة. وانتظار انتهاء الرابط لا يُغلق شيئًا."><span class="mo-k">د)</span><span>تصدّر بياناتها ثم تنتظر انتهاء صلاحية الرابط.</span></div>
+                </div>
+              </div>
+              <div class="lab-side">
+                <div class="lab-fb"></div>
+                <button type="button" class="lab-again">أعد التمرين</button>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div class="section-heading" style="margin-top:24px;">
@@ -4516,26 +4717,84 @@
 <script>
 /* ============================================================
    تمارين الصف — تظهر خلف بوابة القلم وحدها.
-   بالضغط لا بالسحب: pointerdown يعمل بالماوس واللمس والقلم بنفس الشيفرة،
-   على عكس drag & drop المعياري الذي لا يعمل على شاشة اللمس إطلاقًا.
+   بالضغط والسحب بمؤشّر واحد: pointerdown/move/up يعمل بالماوس واللمس
+   والقلم بنفس الشيفرة، على عكس drag & drop المعياري الذي لا يعمل على
+   شاشة اللمس إطلاقًا — والشاشة التفاعلية في الصف لمسٌ لا ماوس.
    ============================================================ */
 (function(){
   var q = location.search + ' ' + location.hash;
   if(!/(^|[?&#])pen\b/.test(q)) return;
   document.body.classList.add('teacher');
 
-  document.querySelectorAll('.lab').forEach(function(lab){
+  var AR = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+
+  /* بيان النتيجة في جانب التمرين */
+  function say(fb, ok, head, text){
+    fb.className = 'lab-fb show ' + (ok ? 'ok' : 'bad');
+    fb.innerHTML = '<span class="fb-v"></span><span class="fb-t"></span>';
+    fb.querySelector('.fb-v').textContent = head;
+    fb.querySelector('.fb-t').textContent = text || '';
+  }
+  function clearFb(fb){ fb.className = 'lab-fb'; fb.textContent = ''; }
+
+  /* ---------- سحبٌ بمؤشّر واحد: شبحٌ يتبع الإصبع، والهدف يُقرأ من نقطة الإفلات ----------
+     الشبح pointer-events:none، فـ elementFromPoint يرى ما تحته لا الشبحَ نفسه. */
+  function dragify(root, srcSel, tgtSel, onDrop){
+    root.addEventListener('pointerdown', function(ev){
+      var src = ev.target.closest(srcSel);
+      if(!src || !root.contains(src) || src.classList.contains('placed')) return;
+      ev.preventDefault();
+
+      var r = src.getBoundingClientRect();
+      var ghost = src.cloneNode(true);
+      ghost.className = src.className + ' lab-ghost';
+      ghost.style.width  = r.width + 'px';
+      ghost.style.left   = r.left + 'px';
+      ghost.style.top    = r.top + 'px';
+      ghost.style.margin = '0';
+      document.body.appendChild(ghost);
+      src.classList.add('lifted');
+
+      var dx = ev.clientX - r.left, dy = ev.clientY - r.top, over = null;
+      try{ src.setPointerCapture(ev.pointerId); }catch(e){}
+
+      function targetAt(x, y){
+        var el = document.elementFromPoint(x, y);
+        if(!el) return null;
+        var t = el.closest(tgtSel);
+        return (t && root.contains(t)) ? t : null;
+      }
+      function mark(t){
+        if(t === over) return;
+        if(over) over.classList.remove('over');
+        over = t;
+        if(over) over.classList.add('over');
+      }
+      function move(e){
+        ghost.style.left = (e.clientX - dx) + 'px';
+        ghost.style.top  = (e.clientY - dy) + 'px';
+        mark(targetAt(e.clientX, e.clientY));
+      }
+      function up(e){
+        src.removeEventListener('pointermove', move);
+        src.removeEventListener('pointerup', up);
+        src.removeEventListener('pointercancel', up);
+        ghost.remove();
+        src.classList.remove('lifted');
+        mark(null);
+        var t = targetAt(e.clientX, e.clientY);
+        if(t) onDrop(src, t);
+      }
+      src.addEventListener('pointermove', move);
+      src.addEventListener('pointerup', up);
+      src.addEventListener('pointercancel', up);
+    });
+  }
+
+  /* ---------- ١ · أشِر على الشاشة ---------- */
+  function labScreen(lab, fb, again){
     var answer = lab.getAttribute('data-answer');
     var screen = lab.querySelector('.lab-screen');
-    var fb     = lab.querySelector('.lab-fb');
-    var again  = lab.querySelector('.lab-again');
-
-    function reset(){
-      screen.classList.remove('done');
-      screen.querySelectorAll('.sf-row').forEach(function(r){ r.classList.remove('ok','bad'); });
-      fb.className = 'lab-fb';
-      fb.textContent = '';
-    }
 
     screen.addEventListener('pointerdown', function(ev){
       if(screen.classList.contains('done')) return;      /* أُجيب: لا يُغيَّر الجواب */
@@ -4545,23 +4804,152 @@
 
       var right = row.dataset.k === answer;
       row.classList.add(right ? 'ok' : 'bad');
-      if(!right){
-        /* يُبرز الصواب مع الخطأ: التصحيح بلا إراءة الصواب لا يعلّم */
-        var correct = screen.querySelector('.sf-row[data-k="' + answer + '"]');
-        if(correct) correct.classList.add('ok');
-      }
+      var correct = screen.querySelector('.sf-row[data-k="' + answer + '"]');
+      /* يُبرز الصواب مع الخطأ: التصحيح بلا إراءة الصواب لا يعلّم */
+      if(!right && correct) correct.classList.add('ok');
       screen.classList.add('done');
 
-      fb.className = 'lab-fb show ' + (right ? 'ok' : 'bad');
-      fb.innerHTML = '<span class="fb-v"></span><span class="fb-t"></span>';
-      fb.querySelector('.fb-v').textContent = right ? '✓ إجابة صحيحة' : '✗ ليست هي';
-      fb.querySelector('.fb-t').textContent = right
-        ? row.dataset.why
-        : row.dataset.why + '  والصواب: ' +
-          (screen.querySelector('.sf-row[data-k="' + answer + '"]').dataset.why || '');
+      say(fb, right, right ? '✓ إجابة صحيحة' : '✗ ليست هي',
+          right ? row.dataset.why
+                : row.dataset.why + '  والصواب: ' + ((correct && correct.dataset.why) || ''));
     });
 
-    again.addEventListener('click', reset);
+    return function(){
+      screen.classList.remove('done');
+      screen.querySelectorAll('.sf-row').forEach(function(r){ r.classList.remove('ok','bad'); });
+    };
+  }
+
+  /* ---------- ٢ · صح وخطأ بالسحب ---------- */
+  function labTf(lab, fb){
+    var sts  = Array.prototype.slice.call(lab.querySelectorAll('.tf-st'));
+    var done = 0, hits = 0;
+
+    dragify(lab, '.tf-chip', '.tf-st', function(chip, st){
+      if(st.classList.contains('ok') || st.classList.contains('bad')) return;
+      var right = chip.dataset.v === st.dataset.a;
+      var truth = st.dataset.a === 'y' ? 'صح' : 'خطأ';
+      st.classList.add(right ? 'ok' : 'bad');
+      st.querySelector('.tf-why').innerHTML =
+        '<span class="tf-v">' + (right ? '✓ حكمٌ صحيح' : '✗ الصواب: ' + truth) + '</span> ' +
+        st.dataset.why;
+      done++; if(right) hits++;
+      say(fb, right, right ? '✓ أصبت' : '✗ الصواب: ' + truth,
+          done === sts.length
+            ? 'انتهت العبارات — ' + AR[hits] + ' من ' + AR[sts.length] + ' صحيحة.'
+            : 'بقيت ' + AR[sts.length - done] + ' من ' + AR[sts.length] + '.');
+    });
+
+    return function(){
+      done = 0; hits = 0;
+      sts.forEach(function(st){
+        st.classList.remove('ok','bad','over');
+        st.querySelector('.tf-why').innerHTML = '';
+      });
+    };
+  }
+
+  /* ---------- ٣ · صنّف في ثلاث سلال ---------- */
+  function labSort(lab, fb){
+    var tray  = lab.querySelector('.sort-cards');
+    var cards = Array.prototype.slice.call(lab.querySelectorAll('.sort-card'));
+    var placed = 0;
+
+    dragify(lab, '.sort-card', '.sort-bin', function(card, bin){
+      var right = card.dataset.bin === bin.dataset.bin;
+      if(right){
+        /* الصحيحة وحدها تستقرّ في السلّة؛ الخاطئة تُردّ فيبقى الجدول صادقًا */
+        bin.querySelector('.bin-in').appendChild(card);
+        card.classList.add('placed');
+        placed++;
+        say(fb, true, '✓ في مكانها', card.dataset.why +
+            (placed === cards.length ? '  اكتمل التصنيف.' : ''));
+      }else{
+        var name = bin.querySelector('b').textContent;
+        say(fb, false, '✗ ليست «' + name + '»', card.dataset.why);
+      }
+    });
+
+    return function(){
+      placed = 0;
+      cards.forEach(function(c){ c.classList.remove('placed','lifted'); tray.appendChild(c); });
+      lab.querySelectorAll('.sort-bin').forEach(function(b){ b.classList.remove('over'); });
+    };
+  }
+
+  /* ---------- ٤ · رتّب الخطوات بالضغط ---------- */
+  function labOrd(lab, fb){
+    var steps = Array.prototype.slice.call(lab.querySelectorAll('.ord-step'));
+    var next  = 1, timer = null;
+
+    lab.addEventListener('pointerdown', function(ev){
+      var step = ev.target.closest('.ord-step');
+      if(!step || !lab.contains(step) || step.classList.contains('ok')) return;
+      ev.preventDefault();
+
+      if(+step.dataset.o === next){
+        step.classList.remove('bad');
+        step.classList.add('ok');
+        step.querySelector('.ord-n').textContent = AR[next];
+        next++;
+        say(fb, true, '✓ الخطوة ' + AR[next - 1], step.dataset.why +
+            (next > steps.length ? '  اكتمل الترتيب.' : ''));
+      }else{
+        step.classList.add('bad');
+        say(fb, false, '✗ ليست الآن', step.dataset.why);
+        clearTimeout(timer);
+        timer = setTimeout(function(){ step.classList.remove('bad'); }, 1400);
+      }
+    });
+
+    return function(){
+      next = 1; clearTimeout(timer);
+      steps.forEach(function(s){
+        s.classList.remove('ok','bad');
+        s.querySelector('.ord-n').textContent = '؟';
+      });
+    };
+  }
+
+  /* ---------- ٥ · سيناريو واختيارات ---------- */
+  function labMcq(lab, fb){
+    var answer = lab.getAttribute('data-answer');
+    var opts   = lab.querySelector('.mcq-opts');
+
+    opts.addEventListener('pointerdown', function(ev){
+      if(opts.classList.contains('done')) return;
+      var opt = ev.target.closest('.mcq-opt');
+      if(!opt) return;
+      ev.preventDefault();
+
+      var right   = opt.dataset.k === answer;
+      var correct = opts.querySelector('.mcq-opt[data-k="' + answer + '"]');
+      opt.classList.add(right ? 'ok' : 'bad');
+      if(!right && correct) correct.classList.add('ok');
+      opts.classList.add('done');
+
+      say(fb, right, right ? '✓ إجابة صحيحة' : '✗ ليست هي',
+          right ? opt.dataset.why
+                : opt.dataset.why + '  والصواب «' + answer + '»: ' +
+                  ((correct && correct.dataset.why) || ''));
+    });
+
+    return function(){
+      opts.classList.remove('done');
+      opts.querySelectorAll('.mcq-opt').forEach(function(o){ o.classList.remove('ok','bad'); });
+    };
+  }
+
+  var KINDS = { screen:labScreen, tf:labTf, sort:labSort, ord:labOrd, mcq:labMcq };
+
+  document.querySelectorAll('.lab').forEach(function(lab){
+    var kind  = lab.getAttribute('data-kind') || 'screen';
+    var build = KINDS[kind];
+    if(!build) return;
+    var fb    = lab.querySelector('.lab-fb');
+    var again = lab.querySelector('.lab-again');
+    var reset = build(lab, fb, again);
+    if(again) again.addEventListener('click', function(){ clearFb(fb); reset(); });
   });
 })();
 </script>
