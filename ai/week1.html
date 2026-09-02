@@ -1475,6 +1475,35 @@
   /* أيقونة الاستدعاء داخل شريط الأدوات */
   .ann-bar .sheet-toggle.on{ background:rgba(255,255,255,0.2); border-color:rgba(255,255,255,0.4); }
 
+  /* ---------- الخريطة مطويّة: نفس محتوى الشجرة، فلا تُعرض إلا لمن يطلبها ---------- */
+  .map-fold{
+    width:100%; margin:14px 0 6px;
+    border:2px dashed rgba(26,61,140,0.35); border-radius:12px;
+    background:rgba(255,255,255,0.4);
+  }
+  .map-fold > summary{
+    display:flex; align-items:center; gap:9px; flex-wrap:wrap;
+    padding:10px 14px 11px; cursor:pointer; list-style:none;
+    font-family:'Aref Ruqaa',serif; font-weight:700; color:var(--blue);
+  }
+  .map-fold > summary::-webkit-details-marker{ display:none; }
+  .map-fold > summary:hover{ background:rgba(24,87,164,0.05); border-radius:10px; }
+  .map-fold > summary:focus-visible{ outline:2px solid #f0b400; outline-offset:2px; border-radius:10px; }
+  .mf-arrow{ color:var(--red); font-size:16px; transition:transform .18s ease; display:inline-block; }
+  .map-fold[open] .mf-arrow{ transform:rotate(-90deg); }
+  .mf-title{ font-size:clamp(15px,3.4vw,18px); }
+  .mf-count{
+    font-size:11.5px; font-weight:700; color:#fff; background:var(--blue);
+    padding:2px 9px 3px; border-radius:999px;
+  }
+  .mf-hint{ font-size:12px; font-weight:400; color:rgba(26,61,140,0.65); }
+  .map-fold[open] .mf-hint{ display:none; }
+  .map-fold .map-note{
+    font-size:13px; line-height:1.95; color:rgba(26,61,140,0.8);
+    margin:0 14px 4px; padding-top:2px;
+  }
+  .map-fold .map-tree{ padding:0 6px 10px; }
+
   /* ---------- مهمة واحدة عبر أربع واجهات ---------- */
   .pick{ width:100%; margin:14px 0 6px; }
   .pick-task{
@@ -1653,7 +1682,10 @@
     @page{ size:A4; margin:8mm; }
     body{ background:#fff !important; }
     .print-btn, .tabs, .tape, .master-header, .master-footer,
-    .ann-bar, .sheet{ display:none !important; }
+    .ann-bar, .sheet,
+    /* الشجرة والخريطة محتوًى واحد بنسبة تامّة، فطباعتهما معًا هدر ورق:
+       تُطبع الشجرة وحدها، وهي تحمل البنود كلها. */
+    .map-fold{ display:none !important; }
     /* التأشير يُطبع لأنه داخل الشريحة، ولا يُطبع الشريط */
     .ann-layer{ display:block !important; }
     .paper-wrapper{ transform:none !important; }
@@ -2116,8 +2148,8 @@
           <div class="ct-canopy">
             <div class="ct-crowns">
               <div class="ct-crown" style="--bc:var(--blue);"><b>١ · كيف يشتغل</b><i>الأساسيات</i></div>
-              <div class="ct-crown" style="--bc:var(--green);"><b>٢ · الواجهات <span class="ct-star">★</span></b><i>أين تشتغل</i></div>
-              <div class="ct-crown" style="--bc:var(--orange);"><b>٣ · الإعدادات <span class="ct-star">★</span></b><i>كيف تضبطه</i></div>
+              <div class="ct-crown" style="--bc:var(--green);"><b>٢ · الواجهات</b><i>أين تشتغل</i></div>
+              <div class="ct-crown" style="--bc:var(--orange);"><b>٣ · الإعدادات</b><i>كيف تضبطه</i></div>
               <div class="ct-crown" style="--bc:var(--purple);"><b>٤ · الحوكمة</b><i>الاستخدام الآمن</i></div>
             </div>
 
@@ -2139,7 +2171,6 @@
           </div>
 
           <div class="ct-key">
-            <span><span class="ct-star">★</span> = نغطّيه هذا الأسبوع</span>
             <span><span class="ct-leaf twig" style="--bc:var(--ink);">حدود متقطّعة</span> = تفرّع من الورقة نفسها</span>
           </div>
 
@@ -2193,7 +2224,7 @@
             </div>
 
             <div class="ct-bough g">
-              <div class="ct-head">٢ · واجهات الاستخدام <span class="ct-star">★</span></div>
+              <div class="ct-head">٢ · واجهات الاستخدام</div>
               <div class="ct-limb">
                 <div class="ct-bud">
                   <span class="ct-name">المحادثة <span class="ct-en">Chat</span></span>
@@ -2226,7 +2257,7 @@
                   </div>
                 </div>
                 <div class="ct-bud">
-                  <span class="ct-name">كوورك <span class="ct-star">★</span> <span class="ct-en">Cowork</span></span>
+                  <span class="ct-name">كوورك <span class="ct-en">Cowork</span></span>
                   <div class="ct-leaves">
                     <span class="ct-leaf">المهام وحالاتها</span>
                     <span class="ct-leaf twig">قيد العمل <span class="ct-en">Working</span></span>
@@ -2238,10 +2269,10 @@
                   </div>
                 </div>
                 <div class="ct-bud">
-                  <span class="ct-name">ديسباتش <span class="ct-star">★</span> <span class="ct-en">Dispatch</span></span>
+                  <span class="ct-name">ديسباتش <span class="ct-en">Dispatch</span></span>
                 </div>
                 <div class="ct-bud">
-                  <span class="ct-name">كلود كود <span class="ct-star">★</span> <span class="ct-en">Code</span></span>
+                  <span class="ct-name">كلود كود <span class="ct-en">Code</span></span>
                   <div class="ct-leaves">
                     <span class="ct-leaf">الأجهزة <span class="ct-en">Devices</span></span>
                     <span class="ct-leaf">الجلسات <span class="ct-en">Sessions</span></span>
@@ -2249,7 +2280,7 @@
                   </div>
                 </div>
                 <div class="ct-bud">
-                  <span class="ct-name">المهام المجدولة <span class="ct-star">★</span> <span class="ct-en">Scheduled</span></span>
+                  <span class="ct-name">المهام المجدولة <span class="ct-en">Scheduled</span></span>
                   <div class="ct-leaves">
                     <span class="ct-leaf">المُشغِّل <span class="ct-en">Trigger</span></span>
                     <span class="ct-leaf">سجلّ التشغيلات</span>
@@ -2260,7 +2291,7 @@
                   <span class="ct-name">التخصيص <span class="ct-en">Customize</span></span>
                 </div>
                 <div class="ct-bud">
-                  <span class="ct-name">التصميم <span class="ct-star">★</span> <span class="ct-en">Design · Beta</span></span>
+                  <span class="ct-name">التصميم <span class="ct-en">Design · Beta</span></span>
                   <div class="ct-leaves">
                     <span class="ct-leaf">القوالب — فارغ · تطبيق جوال · شرائح · مستند</span>
                     <span class="ct-leaf">أنظمة التصميم <span class="ct-en">Design systems</span></span>
@@ -2271,7 +2302,7 @@
             </div>
 
             <div class="ct-bough o">
-              <div class="ct-head">٣ · الإعدادات <span class="ct-star">★</span></div>
+              <div class="ct-head">٣ · الإعدادات</div>
               <div class="ct-limb">
                 <div class="ct-bud">
                   <span class="ct-name">الملف الشخصي <span class="ct-en">Profile</span></span>
@@ -2379,11 +2410,14 @@
           </div>
         </div>
 
-        <div class="section-heading" style="margin-top:14px;">
-          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
-          <span>الخريطة الشاملة لكلود</span>
-        </div>
-        <p class="lead-paragraph">قبل التفاصيل، هذه خريطة كل ما في كلود — فروع وتفرّعات. ما نغطّيه هذا الأسبوع مُعلَّم بـ<span class="hl hl-yellow">★</span>، والباقي يأتي في الأسابيع القادمة.</p>
+        <details class="map-fold">
+          <summary>
+            <span class="mf-arrow" aria-hidden="true">◂</span>
+            <span class="mf-title">الخريطة الشاملة لكلود</span>
+            <span class="mf-count">١٠٥ بنود</span>
+            <span class="mf-hint">اضغط للعرض</span>
+          </summary>
+          <p class="map-note">الشجرة أعلاه والخريطة هنا محتوًى واحد بشكلين: الشجرة صورة عامة، والخريطة فهرس متداخل بأربعة مستويات لمن يريد الدقّة.</p>
 
         <div class="map-tree">
           <div class="map-root">كلود <em>Claude</em></div>
@@ -2429,7 +2463,7 @@
               </ul>
             </li>
 
-            <li><span class="m1 g">٢ · واجهات الاستخدام ★</span>
+            <li><span class="m1 g">٢ · واجهات الاستخدام</span>
               <ul>
                 <li><span class="m2">المحادثة</span> <em>Chat</em>
                   <ul>
@@ -2461,7 +2495,7 @@
                     <li>النشر برابط أو الإبقاء خاصًا</li>
                   </ul>
                 </li>
-                <li><span class="m2">كوورك ★</span> <em>Cowork</em>
+                <li><span class="m2">كوورك</span> <em>Cowork</em>
                   <ul>
                     <li>المهام وحالاتها
                       <ul>
@@ -2475,15 +2509,15 @@
                     <li>الأجهزة الموثوقة والمتصفح المفضّل</li>
                   </ul>
                 </li>
-                <li><span class="m2">ديسباتش ★</span> <em>Dispatch</em></li>
-                <li><span class="m2">كلود كود ★</span> <em>Code</em>
+                <li><span class="m2">ديسباتش</span> <em>Dispatch</em></li>
+                <li><span class="m2">كلود كود</span> <em>Code</em>
                   <ul>
                     <li>الأجهزة <em>Devices</em></li>
                     <li>الجلسات <em>Sessions</em></li>
                     <li>تصنيف حالة الجلسة · مظهر الكود</li>
                   </ul>
                 </li>
-                <li><span class="m2">المهام المجدولة ★</span> <em>Scheduled</em>
+                <li><span class="m2">المهام المجدولة</span> <em>Scheduled</em>
                   <ul>
                     <li>المُشغِّل <em>Trigger</em></li>
                     <li>سجلّ التشغيلات</li>
@@ -2491,7 +2525,7 @@
                   </ul>
                 </li>
                 <li><span class="m2">التخصيص</span> <em>Customize</em></li>
-                <li><span class="m2">التصميم ★</span> <em>Design · Beta</em>
+                <li><span class="m2">التصميم</span> <em>Design · Beta</em>
                   <ul>
                     <li>القوالب — فارغ · تطبيق جوال · شرائح · مستند</li>
                     <li>أنظمة التصميم <em>Design systems</em></li>
@@ -2501,7 +2535,7 @@
               </ul>
             </li>
 
-            <li><span class="m1 o">٣ · الإعدادات ★</span>
+            <li><span class="m1 o">٣ · الإعدادات</span>
               <ul>
                 <li><span class="m2">الملف الشخصي</span> <em>Profile</em>
                   <ul>
@@ -2591,6 +2625,7 @@
             </li>
           </ul>
         </div>
+        </details>
 
 
         <!-- ===== 1: SIDEBAR ===== -->
