@@ -1531,9 +1531,24 @@
   .fb-grid .fb-h{ font-weight:700; color:#fff; }
   .fb-grid .fb-h.bad{  background:var(--red); }
   .fb-grid .fb-h.good{ background:var(--green); }
+  /* على الهاتف ينهار العمودان إلى عمود واحد، فيسقط العنوانان ويتوالى النصّ
+     بلا ما يدلّ على أيّ خليّة عقيمة وأيّها صحيحة — والاقتران هو كل الفائدة.
+     فنُخفي العنوانين ونعلّم كل سطر بعلامته ولونه، ونفصل بين كل زوج وآخر. */
   @media (max-width:520px){
     .fb-grid{ grid-template-columns:1fr; }
+    .fb-grid > div{ border-bottom:none; }
     .fb-grid > div:nth-child(2n){ border-inline-start:none; }
+    .fb-grid .fb-h{ display:none; }
+    .fb-grid .fb-b, .fb-grid .fb-g{ display:flex; gap:7px; align-items:flex-start; }
+    .fb-grid .fb-b{ background:rgba(209,52,43,0.07); }
+    .fb-grid .fb-g{ background:rgba(31,122,61,0.07);
+                    border-bottom:2px solid rgba(26,61,140,0.22); padding-bottom:10px; }
+    .fb-grid .fb-g:last-child{ border-bottom:none; }
+    .fb-grid .fb-b::before, .fb-grid .fb-g::before{
+      flex:0 0 auto; font-weight:700; font-size:14px; line-height:1.6;
+    }
+    .fb-grid .fb-b::before{ content:"✗"; color:var(--red); }
+    .fb-grid .fb-g::before{ content:"✓"; color:var(--green); }
   }
 
   @media print{
@@ -1786,14 +1801,14 @@
           <div class="fb-grid">
             <div class="fb-h bad">ملاحظة عقيمة</div>
             <div class="fb-h good">ملاحظة تعمل</div>
-            <div>«ما عجبني»</div>
-            <div>«الفقرة الثانية طويلة — اختصرها لسطرين»</div>
-            <div>«خليه أحسن»</div>
-            <div>«احذف عبارات المجاملة وابدأ بالنتيجة»</div>
-            <div>«غلط»</div>
-            <div>«الرقم خطأ، الصحيح ١٢ لا ٢٠»</div>
-            <div>«مو رسمي»</div>
-            <div>«استعمل صيغة الغائب، وابدأ بـ: تشير المؤشرات إلى…»</div>
+            <div class="fb-b">«ما عجبني»</div>
+            <div class="fb-g">«الفقرة الثانية طويلة — اختصرها لسطرين»</div>
+            <div class="fb-b">«خليه أحسن»</div>
+            <div class="fb-g">«احذف عبارات المجاملة وابدأ بالنتيجة»</div>
+            <div class="fb-b">«غلط»</div>
+            <div class="fb-g">«الرقم خطأ، الصحيح ١٢ لا ٢٠»</div>
+            <div class="fb-b">«مو رسمي»</div>
+            <div class="fb-g">«استعمل صيغة الغائب، وابدأ بـ: تشير المؤشرات إلى…»</div>
           </div>
 
           <p class="ex-lead" style="margin:14px 0 0;"><strong>ومتى تنفع اللقطة الواحدة؟</strong> في المهام القصيرة المعروفة مثل «صحّح إملاء هذه الفقرة». أما ما فيه أسلوب أو حكم أو بيانات — تقرير، كتاب رسمي، تحليل — فالتكرار أسرع وأدقّ <span class="hl hl-blue">حتى لو بدا أطول</span>، لأن اللقطة الواحدة تنتهي عادةً بخمس محاولات من الصفر، والتكرار بخمس جولات تبني كلٌّ منها على التي قبلها.</p>
