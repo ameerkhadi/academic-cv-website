@@ -1504,6 +1504,61 @@
   }
   .map-fold .map-tree{ padding:0 6px 10px; }
 
+  /* ---------- تمارين الصف: للمدرّس وحده، خلف بوابة القلم ---------- */
+  .teach{ display:none; }
+  body.teacher .teach{ display:block; }
+
+  .lab{
+    width:100%; margin:14px 0 6px;
+    border:2.5px solid var(--purple); border-radius:16px;
+    background:rgba(122,46,166,0.045); padding:12px 14px 14px;
+  }
+  .lab-tag{
+    display:inline-flex; align-items:center; gap:7px;
+    background:var(--purple); color:#fff; font-weight:700; font-size:12px;
+    padding:3px 12px 4px; border-radius:999px; margin-bottom:9px;
+  }
+  .lab-q{
+    font-family:'Aref Ruqaa Ink','Aref Ruqaa',serif; font-weight:700;
+    font-size:clamp(16px,3.6vw,21px); color:var(--ink); line-height:1.75; margin-bottom:10px;
+  }
+  .lab-body{ display:flex; flex-wrap:wrap; gap:14px; align-items:flex-start; }
+
+  /* الصفوف أهداف ضغط كبيرة: الطالب واقف أمام الشاشة لا جالس أمامها */
+  .lab-screen{ flex:1 1 280px; max-width:380px; }
+  .lab-screen .sf-row{ cursor:pointer; transition:background .15s ease, box-shadow .15s ease; padding:12px 12px; }
+  .lab-screen .sf-row:hover{ background:rgba(255,255,255,0.14); }
+  .lab-screen.done .sf-row{ cursor:default; }
+  .lab-screen .sf-row.ok{
+    background:rgba(31,122,61,0.5) !important;
+    box-shadow:inset 4px 0 0 #4ade80;
+  }
+  .lab-screen .sf-row.bad{
+    background:rgba(209,52,43,0.45) !important;
+    box-shadow:inset 4px 0 0 #ff8a80;
+  }
+
+  .lab-side{ flex:1 1 240px; min-width:0; display:flex; flex-direction:column; gap:9px; }
+  .lab-fb{
+    display:none; border-radius:11px; padding:9px 12px 10px;
+    font-size:13.5px; line-height:1.95;
+  }
+  .lab-fb.show{ display:block; }
+  .lab-fb.ok{  border:2px solid var(--green); background:rgba(31,122,61,0.09); }
+  .lab-fb.bad{ border:2px solid var(--red);   background:rgba(209,52,43,0.08); }
+  .lab-fb .fb-v{ font-weight:700; display:block; margin-bottom:3px; }
+  .lab-fb.ok  .fb-v{ color:var(--green); }
+  .lab-fb.bad .fb-v{ color:var(--red); }
+
+  .lab-again{
+    align-self:flex-start;
+    font-family:'Aref Ruqaa',serif; font-weight:700; font-size:13px;
+    color:#fff; background:var(--purple); border:none; border-radius:999px;
+    padding:7px 16px 8px; cursor:pointer;
+  }
+  .lab-again:hover{ background:#5f2183; }
+  .lab-again:focus-visible{ outline:2px solid #f0b400; outline-offset:2px; }
+
   /* ---------- مهمة واحدة عبر أربع واجهات ---------- */
   .pick{ width:100%; margin:14px 0 6px; }
   .pick-task{
@@ -1685,7 +1740,7 @@
     .ann-bar, .sheet,
     /* الشجرة والخريطة محتوًى واحد بنسبة تامّة، فطباعتهما معًا هدر ورق:
        تُطبع الشجرة وحدها، وهي تحمل البنود كلها. */
-    .map-fold{ display:none !important; }
+    .map-fold, .teach{ display:none !important; }
     /* التأشير يُطبع لأنه داخل الشريحة، ولا يُطبع الشريط */
     .ann-layer{ display:block !important; }
     .paper-wrapper{ transform:none !important; }
@@ -3097,6 +3152,43 @@
         </div>
 
 
+
+        <div class="teach">
+          <div class="section-heading" style="margin-top:26px;">
+            <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+            <span>تمارين الصف</span>
+          </div>
+          <p class="lead-paragraph">تُحلّ على الشاشة أمام الطلبة، وتُصحَّح فورًا مع بيان السبب. <span class="hl hl-yellow">لا تظهر للطالب في البيت</span> — أسئلة المراجعة تبقى بلا حلول كما هي.</p>
+
+          <div class="lab" data-answer="٣">
+            <span class="lab-tag">تمرين ١ · أشِر على الشاشة</span>
+            <div class="lab-q">أمامك شاشة كوورك. أين تضغط لترى المهام <strong>المتوقّفة بانتظار قرارك</strong> وحدها؟</div>
+            <div class="lab-body">
+              <div class="screen-frame dark lab-screen">
+                <div class="sf-bar"><span class="sf-en">Cowork</span></div>
+                <div class="sf-row" data-k="١" data-why="«الكل» يعرض كل المهام بلا تصفية — فلن تميّز المتوقّفة من غيرها.">
+                  <span class="sf-num">١</span><span class="sf-name">All</span></div>
+                <div class="sf-row" data-k="٢" data-why="«قيد العمل» مهامٌ كلود يشتغل عليها الآن — هي تمشي ولا تنتظر منك شيئًا.">
+                  <span class="sf-num">٢</span><span class="sf-name">Working</span></div>
+                <div class="sf-row" data-k="٣" data-why="متوقّفة بانتظار قرارٍ منك لتكمل — وهذه قائمة عملك لهذا اليوم.">
+                  <span class="sf-num">٣</span><span class="sf-name">Needs input</span></div>
+                <div class="sf-row" data-k="٤" data-why="«جاهزة للمراجعة» أنجزها كلود ويريد اعتمادك — انتهى العمل فيها، ولم تعد متوقّفة.">
+                  <span class="sf-num">٤</span><span class="sf-name">Ready for review</span></div>
+                <div class="sf-row" data-k="٥" data-why="«مكتملة» انتهت واعتُمدت — لم يبقَ فيها قرار.">
+                  <span class="sf-num">٥</span><span class="sf-name">Completed</span></div>
+                <div class="sf-row" data-k="٦" data-why="«مؤرشفة» أُخفيت من القائمة دون حذف — وهي خارج عملك الحالي.">
+                  <span class="sf-num">٦</span><span class="sf-name">Archived</span></div>
+                <div class="sf-row" data-k="٧" data-why="«مهمة جديدة» تبدأ عملًا جديدًا — لا تصفّي شيئًا موجودًا.">
+                  <span class="sf-num">٧</span><span class="sf-name">+ New task</span></div>
+              </div>
+              <div class="lab-side">
+                <div class="lab-fb"></div>
+                <button type="button" class="lab-again">أعد التمرين</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div class="section-heading" style="margin-top:24px;">
           <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
           <span>ثلاثة إعدادات تكلّفك إن أهملتها</span>
@@ -4418,6 +4510,59 @@
 
   document.body.appendChild(bar);
   attach();
+})();
+</script>
+
+<script>
+/* ============================================================
+   تمارين الصف — تظهر خلف بوابة القلم وحدها.
+   بالضغط لا بالسحب: pointerdown يعمل بالماوس واللمس والقلم بنفس الشيفرة،
+   على عكس drag & drop المعياري الذي لا يعمل على شاشة اللمس إطلاقًا.
+   ============================================================ */
+(function(){
+  var q = location.search + ' ' + location.hash;
+  if(!/(^|[?&#])pen\b/.test(q)) return;
+  document.body.classList.add('teacher');
+
+  document.querySelectorAll('.lab').forEach(function(lab){
+    var answer = lab.getAttribute('data-answer');
+    var screen = lab.querySelector('.lab-screen');
+    var fb     = lab.querySelector('.lab-fb');
+    var again  = lab.querySelector('.lab-again');
+
+    function reset(){
+      screen.classList.remove('done');
+      screen.querySelectorAll('.sf-row').forEach(function(r){ r.classList.remove('ok','bad'); });
+      fb.className = 'lab-fb';
+      fb.textContent = '';
+    }
+
+    screen.addEventListener('pointerdown', function(ev){
+      if(screen.classList.contains('done')) return;      /* أُجيب: لا يُغيَّر الجواب */
+      var row = ev.target.closest('.sf-row');
+      if(!row || !row.dataset.k) return;
+      ev.preventDefault();
+
+      var right = row.dataset.k === answer;
+      row.classList.add(right ? 'ok' : 'bad');
+      if(!right){
+        /* يُبرز الصواب مع الخطأ: التصحيح بلا إراءة الصواب لا يعلّم */
+        var correct = screen.querySelector('.sf-row[data-k="' + answer + '"]');
+        if(correct) correct.classList.add('ok');
+      }
+      screen.classList.add('done');
+
+      fb.className = 'lab-fb show ' + (right ? 'ok' : 'bad');
+      fb.innerHTML = '<span class="fb-v"></span><span class="fb-t"></span>';
+      fb.querySelector('.fb-v').textContent = right ? '✓ إجابة صحيحة' : '✗ ليست هي';
+      fb.querySelector('.fb-t').textContent = right
+        ? row.dataset.why
+        : row.dataset.why + '  والصواب: ' +
+          (screen.querySelector('.sf-row[data-k="' + answer + '"]').dataset.why || '');
+    });
+
+    again.addEventListener('click', reset);
+  });
 })();
 </script>
 
