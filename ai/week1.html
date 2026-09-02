@@ -1475,6 +1475,51 @@
   /* أيقونة الاستدعاء داخل شريط الأدوات */
   .ann-bar .sheet-toggle.on{ background:rgba(255,255,255,0.2); border-color:rgba(255,255,255,0.4); }
 
+  /* ---------- مهمة واحدة عبر أربع واجهات ---------- */
+  .pick{ width:100%; margin:14px 0 6px; }
+  .pick-task{
+    border-right:5px solid var(--blue); background:rgba(24,87,164,0.07);
+    border-radius:5px 12px 12px 5px; padding:9px 13px 10px; margin-bottom:12px;
+    font-size:14px; line-height:1.95;
+  }
+  .pick-rows{ display:flex; flex-direction:column; gap:9px; }
+  .pick-row{
+    --kc:var(--ink);
+    display:flex; gap:10px; align-items:flex-start;
+    border:1.5px solid color-mix(in srgb, var(--kc) 45%, transparent);
+    background:color-mix(in srgb, var(--kc) 6%, transparent);
+    border-radius:11px; padding:8px 11px 9px; font-size:13.5px; line-height:1.9;
+  }
+  .pick-row.win{ --kc:var(--green); border-width:2.5px; }
+  .pick-row.no{  --kc:var(--red); }
+  .pick-name{
+    flex:0 0 auto; min-width:96px; font-weight:700; color:var(--kc);
+    display:flex; align-items:center; gap:6px;
+  }
+  .pick-name .pn-en{ font-family:'Caveat',cursive; font-size:15px; opacity:0.9; }
+  .pick-verdict{ font-weight:700; }
+  .pick-rule{
+    margin-top:12px; border:2px solid var(--purple); border-radius:12px;
+    background:rgba(122,46,166,0.06); padding:9px 13px 11px; font-size:13.5px; line-height:2;
+  }
+  .pick-rule b{ color:var(--purple); }
+
+  /* ---------- إعداد خاطئ وأثره ---------- */
+  .cost{ display:flex; flex-direction:column; gap:11px; width:100%; margin:12px 0 6px; }
+  .cost-item{
+    border:2px solid rgba(209,52,43,0.55); border-radius:12px;
+    background:rgba(209,52,43,0.05); padding:10px 13px 11px;
+  }
+  .cost-h{ font-weight:700; font-size:14.5px; color:var(--red); margin-bottom:4px; }
+  .cost-l{ display:flex; gap:8px; align-items:flex-start; font-size:13.5px; line-height:1.9; margin-top:4px; }
+  .cost-l .cl-tag{
+    flex:0 0 auto; font-size:11px; font-weight:700; color:#fff;
+    padding:2px 9px 3px; border-radius:999px;
+  }
+  .cost-l.what .cl-tag{ background:#6b5a45; }
+  .cost-l.harm .cl-tag{ background:var(--red); }
+  .cost-l.fix  .cl-tag{ background:var(--green); }
+
   /* ---------- توضيح القواعد الذهبية الأربع ---------- */
   .pe-rules{ display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:12px 0 4px; width:100%; }
   @media (max-width:600px){ .pe-rules{ grid-template-columns:1fr; } }
@@ -1641,7 +1686,7 @@
        بدونها يبدأ أعلى الصفحة بصفوف يتيمة بلا إطار ولا عنوان. */
     .screen-frame, .scn, .hw, .try-box, .callout, .ct-bud, .gloss-row,
     .q-item, .sf-row, .leg-item, .mini-note, .map-tree li, .ex-card, .fb-grid,
-    .pe-card, .pe-built, li{
+    .pe-card, .pe-built, .pick-row, .cost-item, .pick-rule, li{
       break-inside:avoid; page-break-inside:avoid;
     }
     /* عنوان في ذيل الصفحة ومحتواه في التي بعدها: يُدفع العنوان معه */
@@ -2589,6 +2634,41 @@
           <div class="try-line"><span class="try-tag try-do">افعل</span><span>اضغط <strong>Projects</strong> ثم أنشئ مشروعًا باسم «مراسلات دائرتي»، واكتب في تعليماته: «صياغة رسمية موجزة، بلا مبالغة».</span></div>
           <div class="try-line"><span class="try-tag try-see">سترى</span><span>كل محادثة تفتحها داخل هذا المشروع تبدأ وهي عارفة أسلوبك — بلا إعادة شرح.</span></div>
         </div>
+
+        <div class="pick">
+          <div class="section-heading" style="margin-top:16px;">
+            <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+            <span>مهمة واحدة، أربع واجهات — أيّها تختار؟</span>
+          </div>
+          <p class="lead-paragraph">عرفت الآن الواجهات السبع. والسؤال الذي يقع فيه كل مبتدئ: <span class="hl hl-yellow">أيّها أفتح لمهمتي؟</span> نأخذ مهمة واحدة ونمرّرها على أربعتها.</p>
+
+          <div class="pick-task"><strong>المهمة:</strong> عندك مجلّد فيه أربعون ملف شكوى، وتريد جدولًا يصنّفها حسب نوع الشكوى والجهة المسؤولة.</div>
+
+          <div class="pick-rows">
+            <div class="pick-row no">
+              <span class="pick-name">شات <span class="pn-en">Chat</span></span>
+              <span><span class="pick-verdict">يشتغل، لكن يدويًّا.</span> تلصق الملفات واحدًا واحدًا. ومع الملف العاشر أو الحادي عشر تبدأ <strong>نافذة السياق</strong> تفقد أوائل ما ألصقت، فيختلّ التصنيف من حيث لا تنتبه.</span>
+            </div>
+            <div class="pick-row win">
+              <span class="pick-name">كوورك <span class="pn-en">Cowork</span></span>
+              <span><span class="pick-verdict">✓ الأنسب هنا.</span> يصل إلى <strong>المجلّد كله</strong> دفعةً واحدة ويشتغل بالخلفية، فتغلق الجهاز وترجع للنتيجة. وهذا بالضبط ما لا يقدر عليه الشات.</span>
+            </div>
+            <div class="pick-row">
+              <span class="pick-name">مجدولة <span class="pn-en">Scheduled</span></span>
+              <span><span class="pick-verdict">ليست لهذه المرة.</span> تصلح لو كانت الشكاوى <strong>تصل يوميًّا</strong> وتريد الجدول جاهزًا كل صباح. أمّا مجلّد اليوم فمهمة واحدة لا تتكرّر.</span>
+            </div>
+            <div class="pick-row">
+              <span class="pick-name">ديسباتش <span class="pn-en">Dispatch</span></span>
+              <span><span class="pick-verdict">لا تحتاجه.</span> فائدته أن ترسل مهمة فرعية طويلة وتعود لنتيجتها وحدها — مفيد داخل عمل أكبر، لا لمهمة قائمة بذاتها كهذه.</span>
+            </div>
+          </div>
+
+          <div class="pick-rule">
+            <b>قاعدة الاختيار في سطر:</b><br>
+            ملف واحد وسؤال واحد ← <strong>شات</strong> &nbsp;·&nbsp; مجلّد أو خطوات متعدّدة ← <strong>كوورك</strong> &nbsp;·&nbsp; يتكرّر بوقت معلوم ← <strong>مهمة مجدولة</strong> &nbsp;·&nbsp; شقّ طويل داخل عمل أكبر ← <strong>ديسباتش</strong> &nbsp;·&nbsp; أكواد ومستودعات ← <strong>كود</strong>.
+          </div>
+        </div>
+
         <div class="nav-pill">كوورك: إدارة المهام <span class="np-en">Cowork</span></div>
         <p class="lead-paragraph">هنا تُدار المهام الطويلة. لكل مهمة <span class="hl hl-green">حالة</span>، وتُصفّى بالقائمة العلوية:</p>
         <div class="screen-block">
@@ -2979,6 +3059,36 @@
           </div>
           <div class="try-line"><span class="try-tag try-do">افعل</span><span>افتح <strong>Design</strong>، اختر قالب <strong>Blank</strong>، واكتب: «بوستر إعلان دورة تدريبية للمعهد».</span></div>
           <div class="try-line"><span class="try-tag try-see">سترى</span><span>يفتح لوح تصميم فيه البوستر جاهزًا — تضغط على أي عنصر لتغيّر نصّه أو لونه أو حجمه بيدك، بلا برامج تصميم.</span></div>
+        </div>
+
+
+        <div class="section-heading" style="margin-top:24px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>ثلاثة إعدادات تكلّفك إن أهملتها</span>
+        </div>
+        <p class="lead-paragraph">كل ما سبق أراك <span class="hl hl-green">ما يحدث حين تضبط الإعداد</span>. وهذه ثلاثة تريك <span class="hl hl-pink">ما يحدث حين تتركه</span> — وهي أخطاء واقعية لا افتراضية.</p>
+
+        <div class="cost">
+          <div class="cost-item">
+            <div class="cost-h">١ · إعادة الشحن التلقائي مفعّلة بلا متابعة</div>
+            <div class="cost-l what"><span class="cl-tag">الإعداد</span><span>الفوترة ← <strong>Auto-reload</strong> يشتري رصيدًا تلقائيًّا كلما قارب النفاد.</span></div>
+            <div class="cost-l harm"><span class="cl-tag">الأثر</span><span>مهمة مجدولة تعمل يوميًّا، أو محادثة طويلة تُعاد كل مرة، تستهلك رصيدك — والشحن يتجدّد بصمت فلا تنتبه إلا في الفاتورة.</span></div>
+            <div class="cost-l fix"><span class="cl-tag">العلاج</span><span>راجع <strong>Current balance</strong> أسبوعيًّا، ولا تفعّل إعادة الشحن قبل أن تعرف استهلاكك الطبيعي.</span></div>
+          </div>
+
+          <div class="cost-item">
+            <div class="cost-h">٢ · «طلب أجهزة موثوقة» مُطفأ</div>
+            <div class="cost-l what"><span class="cl-tag">الإعداد</span><span>كوورك ← <strong>Require trusted devices</strong> يتحقّق من كل جهاز جديد قبل أن يبدأ جلسة.</span></div>
+            <div class="cost-l harm"><span class="cl-tag">الأثر</span><span>من وصل إلى حسابك من أي جهاز بدأ جلسة <strong>تصل إلى ملفاتك</strong> بلا أي تحقّق إضافي. وهذا ليس تسريب محادثة، بل وصول إلى مجلّدات دائرتك.</span></div>
+            <div class="cost-l fix"><span class="cl-tag">العلاج</span><span>أبقِه مفعّلًا دائمًا، وراجع <strong>Active sessions</strong> دوريًّا كما في قسم الحساب.</span></div>
+          </div>
+
+          <div class="cost-item">
+            <div class="cost-h">٣ · ربط موصّل البريد بحساب العمل بلا تفكير</div>
+            <div class="cost-l what"><span class="cl-tag">الإعداد</span><span>الموصّلات ← ربط <strong>البريد</strong> أو <strong>درايف</strong> بحسابك الرسمي.</span></div>
+            <div class="cost-l harm"><span class="cl-tag">الأثر</span><span>الصلاحية تُمنح <strong>للصندوق كلّه</strong> لا لرسالة واحدة. فطلبٌ بريء مثل «لخّص لي بريد اليوم» يمرّ على مراسلات سرّية لم تقصد إطلاعه عليها.</span></div>
+            <div class="cost-l fix"><span class="cl-tag">العلاج</span><span>اربط حسابًا مخصّصًا للعمل مع كلود لا حسابك الرسمي، أو أبقِ الموصّل مطفأً وألصق ما تحتاجه يدويًّا بعد <strong>إخفاء الهوية</strong>.</span></div>
+          </div>
         </div>
 
         <div class="section-heading" style="margin-top:26px;">
