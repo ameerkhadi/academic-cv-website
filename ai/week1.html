@@ -175,6 +175,20 @@
     text-shadow:0 1px 2px rgba(0,0,0,0.5);
     opacity:0.9;
   }
+  /* رابط الصفحة الأكاديمية في سطر الحقوق: يرث لون الفوتر الفاتح على الخلفية
+     البنية، ويتمايز بخطّ متقطّع تحته ليُعرف أنه قابل للضغط. */
+  .master-footer .mf-site{
+    color:#f0dcb4; text-decoration:none;
+    white-space:nowrap;   /* وإلا انفصل السهم عن نصّه في سطر جديد على الهاتف */
+    border-bottom:1px dashed rgba(240,220,180,0.5);
+    transition:color .15s ease, border-color .15s ease;
+  }
+  .master-footer .mf-site:hover,
+  .master-footer .mf-site:focus-visible{ color:#f0b400; border-bottom-color:#f0b400; }
+  .master-footer .mf-site:focus-visible{ outline:2px solid #f0b400; outline-offset:3px; }
+  .master-footer .mf-go{ color:#9ad6a8; display:inline-block; transition:transform .15s ease; }
+  .master-footer .mf-site:hover .mf-go{ transform:translateX(-3px); }
+
   .master-footer .mf-email{
     font-family:'Caveat',cursive;
     font-weight:700;
@@ -1405,27 +1419,6 @@
 
   /* هوية المطبوع: لا تظهر على الشاشة إطلاقاً */
   .print-id, .print-foot{ display:none; }
-
-  /* فوتر آخر كل محاضرة: خطّ فاصل ثم رابط الصفحة الأكاديمية */
-  .lec-foot{
-    width:100%; margin:26px 0 4px; padding-top:12px;
-    border-top:1.5px dashed rgba(26,61,140,0.32);
-    text-align:center;
-  }
-  .lec-foot a{
-    display:inline-flex; align-items:center; gap:6px;
-    font-family:'Aref Ruqaa',serif; font-weight:700;
-    font-size:clamp(12.5px,2.7vw,15px);
-    color:var(--blue); text-decoration:none;
-    border-bottom:1px dashed rgba(24,87,164,0.5);
-    padding-bottom:1px;
-    transition:color .15s ease, border-color .15s ease;
-  }
-  .lec-foot a:hover,
-  .lec-foot a:focus-visible{ color:var(--red); border-bottom-color:var(--red); }
-  .lec-foot a:focus-visible{ outline:2px solid #f0b400; outline-offset:3px; }
-  .lec-foot .lf-go{ color:var(--green); transition:transform .15s ease; }
-  .lec-foot a:hover .lf-go{ transform:translateX(-3px); }
 
   /* مقبض سحب الشريط: السحب من المقبض وحده، وإلا صار كل ضغط على لون سحبًا */
   .ann-grip{
@@ -3265,7 +3258,7 @@
   </div>
 
   <div class="master-footer">
-    جميع الحقوق محفوظة © د. أمير هادي &nbsp;•&nbsp; <span class="mf-email">amer.hadi@alshaab.edu.iq</span> &nbsp;•&nbsp; ٢٠٢٦
+    جميع الحقوق محفوظة © د. أمير هادي &nbsp;•&nbsp; <span class="mf-email">amer.hadi@alshaab.edu.iq</span> &nbsp;•&nbsp; <a class="mf-site" href="https://ameerkhadi.github.io/academic-cv-website/" target="_blank" rel="noopener" title="الصفحة الأكاديمية — تفتح في صفحة جديدة">الصفحة الأكاديمية <span class="mf-go" aria-hidden="true">←</span></a> &nbsp;•&nbsp; ٢٠٢٦
   </div>
 </div>
 
@@ -3316,7 +3309,6 @@
     var COURSE = 'دفتر محاضرات الذكاء الاصطناعي وتحليل البيانات';
     var WHO    = 'د. أمير هادي · المعهد العالي لتأهيل وتدريب القادة · ٢٠٢٦';
     var URL    = 'ameerkhadi.github.io/academic-cv-website/ai/week1';
-    var SITE   = 'https://ameerkhadi.github.io/academic-cv-website/';
 
     document.querySelectorAll('.slide').forEach(function(slide){
       var tab = document.querySelector('.tab[data-target="' + slide.id + '"]');
@@ -3333,19 +3325,6 @@
       box.children[1].textContent = WHO;
       box.children[2].textContent = URL;
       slide.insertBefore(box, slide.firstChild);
-
-      /* فوتر المحاضرة: نصّ عربي يقول إلى أين يأخذه الرابط، لا عنوان لاتيني. */
-      var lf = document.createElement('div');
-      lf.className = 'lec-foot';
-      lf.innerHTML = '<a target="_blank" rel="noopener">' +
-                       '<span class="lf-txt"></span>' +
-                       '<span class="lf-go" aria-hidden="true">←</span>' +
-                     '</a>';
-      var a = lf.querySelector('a');
-      a.href = SITE;
-      a.title = 'الصفحة الأكاديمية — تفتح في صفحة جديدة';
-      a.firstChild.textContent = 'الصفحة الأكاديمية للدكتور أمير هادي';
-      slide.appendChild(lf);
     });
 
     var foot = document.createElement('div');
