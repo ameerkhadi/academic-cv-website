@@ -1357,6 +1357,14 @@
   body.ann-point .sheet-body{ cursor:none; }
   .ann-bar button.ann-laser-btn .ic{ color:#ff4b4b; }
 
+  /* وضع اليد: القلم يتنحّى. الطبقة تصير شفّافة للمس، فيمرّر المتصفّح
+     الصفحة بنفسه — بعزمه وارتداده وكل ما فيه — بلا سطر جافاسكربت واحد.
+     وككسبٍ ثانٍ: تمارين الصف والروابط تحت الطبقة تعود قابلة للضغط. */
+  body.ann-pan .slide.active > .ann-layer{ pointer-events:none !important; }
+  .ann-bar .ann-nav{ display:flex; gap:2px; align-items:center; }
+  .ann-bar button.ann-hand-btn.on{ background:rgba(255,255,255,0.28); }
+  .ann-bar .ann-nav button{ padding:6px 9px; }
+
   .ann-bar{
     position:fixed; bottom:18px; right:18px; z-index:300;
     display:flex; align-items:center; gap:7px;
@@ -4061,7 +4069,7 @@
     { name:'أعرض', mul:2.4, dot:16 }
   ];
 
-  var pen = 1, size = 1, erasing = false, pointing = false,
+  var pen = 1, size = 1, erasing = false, pointing = false, panning = false,
       drawing = false, activePointer = null;
   var cur = null, pts = [];
 
@@ -4276,6 +4284,7 @@
 
   function onDown(ev){
     if(!document.body.classList.contains('ann-on')) return;
+    if(panning) return;                                /* اليد: الصفحة تمرّ، ولا نرسم */
     if(activePointer !== null) return;                 // إصبعان: اتركهما للتمرير
     if(ev.button !== undefined && ev.button !== 0) return;
     var slide = activeSlide(); if(!slide) return;
@@ -4300,6 +4309,7 @@
 
   function onMove(ev){
     /* في نمط المؤشّر تتبع النقطةُ الإصبعَ ولو لم يضغط، ليعرف أين يؤشّر قبل أن يبدأ */
+    if(panning) return;
     if(pointing && document.body.classList.contains('ann-on')){
       if(drawing && ev.pointerId === activePointer){ ev.preventDefault(); lzExtend(ev); }
       else lzTip(ev.clientX, ev.clientY);
@@ -4362,7 +4372,7 @@
       document.body.classList.remove('ann-erase', 'ann-point');
       eraseBtn.classList.remove('on');
       pointBtn.classList.remove('on');
-      lzClear();
+      lzClear(); setPan(false);
       swatches.forEach(function(x){ x.classList.remove('sel'); });
       b.classList.add('sel');
     });
@@ -4420,6 +4430,7 @@
     pointBtn.classList.toggle('on', pointing);
     document.body.classList.toggle('ann-point', pointing);
     if(pointing){
+      setPan(false);
       erasing = false;
       eraseBtn.classList.remove('on');
       document.body.classList.remove('ann-erase');
@@ -4434,6 +4445,7 @@
     eraseBtn.classList.toggle('on', erasing);
     document.body.classList.toggle('ann-erase', erasing);
     if(erasing){
+      setPan(false);
       pointing = false;
       pointBtn.classList.remove('on');
       document.body.classList.remove('ann-point');
@@ -4442,6 +4454,58 @@
   });
   tool('↶', 'تراجع', 'تراجع عن آخر خطوة (Z)', undo);
   sep();
+
+  /* ---------- التنقّل في الصفحة والقلم شغّال ----------
+     زرّان يقفزان شاشةً كاملة إلا قليلًا (يبقى السطران الأخيران ظاهرين
+     ليلتقط الطالب الخيط)، ويدٌ تُنحّي الطبقة فيمرّر الإصبع الصفحة نفسها. */
+  var navG = document.createElement('div');
+  navG.className = 'ann-nav';
+  tools.appendChild(navG);
+
+  function navBtn(icon, label, title, fn){
+    var b = document.createElement('button');
+    b.type = 'button'; b.title = title;
+    b.innerHTML = '<span class="ic"></span><span class="lbl"></span>';
+    b.firstChild.textContent = icon;
+    b.lastChild.textContent = label;
+    b.addEventListener('click', fn);
+    navG.appendChild(b);
+    return b;
+  }
+
+  /* هدفٌ نتتبّعه بأنفسنا: ضغطتان متتاليتان تنقلان شاشتين لا شاشة واحدة،
+     لأن scrollTo السلس يبدأ من موضعه الحالي لا من حيث كان ذاهبًا. */
+  var jumpTo = null, jumpClear = null;
+  function jump(dir){
+    var step = Math.round(window.innerHeight * 0.85);
+    var max  = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+    var base = (jumpTo === null) ? window.scrollY : jumpTo;
+    jumpTo = Math.max(0, Math.min(max, base + dir * step));
+    try{ window.scrollTo({ top: jumpTo, behavior:'smooth' }); }
+    catch(e){ window.scrollTo(0, jumpTo); }
+    clearTimeout(jumpClear);
+    jumpClear = setTimeout(function(){ jumpTo = null; }, 800);
+  }
+
+  navBtn('▲', 'أعلى', 'اصعد شاشةً كاملة — يعمل والقلم شغّال', function(){ jump(-1); });
+
+  var handBtn = navBtn('✋', 'يد',
+      'وضع اليد — مرّر الصفحة بإصبعك واضغط التمارين، بلا إيقاف القلم (G)', function(){
+    setPan(!panning);
+  });
+  handBtn.classList.add('ann-hand-btn');
+
+  navBtn('▼', 'أسفل', 'انزل شاشةً كاملة — يعمل والقلم شغّال', function(){ jump(1); });
+
+  /* اليد ليست نمطًا رابعًا يُقصي الثلاثة، بل تعليقٌ مؤقّت لها:
+     تُطفئها فتعود إلى ما كنت عليه — قلمًا كان أو ممحاةً أو مؤشّرًا. */
+  function setPan(on){
+    panning = on;
+    handBtn.classList.toggle('on', on);
+    document.body.classList.toggle('ann-pan', on);
+    if(on) lzHideTip();
+  }
+
   var hideBtn = tool('👁', 'إخفاء', 'إخفاء التأشير مؤقتاً بلا حذف (H)', function(){
     var h = document.body.classList.toggle('ann-hide');
     setLabel(hideBtn, h ? 'إظهار' : 'إخفاء');
@@ -4456,12 +4520,14 @@
   help.className = 'ann-help';
   help.innerHTML =
     '<b>التمرير بالصفحة</b><br>' +
-    'اسحب من الحاشية البنية حول الورقة، والقلم يبقى شغّالًا. أو أوقف القلم.' +
+    'اضغط <b>▲</b> و<b>▼</b> لتقفز شاشةً، أو <b>✋</b> لتمرّر بإصبعك بلا إيقاف القلم. ' +
+    'وعجلة الماوس تعمل دائمًا.' +
     '<hr>' +
     '<span class="k">١…٨</span>الألوان<br>' +
     '<span class="k">S</span>سُمك القلم &nbsp; <span class="k">+</span><span class="k">−</span>أدقّ<br>' +
     '<span class="k">W</span>ورقة فارغة عائمة<br>' +
     '<span class="k">P</span>مؤشّر ليزر — يؤشّر ويتلاشى<br>' +
+    '<span class="k">G</span>وضع اليد — تمرّر وتضغط بلا إيقاف القلم<br>' +
     '<span class="k">E</span>ممحاة &nbsp; <span class="k">Z</span>تراجع<br>' +
     '<span class="k">H</span>إخفاء التأشير &nbsp; <span class="k">Esc</span>إيقاف' +
     '<hr>' +
@@ -4500,7 +4566,7 @@
       eraseBtn.classList.remove('on');
       pointBtn.classList.remove('on');
       document.body.classList.remove('ann-erase', 'ann-point');
-      lzClear();
+      lzClear(); setPan(false);
     }
   }
   main.addEventListener('click', function(){ setOn(!document.body.classList.contains('ann-on')); });
@@ -4679,6 +4745,7 @@
 
   shBody.addEventListener('pointerdown', function(ev){
     if(ev.target === shResize) return;
+    if(panning) return;                                /* اليد تُسكِت اللوح أيضًا */
     if(shPointer !== null) return;
     if(ev.button !== undefined && ev.button !== 0) return;
     ev.preventDefault();
@@ -4813,6 +4880,7 @@
     else if(k === '+' || k === '='){ bumpSize(1); }
     else if(k === '-' || k === '_'){ bumpSize(-1); }
     else if(k === 'p' || k === 'P' || k === 'ح'){ pointBtn.click(); }
+    else if(k === 'g' || k === 'G' || k === 'ل'){ handBtn.click(); }
     else if(k === 'e' || k === 'E' || k === 'ث'){ eraseBtn.click(); }
     else if(k === 'z' || k === 'Z' || k === 'ء'){ undo(); }
     else if(k === 'h' || k === 'H' || k === 'ا'){ hideBtn.click(); }
@@ -4841,7 +4909,7 @@
      أما الأثر المتوهّج فيُرسم فوق الورقة واللوح وحدهما: الضغط على الحاشية
      يبقى للتمرير كما طُلب، ولو التقطناه هناك لتعطّل تمرير الصفحة باللمس. */
   document.addEventListener('pointermove', function(ev){
-    if(!pointing || !document.body.classList.contains('ann-on')) return;
+    if(!pointing || panning || !document.body.classList.contains('ann-on')) return;
     if(drawing || shDrawing) return;
     lzTip(ev.clientX, ev.clientY);
   }, { passive:true });
