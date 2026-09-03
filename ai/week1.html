@@ -1329,6 +1329,34 @@
   body.ann-erase .slide.active > .ann-layer{ cursor:cell; }
   body.ann-hide .ann-layer{ display:none; }
 
+  /* مؤشّر الليزر: يؤشّر ثم يتلاشى. طبقة ثابتة على الشاشة، منفصلة تمامًا عن
+     طبقة الرسم — فلا يدخل التراجع ولا الحفظ ولا الطباعة ولا تراه الممحاة.
+     أثرٌ يعيش أقلّ من ثانية لا يحتاج أن يتحرّك مع النص، وإحداثيات الشاشة
+     المباشرة أبسط وأأمن من حساب مصفوفة الشريحة. */
+  .ann-laser{
+    position:fixed; top:0; right:0; bottom:0; left:0;
+    width:100%; height:100%;
+    display:none; pointer-events:none; z-index:290;   /* دون الشريط: لا يغشاه */
+  }
+  body.ann-point .ann-laser{ display:block; }
+  .ann-laser path{
+    fill:none; stroke:#ff2020; stroke-width:7;
+    stroke-linecap:round; stroke-linejoin:round; stroke-opacity:0.92;
+    filter:drop-shadow(0 0 5px rgba(255,20,20,0.95)) drop-shadow(0 0 15px rgba(255,70,40,0.6));
+    transition:opacity .7s ease;
+  }
+  .ann-laser path.fade{ opacity:0; }
+  .ann-laser .tip{
+    fill:#fff; stroke:#ff2020; stroke-width:4;
+    filter:drop-shadow(0 0 7px rgba(255,20,20,1)) drop-shadow(0 0 18px rgba(255,70,40,0.7));
+    transition:opacity .3s ease;
+  }
+  .ann-laser .tip.off{ opacity:0; }
+  /* النقطة الحمراء هي المؤشّر داخل الورقة، فلا حاجة لمؤشّر النظام فوقها */
+  body.ann-point .slide.active > .ann-layer{ cursor:none; }
+  body.ann-point .sheet-body{ cursor:none; }
+  .ann-bar button.ann-laser-btn .ic{ color:#ff4b4b; }
+
   .ann-bar{
     position:fixed; bottom:18px; right:18px; z-index:300;
     display:flex; align-items:center; gap:7px;
@@ -1833,7 +1861,7 @@
     @page{ size:A4; margin:8mm; }
     body{ background:#fff !important; }
     .print-btn, .tabs, .tape, .master-header, .master-footer,
-    .ann-bar, .sheet,
+    .ann-bar, .sheet, .ann-laser,
     /* الشجرة والخريطة محتوًى واحد بنسبة تامّة، فطباعتهما معًا هدر ورق:
        تُطبع الشجرة وحدها، وهي تحمل البنود كلها. */
     .map-fold, .teach{ display:none !important; }
@@ -4033,7 +4061,8 @@
     { name:'أعرض', mul:2.4, dot:16 }
   ];
 
-  var pen = 1, size = 1, erasing = false, drawing = false, activePointer = null;
+  var pen = 1, size = 1, erasing = false, pointing = false,
+      drawing = false, activePointer = null;
   var cur = null, pts = [];
 
   // سجلّ الأفعال لكل شريحة: إضافة مسار أو محو مجموعة، ليعمل التراجع في الحالتين
@@ -4129,6 +4158,58 @@
     return gone;
   }
 
+  // ---------- مؤشّر الليزر ----------
+
+  /* لا يُخزَّن ولا يُسجَّل: يُرسم على طبقته الثابتة، ثم يتلاشى ويُحذف من الصفحة.
+     هذا هو الفرق بينه وبين القلم: القلم يقول «انتبه لهذا لاحقًا»،
+     والمؤشّر يقول «انظر هنا الآن». */
+  var laser = document.createElementNS(SVGNS, 'svg');
+  laser.setAttribute('class', 'ann-laser');
+  var tip = document.createElementNS(SVGNS, 'circle');
+  tip.setAttribute('class', 'tip off');
+  tip.setAttribute('r', '6');
+  laser.appendChild(tip);
+  var lzCur = null, lzPts = [];
+
+  function lzTip(x, y){
+    tip.setAttribute('cx', x); tip.setAttribute('cy', y);
+    tip.classList.remove('off');
+  }
+  function lzHideTip(){ tip.classList.add('off'); }
+
+  function lzStart(ev){
+    lzCur = document.createElementNS(SVGNS, 'path');
+    laser.insertBefore(lzCur, tip);          /* النقطة تبقى فوق الأثر */
+    lzPts = [{ x:ev.clientX, y:ev.clientY }];
+    lzCur.setAttribute('d', pathData(lzPts));
+    lzTip(ev.clientX, ev.clientY);
+  }
+
+  function lzExtend(ev){
+    lzTip(ev.clientX, ev.clientY);
+    if(!lzCur) return;
+    var last = lzPts[lzPts.length - 1];
+    if(Math.abs(ev.clientX - last.x) + Math.abs(ev.clientY - last.y) < 1.4) return;
+    lzPts.push({ x:ev.clientX, y:ev.clientY });
+    if(lzPts.length > 700) lzPts.shift();    /* أثرٌ لا ينمو بلا حدّ */
+    lzCur.setAttribute('d', pathData(lzPts));
+  }
+
+  function lzEnd(){
+    lzHideTip();
+    if(!lzCur) return;
+    var el = lzCur; lzCur = null; lzPts = [];
+    /* إطارٌ واحد قبل إضافة الصنف، وإلا لم يبدأ الانتقال أصلًا */
+    requestAnimationFrame(function(){ el.classList.add('fade'); });
+    setTimeout(function(){ el.remove(); }, 900);
+  }
+
+  function lzClear(){
+    lzCur = null; lzPts = [];
+    laser.querySelectorAll('path').forEach(function(p){ p.remove(); });
+    lzHideTip();
+  }
+
   // ---------- السجلّ والحفظ ----------
 
   function push(slide, action){
@@ -4205,6 +4286,7 @@
     ev.preventDefault();
     try{ layer.setPointerCapture(ev.pointerId); }catch(e){}
 
+    if(pointing){ drawing = true; lzStart(ev); return; }
     if(erasing){
       drawing = true;
       var removed = eraseAt(layer, ev);
@@ -4217,6 +4299,12 @@
   }
 
   function onMove(ev){
+    /* في نمط المؤشّر تتبع النقطةُ الإصبعَ ولو لم يضغط، ليعرف أين يؤشّر قبل أن يبدأ */
+    if(pointing && document.body.classList.contains('ann-on')){
+      if(drawing && ev.pointerId === activePointer){ ev.preventDefault(); lzExtend(ev); }
+      else lzTip(ev.clientX, ev.clientY);
+      return;
+    }
     if(!drawing || ev.pointerId !== activePointer) return;
     ev.preventDefault();
     var slide = activeSlide(); if(!slide) return;
@@ -4234,6 +4322,7 @@
     activePointer = null;
     if(!drawing) return;
     drawing = false;
+    if(pointing){ lzEnd(); return; }
     var slide = activeSlide();
     if(!erasing && cur && slide) push(slide, { type:'add', el: cur });
     cur = null; pts = [];
@@ -4269,9 +4358,11 @@
     b.style.background = s.hl ? s.color : s.color;
     if(s.hl) b.style.opacity = '0.75';
     b.addEventListener('click', function(){
-      pen = i; erasing = false;
-      document.body.classList.remove('ann-erase');
+      pen = i; erasing = false; pointing = false;
+      document.body.classList.remove('ann-erase', 'ann-point');
       eraseBtn.classList.remove('on');
+      pointBtn.classList.remove('on');
+      lzClear();
       swatches.forEach(function(x){ x.classList.remove('sel'); });
       b.classList.add('sel');
     });
@@ -4321,10 +4412,33 @@
   });
 
   sep();
+
+  /* ثلاثة أنماط يقصي بعضها بعضًا: قلمٌ يكتب، وممحاةٌ تمحو، ومؤشّرٌ لا يترك أثرًا. */
+  var pointBtn = tool('◉', 'مؤشّر',
+      'مؤشّر ليزر — يؤشّر ثم يتلاشى، ولا يبقى في الصفحة ولا في الطباعة (P)', function(){
+    pointing = !pointing;
+    pointBtn.classList.toggle('on', pointing);
+    document.body.classList.toggle('ann-point', pointing);
+    if(pointing){
+      erasing = false;
+      eraseBtn.classList.remove('on');
+      document.body.classList.remove('ann-erase');
+    }else{
+      lzClear();
+    }
+  });
+  pointBtn.classList.add('ann-laser-btn');
+
   var eraseBtn = tool('⌫', 'ممحاة', 'ممحاة — امسح الخط بمرور الممحاة عليه (E)', function(){
     erasing = !erasing;
     eraseBtn.classList.toggle('on', erasing);
     document.body.classList.toggle('ann-erase', erasing);
+    if(erasing){
+      pointing = false;
+      pointBtn.classList.remove('on');
+      document.body.classList.remove('ann-point');
+      lzClear();
+    }
   });
   tool('↶', 'تراجع', 'تراجع عن آخر خطوة (Z)', undo);
   sep();
@@ -4347,6 +4461,7 @@
     '<span class="k">١…٨</span>الألوان<br>' +
     '<span class="k">S</span>سُمك القلم &nbsp; <span class="k">+</span><span class="k">−</span>أدقّ<br>' +
     '<span class="k">W</span>ورقة فارغة عائمة<br>' +
+    '<span class="k">P</span>مؤشّر ليزر — يؤشّر ويتلاشى<br>' +
     '<span class="k">E</span>ممحاة &nbsp; <span class="k">Z</span>تراجع<br>' +
     '<span class="k">H</span>إخفاء التأشير &nbsp; <span class="k">Esc</span>إيقاف' +
     '<hr>' +
@@ -4381,9 +4496,11 @@
     var slide = activeSlide();
     if(on && slide) layerOf(slide);
     else {
-      erasing = false;
+      erasing = false; pointing = false;
       eraseBtn.classList.remove('on');
-      document.body.classList.remove('ann-erase');
+      pointBtn.classList.remove('on');
+      document.body.classList.remove('ann-erase', 'ann-point');
+      lzClear();
     }
   }
   main.addEventListener('click', function(){ setOn(!document.body.classList.contains('ann-on')); });
@@ -4568,6 +4685,7 @@
     shPointer = ev.pointerId; shDrawing = true;
     try{ shBody.setPointerCapture(ev.pointerId); }catch(e){}
 
+    if(pointing){ lzStart(ev); return; }
     if(erasing){
       var hit = eraseAt(shSvg, ev);
       if(hit.length){ shHist.push({ type:'erase', els:hit }); saveSheet(); }
@@ -4586,6 +4704,11 @@
   });
 
   shBody.addEventListener('pointermove', function(ev){
+    if(pointing){
+      if(shDrawing && ev.pointerId === shPointer){ ev.preventDefault(); lzExtend(ev); }
+      else lzTip(ev.clientX, ev.clientY);
+      return;
+    }
     if(!shDrawing || ev.pointerId !== shPointer) return;
     ev.preventDefault();
     if(erasing){
@@ -4603,6 +4726,7 @@
     if(ev.pointerId !== shPointer) return;
     shPointer = null;
     if(!shDrawing) return;
+    if(pointing){ shDrawing = false; lzEnd(); return; }
     shDrawing = false;
     if(!erasing && shCur){ shHist.push({ type:'add', el:shCur }); saveSheet(); }
     shCur = null; shPts = [];
@@ -4688,6 +4812,7 @@
     else if(k === 's' || k === 'S'){ bumpSize(1); }
     else if(k === '+' || k === '='){ bumpSize(1); }
     else if(k === '-' || k === '_'){ bumpSize(-1); }
+    else if(k === 'p' || k === 'P' || k === 'ح'){ pointBtn.click(); }
     else if(k === 'e' || k === 'E' || k === 'ث'){ eraseBtn.click(); }
     else if(k === 'z' || k === 'Z' || k === 'ء'){ undo(); }
     else if(k === 'h' || k === 'H' || k === 'ا'){ hideBtn.click(); }
@@ -4706,9 +4831,22 @@
       layer.addEventListener('pointermove', onMove);
       layer.addEventListener('pointerup', onUp);
       layer.addEventListener('pointercancel', onUp);
+      layer.addEventListener('pointerleave', function(){ if(pointing && !drawing) lzHideTip(); });
     });
   }
 
+  shBody.addEventListener('pointerleave', function(){ if(pointing && !shDrawing) lzHideTip(); });
+
+  /* النقطة تتبع الإصبع في كل الصفحة — حتى فوق الحاشية البنية والتبويبات —
+     أما الأثر المتوهّج فيُرسم فوق الورقة واللوح وحدهما: الضغط على الحاشية
+     يبقى للتمرير كما طُلب، ولو التقطناه هناك لتعطّل تمرير الصفحة باللمس. */
+  document.addEventListener('pointermove', function(ev){
+    if(!pointing || !document.body.classList.contains('ann-on')) return;
+    if(drawing || shDrawing) return;
+    lzTip(ev.clientX, ev.clientY);
+  }, { passive:true });
+
+  document.body.appendChild(laser);
   document.body.appendChild(bar);
   attach();
 })();
