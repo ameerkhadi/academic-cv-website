@@ -1165,6 +1165,148 @@
     text-align:center;
   }
 
+  /* ---------- الأسبوع الثالث: أدوات التطبيق ---------- */
+
+  /* شارة تفصل ما يعمله الطالب بيده عمّا يعرضه المدرّس */
+  .mode{
+    display:inline-flex; align-items:center; gap:6px;
+    font-size:calc(11.5px * var(--fs,1)); font-weight:700; letter-spacing:0.03em;
+    padding:3px 11px 4px; border-radius:999px; white-space:nowrap;
+  }
+  .mode.hands{ background:var(--green); color:#fff; }
+  .mode.watch{ background:rgba(122,46,166,0.14); color:var(--purple);
+               box-shadow:inset 0 0 0 1.5px var(--purple); }
+
+  /* بطاقة أمر جاهز: تُنسخ بضغطة، فلا يقف أحد أمام صندوق فارغ */
+  .pr{
+    width:100%; margin:12px 0;
+    border:2px solid var(--blue); border-radius:12px;
+    background:rgba(24,87,164,0.05); overflow:hidden;
+  }
+  .pr-head{
+    display:flex; align-items:center; gap:9px; flex-wrap:wrap;
+    background:rgba(24,87,164,0.11); padding:8px 13px 9px;
+    border-bottom:1.5px solid rgba(24,87,164,0.2);
+  }
+  .pr-head .pr-n{
+    flex:0 0 auto; width:24px; height:24px; border-radius:50%;
+    background:var(--blue); color:#fff; font-weight:700;
+    font-size:calc(12.5px * var(--fs,1));
+    display:flex; align-items:center; justify-content:center;
+  }
+  .pr-head .pr-t{
+    font-weight:700; color:var(--blue); font-size:calc(14px * var(--fs,1));
+  }
+  .pr-copy{
+    margin-inline-start:auto; cursor:pointer;
+    border:1.5px solid var(--blue); border-radius:999px;
+    background:#fff; color:var(--blue);
+    font-family:inherit; font-weight:700; font-size:calc(12px * var(--fs,1));
+    padding:5px 14px 6px; white-space:nowrap;
+  }
+  .pr-copy:hover{ background:var(--blue); color:#fff; }
+  .pr-copy:focus-visible{ outline:2px solid #f0b400; outline-offset:2px; }
+  .pr-copy.done{ background:var(--green); border-color:var(--green); color:#fff; }
+  .pr-body{
+    padding:12px 14px 14px; font-size:calc(13.5px * var(--fs,1));
+    line-height:2; color:var(--ink); white-space:pre-wrap;
+  }
+  /* الفراغات التي يملؤها الطالب — تُرى فورًا فلا يرسل القالب كما هو */
+  .pr-body .slot{
+    background:rgba(240,180,0,0.3); border-bottom:2px solid #d99b00;
+    padding:0 4px; border-radius:3px; font-weight:700;
+  }
+
+  /* تمرين تطبيقي بوقت محدّد */
+  .drill{
+    width:100%; margin:14px 0 6px;
+    border:2.5px solid var(--green); border-radius:14px;
+    background:rgba(31,122,61,0.05); padding:12px 14px 14px;
+  }
+  .drill-head{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:9px; }
+  .drill-head .d-n{
+    flex:0 0 auto; width:27px; height:27px; border-radius:50%;
+    background:var(--green); color:#fff; font-weight:700;
+    font-size:calc(13.5px * var(--fs,1));
+    display:flex; align-items:center; justify-content:center;
+  }
+  .drill-head .d-t{
+    font-family:'Aref Ruqaa',serif; font-weight:700;
+    font-size:calc(16px * var(--fs,1)); color:var(--ink);
+  }
+  .drill-head .d-time{
+    margin-inline-start:auto; font-size:calc(12px * var(--fs,1)); font-weight:700;
+    color:var(--green); background:rgba(31,122,61,0.13);
+    padding:3px 11px 4px; border-radius:999px; white-space:nowrap;
+  }
+  .drill ol{ margin:0; padding-inline-start:20px; }
+  .drill li{ font-size:calc(14px * var(--fs,1)); line-height:1.95; margin-bottom:6px; }
+  .drill .d-out{
+    margin-top:10px; padding-top:9px; border-top:1.5px dashed rgba(31,122,61,0.4);
+    font-size:calc(13.5px * var(--fs,1)); line-height:1.9;
+  }
+  .drill .d-out b{ color:var(--green); }
+
+  /* جدول بيانات التدريب: قبل الإخفاء وبعده */
+  .dt-wrap{ width:100%; overflow-x:auto; margin:10px 0 4px; }
+  .dt{
+    border-collapse:collapse; width:100%; min-width:440px;
+    font-size:calc(12.5px * var(--fs,1)); line-height:1.7;
+  }
+  .dt th{
+    background:rgba(26,61,140,0.1); color:var(--ink); font-weight:700;
+    text-align:start; padding:7px 9px; border:1px solid rgba(26,61,140,0.2);
+    white-space:nowrap;
+  }
+  .dt td{
+    padding:6px 9px; border:1px solid rgba(26,61,140,0.16);
+    color:var(--ink); vertical-align:top;
+  }
+  .dt .gone{ background:rgba(209,52,43,0.12); text-decoration:line-through;
+             text-decoration-color:var(--red); }
+  .dt .kept{ background:rgba(31,122,61,0.12); font-weight:700; }
+  .dt-cap{
+    font-size:calc(12px * var(--fs,1)); color:rgba(26,61,140,0.75);
+    margin:0 0 4px; font-weight:700;
+  }
+  .dt-cap.fake{ color:var(--red); }
+
+  /* قاعدة الإخفاء الثلاثية */
+  .anon{ display:flex; flex-direction:column; gap:8px; margin:12px 0; }
+  .anon-row{
+    display:flex; gap:11px; align-items:flex-start;
+    border-inline-start:4px solid var(--blue); border-radius:4px;
+    background:rgba(24,87,164,0.06); padding:9px 12px 10px;
+  }
+  .anon-row.drop{ border-inline-start-color:var(--red); background:rgba(209,52,43,0.06); }
+  .anon-row.keep{ border-inline-start-color:var(--green); background:rgba(31,122,61,0.07); }
+  .anon-row .a-v{
+    flex:0 0 auto; font-weight:700; font-size:calc(13px * var(--fs,1));
+    min-width:74px;
+  }
+  .anon-row.code .a-v{ color:var(--blue); }
+  .anon-row.drop .a-v{ color:var(--red); }
+  .anon-row.keep .a-v{ color:var(--green); }
+  .anon-row span:last-child{ flex:1 1 auto; min-width:0;
+    font-size:calc(13.5px * var(--fs,1)); line-height:1.9; }
+
+  /* أخطاء اليوم: ما سيقع، وما تفعله حين يقع */
+  .oops{
+    display:flex; gap:10px; align-items:flex-start;
+    border:1.5px solid rgba(224,122,31,0.5); border-radius:10px;
+    background:rgba(224,122,31,0.07); padding:10px 12px 11px; margin:8px 0;
+  }
+  .oops .o-i{ flex:0 0 auto; color:var(--orange); font-weight:700;
+              font-size:calc(15px * var(--fs,1)); }
+  .oops div{ flex:1 1 auto; min-width:0; font-size:calc(13.5px * var(--fs,1)); line-height:1.9; }
+  .oops b{ color:var(--ink); }
+
+  @media (max-width:520px){
+    .pr-head{ gap:7px; padding:7px 10px 8px; }
+    .pr-copy{ padding:5px 11px 6px; }
+    .drill-head .d-time{ margin-inline-start:0; }
+  }
+
   /* ---------- اختيار القارئ: خطّه وحجمه ----------
      القارئ الوحيد الذي يعرف ما يريح عينه هو القارئ. */
   .reader-btn{
@@ -1947,7 +2089,7 @@
     @page{ size:A4; margin:8mm; }
     body{ background:#fff !important; }
     .print-btn, .tabs, .tape, .master-header, .master-footer,
-    .ann-bar, .sheet, .ann-laser, .reader-btn, .reader-panel,
+    .ann-bar, .sheet, .ann-laser, .reader-btn, .reader-panel, .pr-copy,
     /* الشجرة والخريطة محتوًى واحد بنسبة تامّة، فطباعتهما معًا هدر ورق:
        تُطبع الشجرة وحدها، وهي تحمل البنود كلها. */
     .map-fold, .teach{ display:none !important; }
@@ -1984,7 +2126,8 @@
     .screen-frame, .scn, .hw, .try-box, .callout, .ct-bud, .gloss-row,
     .q-item, .sf-row, .leg-item, .mini-note, .map-tree li, .ex-card, .fb-grid,
     .pe-card, .pe-built, .pick-row, .cost-item, .pick-rule,
-    .lab, .tf-st, .sort-bin, .ord-step, .mcq-opt, li{
+    .lab, .tf-st, .sort-bin, .ord-step, .mcq-opt,
+    .pr, .drill, .oops, .anon-row, li{
       break-inside:avoid; page-break-inside:avoid;
     }
     /* عنوان في ذيل الصفحة ومحتواه في التي بعدها: يُدفع العنوان معه */
@@ -3813,15 +3956,232 @@
       <!-- ============ END SLIDE 2 ============ -->
 
       <!-- ============ SLIDE 3 : الأسبوع الثالث ============ -->
-      <div id="slide-3" class="slide content-slide">
+      <div id="slide-3" class="slide content-slide rich-slide">
         <span class="chip chip-ch1">الأسبوع الثالث</span>
         <h2 class="page-title">الأسبوع الثالث</h2>
         <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
-        <div class="coming-soon">
-          <svg class="big-icon" viewBox="0 0 40 40"><g filter="url(#sketchy)"><circle cx="20" cy="20" r="15" fill="#fde3c4" stroke="var(--orange)" stroke-width="2.5"/><path d="M20 12 v9 l6 4" fill="none" stroke="var(--orange)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></g></svg>
-          <p class="cs-title">تنزل لاحقاً</p>
-          <p class="cs-sub">محتوى هذا الأسبوع سيُضاف قريباً.</p>
+        <p class="lead-paragraph">اليوم <span class="hl hl-yellow">لا نشرح، بل نشتغل</span>. نفتح كلود على الشاشة، ونطبّق أمامكم، ثم تطبّقون أنتم — والمقياس واحد: أن تخرجوا بشيءٍ <strong>تستعملونه في مكتبكم غدًا</strong>، لا بفهمٍ تنسونه بعد أسبوع.</p>
+
+        <div class="ba-pair">
+          <div class="bubble b-before"><span class="ba-tag">الأسبوع ١ و٢</span>فهمتم كيف يشتغل، وعرفتم أين تجدون كل شيء.</div>
+          <div class="bubble b-after"><span class="ba-tag">اليوم</span>تخرجون بثلاثة أوامر جاهزة، وجدولٍ محلَّل، ورسمٍ بيانيّ من بياناتكم.</div>
         </div>
+
+        <!-- ===== قبل ما نبدأ ===== -->
+        <div class="section-heading" style="margin-top:26px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>قبل أن نبدأ — خمس دقائق</span>
+        </div>
+        <div class="screen-legend">
+          <div class="leg-item"><span class="leg-num">١</span><span><b>افتحوا claude.ai وسجّلوا دخولًا</b> — الحساب المجاني يكفي لكل ما سنعمله اليوم. والعراق ضمن الدول المدعومة رسميًّا.</span></div>
+          <div class="leg-item"><span class="leg-num">٢</span><span><b>من ليس معه جهاز، يجلس مع زميله.</b> اثنان على جهاز واحد أفضل من واحدٍ يتفرّج — تتناقشان في الأمر قبل إرساله، وهذا نصف الفائدة.</span></div>
+          <div class="leg-item"><span class="leg-num">٣</span><span><b>افتحوا هذه الصفحة على هواتفكم.</b> الأوامر الجاهزة أدناه تُنسخ بضغطة واحدة، فلا تكتبوها بأيديكم.</span></div>
+        </div>
+        <div class="mini-note" style="color:var(--red);">لن نرفع اليوم أيّ بيانات حقيقية لدائرتكم. كل ما سنستعمله بيانات تدريبية وهمية — والسبب يأتي في القسم الثاني.</div>
+
+        <!-- ===== بطاقة الأوامر ===== -->
+        <div class="section-heading" style="margin-top:26px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>بطاقة الأوامر الجاهزة</span>
+        </div>
+        <p class="lead-paragraph">اضغطوا <strong>نسخ</strong> ثم الصقوا في كلود. <span class="hl hl-pink">المظلَّل بالأصفر يُبدَّل بمعطياتكم أنتم</span> — والباقي يبقى كما هو.</p>
+
+        <div class="pr">
+          <div class="pr-head"><span class="pr-n">١</span><span class="pr-t">كتاب رسمي</span>
+            <button type="button" class="pr-copy">نسخ</button></div>
+          <div class="pr-body">أنت موظف في <span class="slot">دائرة/قسم</span> تكتب كتبًا رسمية.
+اكتب كتابًا رسميًّا من <span class="slot">الجهة المُرسِلة</span> إلى <span class="slot">الجهة المُرسَل إليها</span> بشأن <span class="slot">الموضوع</span>.
+المعطيات: <span class="slot">اكتب النقاط هنا</span>
+الشروط: ثلاث فقرات، صياغة رسمية موجزة، بلا عبارات مبالغة، ولا يزيد على ١٥٠ كلمة.</div>
+        </div>
+
+        <div class="pr">
+          <div class="pr-head"><span class="pr-n">٢</span><span class="pr-t">تلخيص محضر أو تقرير</span>
+            <button type="button" class="pr-copy">نسخ</button></div>
+          <div class="pr-body">هذا نصّ <span class="slot">محضر اجتماع / تقرير</span>.
+لخّصه في صفحة واحدة على شكل ثلاثة أقسام:
+١ — القرارات المتّخذة.
+٢ — الجهة المكلَّفة بكل قرار.
+٣ — الموعد النهائي لكل قرار.
+ما لم يُذكر صراحةً في النص، اكتب «غير محدّد» ولا تستنتجه.</div>
+        </div>
+
+        <div class="pr">
+          <div class="pr-head"><span class="pr-n">٣</span><span class="pr-t">تحليل جدول</span>
+            <button type="button" class="pr-copy">نسخ</button></div>
+          <div class="pr-body">هذا جدول <span class="slot">وصف البيانات</span> بعد إخفاء الهوية.
+استخرج منه:
+١ — ثلاثة مؤشّرات رقمية مهمّة لمتخذ القرار.
+٢ — أكثر <span class="slot">فئة/منطقة</span> تكرارًا.
+٣ — رسمًا بيانيًّا واحدًا يوضّح أهمّ نتيجة.
+لا تخترع أرقامًا غير موجودة في الجدول، وإن نقص شيء فقل ذلك صراحةً.</div>
+        </div>
+
+        <div class="pr">
+          <div class="pr-head"><span class="pr-n">٤</span><span class="pr-t">جُمل التحسين — بعد أوّل جواب</span>
+            <button type="button" class="pr-copy">نسخ</button></div>
+          <div class="pr-body">اختصره إلى النصف.
+اجعله أكثر رسمية.
+احذف الفقرة <span class="slot">رقم</span>.
+أعطني ثلاث صياغات مختلفة لأختار.
+اشرح لي لماذا اخترت هذه الصيغة.</div>
+        </div>
+
+        <!-- ===== الوحدة ١ ===== -->
+        <div class="chapter-num" style="color:var(--blue);margin-top:30px;"><span class="cn-num">١</span><span class="cn-title">أوامرك الثلاثة المتكرّرة</span></div>
+        <p class="lead-paragraph"><span class="mode hands">بأيديكم</span> &nbsp; في الأسبوع الأول تعلّمتم أن تكتبوا <strong>أمرًا واحدًا جيّدًا</strong>. اليوم مهارة أخرى: أن تنظروا في عملكم فتروا ما <span class="hl hl-green">تكرّرونه كل أسبوع</span>، وتحوّلوه <strong>قالبًا</strong> يبقى معكم.</p>
+        <p class="lead-paragraph">الفرق بين الأمر والقالب: <strong>الأمر يُكتب مرّة لحالة واحدة، والقالب فيه فراغات تملؤها كل مرّة.</strong> الأوامر الأربعة أعلاه قوالب — لاحظوا المظلَّل بالأصفر.</p>
+
+        <div class="drill">
+          <div class="drill-head"><span class="d-n">١</span><span class="d-t">ما الذي تكرّره أنت؟</span><span class="d-time">٥ دقائق</span></div>
+          <ol>
+            <li>افتحوا الملاحظات في هواتفكم.</li>
+            <li>اكتبوا <strong>ثلاث مهام</strong> تكرّرونها في الشهر الواحد أكثر من مرّة: كتاب، تلخيص، ردّ، جدول، تعميم…</li>
+            <li>ضعوا علامة على <strong>أكثرها استهلاكًا لوقتكم</strong>.</li>
+          </ol>
+          <div class="d-out"><b>المخرَج:</b> ثلاثة أسطر في هاتفك. هذه قائمة عملك لبقية الفصل.</div>
+        </div>
+
+        <div class="drill">
+          <div class="drill-head"><span class="d-n">٢</span><span class="d-t">حوّلها قالبًا واختبرها</span><span class="d-time">١٥ دقيقة</span></div>
+          <ol>
+            <li>انسخوا الأمر الجاهز الأقرب لمهمّتكم من البطاقة أعلاه.</li>
+            <li>بدّلوا المظلَّل بمعطياتكم <strong>الحقيقية غير السرّية</strong>.</li>
+            <li>أرسلوه، واقرأوا الجواب.</li>
+            <li>حسّنوه <strong>ثلاث مرّات على الأقل</strong> بجُمل البطاقة رقم ٤ — لا تقبلوا أول جواب.</li>
+            <li>احفظوا <strong>الصيغة النهائية للأمر</strong> في ملاحظاتكم، لا الجواب.</li>
+          </ol>
+          <div class="d-out"><b>المخرَج:</b> قالب واحد جاهز، ونصّ صالح للإرسال. <b>ولماذا نحفظ الأمر لا الجواب؟</b> لأن الجواب يخدم حالة واحدة، والأمر يخدم كل الحالات القادمة.</div>
+        </div>
+
+        <div class="try-box">
+          <div class="try-title">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2"><path d="M9 3h6v5l4 9a2 2 0 0 1-2 3H7a2 2 0 0 1-2-3l4-9z" stroke-linejoin="round"/><path d="M9 3h6" stroke-linecap="round"/></svg>
+            جرّب بنفسك — الجواب الضعيف
+          </div>
+          <div class="try-line"><span class="try-tag try-do">افعل</span><span>اكتب أمرًا ناقصًا عمدًا: «اكتب لي كتاب رسمي». ثم اكتب القالب رقم ١ كاملًا.</span></div>
+          <div class="try-line"><span class="try-tag try-see">سترى</span><span>الأول يعطيك نصًّا عامًّا لا يصلح للإرسال، والثاني يعطيك كتابًا شبه جاهز. <strong>الفرق فيك لا فيه.</strong></span></div>
+        </div>
+
+        <!-- ===== الوحدة ٢ ===== -->
+        <div class="chapter-num" style="color:var(--green);margin-top:32px;"><span class="cn-num">٢</span><span class="cn-title">بيانات بلا أسماء</span></div>
+        <p class="lead-paragraph"><span class="mode hands">بأيديكم</span> &nbsp; في الأسبوع الثاني قلنا: <span class="hl hl-pink">ما لا تريد خروجه من الدائرة، لا ترفعه</span>. وهذا <strong>نهيٌ</strong>. واليوم نعطيكم <strong>الطريقة</strong> التي تُبقي بياناتكم عندكم وتسمح لكم بتحليلها.</p>
+        <p class="lead-paragraph">القاعدة سطر واحد: <strong>احذف ما لا يفيد التحليل، ورمّز ما يفيده، وأبقِ ما لا يدلّ على شخص.</strong></p>
+
+        <div class="anon">
+          <div class="anon-row drop"><span class="a-v">احذف</span><span><strong>الهاتف · البريد · رقم الهوية.</strong> اسألوا أنفسكم: هل يغيّر رقم الهاتف نتيجة التحليل؟ لا. إذًا لا مبرّر لرفعه أصلًا.</span></div>
+          <div class="anon-row code"><span class="a-v">رمّز</span><span><strong>الاسم ← رمز متسلسل</strong> (م-٠٠١، م-٠٠٢). وجدول المطابقة يبقى في ملفٍ عندك على جهازك لا تُرفع نسخته.</span></div>
+          <div class="anon-row keep"><span class="a-v">أبقِ</span><span><strong>النوع · التاريخ · الحالة · المنطقة العامة.</strong> هذه هي التحليل نفسه، ولا تدلّ على شخص بعينه.</span></div>
+        </div>
+
+        <p class="dt-cap fake">جدول تدريبي — بيانات وهمية بالكامل، لا تخصّ أشخاصًا حقيقيين</p>
+        <p class="dt-cap">قبل الإخفاء</p>
+        <div class="dt-wrap">
+          <table class="dt">
+            <thead><tr><th>ت</th><th>اسم المواطن</th><th>الهاتف</th><th>العنوان</th><th>نوع الشكوى</th><th>التاريخ</th><th>الحالة</th></tr></thead>
+            <tbody>
+              <tr><td>١</td><td class="gone">أحمد كاظم محمد</td><td class="gone">٠٧٠٠-٠٠٠-٠٠١١</td><td class="gone">بغداد — الكرادة، محلة ٩٠٩، دار ١٢</td><td>تأخير معاملة</td><td>٣ أيلول</td><td>مفتوحة</td></tr>
+              <tr><td>٢</td><td class="gone">سعاد جبار علي</td><td class="gone">٠٧٠٠-٠٠٠-٠٠٢٢</td><td class="gone">بغداد — الأعظمية، محلة ٣١٢، دار ٤</td><td>نقص مستمسكات</td><td>٣ أيلول</td><td>مغلقة</td></tr>
+              <tr><td>٣</td><td class="gone">مروان عبد الله</td><td class="gone">٠٧٠٠-٠٠٠-٠٠٣٣</td><td class="gone">بغداد — الكرادة، محلة ٩١٣، دار ٧</td><td>تأخير معاملة</td><td>٤ أيلول</td><td>مفتوحة</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="dt-cap">بعد الإخفاء — هذا ما يُرفع</p>
+        <div class="dt-wrap">
+          <table class="dt">
+            <thead><tr><th>ت</th><th>الرمز</th><th>المنطقة</th><th>نوع الشكوى</th><th>التاريخ</th><th>الحالة</th></tr></thead>
+            <tbody>
+              <tr><td>١</td><td class="kept">م-٠٠١</td><td class="kept">الكرادة</td><td>تأخير معاملة</td><td>٣ أيلول</td><td>مفتوحة</td></tr>
+              <tr><td>٢</td><td class="kept">م-٠٠٢</td><td class="kept">الأعظمية</td><td>نقص مستمسكات</td><td>٣ أيلول</td><td>مغلقة</td></tr>
+              <tr><td>٣</td><td class="kept">م-٠٠٣</td><td class="kept">الكرادة</td><td>تأخير معاملة</td><td>٤ أيلول</td><td>مفتوحة</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="mini-note">لاحظوا: الجدول الثاني يجيب على كل سؤالٍ إداريّ يهمّكم — أيّ منطقة أكثر شكوى، وأيّ نوعٍ يتكرّر، وكم نسبة المغلق — <strong>بلا اسمٍ واحد</strong>.</div>
+
+        <div class="drill">
+          <div class="drill-head"><span class="d-n">٣</span><span class="d-t">أخفِ الهوية بيدك</span><span class="d-time">١٠ دقائق</span></div>
+          <ol>
+            <li>افتحوا جدولًا في الإكسل: إمّا الجدول أعلاه تنسخونه، أو جدولًا من عملكم <strong>تُخرجون منه الأسماء أولًا</strong>.</li>
+            <li>احذفوا أعمدة الهاتف والعنوان التفصيلي.</li>
+            <li>بدّلوا عمود الأسماء برموز متسلسلة.</li>
+            <li>احفظوا نسخة باسم «للتحليل»، وأبقوا الأصل عندكم مغلقًا.</li>
+          </ol>
+          <div class="d-out"><b>المخرَج:</b> ملف صالح للرفع بأمان. <b>وهذه الخطوة تصير عادة:</b> لا يُرفع ملفٌ إلا وقد مرّ عليها.</div>
+        </div>
+
+        <div class="drill">
+          <div class="drill-head"><span class="d-n">٤</span><span class="d-t">من جدول إلى قرار</span><span class="d-time">١٥ دقيقة</span></div>
+          <ol>
+            <li>ارفعوا الملف المُخفى إلى كلود.</li>
+            <li>الصقوا الأمر الجاهز رقم ٣، وبدّلوا المظلَّل.</li>
+            <li>اقرأوا المؤشّرات الثلاثة. <strong>تحقّقوا من رقمٍ واحدٍ منها بأنفسكم</strong> — عُدّوا الصفوف في الإكسل.</li>
+            <li>اطلبوا الرسم البياني، ثم حسّنوه: «اجعله عموديًّا»، «رتّب من الأكبر»، «أضف العنوان بالعربي».</li>
+          </ol>
+          <div class="d-out"><b>المخرَج:</b> رسم بياني وثلاثة مؤشّرات. <b>ولماذا نتحقّق من رقم؟</b> لأن الهلوسة لا تعلن عن نفسها — تعرفونها من الأسبوع الأول، واليوم تتدرّبون عليها.</div>
+        </div>
+
+        <!-- ===== الوحدة ٣ ===== -->
+        <div class="chapter-num" style="color:var(--purple);margin-top:32px;"><span class="cn-num">٣</span><span class="cn-title">ما بعد المجاني</span></div>
+        <p class="lead-paragraph"><span class="mode watch">عرضٌ على الشاشة</span> &nbsp; هذا القسم <strong>تشاهدونه ولا تطبّقونه</strong> — بعض ما فيه يحتاج اشتراكًا مدفوعًا. الغرض أن تعرفوا إلى أين يمتدّ الطريق، لا أن تعملوه اليوم.</p>
+
+        <div class="screen-legend">
+          <div class="leg-item"><span class="leg-num">١</span><span><b>مشروع بتعليمات دائمة</b> — تكتب مرّة واحدة من أنت وما أسلوبك، فتبدأ كل محادثة داخله وهي عارفة. القالب الذي بنيتموه اليوم يصير <b>تعليمات ثابتة</b> لا تلصقونها كل مرّة.</span></div>
+          <div class="leg-item"><span class="leg-num">٢</span><span><b>مهمّة مجدولة</b> — تُضبط مرّة، فتعمل كل صباح وأنتم نائمون، ويصلكم الناتج جاهزًا.</span></div>
+          <div class="leg-item"><span class="leg-num">٣</span><span><b>كوورك</b> — مهامّ أكبر تصل إلى ملفاتكم وتشتغل في الخلفية بينما أنتم في اجتماع.</span></div>
+        </div>
+        <div class="mini-note" style="color:var(--purple);">الترتيب الطبيعي: أتقنوا القالب أولًا. من لم ينفعه القالب لن ينفعه المشروع، ومن لم ينفعه المشروع لن تنفعه الجدولة.</div>
+
+        <!-- ===== أخطاء اليوم ===== -->
+        <div class="section-heading" style="margin-top:30px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>خمسة أخطاء ستقع اليوم — وعلاجها</span>
+        </div>
+        <div class="oops"><span class="o-i">١</span><div><b>«الجواب عام ولا يصلح.»</b> غالبًا أرسلتم القالب بلا ملء المظلَّل. ارجعوا واملأوه.</div></div>
+        <div class="oops"><span class="o-i">٢</span><div><b>«قبلت أول جواب.»</b> أول جواب مسوّدة لا نتيجة. ثلاث جُمل تحسين تفصل بين نصٍّ عادي ونصٍّ يُوقَّع.</div></div>
+        <div class="oops"><span class="o-i">٣</span><div><b>«رفعت ملفًا فيه أسماء.»</b> توقّفوا، احذفوا المحادثة، وأخفوا الهوية ثم أعيدوا. والأهم: أخبروا مسؤولكم — الخطأ المُبلَّغ عنه أهون من المكتشَف.</div></div>
+        <div class="oops"><span class="o-i">٤</span><div><b>«أعطاني رقمًا لا أصدّقه.»</b> أحسنتم. عُدّوه بأنفسكم في الإكسل. هو مساعد لا مصدر.</div></div>
+        <div class="oops"><span class="o-i">٥</span><div><b>«انتهى رصيدي المجاني.»</b> طبيعي في يوم تطبيق مكثّف. اجلسوا مع زميلٍ وأكملوا على جهازه، وأكملوا في البيت مساءً.</div></div>
+
+        <!-- ===== مصطلحات ===== -->
+        <div class="section-heading" style="margin-top:30px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>مصطلحات هذا الأسبوع بالعربي</span>
+        </div>
+        <ul class="glossary-list">
+          <li><span class="gloss-ar">القالب</span> <span class="gloss-term">(Template)</span>: أمرٌ مكتوب مرّة بفراغات تملؤها كل مرّة، بدل كتابته من الصفر.</li>
+          <li><span class="gloss-ar">إخفاء الهوية</span> <span class="gloss-term">(Anonymization)</span>: إزالة ما يدلّ على شخصٍ بعينه من البيانات، مع إبقاء ما يصلح للتحليل.</li>
+          <li><span class="gloss-ar">جدول المطابقة</span> <span class="gloss-term">(Key file)</span>: الملف الذي يربط الرمز بصاحبه، ويبقى عندك ولا يُرفع أبدًا.</li>
+          <li><span class="gloss-ar">التحقّق المتقاطع</span> <span class="gloss-term">(Verification)</span>: أن تفحص رقمًا واحدًا من نتيجته بنفسك قبل أن تبني عليه قرارًا.</li>
+        </ul>
+
+        <!-- ===== الواجبات ===== -->
+        <div class="section-heading" style="margin-top:30px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>الواجبات التدريبية</span>
+        </div>
+
+        <div class="hw">
+          <div class="hw-head"><span class="hw-num">١</span><span class="hw-title">قوالبك الثلاثة</span><span class="scn-badge lv-easy">بسيط</span></div>
+          <p>أكملوا القوالب الثلاثة التي بدأتموها في الصف، واستعملوا كلّ واحدٍ منها <strong>مرّة واحدة على الأقل في عمل حقيقي</strong> هذا الأسبوع.</p>
+          <div class="hw-deliver"><span class="hw-tag">المُسلَّم</span><span>نصوص القوالب الثلاثة، وسطرٌ لكل واحد: كم دقيقة كانت المهمّة تأخذ قبله، وكم صارت بعده.</span></div>
+        </div>
+
+        <div class="hw">
+          <div class="hw-head"><span class="hw-num">٢</span><span class="hw-title">جدول من عملك، مُخفى الهوية</span><span class="scn-badge lv-mid">متوسط</span></div>
+          <p>خذوا جدولًا حقيقيًّا من قسمكم لا يقلّ عن عشرين صفًّا، وأخفوا هويّته بالقاعدة الثلاثية، ثم استخرجوا منه ثلاثة مؤشّرات ورسمًا بيانيًّا.</p>
+          <div class="hw-deliver"><span class="hw-tag">المُسلَّم</span><span>الجدول بعد الإخفاء (لا الأصل)، والرسم، وفقرة من خمسة أسطر: ما الذي كشفه لك الرقم ولم تكن تعرفه؟</span></div>
+        </div>
+
+        <div class="hw">
+          <div class="hw-head"><span class="hw-num">٣</span><span class="hw-title">اصطدْ هلوسة</span><span class="scn-badge lv-hard">معقّد</span></div>
+          <p>اطرحوا عليه سؤالًا في مجال تخصّصكم <strong>تعرفون جوابه يقينًا</strong> — نظام أو تعليمات أو رقم في دائرتكم — وافحصوا جوابه بدقّة.</p>
+          <div class="hw-deliver"><span class="hw-tag">المُسلَّم</span><span>السؤال، وجوابه، وموضع الخطأ إن وُجد. وإن أصاب تمامًا فقولوا ذلك — النتيجة السلبية نتيجة أيضًا.</span></div>
+        </div>
+
+        <div class="mini-note">نهاية المحاضرة الثالثة — إعداد: أ.م.د أمير هادي ★</div>
+
         <div class="page-nav">
           <button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button>
           <button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button>
@@ -5354,6 +5714,57 @@
   });
 
   paint();
+})();
+</script>
+
+
+<script>
+/* نسخ الأمر الجاهز بضغطة: الطالب واقف بهاتفه، وكتابة عشرة أسطر بيده
+   تعني أنه لن يبدأ أصلًا. نأخذ النصّ من الصندوق لا من متغيّر، فلا يفترقان. */
+(function(){
+  var cards = document.querySelectorAll('.pr');
+  if(!cards.length) return;
+
+  function copy(text){
+    if(navigator.clipboard && window.isSecureContext)
+      return navigator.clipboard.writeText(text);
+    /* متصفّح قديم أو صفحة غير مؤمّنة: الطريقة الاحتياطية */
+    return new Promise(function(res, rej){
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly', '');
+      ta.style.cssText = 'position:fixed;top:-1000px;opacity:0';
+      document.body.appendChild(ta);
+      ta.select(); ta.setSelectionRange(0, ta.value.length);
+      var ok = false;
+      try{ ok = document.execCommand('copy'); }catch(e){}
+      ta.remove();
+      ok ? res() : rej();
+    });
+  }
+
+  cards.forEach(function(card){
+    var btn = card.querySelector('.pr-copy');
+    var body = card.querySelector('.pr-body');
+    if(!btn || !body) return;
+    var timer = null;
+    btn.addEventListener('click', function(){
+      copy(body.innerText).then(function(){
+        btn.textContent = '✓ نُسخ';
+        btn.classList.add('done');
+      }).catch(function(){
+        /* تعذّر النسخ: نُظهر النصّ محدَّدًا ليأخذه بيده */
+        btn.textContent = 'انسخه يدويًّا';
+        var r = document.createRange(); r.selectNodeContents(body);
+        var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+      }).then(function(){
+        clearTimeout(timer);
+        timer = setTimeout(function(){
+          btn.textContent = 'نسخ'; btn.classList.remove('done');
+        }, 2200);
+      });
+    });
+  });
 })();
 </script>
 
