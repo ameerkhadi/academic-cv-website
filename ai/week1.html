@@ -1177,6 +1177,68 @@
   .mode.watch{ background:rgba(122,46,166,0.14); color:var(--purple);
                box-shadow:inset 0 0 0 1.5px var(--purple); }
 
+  /* محطّة تطبيق: بندٌ من الشجرة يُنفَّذ الآن أو يُشاهَد */
+  .st{
+    width:100%; margin:9px 0;
+    border:1.5px solid rgba(26,61,140,0.22); border-radius:11px;
+    background:rgba(255,255,255,0.45); padding:10px 13px 11px;
+    border-inline-start-width:5px;
+  }
+  .st.hands{ border-inline-start-color:var(--green); }
+  .st.watch{ border-inline-start-color:var(--purple); background:rgba(122,46,166,0.045); }
+  .st-h{ display:flex; align-items:center; gap:9px; flex-wrap:wrap; margin-bottom:6px; }
+  .st-n{
+    flex:0 0 auto; width:23px; height:23px; border-radius:50%;
+    color:#fff; font-weight:700; font-size:calc(12px * var(--fs,1));
+    display:flex; align-items:center; justify-content:center;
+  }
+  .st.hands .st-n{ background:var(--green); }
+  .st.watch .st-n{ background:var(--purple); }
+  .st-t{
+    font-family:'Aref Ruqaa',serif; font-weight:700;
+    font-size:calc(15px * var(--fs,1)); color:var(--ink); line-height:1.5;
+  }
+  .st-en{ font-size:calc(11.5px * var(--fs,1)); color:rgba(26,61,140,0.6);
+          direction:ltr; unicode-bidi:isolate; }
+  .st-b{ display:flex; gap:8px; align-items:flex-start; margin-top:5px; }
+  .st-b > span:last-child{ flex:1 1 auto; min-width:0;
+    font-size:calc(13.5px * var(--fs,1)); line-height:1.9; color:var(--ink); }
+  .st-tag{
+    flex:0 0 auto; font-size:calc(10.5px * var(--fs,1)); font-weight:700;
+    padding:2px 8px 3px; border-radius:999px; margin-top:4px; white-space:nowrap;
+  }
+  .st-tag.do{ background:var(--blue); color:#fff; }
+  .st-tag.see{ background:rgba(31,122,61,0.16); color:var(--green); }
+  .st-tag.why{ background:rgba(209,52,43,0.13); color:var(--red); }
+
+  /* فاصل فرع من الشجرة */
+  .br-head{
+    display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+    margin:26px 0 4px; padding-bottom:6px;
+    border-bottom:2.5px solid var(--ink);
+  }
+  .br-head .br-n{
+    font-family:'Aref Ruqaa Ink','Aref Ruqaa',serif;
+    font-size:calc(26px * var(--fs,1)); color:var(--red); line-height:1;
+  }
+  .br-head .br-t{
+    font-family:'Aref Ruqaa',serif; font-weight:700;
+    font-size:calc(18px * var(--fs,1)); color:var(--ink);
+  }
+  .br-head .br-c{
+    margin-inline-start:auto; font-size:calc(11.5px * var(--fs,1));
+    color:rgba(26,61,140,0.65); font-weight:700; white-space:nowrap;
+  }
+
+  /* مفاتيح القراءة أعلى الجولة */
+  .keys{ display:flex; flex-wrap:wrap; gap:9px; margin:12px 0 4px; }
+  .keys .k-i{
+    display:flex; align-items:center; gap:7px;
+    border:1.5px solid rgba(26,61,140,0.2); border-radius:9px;
+    padding:7px 12px 8px; background:rgba(255,255,255,0.5);
+    font-size:calc(13px * var(--fs,1)); line-height:1.6;
+  }
+
   /* بطاقة أمر جاهز: تُنسخ بضغطة، فلا يقف أحد أمام صندوق فارغ */
   .pr{
     width:100%; margin:12px 0;
@@ -2127,7 +2189,7 @@
     .q-item, .sf-row, .leg-item, .mini-note, .map-tree li, .ex-card, .fb-grid,
     .pe-card, .pe-built, .pick-row, .cost-item, .pick-rule,
     .lab, .tf-st, .sort-bin, .ord-step, .mcq-opt,
-    .pr, .drill, .oops, .anon-row, li{
+    .pr, .drill, .oops, .anon-row, .st, li{
       break-inside:avoid; page-break-inside:avoid;
     }
     /* عنوان في ذيل الصفحة ومحتواه في التي بعدها: يُدفع العنوان معه */
@@ -4027,8 +4089,183 @@
 اشرح لي لماذا اخترت هذه الصيغة.</div>
         </div>
 
+        <!-- ===== جولة التطبيق على الشجرة ===== -->
+        <div class="section-heading" style="margin-top:30px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>جولة التطبيق — الشجرة كلّها، محطّةً محطّة</span>
+        </div>
+        <p class="lead-paragraph">هذه <span class="hl hl-yellow">قائمة عملٍ لا فصلُ قراءة</span>. نمرّ على فروع شجرة كلود الأربعة بالترتيب نفسه، وكل محطّة فيها ما تفعله وما ستراه. نمشي معًا على الأخضر في الصفّ، وما لا يتّسع له الوقت <strong>تكملونه في البيت بهذه القائمة نفسها</strong>.</p>
+
+        <div class="keys">
+          <div class="k-i"><span class="mode hands">افعله</span><span>الآن، على حسابك المجاني</span></div>
+          <div class="k-i"><span class="mode watch">شاهده</span><span>أعرضه أنا — قد يحتاج اشتراكًا</span></div>
+        </div>
+
+        <!-- ===== الفرع ١ ===== -->
+        <div class="br-head"><span class="br-n">١</span><span class="br-t">كيف يشتغل</span><span class="br-c">أربع محطّات</span></div>
+        <div class="mini-note">التقطيع والتمثيل الرقمي والتوليد مفاهيمُ بلا زرٍّ يُضغط — عرفتموها في الأسبوع الأول، ولا يُطبَّق منها شيء. أمّا حدود النموذج فتُلمَس باليد، وهذه محطّاتها.</div>
+
+        <div class="st hands">
+          <div class="st-h"><span class="st-n">١</span><span class="st-t">نافذة السياق <span class="st-en">Context window</span></span><span class="mode hands">افعله</span></div>
+          <div class="st-b"><span class="st-tag do">افعل</span><span>في محادثة واحدة، أعطه اسمك ووظيفتك، ثم اسأله عشرة أسئلة طويلة غير متعلّقة، ثم اسأله: «ما وظيفتي التي ذكرتها؟»</span></div>
+          <div class="st-b"><span class="st-tag see">سترى</span><span>يتعثّر أو يخترع. <strong>هذه هي النافذة وقد امتلأت.</strong></span></div>
+          <div class="st-b"><span class="st-tag why">القاعدة</span><span>محادثة جديدة لكل موضوع جديد، ولخّص المهم بين حين وآخر.</span></div>
+        </div>
+
+        <div class="st hands">
+          <div class="st-h"><span class="st-n">٢</span><span class="st-t">الهلوسة <span class="st-en">Hallucination</span></span><span class="mode hands">افعله</span></div>
+          <div class="st-b"><span class="st-tag do">افعل</span><span>اسأله عن مادّة في نظامٍ أو تعليماتٍ عراقية تعرفها يقينًا، واطلب رقم المادّة ونصّها.</span></div>
+          <div class="st-b"><span class="st-tag see">سترى</span><span>جوابًا واثقًا. قارنه بالنصّ الرسمي عندك.</span></div>
+          <div class="st-b"><span class="st-tag why">القاعدة</span><span>كل رقمٍ واسمٍ وتاريخ يخرج منه، تتحقّق منه بنفسك. هو مساعد لا مصدر.</span></div>
+        </div>
+
+        <div class="st hands">
+          <div class="st-h"><span class="st-n">٣</span><span class="st-t">النماذج والتفكير الممتد <span class="st-en">Models · Extended thinking</span></span><span class="mode hands">افعله</span></div>
+          <div class="st-b"><span class="st-tag do">افعل</span><span>اطرح مسألة تحتاج تفكيرًا (ترتيب أولويات ميزانية مثلًا) مرّة بالوضع العادي، ومرّة مع <strong>التفكير الممتد</strong> إن كان متاحًا في حسابك.</span></div>
+          <div class="st-b"><span class="st-tag see">سترى</span><span>الثاني أبطأ وأدقّ. والفرق يظهر في المسائل المركّبة لا في سؤالٍ بسيط.</span></div>
+        </div>
+
+        <div class="st hands">
+          <div class="st-h"><span class="st-n">٤</span><span class="st-t">هندسة الأوامر — القوالب <span class="st-en">Prompting</span></span><span class="mode hands">افعله</span></div>
+          <div class="st-b"><span class="st-tag do">افعل</span><span>هذه محطّة موسّعة — انظر التمرينين ١ و٢ أدناه.</span></div>
+        </div>
+
+        <!-- ===== الفرع ٢ ===== -->
+        <div class="br-head"><span class="br-n">٢</span><span class="br-t">واجهات الاستخدام</span><span class="br-c">تسع محطّات</span></div>
+
+        <div class="st hands">
+          <div class="st-h"><span class="st-n">٥</span><span class="st-t">المحادثات: بحث · تثبيت · أرشفة <span class="st-en">Chats</span></span><span class="mode hands">افعله</span></div>
+          <div class="st-b"><span class="st-tag do">افعل</span><span>افتح قائمة المحادثات، ابحث عن كلمة من محادثة قديمة، <strong>ثبّت</strong> أهمّ محادثة عندك، و<strong>أرشِف</strong> واحدة انتهيت منها.</span></div>
+          <div class="st-b"><span class="st-tag see">سترى</span><span>المثبّتة في الأعلى دائمًا، والمؤرشفة اختفت من القائمة <strong>ولم تُحذف</strong>.</span></div>
+        </div>
+
+        <div class="st hands">
+          <div class="st-h"><span class="st-n">٦</span><span class="st-t">تعديل رسالتك وإعادة التوليد <span class="st-en">Edit · Regenerate</span></span><span class="mode hands">افعله</span></div>
+          <div class="st-b"><span class="st-tag do">افعل</span><span>مرّر على رسالتك أنت واضغط <strong>تعديل</strong>، غيّر كلمة واحدة في الأمر، وأعد الإرسال.</span></div>
+          <div class="st-b"><span class="st-tag see">سترى</span><span>مسارًا جديدًا للمحادثة بدل تكديس التصحيحات. <strong>أنظف من أن تكتب «لا، أقصد…».</strong></span></div>
+        </div>
+
+        <div class="st hands">
+          <div class="st-h"><span class="st-n">٧</span><span class="st-t">تبديل النموذج داخل المحادثة <span class="st-en">Model switch</span></span><span class="mode hands">افعله</span></div>
+          <div class="st-b"><span class="st-tag do">افعل</span><span>من قائمة النموذج أعلى المحادثة، بدّل النموذج ثم أعد توليد الجواب نفسه.</span></div>
+          <div class="st-b"><span class="st-tag see">سترى</span><span>اختلاف الطول والأسلوب. الخيارات المتاحة تختلف بحسب خطّتك.</span></div>
+        </div>
+
+        <div class="st hands">
+          <div class="st-h"><span class="st-n">٨</span><span class="st-t">رفع الملفات والصور <span class="st-en">Upload</span></span><span class="mode hands">افعله</span></div>
+          <div class="st-b"><span class="st-tag do">افعل</span><span>ارفع صورة كتابٍ رسمي بهاتفك واطلب: «فرّغ نصّ هذا الكتاب واستخرج: الجهة، والموضوع، والتاريخ».</span></div>
+          <div class="st-b"><span class="st-tag see">سترى</span><span>يقرأ الصورة ويفرّغها. <strong>هذه وحدها تختصر ساعات الإدخال اليدوي.</strong></span></div>
+          <div class="st-b"><span class="st-tag why">تحذير</span><span>لا ترفع كتابًا فيه بيانات مواطن. استعمل كتابًا معمَّمًا أو غطِّ الأسماء قبل التصوير.</span></div>
+        </div>
+
+        <div class="st hands">
+          <div class="st-h"><span class="st-n">٩</span><span class="st-t">المحادثة الصوتية <span class="st-en">Voice</span></span><span class="mode hands">افعله</span></div>
+          <div class="st-b"><span class="st-tag do">افعل</span><span>افتح الصوت في تطبيق الهاتف، وأملِ عليه فكرة كتابٍ بالعربية بصوتك بدل أن تكتبها.</span></div>
+          <div class="st-b"><span class="st-tag see">سترى</span><span>نصًّا مكتوبًا من كلامك. <strong>لمن يكتب ببطء على الهاتف، هذه أهمّ محطّة اليوم.</strong></span></div>
+        </div>
+
+        <div class="st hands">
+          <div class="st-h"><span class="st-n">١٠</span><span class="st-t">المشاركة برابط <span class="st-en">Share</span></span><span class="mode hands">افعله</span></div>
+          <div class="st-b"><span class="st-tag do">افعل</span><span>من قائمة المحادثة اختر <strong>مشاركة</strong>، وأرسل الرابط لزميلك بجانبك.</span></div>
+          <div class="st-b"><span class="st-tag see">سترى</span><span>يفتحها ويقرأها بلا حساب.</span></div>
+          <div class="st-b"><span class="st-tag why">تحذير</span><span>الرابط يعمل لمن يملكه <strong>كائنًا من كان</strong>. لا تشارك محادثةً فيها شيء من عمل دائرتك.</span></div>
+        </div>
+
+        <div class="st hands">
+          <div class="st-h"><span class="st-n">١١</span><span class="st-t">الأرتيفاكتس: أنشئ · عدّل · انشر <span class="st-en">Artifacts</span></span><span class="mode hands">افعله</span></div>
+          <div class="st-b"><span class="st-tag do">افعل</span><span>اطلب: «اعمل لي جدول متابعة معاملات لقسمي، بأعمدة: الرقم، الموضوع، الجهة، التاريخ، الحالة». ثم اطلب تعديلًا: «أضف عمود الملاحظات».</span></div>
+          <div class="st-b"><span class="st-tag see">سترى</span><span>نافذة مستقلّة بجانب المحادثة، تُعدَّل بلا إعادة كتابة الطلب من الصفر، ويمكن نشرها برابط أو إبقاؤها خاصّة.</span></div>
+        </div>
+
+        <div class="st watch">
+          <div class="st-h"><span class="st-n">١٢</span><span class="st-t">المشاريع: تعليمات ثابتة وملفات مرجعية <span class="st-en">Projects</span></span><span class="mode watch">شاهده</span></div>
+          <div class="st-b"><span class="st-tag do">أعرض</span><span>أُنشئ مشروع «مراسلات قسم التدريب»، وأضع فيه التعليمات الدائمة والملفات المرجعية، ثم أفتح محادثة داخله.</span></div>
+          <div class="st-b"><span class="st-tag see">سترون</span><span>المحادثة تبدأ وهي عارفةٌ أسلوبي وملفّاتي — <strong>القالب الذي بنيتموه اليوم يصير هنا تعليمات ثابتة</strong> لا تلصقونها كل مرّة.</span></div>
+        </div>
+
+        <div class="st watch">
+          <div class="st-h"><span class="st-n">١٣</span><span class="st-t">كوورك · ديسباتش · المهامّ المجدولة <span class="st-en">Cowork · Dispatch · Scheduled</span></span><span class="mode watch">شاهده</span></div>
+          <div class="st-b"><span class="st-tag do">أعرض</span><span>مهمّة في كوورك تصل إلى ملفاتي وتشتغل بالخلفية، وحالاتها السبع، ومُشغِّلًا مجدولًا وسجلّ تشغيلاته.</span></div>
+          <div class="st-b"><span class="st-tag see">سترون</span><span>«تحتاج ردّك» هي قائمة العمل اليومية، والمجدولة تشتغل وأنتم نائمون.</span></div>
+          <div class="st-b"><span class="st-tag why">ملاحظة</span><span>كلود كود وأجهزته وجلساته أداة مبرمجين — تكفيكم معرفة أنها موجودة.</span></div>
+        </div>
+
+        <!-- ===== الفرع ٣ ===== -->
+        <div class="br-head"><span class="br-n">٣</span><span class="br-t">الإعدادات — افتحوها معي الآن</span><span class="br-c">ثماني محطّات</span></div>
+        <p class="lead-paragraph">هذا الفرع كلّه <span class="hl hl-green">مجانيّ وسريع</span>. افتحوا الإعدادات وامشوا معي بندًا بندًا — عشر دقائق تضبط حسابكم لبقيّة السنة.</p>
+
+        <div class="st hands">
+          <div class="st-h"><span class="st-n">١٤</span><span class="st-t">الملف الشخصي والتعليمات الدائمة <span class="st-en">Profile</span></span><span class="mode hands">افعله</span></div>
+          <div class="st-b"><span class="st-tag do">افعل</span><span>اكتب بماذا يناديك وطبيعة عملك، ثم في <strong>التعليمات الشخصية الدائمة</strong> اكتب خمسة أسطر: موقعك الوظيفي، جمهور مخاطباتك، واللغة والأسلوب الذي تريده دائمًا.</span></div>
+          <div class="st-b"><span class="st-tag see">سترى</span><span>اطرح السؤال نفسه قبل وبعد. <strong>أعلى عائدٍ لأقلّ جهد في كل الإعدادات.</strong></span></div>
+        </div>
+
+        <div class="st hands">
+          <div class="st-h"><span class="st-n">١٥</span><span class="st-t">عام: الصوت والإشعارات <span class="st-en">General</span></span><span class="mode hands">افعله</span></div>
+          <div class="st-b"><span class="st-tag do">افعل</span><span>اضبط لغة الصوت ونمطه وسرعته، وفعّل إشعار اكتمال الردّ.</span></div>
+          <div class="st-b"><span class="st-tag see">سترى</span><span>إشعارًا حين ينتهي من طلبٍ طويل، فلا تجلس تنتظر الشاشة.</span></div>
+        </div>
+
+        <div class="st hands">
+          <div class="st-h"><span class="st-n">١٦</span><span class="st-t">الحساب: الأجهزة والجلسات النشطة <span class="st-en">Account</span></span><span class="mode hands">افعله</span></div>
+          <div class="st-b"><span class="st-tag do">افعل</span><span>افتح <strong>الجلسات النشطة</strong> وقارن القائمة بأجهزتك الحقيقية، وأنهِ ما لا تعرفه.</span></div>
+          <div class="st-b"><span class="st-tag why">القاعدة</span><span>راجعها دوريًّا كما تراجع كشف حسابك في المصرف.</span></div>
+        </div>
+
+        <div class="st hands">
+          <div class="st-h"><span class="st-n">١٧</span><span class="st-t">الخصوصية: التصدير والحذف <span class="st-en">Privacy</span></span><span class="mode hands">افعله</span></div>
+          <div class="st-b"><span class="st-tag do">افعل</span><span>اطلب تصدير بياناتك، واحذف محادثةً واحدة تجريبًا.</span></div>
+          <div class="st-b"><span class="st-tag see">سترى</span><span>رابطًا على بريدك <strong>يبطل بعد ٢٤ ساعة</strong> — نزّله فور وصوله.</span></div>
+          <div class="st-b"><span class="st-tag why">القاعدة</span><span>هذه الإعدادات تحمي بياناتك من الاستخدام اللاحق، ولا تجعل رفع السرّي مقبولًا.</span></div>
+        </div>
+
+        <div class="st hands">
+          <div class="st-h"><span class="st-n">١٨</span><span class="st-t">القدرات: أطفئ وشغّل <span class="st-en">Capabilities</span></span><span class="mode hands">افعله</span></div>
+          <div class="st-b"><span class="st-tag do">افعل</span><span>أطفئ <strong>الأرتيفاكتس</strong> واطلب جدول ميزانية، ثم شغّلها واطلب الطلب نفسه. ومرّ على الرسوم داخل المحادثة وتنفيذ الكود وإنشاء الملفات.</span></div>
+          <div class="st-b"><span class="st-tag see">سترى</span><span>الفرق بعينك — وهذا أوضح من أي شرح.</span></div>
+        </div>
+
+        <div class="st watch">
+          <div class="st-h"><span class="st-n">١٩</span><span class="st-t">الموصّلات: درايف · البريد · التقويم <span class="st-en">Connectors</span></span><span class="mode watch">شاهده</span></div>
+          <div class="st-b"><span class="st-tag do">أعرض</span><span>ربط موصّل، وأين تُدار الصلاحيات وكيف تُفصَل.</span></div>
+          <div class="st-b"><span class="st-tag see">سترون</span><span>أن كلود يصل إلى بريدك أو ملفاتك مباشرةً بلا رفعٍ يدوي.</span></div>
+          <div class="st-b"><span class="st-tag why">وهنا الخطر</span><span><strong>الصلاحية تُمنح للصندوق كلّه لا لرسالة واحدة.</strong> طلبٌ بريء مثل «لخّص لي بريد اليوم» يمرّ على مراسلات سرّية لم تقصد إطلاعه عليها. لا يُربط موصّل بحساب عملٍ رسميّ إلا بقرار إداريّ مكتوب، لا باجتهاد موظّف.</span></div>
+        </div>
+
+        <div class="st watch">
+          <div class="st-h"><span class="st-n">٢٠</span><span class="st-t">المهارات: تصفّح · رفع · إنشاء <span class="st-en">Skills</span></span><span class="mode watch">شاهده</span></div>
+          <div class="st-b"><span class="st-tag do">أعرض</span><span>المهارات الجاهزة، ورفع مهارة، وإنشاء واحدة بمساعدة كلود نفسه.</span></div>
+          <div class="st-b"><span class="st-tag see">سترون</span><span>المهارة تعليماتٌ تُكتب مرّة فيعمل بها في كل محادثة — الدرجة التالية بعد المشروع.</span></div>
+        </div>
+
+        <div class="st hands">
+          <div class="st-h"><span class="st-n">٢١</span><span class="st-t">الفوترة والأذونات والمظهر <span class="st-en">Billing · Permissions</span></span><span class="mode hands">افعله</span></div>
+          <div class="st-b"><span class="st-tag do">افعل</span><span>انظر رصيدك، وراجع أذونات الجهاز (الميكروفون والكاميرا والملفات)، واضبط وضع اللون ونمط الخطّ كما يريحك.</span></div>
+          <div class="st-b"><span class="st-tag why">القاعدة</span><span>لا تفعّلوا <strong>إعادة الشحن التلقائي</strong> قبل أن تعرفوا استهلاككم الطبيعي — تتجدّد بصمتٍ فلا تنتبهون إلا في الفاتورة.</span></div>
+        </div>
+
+        <!-- ===== الفرع ٤ ===== -->
+        <div class="br-head"><span class="br-n">٤</span><span class="br-t">الحوكمة والاستخدام الآمن</span><span class="br-c">ثلاث محطّات</span></div>
+
+        <div class="st hands">
+          <div class="st-h"><span class="st-n">٢٢</span><span class="st-t">تصنيف البيانات وإخفاء الهوية <span class="st-en">PII · Anonymization</span></span><span class="mode hands">افعله</span></div>
+          <div class="st-b"><span class="st-tag do">افعل</span><span>محطّة موسّعة — القاعدة الثلاثية والجدولان والتمرينان ٣ و٤ أدناه.</span></div>
+        </div>
+
+        <div class="st hands">
+          <div class="st-h"><span class="st-n">٢٣</span><span class="st-t">الإشراف البشري والتوقيع <span class="st-en">Human in the loop</span></span><span class="mode hands">افعله</span></div>
+          <div class="st-b"><span class="st-tag do">افعل</span><span>خذ آخر نصّ أخرجه لك اليوم، واقرأه سطرًا سطرًا كأنك ستوقّعه. ضع علامة على كل رقمٍ أو اسمٍ أو استنادٍ نظاميّ فيه.</span></div>
+          <div class="st-b"><span class="st-tag why">القاعدة</span><span>التوقيع توقيعك، والمسؤولية مسؤوليتك. <strong>لا يُعتمد نصٌّ لم يمرّ على عينك.</strong></span></div>
+        </div>
+
+        <div class="st hands">
+          <div class="st-h"><span class="st-n">٢٤</span><span class="st-t">سياسة استخدام لقسمك <span class="st-en">Usage policy</span></span><span class="mode hands">افعله</span></div>
+          <div class="st-b"><span class="st-tag do">افعل</span><span>اكتب ثلاثة أسطر: <strong>من</strong> يستخدمه في قسمك، <strong>لأي غرض</strong>، و<strong>بأي صلاحية</strong> — وما الممنوع رفعه صراحةً.</span></div>
+          <div class="st-b"><span class="st-tag see">سترى</span><span>أن ثلاثة أسطر واضحة تكفي لتبدأ. والباقي يأتي بالتجربة.</span></div>
+        </div>
+
         <!-- ===== الوحدة ١ ===== -->
-        <div class="chapter-num" style="color:var(--blue);margin-top:30px;"><span class="cn-num">١</span><span class="cn-title">أوامرك الثلاثة المتكرّرة</span></div>
+        <div class="chapter-num" style="color:var(--blue);margin-top:30px;"><span class="cn-num">١</span><span class="cn-title">تمرين موسّع — محطّة ٤: أوامرك المتكرّرة</span></div>
         <p class="lead-paragraph"><span class="mode hands">بأيديكم</span> &nbsp; في الأسبوع الأول تعلّمتم أن تكتبوا <strong>أمرًا واحدًا جيّدًا</strong>. اليوم مهارة أخرى: أن تنظروا في عملكم فتروا ما <span class="hl hl-green">تكرّرونه كل أسبوع</span>، وتحوّلوه <strong>قالبًا</strong> يبقى معكم.</p>
         <p class="lead-paragraph">الفرق بين الأمر والقالب: <strong>الأمر يُكتب مرّة لحالة واحدة، والقالب فيه فراغات تملؤها كل مرّة.</strong> الأوامر الأربعة أعلاه قوالب — لاحظوا المظلَّل بالأصفر.</p>
 
@@ -4064,7 +4301,7 @@
         </div>
 
         <!-- ===== الوحدة ٢ ===== -->
-        <div class="chapter-num" style="color:var(--green);margin-top:32px;"><span class="cn-num">٢</span><span class="cn-title">بيانات بلا أسماء</span></div>
+        <div class="chapter-num" style="color:var(--green);margin-top:32px;"><span class="cn-num">٢</span><span class="cn-title">تمرين موسّع — محطّة ٢٢: بيانات بلا أسماء</span></div>
         <p class="lead-paragraph"><span class="mode hands">بأيديكم</span> &nbsp; في الأسبوع الثاني قلنا: <span class="hl hl-pink">ما لا تريد خروجه من الدائرة، لا ترفعه</span>. وهذا <strong>نهيٌ</strong>. واليوم نعطيكم <strong>الطريقة</strong> التي تُبقي بياناتكم عندكم وتسمح لكم بتحليلها.</p>
         <p class="lead-paragraph">القاعدة سطر واحد: <strong>احذف ما لا يفيد التحليل، ورمّز ما يفيده، وأبقِ ما لا يدلّ على شخص.</strong></p>
 
@@ -4123,7 +4360,7 @@
         </div>
 
         <!-- ===== الوحدة ٣ ===== -->
-        <div class="chapter-num" style="color:var(--purple);margin-top:32px;"><span class="cn-num">٣</span><span class="cn-title">ما بعد المجاني</span></div>
+        <div class="chapter-num" style="color:var(--purple);margin-top:32px;"><span class="cn-num">٣</span><span class="cn-title">لماذا قسمنا المحطّات قسمين</span></div>
         <p class="lead-paragraph"><span class="mode watch">عرضٌ على الشاشة</span> &nbsp; هذا القسم <strong>تشاهدونه ولا تطبّقونه</strong> — بعض ما فيه يحتاج اشتراكًا مدفوعًا. الغرض أن تعرفوا إلى أين يمتدّ الطريق، لا أن تعملوه اليوم.</p>
 
         <div class="screen-legend">
