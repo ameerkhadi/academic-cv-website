@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="Cache-Control" content="no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
 <title>تسجيل الحضور — المعهد العالي لتدريب وتأهيل القادة</title>
 <style>
   :root{--bg1:#07111f;--bg2:#0f172a;--panel:rgba(255,255,255,.07);--line:rgba(255,255,255,.10);
@@ -62,19 +64,42 @@
 /* ══ ضع هنا رابط تطبيق Apps Script بعد النشر ══ */
 const API = 'https://script.google.com/macros/s/AKfycbwx1Ul3AWlToOA7ZNkXJeV5hXINmG2TutiyjLzWSQGNvV8cEk5US0Z3KZsncqypLpeW/exec';
 
+/* قائمة الطلبة مضمّنة — تظهر فوراً بلا انتظار الخادم */
+const STUDENTS = [{"id":1,"name":"احمد إسماعيل علوان"},{"id":2,"name":"احمد رزاق مايح"},{"id":3,"name":"احمد صبيح مجيد"},{"id":4,"name":"احمد عبد حسن رهيف"},{"id":5,"name":"احمد عبد علي عباس"},{"id":6,"name":"احمد مهدي حاشوش"},{"id":7,"name":"احمد نزار حسين"},{"id":8,"name":"اسعد فليح قاسم"},{"id":9,"name":"اسلام حمزة علي"},{"id":10,"name":"الهام سامي علي"},{"id":11,"name":"اياد طارق جواد"},{"id":12,"name":"ايمان زغير رحيم"},{"id":13,"name":"ايمان ضيدان عزيز"},{"id":14,"name":"ايناس عبد الكاظم محمد"},{"id":15,"name":"إبراهيم نبيل عبدالكريم"},{"id":16,"name":"إيهاب ظاهر حبيب"},{"id":17,"name":"آفاق حميد حسن"},{"id":18,"name":"باسم جلوب ازغير"},{"id":19,"name":"باسم محمد هاشم"},{"id":20,"name":"بسام خليل إبراهيم"},{"id":21,"name":"بشرى شريف غضبان"},{"id":22,"name":"ثائر حسين محمد"},{"id":23,"name":"جميل عودة إبراهيم"},{"id":24,"name":"جهاد منصور ناصح"},{"id":25,"name":"حاتم عبد الكريم محمد"},{"id":26,"name":"حسن جبار جاسم"},{"id":27,"name":"حسن كريم ازميط"},{"id":28,"name":"حسن هادي حسن"},{"id":29,"name":"حسين فاضل عباس"},{"id":30,"name":"حقي إسماعيل محمد"},{"id":31,"name":"حميد راضي محمد"},{"id":32,"name":"حيدر جبار عبدالله"},{"id":33,"name":"حيدر حسين مطلك"},{"id":34,"name":"حيدر طارق حميد"},{"id":35,"name":"حيدر عبد الكريم شويع"},{"id":36,"name":"حيدر محمود مردان"},{"id":37,"name":"حيدر موسى احمد"},{"id":38,"name":"حيدر وثيج عجيل"},{"id":39,"name":"خدر حسن ممند"},{"id":40,"name":"خلدون إبراهيم عباس"},{"id":41,"name":"خميس نصيف جاسم"},{"id":42,"name":"داود سلمان داود"},{"id":43,"name":"دنيا عبدالرضا هادي"},{"id":44,"name":"رافد خيون دبيسان"},{"id":45,"name":"رافد كاظم فياض"},{"id":46,"name":"رائد عبد الحسن ضحك"},{"id":47,"name":"رجاء سعيد فرج"},{"id":48,"name":"رسل مظفر ناصر"},{"id":49,"name":"رشا عبد محمد كفطان"},{"id":50,"name":"رضوان يونس إسماعيل"},{"id":51,"name":"رعد سعد الله علي"},{"id":52,"name":"رند صباح حسين"},{"id":53,"name":"زياد طارق حسين"},{"id":54,"name":"زينب حسن خيون"},{"id":55,"name":"زينب رائد عبد حمودي"},{"id":56,"name":"زينب عكلة عبد"},{"id":57,"name":"سعد صاحب عبد"},{"id":58,"name":"سلام حنون مناتي"},{"id":59,"name":"سلوان كامل علوان"},{"id":60,"name":"سليم جلوب بجاي فرج"},{"id":61,"name":"سندس علي خليفة"},{"id":62,"name":"سهد حسن امين"},{"id":63,"name":"سوسن جبار إبراهيم"},{"id":64,"name":"سيف محمد جاسم"},{"id":65,"name":"شهلاء حسين سلمان"},{"id":66,"name":"صادق فاضل علي"},{"id":67,"name":"ضرغام هادي كيكو"},{"id":68,"name":"ضمياء سلمان داود"},{"id":69,"name":"طارق عزيز حسين"},{"id":70,"name":"عادل محمد علاوي"},{"id":71,"name":"عامر جميل حمود"},{"id":72,"name":"عامر حسين علي"},{"id":73,"name":"عامر محمود عكيل"},{"id":74,"name":"عباس محمد علي"},{"id":75,"name":"عبد الجبار حنون جبرة الله"},{"id":76,"name":"عبد الستار جبار  زيارة"},{"id":77,"name":"عصام جبر جاسم حسن"},{"id":78,"name":"عقيل حسن عبد الكاظم"},{"id":79,"name":"علاء سامي محمد"},{"id":80,"name":"علاء فيصل زعيان"},{"id":81,"name":"علاء كاظم صالح"},{"id":82,"name":"علي رسول حسين"},{"id":83,"name":"علي عادل محمد"},{"id":84,"name":"علي عماد لطوفي"},{"id":85,"name":"علي غانم حسين"},{"id":86,"name":"علي فاروق فؤاد"},{"id":87,"name":"علي كريم مجيد"},{"id":88,"name":"علي ناظم كاطع"},{"id":89,"name":"علي نجم عبد حسين"},{"id":90,"name":"عماد عباس بنيان"},{"id":91,"name":"عمار عبد الحسين جاسم"},{"id":92,"name":"عمر عبد الكريم حميد"},{"id":93,"name":"غزوان جبار عودة"},{"id":94,"name":"غزوان عبد الأمير  كاظم"},{"id":95,"name":"غسان سليم علي"},{"id":96,"name":"فاروق غازي عبدالله"},{"id":97,"name":"فاضل عبد الزهرة ناجي"},{"id":98,"name":"فائق حميد حزام"},{"id":99,"name":"فتيان حسين علي"},{"id":100,"name":"فرح قاسم محمد"},{"id":101,"name":"فريد كاظم سدرة"},{"id":102,"name":"قاسم محمد علي"},{"id":103,"name":"كرار محمد عبد الزهرة"},{"id":104,"name":"ماهر حمدي رشيد"},{"id":105,"name":"محمد جمال جاسم"},{"id":106,"name":"محمد حسن علوان"},{"id":107,"name":"محمد حمدي كريم"},{"id":108,"name":"محمد خالد شهاب"},{"id":109,"name":"محمد شوكت جاسم"},{"id":110,"name":"محمد عبد السلام عبد العزيز"},{"id":111,"name":"محمد عبد الصاحب حسن"},{"id":112,"name":"محمد عبد الله محمود"},{"id":113,"name":"محمد كامل دنبوس"},{"id":114,"name":"مصطفى سعد خزعل"},{"id":115,"name":"مصطفى فاروق خلف"},{"id":116,"name":"مهند عبد الواحد نايف"},{"id":117,"name":"ميثم حسين امين"},{"id":118,"name":"ميعاد هاتو هاشم"},{"id":119,"name":"نصير ماجد جابر"},{"id":120,"name":"نغم داود سلمان"},{"id":121,"name":"هيثم محسن حسين"},{"id":122,"name":"وجدان قحطان فرحان"}];
+
 let jsonpId = 0;
-function call(params){
+
+/* استدعاء واحد بمهلة — يُستعمل داخل call() مع إعادة المحاولة */
+function callOnce(params, timeoutMs){
   return new Promise((resolve, reject) => {
     const cb = 'cb_' + (++jsonpId) + '_' + Date.now();
     const s  = document.createElement('script');
-    const t  = setTimeout(() => { cleanup(); reject(new Error('انتهت مهلة الاتصال — تحقّق من الإنترنت')); }, 20000);
+    const t  = setTimeout(() => { cleanup(); reject(new Error('TIMEOUT')); }, timeoutMs);
     function cleanup(){ clearTimeout(t); delete window[cb]; if (s.parentNode) s.parentNode.removeChild(s); }
     window[cb] = data => { cleanup(); resolve(data); };
-    s.onerror = () => { cleanup(); reject(new Error('تعذّر الاتصال بالخادم')); };
+    s.onerror = () => { cleanup(); reject(new Error('NETWORK')); };
     const q = Object.keys(params).map(k => k + '=' + encodeURIComponent(params[k])).join('&');
-    s.src = API + '?' + q + '&callback=' + cb;
+    // _ لكسر أي تخزين مؤقت وسيط
+    s.src = API + '?' + q + '&callback=' + cb + '&_=' + Date.now();
     document.body.appendChild(s);
   });
+}
+
+/* محاولتان قبل الاستسلام — الشبكات المتقطّعة تنجح غالباً في الثانية */
+async function call(params){
+  let lastErr = null;
+  for (let attempt = 1; attempt <= 2; attempt++){
+    try {
+      return await callOnce(params, attempt === 1 ? 15000 : 30000);
+    } catch (e) {
+      lastErr = e;
+      if (attempt === 1) await new Promise(r => setTimeout(r, 800));
+    }
+  }
+  if (lastErr && lastErr.message === 'TIMEOUT'){
+    throw new Error('لا يصل رد من الخادم. الأسباب المحتملة: (١) الصفحة قديمة في ذاكرة المتصفح — اضغط Ctrl+Shift+R، (٢) رابط النشر تغيّر ولم يُحدَّث في الملف، (٣) الإنترنت بطيء جداً.');
+  }
+  throw new Error('تعذّر الاتصال بالخادم — تحقّق من الإنترنت.');
 }
 
 function esc(v){ return String(v ?? '').replace(/[&<>"']/g, c =>
@@ -105,17 +130,24 @@ const token = new URLSearchParams(location.search).get('t') || '';
     return show('err', 'لا يوجد رمز في الرابط.<br>امسح رمز QR من الشاشة مباشرةً.');
   }
   try{
-    // استدعاء واحد يجلب التحقّق وقائمة الأسماء معاً — نصف زمن الانتظار
-    const chk = await call({ action:'init', t: token });
-    if (!chk.ok) return show('err', esc(chk.error));
-
-    document.getElementById('subjName').textContent = chk.subject;
+    // القائمة تظهر فوراً من الملف — بلا أي انتظار للخادم
     document.getElementById('student').innerHTML =
       '<option value="">— اختر اسمك —</option>' +
-      chk.students.map(s => `<option value="${s.id}">${s.id} — ${esc(s.name)}</option>`).join('');
-
+      STUDENTS.map(s => `<option value="${s.id}">${s.id} — ${esc(s.name)}</option>`).join('');
     document.getElementById('state').classList.add('hide');
     document.getElementById('form').classList.remove('hide');
+
+    // التحقّق من الرمز يجري في الخلفية ولا يعطّل الطالب
+    call({ action:'check', t: token }).then(chk => {
+      if (chk.ok){
+        document.getElementById('subjName').textContent = chk.subject;
+      } else {
+        document.getElementById('form').classList.add('hide');
+        show('err', esc(chk.error));
+      }
+    }).catch(() => {
+      document.getElementById('subjName').textContent = 'جارٍ التحقّق…';
+    });
   }catch(e){
     show('err', esc(e.message));
   }
