@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>شاشة الحضور — المعهد العالي لتدريب وتأهيل القادة</title>
-<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
 <style>
   :root{--bg1:#07111f;--bg2:#0f172a;--panel:rgba(255,255,255,.07);--line:rgba(255,255,255,.10);
         --text:#f8fafc;--muted:#a5b4c7;--blue:#3b82f6;--green:#22c55e;--red:#ef4444;--amber:#f59e0b}
@@ -194,9 +194,16 @@ async function tick(){
       lastToken = st.token;
       const url = (r.attendUrl || attendUrl) + '?t=' + encodeURIComponent(st.token);
       document.getElementById('qr').innerHTML = '';
-      QRCode.toCanvas(url, { width: 420, margin: 1 }, (err, canvas) => {
-        if (!err) document.getElementById('qr').appendChild(canvas);
-      });
+      if (typeof QRCode === 'undefined'){
+        document.getElementById('qr').innerHTML =
+          '<p style="color:#dc2626;font-weight:800;padding:20px">تعذّر تحميل مكتبة QR — تحقق من الإنترنت</p>';
+      } else {
+        QRCode.toCanvas(url, { width: 420, margin: 1 }, (err, canvas) => {
+          if (!err) document.getElementById('qr').appendChild(canvas);
+          else document.getElementById('qr').innerHTML =
+            '<p style="color:#dc2626;font-weight:800;padding:20px">فشل توليد رمز QR</p>';
+        });
+      }
     }
 
     const pct = Math.max(0, 100 - (st.tokenAge / 25) * 100);
