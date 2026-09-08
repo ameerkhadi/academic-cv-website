@@ -193,7 +193,8 @@ async function loadReport(force){
     const r = await call({
       action: 'report',
       pin: sessionStorage.getItem('pin') || '',
-      subject: document.getElementById('subjName').textContent
+      subject: document.getElementById('subjName').textContent,
+      fresh: force ? 1 : 0
     });
     if (!r.ok) throw new Error(r.error);
     report = r;
@@ -276,7 +277,7 @@ async function openSession(){
     document.getElementById('setup').style.display = 'none';
     document.getElementById('stage').style.display = 'grid';
     tick();
-    timer = setInterval(tick, 5000);
+    timer = setInterval(tick, 9000);
   }catch(e){ say('err', e.message); }
 }
 

@@ -105,16 +105,14 @@ const token = new URLSearchParams(location.search).get('t') || '';
     return show('err', 'لا يوجد رمز في الرابط.<br>امسح رمز QR من الشاشة مباشرةً.');
   }
   try{
-    const chk = await call({ action:'check', t: token });
+    // استدعاء واحد يجلب التحقّق وقائمة الأسماء معاً — نصف زمن الانتظار
+    const chk = await call({ action:'init', t: token });
     if (!chk.ok) return show('err', esc(chk.error));
-
-    const st = await call({ action:'students' });
-    if (!st.ok) return show('err', esc(st.error));
 
     document.getElementById('subjName').textContent = chk.subject;
     document.getElementById('student').innerHTML =
       '<option value="">— اختر اسمك —</option>' +
-      st.students.map(s => `<option value="${s.id}">${s.id} — ${esc(s.name)}</option>`).join('');
+      chk.students.map(s => `<option value="${s.id}">${s.id} — ${esc(s.name)}</option>`).join('');
 
     document.getElementById('state').classList.add('hide');
     document.getElementById('form').classList.remove('hide');
