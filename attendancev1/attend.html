@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>تسجيل الحضور — المعهد العالي لتدريب وتأهيل القادة</title>
+<style>
+  :root{--bg1:#07111f;--bg2:#0f172a;--panel:rgba(255,255,255,.07);--line:rgba(255,255,255,.10);
+        --text:#f8fafc;--muted:#a5b4c7;--green:#22c55e;--red:#ef4444}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Tahoma,Arial,sans-serif;color:var(--text);min-height:100vh;
+    display:flex;align-items:center;justify-content:center;padding:16px;
+    background:radial-gradient(circle at top,rgba(59,130,246,.20),transparent 30%),
+               linear-gradient(135deg,var(--bg1),var(--bg2) 55%,#09101d)}
+  .card{width:100%;max-width:460px;background:var(--panel);border:1px solid var(--line);
+    border-radius:26px;padding:26px 22px;box-shadow:0 24px 60px rgba(0,0,0,.42);backdrop-filter:blur(14px)}
+  .org{margin:0 0 10px;text-align:center;font-size:13px;font-weight:900;color:#93c5fd;
+    letter-spacing:.2px;line-height:1.7}
+  h1{margin:0 0 6px;font-size:23px;text-align:center}
+  .sub{color:var(--muted);font-size:14px;text-align:center;margin:0 0 18px;line-height:1.8}
+  .subject{background:rgba(59,130,246,.14);border:1px solid rgba(59,130,246,.32);color:#bfdbfe;
+    border-radius:14px;padding:12px;text-align:center;font-weight:900;font-size:16px;margin-bottom:16px}
+  label{display:block;font-size:14px;font-weight:800;margin-bottom:7px}
+  input,select{width:100%;font-family:inherit;font-size:16px;border-radius:14px;padding:14px;
+    background:#0a1323;color:#fff;border:1px solid rgba(255,255,255,.12);outline:none;margin-bottom:14px}
+  button{width:100%;font-family:inherit;font-size:17px;border:none;border-radius:16px;color:#fff;
+    padding:16px;cursor:pointer;font-weight:900;background:linear-gradient(180deg,#22c55e,#16a34a)}
+  button:disabled{opacity:.55;cursor:not-allowed}
+  .box{border-radius:16px;padding:16px;font-weight:800;line-height:1.9;text-align:center;font-size:15px}
+  .ok{background:rgba(34,197,94,.16);border:1px solid rgba(34,197,94,.38);color:#bbf7d0}
+  .err{background:rgba(239,68,68,.16);border:1px solid rgba(239,68,68,.38);color:#fecaca}
+  .load{background:rgba(59,130,246,.14);border:1px solid rgba(59,130,246,.32);color:#bfdbfe}
+  .tick{font-size:52px;line-height:1;margin-bottom:8px}
+  .hide{display:none}
+  .foot{margin-top:18px;text-align:center;color:var(--muted);font-size:12px;line-height:1.9;
+    border-top:1px solid var(--line);padding-top:12px}
+  .foot b{color:#cbd5e1}
+</style>
+</head>
+<body>
+<div class="card">
+  <p class="org">المعهد العالي لتدريب وتأهيل القادة</p>
+  <h1>تسجيل الحضور</h1>
+  <p class="sub">برنامج إعداد قادة المستقبل</p>
+
+  <div id="state" class="box load">جارٍ التحقّق من الرمز…</div>
+
+  <div id="form" class="hide">
+    <div class="subject" id="subjName">—</div>
+    <label for="student">اختر اسمك من القائمة</label>
+    <select id="student"><option value="">— اختر اسمك —</option></select>
+    <button id="btn" onclick="submitAttendance()">تأكيد الحضور</button>
+  </div>
+
+  <div class="foot">
+    المعهد العالي لتدريب وتأهيل القادة<br>
+    تطوير <b>د. أمير هادي</b>
+  </div>
+</div>
+
+<script>
+/* ══ ضع هنا رابط تطبيق Apps Script بعد النشر ══ */
+const API = 'https://script.google.com/macros/s/AKfycbwx1Ul3AWlToOA7ZNkXJeV5hXINmG2TutiyjLzWSQGNvV8cEk5US0Z3KZsncqypLpeW/exec';
+
+let jsonpId = 0;
+function call(params){
+  return new Promise((resolve, reject) => {
+    const cb = 'cb_' + (++jsonpId) + '_' + Date.now();
+    const s  = document.createElement('script');
+    const t  = setTimeout(() => { cleanup(); reject(new Error('انتهت مهلة الاتصال — تحقّق من الإنترنت')); }, 20000);
+    function cleanup(){ clearTimeout(t); delete window[cb]; if (s.parentNode) s.parentNode.removeChild(s); }
+    window[cb] = data => { cleanup(); resolve(data); };
+    s.onerror = () => { cleanup(); reject(new Error('تعذّر الاتصال بالخادم')); };
+    const q = Object.keys(params).map(k => k + '=' + encodeURIComponent(params[k])).join('&');
+    s.src = API + '?' + q + '&callback=' + cb;
+    document.body.appendChild(s);
+  });
+}
+
+function esc(v){ return String(v ?? '').replace(/[&<>"']/g, c =>
+  ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+function show(kind, html){
+  const el = document.getElementById('state');
+  el.className = 'box ' + kind;
+  el.innerHTML = html;
+  el.classList.remove('hide');
+}
+
+/* معرّف ثابت للجهاز — يمنع تسجيل عدة أسماء من هاتف واحد */
+function deviceId(){
+  let d = null;
+  try { d = localStorage.getItem('qm_dev'); } catch(e){}
+  if (!d){
+    d = 'd' + Math.random().toString(36).slice(2) + Date.now().toString(36);
+    try { localStorage.setItem('qm_dev', d); } catch(e){}
+  }
+  return d;
+}
+
+const token = new URLSearchParams(location.search).get('t') || '';
+
+(async function init(){
+  if (!token){
+    return show('err', 'لا يوجد رمز في الرابط.<br>امسح رمز QR من الشاشة مباشرةً.');
+  }
+  try{
+    const chk = await call({ action:'check', t: token });
+    if (!chk.ok) return show('err', esc(chk.error));
+
+    const st = await call({ action:'students' });
+    if (!st.ok) return show('err', esc(st.error));
+
+    document.getElementById('subjName').textContent = chk.subject;
+    document.getElementById('student').innerHTML =
+      '<option value="">— اختر اسمك —</option>' +
+      st.students.map(s => `<option value="${s.id}">${s.id} — ${esc(s.name)}</option>`).join('');
+
+    document.getElementById('state').classList.add('hide');
+    document.getElementById('form').classList.remove('hide');
+  }catch(e){
+    show('err', esc(e.message));
+  }
+})();
+
+async function submitAttendance(){
+  const sel = document.getElementById('student');
+  if (!sel.value) return alert('اختر اسمك أولاً');
+
+  const btn = document.getElementById('btn');
+  btn.disabled = true;
+  btn.textContent = 'جارٍ التسجيل…';
+
+  try{
+    const r = await call({ action:'mark', t: token, id: sel.value, dev: deviceId() });
+    document.getElementById('form').classList.add('hide');
+
+    if (r.ok){
+      show('ok', '<div class="tick">✓</div>' +
+        (r.already ? 'حضورك مسجَّل مسبقاً' : 'تم تسجيل حضورك') +
+        '<br><b>' + esc(r.name) + '</b><br>' + esc(r.subject) +
+        (r.time ? '<br>' + esc(r.time) : ''));
+    } else {
+      show('err', esc(r.error) + '<br><br>أعد مسح الرمز من الشاشة.');
+    }
+  }catch(e){
+    btn.disabled = false;
+    btn.textContent = 'تأكيد الحضور';
+    show('err', esc(e.message));
+  }
+}
+</script>
+</body>
+</html>
