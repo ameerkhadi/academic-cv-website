@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>تسجيل الحضور</title>
+  <style>
+    :root {
+      --bg-1: #0f172a;
+      --bg-2: #1e1b4b;
+      --bg-3: #111827;
+      --panel: rgba(255,255,255,0.08);
+      --panel-border: rgba(255,255,255,0.12);
+      --text: #ffffff;
+      --muted: #94a3b8;
+      --indigo: #6366f1;
+      --indigo-dark: #4338ca;
+      --green: #16a34a;
+      --green-soft: rgba(34,197,94,0.14);
+      --yellow: #eab308;
+      --yellow-soft: rgba(234,179,8,0.14);
+      --red: #ef4444;
+      --red-soft: rgba(239,68,68,0.12);
+      --shadow: 0 16px 34px rgba(0,0,0,0.34);
+      --radius: 18px;
+      --radius-sm: 12px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
+      background: linear-gradient(135deg, var(--bg-1) 0%, var(--bg-2) 50%, var(--bg-3) 100%);
+      color: var(--text);
+      font-family: Tahoma, Arial, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .hidden { display: none !important; }
+
+    .center-screen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 420px;
+      background: var(--panel);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--panel-border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 26px 20px;
+    }
+
+    .panel {
+      background: var(--panel);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--panel-border);
+      border-radius: var(--radius-sm);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+    }
+
+    .title {
+      margin: 0 0 10px;
+      font-size: 24px;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      text-align: center;
+      line-height: 1.7;
+    }
+
+    .hero-icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 18px;
+      font-size: 34px;
+      font-weight: 700;
+      color: #fff;
+      background: linear-gradient(135deg, var(--indigo), var(--indigo-dark));
+      box-shadow: 0 10px 24px rgba(99,102,241,0.35);
+    }
+
+    .hero-icon.error {
+      background: linear-gradient(135deg, #dc2626, #991b1b);
+      box-shadow: 0 10px 24px rgba(220,38,38,0.35);
+    }
+
+    .hero-icon.lock {
+      background: linear-gradient(135deg, #4f46e5, #312e81);
+    }
+
+    .hero-icon.loading {
+      animation: pulse 1.4s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(0.96); opacity: 0.92; }
+      50% { transform: scale(1.03); opacity: 1; }
+      100% { transform: scale(0.96); opacity: 0.92; }
+    }
+
+    .dots {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 16px;
+    }
+
+    .dots span {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #a5b4fc;
+      animation: bounce 1s infinite ease-in-out;
+    }
+
+    .dots span:nth-child(2) { animation-delay: 0.15s; }
+    .dots span:nth-child(3) { animation-delay: 0.3s; }
+
+    @keyframes bounce {
+      0%, 80%, 100% { transform: translateY(0); opacity: 0.55; }
+      40% { transform: translateY(-5px); opacity: 1; }
+    }
+
+    .btn {
+      width: 100%;
+      border: 0;
+      border-radius: 14px;
+      padding: 14px 16px;
+      font-size: 15px;
+      font-weight: 700;
+      color: #fff;
+      cursor: pointer;
+      background: linear-gradient(135deg, var(--indigo), var(--indigo-dark));
+      box-shadow: 0 10px 22px rgba(67,56,202,0.24);
+    }
+
+    .btn:active { transform: scale(0.99); }
+    .btn:hover { filter: brightness(1.05); }
+
+    .input {
+      width: 100%;
+      padding: 14px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.08);
+      color: #fff;
+      font-size: 15px;
+      outline: none;
+    }
+
+    .input::placeholder { color: var(--muted); }
+    .input:focus {
+      border-color: rgba(99,102,241,0.65);
+      box-shadow: 0 0 0 3px rgba(99,102,241,0.18);
+    }
+
+    .error-text {
+      color: #fca5a5;
+      margin-top: 12px;
+      font-size: 13px;
+      text-align: center;
+    }
+
+    .app-shell {
+      min-height: 100vh;
+    }
+
+    .app-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: linear-gradient(135deg, rgba(49,46,129,0.95), rgba(88,28,135,0.95));
+      backdrop-filter: blur(16px);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.24);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .app-header-inner,
+    .content {
+      width: 100%;
+      max-width: 540px;
+      margin: 0 auto;
+      padding: 0 14px;
+    }
+
+    .app-header-inner {
+      padding-top: 14px;
+      padding-bottom: 14px;
+    }
+
+    .top-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--indigo), #7c3aed);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .brand-title {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.35;
+    }
+
+    .brand-subtitle {
+      margin: 4px 0 0;
+      color: #c7d2fe;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .search-box {
+      width: 100%;
+      position: relative;
+    }
+
+    .search-box::before {
+      content: "⌕";
+      position: absolute;
+      inset-inline-start: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #cbd5e1;
+      font-size: 18px;
+      pointer-events: none;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 14px 14px 14px 14px;
+      padding-inline-start: 40px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.10);
+      color: #fff;
+      outline: none;
+      font-size: 14px;
+    }
+
+    .search-input::placeholder { color: #cbd5e1; }
+    .search-input:focus {
+      border-color: rgba(99,102,241,0.58);
+      box-shadow: 0 0 0 3px rgba(99,102,241,0.16);
+    }
+
+    .content {
+      padding-top: 12px;
+      padding-bottom: 20px;
+    }
+
+    .hint-box {
+      padding: 12px 14px;
+      margin-bottom: 12px;
+      font-size: 12px;
+      line-height: 1.7;
+      color: #dbeafe;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .stat-card {
+      padding: 14px 10px;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .stat-label {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .students-list {
+      display: grid;
+      gap: 10px;
+      padding-bottom: 60px;
+    }
+
+    .student-item {
+      padding: 14px;
+      border: 2px solid transparent;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      cursor: pointer;
+      transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease, opacity 0.15s ease;
+    }
+
+    .student-item:active { transform: scale(0.99); }
+
+    .student-main {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+      flex: 1;
+    }
+
+    .student-number {
+      width: 38px;
+      height: 38px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(79,70,229,0.85);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .student-number.ok {
+      background: linear-gradient(135deg, #16a34a, #15803d);
+    }
+
+    .student-number.late {
+      background: linear-gradient(135deg, #facc15, #ca8a04);
+      color: #111827;
+    }
+
+    .student-name {
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.5;
+      word-break: break-word;
+    }
+
+    .student-meta {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .attended-present {
+      background: var(--green-soft) !important;
+      border-color: rgba(34,197,94,0.38) !important;
+    }
+
+    .attended-late {
+      background: var(--yellow-soft) !important;
+      border-color: rgba(234,179,8,0.38) !important;
+    }
+
+    .status-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      border-radius: 999px;
+      padding: 6px 10px;
+      white-space: nowrap;
+      font-size: 11px;
+      font-weight: 800;
+      border: 1px solid transparent;
+    }
+
+    .status-present {
+      background: rgba(34,197,94,0.18);
+      color: #86efac;
+      border-color: rgba(34,197,94,0.35);
+    }
+
+    .status-late {
+      background: rgba(234,179,8,0.18);
+      color: #fde68a;
+      border-color: rgba(234,179,8,0.35);
+    }
+
+    .status-absent {
+      background: rgba(148,163,184,0.16);
+      color: #cbd5e1;
+      border-color: rgba(148,163,184,0.25);
+    }
+
+    .mode-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .mode-student {
+      background: rgba(99,102,241,0.18);
+      color: #c7d2fe;
+      border: 1px solid rgba(99,102,241,0.30);
+    }
+
+    .mode-delegate {
+      background: rgba(249,115,22,0.18);
+      color: #fdba74;
+      border: 1px solid rgba(249,115,22,0.30);
+    }
+
+    .empty-state {
+      padding: 34px 18px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .empty-state .big {
+      display: block;
+      font-size: 28px;
+      margin-bottom: 8px;
+      opacity: 0.75;
+    }
+
+    .toast {
+      position: fixed;
+      top: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% - 24px);
+      max-width: 540px;
+      z-index: 100;
+      border-radius: 16px;
+      padding: 14px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .toast.success {
+      background: rgba(20,83,45,0.96);
+      border-color: rgba(34,197,94,0.45);
+    }
+
+    .toast.warning {
+      background: rgba(127,29,29,0.96);
+      border-color: rgba(239,68,68,0.45);
+    }
+
+    .toast-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .toast-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 20px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .toast.success .toast-icon {
+      background: #16a34a;
+    }
+
+    .toast.warning .toast-icon {
+      background: #ef4444;
+    }
+
+    .toast-title {
+      font-size: 14px;
+      font-weight: 800;
+      margin-bottom: 3px;
+    }
+
+    .toast-subtitle {
+      font-size: 12px;
+      line-height: 1.6;
+      opacity: 0.92;
+    }
+
+    .mt-12 { margin-top: 12px; }
+    .mb-14 { margin-bottom: 14px; }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(99,102,241,0.6);
+      border-radius: 999px;
+    }
+
+    @media (max-width: 420px) {
+      .brand-title { font-size: 15px; }
+      .brand-subtitle { font-size: 11px; }
+      .stats-grid { gap: 8px; }
+      .stat-number { font-size: 22px; }
+      .status-chip { padding: 6px 9px; font-size: 10px; }
+      .student-item { padding: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <div id="loadingScreen" class="center-screen">
+    <div class="card">
+      <div class="hero-icon loading">QR</div>
+      <h2 class="title">جاري التحقق من الجلسة...</h2>
+      <p class="subtitle">يرجى الانتظار لحظات أثناء فحص رمز الحضور والاتصال بالخادم المحلي</p>
+      <div class="dots"><span></span><span></span><span></span></div>
+    </div>
+  </div>
+
+  <div id="passwordScreen" class="center-screen hidden">
+    <div class="card">
+      <div class="hero-icon lock">🔒</div>
+      <div id="passwordModeBadgeWrap" class="mb-14" style="text-align:center;"></div>
+      <h2 class="title">كلمة سر الحضور</h2>
+      <p class="subtitle">أدخل كلمة السر التي يحددها المدرس للمتابعة</p>
+      <div class="mt-12">
+        <input id="studentPasswordInput" type="password" class="input" placeholder="أدخل كلمة السر" />
+      </div>
+      <div class="mt-12">
+        <button class="btn" onclick="verifyStudentPassword()">دخول</button>
+      </div>
+      <p id="passwordError" class="error-text hidden"></p>
+    </div>
+  </div>
+
+  <div id="errorScreen" class="center-screen hidden">
+    <div class="card">
+      <div class="hero-icon error">!</div>
+      <h2 class="title" style="color:#fca5a5;">تنبيه</h2>
+      <p id="errorMessage" class="subtitle" style="color:#e5e7eb;"></p>
+    </div>
+  </div>
+
+  <div id="attendScreen" class="hidden app-shell">
+    <div class="app-header">
+      <div class="app-header-inner">
+        <div class="top-row">
+          <div class="brand-wrap">
+            <div class="brand-icon">✓</div>
+            <div>
+              <h1 class="brand-title" id="sectionTitle">تسجيل الحضور</h1>
+              <p class="brand-subtitle" id="sessionInfo"></p>
+            </div>
+          </div>
+          <div id="modeBadgeWrap"></div>
+        </div>
+
+        <div class="search-box">
+          <input type="text" id="searchInput" class="search-input" placeholder="ابحث عن الاسم أو الرقم..." oninput="filterStudents()" />
+        </div>
+      </div>
+    </div>
+
+    <div class="content">
+      <div id="sessionModeHint" class="panel hint-box"></div>
+
+      <div class="stats-grid">
+        <div class="panel stat-card">
+          <div class="stat-number" style="color:#818cf8;" id="totalCount">0</div>
+          <div class="stat-label">الكل</div>
+        </div>
+        <div class="panel stat-card">
+          <div class="stat-number" style="color:#4ade80;" id="presentCountDisplay">0</div>
+          <div class="stat-label">مسجل</div>
+        </div>
+        <div class="panel stat-card">
+          <div class="stat-number" style="color:#facc15;" id="remainingCount">0</div>
+          <div class="stat-label">متبقّي</div>
+        </div>
+      </div>
+
+      <div id="studentsList" class="students-list"></div>
+    </div>
+  </div>
+
+  <div id="successToast" class="toast success hidden">
+    <div class="toast-row">
+      <div class="toast-icon">✓</div>
+      <div>
+        <div class="toast-title" id="toastName"></div>
+        <div class="toast-subtitle" id="toastTime"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="warningToast" class="toast warning hidden">
+    <div class="toast-row">
+      <div class="toast-icon">!</div>
+      <div>
+        <div class="toast-title">تنبيه</div>
+        <div class="toast-subtitle" id="warningToastMsg"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function getDeviceId() {
+      let id = localStorage.getItem('attend_device_id');
+      if (!id) {
+        id = 'dev_' + Date.now() + '_' + Math.random().toString(36).substring(2, 10);
+        localStorage.setItem('attend_device_id', id);
+      }
+      return id;
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get('token');
+    const sectionId = params.get('section');
+    const requestedMode = params.get('mode') || 'student';
+    const deviceId = getDeviceId();
+
+    let currentMode = 'student';
+    let allStudents = [];
+    let filteredStudents = [];
+    let attendedMap = new Map();
+    let passwordVerified = false;
+
+    function showScreen(id) {
+      ['loadingScreen', 'passwordScreen', 'errorScreen', 'attendScreen'].forEach(s => {
+        const el = document.getElementById(s);
+        if (el) el.classList.add('hidden');
+      });
+      document.getElementById(id).classList.remove('hidden');
+    }
+
+    function showToast(id, duration = 2600) {
+      const el = document.getElementById(id);
+      el.classList.remove('hidden');
+      setTimeout(() => el.classList.add('hidden'), duration);
+    }
+
+    function modeBadge(mode) {
+      if (mode === 'delegate') {
+        return '<span class="mode-badge mode-delegate">🛡️ QR المندوب</span>';
+      }
+      return '<span class="mode-badge mode-student">🎓 QR الطلاب</span>';
+    }
+
+    function getStatusChip(status) {
+      if (status === 'late') {
+        return '<span class="status-chip status-late">⏰ متأخر</span>';
+      }
+      if (status === 'present') {
+        return '<span class="status-chip status-present">✓ حاضر</span>';
+      }
+      return '<span class="status-chip status-absent">• سجّل</span>';
+    }
+
+    function updateStats() {
+      const total = allStudents.length;
+      const attended = attendedMap.size;
+      document.getElementById('totalCount').textContent = total;
+      document.getElementById('presentCountDisplay').textContent = attended;
+      document.getElementById('remainingCount').textContent = total - attended;
+    }
+
+    function renderModeMessages() {
+      document.getElementById('modeBadgeWrap').innerHTML = modeBadge(currentMode);
+      document.getElementById('passwordModeBadgeWrap').innerHTML = modeBadge(currentMode);
+
+      const hint = document.getElementById('sessionModeHint');
+      if (currentMode === 'delegate') {
+        hint.innerHTML = 'هذا وضع <b>المندوب</b> — يمكن تسجيل عدة أسماء من نفس الجهاز';
+      } else {
+        hint.innerHTML = 'هذا وضع <b>الطلاب</b> — كل جهاز يسجل اسمًا واحدًا فقط';
+      }
+    }
+
+    async function init() {
+      if (!token || !sectionId) {
+        showScreen('errorScreen');
+        document.getElementById('errorMessage').textContent = 'رابط غير صالح. يرجى مسح QR من جديد.';
+        return;
+      }
+
+      try {
+        const res = await fetch(`/api/validate-token?token=${encodeURIComponent(token)}&section=${encodeURIComponent(sectionId)}&deviceId=${encodeURIComponent(deviceId)}&mode=${encodeURIComponent(requestedMode)}`);
+        const data = await res.json();
+
+        if (!res.ok || !data.valid) {
+          showScreen('errorScreen');
+          document.getElementById('errorMessage').textContent = data.error || 'رمز غير صالح';
+          return;
+        }
+
+        currentMode = data.mode || requestedMode || 'student';
+        allStudents = data.students || [];
+        filteredStudents = [...allStudents];
+
+        attendedMap = new Map();
+        allStudents.forEach(s => {
+          if (s.already_attended) attendedMap.set(s.id, 'present');
+        });
+
+        document.getElementById('sectionTitle').textContent = data.sectionName || 'تسجيل الحضور';
+        document.getElementById('sessionInfo').textContent =
+          `${data.sessionType || ''} | ${new Date().toLocaleDateString('ar-IQ', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}`;
+
+        renderModeMessages();
+        updateStats();
+        renderStudents(filteredStudents);
+        showScreen('passwordScreen');
+
+        if (currentMode === 'student' && data.deviceAlreadyUsed) {
+          document.getElementById('warningToastMsg').textContent = `هذا الجهاز سجّل "${data.registeredStudentName || ''}" مسبقاً`;
+        }
+      } catch (e) {
+        showScreen('errorScreen');
+        document.getElementById('errorMessage').textContent = 'فشل الاتصال بالخادم. تأكد من الاتصال بالشبكة المحلية.';
+      }
+    }
+
+    async function verifyStudentPassword() {
+      const password = document.getElementById('studentPasswordInput').value.trim();
+      const errorEl = document.getElementById('passwordError');
+
+      errorEl.classList.add('hidden');
+      errorEl.textContent = '';
+
+      if (!password) {
+        errorEl.textContent = 'يرجى إدخال كلمة السر';
+        errorEl.classList.remove('hidden');
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/verify-student-password', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ password })
+        });
+
+        const data = await res.json();
+
+        if (res.ok && data.success) {
+          passwordVerified = true;
+          showScreen('attendScreen');
+        } else {
+          errorEl.textContent = data.error || 'كلمة السر غير صحيحة';
+          errorEl.classList.remove('hidden');
+        }
+      } catch (e) {
+        errorEl.textContent = 'فشل الاتصال بالخادم';
+        errorEl.classList.remove('hidden');
+      }
+    }
+
+    function renderStudents(students) {
+      const list = document.getElementById('studentsList');
+
+      if (!students.length) {
+        list.innerHTML = '<div class="panel empty-state"><span class="big">⌕</span>لا توجد نتائج مطابقة للبحث</div>';
+        return;
+      }
+
+      list.innerHTML = students.map(student => {
+        const status = attendedMap.get(student.id) || null;
+        const attended = !!status;
+
+        let itemClass = '';
+        let numberClass = '';
+        if (status === 'present') { itemClass = 'attended-present'; numberClass = 'ok'; }
+        if (status === 'late') { itemClass = 'attended-late'; numberClass = 'late'; }
+
+        return `
+          <div id="student-${student.id}" class="panel student-item ${itemClass}" onclick="${attended ? `showAlreadyMsg(${student.id})` : `registerAttendance(${student.id})`}">
+            <div class="student-main">
+              <div class="student-number ${numberClass}">${attended ? '✓' : (student.row_number ?? '')}</div>
+              <div style="min-width:0; flex:1;">
+                <div class="student-name">${student.name || ''}</div>
+                <div class="student-meta">${student.study_type || ''}</div>
+              </div>
+            </div>
+            <div>${attended ? getStatusChip(status) : '<span class="status-chip status-absent">سجّل</span>'}</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function filterStudents() {
+      const q = document.getElementById('searchInput').value.trim();
+      if (!q) {
+        filteredStudents = [...allStudents];
+      } else {
+        filteredStudents = allStudents.filter(s =>
+          (s.name || '').includes(q) ||
+          String(s.row_number || '').includes(q)
+        );
+      }
+      renderStudents(filteredStudents);
+    }
+
+    async function registerAttendance(studentId) {
+      if (!passwordVerified) {
+        showScreen('passwordScreen');
+        return;
+      }
+
+      const el = document.getElementById(`student-${studentId}`);
+      if (el) {
+        el.style.opacity = '0.55';
+        el.style.pointerEvents = 'none';
+      }
+
+      try {
+        const res = await fetch('/api/attend', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            token,
+            sectionId: parseInt(sectionId, 10),
+            studentId,
+            deviceId,
+            mode: currentMode
+          })
+        });
+
+        const data = await res.json();
+
+        if (res.ok && data.success) {
+          const finalStatus = data.status || 'present';
+          attendedMap.set(studentId, finalStatus);
+          updateStats();
+          renderStudents(filteredStudents);
+
+          document.getElementById('toastName').textContent =
+            finalStatus === 'late' ? `تم تسجيل متأخر: ${data.name}` : `تم تسجيل حضور: ${data.name}`;
+          document.getElementById('toastTime').textContent =
+            `الوقت: ${data.time} | الحالة: ${finalStatus === 'late' ? 'متأخر' : 'حاضر'}`;
+          showToast('successToast', 2600);
+
+        } else if (res.status === 409) {
+          const finalStatus = data.status || 'present';
+          attendedMap.set(studentId, finalStatus);
+          updateStats();
+          renderStudents(filteredStudents);
+
+          document.getElementById('warningToastMsg').textContent =
+            `${data.name || 'هذا الطالب'} مسجل مسبقًا (${finalStatus === 'late' ? 'متأخر' : 'حاضر'})`;
+          showToast('warningToast', 2600);
+
+        } else if (res.status === 403) {
+          document.getElementById('warningToastMsg').textContent = data.error || 'غير مسموح';
+          showToast('warningToast', 3500);
+        } else {
+          alert(data.error || 'حدث خطأ');
+        }
+      } catch (e) {
+        alert('فشل الاتصال بالخادم');
+      } finally {
+        const card = document.getElementById(`student-${studentId}`);
+        if (card) {
+          card.style.opacity = '1';
+          card.style.pointerEvents = 'auto';
+        }
+      }
+    }
+
+    function showAlreadyMsg(studentId) {
+      const st = allStudents.find(s => s.id === studentId);
+      const status = attendedMap.get(studentId) || 'present';
+      document.getElementById('warningToastMsg').textContent =
+        `سبق تسجيل "${st?.name || ''}" (${status === 'late' ? 'متأخر' : 'حاضر'})`;
+      showToast('warningToast', 2200);
+    }
+
+    init();
+  </script>
+</body>
+</html>

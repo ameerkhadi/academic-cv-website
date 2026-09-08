@@ -1,0 +1,16 @@
+{
+  "name": "حضور أوفلاين — د. عامر هادي",
+  "short_name": "حضور",
+  "description": "نظام تسجيل الحضور الذكي — يعمل أوفلاين",
+  "start_url": "/mobile",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "lang": "ar",
+  "dir": "rtl",
+  "icons": [
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+  <meta name="theme-color" content="#0f172a"/>
+  <meta name="mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <link rel="manifest" href="/manifest.json"/>
+  <title>حضور أوفلاين</title>
+  <script src="/js/html5-qrcode.min.js"></script>
+  <style>
+    :root{
+      --bg:#0f172a; --bg2:#1e1b4b; --panel:rgba(255,255,255,.07);
+      --line:rgba(255,255,255,.10); --text:#f8fafc; --muted:#94a3b8;
+      --indigo:#6366f1; --green:#22c55e; --orange:#f59e0b; --red:#ef4444;
+      --radius:16px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+    html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);
+              font-family:Tahoma,Arial,sans-serif;font-size:15px}
+    .screen{position:fixed;inset:0;display:flex;flex-direction:column;overflow:hidden;
+            background:linear-gradient(135deg,#0f172a,#1e1b4b 60%,#0f172a)}
+    .screen[hidden]{display:none!important}
+
+    /* ── HEADER ── */
+    .hdr{padding:14px 16px 10px;border-bottom:1px solid var(--line);
+         background:rgba(15,23,42,.92);backdrop-filter:blur(10px);flex-shrink:0}
+    .hdr h2{font-size:17px;font-weight:900;margin-bottom:2px}
+    .hdr p{font-size:12px;color:var(--muted)}
+    .hdr-row{display:flex;justify-content:space-between;align-items:center;gap:10px}
+
+    /* ── SCROLL BODY ── */
+    .body{flex:1;overflow-y:auto;padding:14px 14px 80px;overscroll-behavior:contain}
+    .body::-webkit-scrollbar{width:4px}
+    .body::-webkit-scrollbar-thumb{background:rgba(99,102,241,.5);border-radius:99px}
+
+    /* ── GLASS CARD ── */
+    .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:12px}
+
+    /* ── FORM FIELDS ── */
+    .lbl{font-size:12px;font-weight:800;color:var(--muted);margin-bottom:6px;display:block}
+    .fld{width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--line);
+         background:rgba(255,255,255,.06);color:var(--text);font-size:15px;
+         font-family:inherit;outline:none}
+    .fld:focus{border-color:rgba(99,102,241,.6);box-shadow:0 0 0 3px rgba(99,102,241,.18)}
+    .fld-group{margin-bottom:14px}
+
+    /* ── BUTTONS ── */
+    .btn{display:block;width:100%;padding:14px;border-radius:14px;border:none;
+         font-family:inherit;font-size:15px;font-weight:900;color:#fff;cursor:pointer;
+         transition:.15s;text-align:center}
+    .btn:active{transform:scale(.98)}
+    .btn-primary{background:linear-gradient(180deg,#6366f1,#4338ca);
+                 box-shadow:0 8px 20px rgba(99,102,241,.3)}
+    .btn-green{background:linear-gradient(180deg,#22c55e,#16a34a)}
+    .btn-orange{background:linear-gradient(180deg,#fbbf24,#d97706);color:#111}
+    .btn-red{background:linear-gradient(180deg,#ef4444,#dc2626)}
+    .btn-slate{background:linear-gradient(180deg,#475569,#334155)}
+    .btn-sm{padding:9px 14px;font-size:13px;border-radius:11px;width:auto;display:inline-block}
+    .btn-outline{background:rgba(255,255,255,.06);border:1px solid var(--line);color:var(--muted)}
+    .mt{margin-top:10px}
+
+    /* ── CONNECTION BADGE ── */
+    .conn-badge{padding:6px 12px;border-radius:999px;font-size:12px;font-weight:900;white-space:nowrap}
+    .conn-badge.online{background:rgba(34,197,94,.18);color:#86efac;border:1px solid rgba(34,197,94,.35)}
+    .conn-badge.offline{background:rgba(239,68,68,.18);color:#fca5a5;border:1px solid rgba(239,68,68,.35)}
+    .conn-badge.checking{background:rgba(234,179,8,.18);color:#fde68a;border:1px solid rgba(234,179,8,.35)}
+
+    /* ── PENDING BADGE ── */
+    .pend-badge{background:rgba(99,102,241,.25);color:#c7d2fe;border:1px solid rgba(99,102,241,.4);
+                padding:6px 12px;border-radius:999px;font-size:13px;font-weight:900}
+
+    /* ── HOME SECTION SELECT ── */
+    .home-meta{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;align-items:center}
+    .home-meta .conn-badge{flex-shrink:0}
+
+    /* ── STUDENT ROW ── */
+    .stu-row{display:flex;align-items:center;gap:10px;padding:10px 12px;
+             border-radius:12px;border:1px solid var(--line);margin-bottom:7px;
+             background:rgba(255,255,255,.04);transition:background .12s}
+    .stu-num{min-width:32px;height:32px;border-radius:999px;background:rgba(99,102,241,.7);
+             color:#fff;font-size:12px;font-weight:900;display:flex;align-items:center;
+             justify-content:center;flex-shrink:0}
+    .stu-name{flex:1;font-size:14px;font-weight:700;line-height:1.4;min-width:0;word-break:break-word}
+    .stu-type{font-size:11px;color:var(--muted)}
+    .stu-btns{display:flex;gap:5px;flex-shrink:0}
+    .sb{width:38px;height:38px;border-radius:10px;border:1px solid var(--line);
+        background:rgba(255,255,255,.05);color:var(--muted);font-size:16px;
+        cursor:pointer;transition:.12s;display:flex;align-items:center;justify-content:center}
+    .sb:active{transform:scale(.92)}
+    .sb-p{background:rgba(34,197,94,.25)!important;border-color:rgba(34,197,94,.5)!important;color:#86efac!important}
+    .sb-l{background:rgba(245,158,11,.25)!important;border-color:rgba(245,158,11,.5)!important;color:#fde68a!important}
+    .sb-a{background:rgba(148,163,184,.18)!important;border-color:rgba(148,163,184,.35)!important;color:#94a3b8!important}
+
+    /* ── STATS BAR ── */
+    .stats-bar{display:flex;gap:8px;margin-bottom:10px}
+    .stat-pill{flex:1;padding:10px 6px;border-radius:12px;text-align:center;border:1px solid var(--line)}
+    .stat-pill .n{font-size:22px;font-weight:900;line-height:1}
+    .stat-pill .l{font-size:11px;color:var(--muted);margin-top:3px}
+    .sp-p{background:rgba(34,197,94,.08)}
+    .sp-l{background:rgba(245,158,11,.08)}
+    .sp-a{background:rgba(148,163,184,.06)}
+
+    /* ── VIEW TOGGLE ── */
+    .view-toggle{display:flex;gap:6px;margin-bottom:10px}
+    .view-btn{flex:1;padding:10px;border-radius:12px;border:1px solid var(--line);
+              background:rgba(255,255,255,.05);color:var(--muted);font-size:13px;
+              font-weight:800;cursor:pointer;text-align:center;transition:.15s}
+    .view-btn.active{background:rgba(99,102,241,.22);border-color:rgba(99,102,241,.5);color:#c7d2fe}
+
+    /* ── SEARCH ── */
+    .search-wrap{position:relative;margin-bottom:10px}
+    .search-wrap::before{content:"⌕";position:absolute;inset-inline-start:12px;top:50%;
+                          transform:translateY(-50%);color:var(--muted);font-size:17px;pointer-events:none}
+    .search-fld{padding-inline-start:36px!important}
+
+    /* ── QR AREA ── */
+    #qrReader{width:100%;border-radius:14px;overflow:hidden;background:#000;min-height:260px}
+    .qr-hint{text-align:center;color:var(--muted);font-size:12px;margin-top:8px;line-height:1.7}
+
+    /* ── BOTTOM FIXED BAR ── */
+    .bottom-bar{position:fixed;bottom:0;left:0;right:0;padding:10px 14px 14px;
+                background:rgba(15,23,42,.96);backdrop-filter:blur(12px);
+                border-top:1px solid var(--line);z-index:10}
+
+    /* ── PENDING LIST ── */
+    .pend-item{padding:10px 12px;border-radius:12px;background:rgba(255,255,255,.04);
+               border:1px solid var(--line);margin-bottom:7px;font-size:13px}
+    .pend-item .pi-head{font-weight:800;margin-bottom:2px}
+    .pend-item .pi-meta{color:var(--muted);font-size:12px}
+
+    /* ── CONFLICT CARD ── */
+    .conf-card{border:1px solid rgba(245,158,11,.35);border-radius:14px;
+               background:rgba(245,158,11,.06);padding:14px;margin-bottom:10px}
+    .conf-name{font-weight:900;font-size:15px;margin-bottom:3px}
+    .conf-sub{font-size:12px;color:var(--muted);margin-bottom:12px}
+    .conf-sides{display:grid;grid-template-columns:1fr 30px 1fr;gap:6px;
+                align-items:center;margin-bottom:12px;text-align:center}
+    .conf-side{background:rgba(255,255,255,.05);border:1px solid var(--line);
+               border-radius:12px;padding:10px 8px}
+    .conf-side-lbl{font-size:11px;color:var(--muted);margin-bottom:5px}
+    .conf-vs{color:var(--muted);font-weight:900;font-size:13px}
+    .conf-status{font-size:13px;font-weight:900;padding:5px 10px;border-radius:999px;display:inline-block}
+    .conf-time{font-size:10px;color:var(--muted);margin-top:4px}
+    .conf-btns{display:flex;gap:8px}
+    .conf-btns button{flex:1}
+
+    /* ── SYNC RESULT ── */
+    .sync-result{padding:14px;border-radius:14px;background:rgba(34,197,94,.08);
+                 border:1px solid rgba(34,197,94,.25);margin-bottom:12px;font-size:14px;line-height:2}
+
+    /* ── CHIP ── */
+    .chip{display:inline-flex;padding:4px 10px;border-radius:999px;font-size:11px;font-weight:800}
+    .chip-green{background:rgba(34,197,94,.18);color:#86efac;border:1px solid rgba(34,197,94,.3)}
+    .chip-orange{background:rgba(245,158,11,.18);color:#fde68a;border:1px solid rgba(245,158,11,.3)}
+    .chip-gray{background:rgba(148,163,184,.12);color:#cbd5e1;border:1px solid rgba(148,163,184,.2)}
+
+    /* ── TOAST ── */
+    #toast{position:fixed;top:14px;left:50%;transform:translateX(-50%);
+           width:calc(100% - 28px);max-width:400px;padding:13px 16px;border-radius:14px;
+           font-weight:900;font-size:14px;z-index:9999;display:none;
+           box-shadow:0 10px 30px rgba(0,0,0,.4);text-align:center}
+    #toast.ok{background:rgba(22,163,74,.98)}
+    #toast.warn{background:rgba(245,158,11,.98);color:#111}
+    #toast.err{background:rgba(239,68,68,.98)}
+
+    /* ── SETUP ICON ── */
+    .setup-icon{width:72px;height:72px;border-radius:20px;background:linear-gradient(135deg,#6366f1,#4338ca);
+                display:flex;align-items:center;justify-content:center;font-size:32px;
+                margin:0 auto 18px;box-shadow:0 10px 24px rgba(99,102,241,.35)}
+    .setup-title{font-size:22px;font-weight:900;text-align:center;margin-bottom:6px}
+    .setup-sub{font-size:13px;color:var(--muted);text-align:center;margin-bottom:22px;line-height:1.7}
+
+    /* ── MISC ── */
+    .divider{height:1px;background:var(--line);margin:14px 0}
+    .section-title{font-size:13px;font-weight:900;color:var(--muted);margin-bottom:10px}
+    .empty{text-align:center;padding:30px;color:var(--muted);font-size:13px;line-height:2}
+    .empty .big{font-size:32px;display:block;margin-bottom:8px;opacity:.6}
+    .back-btn{padding:8px 14px;border-radius:11px;border:1px solid var(--line);
+              background:rgba(255,255,255,.06);color:var(--muted);font-size:13px;
+              font-weight:800;cursor:pointer;white-space:nowrap}
+    .back-btn:active{transform:scale(.96)}
+    @media(max-width:360px){.stu-name{font-size:13px}.sb{width:34px;height:34px;font-size:14px}}
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════ SETUP SCREEN ══════════════════ -->
+<div class="screen" id="sc-setup">
+  <div class="body">
+    <div style="padding-top:30px">
+      <div class="setup-icon">📋</div>
+      <div class="setup-title">حضور أوفلاين</div>
+      <div class="setup-sub">أدخل بيانات السيرفر لتحميل قوائم الطلاب<br>بعدها يعمل التطبيق بدون إنترنت</div>
+
+      <div class="card">
+        <div class="fld-group">
+          <label class="lbl">عنوان السيرفر (IP اللابتوب)</label>
+          <input id="setupUrl" class="fld" type="url" placeholder="http://192.168.1.5:3000"
+                 autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false"/>
+          <div style="font-size:11px;color:var(--muted);margin-top:5px">
+            يظهر الـ IP عند تشغيل node server.js
+          </div>
+        </div>
+        <div class="fld-group">
+          <label class="lbl">PIN التطبيق</label>
+          <input id="setupPin" class="fld" type="password" placeholder="5678" maxlength="10"/>
+          <div style="font-size:11px;color:var(--muted);margin-top:5px">
+            الـ PIN الافتراضي: 5678
+          </div>
+        </div>
+        <button class="btn btn-primary mt" onclick="testAndDownload()">
+          🔗 اتصل وحمّل بيانات الطلاب
+        </button>
+      </div>
+
+      <div id="setupStatus" style="text-align:center;font-size:13px;min-height:20px;color:var(--muted);padding:8px"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ HOME SCREEN ══════════════════ -->
+<div class="screen" id="sc-home" hidden>
+  <div class="hdr">
+    <div class="hdr-row">
+      <div>
+        <h2>حضور أوفلاين</h2>
+        <p id="lastSync">آخر تحديث: —</p>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <span id="connBadge" class="conn-badge offline">جاري الفحص...</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="body">
+    <!-- Pending sync indicator -->
+    <div id="pendingBar" style="display:none" class="card" style="background:rgba(99,102,241,.1);border-color:rgba(99,102,241,.3);margin-bottom:12px">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+        <div>
+          <div style="font-weight:900;font-size:14px">📤 سجلات معلّقة</div>
+          <div id="pendingBarText" style="font-size:12px;color:var(--muted)"></div>
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="goToSync()">مزامنة الآن</button>
+      </div>
+    </div>
+
+    <!-- Session config -->
+    <div class="card">
+      <div class="section-title">اختر الشعبة والتاريخ</div>
+      <div class="fld-group">
+        <label class="lbl">الشعبة</label>
+        <select id="sectionSel" class="fld"></select>
+      </div>
+      <div class="fld-group">
+        <label class="lbl">التاريخ</label>
+        <input id="dateSel" type="date" class="fld"/>
+      </div>
+      <button class="btn btn-primary" onclick="goToAttend()">▶ بدء تسجيل الحضور</button>
+    </div>
+
+    <!-- Actions -->
+    <div class="card">
+      <div class="section-title">إجراءات</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn btn-slate btn-sm" style="flex:1" onclick="goToSync()">↕ مزامنة مع السيرفر</button>
+        <button class="btn btn-outline btn-sm" style="flex:1" onclick="goToSetup()">🔄 تحديث البيانات</button>
+      </div>
+    </div>
+
+    <!-- Sections summary -->
+    <div class="section-title" style="margin-top:4px">الشعب المحفوظة على الهاتف</div>
+    <div id="sectionsSummary"></div>
+  </div>
+</div>
+
+<!-- ══════════════════ ATTEND SCREEN ══════════════════ -->
+<div class="screen" id="sc-attend" hidden>
+  <div class="hdr">
+    <div class="hdr-row">
+      <button class="back-btn" onclick="backFromAttend()">← عودة</button>
+      <div style="flex:1;min-width:0;text-align:center">
+        <div style="font-size:14px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" id="attendHeader">—</div>
+      </div>
+      <div style="min-width:44px"></div>
+    </div>
+  </div>
+
+  <div class="body" id="attendBody">
+    <!-- Stats bar -->
+    <div class="stats-bar">
+      <div class="stat-pill sp-p">
+        <div class="n" style="color:#86efac" id="statPresent">0</div>
+        <div class="l">حاضر</div>
+      </div>
+      <div class="stat-pill sp-l">
+        <div class="n" style="color:#fde68a" id="statLate">0</div>
+        <div class="l">متأخر</div>
+      </div>
+      <div class="stat-pill sp-a">
+        <div class="n" style="color:#94a3b8" id="statAbsent">0</div>
+        <div class="l">غائب</div>
+      </div>
+    </div>
+
+    <!-- View toggle -->
+    <div class="view-toggle">
+      <div class="view-btn active" id="btnList" onclick="setView('list')">📋 قائمة</div>
+      <div class="view-btn" id="btnQr" onclick="setView('qr')">📷 مسح QR</div>
+    </div>
+
+    <!-- List area -->
+    <div id="listArea">
+      <div class="search-wrap">
+        <input id="attendSearch" class="fld search-fld" type="search" placeholder="ابحث بالاسم أو الرقم..."
+               oninput="renderAttendList()"/>
+      </div>
+
+      <!-- Bulk actions -->
+      <div style="display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap">
+        <button class="btn btn-sm" style="flex:1;background:rgba(34,197,94,.2);border:1px solid rgba(34,197,94,.4);color:#86efac;border-radius:10px;padding:8px;font-size:12px;font-weight:900" onclick="bulkSet('present')">✓ كل الحاضرين</button>
+        <button class="btn btn-sm" style="flex:1;background:rgba(245,158,11,.2);border:1px solid rgba(245,158,11,.4);color:#fde68a;border-radius:10px;padding:8px;font-size:12px;font-weight:900" onclick="bulkSet('late')">⏰ كل متأخر</button>
+        <button class="btn btn-sm" style="flex:1;background:rgba(148,163,184,.12);border:1px solid rgba(148,163,184,.3);color:#94a3b8;border-radius:10px;padding:8px;font-size:12px;font-weight:900" onclick="bulkSet('absent')">✗ كل غائب</button>
+      </div>
+
+      <div id="attendList"></div>
+    </div>
+
+    <!-- QR area -->
+    <div id="qrArea" hidden>
+      <div id="qrReader"></div>
+      <div class="qr-hint">
+        وجّه الكاميرا نحو بطاقة QR الطالب<br>
+        صيغة الكود: STU-[الشعبة]-[رقم الصف]<br>
+        <span style="color:#fde68a">مثال: STU-A-5</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom save bar -->
+  <div class="bottom-bar">
+    <button class="btn btn-green" id="saveBtn" onclick="saveSession()">💾 حفظ الجلسة</button>
+  </div>
+</div>
+
+<!-- ══════════════════ SYNC SCREEN ══════════════════ -->
+<div class="screen" id="sc-sync" hidden>
+  <div class="hdr">
+    <div class="hdr-row">
+      <button class="back-btn" onclick="showScreen('home')">← عودة</button>
+      <h2>مزامنة مع السيرفر</h2>
+      <div style="min-width:60px"></div>
+    </div>
+  </div>
+
+  <div class="body">
+    <!-- Connection check -->
+    <div class="card" id="syncConnCard">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+        <div>
+          <div style="font-weight:900;margin-bottom:3px">حالة الاتصال</div>
+          <div id="syncConnStatus" style="font-size:13px;color:var(--muted)">جاري الفحص...</div>
+        </div>
+        <span id="syncConnBadge" class="conn-badge checking">جاري...</span>
+      </div>
+    </div>
+
+    <!-- Pending summary -->
+    <div class="section-title">السجلات المعلّقة</div>
+    <div id="pendingSummary" class="card"></div>
+
+    <!-- Sync button -->
+    <button class="btn btn-primary mt" id="doSyncBtn" onclick="doSync()">
+      📤 إرسال للسيرفر الآن
+    </button>
+
+    <!-- Result -->
+    <div id="syncResult"></div>
+
+    <!-- Conflicts -->
+    <div id="conflictsSection" style="display:none">
+      <div class="divider"></div>
+      <div style="font-size:15px;font-weight:900;margin-bottom:12px;color:#fde68a">
+        ⚠️ تعارضات — اختر لكل واحد
+      </div>
+      <div id="conflictsList"></div>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<script>
+// ─── IndexedDB ────────────────────────────────────────────────
+const DB_NAME = 'attendance_offline_v2';
+const DB_VER  = 1;
+let IDB;
+
+function dbOpen() {
+  return new Promise((res, rej) => {
+    const r = indexedDB.open(DB_NAME, DB_VER);
+    r.onupgradeneeded = e => {
+      const db = e.target.result;
+      if (!db.objectStoreNames.contains('config'))
+        db.createObjectStore('config', { keyPath: 'k' });
+      if (!db.objectStoreNames.contains('sections'))
+        db.createObjectStore('sections', { keyPath: 'id' });
+      if (!db.objectStoreNames.contains('students')) {
+        const s = db.createObjectStore('students', { keyPath: 'id' });
+        s.createIndex('by_sec', 'section_id');
+      }
+      if (!db.objectStoreNames.contains('pending')) {
+        const p = db.createObjectStore('pending', { keyPath: 'lid', autoIncrement: true });
+        p.createIndex('by_synced', 'synced');
+        p.createIndex('by_sec_date', 'sec_date');
+      }
+    };
+    r.onsuccess = e => { IDB = e.target.result; res(); };
+    r.onerror = () => rej(r.error);
+  });
+}
+
+// ── Config ────────────────────────────────────────────────────
+const cfg = {
+  get: k => new Promise(res => {
+    const t = IDB.transaction('config', 'readonly');
+    const r = t.objectStore('config').get(k);
+    r.onsuccess = () => res(r.result?.v);
+  }),
+  set: (k, v) => new Promise(res => {
+    const t = IDB.transaction('config', 'readwrite');
+    t.objectStore('config').put({ k, v });
+    t.oncomplete = res;
+  }),
+};
+
+// ── Sections ──────────────────────────────────────────────────
+const secDB = {
+  save: secs => new Promise(res => {
+    const t = IDB.transaction('sections', 'readwrite');
+    const st = t.objectStore('sections');
+    secs.forEach(s => st.put(s));
+    t.oncomplete = res;
+  }),
+  all: () => new Promise(res => {
+    const t = IDB.transaction('sections', 'readonly');
+    const r = t.objectStore('sections').getAll();
+    r.onsuccess = () => res(r.result || []);
+  }),
+};
+
+// ── Students ──────────────────────────────────────────────────
+const stuDB = {
+  save: stus => new Promise(res => {
+    const t = IDB.transaction('students', 'readwrite');
+    const st = t.objectStore('students');
+    stus.forEach(s => st.put(s));
+    t.oncomplete = res;
+  }),
+  bySec: sid => new Promise(res => {
+    const t = IDB.transaction('students', 'readonly');
+    const r = t.objectStore('students').index('by_sec').getAll(IDBKeyRange.only(sid));
+    r.onsuccess = () => res((r.result||[]).sort((a,b) => a.row_number - b.row_number));
+  }),
+};
+
+// ── Pending ───────────────────────────────────────────────────
+const pendDB = {
+  add: rec => new Promise(res => {
+    const t = IDB.transaction('pending', 'readwrite');
+    t.objectStore('pending').add(rec);
+    t.oncomplete = res;
+  }),
+  delBySecDate: sd => new Promise(res => {
+    const t = IDB.transaction('pending', 'readwrite');
+    const idx = t.objectStore('pending').index('by_sec_date');
+    const r = idx.openCursor(IDBKeyRange.only(sd));
+    r.onsuccess = e => {
+      const c = e.target.result;
+      if (c) { if (!c.value.synced) c.delete(); c.continue(); }
+    };
+    t.oncomplete = res;
+  }),
+  unsynced: () => new Promise(res => {
+    const t = IDB.transaction('pending', 'readonly');
+    const r = t.objectStore('pending').index('by_synced').getAll(IDBKeyRange.only(0));
+    r.onsuccess = () => res(r.result || []);
+  }),
+  markSynced: lid => new Promise(res => {
+    const t = IDB.transaction('pending', 'readwrite');
+    const st = t.objectStore('pending');
+    const r = st.get(lid);
+    r.onsuccess = () => { if (r.result) { r.result.synced = 1; st.put(r.result); } };
+    t.oncomplete = res;
+  }),
+  count: () => new Promise(res => {
+    const t = IDB.transaction('pending', 'readonly');
+    const r = t.objectStore('pending').index('by_synced').count(IDBKeyRange.only(0));
+    r.onsuccess = () => res(r.result || 0);
+  }),
+};
+
+// ─── API ──────────────────────────────────────────────────────
+let SERVER = '', PIN = '';
+
+async function apiGet(path) {
+  const r = await fetch(SERVER + path, {
+    headers: { 'x-mobile-pin': PIN },
+    signal: AbortSignal.timeout(8000),
+  });
+  const data = await r.json();
+  if (!r.ok) throw new Error(data.error || 'فشل الطلب');
+  return data;
+}
+
+async function apiPost(path, body) {
+  const r = await fetch(SERVER + path, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'x-mobile-pin': PIN },
+    body: JSON.stringify(body),
+    signal: AbortSignal.timeout(20000),
+  });
+  const data = await r.json();
+  if (!r.ok) throw new Error(data.error || 'فشل الطلب');
+  return data;
+}
+
+// ─── State ───────────────────────────────────────────────────
+const S = {
+  sections: [],
+  students: [],
+  session: {},       // { studentId: 'present'|'late'|'absent' }
+  sectionId: null,
+  date: '',
+  view: 'list',
+  scanner: null,
+  pendingCount: 0,
+  conflicts: [],
+};
+
+// ─── Helpers ─────────────────────────────────────────────────
+function today() {
+  return new Date().toLocaleDateString('en-CA');
+}
+
+function esc(s) {
+  return String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+let _toastT;
+function toast(msg, type = 'ok', dur = 2600) {
+  const t = document.getElementById('toast');
+  t.className = 'toast ' + type;
+  t.textContent = msg;
+  t.style.display = 'block';
+  clearTimeout(_toastT);
+  _toastT = setTimeout(() => t.style.display = 'none', dur);
+}
+
+function showScreen(name) {
+  document.querySelectorAll('.screen').forEach(s => s.hidden = true);
+  document.getElementById('sc-' + name).hidden = false;
+  if (name !== 'attend') stopQR();
+  if (name === 'home') { updateConnBadge(); refreshPendingBar(); }
+  if (name === 'sync') checkSyncConn();
+}
+
+async function updateConnBadge() {
+  const el = document.getElementById('connBadge');
+  if (!el) return;
+  if (!navigator.onLine) {
+    el.textContent = '✕ أوفلاين'; el.className = 'conn-badge offline'; return;
+  }
+  try {
+    await fetch(SERVER + '/api/mobile/sections', {
+      headers: { 'x-mobile-pin': PIN },
+      signal: AbortSignal.timeout(3000)
+    });
+    el.textContent = '● متصل'; el.className = 'conn-badge online';
+  } catch {
+    el.textContent = '✕ أوفلاين'; el.className = 'conn-badge offline';
+  }
+}
+
+async function refreshPendingBar() {
+  S.pendingCount = await pendDB.count();
+  const bar = document.getElementById('pendingBar');
+  const txt = document.getElementById('pendingBarText');
+  if (S.pendingCount > 0) {
+    bar.style.display = '';
+    txt.textContent = `${S.pendingCount} سجل لم يُرسل للسيرفر بعد`;
+  } else {
+    bar.style.display = 'none';
+  }
+}
+
+async function renderSectionsSummary() {
+  const secs = await secDB.all();
+  const box = document.getElementById('sectionsSummary');
+  if (!secs.length) { box.innerHTML = ''; return; }
+  const lastDl = await cfg.get('lastDownload');
+  box.innerHTML = `
+    <div class="card" style="padding:12px">
+      ${secs.map(s => `<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--line);font-size:13px">
+        <span style="font-weight:800">${esc(s.display_name)}</span>
+        <span class="chip chip-gray">${esc(s.session_type||'')}</span>
+      </div>`).join('')}
+      <div style="margin-top:8px;font-size:11px;color:var(--muted)">
+        آخر تحميل: ${lastDl ? new Date(lastDl).toLocaleString('ar-IQ') : 'غير معروف'}
+      </div>
+    </div>
+  `;
+}
+
+// ─── SETUP SCREEN ─────────────────────────────────────────────
+async function testAndDownload() {
+  const urlRaw = document.getElementById('setupUrl').value.trim().replace(/\/$/, '');
+  const pin    = document.getElementById('setupPin').value.trim();
+  const st_el  = document.getElementById('setupStatus');
+
+  if (!urlRaw || !pin) {
+    st_el.textContent = '⚠️ أدخل العنوان والـ PIN';
+    st_el.style.color = '#fca5a5'; return;
+  }
+
+  SERVER = urlRaw; PIN = pin;
+  st_el.style.color = '#fde68a';
+  st_el.textContent = '⏳ جاري الاتصال بالسيرفر...';
+
+  try {
+    const sections = await apiGet('/api/mobile/sections');
+    if (!sections.length) throw new Error('لا توجد شعب في النظام');
+
+    for (let i = 0; i < sections.length; i++) {
+      const sec = sections[i];
+      st_el.textContent = `⏳ تحميل ${sec.display_name} (${i+1}/${sections.length})...`;
+      const data = await apiGet(`/api/mobile/download/${sec.id}`);
+      await stuDB.save(data.students);
+    }
+
+    await secDB.save(sections);
+    await cfg.set('serverUrl', urlRaw);
+    await cfg.set('pin', pin);
+    await cfg.set('lastDownload', new Date().toISOString());
+
+    st_el.style.color = '#86efac';
+    st_el.textContent = `✅ تم تحميل ${sections.length} شعبة بنجاح!`;
+
+    S.sections = sections;
+    populateSectionSelect();
+    await renderSectionsSummary();
+
+    setTimeout(() => showScreen('home'), 700);
+  } catch(e) {
+    st_el.style.color = '#fca5a5';
+    st_el.textContent = '❌ ' + e.message;
+  }
+}
+
+function goToSetup() {
+  document.getElementById('setupUrl').value = SERVER;
+  document.getElementById('setupPin').value = PIN;
+  document.getElementById('setupStatus').textContent = '';
+  showScreen('setup');
+}
+
+// ─── HOME SCREEN ──────────────────────────────────────────────
+function populateSectionSelect() {
+  const sel = document.getElementById('sectionSel');
+  sel.innerHTML = S.sections.map(s =>
+    `<option value="${s.id}">${esc(s.display_name)}</option>`
+  ).join('');
+}
+
+// ─── ATTEND SCREEN ────────────────────────────────────────────
+async function goToAttend() {
+  const secId = Number(document.getElementById('sectionSel').value);
+  const date  = document.getElementById('dateSel').value;
+
+  if (!secId || !date) { toast('اختر الشعبة والتاريخ', 'warn'); return; }
+
+  S.sectionId = secId;
+  S.date = date;
+  S.students = await stuDB.bySec(secId);
+  S.view = 'list';
+
+  if (!S.students.length) {
+    toast('لا يوجد طلاب — حمّل البيانات من جديد', 'err', 4000); return;
+  }
+
+  // Initialize all absent
+  S.session = {};
+  S.students.forEach(s => { S.session[s.id] = 'absent'; });
+
+  const sec = S.sections.find(s => s.id === secId);
+  document.getElementById('attendHeader').textContent = `${sec?.display_name || ''} — ${date}`;
+  document.getElementById('attendSearch').value = '';
+
+  renderAttendList();
+  updateStats();
+  setView('list');
+  showScreen('attend');
+}
+
+function backFromAttend() {
+  stopQR();
+  showScreen('home');
+}
+
+function setView(v) {
+  S.view = v;
+  document.getElementById('btnList').className = 'view-btn' + (v==='list' ? ' active' : '');
+  document.getElementById('btnQr').className   = 'view-btn' + (v==='qr'   ? ' active' : '');
+  document.getElementById('listArea').hidden   = v !== 'list';
+  document.getElementById('qrArea').hidden     = v !== 'qr';
+  if (v === 'qr') startQR(); else stopQR();
+}
+
+function updateStats() {
+  const vals = Object.values(S.session);
+  const p = vals.filter(v => v==='present').length;
+  const l = vals.filter(v => v==='late').length;
+  const a = vals.filter(v => v==='absent').length;
+  document.getElementById('statPresent').textContent = p;
+  document.getElementById('statLate').textContent    = l;
+  document.getElementById('statAbsent').textContent  = a;
+  const total = p + l;
+  document.getElementById('saveBtn').textContent =
+    total ? `💾 حفظ الجلسة — ${total} حاضر${l ? ` (${l} متأخر)` : ''}` : '💾 حفظ الجلسة';
+}
+
+function renderAttendList() {
+  const q = (document.getElementById('attendSearch').value || '').trim();
+  let list = S.students;
+  if (q) list = list.filter(s => s.name.includes(q) || String(s.row_number).includes(q));
+
+  document.getElementById('attendList').innerHTML = list.map(s => {
+    const st = S.session[s.id] || 'absent';
+    const bg = st==='present' ? 'rgba(34,197,94,.1)' : st==='late' ? 'rgba(245,158,11,.1)' : '';
+    return `<div class="stu-row" id="sr${s.id}" style="background:${bg}">
+      <div class="stu-num">${s.row_number}</div>
+      <div style="flex:1;min-width:0">
+        <div class="stu-name">${esc(s.name)}</div>
+        <div class="stu-type">${esc(s.study_type||'')}</div>
+      </div>
+      <div class="stu-btns">
+        <button class="sb ${st==='present'?'sb-p':''}" onclick="setSt(${s.id},'present')">✓</button>
+        <button class="sb ${st==='late'?'sb-l':''}" onclick="setSt(${s.id},'late')">⏰</button>
+        <button class="sb ${st==='absent'?'sb-a':''}" onclick="setSt(${s.id},'absent')">✗</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function setSt(sid, status) {
+  S.session[sid] = status;
+  const row = document.getElementById('sr' + sid);
+  if (row) {
+    row.style.background = status==='present' ? 'rgba(34,197,94,.1)' : status==='late' ? 'rgba(245,158,11,.1)' : '';
+    const bs = row.querySelectorAll('.sb');
+    bs[0].className = 'sb' + (status==='present' ? ' sb-p' : '');
+    bs[1].className = 'sb' + (status==='late'    ? ' sb-l' : '');
+    bs[2].className = 'sb' + (status==='absent'  ? ' sb-a' : '');
+  }
+  updateStats();
+}
+
+function bulkSet(status) {
+  S.students.forEach(s => { S.session[s.id] = status; });
+  renderAttendList();
+  updateStats();
+}
+
+// ── QR Scanner ────────────────────────────────────────────────
+function startQR() {
+  if (typeof Html5Qrcode === 'undefined') {
+    toast('مكتبة QR غير محملة — اتصل بالسيرفر مرة للتحميل', 'err', 5000);
+    setView('list'); return;
+  }
+  if (S.scanner) return;
+  document.getElementById('qrReader').innerHTML = '';
+  S.scanner = new Html5Qrcode('qrReader');
+  S.scanner.start(
+    { facingMode: 'environment' },
+    { fps: 10, qrbox: { width: 220, height: 220 } },
+    onQR, () => {}
+  ).catch(e => { toast('فشل الكاميرا: ' + e, 'err'); setView('list'); });
+}
+
+function stopQR() {
+  if (S.scanner) {
+    S.scanner.stop().catch(() => {});
+    S.scanner = null;
+  }
+}
+
+let _lastQR = '', _lastQRAt = 0;
+function onQR(text) {
+  const now = Date.now();
+  if (text === _lastQR && now - _lastQRAt < 2000) return;
+  _lastQR = text; _lastQRAt = now;
+
+  const parts = text.trim().split('-');
+  if (parts.length !== 3 || parts[0] !== 'STU') { toast('كود غير صالح', 'err'); return; }
+
+  const letter = parts[1].toUpperCase();
+  const row    = parseInt(parts[2], 10);
+
+  // Match section letter
+  const sec    = S.sections.find(s => s.id === S.sectionId);
+  const secLet = (sec?.name || '').replace(/[^a-zA-Z]/g, '').toUpperCase().slice(-1);
+
+  if (letter !== secLet) {
+    toast(`⚠️ الطالب من شعبة ${letter} — الحالية ${secLet}`, 'warn', 3000); return;
+  }
+
+  const stu = S.students.find(s => s.row_number === row);
+  if (!stu) { toast(`طالب رقم ${row} غير موجود`, 'err'); return; }
+
+  if (S.session[stu.id] !== 'absent') {
+    toast(`${stu.name} — مسجّل مسبقاً`, 'warn', 1800); return;
+  }
+
+  setSt(stu.id, 'present');
+  beep();
+  toast(`✅ ${stu.name}`, 'ok', 1500);
+}
+
+function beep() {
+  try {
+    const ctx = new (window.AudioContext||window.webkitAudioContext)();
+    const o = ctx.createOscillator(), g = ctx.createGain();
+    o.type = 'triangle'; o.frequency.value = 1046;
+    g.gain.setValueAtTime(0.001, ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.1,  ctx.currentTime + 0.01);
+    g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
+    o.connect(g); g.connect(ctx.destination);
+    o.start(); o.stop(ctx.currentTime + 0.18);
+  } catch(e) {}
+}
+
+async function saveSession() {
+  const present = S.students.filter(s => S.session[s.id] === 'present' || S.session[s.id] === 'late');
+  if (!present.length) { toast('لم تسجّل أي حضور!', 'warn'); return; }
+
+  const secDate = `${S.sectionId}_${S.date}`;
+  await pendDB.delBySecDate(secDate);
+
+  const now = new Date().toISOString();
+  for (const s of S.students) {
+    const status = S.session[s.id];
+    if (status === 'present' || status === 'late') {
+      await pendDB.add({
+        student_id: s.id,
+        section_id: S.sectionId,
+        date: S.date,
+        status,
+        sec_date: secDate,
+        recorded_at: now,
+        synced: 0,
+      });
+    }
+  }
+
+  toast(`✅ تم حفظ ${present.length} سجل محلياً`, 'ok');
+  stopQR();
+  showScreen('home');
+}
+
+// ─── SYNC SCREEN ──────────────────────────────────────────────
+async function checkSyncConn() {
+  const badge = document.getElementById('syncConnBadge');
+  const status = document.getElementById('syncConnStatus');
+  badge.textContent = 'جاري...'; badge.className = 'conn-badge checking';
+
+  try {
+    await fetch(SERVER + '/api/mobile/sections', {
+      headers: { 'x-mobile-pin': PIN },
+      signal: AbortSignal.timeout(4000)
+    });
+    badge.textContent = '● متصل'; badge.className = 'conn-badge online';
+    status.textContent = 'السيرفر متاح — يمكن المزامنة الآن';
+    document.getElementById('doSyncBtn').disabled = false;
+  } catch {
+    badge.textContent = '✕ أوفلاين'; badge.className = 'conn-badge offline';
+    status.textContent = 'تأكد من تشغيل السيرفر وأنك على نفس الـ WiFi';
+    document.getElementById('doSyncBtn').disabled = true;
+  }
+
+  // Load pending summary
+  await loadPendingSummary();
+}
+
+async function goToSync() {
+  S.conflicts = [];
+  document.getElementById('syncResult').innerHTML = '';
+  document.getElementById('conflictsList').innerHTML = '';
+  document.getElementById('conflictsSection').style.display = 'none';
+  document.getElementById('doSyncBtn').textContent = '📤 إرسال للسيرفر الآن';
+  showScreen('sync');
+}
+
+async function loadPendingSummary() {
+  const pending = await pendDB.unsynced();
+  const box = document.getElementById('pendingSummary');
+
+  if (!pending.length) {
+    box.innerHTML = '<div class="empty"><span class="big">✅</span>لا توجد سجلات معلّقة</div>';
+    document.getElementById('doSyncBtn').disabled = true;
+    return;
+  }
+
+  document.getElementById('doSyncBtn').disabled = false;
+
+  // Group by section+date
+  const groups = {};
+  const secMap = {};
+  S.sections.forEach(s => { secMap[s.id] = s.display_name; });
+
+  pending.forEach(r => {
+    const k = r.sec_date || `${r.section_id}_${r.date}`;
+    if (!groups[k]) groups[k] = { section_id: r.section_id, date: r.date, present: 0, late: 0 };
+    if (r.status === 'present') groups[k].present++;
+    else if (r.status === 'late') groups[k].late++;
+  });
+
+  box.innerHTML = Object.values(groups).map(g => `
+    <div class="pend-item">
+      <div class="pi-head">📅 ${g.date} — ${secMap[g.section_id] || 'شعبة '+g.section_id}</div>
+      <div class="pi-meta">
+        حاضر: ${g.present}
+        ${g.late ? ` | متأخر: ${g.late}` : ''}
+        | الإجمالي: ${g.present + g.late}
+      </div>
+    </div>
+  `).join('');
+}
+
+async function doSync() {
+  const pending = await pendDB.unsynced();
+  if (!pending.length) { toast('لا توجد سجلات معلّقة', 'warn'); return; }
+
+  const btn = document.getElementById('doSyncBtn');
+  btn.disabled = true;
+  btn.textContent = '⏳ جاري الإرسال...';
+
+  try {
+    const records = pending.map(r => ({
+      lid: r.lid,
+      student_id: r.student_id,
+      section_id: r.section_id,
+      date: r.date,
+      status: r.status,
+      recorded_at: r.recorded_at,
+    }));
+
+    const res = await apiPost('/api/mobile/sync', { records });
+
+    // Build conflict key set
+    const confKeys = new Set(
+      (res.conflicts||[]).map(c => `${c.student_id}_${c.section_id}_${c.date}`)
+    );
+
+    // Mark non-conflict records as synced
+    for (const r of pending) {
+      if (!confKeys.has(`${r.student_id}_${r.section_id}_${r.date}`)) {
+        await pendDB.markSynced(r.lid);
+      }
+    }
+
+    await refreshPendingBar();
+
+    // Show result
+    document.getElementById('syncResult').innerHTML = `
+      <div class="sync-result">
+        <div>✅ تم استيراد <b>${res.imported}</b> سجل بنجاح</div>
+        ${res.conflicts?.length ? `<div>⚠️ <b>${res.conflicts.length}</b> تعارض — يرجى الحل أدناه</div>` : ''}
+        ${res.errors?.length ? `<div style="color:#fca5a5">❌ أخطاء: ${res.errors.join('، ')}</div>` : ''}
+      </div>
+    `;
+
+    // Handle conflicts
+    S.conflicts = res.conflicts || [];
+    if (S.conflicts.length) {
+      document.getElementById('conflictsSection').style.display = '';
+      renderConflicts(pending);
+      toast(`⚠️ ${S.conflicts.length} تعارض يحتاج حلاً`, 'warn', 5000);
+    } else {
+      toast('✅ تمت المزامنة الكاملة!', 'ok');
+    }
+
+    await loadPendingSummary();
+
+  } catch(e) {
+    toast('❌ ' + e.message, 'err', 5000);
+  }
+
+  btn.disabled = false;
+  btn.textContent = '📤 إرسال للسيرفر مجدداً';
+}
+
+function renderConflicts(pending) {
+  const secMap = {};
+  S.sections.forEach(s => { secMap[s.id] = s.display_name; });
+
+  document.getElementById('conflictsList').innerHTML = S.conflicts.map((c, i) => `
+    <div class="conf-card" id="cconf-${i}">
+      <div class="conf-name">${esc(c.student_name)}</div>
+      <div class="conf-sub">${secMap[c.section_id]||''} | ${c.date}</div>
+      <div class="conf-sides">
+        <div class="conf-side">
+          <div class="conf-side-lbl">📱 الهاتف</div>
+          <span class="conf-status ${c.local.status==='present'?'chip-green':'chip-orange'}">
+            ${c.local.status==='present'?'حاضر':'متأخر'}
+          </span>
+          <div class="conf-time">${(c.local.recorded_at||'').substring(11,16)}</div>
+        </div>
+        <div class="conf-vs">VS</div>
+        <div class="conf-side">
+          <div class="conf-side-lbl">💻 السيرفر</div>
+          <span class="conf-status ${c.server.status==='present'?'chip-green':'chip-orange'}">
+            ${c.server.status==='present'?'حاضر':'متأخر'}
+          </span>
+          <div class="conf-time">${(c.server.check_in_time||'').substring(11,16)}</div>
+        </div>
+      </div>
+      <div class="conf-btns">
+        <button class="btn btn-primary btn-sm" onclick="resolveConf(${i},'mobile')">
+          📱 استخدم الهاتف
+        </button>
+        <button class="btn btn-slate btn-sm" onclick="resolveConf(${i},'server')">
+          💻 استبق السيرفر
+        </button>
+      </div>
+    </div>
+  `).join('');
+}
+
+async function resolveConf(idx, winner) {
+  const c = S.conflicts[idx];
+  try {
+    await apiPost('/api/mobile/resolve', {
+      student_id: c.student_id,
+      section_id: c.section_id,
+      date: c.date,
+      winner,
+      status: c.local.status,
+    });
+
+    // Mark local as synced
+    const pending = await pendDB.unsynced();
+    const match = pending.find(r =>
+      r.student_id === c.student_id &&
+      r.section_id === c.section_id &&
+      r.date === c.date
+    );
+    if (match) await pendDB.markSynced(match.lid);
+
+    S.conflicts.splice(idx, 1);
+    await refreshPendingBar();
+    await loadPendingSummary();
+
+    if (!S.conflicts.length) {
+      document.getElementById('conflictsSection').style.display = 'none';
+      toast('✅ تم حل كل التعارضات', 'ok');
+    } else {
+      renderConflicts(await pendDB.unsynced());
+      toast(winner==='mobile' ? '✅ تم استخدام بيانات الهاتف' : '✅ تم الإبقاء على بيانات السيرفر', 'ok');
+    }
+  } catch(e) {
+    toast('❌ ' + e.message, 'err');
+  }
+}
+
+// ─── INIT ─────────────────────────────────────────────────────
+async function init() {
+  await dbOpen();
+
+  SERVER = (await cfg.get('serverUrl')) || '';
+  PIN    = (await cfg.get('pin'))       || '';
+
+  document.getElementById('dateSel').value = today();
+
+  if (SERVER && PIN) {
+    S.sections = await secDB.all();
+    if (S.sections.length) {
+      populateSectionSelect();
+      await renderSectionsSummary();
+      await refreshPendingBar();
+      showScreen('home');
+      updateConnBadge();
+    } else {
+      document.getElementById('setupUrl').value = SERVER;
+      document.getElementById('setupPin').value = PIN;
+      showScreen('setup');
+    }
+  } else {
+    showScreen('setup');
+  }
+
+  window.addEventListener('online',  () => { updateConnBadge(); });
+  window.addEventListener('offline', () => {
+    document.getElementById('connBadge').textContent = '✕ أوفلاين';
+    document.getElementById('connBadge').className = 'conn-badge offline';
+  });
+
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js').catch(() => {});
+  }
+}
+
+init();
+</script>
+</body>
+</html>

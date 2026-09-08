@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>لوحة الإدارة</title>
+  <style>
+    :root{
+      --bg1:#07111f;--bg2:#0f172a;
+      --panel:rgba(255,255,255,.07);--line:rgba(255,255,255,.10);
+      --text:#f8fafc;--muted:#a5b4c7;
+      --blue:#3b82f6;--blue2:#2563eb;
+      --green:#16a34a;--green2:#22c55e;
+      --orange:#f59e0b;--red:#ef4444;
+      --purple:#8b5cf6;--cyan:#06b6d4;
+      --indigo:#6366f1;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Tahoma,Arial,sans-serif;color:var(--text);min-height:100vh;
+      background:radial-gradient(circle at top right,rgba(99,102,241,.15),transparent 22%),
+                 radial-gradient(circle at bottom left,rgba(139,92,246,.12),transparent 20%),
+                 linear-gradient(135deg,var(--bg1),var(--bg2) 55%,#09101d)}
+    .wrap{max-width:1400px;margin:0 auto;padding:16px}
+    .glass{background:var(--panel);border:1px solid var(--line);border-radius:20px;
+           box-shadow:0 16px 40px rgba(0,0,0,.3);backdrop-filter:blur(14px)}
+
+    /* ── HEADER ── */
+    .header{display:flex;justify-content:space-between;align-items:center;
+            gap:14px;flex-wrap:wrap;padding:16px 20px;margin-bottom:14px}
+    .header h1{font-size:24px;font-weight:900}
+    .header p{color:var(--muted);font-size:13px;margin-top:4px}
+    .header-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+
+    /* ── TABS ── */
+    .tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+    .tab{padding:10px 18px;border-radius:12px;border:1px solid var(--line);
+         background:rgba(255,255,255,.04);color:var(--muted);font-size:14px;
+         font-weight:800;cursor:pointer;transition:.15s}
+    .tab.active{background:rgba(99,102,241,.2);border-color:rgba(99,102,241,.45);color:#c7d2fe}
+    .tab:hover:not(.active){background:rgba(255,255,255,.08)}
+
+    /* ── FILTERS ── */
+    .filters{display:flex;gap:10px;flex-wrap:wrap;align-items:center;
+             padding:14px 16px;margin-bottom:12px}
+    .filters input,.filters select{
+      padding:10px 12px;border-radius:12px;border:1px solid var(--line);
+      background:rgba(255,255,255,.06);color:var(--text);font-size:13px;
+      font-family:inherit;outline:none;min-width:180px}
+    .filters input:focus,.filters select:focus{border-color:rgba(99,102,241,.5)}
+    .filters select option{background:#0f172a}
+    .count-badge{background:rgba(99,102,241,.18);border:1px solid rgba(99,102,241,.3);
+                 color:#c7d2fe;padding:6px 12px;border-radius:999px;font-size:12px;font-weight:800}
+
+    /* ── BUTTONS ── */
+    button{font-family:inherit;font-size:13px;border:none;outline:none;
+           border-radius:12px;color:#fff;padding:9px 14px;cursor:pointer;
+           font-weight:800;transition:.15s}
+    button:hover{transform:translateY(-1px);filter:brightness(1.08)}
+    button:active{transform:scale(.98)}
+    .b-blue{background:linear-gradient(180deg,var(--blue),var(--blue2))}
+    .b-green{background:linear-gradient(180deg,var(--green2),var(--green))}
+    .b-orange{background:linear-gradient(180deg,#fbbf24,#d97706);color:#111827}
+    .b-red{background:linear-gradient(180deg,var(--red),#dc2626)}
+    .b-slate{background:linear-gradient(180deg,#475569,#334155)}
+    .b-purple{background:linear-gradient(180deg,#a78bfa,#7c3aed)}
+    .b-cyan{background:linear-gradient(180deg,#22d3ee,#0891b2)}
+    .b-sm{padding:6px 11px;font-size:12px;border-radius:9px}
+
+    /* ── TABLE ── */
+    .table-wrap{overflow-x:auto;padding:0 4px 4px}
+    table{width:100%;border-collapse:separate;border-spacing:0 6px}
+    thead th{padding:10px 12px;text-align:right;font-size:12px;color:var(--muted);
+             font-weight:700;white-space:nowrap}
+    tbody tr{background:rgba(255,255,255,.04);border-radius:14px;transition:.15s}
+    tbody tr:hover{background:rgba(99,102,241,.1)}
+    tbody td{padding:11px 12px;font-size:13px;border-top:1px solid rgba(255,255,255,.05);
+             border-bottom:1px solid rgba(255,255,255,.05)}
+    tbody td:first-child{border-radius:14px 0 0 14px;border-right:1px solid rgba(255,255,255,.05)}
+    tbody td:last-child{border-radius:0 14px 14px 0;border-left:1px solid rgba(255,255,255,.05)}
+    .td-actions{display:flex;gap:6px;justify-content:flex-end;flex-wrap:wrap}
+    .name-cell{font-weight:800;font-size:14px}
+    .meta-cell{color:var(--muted);font-size:12px}
+
+    /* ── CHIPS ── */
+    .chip{display:inline-flex;align-items:center;gap:5px;padding:5px 10px;
+          border-radius:999px;font-size:11px;font-weight:800;white-space:nowrap}
+    .chip-morning{background:rgba(34,197,94,.14);color:#86efac;border:1px solid rgba(34,197,94,.3)}
+    .chip-evening{background:rgba(245,158,11,.14);color:#fde68a;border:1px solid rgba(245,158,11,.3)}
+    .chip-blue{background:rgba(59,130,246,.14);color:#bfdbfe;border:1px solid rgba(59,130,246,.3)}
+    .chip-gray{background:rgba(148,163,184,.12);color:#cbd5e1;border:1px solid rgba(148,163,184,.2)}
+
+    /* ── MODAL ── */
+    .modal-backdrop{position:fixed;inset:0;background:rgba(2,6,23,.82);
+                    display:none;align-items:center;justify-content:center;
+                    padding:16px;z-index:2000}
+    .modal-backdrop.open{display:flex}
+    .modal{width:min(560px,100%);border-radius:22px;
+           background:linear-gradient(180deg,#101a2d,#0b1220);
+           border:1px solid rgba(255,255,255,.10);box-shadow:0 24px 70px rgba(0,0,0,.55)}
+    .modal-head{padding:18px 20px;border-bottom:1px solid rgba(255,255,255,.08);
+                display:flex;justify-content:space-between;align-items:center}
+    .modal-head h2{font-size:19px;font-weight:900}
+    .modal-body{padding:20px}
+    .modal-foot{padding:14px 20px;border-top:1px solid rgba(255,255,255,.08);
+                display:flex;gap:10px;justify-content:flex-end}
+
+    /* ── FORM ── */
+    .form-group{margin-bottom:14px}
+    .form-group label{display:block;font-size:12px;font-weight:800;color:var(--muted);margin-bottom:6px}
+    .form-group input,.form-group select,.form-group textarea{
+      width:100%;padding:11px 13px;border-radius:12px;
+      border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.06);
+      color:var(--text);font-size:14px;font-family:inherit;outline:none}
+    .form-group input:focus,.form-group select:focus,.form-group textarea:focus{
+      border-color:rgba(99,102,241,.55);box-shadow:0 0 0 3px rgba(99,102,241,.15)}
+    .form-group select option{background:#0f172a}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    @media(max-width:480px){.form-row{grid-template-columns:1fr}}
+
+    /* ── MOVE MODAL extras ── */
+    .move-info{padding:12px 14px;border-radius:14px;background:rgba(99,102,241,.1);
+               border:1px solid rgba(99,102,241,.2);margin-bottom:14px;font-size:13px;line-height:1.7}
+    .move-info strong{color:#c7d2fe}
+    .toggle-row{display:flex;align-items:center;gap:10px;padding:12px 14px;
+                border-radius:14px;background:rgba(255,255,255,.04);border:1px solid var(--line);margin-bottom:14px}
+    .toggle-row label{flex:1;font-size:13px;font-weight:700}
+    .toggle-row input[type=checkbox]{width:18px;height:18px;cursor:pointer;accent-color:var(--indigo)}
+
+    /* ── HISTORY TABLE ── */
+    .hist-row{display:flex;justify-content:space-between;align-items:center;
+              gap:12px;padding:10px 12px;border-radius:12px;
+              background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);margin-bottom:6px}
+    .hist-date{font-weight:800;font-size:13px}
+    .hist-time{font-size:11px;color:var(--muted)}
+    .hist-actions{display:flex;gap:6px}
+    .st-present{background:rgba(34,197,94,.14);color:#86efac;border:1px solid rgba(34,197,94,.3)}
+    .st-late{background:rgba(245,158,11,.14);color:#fde68a;border:1px solid rgba(245,158,11,.3)}
+    .st-absent{background:rgba(148,163,184,.12);color:#cbd5e1;border:1px solid rgba(148,163,184,.2)}
+
+    /* ── SECTIONS GRID ── */
+    .sec-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+    .sec-card{padding:16px 18px}
+    .sec-card-head{display:flex;justify-content:space-between;align-items:start;gap:10px;margin-bottom:10px}
+    .sec-name{font-size:20px;font-weight:900}
+    .sec-type{font-size:12px;color:var(--muted);margin-top:3px}
+    .sec-stats{display:flex;gap:12px;margin-bottom:12px}
+    .sec-stat{font-size:12px;color:var(--muted)}
+    .sec-stat span{font-weight:900;color:var(--text);font-size:16px;display:block}
+    .sec-actions{display:flex;gap:8px;flex-wrap:wrap}
+
+    /* ── TOAST ── */
+    .toast{position:fixed;left:50%;transform:translateX(-50%);top:16px;z-index:9999;
+           display:none;min-width:min(94vw,480px);padding:14px 18px;border-radius:16px;
+           font-weight:900;font-size:14px;box-shadow:0 16px 40px rgba(0,0,0,.4)}
+    .toast.ok{background:linear-gradient(180deg,rgba(22,163,74,.98),rgba(21,128,61,.98))}
+    .toast.err{background:linear-gradient(180deg,rgba(239,68,68,.98),rgba(185,28,28,.98))}
+    .toast.warn{background:linear-gradient(180deg,rgba(245,158,11,.98),rgba(180,83,9,.98));color:#111}
+
+    /* ── EMPTY ── */
+    .empty{padding:40px;text-align:center;color:var(--muted);font-size:14px;line-height:2}
+    .empty .big{font-size:36px;display:block;margin-bottom:8px;opacity:.6}
+
+    /* ── CONFIRM MODAL ── */
+    .confirm-msg{font-size:15px;line-height:1.8;padding:4px 0 16px}
+    .confirm-sub{font-size:12px;color:#fca5a5;margin-top:8px}
+
+
+    .step-item{padding:10px 16px;font-size:13px;font-weight:800;color:var(--muted);border-radius:10px;transition:.15s}
+    .step-item.active{color:#c7d2fe;background:rgba(99,102,241,.15)}
+    .step-sep{padding:10px 4px;color:var(--muted);font-size:18px;display:flex;align-items:center}
+    .import-btn-group{display:flex;border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,.1)}
+    .import-btn{flex:1;padding:9px 0;font-size:13px;font-weight:900;cursor:pointer;border:none;
+                background:rgba(255,255,255,.06);color:var(--muted);transition:.15s;font-family:inherit}
+    .import-btn:hover{filter:brightness(1.15)}
+    .import-btn.is-present{background:rgba(34,197,94,.25);color:#86efac}
+    .import-btn.is-late{background:rgba(245,158,11,.25);color:#fde68a}
+    .import-btn.is-absent{background:rgba(148,163,184,.18);color:#94a3b8}
+    .import-row-present td{background:rgba(34,197,94,.06) !important}
+    .import-row-late td{background:rgba(245,158,11,.06) !important}
+
+    ::-webkit-scrollbar{width:6px;height:6px}
+    ::-webkit-scrollbar-thumb{background:rgba(99,102,241,.5);border-radius:999px}
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <div class="glass header">
+    <div>
+      <h1>⚙️ لوحة الإدارة</h1>
+      <p>إدارة الطلاب والشعب وسجلات الحضور</p>
+    </div>
+    <div class="header-actions">
+      <span class="count-badge" id="totalBadge">— طالب</span>
+      <button class="b-green" onclick="openAddStudentModal()">+ إضافة طالب</button>
+      <button class="b-purple" onclick="openAddSectionModal()">+ إضافة شعبة</button>
+      <button class="b-slate" onclick="window.location.href='/'">← لوحة المدرس</button>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <div class="tab active" onclick="switchTab('students')">👥 إدارة الطلاب</div>
+    <div class="tab" onclick="switchTab('sections')">🏫 إدارة الشعب</div>
+    <div class="tab" onclick="switchTab('import')">📥 استيراد الحضور القديم</div>
+  </div>
+
+  <!-- ══════════════ STUDENTS TAB ══════════════ -->
+  <div id="tab-students">
+    <div class="glass filters">
+      <input type="text" id="searchInput" placeholder="🔍 ابحث بالاسم أو الرقم..."
+             oninput="filterStudents()" style="flex:1;min-width:200px"/>
+      <select id="sectionFilter" onchange="loadStudents()">
+        <option value="">كل الشعب</option>
+      </select>
+      <span class="count-badge" id="studentCount">0 طالب</span>
+      <button class="b-blue" onclick="loadStudents()">تحديث</button>
+    </div>
+
+    <div class="glass" style="padding:0 4px">
+      <div class="table-wrap">
+        <table id="studentsTable">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>الاسم</th>
+              <th>الشعبة</th>
+              <th>نوع الدراسة</th>
+              <th>رقم الصف</th>
+              <th style="text-align:left">إجراءات</th>
+            </tr>
+          </thead>
+          <tbody id="studentsBody">
+            <tr><td colspan="6"><div class="empty"><span class="big">⏳</span>جاري التحميل...</div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ SECTIONS TAB ══════════════ -->
+  <div id="tab-sections" style="display:none">
+    <div id="sectionsGrid" class="sec-grid"></div>
+  </div>
+
+
+  <!-- ══════════════ IMPORT TAB ══════════════ -->
+  <div id="tab-import" style="display:none">
+
+    <!-- Step indicator -->
+    <div class="glass" style="padding:14px 20px;margin-bottom:12px;display:flex;gap:0;flex-wrap:wrap" id="stepBar">
+      <div class="step-item active" id="step1ind">① اختر الشعبة والتاريخ</div>
+      <div class="step-sep">›</div>
+      <div class="step-item" id="step2ind">② راجع الطلاب وحدد الحالة</div>
+      <div class="step-sep">›</div>
+      <div class="step-item" id="step3ind">③ احفظ</div>
+    </div>
+
+    <!-- STEP 1: Section + Date -->
+    <div id="importStep1" class="glass" style="padding:22px">
+      <h3 style="margin-bottom:18px;font-size:17px">① اختر الشعبة والتاريخ</h3>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:520px">
+        <div class="form-group" style="margin:0">
+          <label>الشعبة *</label>
+          <select id="importSection" style="width:100%;padding:11px 13px;border-radius:12px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.06);color:#f8fafc;font-size:14px;font-family:inherit;outline:none">
+            <option value="">اختر الشعبة...</option>
+          </select>
+        </div>
+        <div class="form-group" style="margin:0">
+          <label>التاريخ *</label>
+          <input type="date" id="importDate" style="width:100%;padding:11px 13px;border-radius:12px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.06);color:#f8fafc;font-size:14px;font-family:inherit;outline:none"/>
+        </div>
+      </div>
+      <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+        <button class="b-blue" onclick="loadImportStudents()">▶ تحميل قائمة الطلاب</button>
+        <span style="font-size:12px;color:var(--muted)">سيتم تحميل الطلاب مع حالتهم الحالية في ذلك التاريخ</span>
+      </div>
+    </div>
+
+    <!-- STEP 2: Students table -->
+    <div id="importStep2" style="display:none;margin-top:12px">
+
+      <!-- Info bar -->
+      <div class="glass" style="padding:12px 16px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+        <div>
+          <span id="importSectionLabel" style="font-weight:900;font-size:15px"></span>
+          <span id="importDateLabel" style="color:var(--muted);font-size:13px;margin-right:10px"></span>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+          <span id="importCounters" style="font-size:12px;color:var(--muted)"></span>
+          <button class="b-green b-sm" onclick="bulkSetAll('present')">✓ كل الحاضرين</button>
+          <button class="b-orange b-sm" onclick="bulkSetAll('late')">⏰ كل متأخر</button>
+          <button class="b-slate b-sm" onclick="bulkSetAll('absent')">✗ كل غائب</button>
+        </div>
+      </div>
+
+      <!-- Table -->
+      <div class="glass" style="padding:0 4px">
+        <div class="table-wrap">
+          <table id="importTable">
+            <thead>
+              <tr>
+                <th style="width:50px">#</th>
+                <th>الاسم</th>
+                <th style="width:100px">نوع الدراسة</th>
+                <th style="width:260px;text-align:center">الحالة</th>
+              </tr>
+            </thead>
+            <tbody id="importBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Save bar -->
+      <div class="glass" style="padding:14px 18px;margin-top:10px;display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+        <button class="b-green" style="padding:12px 24px;font-size:15px" onclick="saveImport()">
+          💾 حفظ الحضور ليوم <span id="importSaveDateLabel"></span>
+        </button>
+        <button class="b-slate" onclick="resetImport()">← تغيير الشعبة أو التاريخ</button>
+        <span style="font-size:12px;color:var(--muted)">الغائبون لن يُحفظ لهم سجل (يمكن تغييرهم لحاضر أو متأخر)</span>
+      </div>
+    </div>
+
+  </div>
+
+
+</div>
+
+<!-- ══════════ TOAST ══════════ -->
+<div id="toast" class="toast"></div>
+
+<!-- ══════════ ADD/EDIT STUDENT MODAL ══════════ -->
+<div id="studentModal" class="modal-backdrop">
+  <div class="modal">
+    <div class="modal-head">
+      <h2 id="studentModalTitle">إضافة طالب</h2>
+      <button class="b-slate b-sm" onclick="closeStudentModal()">✕ إغلاق</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="editStudentId"/>
+      <div class="form-row">
+        <div class="form-group" style="grid-column:1/-1">
+          <label>الاسم الكامل *</label>
+          <input type="text" id="sName" placeholder="أدخل الاسم الرباعي"/>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>الشعبة *</label>
+          <select id="sSection"></select>
+        </div>
+        <div class="form-group">
+          <label>نوع الدراسة</label>
+          <select id="sType">
+            <option value="صباحي">صباحي</option>
+            <option value="مسائي">مسائي</option>
+            <option value="">غير محدد</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group" id="rowNumGroup">
+        <label>رقم الصف <span style="color:var(--muted);font-weight:400">(اختياري — يُحسب تلقائياً)</span></label>
+        <input type="number" id="sRowNum" placeholder="تلقائي" min="1"/>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="b-slate" onclick="closeStudentModal()">إلغاء</button>
+      <button class="b-green" onclick="saveStudent()">💾 حفظ</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ MOVE STUDENT MODAL ══════════ -->
+<div id="moveModal" class="modal-backdrop">
+  <div class="modal">
+    <div class="modal-head">
+      <h2>نقل طالب لشعبة أخرى</h2>
+      <button class="b-slate b-sm" onclick="closeMoveModal()">✕ إغلاق</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="moveStudentId"/>
+      <div class="move-info" id="moveStudentInfo"></div>
+      <div class="form-group">
+        <label>الشعبة المستهدفة *</label>
+        <select id="moveTargetSection"></select>
+      </div>
+      <div class="toggle-row">
+        <label>نقل سجلات الحضور معه؟</label>
+        <input type="checkbox" id="keepAttendance" checked/>
+      </div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.7">
+        ✅ تفعيل: تنتقل سجلات حضوره السابقة للشعبة الجديدة<br>
+        ❌ إيقاف: تُحذف سجلات حضوره السابقة نهائياً
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="b-slate" onclick="closeMoveModal()">إلغاء</button>
+      <button class="b-orange" onclick="confirmMove()">🔀 تأكيد النقل</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ STUDENT HISTORY MODAL ══════════ -->
+<div id="historyModal" class="modal-backdrop">
+  <div class="modal" style="width:min(680px,100%)">
+    <div class="modal-head">
+      <div>
+        <h2 id="historyTitle">سجل الحضور</h2>
+        <p id="historySub" style="font-size:12px;color:var(--muted);margin-top:4px"></p>
+      </div>
+      <button class="b-slate b-sm" onclick="closeHistoryModal()">✕ إغلاق</button>
+    </div>
+    <div class="modal-body" style="max-height:70vh;overflow-y:auto">
+      <div id="historyStats" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px"></div>
+      <div id="historyList"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ ADD/EDIT SECTION MODAL ══════════ -->
+<div id="sectionModal" class="modal-backdrop">
+  <div class="modal">
+    <div class="modal-head">
+      <h2 id="sectionModalTitle">إضافة شعبة</h2>
+      <button class="b-slate b-sm" onclick="closeSectionModal()">✕ إغلاق</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="editSectionId"/>
+      <div class="form-group">
+        <label>رمز الشعبة (فريد) * <span style="color:var(--muted);font-weight:400">مثال: morning_k</span></label>
+        <input type="text" id="secCode" placeholder="morning_k"/>
+      </div>
+      <div class="form-group">
+        <label>الاسم المعروض *</label>
+        <input type="text" id="secDisplay" placeholder="صباحي K"/>
+      </div>
+      <div class="form-group">
+        <label>نوع الجلسة</label>
+        <select id="secType">
+          <option value="محاضرة">محاضرة</option>
+          <option value="مختبر">مختبر</option>
+          <option value="عملي">عملي</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="b-slate" onclick="closeSectionModal()">إلغاء</button>
+      <button class="b-green" onclick="saveSection()">💾 حفظ</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ CONFIRM MODAL ══════════ -->
+<div id="confirmModal" class="modal-backdrop">
+  <div class="modal" style="width:min(420px,100%)">
+    <div class="modal-head">
+      <h2 id="confirmTitle">تأكيد الحذف</h2>
+      <button class="b-slate b-sm" onclick="closeConfirmModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="confirm-msg" id="confirmMsg"></div>
+    </div>
+    <div class="modal-foot">
+      <button class="b-slate" onclick="closeConfirmModal()">إلغاء</button>
+      <button class="b-red" id="confirmOkBtn">🗑 تأكيد الحذف</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── State ───────────────────────────────────────────────────
+let allStudents = [];
+let allSections = [];
+let currentTab = 'students';
+
+// ─── Helpers ─────────────────────────────────────────────────
+function esc(str){ return String(str??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;'); }
+
+let toastTimer;
+function toast(type, msg){
+  const t = document.getElementById('toast');
+  t.className = 'toast ' + type;
+  t.textContent = msg;
+  t.style.display = 'block';
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.style.display='none', 3200);
+}
+
+async function api(url, opts={}){
+  const res = await fetch(url, opts);
+  let data={};
+  try{ data = await res.json(); } catch(e){}
+  if (!res.ok) throw new Error(data.error || 'فشل الطلب');
+  return data;
+}
+
+function chipType(type){
+  if (!type) return `<span class="chip chip-gray">—</span>`;
+  if (type.includes('صباح')) return `<span class="chip chip-morning">صباحي</span>`;
+  if (type.includes('مساء') || type.includes('مسائي')) return `<span class="chip chip-evening">مسائي</span>`;
+  return `<span class="chip chip-blue">${esc(type)}</span>`;
+}
+
+function statusChip(status){
+  if (status==='present') return `<span class="chip st-present">✓ حاضر</span>`;
+  if (status==='late')    return `<span class="chip st-late">⏰ متأخر</span>`;
+  return `<span class="chip st-absent">✗ غائب</span>`;
+}
+
+// ─── Tabs ─────────────────────────────────────────────────────
+function switchTab(tab){
+  currentTab = tab;
+  document.querySelectorAll('.tab').forEach((el,i) => {
+    el.classList.toggle('active',
+      (i===0&&tab==='students')||(i===1&&tab==='sections')||(i===2&&tab==='import'));
+  });
+  document.getElementById('tab-students').style.display = tab==='students' ? '' : 'none';
+  document.getElementById('tab-sections').style.display = tab==='sections' ? '' : 'none';
+  document.getElementById('tab-import').style.display   = tab==='import'   ? '' : 'none';
+  if (tab==='sections') loadSections();
+  if (tab==='import')   populateImportSection();
+}
+
+// ─── INIT ─────────────────────────────────────────────────────
+async function init(){
+  await loadSectionsList();
+  await loadStudents();
+}
+
+async function loadSectionsList(){
+  try{
+    allSections = await api('/api/sections');
+    // Populate section filter
+    const sf = document.getElementById('sectionFilter');
+    sf.innerHTML = '<option value="">كل الشعب</option>' +
+      allSections.map(s => `<option value="${s.id}">${esc(s.display_name)}</option>`).join('');
+    // Populate modal selects
+    ['sSection','moveTargetSection'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.innerHTML = allSections.map(s =>
+        `<option value="${s.id}">${esc(s.display_name)}</option>`
+      ).join('');
+    });
+  } catch(e){ toast('err','فشل تحميل الشعب: '+e.message); }
+}
+
+async function loadStudents(){
+  const sectionId = document.getElementById('sectionFilter').value;
+  const q = document.getElementById('searchInput').value.trim();
+  let url = '/api/admin/students?';
+  if (sectionId) url += `section=${sectionId}&`;
+  if (q) url += `q=${encodeURIComponent(q)}`;
+
+  try{
+    allStudents = await api(url);
+    renderStudents(allStudents);
+    document.getElementById('totalBadge').textContent = allStudents.length + ' طالب';
+  } catch(e){ toast('err','فشل تحميل الطلاب: '+e.message); }
+}
+
+function filterStudents(){
+  const q = document.getElementById('searchInput').value.trim().toLowerCase();
+  if (!q){ loadStudents(); return; }
+  const filtered = allStudents.filter(s =>
+    (s.name||'').toLowerCase().includes(q) ||
+    String(s.row_number||'').includes(q)
+  );
+  renderStudents(filtered);
+}
+
+function renderStudents(students){
+  document.getElementById('studentCount').textContent = students.length + ' طالب';
+  const tbody = document.getElementById('studentsBody');
+  if (!students.length){
+    tbody.innerHTML = `<tr><td colspan="6"><div class="empty"><span class="big">🔍</span>لا توجد نتائج</div></td></tr>`;
+    return;
+  }
+  tbody.innerHTML = students.map((s,i) => `
+    <tr>
+      <td class="meta-cell">${i+1}</td>
+      <td><div class="name-cell">${esc(s.name)}</div></td>
+      <td>${esc(s.section_name||'')}</td>
+      <td>${chipType(s.study_type)}</td>
+      <td><span class="chip chip-blue">${s.row_number}</span></td>
+      <td>
+        <div class="td-actions">
+          <button class="b-blue b-sm" onclick="openEditStudentModal(${s.id})">✏️ تعديل</button>
+          <button class="b-cyan b-sm" onclick="openMoveModal(${s.id})">🔀 نقل</button>
+          <button class="b-orange b-sm" onclick="openHistoryModal(${s.id})">📋 سجل</button>
+          <button class="b-red b-sm" onclick="confirmDeleteStudent(${s.id},'${esc(s.name)}')">🗑</button>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+
+// ─── ADD STUDENT ──────────────────────────────────────────────
+function openAddStudentModal(){
+  document.getElementById('studentModalTitle').textContent = 'إضافة طالب جديد';
+  document.getElementById('editStudentId').value = '';
+  document.getElementById('sName').value = '';
+  document.getElementById('sRowNum').value = '';
+  document.getElementById('sType').value = 'صباحي';
+  // Pre-select current section filter
+  const sf = document.getElementById('sectionFilter').value;
+  if (sf) document.getElementById('sSection').value = sf;
+  document.getElementById('studentModal').classList.add('open');
+  setTimeout(() => document.getElementById('sName').focus(), 100);
+}
+
+async function openEditStudentModal(id){
+  try{
+    const s = await api(`/api/admin/students/${id}`);
+    document.getElementById('studentModalTitle').textContent = 'تعديل بيانات طالب';
+    document.getElementById('editStudentId').value = s.id;
+    document.getElementById('sName').value = s.name;
+    document.getElementById('sSection').value = s.section_id;
+    document.getElementById('sType').value = s.study_type || '';
+    document.getElementById('sRowNum').value = s.row_number;
+    document.getElementById('studentModal').classList.add('open');
+    setTimeout(() => document.getElementById('sName').focus(), 100);
+  } catch(e){ toast('err', e.message); }
+}
+
+function closeStudentModal(){ document.getElementById('studentModal').classList.remove('open'); }
+
+async function saveStudent(){
+  const id = document.getElementById('editStudentId').value;
+  const name = document.getElementById('sName').value.trim();
+  const section_id = document.getElementById('sSection').value;
+  const study_type = document.getElementById('sType').value;
+  const row_number = document.getElementById('sRowNum').value;
+
+  if (!name){ toast('warn','اسم الطالب مطلوب'); return; }
+  if (!section_id){ toast('warn','يرجى اختيار الشعبة'); return; }
+
+  try{
+    if (id){
+      await api(`/api/admin/students/${id}`, {
+        method:'PUT', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ name, study_type, row_number: row_number ? Number(row_number) : undefined })
+      });
+      toast('ok', `✅ تم تحديث بيانات "${name}"`);
+    } else {
+      await api('/api/admin/students', {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ section_id, name, study_type })
+      });
+      toast('ok', `✅ تمت إضافة "${name}"`);
+    }
+    closeStudentModal();
+    loadStudents();
+  } catch(e){ toast('err', e.message); }
+}
+
+// ─── DELETE STUDENT ───────────────────────────────────────────
+function confirmDeleteStudent(id, name){
+  document.getElementById('confirmTitle').textContent = 'حذف طالب';
+  document.getElementById('confirmMsg').innerHTML =
+    `هل تريد حذف الطالب <b>"${esc(name)}"</b> نهائياً؟<div class="confirm-sub">⚠️ سيتم حذف جميع سجلات حضوره أيضاً</div>`;
+  document.getElementById('confirmOkBtn').onclick = async () => {
+    try{
+      const res = await api(`/api/admin/students/${id}`, { method:'DELETE' });
+      toast('ok', res.message);
+      closeConfirmModal();
+      loadStudents();
+    } catch(e){ toast('err', e.message); }
+  };
+  document.getElementById('confirmModal').classList.add('open');
+}
+
+// ─── MOVE STUDENT ─────────────────────────────────────────────
+async function openMoveModal(id){
+  try{
+    const s = await api(`/api/admin/students/${id}`);
+    document.getElementById('moveStudentId').value = id;
+    document.getElementById('moveStudentInfo').innerHTML =
+      `<strong>${esc(s.name)}</strong><br>الشعبة الحالية: ${esc(s.section_name)} | رقم الصف: ${s.row_number}`;
+
+    // Filter out current section from target options
+    const select = document.getElementById('moveTargetSection');
+    select.innerHTML = allSections
+      .filter(sec => sec.id !== s.section_id)
+      .map(sec => `<option value="${sec.id}">${esc(sec.display_name)}</option>`)
+      .join('');
+
+    document.getElementById('keepAttendance').checked = true;
+    document.getElementById('moveModal').classList.add('open');
+  } catch(e){ toast('err', e.message); }
+}
+
+function closeMoveModal(){ document.getElementById('moveModal').classList.remove('open'); }
+
+async function confirmMove(){
+  const id = document.getElementById('moveStudentId').value;
+  const target_section_id = document.getElementById('moveTargetSection').value;
+  const keep_attendance = document.getElementById('keepAttendance').checked;
+
+  try{
+    const res = await api(`/api/admin/students/${id}/move`, {
+      method:'PUT', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ target_section_id, keep_attendance })
+    });
+    toast('ok', '✅ ' + res.message);
+    closeMoveModal();
+    loadStudents();
+  } catch(e){ toast('err', e.message); }
+}
+
+// ─── STUDENT HISTORY ──────────────────────────────────────────
+async function openHistoryModal(id){
+  document.getElementById('historyList').innerHTML = '<div class="empty"><span class="big">⏳</span>جاري التحميل...</div>';
+  document.getElementById('historyModal').classList.add('open');
+
+  try{
+    const data = await api(`/api/admin/student-history/${id}`);
+    const s = data.student;
+    document.getElementById('historyTitle').textContent = s.name;
+    document.getElementById('historySub').textContent = `${s.section_name} | رقم الصف: ${s.row_number}`;
+
+    // Stats chips
+    document.getElementById('historyStats').innerHTML = `
+      <span class="chip chip-morning">✓ حاضر: ${data.stats.present}</span>
+      <span class="chip chip-evening">⏰ متأخر: ${data.stats.late}</span>
+      <span class="chip chip-blue">📅 إجمالي الجلسات: ${data.stats.total_sessions}</span>
+    `;
+
+    if (!data.records.length){
+      document.getElementById('historyList').innerHTML =
+        '<div class="empty"><span class="big">📭</span>لا توجد سجلات حضور</div>';
+      return;
+    }
+
+    document.getElementById('historyList').innerHTML = data.records.map(r => `
+      <div class="hist-row">
+        <div>
+          <div class="hist-date">${esc(r.date)}</div>
+          <div class="hist-time">${esc(r.check_in_time||'')} | ${esc(r.source_mode||'')}</div>
+        </div>
+        ${statusChip(r.status||'present')}
+        <div class="hist-actions">
+          <button class="b-red b-sm" onclick="deleteAttendanceRecord(${r.id}, ${id})">🗑</button>
+        </div>
+      </div>
+    `).join('');
+  } catch(e){ toast('err', e.message); }
+}
+
+function closeHistoryModal(){ document.getElementById('historyModal').classList.remove('open'); }
+
+async function deleteAttendanceRecord(recId, studentId){
+  if (!confirm('حذف هذا السجل نهائياً؟')) return;
+  try{
+    await api(`/api/admin/attendance/${recId}`, { method:'DELETE' });
+    toast('ok','✅ تم حذف السجل');
+    openHistoryModal(studentId); // reload
+  } catch(e){ toast('err', e.message); }
+}
+
+// ─── SECTIONS ─────────────────────────────────────────────────
+async function loadSections(){
+  try{
+    const sections = await api('/api/sections');
+    const grid = document.getElementById('sectionsGrid');
+
+    if (!sections.length){
+      grid.innerHTML = '<div class="empty"><span class="big">🏫</span>لا توجد شعب</div>';
+      return;
+    }
+
+    // Get student counts
+    const stats = await api('/api/stats');
+    const statsMap = {};
+    (stats.stats||[]).forEach(s => { statsMap[s.id] = s; });
+
+    grid.innerHTML = sections.map(sec => {
+      const st = statsMap[sec.id] || {};
+      return `
+        <div class="glass sec-card">
+          <div class="sec-card-head">
+            <div>
+              <div class="sec-name">${esc(sec.display_name)}</div>
+              <div class="sec-type">${esc(sec.session_type||'')} | <span style="color:#94a3b8;font-size:11px">${esc(sec.name)}</span></div>
+            </div>
+            ${st.has_active_session
+              ? '<span class="chip chip-morning" style="font-size:10px">● نشطة</span>'
+              : '<span class="chip chip-gray" style="font-size:10px">○ غير نشطة</span>'}
+          </div>
+          <div class="sec-stats">
+            <div class="sec-stat"><span>${st.total_students??0}</span>الطلاب</div>
+            <div class="sec-stat"><span style="color:#86efac">${st.today_present??0}</span>حضور اليوم</div>
+            <div class="sec-stat"><span style="color:#fca5a5">${st.today_absent??0}</span>غياب اليوم</div>
+          </div>
+          <div class="sec-actions">
+            <button class="b-blue b-sm" onclick="openEditSectionModal(${sec.id},'${esc(sec.display_name)}','${esc(sec.session_type||'')}')">✏️ تعديل</button>
+            <button class="b-red b-sm" onclick="confirmDeleteSection(${sec.id},'${esc(sec.display_name)}',${st.total_students??0})">🗑 حذف</button>
+          </div>
+        </div>
+      `;
+    }).join('');
+  } catch(e){ toast('err', e.message); }
+}
+
+// ─── ADD/EDIT SECTION ─────────────────────────────────────────
+function openAddSectionModal(){
+  document.getElementById('sectionModalTitle').textContent = 'إضافة شعبة جديدة';
+  document.getElementById('editSectionId').value = '';
+  document.getElementById('secCode').value = '';
+  document.getElementById('secDisplay').value = '';
+  document.getElementById('secType').value = 'محاضرة';
+  document.getElementById('secCode').disabled = false;
+  document.getElementById('sectionModal').classList.add('open');
+  setTimeout(() => document.getElementById('secCode').focus(), 100);
+}
+
+function openEditSectionModal(id, display, type){
+  document.getElementById('sectionModalTitle').textContent = 'تعديل الشعبة';
+  document.getElementById('editSectionId').value = id;
+  document.getElementById('secDisplay').value = display;
+  document.getElementById('secType').value = type || 'محاضرة';
+  document.getElementById('secCode').disabled = true; // can't change unique code
+  document.getElementById('sectionModal').classList.add('open');
+}
+
+function closeSectionModal(){ document.getElementById('sectionModal').classList.remove('open'); }
+
+async function saveSection(){
+  const id = document.getElementById('editSectionId').value;
+  const name = document.getElementById('secCode').value.trim();
+  const display_name = document.getElementById('secDisplay').value.trim();
+  const session_type = document.getElementById('secType').value;
+
+  if (!display_name){ toast('warn','اسم الشعبة مطلوب'); return; }
+
+  try{
+    if (id){
+      await api(`/api/admin/sections/${id}`, {
+        method:'PUT', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ display_name, session_type })
+      });
+      toast('ok', `✅ تم تحديث شعبة "${display_name}"`);
+    } else {
+      if (!name){ toast('warn','رمز الشعبة مطلوب'); return; }
+      await api('/api/admin/sections', {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ name, display_name, session_type })
+      });
+      toast('ok', `✅ تمت إضافة شعبة "${display_name}"`);
+    }
+    closeSectionModal();
+    await loadSectionsList();
+    loadSections();
+  } catch(e){ toast('err', e.message); }
+}
+
+function confirmDeleteSection(id, name, count){
+  document.getElementById('confirmTitle').textContent = 'حذف شعبة';
+  document.getElementById('confirmMsg').innerHTML =
+    `هل تريد حذف شعبة <b>"${esc(name)}"</b> نهائياً؟
+     <div class="confirm-sub">⚠️ سيتم حذف ${count} طالب وجميع سجلات الحضور المرتبطة بها</div>`;
+  document.getElementById('confirmOkBtn').onclick = async () => {
+    try{
+      const res = await api(`/api/admin/sections/${id}`, { method:'DELETE' });
+      toast('ok', res.message);
+      closeConfirmModal();
+      await loadSectionsList();
+      loadSections();
+    } catch(e){ toast('err', e.message); }
+  };
+  document.getElementById('confirmModal').classList.add('open');
+}
+
+// ─── CONFIRM MODAL ────────────────────────────────────────────
+function closeConfirmModal(){ document.getElementById('confirmModal').classList.remove('open'); }
+
+// ─── Keyboard shortcuts ───────────────────────────────────────
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape'){
+    ['studentModal','moveModal','historyModal','sectionModal','confirmModal']
+      .forEach(id => document.getElementById(id).classList.remove('open'));
+  }
+});
+
+// ─── Start ────────────────────────────────────────────────────
+init();
+</script>
+</body>
+</html>
