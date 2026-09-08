@@ -63,7 +63,7 @@
   <div class="glass setup" id="setup">
     <p class="org">المعهد العالي لتدريب وتأهيل القادة</p>
     <h1>شاشة الحضور — قادة المستقبل</h1>
-    <p class="muted">افتح الجلسة، واعرض هذه الشاشة على الشاشة الكبيرة. رمز QR يتغيّر كل 25 ثانية،
+    <p class="muted">افتح الجلسة، واعرض هذه الشاشة على الشاشة الكبيرة. رمز QR يتغيّر كل 3 دقائق،
       فمن يصوّره ويرسله لزميل غائب يجده منتهياً.</p>
 
     <div class="row">
@@ -84,7 +84,7 @@
       <p class="muted">امسح الرمز بكاميرا هاتفك</p>
       <div class="qrhold"><div id="qr"></div></div>
       <div class="bar"><i id="bar"></i></div>
-      <p class="muted">الرمز يتجدّد كل 25 ثانية · تنتهي الجلسة بعد <b id="left">—</b></p>
+      <p class="muted">الرمز يتجدّد كل 3 دقائق · تنتهي الجلسة بعد <b id="left">—</b></p>
       <div class="row" style="justify-content:center">
         <button class="b-red" onclick="closeSession()">■ إنهاء الجلسة</button>
         <button class="b-slate" onclick="location.reload()">↻ إعادة</button>
@@ -206,7 +206,7 @@ async function tick(){
       }
     }
 
-    const pct = Math.max(0, 100 - (st.tokenAge / 25) * 100);
+    const pct = Math.max(0, 100 - (st.tokenAge / 180) * 100);
     document.getElementById('bar').style.width = pct + '%';
 
     const m = Math.floor(st.remaining / 60), s = st.remaining % 60;
