@@ -8,6 +8,7 @@ const uiText = {
     en: {
         crumbUni: "University of Babylon",
         crumbFac: "Faculty of IT",
+        crumbInst: "Higher Institute",
         updatedLabel: "Updated:",
         navBrand: "Dr. Ameer Hadi",
         navAbout: "About",
@@ -15,12 +16,11 @@ const uiText = {
         navPublications: "Publications",
         navProjects: "Projects",
         navCourses: "Teaching",
-        navMedia: "Media",
         navAwards: "Awards",
         navContact: "Contact",
 
         heroBadge: "Assistant Professor · University of Babylon",
-        heroSub: "Faculty of Information Technology · Information Network Dept.",
+        heroSub: "Faculty of Information Technology · Information Network Dept. · Higher Institute for Training and Qualifying Leaders",
         tag1: "☁️ Cloud Computing",
         tag2: "🤖 Artificial Intelligence",
         tag3: "📡 IoT",
@@ -64,15 +64,13 @@ const uiText = {
 
         secEyeProj: "Projects", secH2Proj: "Research Projects",
         secEyeCourses: "Teaching", secH2Courses: "Courses Taught",
-        secEyeMedia: "Media", secH2Media: "News & Media",
         secEyeCerts: "Credentials", secH2Certs: "Certifications",
         secEyeAwards: "Recognition", secH2Awards: "Awards & Honors",
-        secEyeGallery: "Gallery", secH2Gallery: "Photo Gallery",
         secEyeContact: "Contact", secH2Contact: "Get in Touch",
 
         panelContactInfo: "📬 &nbsp;Contact Information",
         panelAffiliation: "🏛 &nbsp;Affiliation",
-        affilUni: "Faculty of Information Technology<br>University of Babylon, Iraq",
+        affilUni: "🎓 Lecturer — Higher Institute for Training and Qualifying Leaders, Baghdad<br><span style=\"color:var(--text-dim);font-size:.8em\">Higher Diploma in Digital Leadership</span><br><br>Faculty of Information Technology<br>University of Babylon, Iraq",
         panelProfiles: "🔗 &nbsp;Online Profiles",
 
         footerRights: "All rights reserved.",
@@ -86,10 +84,6 @@ const uiText = {
         researchProjectHdr: "🔬 Research Project",
         durationLabel: "⏱️ Duration:",
         fundingLabel: "💰 Funding:",
-        noMediaTitle: "No media posts yet",
-        noMediaDesc: "Add posts to the",
-        noMediaDesc2: "array in",
-        viewPost: "View Post →",
         labelEmail: "Email",
         labelPhone: "Phone",
         labelLocation: "Location",
@@ -104,6 +98,7 @@ const uiText = {
     ar: {
         crumbUni: "جامعة بابل",
         crumbFac: "كلية تكنولوجيا المعلومات",
+        crumbInst: "المعهد العالي",
         updatedLabel: "آخر تحديث:",
         navBrand: "د. أمير هادي",
         navAbout: "نبذة",
@@ -111,12 +106,11 @@ const uiText = {
         navPublications: "المنشورات",
         navProjects: "المشاريع",
         navCourses: "التدريس",
-        navMedia: "الإعلام",
         navAwards: "الجوائز",
         navContact: "التواصل",
 
         heroBadge: "أستاذ مساعد · جامعة بابل",
-        heroSub: "كلية تكنولوجيا المعلومات · قسم شبكات المعلومات",
+        heroSub: "كلية تكنولوجيا المعلومات · قسم شبكات المعلومات · المعهد العالي لتدريب وتأهيل القادة",
         tag1: "☁️ الحوسبة السحابية",
         tag2: "🤖 الذكاء الاصطناعي",
         tag3: "📡 إنترنت الأشياء",
@@ -160,15 +154,13 @@ const uiText = {
 
         secEyeProj: "المشاريع", secH2Proj: "مشاريع بحثية",
         secEyeCourses: "التدريس", secH2Courses: "المقررات التي أُدرّسها",
-        secEyeMedia: "الإعلام", secH2Media: "الأخبار والإعلام",
         secEyeCerts: "الشهادات", secH2Certs: "الشهادات المهنية",
         secEyeAwards: "التقدير", secH2Awards: "الجوائز والتكريمات",
-        secEyeGallery: "معرض الصور", secH2Gallery: "معرض الصور",
         secEyeContact: "التواصل", secH2Contact: "تواصل معي",
 
         panelContactInfo: "📬 &nbsp;معلومات التواصل",
         panelAffiliation: "🏛 &nbsp;الانتساب",
-        affilUni: "كلية تكنولوجيا المعلومات<br>جامعة بابل، العراق",
+        affilUni: "🎓 محاضر — المعهد العالي لتدريب وتأهيل القادة، بغداد<br><span style=\"color:var(--text-dim);font-size:.8em\">الدبلوم العالي في القيادة الرقمية</span><br><br>كلية تكنولوجيا المعلومات<br>جامعة بابل، العراق",
         panelProfiles: "🔗 &nbsp;الحسابات العلمية",
 
         footerRights: "جميع الحقوق محفوظة.",
@@ -182,10 +174,6 @@ const uiText = {
         researchProjectHdr: "🔬 مشروع بحثي",
         durationLabel: "⏱️ المدة:",
         fundingLabel: "💰 التمويل:",
-        noMediaTitle: "لا توجد منشورات إعلامية حالياً",
-        noMediaDesc: "أضف منشورات إلى مصفوفة",
-        noMediaDesc2: "في ملف",
-        viewPost: "عرض المنشور ←",
         labelEmail: "البريد الإلكتروني",
         labelPhone: "الهاتف",
         labelLocation: "الموقع",
@@ -281,10 +269,8 @@ function setLanguage(lang, isInitial) {
     renderPublications();
     loadProjects();
     loadCourses();
-    loadMedia();
     loadCertifications();
     loadAwards();
-    loadGallery();
     loadContact();
     loadFooter();
 
@@ -380,6 +366,11 @@ function loadEducation() {
 }
 
 // ── PUBLICATIONS ──
+function pubLink(pub) {
+    const href = (pub.link && pub.link !== '#') ? pub.link : academicData.en.personal.googleScholar;
+    return `<a href="${href}" target="_blank" rel="noopener">${pub.title}</a>`;
+}
+
 function renderPublications() {
     const el = document.getElementById('publications-list');
     if (!el) return;
@@ -402,7 +393,7 @@ function renderPublications() {
                     ${pub.citations > 0 ? `<span class="pub-cite-pill">🔖 ${pub.citations} ${pub.citations > 1 ? t.citationsWord : t.citationWord}</span>` : ''}
                     <span class="pub-num">#${String(i + 1).padStart(2, '0')}</span>
                 </div>
-                <div class="pub-title">${pub.title}</div>
+                <div class="pub-title">${pubLink(pub)}</div>
                 <div class="pub-authors">${pub.authors}</div>
                 <div class="pub-venue">${pub.venue}</div>
             </div>
@@ -470,42 +461,6 @@ function loadCourses() {
         </div>`).join('');
 }
 
-// ── MEDIA / NEWS ──
-function loadMedia() {
-    const el = document.getElementById('media-list');
-    if (!el) return;
-    const t = uiText[currentLang];
-
-    if (!data().media || data().media.length === 0) {
-        el.innerHTML = `
-            <div class="panel" style="grid-column:1/-1;padding:2rem;text-align:center;color:var(--text-muted)">
-                <div style="font-size:2rem;margin-bottom:.8rem">📢</div>
-                <div style="font-size:.9rem;margin-bottom:.5rem;color:var(--text)">${t.noMediaTitle}</div>
-                <div style="font-size:.8rem">${t.noMediaDesc} <code style="background:var(--bg-card2);padding:.1rem .4rem;border-radius:3px;color:var(--orange)">media</code> ${t.noMediaDesc2} <code style="background:var(--bg-card2);padding:.1rem .4rem;border-radius:3px;color:var(--orange)">data.js</code></div>
-            </div>`;
-        return;
-    }
-
-    el.innerHTML = data().media.map(item => `
-        <div class="media-card fade-in visible">
-            <div class="media-img-wrap">
-                ${item.image
-                    ? `<img src="${item.image}" alt="${item.title}" onerror="this.parentElement.innerHTML='📢'">`
-                    : '📢'}
-                <span class="media-platform-badge ${item.platform.toLowerCase()}">${item.platform}</span>
-            </div>
-            <div class="media-card-body">
-                <div class="media-source">🏛 ${item.source}</div>
-                <div class="media-title">${item.title}</div>
-                <div class="media-desc">${item.description}</div>
-                ${item.link && item.link !== '#'
-                    ? `<a href="${item.link}" target="_blank" class="media-link">${t.viewPost}</a>`
-                    : ''}
-                <div class="media-date">📅 ${item.date}</div>
-            </div>
-        </div>`).join('');
-}
-
 // ── CERTIFICATIONS ──
 function loadCertifications() {
     const el = document.getElementById('certs-list');
@@ -532,18 +487,6 @@ function loadAwards() {
             <div class="award-icon">${icons[i % icons.length]}</div>
             <div class="award-title">${a.title}</div>
             <div class="award-meta">${a.issuer ? `<span>${a.issuer}</span> · ` : ''}<span>${a.year}</span></div>
-        </div>`).join('');
-}
-
-// ── GALLERY ──
-function loadGallery() {
-    const el = document.getElementById('gallery-grid');
-    if (!el) return;
-    el.innerHTML = (data().gallery || []).map(item => `
-        <div class="gal-item fade-in visible">
-            <img src="${item.src}" alt="${item.alt}"
-                onerror="this.parentElement.innerHTML='<div class=gal-placeholder>🖼️<br><span>${item.caption}</span></div>'">
-            <div class="gal-caption">${item.caption}</div>
         </div>`).join('');
 }
 
