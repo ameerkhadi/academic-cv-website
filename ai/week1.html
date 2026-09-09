@@ -1211,6 +1211,54 @@
   .st-tag.see{ background:rgba(31,122,61,0.16); color:var(--green); }
   .st-tag.why{ background:rgba(209,52,43,0.13); color:var(--red); }
 
+  /* سيناريو المحطّة: الموقف الإداري الذي يبرّر الأداة */
+  .st-sc{
+    border-inline-start:4px solid var(--orange);
+    background:rgba(224,122,31,0.07);
+    border-radius:4px; padding:9px 12px 10px; margin:8px 0 10px;
+    font-size:calc(13.5px * var(--fs,1)); line-height:1.95;
+  }
+  .st-sc::before{
+    content:'السيناريو'; display:block;
+    font-size:calc(10.5px * var(--fs,1)); font-weight:700; letter-spacing:0.08em;
+    color:var(--orange); margin-bottom:3px;
+  }
+  .st-steps{ margin:8px 0 0; padding-inline-start:19px; }
+  .st-steps li{
+    font-size:calc(13.5px * var(--fs,1)); line-height:1.95; margin-bottom:5px;
+  }
+  .st-steps li::marker{ color:var(--blue); font-weight:700; }
+  .st-covers{
+    margin-top:9px; padding-top:7px; border-top:1px dashed rgba(26,61,140,0.22);
+    font-size:calc(11.5px * var(--fs,1)); color:rgba(26,61,140,0.7);
+  }
+  .st-covers b{ color:var(--ink); }
+
+  /* مادّة تجريب: جدول أو نصّ يُنسخ ويُشتغل عليه */
+  .mat{
+    width:100%; margin:14px 0;
+    border:2px solid var(--green); border-radius:12px;
+    background:rgba(31,122,61,0.04); overflow:hidden;
+  }
+  .mat-head{
+    display:flex; align-items:center; gap:9px; flex-wrap:wrap;
+    background:rgba(31,122,61,0.11); padding:9px 13px 10px;
+    border-bottom:1.5px solid rgba(31,122,61,0.22);
+  }
+  .mat-head .m-n{
+    flex:0 0 auto; width:24px; height:24px; border-radius:50%;
+    background:var(--green); color:#fff; font-weight:700;
+    font-size:calc(12.5px * var(--fs,1));
+    display:flex; align-items:center; justify-content:center;
+  }
+  .mat-head .m-t{ font-weight:700; color:var(--green); font-size:calc(14.5px * var(--fs,1)); }
+  .mat-head .m-u{
+    margin-inline-start:auto; font-size:calc(11.5px * var(--fs,1));
+    color:rgba(31,122,61,0.85); font-weight:700;
+  }
+  .mat-body{ padding:11px 13px 13px; }
+  .mat-body .pr{ margin:0; }
+
   /* فاصل فرع من الشجرة */
   .br-head{
     display:flex; align-items:center; gap:10px; flex-wrap:wrap;
@@ -4089,183 +4137,492 @@
 اشرح لي لماذا اخترت هذه الصيغة.</div>
         </div>
 
-        <!-- ===== جولة التطبيق على الشجرة ===== -->
+
+        <!-- ===== مواد التجريب ===== -->
         <div class="section-heading" style="margin-top:30px;">
           <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
-          <span>جولة التطبيق — الشجرة كلّها، محطّةً محطّة</span>
+          <span>مواد التجريب — انسخوها الآن</span>
         </div>
-        <p class="lead-paragraph">هذه <span class="hl hl-yellow">قائمة عملٍ لا فصلُ قراءة</span>. نمرّ على فروع شجرة كلود الأربعة بالترتيب نفسه، وكل محطّة فيها ما تفعله وما ستراه. نمشي معًا على الأخضر في الصفّ، وما لا يتّسع له الوقت <strong>تكملونه في البيت بهذه القائمة نفسها</strong>.</p>
+        <p class="lead-paragraph">خمس مواد <span class="hl hl-pink">وهمية بالكامل</span> نشتغل عليها اليوم بدل بيانات دوائركم. اضغطوا <strong>نسخ</strong> والصقوا في إكسل أو في كلود مباشرة — الجداول مفصولة بعلامات جدولة، فتنقسم أعمدةً وحدها.</p>
+        <div class="mini-note" style="color:var(--red);">هذه أسماء وأرقام مُختلقة لا تخصّ أشخاصًا حقيقيين. لا ترفعوا اليوم أيّ ملفٍّ من دوائركم.</div>
+
+        <div class="mat">
+          <div class="mat-head"><span class="m-n">١</span><span class="m-t">جدول شكاوى المواطنين — ٢٠ صفًّا</span><span class="m-u">للإخفاء والتحليل</span></div>
+          <div class="mat-body">
+            <div class="pr"><div class="pr-head"><span class="pr-t">الصقه في إكسل</span><button type="button" class="pr-copy">نسخ</button></div>
+              <div class="pr-body">ت	اسم المواطن	رقم الهاتف	العنوان	الشعبة	نوع الشكوى	تاريخ التقديم	أيام المعالجة	الحالة
+١	أحمد كاظم محمد	٠٧٠٠-٠٠٠-٠٠١	بغداد — الغزالية، محلة ٨٧٣، دار ٥٥	شعبة الخدمات	خطأ في البيانات	٤ أيلول	٦	قيد المراجعة
+٢	سعاد جبار علي	٠٧٠٠-٠٠٠-٠٠٢	بغداد — الغزالية، محلة ٩٢٨، دار ٥١	شعبة المالية	تأخير معاملة	٨ أيلول	١٠	مفتوحة
+٣	مروان عبد الله	٠٧٠٠-٠٠٠-٠٠٣	بغداد — الأعظمية، محلة ٨٥١، دار ٥٢	شعبة التسجيل	طلب إعفاء	٧ أيلول	١٥	قيد المراجعة
+٤	هناء سالم داود	٠٧٠٠-٠٠٠-٠٠٤	بغداد — المنصور، محلة ٣١٥، دار ٥٤	شعبة التسجيل	تأخير معاملة	١ أيلول	٧	مفتوحة
+٥	عمّار ياسين خلف	٠٧٠٠-٠٠٠-٠٠٥	بغداد — الكرادة، محلة ٧٧٥، دار ٢١	شعبة الخدمات	طلب إعفاء	٤ أيلول	١٧	مفتوحة
+٦	رغد نوري حسن	٠٧٠٠-٠٠٠-٠٠٦	بغداد — الدورة، محلة ٨١١، دار ١	شعبة التسجيل	خطأ في البيانات	٥ أيلول	١٤	قيد المراجعة
+٧	بشير مهدي عباس	٠٧٠٠-٠٠٠-٠٠٧	بغداد — الأعظمية، محلة ٥٦٠، دار ٢١	شعبة المالية	طلب إعفاء	٥ أيلول	١	مفتوحة
+٨	لمى فاضل جاسم	٠٧٠٠-٠٠٠-٠٠٨	بغداد — الأعظمية، محلة ٧١٠، دار ٧	شعبة الموارد البشرية	خطأ في البيانات	٢ أيلول	١	قيد المراجعة
+٩	سيف الدين طارق	٠٧٠٠-٠٠٠-٠٠٩	بغداد — الكرادة، محلة ٥١٨، دار ١٤	شعبة التسجيل	خطأ في البيانات	٧ أيلول	٢٣	مغلقة
+١٠	نور صباح كريم	٠٧٠٠-٠٠٠-٠١٠	بغداد — الشعلة، محلة ٣٧٤، دار ٣٧	شعبة المالية	تأخير صرف	٥ أيلول	١١	مفتوحة
+١١	وليد عدنان شاكر	٠٧٠٠-٠٠٠-٠١١	بغداد — الدورة، محلة ٦٤٠، دار ١	شعبة الخدمات	تأخير معاملة	٣ أيلول	٨	قيد المراجعة
+١٢	إيمان رعد حميد	٠٧٠٠-٠٠٠-٠١٢	بغداد — الأعظمية، محلة ٣١١، دار ٤	شعبة الخدمات	خطأ في البيانات	٣ أيلول	٢٢	قيد المراجعة
+١٣	قاسم وحيد لطيف	٠٧٠٠-٠٠٠-٠١٣	بغداد — الكاظمية، محلة ٧٥٨، دار ٣٣	شعبة المالية	تأخير صرف	٣ أيلول	١٤	قيد المراجعة
+١٤	دعاء ماجد صالح	٠٧٠٠-٠٠٠-٠١٤	بغداد — الشعلة، محلة ٤١٩، دار ٢٦	شعبة الخدمات	نقص مستمسكات	١ أيلول	٩	قيد المراجعة
+١٥	حيدر عماد جبر	٠٧٠٠-٠٠٠-٠١٥	بغداد — الدورة، محلة ٣٢٠، دار ١٤	شعبة المالية	خطأ في البيانات	٢ أيلول	٢	مفتوحة
+١٦	شيماء أنور رشيد	٠٧٠٠-٠٠٠-٠١٦	بغداد — الكاظمية، محلة ٧٥٢، دار ١٧	شعبة التسجيل	طلب إعفاء	٦ أيلول	٢٧	مغلقة
+١٧	ثامر حازم علوان	٠٧٠٠-٠٠٠-٠١٧	بغداد — الشعلة، محلة ٣٧٥، دار ٥	شعبة التسجيل	نقص مستمسكات	٤ أيلول	١	قيد المراجعة
+١٨	بيداء سعد منصور	٠٧٠٠-٠٠٠-٠١٨	بغداد — زيونة، محلة ٦٨٠، دار ٤٠	شعبة الخدمات	نقص مستمسكات	٨ أيلول	٢٧	قيد المراجعة
+١٩	علي غانم زيدان	٠٧٠٠-٠٠٠-٠١٩	بغداد — المنصور، محلة ٦٩٥، دار ١٢	شعبة المالية	سوء استقبال	٤ أيلول	٢٧	قيد المراجعة
+٢٠	رنا وسام هادي	٠٧٠٠-٠٠٠-٠٢٠	بغداد — الكاظمية، محلة ٤٩٤، دار ١١	شعبة المالية	تأخير صرف	٧ أيلول	١٦	قيد المراجعة</div></div>
+          </div>
+        </div>
+
+        <div class="mat">
+          <div class="mat-head"><span class="m-n">٢</span><span class="m-t">جدول حضور دورة تدريبية — ١٥ صفًّا</span><span class="m-u">للتحليل والرسم البياني</span></div>
+          <div class="mat-body">
+            <div class="pr"><div class="pr-head"><span class="pr-t">الصقه في إكسل</span><button type="button" class="pr-copy">نسخ</button></div>
+              <div class="pr-body">ت	اسم المتدرّب	الدائرة	الجلسة ١	الجلسة ٢	الجلسة ٣	الجلسة ٤	درجة الاختبار
+١	أحمد كاظم محمد	وزارة التخطيط	غائب	حاضر	حاضر	حاضر	٤٧
+٢	سعاد جبار علي	ديوان المحافظة	حاضر	حاضر	غائب	حاضر	٧١
+٣	مروان عبد الله	ديوان المحافظة	غائب	حاضر	حاضر	حاضر	٥٣
+٤	هناء سالم داود	وزارة الصحة	غائب	حاضر	حاضر	حاضر	٥٨
+٥	عمّار ياسين خلف	وزارة التخطيط	حاضر	حاضر	غائب	غائب	٦٠
+٦	رغد نوري حسن	وزارة التخطيط	حاضر	حاضر	حاضر	حاضر	٧٨
+٧	بشير مهدي عباس	ديوان المحافظة	حاضر	حاضر	حاضر	حاضر	٧٣
+٨	لمى فاضل جاسم	أمانة بغداد	حاضر	حاضر	حاضر	غائب	٦٧
+٩	سيف الدين طارق	أمانة بغداد	حاضر	حاضر	حاضر	غائب	٤٩
+١٠	نور صباح كريم	أمانة بغداد	حاضر	حاضر	حاضر	حاضر	٧٣
+١١	وليد عدنان شاكر	ديوان المحافظة	حاضر	حاضر	حاضر	حاضر	٦٧
+١٢	إيمان رعد حميد	وزارة التخطيط	غائب	حاضر	غائب	حاضر	٧٦
+١٣	قاسم وحيد لطيف	ديوان المحافظة	حاضر	غائب	غائب	حاضر	٨٣
+١٤	دعاء ماجد صالح	وزارة التخطيط	حاضر	حاضر	حاضر	حاضر	٧١
+١٥	حيدر عماد جبر	أمانة بغداد	غائب	غائب	غائب	غائب	٩٨</div></div>
+          </div>
+        </div>
+
+        <div class="mat">
+          <div class="mat-head"><span class="m-n">٣</span><span class="m-t">جدول بنود صرف — ٨ بنود</span><span class="m-u">للتفكير الممتدّ وترتيب الأولويات</span></div>
+          <div class="mat-body">
+            <div class="pr"><div class="pr-head"><span class="pr-t">الصقه في إكسل</span><button type="button" class="pr-copy">نسخ</button></div>
+              <div class="pr-body">ت	بند الصرف	المبلغ المطلوب (دينار)	الجهة الطالبة	الأولوية المعلنة	ملاحظة
+١	صيانة منظومة التبريد	١٢٬٠٠٠٬٠٠٠	الخدمات	عالية	توقّفت وحدتان
+٢	شراء أثاث قاعة التدريب	٢٥٬٠٠٠٬٠٠٠	التدريب	متوسطة	القاعة تعمل بأثاث قديم
+٣	تجديد اشتراك الإنترنت	٨٬٠٠٠٬٠٠٠	تقنية المعلومات	عالية	ينتهي بعد ٣ أسابيع
+٤	طباعة تقارير سنوية	٤٬٥٠٠٬٠٠٠	الإعلام	منخفضة	يمكن نشرها رقميًّا
+٥	صيانة مولّدة كهرباء	١٨٬٠٠٠٬٠٠٠	الخدمات	عالية	تعمل بنصف طاقتها
+٦	دورة تدريبية خارجية	٣٠٬٠٠٠٬٠٠٠	الموارد البشرية	متوسطة	لأربعة موظفين
+٧	أجهزة حاسوب بديلة	٢٢٬٠٠٠٬٠٠٠	تقنية المعلومات	متوسطة	٦ أجهزة عمرها ٩ سنوات
+٨	تأهيل مدخل المراجعين	١٥٬٠٠٠٬٠٠٠	الخدمات	منخفضة	شكاوى متكرّرة من الازدحام</div></div>
+          </div>
+        </div>
+
+        <div class="mat">
+          <div class="mat-head"><span class="m-n">٤</span><span class="m-t">نصّ محضر اجتماع</span><span class="m-u">للتلخيص واستخراج القرارات</span></div>
+          <div class="mat-body">
+            <div class="pr"><div class="pr-head"><span class="pr-t">الصقه في كلود</span><button type="button" class="pr-copy">نسخ</button></div>
+              <div class="pr-body">محضر اجتماع اللجنة الإدارية — الجلسة الرابعة
+التاريخ: ٢ أيلول · المكان: قاعة الاجتماعات · الحضور: ثمانية أعضاء، وغياب عضوين بعذر.
+
+افتُتح الاجتماع بمناقشة تأخّر معاملات شعبة التسجيل. عرض مدير الشعبة أن متوسّط مدّة الإنجاز ارتفع من أربعة أيام إلى أحد عشر يومًا خلال شهرين، وأرجع ذلك إلى نقص موظّفَين وإلى تعطّل منظومة الأرشفة مرّتين. اقترح تكليف موظّف من شعبة الخدمات مؤقّتًا، واعترض ممثّل الخدمات لأن شعبته تعاني النقص نفسه. اتُّفق على رفع طلب تعيين إلى الموارد البشرية، وعلى أن تتولّى تقنية المعلومات فحص المنظومة قبل نهاية الأسبوع.
+
+ثم انتقل النقاش إلى شكاوى المراجعين. عُرض أن أكثر الشكاوى تتعلّق بنقص المستمسكات، وأن كثيرًا منها كان يمكن تلافيه بلوحة إرشادية عند المدخل. كلّفت اللجنة شعبة الإعلام بإعداد لوحة ونشر القائمة على موقع الدائرة. لم يُحدَّد موعد.
+
+وفي بند الميزانية، طُرح طلب صيانة منظومة التبريد وطلب أثاث قاعة التدريب. رأى الأعضاء أن الصيانة أسبق، وأُجّل البتّ في الأثاث إلى الجلسة القادمة بعد ورود عرضين إضافيين. طلبت رئيسة اللجنة أن تُرفَق مع كل طلب صرفٍ مبرّراتٌ مكتوبة.
+
+وفي الختام، حُدّدت الجلسة القادمة بعد أسبوعين، وكُلّف مقرّر اللجنة بمتابعة تنفيذ ما اتُّفق عليه وعرض تقرير في مستهلّ الجلسة.</div></div>
+          </div>
+        </div>
+
+        <div class="mat">
+          <div class="mat-head"><span class="m-n">٥</span><span class="m-t">معطيات كتاب رسمي</span><span class="m-u">لتجربة الأمر الضعيف مقابل القوي</span></div>
+          <div class="mat-body">
+            <div class="pr"><div class="pr-head"><span class="pr-t">أ · الأمر الضعيف</span><button type="button" class="pr-copy">نسخ</button></div>
+              <div class="pr-body">اكتب لي كتاب رسمي عن التأخير</div></div>
+            <div class="pr"><div class="pr-head"><span class="pr-t">ب · المعطيات نفسها للقالب القوي</span><button type="button" class="pr-copy">نسخ</button></div>
+              <div class="pr-body">الموضوع: اعتذار عن تأخير إنجاز معاملة
+الجهة المُرسِلة: مدير شعبة التسجيل
+الجهة المُرسَل إليها: مدير الدائرة
+المعطيات:
+- رقم المعاملة: ٤٤٨/ت
+- سبب التأخير: تعطّل منظومة الأرشفة مرّتين، ونقص موظّفَين
+- الموعد الجديد للإنجاز: ١٥ أيلول
+- الإجراء المتّخذ: طلب تعيين مرفوع، وفحص المنظومة جارٍ</div></div>
+          </div>
+        </div>
+        <!-- ===== جولة التطبيق ===== -->
+        <div class="section-heading" style="margin-top:30px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>جولة التطبيق — سبعٌ وعشرون محطّة تغطّي الشجرة كلّها</span>
+        </div>
+        <p class="lead-paragraph">كل محطّة فيها <strong>سيناريو إداريّ حقيقي</strong> ثم <strong>خطوات مرقّمة</strong> ثم ما سترونه. نمشي عليها بالترتيب نفسه الذي في شجرة الأسبوع الثاني، ولا نترك بندًا.</p>
 
         <div class="keys">
-          <div class="k-i"><span class="mode hands">افعله</span><span>الآن، على حسابك المجاني</span></div>
-          <div class="k-i"><span class="mode watch">شاهده</span><span>أعرضه أنا — قد يحتاج اشتراكًا</span></div>
+          <div class="k-i"><span class="mode hands">افعله</span><span>معي الآن على حسابك</span></div>
+          <div class="k-i"><span class="mode watch">شاهده</span><span>أعرضه على حسابي — قد يحتاج اشتراكًا</span></div>
         </div>
 
-        <!-- ===== الفرع ١ ===== -->
-        <div class="br-head"><span class="br-n">١</span><span class="br-t">كيف يشتغل</span><span class="br-c">أربع محطّات</span></div>
-        <div class="mini-note">التقطيع والتمثيل الرقمي والتوليد مفاهيمُ بلا زرٍّ يُضغط — عرفتموها في الأسبوع الأول، ولا يُطبَّق منها شيء. أمّا حدود النموذج فتُلمَس باليد، وهذه محطّاتها.</div>
+        <!-- ============ الفرع ١ ============ -->
+        <div class="br-head"><span class="br-n">١</span><span class="br-t">كيف يشتغل</span><span class="br-c">خمس محطّات · البنود ٢–٢٢</span></div>
 
         <div class="st hands">
-          <div class="st-h"><span class="st-n">١</span><span class="st-t">نافذة السياق <span class="st-en">Context window</span></span><span class="mode hands">افعله</span></div>
-          <div class="st-b"><span class="st-tag do">افعل</span><span>في محادثة واحدة، أعطه اسمك ووظيفتك، ثم اسأله عشرة أسئلة طويلة غير متعلّقة، ثم اسأله: «ما وظيفتي التي ذكرتها؟»</span></div>
-          <div class="st-b"><span class="st-tag see">سترى</span><span>يتعثّر أو يخترع. <strong>هذه هي النافذة وقد امتلأت.</strong></span></div>
-          <div class="st-b"><span class="st-tag why">القاعدة</span><span>محادثة جديدة لكل موضوع جديد، ولخّص المهم بين حين وآخر.</span></div>
-        </div>
-
-        <div class="st hands">
-          <div class="st-h"><span class="st-n">٢</span><span class="st-t">الهلوسة <span class="st-en">Hallucination</span></span><span class="mode hands">افعله</span></div>
-          <div class="st-b"><span class="st-tag do">افعل</span><span>اسأله عن مادّة في نظامٍ أو تعليماتٍ عراقية تعرفها يقينًا، واطلب رقم المادّة ونصّها.</span></div>
-          <div class="st-b"><span class="st-tag see">سترى</span><span>جوابًا واثقًا. قارنه بالنصّ الرسمي عندك.</span></div>
-          <div class="st-b"><span class="st-tag why">القاعدة</span><span>كل رقمٍ واسمٍ وتاريخ يخرج منه، تتحقّق منه بنفسك. هو مساعد لا مصدر.</span></div>
+          <div class="st-h"><span class="st-n">١</span><span class="st-t">هل يفهم أم يتوقّع؟</span><span class="mode hands">افعله</span></div>
+          <div class="st-sc">موظّف يسألك: «هل هذا البرنامج يفهم كلامي مثل الإنسان؟» جوابك بكلامٍ لن يقنعه — لكن ثلاث تجارب أمامه تقنعه.</div>
+          <ol class="st-steps">
+            <li>اسأله حرفيًّا: <strong>«هل تفهم كلامي فهمًا كالإنسان، أم تتوقّع الكلمة التالية؟ أجب بصراحة في ثلاثة أسطر.»</strong> ← يعترف بنفسه أنه يتوقّع.</li>
+            <li>اكتب على الشاشة <strong>«العراق بلد …»</strong> واسأل القاعة قبل أن ترسل: ما الكلمة التالية؟ ستسمع «عربي، جميل، غني». ثم أرسل وقارن، وقل: <strong>«توقّع الكلمة التالية — لا تفكير بشري.»</strong></li>
+            <li>اسأله عن حدثٍ وقع الأسبوع الماضي في العراق ← لا يعرفه أو يخطئ. قل: <strong>«هذا هو التدريب على النصوص ومصدر «المعرفة» عنده — قرأ ما قرأ حتى تاريخٍ معيّن، وما بعده لا يعلمه.»</strong></li>
+            <li>وأنت ترسل أيّ سؤال، أشِر بالمؤشّر إلى الشاشة وهو يكتب كلمةً كلمة: <strong>«هذا التوليد. يختار الكلمة التالية أمامكم الآن.»</strong></li>
+          </ol>
+          <div class="st-covers"><b>يغطّي:</b> النموذج اللغوي الكبير · التدريب على النصوص ومصدر «المعرفة» · توقّع الكلمة التالية — لا تفكير بشري · التوليد</div>
         </div>
 
         <div class="st hands">
-          <div class="st-h"><span class="st-n">٣</span><span class="st-t">النماذج والتفكير الممتد <span class="st-en">Models · Extended thinking</span></span><span class="mode hands">افعله</span></div>
-          <div class="st-b"><span class="st-tag do">افعل</span><span>اطرح مسألة تحتاج تفكيرًا (ترتيب أولويات ميزانية مثلًا) مرّة بالوضع العادي، ومرّة مع <strong>التفكير الممتد</strong> إن كان متاحًا في حسابك.</span></div>
-          <div class="st-b"><span class="st-tag see">سترى</span><span>الثاني أبطأ وأدقّ. والفرق يظهر في المسائل المركّبة لا في سؤالٍ بسيط.</span></div>
+          <div class="st-h"><span class="st-n">٢</span><span class="st-t">لماذا ينفد رصيدك بالعربي أسرع</span><span class="mode hands">افعله</span></div>
+          <div class="st-sc">موظّفة تشتكي: «رصيدي المجاني ينتهي بسرعة، وزميلي الذي يكتب بالإنكليزي يبقى معه رصيد.» الجواب في التقطيع، ويُرى بالعين لا يُشرح.</div>
+          <ol class="st-steps">
+            <li>الصق هذا: <strong>«قسّم هذه الجملة إلى رموز (tokens) وعُدّها: — إن الإدارة الحديثة تقوم على البيانات. — ثم افعل الشيء نفسه بترجمتها الإنكليزية وقارن العددين.»</strong></li>
+            <li>سترى العربية تستهلك رموزًا أكثر بكثير. قل: <strong>«رصيدكم يُحسب بالرموز لا بالكلمات، ولذلك ينفد بالعربي أسرع.»</strong></li>
+            <li>ثم الصق: <strong>«أعطني خمس كلمات قريبة في المعنى من كلمة (معاملة)، وخمسًا بعيدة عنها، واشرح لماذا.»</strong></li>
+            <li>قل: <strong>«هذا التمثيل الرقمي — الكلمات عنده مواقع، والقريب معنًى قريبٌ موقعًا.»</strong></li>
+            <li>وأخيرًا قارن أمرًا من كلمتين بأمرٍ من خمسة أسطر (المادّة ٥ أ و ب) — الفرق في الجواب لا في البرنامج.</li>
+          </ol>
+          <div class="st-covers"><b>يغطّي:</b> الأمر · التقطيع · التمثيل الرقمي · رحلة الأمر</div>
         </div>
 
         <div class="st hands">
-          <div class="st-h"><span class="st-n">٤</span><span class="st-t">هندسة الأوامر — القوالب <span class="st-en">Prompting</span></span><span class="mode hands">افعله</span></div>
-          <div class="st-b"><span class="st-tag do">افعل</span><span>هذه محطّة موسّعة — انظر التمرينين ١ و٢ أدناه.</span></div>
-        </div>
-
-        <!-- ===== الفرع ٢ ===== -->
-        <div class="br-head"><span class="br-n">٢</span><span class="br-t">واجهات الاستخدام</span><span class="br-c">تسع محطّات</span></div>
-
-        <div class="st hands">
-          <div class="st-h"><span class="st-n">٥</span><span class="st-t">المحادثات: بحث · تثبيت · أرشفة <span class="st-en">Chats</span></span><span class="mode hands">افعله</span></div>
-          <div class="st-b"><span class="st-tag do">افعل</span><span>افتح قائمة المحادثات، ابحث عن كلمة من محادثة قديمة، <strong>ثبّت</strong> أهمّ محادثة عندك، و<strong>أرشِف</strong> واحدة انتهيت منها.</span></div>
-          <div class="st-b"><span class="st-tag see">سترى</span><span>المثبّتة في الأعلى دائمًا، والمؤرشفة اختفت من القائمة <strong>ولم تُحذف</strong>.</span></div>
+          <div class="st-h"><span class="st-n">٣</span><span class="st-t">حدوده الثلاثة — لمسًا لا سماعًا</span><span class="mode hands">افعله</span></div>
+          <div class="st-sc">مدير يوشك أن يبني قرارًا على رقمٍ أخرجه له البرنامج. الطريقة الوحيدة لمنعه أن يرى الخطأ يقع أمامه.</div>
+          <ol class="st-steps">
+            <li><strong>الهلوسة:</strong> اسأله عن مادّةٍ في نظامٍ أو تعليماتٍ عراقية تعرف نصّها يقينًا، واطلب رقم المادّة ونصّها حرفيًّا. اقرأ جوابه ثم اقرأ النصّ الرسمي من ملفّك. <strong>سيقولها بثقةٍ تامّة ولن يقول «لست متأكّدًا».</strong></li>
+            <li><strong>نافذة السياق:</strong> في محادثة واحدة أعطه اسمك ووظيفتك، ثم الصق محضر الاجتماع (المادّة ٤) واطلب تلخيصه، ثم اطرح عشرة أسئلة طويلة، ثم اسأله: «ما وظيفتي التي ذكرتها في أول المحادثة؟» ← يتعثّر أو يخترع.</li>
+            <li><strong>التحيّز:</strong> اسأله «صف موظفًا ناجحًا في دائرة حكومية» ثم في محادثة جديدة «صف موظفةً ناجحة في دائرة حكومية». اقرأ الوصفين بصوتٍ عالٍ وقارن الصفات.</li>
+          </ol>
+          <div class="st-covers"><b>يغطّي:</b> حدود النموذج · الهلوسة · نافذة السياق · التحيّز</div>
         </div>
 
         <div class="st hands">
-          <div class="st-h"><span class="st-n">٦</span><span class="st-t">تعديل رسالتك وإعادة التوليد <span class="st-en">Edit · Regenerate</span></span><span class="mode hands">افعله</span></div>
-          <div class="st-b"><span class="st-tag do">افعل</span><span>مرّر على رسالتك أنت واضغط <strong>تعديل</strong>، غيّر كلمة واحدة في الأمر، وأعد الإرسال.</span></div>
-          <div class="st-b"><span class="st-tag see">سترى</span><span>مسارًا جديدًا للمحادثة بدل تكديس التصحيحات. <strong>أنظف من أن تكتب «لا، أقصد…».</strong></span></div>
+          <div class="st-h"><span class="st-n">٤</span><span class="st-t">أيّ نموذج تختار — بالساعة لا بالكلام</span><span class="mode hands">افعله</span></div>
+          <div class="st-sc">أمامك ثمانية بنود صرف وميزانية لا تكفيها. سؤالٌ بسيط يكفيه أسرع نموذج، وقرارٌ كهذا يستحقّ أبطأها.</div>
+          <ol class="st-steps">
+            <li>افتح قائمة النماذج أعلى المحادثة وأرِهم الخيارات المتاحة في حسابك.</li>
+            <li>اسأل سؤالًا بسيطًا («ما عاصمة الأردن؟») على <strong>هايكو — السرعة</strong> واحسب الزمن بساعتك أمامهم.</li>
+            <li>كرّر السؤال نفسه على <strong>سونيت — التوازن</strong> ثم على <strong>أوبس — الدقّة</strong>. قارن الزمن وطول الجواب، وقل: «الأسرع للسؤال العابر، والأدقّ للقرار.»</li>
+            <li>الآن الصق جدول بنود الصرف (المادّة ٣) واطلب: <strong>«رتّب هذه البنود حسب الأولوية الحقيقية لا المعلنة، واشرح لكل بندٍ لماذا، ثم اقترح ما يُؤجَّل إن توفّر نصف المبلغ فقط.»</strong></li>
+            <li>أعد الطلب نفسه مع <strong>التفكير الممتدّ</strong> مفعّلًا، وأرِهم شريط التفكير وهو يشتغل، ثم قارن عمق التبرير.</li>
+          </ol>
+          <div class="st-covers"><b>يغطّي:</b> النماذج واختيارها · هايكو · سونيت · أوبس · التفكير الممتدّ</div>
         </div>
 
         <div class="st hands">
-          <div class="st-h"><span class="st-n">٧</span><span class="st-t">تبديل النموذج داخل المحادثة <span class="st-en">Model switch</span></span><span class="mode hands">افعله</span></div>
-          <div class="st-b"><span class="st-tag do">افعل</span><span>من قائمة النموذج أعلى المحادثة، بدّل النموذج ثم أعد توليد الجواب نفسه.</span></div>
-          <div class="st-b"><span class="st-tag see">سترى</span><span>اختلاف الطول والأسلوب. الخيارات المتاحة تختلف بحسب خطّتك.</span></div>
+          <div class="st-h"><span class="st-n">٥</span><span class="st-t">من أمرٍ ضعيف إلى كتابٍ يُوقَّع</span><span class="mode hands">افعله</span></div>
+          <div class="st-sc">مدير شعبة التسجيل يعتذر عن تأخير معاملة، ويكتب الكتاب من الصفر في كل مرّة فيأخذ عشرين دقيقة وتختلف صياغته.</div>
+          <ol class="st-steps">
+            <li>الصق <strong>الأمر الضعيف</strong> (المادّة ٥ أ): «اكتب لي كتاب رسمي عن التأخير». اقرأ الجواب بصوتٍ عالٍ — عامٌّ لا يصلح للإرسال.</li>
+            <li>الصق <strong>القالب رقم ١</strong> من بطاقة الأوامر، واملأ فراغاته بمعطيات المادّة ٥ ب. أرسل.</li>
+            <li>أشِر بالمؤشّر إلى الفروق الأربعة في القالب: <strong>الدور · الجمهور · المهمة · الحدود</strong>. هذه القواعد الذهبية الأربع.</li>
+            <li><strong>تعيين الدور:</strong> خذ فقرةً من الجواب وقل «أنت مدقّق لغوي، صحّحها»، ثم في محادثة أخرى «أنت شاعر، أعد صياغتها». اقرأ الاثنين.</li>
+            <li><strong>التعليم بالأمثلة:</strong> أعطه صيغة كتابٍ واحدة من أرشيفك (بلا أسماء) وقل: «اكتب كتابًا جديدًا بهذا الأسلوب نفسه لموضوعٍ آخر».</li>
+            <li><strong>التكرار:</strong> على الكتاب الناتج، أرسل ثلاثًا متتالية أمامهم: «اختصره إلى النصف» ← «اجعله أكثر رسمية» ← «احذف الفقرة الثانية». قل: <strong>«هذه محادثة، ليست آلة بيع.»</strong></li>
+          </ol>
+          <div class="st-covers"><b>يغطّي:</b> هندسة الأوامر · القواعد الذهبية الأربع · تعيين الدور · التعليم بالأمثلة · عقلية التكرار مقابل اللقطة الواحدة</div>
+        </div>
+        <!-- ============ الفرع ٢ ============ -->
+        <div class="br-head"><span class="br-n">٢</span><span class="br-t">واجهات الاستخدام</span><span class="br-c">إحدى عشرة محطّة · البنود ٢٤–٦٣</span></div>
+
+        <div class="st hands">
+          <div class="st-h"><span class="st-n">٦</span><span class="st-t">محادثاتك لا تضيع</span><span class="mode hands">افعله</span></div>
+          <div class="st-sc">بعد شهرين تحتاج صيغة كتابٍ كتبتها في آذار ولا تذكر متى. الموظّف الذي لا يعرف البحث يكتبها من جديد.</div>
+          <ol class="st-steps">
+            <li>اضغط <strong>محادثة جديدة</strong> وابدأ واحدة باسمٍ واضح: اطلب منه «اقترح لهذه المحادثة عنوانًا يصف موضوعها».</li>
+            <li>افتح <strong>قائمة المحادثات</strong> وأرِهم الأرشيف كلّه.</li>
+            <li><strong>ابحث</strong> عن كلمة «تأخير» ← تظهر كل محادثة ذكرتها.</li>
+            <li><strong>ثبّت</strong> محادثة القالب الذي بنيته ← تصعد إلى الأعلى دائمًا.</li>
+            <li><strong>أرشِف</strong> محادثةً انتهيت منها، ثم افتح المؤرشفة وأرِهم أنها <strong>لم تُحذف</strong>، بل خرجت من الطريق.</li>
+          </ol>
+          <div class="st-covers"><b>يغطّي:</b> المحادثة · محادثة جديدة · المحادثات السابقة · البحث فيها · التثبيت والأرشفة</div>
         </div>
 
         <div class="st hands">
-          <div class="st-h"><span class="st-n">٨</span><span class="st-t">رفع الملفات والصور <span class="st-en">Upload</span></span><span class="mode hands">افعله</span></div>
-          <div class="st-b"><span class="st-tag do">افعل</span><span>ارفع صورة كتابٍ رسمي بهاتفك واطلب: «فرّغ نصّ هذا الكتاب واستخرج: الجهة، والموضوع، والتاريخ».</span></div>
-          <div class="st-b"><span class="st-tag see">سترى</span><span>يقرأ الصورة ويفرّغها. <strong>هذه وحدها تختصر ساعات الإدخال اليدوي.</strong></span></div>
-          <div class="st-b"><span class="st-tag why">تحذير</span><span>لا ترفع كتابًا فيه بيانات مواطن. استعمل كتابًا معمَّمًا أو غطِّ الأسماء قبل التصوير.</span></div>
+          <div class="st-h"><span class="st-n">٧</span><span class="st-t">صحّح مسارك بدل أن تُراكم التصحيحات</span><span class="mode hands">افعله</span></div>
+          <div class="st-sc">طلبتَ تلخيصًا فجاء طويلًا، فكتبت «لا، أقصر»، ثم «لا، أقصد بالعربي»، ثم «لا…» — وصارت المحادثة ركامًا لا يُقرأ.</div>
+          <ol class="st-steps">
+            <li>مرّر بالمؤشّر على <strong>رسالتك أنت</strong> (لا رسالته) واضغط أيقونة <strong>التعديل</strong>.</li>
+            <li>غيّر كلمة واحدة في أمرك — مثلًا «صفحة واحدة» بدل «ملخّص» — وأعد الإرسال.</li>
+            <li>أرِهم أن المحادثة <strong>تفرّعت من تلك النقطة</strong> ولم تتكدّس تحتها التصحيحات.</li>
+            <li>الآن من قائمة النموذج أعلى المحادثة، <strong>بدّل النموذج</strong> واضغط <strong>إعادة التوليد</strong> على الجواب نفسه.</li>
+            <li>قارن الجوابين. قل: <strong>«السؤال واحد، والنموذج اثنان، والفرق يستحقّ أن تعرفه قبل أن تعتمد جوابًا.»</strong></li>
+          </ol>
+          <div class="st-covers"><b>يغطّي:</b> تعديل الرسالة وإعادة التوليد · تبديل النموذج داخل المحادثة</div>
         </div>
 
         <div class="st hands">
-          <div class="st-h"><span class="st-n">٩</span><span class="st-t">المحادثة الصوتية <span class="st-en">Voice</span></span><span class="mode hands">افعله</span></div>
-          <div class="st-b"><span class="st-tag do">افعل</span><span>افتح الصوت في تطبيق الهاتف، وأملِ عليه فكرة كتابٍ بالعربية بصوتك بدل أن تكتبها.</span></div>
-          <div class="st-b"><span class="st-tag see">سترى</span><span>نصًّا مكتوبًا من كلامك. <strong>لمن يكتب ببطء على الهاتف، هذه أهمّ محطّة اليوم.</strong></span></div>
+          <div class="st-h"><span class="st-n">٨</span><span class="st-t">المشاركة برابط — ومتى لا تشارك</span><span class="mode hands">افعله</span></div>
+          <div class="st-sc">أنجزتَ تحليلًا يفيد زميلك في شعبة أخرى. ترسله له صورةً بالواتساب؟ أم رابطًا يقرأه ويكمل عليه؟</div>
+          <ol class="st-steps">
+            <li>من قائمة المحادثة (النقاط الثلاث) اختر <strong>مشاركة</strong> وانسخ الرابط.</li>
+            <li>أرسله لزميلك بجانبك، أو افتحه أنت في <strong>نافذة تصفّح خاص</strong> على الشاشة.</li>
+            <li>أرِهم أنه فُتح <strong>بلا حساب وبلا كلمة مرور</strong>.</li>
+            <li>وهنا قف وقل: <strong>«الرابط يعمل لمن يملكه كائنًا من كان. لا تشاركوا محادثةً فيها شيء من عمل دائرتكم.»</strong></li>
+            <li>ارجع وأوقف المشاركة أمامهم ← الرابط بطل.</li>
+          </ol>
+          <div class="st-covers"><b>يغطّي:</b> المشاركة برابط</div>
         </div>
 
         <div class="st hands">
-          <div class="st-h"><span class="st-n">١٠</span><span class="st-t">المشاركة برابط <span class="st-en">Share</span></span><span class="mode hands">افعله</span></div>
-          <div class="st-b"><span class="st-tag do">افعل</span><span>من قائمة المحادثة اختر <strong>مشاركة</strong>، وأرسل الرابط لزميلك بجانبك.</span></div>
-          <div class="st-b"><span class="st-tag see">سترى</span><span>يفتحها ويقرأها بلا حساب.</span></div>
-          <div class="st-b"><span class="st-tag why">تحذير</span><span>الرابط يعمل لمن يملكه <strong>كائنًا من كان</strong>. لا تشارك محادثةً فيها شيء من عمل دائرتك.</span></div>
+          <div class="st-h"><span class="st-n">٩</span><span class="st-t">صوّر الكتاب بدل أن تكتبه</span><span class="mode hands">افعله</span></div>
+          <div class="st-sc">وصلك كتابٌ ورقيّ من دائرة أخرى، والمطلوب إدخال بياناته في جدول المتابعة. الموظّف يكتبها بيده في عشر دقائق.</div>
+          <ol class="st-steps">
+            <li>صوّر بهاتفك كتابًا رسميًّا <strong>معمَّمًا لا يخصّ مواطنًا</strong>، أو عمّم اسمًا بقلمٍ قبل التصوير.</li>
+            <li>ارفع الصورة واكتب: <strong>«فرّغ نصّ هذا الكتاب، ثم استخرج في جدول: الجهة المُرسِلة، والموضوع، والتاريخ، والرقم، والمطلوب.»</strong></li>
+            <li>ارفع بعدها ملفًّا (المادّة ١ بصيغة إكسل) واسأله: «كم صفًّا فيه، وما أعمدته؟»</li>
+            <li>قل: <strong>«هاتان الخطوتان وحدهما تختصران ساعات الإدخال اليدوي في شعبتكم.»</strong></li>
+          </ol>
+          <div class="st-covers"><b>يغطّي:</b> رفع الملفات والصور</div>
         </div>
 
         <div class="st hands">
-          <div class="st-h"><span class="st-n">١١</span><span class="st-t">الأرتيفاكتس: أنشئ · عدّل · انشر <span class="st-en">Artifacts</span></span><span class="mode hands">افعله</span></div>
-          <div class="st-b"><span class="st-tag do">افعل</span><span>اطلب: «اعمل لي جدول متابعة معاملات لقسمي، بأعمدة: الرقم، الموضوع، الجهة، التاريخ، الحالة». ثم اطلب تعديلًا: «أضف عمود الملاحظات».</span></div>
-          <div class="st-b"><span class="st-tag see">سترى</span><span>نافذة مستقلّة بجانب المحادثة، تُعدَّل بلا إعادة كتابة الطلب من الصفر، ويمكن نشرها برابط أو إبقاؤها خاصّة.</span></div>
+          <div class="st-h"><span class="st-n">١٠</span><span class="st-t">تكلّم بدل أن تكتب</span><span class="mode hands">افعله</span></div>
+          <div class="st-sc">مدير في الخمسين يكتب على الهاتف بإصبعٍ واحد، فيتجنّب البرنامج كلّه لهذا السبب وحده.</div>
+          <ol class="st-steps">
+            <li>افتح تطبيق الهاتف واضغط أيقونة <strong>الصوت</strong>.</li>
+            <li>أملِ بصوتك بالعربية: <strong>«أريد كتابًا إلى مدير الدائرة أعتذر فيه عن تأخير المعاملة رقم أربعمئة وثمانية وأربعين، والسبب تعطّل المنظومة، والموعد الجديد الخامس عشر من أيلول.»</strong></li>
+            <li>أرِهم النصّ وقد كُتب من كلامك، والجواب جاهزًا.</li>
+            <li>قل: <strong>«من كان يكتب ببطء، هذه أهمّ محطّة اليوم له.»</strong></li>
+          </ol>
+          <div class="st-covers"><b>يغطّي:</b> المحادثة الصوتية</div>
         </div>
 
         <div class="st watch">
-          <div class="st-h"><span class="st-n">١٢</span><span class="st-t">المشاريع: تعليمات ثابتة وملفات مرجعية <span class="st-en">Projects</span></span><span class="mode watch">شاهده</span></div>
-          <div class="st-b"><span class="st-tag do">أعرض</span><span>أُنشئ مشروع «مراسلات قسم التدريب»، وأضع فيه التعليمات الدائمة والملفات المرجعية، ثم أفتح محادثة داخله.</span></div>
-          <div class="st-b"><span class="st-tag see">سترون</span><span>المحادثة تبدأ وهي عارفةٌ أسلوبي وملفّاتي — <strong>القالب الذي بنيتموه اليوم يصير هنا تعليمات ثابتة</strong> لا تلصقونها كل مرّة.</span></div>
+          <div class="st-h"><span class="st-n">١١</span><span class="st-t">المشروع: يعرفك قبل أن تتكلّم</span><span class="mode watch">شاهده</span></div>
+          <div class="st-sc">تكتب في كل محادثة: «أنا مدير شعبة التدريب، والأسلوب رسميّ موجز، وهذه نماذج كتبنا». خمسة أسطر تكرّرها عشرين مرّة في الشهر.</div>
+          <ol class="st-steps">
+            <li>أنشئ مشروعًا باسم <strong>«مراسلات شعبة التدريب»</strong>.</li>
+            <li>في <strong>التعليمات الثابتة</strong> اكتب أمامهم: موقعك الوظيفي، جمهور مخاطباتك، الأسلوب المطلوب، والممنوع (المبالغة، الإطالة، الاستنتاج بلا سند).</li>
+            <li>ارفع في <strong>الملفات المرجعية — قاعدة المعرفة</strong> نموذجَي كتابٍ سابقين ودليلَ صياغةٍ إن وُجد. قل: «هذه قاعدة معرفته في هذا الموضوع، يرجع إليها في كل محادثة داخل المشروع.»</li>
+            <li>افتح <strong>محادثة داخل المشروع</strong> واكتب المعطيات وحدها: «معاملة ٤٤٨/ت — تأخير — الموعد الجديد ١٥ أيلول».</li>
+            <li>أرِهم الجواب: <strong>جاء بالأسلوب المطلوب بلا أن تشرح شيئًا.</strong> قل: «القالب الذي بنيتموه اليوم يصير هنا تعليماتٍ ثابتة لا تلصقونها كل مرّة.»</li>
+          </ol>
+          <div class="st-covers"><b>يغطّي:</b> المشاريع · التعليمات الثابتة · الملفات المرجعية · محادثات داخل سياق المشروع</div>
+        </div>
+
+        <div class="st hands">
+          <div class="st-h"><span class="st-n">١٢</span><span class="st-t">الأرتيفاكتس: مخرَجٌ لا نصّ</span><span class="mode hands">افعله</span></div>
+          <div class="st-sc">طلبتَ جدول متابعة فجاء نصًّا في وسط المحادثة، فنسختَه إلى وورد فتكسّرت أعمدته.</div>
+          <ol class="st-steps">
+            <li>اطلب: <strong>«اعمل لي جدول متابعة معاملات لشعبتي، بأعمدة: الرقم، الموضوع، الجهة، تاريخ الورود، الحالة، الملاحظات.»</strong> ← يفتح في نافذة مستقلّة.</li>
+            <li>اطلب <strong>مستندًا</strong>: «اكتب دليل إجراءات من صفحة واحدة لاستقبال المعاملات».</li>
+            <li>اطلب <strong>رسمًا</strong>: الصق جدول الحضور (المادّة ٢) واطلب «رسمًا بيانيًّا لنسبة الحضور لكل جلسة».</li>
+            <li>اطلب <strong>تصميمًا</strong>: «لوحة إرشادية للمراجعين بالمستمسكات المطلوبة».</li>
+            <li><strong>عدّل</strong> بلا إعادة الطلب: «أضف عمود الموظّف المسؤول» ← يعدّل الموجود لا يبدأ من جديد.</li>
+            <li><strong>انشره برابط</strong> ثم أرِهم الرابط، ثم <strong>أرجعه خاصًّا</strong> أمامهم.</li>
+          </ol>
+          <div class="st-covers"><b>يغطّي:</b> الأرتيفاكتس · مستندات وصفحات وتصاميم ورسوم · المعاينة والتعديل · النشر برابط أو الإبقاء خاصًّا</div>
         </div>
 
         <div class="st watch">
-          <div class="st-h"><span class="st-n">١٣</span><span class="st-t">كوورك · ديسباتش · المهامّ المجدولة <span class="st-en">Cowork · Dispatch · Scheduled</span></span><span class="mode watch">شاهده</span></div>
-          <div class="st-b"><span class="st-tag do">أعرض</span><span>مهمّة في كوورك تصل إلى ملفاتي وتشتغل بالخلفية، وحالاتها السبع، ومُشغِّلًا مجدولًا وسجلّ تشغيلاته.</span></div>
-          <div class="st-b"><span class="st-tag see">سترون</span><span>«تحتاج ردّك» هي قائمة العمل اليومية، والمجدولة تشتغل وأنتم نائمون.</span></div>
-          <div class="st-b"><span class="st-tag why">ملاحظة</span><span>كلود كود وأجهزته وجلساته أداة مبرمجين — تكفيكم معرفة أنها موجودة.</span></div>
-        </div>
-
-        <!-- ===== الفرع ٣ ===== -->
-        <div class="br-head"><span class="br-n">٣</span><span class="br-t">الإعدادات — افتحوها معي الآن</span><span class="br-c">ثماني محطّات</span></div>
-        <p class="lead-paragraph">هذا الفرع كلّه <span class="hl hl-green">مجانيّ وسريع</span>. افتحوا الإعدادات وامشوا معي بندًا بندًا — عشر دقائق تضبط حسابكم لبقيّة السنة.</p>
-
-        <div class="st hands">
-          <div class="st-h"><span class="st-n">١٤</span><span class="st-t">الملف الشخصي والتعليمات الدائمة <span class="st-en">Profile</span></span><span class="mode hands">افعله</span></div>
-          <div class="st-b"><span class="st-tag do">افعل</span><span>اكتب بماذا يناديك وطبيعة عملك، ثم في <strong>التعليمات الشخصية الدائمة</strong> اكتب خمسة أسطر: موقعك الوظيفي، جمهور مخاطباتك، واللغة والأسلوب الذي تريده دائمًا.</span></div>
-          <div class="st-b"><span class="st-tag see">سترى</span><span>اطرح السؤال نفسه قبل وبعد. <strong>أعلى عائدٍ لأقلّ جهد في كل الإعدادات.</strong></span></div>
-        </div>
-
-        <div class="st hands">
-          <div class="st-h"><span class="st-n">١٥</span><span class="st-t">عام: الصوت والإشعارات <span class="st-en">General</span></span><span class="mode hands">افعله</span></div>
-          <div class="st-b"><span class="st-tag do">افعل</span><span>اضبط لغة الصوت ونمطه وسرعته، وفعّل إشعار اكتمال الردّ.</span></div>
-          <div class="st-b"><span class="st-tag see">سترى</span><span>إشعارًا حين ينتهي من طلبٍ طويل، فلا تجلس تنتظر الشاشة.</span></div>
-        </div>
-
-        <div class="st hands">
-          <div class="st-h"><span class="st-n">١٦</span><span class="st-t">الحساب: الأجهزة والجلسات النشطة <span class="st-en">Account</span></span><span class="mode hands">افعله</span></div>
-          <div class="st-b"><span class="st-tag do">افعل</span><span>افتح <strong>الجلسات النشطة</strong> وقارن القائمة بأجهزتك الحقيقية، وأنهِ ما لا تعرفه.</span></div>
-          <div class="st-b"><span class="st-tag why">القاعدة</span><span>راجعها دوريًّا كما تراجع كشف حسابك في المصرف.</span></div>
-        </div>
-
-        <div class="st hands">
-          <div class="st-h"><span class="st-n">١٧</span><span class="st-t">الخصوصية: التصدير والحذف <span class="st-en">Privacy</span></span><span class="mode hands">افعله</span></div>
-          <div class="st-b"><span class="st-tag do">افعل</span><span>اطلب تصدير بياناتك، واحذف محادثةً واحدة تجريبًا.</span></div>
-          <div class="st-b"><span class="st-tag see">سترى</span><span>رابطًا على بريدك <strong>يبطل بعد ٢٤ ساعة</strong> — نزّله فور وصوله.</span></div>
-          <div class="st-b"><span class="st-tag why">القاعدة</span><span>هذه الإعدادات تحمي بياناتك من الاستخدام اللاحق، ولا تجعل رفع السرّي مقبولًا.</span></div>
-        </div>
-
-        <div class="st hands">
-          <div class="st-h"><span class="st-n">١٨</span><span class="st-t">القدرات: أطفئ وشغّل <span class="st-en">Capabilities</span></span><span class="mode hands">افعله</span></div>
-          <div class="st-b"><span class="st-tag do">افعل</span><span>أطفئ <strong>الأرتيفاكتس</strong> واطلب جدول ميزانية، ثم شغّلها واطلب الطلب نفسه. ومرّ على الرسوم داخل المحادثة وتنفيذ الكود وإنشاء الملفات.</span></div>
-          <div class="st-b"><span class="st-tag see">سترى</span><span>الفرق بعينك — وهذا أوضح من أي شرح.</span></div>
+          <div class="st-h"><span class="st-n">١٣</span><span class="st-t">كوورك: مهامّ تشتغل وأنت في اجتماع</span><span class="mode watch">شاهده</span></div>
+          <div class="st-sc">عندك مئة وعشرون شكوى في ملفّ، والمطلوب تصنيفها وتلخيصها. المحادثة تعطيك جوابًا واحدًا، وكوورك يشتغل على الملفّ كلّه بينما أنت في اجتماع.</div>
+          <ol class="st-steps">
+            <li>افتح <strong>كوورك</strong> وأنشئ مهمّة: «صنّف هذه الشكاوى حسب الشعبة والنوع، وأخرج ملخّصًا وجدولًا».</li>
+            <li>أرِهم <strong>الحالات السبع</strong> بالضغط على كل مرشّح: الكل · <strong>قيد العمل</strong> · <strong>تحتاج ردّك</strong> · <strong>جاهزة للمراجعة</strong> · مكتملة · مؤرشفة · مهمّة جديدة.</li>
+            <li>قف عند «تحتاج ردّك» وقل: <strong>«هذه قائمة عملكم اليومية. افتحوها أول ما تجلسون — هذه المهامّ واقفة بسببكم لا بسبب البرنامج.»</strong></li>
+            <li>أرِهم كيف <strong>تصل المهمّة إلى ملفاتكم</strong> وتقرأها وتكتب مخرجاتها.</li>
+            <li>افتح إعداد <strong>الأجهزة الموثوقة والمتصفّح المفضّل</strong> وقل ماذا يحدث لو أُطفئ: من وصل إلى حسابك من أيّ جهاز بدأ جلسة تصل إلى ملفاتك.</li>
+            <li><strong>ديسباتش:</strong> أرسل مهمّة تُنفَّذ بعيدًا عنك ثم تعود بالنتيجة، وأرِهم رجوعها.</li>
+          </ol>
+          <div class="st-covers"><b>يغطّي:</b> كوورك · المهام وحالاتها · قيد العمل · تحتاج ردّك · جاهزة للمراجعة · مكتملة ومؤرشفة · الوصول إلى ملفاتك · الأجهزة الموثوقة · ديسباتش</div>
         </div>
 
         <div class="st watch">
-          <div class="st-h"><span class="st-n">١٩</span><span class="st-t">الموصّلات: درايف · البريد · التقويم <span class="st-en">Connectors</span></span><span class="mode watch">شاهده</span></div>
-          <div class="st-b"><span class="st-tag do">أعرض</span><span>ربط موصّل، وأين تُدار الصلاحيات وكيف تُفصَل.</span></div>
-          <div class="st-b"><span class="st-tag see">سترون</span><span>أن كلود يصل إلى بريدك أو ملفاتك مباشرةً بلا رفعٍ يدوي.</span></div>
-          <div class="st-b"><span class="st-tag why">وهنا الخطر</span><span><strong>الصلاحية تُمنح للصندوق كلّه لا لرسالة واحدة.</strong> طلبٌ بريء مثل «لخّص لي بريد اليوم» يمرّ على مراسلات سرّية لم تقصد إطلاعه عليها. لا يُربط موصّل بحساب عملٍ رسميّ إلا بقرار إداريّ مكتوب، لا باجتهاد موظّف.</span></div>
+          <div class="st-h"><span class="st-n">١٤</span><span class="st-t">كلود كود — تعرفونها ولا تستعملونها</span><span class="mode watch">شاهده</span></div>
+          <div class="st-sc">سيسمعون الاسم في مؤتمر أو من زميل تقنيّ، فيحسبون أنهم يفوّتون شيئًا. دقيقتان تكفيان لإزالة الوهم.</div>
+          <ol class="st-steps">
+            <li>افتح <strong>كلود كود</strong> وأرِهم شكل الواجهة.</li>
+            <li>أرِهم <strong>الأجهزة</strong> و<strong>الجلسات</strong>: أيّ جهازٍ متّصل، وأيّ جلسةٍ مفتوحة على أيّ مستودع.</li>
+            <li>أرِهم <strong>تصنيف حالة الجلسة</strong> و<strong>مظهر الكود</strong> في الإعدادات.</li>
+            <li>قل صراحةً: <strong>«هذه أداة مبرمجين. يكفيكم أن تعرفوا أنها موجودة، وأنّ ما نصنعه به هو الذي بنى ملزمتكم هذه.»</strong></li>
+          </ol>
+          <div class="st-covers"><b>يغطّي:</b> كلود كود · الأجهزة · الجلسات · تصنيف حالة الجلسة ومظهر الكود</div>
         </div>
 
         <div class="st watch">
-          <div class="st-h"><span class="st-n">٢٠</span><span class="st-t">المهارات: تصفّح · رفع · إنشاء <span class="st-en">Skills</span></span><span class="mode watch">شاهده</span></div>
-          <div class="st-b"><span class="st-tag do">أعرض</span><span>المهارات الجاهزة، ورفع مهارة، وإنشاء واحدة بمساعدة كلود نفسه.</span></div>
-          <div class="st-b"><span class="st-tag see">سترون</span><span>المهارة تعليماتٌ تُكتب مرّة فيعمل بها في كل محادثة — الدرجة التالية بعد المشروع.</span></div>
+          <div class="st-h"><span class="st-n">١٥</span><span class="st-t">مهمّة تشتغل وأنت نائم</span><span class="mode watch">شاهده</span></div>
+          <div class="st-sc">كل صباح تفتح ملفّ الشكاوى، تقرأ الجديد، وتكتب ملخّصًا للمدير. عشر دقائق × اثنين وعشرين يوم عمل = أربع ساعات في الشهر.</div>
+          <ol class="st-steps">
+            <li>افتح <strong>المهام المجدولة</strong>.</li>
+            <li>أنشئ <strong>مُشغِّلًا</strong> أمامهم: «كل يوم الساعة ٨ صباحًا، راجع الملفّ الفلاني وأرسل لي ملخّصًا بالجديد في خمسة أسطر».</li>
+            <li>أرِهم <strong>سجلّ التشغيلات</strong> لمُشغِّلٍ قديم عندك: «هذه اشتغلت في اليوم الفلاني، وهذه في الذي قبله — ولم أفتحها في أيّ منهما».</li>
+            <li>ثم <strong>احذف المُشغِّل</strong> الذي أنشأته أمامهم وقل: <strong>«الحذف يوقفها نهائيًّا. لا تشغّلوا مجدولةً ثم تنسوها — تستهلك رصيدكم بصمت.»</strong></li>
+          </ol>
+          <div class="st-covers"><b>يغطّي:</b> المهام المجدولة · المُشغِّل · سجلّ التشغيلات · الإيقاف والحذف</div>
+        </div>
+
+        <div class="st watch">
+          <div class="st-h"><span class="st-n">١٦</span><span class="st-t">التخصيص والتصميم</span><span class="mode watch">شاهده</span></div>
+          <div class="st-sc">شعبة الإعلام تطلب بوسترًا لدورةٍ بعد ثلاثة أيام، والمصمّم في إجازة.</div>
+          <ol class="st-steps">
+            <li>افتح <strong>التخصيص</strong> وغيّر نمط الردّ (موجز · تفسيري · رسمي)، ثم أعد السؤال نفسه وقارن.</li>
+            <li>افتح <strong>التصميم</strong> ومرّ على <strong>القوالب الأربعة</strong>: فارغ · تطبيق جوال · شرائح · مستند.</li>
+            <li>اختر <strong>فارغ</strong> واكتب: «بوستر إعلان دورة تدريبية للمعهد، بالعربية، بلون هادئ ورسمي».</li>
+            <li>أرِهم <strong>أنظمة التصميم</strong> — كيف تُثبَّت الألوان والخطوط ليخرج كل تصميمٍ بهويّةٍ واحدة.</li>
+            <li>أرِهم <strong>اختيار النموذج</strong> داخل التصميم، وأنّ الأدقّ يعطي تفصيلًا أفضل.</li>
+          </ol>
+          <div class="st-covers"><b>يغطّي:</b> التخصيص · التصميم · القوالب الأربعة · أنظمة التصميم · اختيار النموذج</div>
+        </div>
+        <!-- ============ الفرع ٣ ============ -->
+        <div class="br-head"><span class="br-n">٣</span><span class="br-t">الإعدادات</span><span class="br-c">ثماني محطّات · البنود ٦٥–٩٥</span></div>
+
+        <div class="st hands">
+          <div class="st-h"><span class="st-n">١٧</span><span class="st-t">اضبط حسابك كما لو استلمتَ وظيفة اليوم</span><span class="mode hands">افعله</span></div>
+          <div class="st-sc">موظّف يستعمله منذ شهر ولم يفتح الإعدادات مرّة، فيشرح نفسه في كل محادثة من جديد ويشتكي أنّ الردود «عامّة».</div>
+          <ol class="st-steps">
+            <li>افتح <strong>الملف الشخصي</strong>، واملأ <strong>بماذا يناديك</strong> و<strong>طبيعة عملك</strong>.</li>
+            <li>في <strong>التعليمات الشخصية الدائمة</strong> اكتب أمامهم خمسة أسطر: «أنا مدير شعبة في دائرة حكومية عراقية · مخاطباتي رسمية موجّهة إلى مدراء ووزارات · اكتب بالعربية الفصحى الموجزة · لا تستعمل عبارات المبالغة · إن نقصت معلومة قل «غير محدّد» ولا تستنتج.»</li>
+            <li>اطرح سؤالًا واحدًا <strong>قبل</strong> الحفظ ثم <strong>بعده</strong>، واقرأ الجوابين. قل: <strong>«أعلى عائدٍ لأقلّ جهدٍ في الإعدادات كلّها.»</strong></li>
+            <li>افتح <strong>عام</strong>: اضبط <strong>الصوت — اللغة · النمط · السرعة</strong>، ثم شغّل الصوت وأرِهم الفرق.</li>
+            <li>في <strong>الإشعارات</strong> فعّل <strong>اكتمال الردّ</strong>، وأرسل طلبًا طويلًا، وانتقل إلى نافذة أخرى حتى يصلك الإشعار أمامهم. وأرِهم <strong>إشعارات الكود</strong> جنبه وقل: «هذه للمبرمجين، اتركوها.»</li>
+            <li>افتح <strong>الأذونات والمظهر</strong>: راجع <strong>أذونات الجهاز</strong> (الميكروفون · الكاميرا · الملفات)، وبدّل <strong>وضع اللون</strong> إلى الليلي و<strong>نمط الخطّ</strong> أمامهم.</li>
+          </ol>
+          <div class="st-covers"><b>يغطّي:</b> الملف الشخصي · بماذا يناديك وطبيعة عملك · التعليمات الشخصية الدائمة · عام · الصوت · الإشعارات · الأذونات والمظهر · أذونات الجهاز · وضع اللون ونمط الخطّ</div>
         </div>
 
         <div class="st hands">
-          <div class="st-h"><span class="st-n">٢١</span><span class="st-t">الفوترة والأذونات والمظهر <span class="st-en">Billing · Permissions</span></span><span class="mode hands">افعله</span></div>
-          <div class="st-b"><span class="st-tag do">افعل</span><span>انظر رصيدك، وراجع أذونات الجهاز (الميكروفون والكاميرا والملفات)، واضبط وضع اللون ونمط الخطّ كما يريحك.</span></div>
-          <div class="st-b"><span class="st-tag why">القاعدة</span><span>لا تفعّلوا <strong>إعادة الشحن التلقائي</strong> قبل أن تعرفوا استهلاككم الطبيعي — تتجدّد بصمتٍ فلا تنتبهون إلا في الفاتورة.</span></div>
-        </div>
-
-        <!-- ===== الفرع ٤ ===== -->
-        <div class="br-head"><span class="br-n">٤</span><span class="br-t">الحوكمة والاستخدام الآمن</span><span class="br-c">ثلاث محطّات</span></div>
-
-        <div class="st hands">
-          <div class="st-h"><span class="st-n">٢٢</span><span class="st-t">تصنيف البيانات وإخفاء الهوية <span class="st-en">PII · Anonymization</span></span><span class="mode hands">افعله</span></div>
-          <div class="st-b"><span class="st-tag do">افعل</span><span>محطّة موسّعة — القاعدة الثلاثية والجدولان والتمرينان ٣ و٤ أدناه.</span></div>
-        </div>
-
-        <div class="st hands">
-          <div class="st-h"><span class="st-n">٢٣</span><span class="st-t">الإشراف البشري والتوقيع <span class="st-en">Human in the loop</span></span><span class="mode hands">افعله</span></div>
-          <div class="st-b"><span class="st-tag do">افعل</span><span>خذ آخر نصّ أخرجه لك اليوم، واقرأه سطرًا سطرًا كأنك ستوقّعه. ضع علامة على كل رقمٍ أو اسمٍ أو استنادٍ نظاميّ فيه.</span></div>
-          <div class="st-b"><span class="st-tag why">القاعدة</span><span>التوقيع توقيعك، والمسؤولية مسؤوليتك. <strong>لا يُعتمد نصٌّ لم يمرّ على عينك.</strong></span></div>
+          <div class="st-h"><span class="st-n">١٨</span><span class="st-t">راجع أمنك كما تراجع كشف حسابك</span><span class="mode hands">افعله</span></div>
+          <div class="st-sc">موظفة سجّلت دخولها على حاسبة زميل قبل شهرين ونسيت. الجلسة ما زالت مفتوحة، وتصل إلى كل محادثاتها وملفاتها.</div>
+          <ol class="st-steps">
+            <li>افتح <strong>الحساب</strong>.</li>
+            <li>افتح <strong>الأجهزة المعتمدة</strong> واقرأ القائمة بصوتٍ عالٍ.</li>
+            <li>افتح <strong>الجلسات النشطة ومواقعها</strong> وقارنها بأجهزتك الحقيقية.</li>
+            <li><strong>أنهِ جلسةً أمامهم</strong> — أيّ جلسة، ولو كانت لك — ليروا الزرّ وأثره.</li>
+            <li>قل: <strong>«راجعوها شهريًّا. وإن رأيتم جهازًا لا تعرفونه: أنهوا الجلسة، ثم غيّروا كلمة المرور، ثم راجعوا القائمة ثانيةً.»</strong></li>
+          </ol>
+          <div class="st-covers"><b>يغطّي:</b> الحساب · الأجهزة المعتمدة · الجلسات النشطة ومواقعها</div>
         </div>
 
         <div class="st hands">
-          <div class="st-h"><span class="st-n">٢٤</span><span class="st-t">سياسة استخدام لقسمك <span class="st-en">Usage policy</span></span><span class="mode hands">افعله</span></div>
-          <div class="st-b"><span class="st-tag do">افعل</span><span>اكتب ثلاثة أسطر: <strong>من</strong> يستخدمه في قسمك، <strong>لأي غرض</strong>، و<strong>بأي صلاحية</strong> — وما الممنوع رفعه صراحةً.</span></div>
-          <div class="st-b"><span class="st-tag see">سترى</span><span>أن ثلاثة أسطر واضحة تكفي لتبدأ. والباقي يأتي بالتجربة.</span></div>
+          <div class="st-h"><span class="st-n">١٩</span><span class="st-t">بياناتك ملكك — خذها واحذفها</span><span class="mode hands">افعله</span></div>
+          <div class="st-sc">موظّف على وشك ترك الدائرة، ويريد نسخة من عمله. وموظّفة أخرى رفعت ملفًّا بالخطأ وتريد محوه.</div>
+          <ol class="st-steps">
+            <li>افتح <strong>الخصوصية</strong>.</li>
+            <li>اضغط <strong>تصدير البيانات</strong>، واختر المدّة والمحتوى، وأرسل الطلب.</li>
+            <li>افتح بريدك على الشاشة وأرِهم الرابط حين يصل. قل: <strong>«يبطل بعد أربعٍ وعشرين ساعة — نزّلوه فور وصوله.»</strong></li>
+            <li><strong>احذف محادثة</strong> واحدة أمامهم، وأرِهم أنها اختفت (لا كالأرشفة).</li>
+            <li>أرِهم موضع <strong>حذف الحساب</strong> <em>بلا ضغط</em>، وقل: «موجود، ونهائيّ، ولا رجعة فيه.»</li>
+            <li>وأعد القاعدة: <strong>«هذه الإعدادات تحمي بياناتكم من الاستخدام اللاحق، ولا تجعل رفع السرّي مقبولًا.»</strong></li>
+          </ol>
+          <div class="st-covers"><b>يغطّي:</b> الخصوصية · تصدير البيانات — المدّة والمحتوى · حذف المحادثات أو الحساب</div>
+        </div>
+
+        <div class="st hands">
+          <div class="st-h"><span class="st-n">٢٠</span><span class="st-t">القدرات: أطفئها ثم شغّلها ليروا الفرق</span><span class="mode hands">افعله</span></div>
+          <div class="st-sc">موظّف يقول: «عند زميلي يطلع جدول منسّق، وعندي يطلع نصّ». لا يعرف أنّ الفرق إعدادٌ واحد.</div>
+          <ol class="st-steps">
+            <li>افتح <strong>القدرات</strong>.</li>
+            <li><strong>أطفئ الأرتيفاكتس</strong> واطلب «اعمل لي جدول ميزانية» ← يطلع نصًّا في المحادثة.</li>
+            <li><strong>شغّلها</strong> واطلب الطلب نفسه ← يفتح في نافذة مستقلّة. <strong>الفرق يُرى ولا يُشرح.</strong></li>
+            <li>فعّل <strong>أرتيفاكتس ذكية</strong> واطلب «صفحة فيها حاسبة بسيطة لأيام إنجاز المعاملة» ← ناتجٌ يشتغل لا يُقرأ فقط.</li>
+            <li>أطفئ <strong>الرسوم داخل المحادثة</strong> واطلب رسمًا، ثم شغّلها وأعد الطلب.</li>
+            <li>فعّل <strong>تنفيذ الكود وإنشاء الملفات</strong>، والصق جدول الحضور (المادّة ٢) واطلب: «احسب نسبة الحضور لكل جلسة، وأخرج لي ملفّ إكسل جاهزًا للتنزيل» ← أرِهم زرّ التنزيل.</li>
+          </ol>
+          <div class="st-covers"><b>يغطّي:</b> القدرات · الأرتيفاكتس · أرتيفاكتس ذكية · الرسوم داخل المحادثة · تنفيذ الكود وإنشاء الملفات</div>
+        </div>
+
+        <div class="st watch">
+          <div class="st-h"><span class="st-n">٢١</span><span class="st-t">الموصّلات — السيناريو الكامل، ولماذا لا تفعلوها</span><span class="mode watch">شاهده</span></div>
+          <div class="st-sc"><strong>الموقف:</strong> مديرة شعبة تستقبل يوميًّا نحو أربعين رسالة، بينها طلبات إجازات ومخاطبات وزارات ورسائل شخصية من موظفين. تسمع أن كلود يستطيع قراءة بريدها وتلخيصه، فتقول: «هذا يوفّر لي ساعة كل صباح».</div>
+          <ol class="st-steps">
+            <li>افتح <strong>الإعدادات ← الموصّلات</strong> وأرِهم القائمة: <strong>درايف · البريد · التقويم</strong>.</li>
+            <li>اربط موصّلًا واحدًا أمامهم على <strong>حسابك التجريبي لا الرسمي</strong>. أرِهم شاشة الأذونات <strong>واقرأها بصوتٍ عالٍ كلمةً كلمة</strong> قبل الموافقة.</li>
+            <li>بعد الربط، اطلب: <strong>«لخّص لي رسائل اليوم في خمسة أسطر، وبيّن ما يحتاج ردًّا.»</strong> أرِهم النتيجة — مبهرة فعلًا.</li>
+            <li><strong>وهنا قف.</strong> اسألهم: «كم رسالة قرأ ليعطيني هذه الخمسة أسطر؟» الجواب: <strong>كلّها.</strong> بما فيها الشخصية، والسرّية، وما لا يخصّ الطلب.</li>
+            <li>قل: <strong>«الصلاحية تُمنح للصندوق كلّه لا لرسالةٍ واحدة. طلبٌ بريء مثل ›لخّص لي بريد اليوم‹ يمرّ على مراسلاتٍ لم تقصد إطلاعه عليها.»</strong></li>
+            <li>افتح <strong>التقويم</strong> واسأل: «ماذا يرى لو ربطتُه؟» ← مواعيد اجتماعاتك، وأسماء من تجتمع بهم، وعناوين المواضيع.</li>
+            <li>ثم <strong>افصل الموصّل أمامهم</strong> وأرِهم أنّ الصلاحية سُحبت.</li>
+            <li>واختم بالقاعدة: <strong>«لا يُربط موصّل بحساب عملٍ رسميّ إلا بقرارٍ إداريّ مكتوب يحدّد من يربط وما يُربط ولماذا — لا باجتهاد موظّف. وإن أردتم التجربة، فبحسابٍ شخصيّ وبريدٍ لا يحمل عمل الدائرة.»</strong></li>
+          </ol>
+          <div class="st-covers"><b>يغطّي:</b> الموصّلات · درايف · البريد · التقويم</div>
+        </div>
+
+        <div class="st watch">
+          <div class="st-h"><span class="st-n">٢٢</span><span class="st-t">المهارات: علّمه طريقتك مرّة واحدة</span><span class="mode watch">شاهده</span></div>
+          <div class="st-sc">شعبتك تصنّف الشكاوى بطريقة خاصّة بها: خمس فئات وأربع درجات إلحاح وقاعدة إحالة. تشرحها في كل محادثة من جديد.</div>
+          <ol class="st-steps">
+            <li>افتح <strong>المهارات</strong> و<strong>تصفّح الجاهزة</strong> — مرّ على أسمائها وما تفعله.</li>
+            <li>أرِهم <strong>رفع مهارة</strong>: ملفّ تعليماتٍ جاهز يُرفع فيعمل بها.</li>
+            <li>أرِهم <strong>إنشاء مهارة</strong> من الصفر: اسمها «تصنيف شكاوى شعبة التسجيل»، وتعليماتها فئاتُكم الخمس ودرجاتُ الإلحاح وقاعدةُ الإحالة.</li>
+            <li>استعمل <strong>الإنشاء مع كلود</strong>: اطلب منه هو أن يكتب لك المهارة — «اكتب لي مهارة تصنّف الشكاوى حسب هذه القواعد…» ← يكتبها ويصحّحها معك.</li>
+            <li>ثم شغّلها على جدول الشكاوى (المادّة ١) وأرِهم أنه صنّف بطريقتكم لا بطريقته.</li>
+          </ol>
+          <div class="st-covers"><b>يغطّي:</b> المهارات · تصفّح الجاهزة · رفع مهارة · إنشاء مهارة · الإنشاء مع كلود</div>
+        </div>
+
+        <div class="st hands">
+          <div class="st-h"><span class="st-n">٢٣</span><span class="st-t">الفوترة: اعرف ماذا يستهلكك</span><span class="mode hands">افعله</span></div>
+          <div class="st-sc">دائرة اشتركت لخمسة موظفين، وبعد شهرين جاءت فاتورة أكبر من المتوقّع — لأن مهمّة مجدولة نسيها أحدهم كانت تعمل يوميًّا.</div>
+          <ol class="st-steps">
+            <li>افتح <strong>الفوترة والاستخدام</strong> وأرِهم <strong>رصيدكم الحالي</strong>.</li>
+            <li>أرِهم <strong>إعادة الشحن التلقائي</strong> — <em>وهي مطفأة</em>. قل: <strong>«لا تفعّلوها قبل أن تعرفوا استهلاككم الطبيعي شهرًا كاملًا. تتجدّد بصمتٍ فلا تنتبهون إلا في الفاتورة.»</strong></li>
+            <li>افتح <strong>الفواتير</strong> وأرِهم كيف تُنزَّل — تحتاجونها للمحاسبة.</li>
+            <li>أرِهم موضع <strong>إلغاء الخطة</strong> بلا ضغط، وقل: «موجود ومتاح، ولا يحبسكم أحد.»</li>
+            <li>واربطها بمحطّة التقطيع: <strong>«تذكّرون أن العربية تستهلك رموزًا أكثر؟ هنا يظهر أثرها.»</strong></li>
+          </ol>
+          <div class="st-covers"><b>يغطّي:</b> الفوترة والاستخدام · أرصدة الاستخدام وإعادة الشحن التلقائي · الفواتير وإلغاء الخطة</div>
+        </div>
+
+        <div class="st watch">
+          <div class="st-h"><span class="st-n">٢٤</span><span class="st-t">كلود في كروم</span><span class="mode watch">شاهده</span></div>
+          <div class="st-sc">تفتح صفحة تعليماتٍ طويلة على موقع وزارة، وتريد خلاصتها بلا نسخٍ ولصق.</div>
+          <ol class="st-steps">
+            <li>أرِهم <strong>إضافة كلود في كروم</strong> وأين تُثبَّت.</li>
+            <li>افتح صفحةً حكومية عامّة، وشغّل الإضافة، واطلب: «لخّص هذه الصفحة في خمس نقاط».</li>
+            <li>قل: <strong>«هي ترى ما تراه أنت في الصفحة المفتوحة. فلا تفتحوها على صفحةٍ داخلية أو نظامٍ إداريّ فيه بيانات مواطنين.»</strong></li>
+          </ol>
+          <div class="st-covers"><b>يغطّي:</b> كلود في كروم</div>
+        </div>
+
+        <!-- ============ الفرع ٤ ============ -->
+        <div class="br-head"><span class="br-n">٤</span><span class="br-t">الحوكمة والاستخدام الآمن</span><span class="br-c">ثلاث محطّات · البنود ٩٧–١٠٥</span></div>
+
+        <div class="st hands">
+          <div class="st-h"><span class="st-n">٢٥</span><span class="st-t">صنّف قبل أن ترفع</span><span class="mode hands">افعله</span></div>
+          <div class="st-sc">شعبة تريد تحليل شكاوى المواطنين، وفي الجدول أسماء وهواتف وعناوين. الموظّف أمام خيارين: يرفعه كما هو، أو لا يحلّل شيئًا. والصواب ثالث.</div>
+          <ol class="st-steps">
+            <li>اعرض جدول الشكاوى (المادّة ١) على الشاشة، وصنّف أعمدته أمامهم: أيّها <strong>عام</strong>، أيّها <strong>داخلي</strong>، أيّها <strong>سرّي</strong>.</li>
+            <li>أشِر إلى <strong>البيانات الشخصية المعرِّفة</strong>: الاسم · الهاتف · العنوان التفصيلي. قل: «هذه وحدها تدلّ على شخصٍ بعينه.»</li>
+            <li>نفّذ <strong>القاعدة الثلاثية</strong> أمامهم في إكسل: <strong>احذف</strong> الهاتف والعنوان ← <strong>رمّز</strong> الاسم (م-٠٠١) ← <strong>أبقِ</strong> الشعبة والنوع والتاريخ والأيام والحالة.</li>
+            <li>احفظ <strong>جدول المطابقة</strong> في ملفٍّ منفصل وقل: «هذا يبقى على جهازك، ولا يُرفع أبدًا.»</li>
+            <li>ارفع الجدول المُخفى واطلب: <strong>«استخرج ثلاثة مؤشّرات لمتخذ القرار، وأكثر شعبةٍ شكوى، ومتوسّط أيام المعالجة، ورسمًا بيانيًّا واحدًا. لا تخترع أرقامًا غير موجودة.»</strong></li>
+            <li>أرِهم أن الجدول المُخفى <strong>أجاب على كل سؤالٍ إداريّ يهمّهم بلا اسمٍ واحد</strong>.</li>
+          </ol>
+          <div class="st-covers"><b>يغطّي:</b> تصنيف البيانات · عام وداخلي وسرّي · البيانات الشخصية المعرِّفة · إخفاء الهوية</div>
+        </div>
+
+        <div class="st hands">
+          <div class="st-h"><span class="st-n">٢٦</span><span class="st-t">الإشراف البشري — أنت من يوقّع</span><span class="mode hands">افعله</span></div>
+          <div class="st-sc">مدير اعتمد تقريرًا فيه رقمٌ خاطئ لأن البرنامج كتبه بثقة. الرقم ذهب إلى الوزارة، والتوقيع توقيعه.</div>
+          <ol class="st-steps">
+            <li>خذ آخر مخرَجٍ أنتجته اليوم — التحليل أو الكتاب — واعرضه على الشاشة.</li>
+            <li>اقرأه <strong>سطرًا سطرًا</strong> أمامهم، وضع علامةً بالقلم على كل <strong>رقم</strong> و<strong>اسم</strong> و<strong>استنادٍ نظاميّ</strong>.</li>
+            <li>خذ رقمًا واحدًا منها و<strong>تحقّق منه بنفسك</strong>: عُدّ الصفوف في إكسل، أو افتح النصّ الرسمي، وقارن.</li>
+            <li>قل: <strong>«التوقيع توقيعكم، والمسؤولية مسؤوليتكم. لا يُعتمد نصٌّ لم يمرّ على عينكم.»</strong></li>
+            <li>واسألهم سؤالًا مفتوحًا: «ما الذي لا تسمحون له أن يقرّره نيابةً عنكم أبدًا؟» — واسمع أجوبتهم.</li>
+          </ol>
+          <div class="st-covers"><b>يغطّي:</b> الإشراف البشري · المسؤولية والتوقيع · التحقّق قبل الاعتماد</div>
+        </div>
+
+        <div class="st hands">
+          <div class="st-h"><span class="st-n">٢٧</span><span class="st-t">سياسة استخدامٍ لقسمك — ثلاثة أسطر تكفي للبدء</span><span class="mode hands">افعله</span></div>
+          <div class="st-sc">مدير عام يسأل: «هل نمنعه أم نسمح به؟» والجواب الصحيح ليس أيًّا منهما، بل: نكتب من يستخدمه ولأيّ غرضٍ وبأيّ صلاحية.</div>
+          <ol class="st-steps">
+            <li>افتح مستندًا فارغًا على الشاشة واكتب أمامهم ثلاثة عناوين: <strong>من · لأيّ غرض · بأيّ صلاحية</strong>.</li>
+            <li><strong>من:</strong> «موظفو الشعبة المكلّفون بالصياغة والتحليل، بعد اطّلاعهم على هذه السياسة.»</li>
+            <li><strong>لأيّ غرض:</strong> «صياغة المخاطبات · تلخيص التقارير · تحليل بياناتٍ مُخفاة الهوية. ولا يُستخدم في قرارٍ نهائيّ بلا مراجعة بشرية.»</li>
+            <li><strong>بأيّ صلاحية:</strong> «يُمنع رفع البيانات الشخصية والسرّية · يُمنع ربط الموصّلات بحسابات العمل · كل مخرَجٍ يُراجَع ويُوقَّع من مسؤولٍ مخوَّل.»</li>
+            <li>ثم اطلب من كلود: <strong>«حوّل هذه النقاط إلى تعميمٍ إداريّ من صفحة واحدة بصياغة رسمية.»</strong> ← ويخرج التعميم أمامهم.</li>
+            <li>قل: <strong>«ثلاثة أسطر واضحة خيرٌ من سياسةٍ من عشرين صفحة لا يقرأها أحد. والباقي يأتي بالتجربة.»</strong></li>
+          </ol>
+          <div class="st-covers"><b>يغطّي:</b> سياسة استخدام مؤسسي · من يستخدم ولأيّ غرضٍ وبأيّ صلاحية</div>
         </div>
 
         <!-- ===== الوحدة ١ ===== -->
-        <div class="chapter-num" style="color:var(--blue);margin-top:30px;"><span class="cn-num">١</span><span class="cn-title">تمرين موسّع — محطّة ٤: أوامرك المتكرّرة</span></div>
+        <div class="chapter-num" style="color:var(--blue);margin-top:30px;"><span class="cn-num">١</span><span class="cn-title">تطبيق الطلبة — قوالبك أنت (محطّة ٥)</span></div>
         <p class="lead-paragraph"><span class="mode hands">بأيديكم</span> &nbsp; في الأسبوع الأول تعلّمتم أن تكتبوا <strong>أمرًا واحدًا جيّدًا</strong>. اليوم مهارة أخرى: أن تنظروا في عملكم فتروا ما <span class="hl hl-green">تكرّرونه كل أسبوع</span>، وتحوّلوه <strong>قالبًا</strong> يبقى معكم.</p>
         <p class="lead-paragraph">الفرق بين الأمر والقالب: <strong>الأمر يُكتب مرّة لحالة واحدة، والقالب فيه فراغات تملؤها كل مرّة.</strong> الأوامر الأربعة أعلاه قوالب — لاحظوا المظلَّل بالأصفر.</p>
 
@@ -4301,7 +4658,7 @@
         </div>
 
         <!-- ===== الوحدة ٢ ===== -->
-        <div class="chapter-num" style="color:var(--green);margin-top:32px;"><span class="cn-num">٢</span><span class="cn-title">تمرين موسّع — محطّة ٢٢: بيانات بلا أسماء</span></div>
+        <div class="chapter-num" style="color:var(--green);margin-top:32px;"><span class="cn-num">٢</span><span class="cn-title">تطبيق الطلبة — أخفِ هوية جدولك (محطّة ٢٥)</span></div>
         <p class="lead-paragraph"><span class="mode hands">بأيديكم</span> &nbsp; في الأسبوع الثاني قلنا: <span class="hl hl-pink">ما لا تريد خروجه من الدائرة، لا ترفعه</span>. وهذا <strong>نهيٌ</strong>. واليوم نعطيكم <strong>الطريقة</strong> التي تُبقي بياناتكم عندكم وتسمح لكم بتحليلها.</p>
         <p class="lead-paragraph">القاعدة سطر واحد: <strong>احذف ما لا يفيد التحليل، ورمّز ما يفيده، وأبقِ ما لا يدلّ على شخص.</strong></p>
 
