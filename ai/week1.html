@@ -20,6 +20,7 @@
     --ruleline:rgba(63,143,214,0.28);
     --ink:#1a3d8c;
     --bark:#8a5a2b;
+    --teal:#0f7a72;
   }
 
   *{box-sizing:border-box;}
@@ -248,14 +249,15 @@
   .tab:nth-child(5){background:var(--red); transform:rotate(-1.5deg) translateY(6px);}
   .tab:nth-child(6){background:var(--pink); transform:rotate(1.2deg) translateY(6px);}
   .tab:nth-child(7){background:var(--lightblue); transform:rotate(-1deg) translateY(6px);}
-  .tab:nth-child(8){background:var(--blue); transform:rotate(1.4deg) translateY(6px);}
-  .tab:nth-child(9){background:var(--green); transform:rotate(-1.5deg) translateY(6px);}
-  .tab:nth-child(10){background:var(--orange); transform:rotate(1.2deg) translateY(6px);}
-  .tab:nth-child(11){background:var(--purple); transform:rotate(-1deg) translateY(6px);}
-  .tab:nth-child(12){background:var(--red); transform:rotate(1.4deg) translateY(6px);}
-  .tab:nth-child(13){background:var(--pink); transform:rotate(-1.5deg) translateY(6px);}
-  .tab:nth-child(14){background:var(--lightblue); transform:rotate(1.2deg) translateY(6px);}
-  .tab:nth-child(15){background:var(--blue); transform:rotate(-1deg) translateY(6px);}
+  .tab:nth-child(8){background:var(--teal); transform:rotate(1.4deg) translateY(6px);}   /* الحلول والتعليل — لون مستقلّ عن الدورة */
+  .tab:nth-child(9){background:var(--blue); transform:rotate(-1.5deg) translateY(6px);}
+  .tab:nth-child(10){background:var(--green); transform:rotate(1.2deg) translateY(6px);}
+  .tab:nth-child(11){background:var(--orange); transform:rotate(-1deg) translateY(6px);}
+  .tab:nth-child(12){background:var(--purple); transform:rotate(1.4deg) translateY(6px);}
+  .tab:nth-child(13){background:var(--red); transform:rotate(-1.5deg) translateY(6px);}
+  .tab:nth-child(14){background:var(--pink); transform:rotate(1.2deg) translateY(6px);}
+  .tab:nth-child(15){background:var(--lightblue); transform:rotate(-1deg) translateY(6px);}
+  .tab:nth-child(16){background:var(--blue); transform:rotate(1.4deg) translateY(6px);}
 
   .tab.active{
     opacity:1;
@@ -648,6 +650,121 @@
   }
 
   /* ---------- "try it" cards: action -> result ---------- */
+  /* إعلان مثبَّت أعلى الأسبوع — لافتٌ بألوان الخطر لأنه رسالة إدارية عاجلة،
+     لا شرحًا يُقرأ متى تيسّر. */
+  /* ---------- تبويب الحلول والتعليل ---------- */
+  .sol-week{
+    display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+    margin:26px 0 4px; padding-bottom:6px; border-bottom:2.5px solid var(--ink);
+  }
+  .sol-week:first-of-type{ margin-top:6px; }
+  .sol-week .sw-n{
+    font-family:'Aref Ruqaa Ink','Aref Ruqaa',serif;
+    font-size:calc(24px * var(--fs,1)); color:var(--teal); line-height:1;
+  }
+  .sol-week .sw-t{
+    font-family:'Aref Ruqaa',serif; font-weight:700;
+    font-size:calc(18px * var(--fs,1)); color:var(--ink);
+  }
+  .sol-kind{
+    display:flex; align-items:center; gap:8px;
+    margin:20px 0 10px;
+    font-family:'Aref Ruqaa',serif; font-weight:700; color:var(--teal);
+    font-size:calc(15.5px * var(--fs,1));
+  }
+  .sol-kind .sk-line{ flex:1 1 auto; height:1.5px; background:rgba(15,122,114,0.25); }
+
+  /* بطاقة سؤال-جواب موحّدة، بلون جانبي حسب النوع */
+  .sol-item{
+    width:100%; margin:0 0 12px;
+    border:1.5px solid rgba(26,61,140,0.2); border-inline-start:5px solid var(--teal);
+    border-radius:4px 12px 12px 4px;
+    background:rgba(255,255,255,0.45);
+    padding:11px 14px 12px;
+  }
+  .sol-item .sol-q{
+    font-size:calc(14px * var(--fs,1)); line-height:1.9; color:var(--ink);
+    margin:0 0 9px; font-weight:600;
+  }
+  .sol-item .sol-q .sq-n{ color:var(--teal); font-weight:700; }
+
+  /* خيارات الاختيار من متعدد */
+  .sol-opts{ display:flex; flex-direction:column; gap:6px; margin-bottom:9px; }
+  .sol-opt{
+    display:flex; gap:8px; align-items:flex-start;
+    border:1.5px solid rgba(26,61,140,0.16); border-radius:8px;
+    padding:6px 10px 7px; font-size:calc(13px * var(--fs,1)); line-height:1.8;
+  }
+  .sol-opt .so-k{ flex:0 0 auto; font-weight:700; color:rgba(26,61,140,0.55); }
+  .sol-opt.ok{ border-color:var(--green); background:rgba(31,122,61,0.09); }
+  .sol-opt.ok .so-k{ color:var(--green); }
+  .sol-opt.ok::after{ content:'✓'; margin-inline-start:auto; color:var(--green); font-weight:700; }
+  .sol-opt.bad{ opacity:0.72; }
+  .sol-opt.bad .so-k{ text-decoration:line-through; }
+  .sol-opt{ display:flex; }
+
+  /* صح / خطأ */
+  .sol-tf-line{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:8px; }
+  .sol-tf-line .sol-q{ margin:0; flex:1 1 260px; }
+  .sol-badge{
+    flex:0 0 auto; font-weight:700; font-size:calc(12px * var(--fs,1));
+    padding:3px 13px 4px; border-radius:999px; white-space:nowrap;
+  }
+  .sol-badge.t{ background:rgba(31,122,61,0.16); color:var(--green); }
+  .sol-badge.f{ background:rgba(209,52,43,0.14); color:var(--red); }
+
+  .sol-why{
+    font-size:calc(13px * var(--fs,1)); line-height:1.9; color:var(--ink);
+    background:rgba(15,122,114,0.06); border-radius:8px;
+    padding:8px 11px 9px; margin:0;
+  }
+  .sol-why b{ color:var(--teal); }
+
+  /* المثال العميق — بارز عن التعليل العادي */
+  .sol-deep{
+    margin-top:9px; border:1.5px dashed var(--orange); border-radius:10px;
+    background:rgba(224,122,31,0.06); padding:10px 12px 11px;
+  }
+  .sol-deep .sd-h{
+    display:flex; align-items:center; gap:6px;
+    font-weight:700; color:var(--orange); font-size:calc(12px * var(--fs,1));
+    letter-spacing:0.03em; margin-bottom:6px;
+  }
+  .sol-deep p{ font-size:calc(13px * var(--fs,1)); line-height:1.95; margin:0 0 7px; color:var(--ink); }
+  .sol-deep p:last-child{ margin-bottom:0; }
+  .sol-deep .sd-rule{
+    display:block; margin-top:4px; padding-top:7px; border-top:1px dashed rgba(224,122,31,0.4);
+    font-weight:700;
+  }
+
+  /* المقالية: نقاط تصحيح */
+  .sol-grading{ margin:0; padding-inline-start:20px; }
+  .sol-grading li{ font-size:calc(13px * var(--fs,1)); line-height:1.9; margin-bottom:5px; color:var(--ink); }
+  .sol-grading li b{ color:var(--teal); }
+
+  .announce-box{
+    width:100%; margin:10px 0 20px;
+    border:2.5px solid var(--red); border-radius:5px 14px 5px 14px/14px 5px 14px 5px;
+    background:rgba(209,52,43,0.055);
+    padding:13px 15px 14px;
+  }
+  .announce-head{
+    display:flex; align-items:center; gap:8px;
+    color:var(--red); font-weight:700;
+    font-family:'Aref Ruqaa',serif;
+    font-size:calc(clamp(15px,3.4vw,18px) * var(--fs,1));
+    margin-bottom:8px;
+  }
+  .announce-box p{
+    margin:0 0 8px; font-size:calc(14px * var(--fs,1)); line-height:1.95; color:var(--ink);
+  }
+  .announce-box p:last-of-type{ margin-bottom:0; }
+  .announce-sign{
+    margin-top:10px; padding-top:8px; border-top:1px dashed rgba(209,52,43,0.35);
+    font-size:calc(12.5px * var(--fs,1)); color:rgba(26,61,140,0.75); line-height:1.8;
+  }
+  .announce-sign b{ color:var(--ink); }
+
   .try-box{
     width:100%;
     border:2px solid var(--purple);
@@ -1163,6 +1280,258 @@
     opacity:0.85;
     transform:rotate(0.8deg);
     text-align:center;
+  }
+
+  /* ---------- الأسبوع الثالث: أدوات التطبيق ---------- */
+
+  /* شارة تفصل ما يعمله الطالب بيده عمّا يعرضه المدرّس */
+  .mode{
+    display:inline-flex; align-items:center; gap:6px;
+    font-size:calc(11.5px * var(--fs,1)); font-weight:700; letter-spacing:0.03em;
+    padding:3px 11px 4px; border-radius:999px; white-space:nowrap;
+  }
+  .mode.hands{ background:var(--green); color:#fff; }
+  .mode.watch{ background:rgba(122,46,166,0.14); color:var(--purple);
+               box-shadow:inset 0 0 0 1.5px var(--purple); }
+
+  /* محطّة تطبيق: بندٌ من الشجرة يُنفَّذ الآن أو يُشاهَد */
+  .st{
+    width:100%; margin:9px 0;
+    border:1.5px solid rgba(26,61,140,0.22); border-radius:11px;
+    background:rgba(255,255,255,0.45); padding:10px 13px 11px;
+    border-inline-start-width:5px;
+  }
+  .st.hands{ border-inline-start-color:var(--green); }
+  .st.watch{ border-inline-start-color:var(--purple); background:rgba(122,46,166,0.045); }
+  .st-h{ display:flex; align-items:center; gap:9px; flex-wrap:wrap; margin-bottom:6px; }
+  .st-n{
+    flex:0 0 auto; width:23px; height:23px; border-radius:50%;
+    color:#fff; font-weight:700; font-size:calc(12px * var(--fs,1));
+    display:flex; align-items:center; justify-content:center;
+  }
+  .st.hands .st-n{ background:var(--green); }
+  .st.watch .st-n{ background:var(--purple); }
+  .st-t{
+    font-family:'Aref Ruqaa',serif; font-weight:700;
+    font-size:calc(15px * var(--fs,1)); color:var(--ink); line-height:1.5;
+  }
+  .st-en{ font-size:calc(11.5px * var(--fs,1)); color:rgba(26,61,140,0.6);
+          direction:ltr; unicode-bidi:isolate; }
+  .st-b{ display:flex; gap:8px; align-items:flex-start; margin-top:5px; }
+  .st-b > span:last-child{ flex:1 1 auto; min-width:0;
+    font-size:calc(13.5px * var(--fs,1)); line-height:1.9; color:var(--ink); }
+  .st-tag{
+    flex:0 0 auto; font-size:calc(10.5px * var(--fs,1)); font-weight:700;
+    padding:2px 8px 3px; border-radius:999px; margin-top:4px; white-space:nowrap;
+  }
+  .st-tag.do{ background:var(--blue); color:#fff; }
+  .st-tag.see{ background:rgba(31,122,61,0.16); color:var(--green); }
+  .st-tag.why{ background:rgba(209,52,43,0.13); color:var(--red); }
+
+  /* سيناريو المحطّة: الموقف الإداري الذي يبرّر الأداة */
+  .st-sc{
+    border-inline-start:4px solid var(--orange);
+    background:rgba(224,122,31,0.07);
+    border-radius:4px; padding:9px 12px 10px; margin:8px 0 10px;
+    font-size:calc(13.5px * var(--fs,1)); line-height:1.95;
+  }
+  .st-sc::before{
+    content:'السيناريو'; display:block;
+    font-size:calc(10.5px * var(--fs,1)); font-weight:700; letter-spacing:0.08em;
+    color:var(--orange); margin-bottom:3px;
+  }
+  .st-steps{ margin:8px 0 0; padding-inline-start:19px; }
+  .st-steps li{
+    font-size:calc(13.5px * var(--fs,1)); line-height:1.95; margin-bottom:5px;
+  }
+  .st-steps li::marker{ color:var(--blue); font-weight:700; }
+  .st-covers{
+    margin-top:9px; padding-top:7px; border-top:1px dashed rgba(26,61,140,0.22);
+    font-size:calc(11.5px * var(--fs,1)); color:rgba(26,61,140,0.7);
+  }
+  .st-covers b{ color:var(--ink); }
+
+  /* مادّة تجريب: جدول أو نصّ يُنسخ ويُشتغل عليه */
+  .mat{
+    width:100%; margin:14px 0;
+    border:2px solid var(--green); border-radius:12px;
+    background:rgba(31,122,61,0.04); overflow:hidden;
+  }
+  .mat-head{
+    display:flex; align-items:center; gap:9px; flex-wrap:wrap;
+    background:rgba(31,122,61,0.11); padding:9px 13px 10px;
+    border-bottom:1.5px solid rgba(31,122,61,0.22);
+  }
+  .mat-head .m-n{
+    flex:0 0 auto; width:24px; height:24px; border-radius:50%;
+    background:var(--green); color:#fff; font-weight:700;
+    font-size:calc(12.5px * var(--fs,1));
+    display:flex; align-items:center; justify-content:center;
+  }
+  .mat-head .m-t{ font-weight:700; color:var(--green); font-size:calc(14.5px * var(--fs,1)); }
+  .mat-head .m-u{
+    margin-inline-start:auto; font-size:calc(11.5px * var(--fs,1));
+    color:rgba(31,122,61,0.85); font-weight:700;
+  }
+  .mat-body{ padding:11px 13px 13px; }
+  .mat-body .pr{ margin:0; }
+
+  /* فاصل فرع من الشجرة */
+  .br-head{
+    display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+    margin:26px 0 4px; padding-bottom:6px;
+    border-bottom:2.5px solid var(--ink);
+  }
+  .br-head .br-n{
+    font-family:'Aref Ruqaa Ink','Aref Ruqaa',serif;
+    font-size:calc(26px * var(--fs,1)); color:var(--red); line-height:1;
+  }
+  .br-head .br-t{
+    font-family:'Aref Ruqaa',serif; font-weight:700;
+    font-size:calc(18px * var(--fs,1)); color:var(--ink);
+  }
+  .br-head .br-c{
+    margin-inline-start:auto; font-size:calc(11.5px * var(--fs,1));
+    color:rgba(26,61,140,0.65); font-weight:700; white-space:nowrap;
+  }
+
+  /* مفاتيح القراءة أعلى الجولة */
+  .keys{ display:flex; flex-wrap:wrap; gap:9px; margin:12px 0 4px; }
+  .keys .k-i{
+    display:flex; align-items:center; gap:7px;
+    border:1.5px solid rgba(26,61,140,0.2); border-radius:9px;
+    padding:7px 12px 8px; background:rgba(255,255,255,0.5);
+    font-size:calc(13px * var(--fs,1)); line-height:1.6;
+  }
+
+  /* بطاقة أمر جاهز: تُنسخ بضغطة، فلا يقف أحد أمام صندوق فارغ */
+  .pr{
+    width:100%; margin:12px 0;
+    border:2px solid var(--blue); border-radius:12px;
+    background:rgba(24,87,164,0.05); overflow:hidden;
+  }
+  .pr-head{
+    display:flex; align-items:center; gap:9px; flex-wrap:wrap;
+    background:rgba(24,87,164,0.11); padding:8px 13px 9px;
+    border-bottom:1.5px solid rgba(24,87,164,0.2);
+  }
+  .pr-head .pr-n{
+    flex:0 0 auto; width:24px; height:24px; border-radius:50%;
+    background:var(--blue); color:#fff; font-weight:700;
+    font-size:calc(12.5px * var(--fs,1));
+    display:flex; align-items:center; justify-content:center;
+  }
+  .pr-head .pr-t{
+    font-weight:700; color:var(--blue); font-size:calc(14px * var(--fs,1));
+  }
+  .pr-copy{
+    margin-inline-start:auto; cursor:pointer;
+    border:1.5px solid var(--blue); border-radius:999px;
+    background:#fff; color:var(--blue);
+    font-family:inherit; font-weight:700; font-size:calc(12px * var(--fs,1));
+    padding:5px 14px 6px; white-space:nowrap;
+  }
+  .pr-copy:hover{ background:var(--blue); color:#fff; }
+  .pr-copy:focus-visible{ outline:2px solid #f0b400; outline-offset:2px; }
+  .pr-copy.done{ background:var(--green); border-color:var(--green); color:#fff; }
+  .pr-body{
+    padding:12px 14px 14px; font-size:calc(13.5px * var(--fs,1));
+    line-height:2; color:var(--ink); white-space:pre-wrap;
+  }
+  /* الفراغات التي يملؤها الطالب — تُرى فورًا فلا يرسل القالب كما هو */
+  .pr-body .slot{
+    background:rgba(240,180,0,0.3); border-bottom:2px solid #d99b00;
+    padding:0 4px; border-radius:3px; font-weight:700;
+  }
+
+  /* تمرين تطبيقي بوقت محدّد */
+  .drill{
+    width:100%; margin:14px 0 6px;
+    border:2.5px solid var(--green); border-radius:14px;
+    background:rgba(31,122,61,0.05); padding:12px 14px 14px;
+  }
+  .drill-head{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:9px; }
+  .drill-head .d-n{
+    flex:0 0 auto; width:27px; height:27px; border-radius:50%;
+    background:var(--green); color:#fff; font-weight:700;
+    font-size:calc(13.5px * var(--fs,1));
+    display:flex; align-items:center; justify-content:center;
+  }
+  .drill-head .d-t{
+    font-family:'Aref Ruqaa',serif; font-weight:700;
+    font-size:calc(16px * var(--fs,1)); color:var(--ink);
+  }
+  .drill-head .d-time{
+    margin-inline-start:auto; font-size:calc(12px * var(--fs,1)); font-weight:700;
+    color:var(--green); background:rgba(31,122,61,0.13);
+    padding:3px 11px 4px; border-radius:999px; white-space:nowrap;
+  }
+  .drill ol{ margin:0; padding-inline-start:20px; }
+  .drill li{ font-size:calc(14px * var(--fs,1)); line-height:1.95; margin-bottom:6px; }
+  .drill .d-out{
+    margin-top:10px; padding-top:9px; border-top:1.5px dashed rgba(31,122,61,0.4);
+    font-size:calc(13.5px * var(--fs,1)); line-height:1.9;
+  }
+  .drill .d-out b{ color:var(--green); }
+
+  /* جدول بيانات التدريب: قبل الإخفاء وبعده */
+  .dt-wrap{ width:100%; overflow-x:auto; margin:10px 0 4px; }
+  .dt{
+    border-collapse:collapse; width:100%; min-width:440px;
+    font-size:calc(12.5px * var(--fs,1)); line-height:1.7;
+  }
+  .dt th{
+    background:rgba(26,61,140,0.1); color:var(--ink); font-weight:700;
+    text-align:start; padding:7px 9px; border:1px solid rgba(26,61,140,0.2);
+    white-space:nowrap;
+  }
+  .dt td{
+    padding:6px 9px; border:1px solid rgba(26,61,140,0.16);
+    color:var(--ink); vertical-align:top;
+  }
+  .dt .gone{ background:rgba(209,52,43,0.12); text-decoration:line-through;
+             text-decoration-color:var(--red); }
+  .dt .kept{ background:rgba(31,122,61,0.12); font-weight:700; }
+  .dt-cap{
+    font-size:calc(12px * var(--fs,1)); color:rgba(26,61,140,0.75);
+    margin:0 0 4px; font-weight:700;
+  }
+  .dt-cap.fake{ color:var(--red); }
+
+  /* قاعدة الإخفاء الثلاثية */
+  .anon{ display:flex; flex-direction:column; gap:8px; margin:12px 0; }
+  .anon-row{
+    display:flex; gap:11px; align-items:flex-start;
+    border-inline-start:4px solid var(--blue); border-radius:4px;
+    background:rgba(24,87,164,0.06); padding:9px 12px 10px;
+  }
+  .anon-row.drop{ border-inline-start-color:var(--red); background:rgba(209,52,43,0.06); }
+  .anon-row.keep{ border-inline-start-color:var(--green); background:rgba(31,122,61,0.07); }
+  .anon-row .a-v{
+    flex:0 0 auto; font-weight:700; font-size:calc(13px * var(--fs,1));
+    min-width:74px;
+  }
+  .anon-row.code .a-v{ color:var(--blue); }
+  .anon-row.drop .a-v{ color:var(--red); }
+  .anon-row.keep .a-v{ color:var(--green); }
+  .anon-row span:last-child{ flex:1 1 auto; min-width:0;
+    font-size:calc(13.5px * var(--fs,1)); line-height:1.9; }
+
+  /* أخطاء اليوم: ما سيقع، وما تفعله حين يقع */
+  .oops{
+    display:flex; gap:10px; align-items:flex-start;
+    border:1.5px solid rgba(224,122,31,0.5); border-radius:10px;
+    background:rgba(224,122,31,0.07); padding:10px 12px 11px; margin:8px 0;
+  }
+  .oops .o-i{ flex:0 0 auto; color:var(--orange); font-weight:700;
+              font-size:calc(15px * var(--fs,1)); }
+  .oops div{ flex:1 1 auto; min-width:0; font-size:calc(13.5px * var(--fs,1)); line-height:1.9; }
+  .oops b{ color:var(--ink); }
+
+  @media (max-width:520px){
+    .pr-head{ gap:7px; padding:7px 10px 8px; }
+    .pr-copy{ padding:5px 11px 6px; }
+    .drill-head .d-time{ margin-inline-start:0; }
   }
 
   /* ---------- اختيار القارئ: خطّه وحجمه ----------
@@ -1947,7 +2316,7 @@
     @page{ size:A4; margin:8mm; }
     body{ background:#fff !important; }
     .print-btn, .tabs, .tape, .master-header, .master-footer,
-    .ann-bar, .sheet, .ann-laser, .reader-btn, .reader-panel,
+    .ann-bar, .sheet, .ann-laser, .reader-btn, .reader-panel, .pr-copy,
     /* الشجرة والخريطة محتوًى واحد بنسبة تامّة، فطباعتهما معًا هدر ورق:
        تُطبع الشجرة وحدها، وهي تحمل البنود كلها. */
     .map-fold, .teach{ display:none !important; }
@@ -1984,7 +2353,9 @@
     .screen-frame, .scn, .hw, .try-box, .callout, .ct-bud, .gloss-row,
     .q-item, .sf-row, .leg-item, .mini-note, .map-tree li, .ex-card, .fb-grid,
     .pe-card, .pe-built, .pick-row, .cost-item, .pick-rule,
-    .lab, .tf-st, .sort-bin, .ord-step, .mcq-opt, li{
+    .lab, .tf-st, .sort-bin, .ord-step, .mcq-opt,
+    .pr, .drill, .oops, .anon-row, .st, .announce-box,
+    .sol-item, li{
       break-inside:avoid; page-break-inside:avoid;
     }
     /* عنوان في ذيل الصفحة ومحتواه في التي بعدها: يُدفع العنوان معه */
@@ -2077,6 +2448,7 @@
     <button class="tab" data-target="slide-5">٥<br>الأسبوع الخامس</button>
     <button class="tab" data-target="slide-6">٦<br>الأسبوع السادس</button>
     <button class="tab" data-target="slide-7">٧<br>الأسبوع السابع</button>
+    <button class="tab" data-target="slide-sol">🔑<br>الحلول والتعليل</button>
     <button class="tab" data-target="slide-8">٨<br>الأسبوع الثامن</button>
     <button class="tab" data-target="slide-9">٩<br>الأسبوع التاسع</button>
     <button class="tab" data-target="slide-10">١٠<br>الأسبوع العاشر</button>
@@ -3813,15 +4185,727 @@
       <!-- ============ END SLIDE 2 ============ -->
 
       <!-- ============ SLIDE 3 : الأسبوع الثالث ============ -->
-      <div id="slide-3" class="slide content-slide">
+      <div id="slide-3" class="slide content-slide rich-slide">
         <span class="chip chip-ch1">الأسبوع الثالث</span>
         <h2 class="page-title">الأسبوع الثالث</h2>
         <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
-        <div class="coming-soon">
-          <svg class="big-icon" viewBox="0 0 40 40"><g filter="url(#sketchy)"><circle cx="20" cy="20" r="15" fill="#fde3c4" stroke="var(--orange)" stroke-width="2.5"/><path d="M20 12 v9 l6 4" fill="none" stroke="var(--orange)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></g></svg>
-          <p class="cs-title">تنزل لاحقاً</p>
-          <p class="cs-sub">محتوى هذا الأسبوع سيُضاف قريباً.</p>
+        <p class="lead-paragraph">اليوم <span class="hl hl-yellow">لا نشرح، بل نشتغل</span>. نفتح كلود على الشاشة، ونطبّق أمامكم، ثم تطبّقون أنتم — والمقياس واحد: أن تخرجوا بشيءٍ <strong>تستعملونه في مكتبكم غدًا</strong>، لا بفهمٍ تنسونه بعد أسبوع.</p>
+
+        <div class="announce-box">
+          <div class="announce-head">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2"><path d="M3 11v2a2 2 0 0 0 2 2h1l3 5V4l-3 5H5a2 2 0 0 0-2 2z"/><path d="M12 8a4 4 0 0 1 0 8" stroke-linecap="round"/><path d="M15 5a8 8 0 0 1 0 14" stroke-linecap="round"/></svg>
+            <span>إعلان</span>
+          </div>
+          <p>الأسبوع الثالث محاضرة تطبيقية.</p>
+          <p>يكفي أن تراجعوا محاضرتَي الأسبوع الأول والثاني والتمارين الواردة فيهما.</p>
+          <p>إن أحببتم تجربة شيء، استعدّوا لتخبرونا به خلال <strong>٩٠ ثانية</strong> فقط.</p>
+          <div class="announce-sign">مع التقدير،<br><b>د. أمير هادي</b><br>٩ أيلول ٢٠٢٦ — ١:٥٦ ظهرًا (بتوقيت بغداد)</div>
         </div>
+
+        <div class="ba-pair">
+          <div class="bubble b-before"><span class="ba-tag">الأسبوع ١ و٢</span>فهمتم كيف يشتغل، وعرفتم أين تجدون كل شيء.</div>
+          <div class="bubble b-after"><span class="ba-tag">اليوم</span>تخرجون بثلاثة أوامر جاهزة، وجدولٍ محلَّل، ورسمٍ بيانيّ من بياناتكم.</div>
+        </div>
+
+        <!-- ===== قبل ما نبدأ ===== -->
+        <div class="section-heading" style="margin-top:26px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>قبل أن نبدأ — خمس دقائق</span>
+        </div>
+        <div class="screen-legend">
+          <div class="leg-item"><span class="leg-num">١</span><span><b>افتحوا claude.ai وسجّلوا دخولًا</b> — الحساب المجاني يكفي لكل ما سنعمله اليوم. والعراق ضمن الدول المدعومة رسميًّا.</span></div>
+          <div class="leg-item"><span class="leg-num">٢</span><span><b>من ليس معه جهاز، يجلس مع زميله.</b> اثنان على جهاز واحد أفضل من واحدٍ يتفرّج — تتناقشان في الأمر قبل إرساله، وهذا نصف الفائدة.</span></div>
+          <div class="leg-item"><span class="leg-num">٣</span><span><b>افتحوا هذه الصفحة على هواتفكم.</b> الأوامر الجاهزة أدناه تُنسخ بضغطة واحدة، فلا تكتبوها بأيديكم.</span></div>
+        </div>
+        <div class="mini-note" style="color:var(--red);">لن نرفع اليوم أيّ بيانات حقيقية لدائرتكم. كل ما سنستعمله بيانات تدريبية وهمية — والسبب يأتي في القسم الثاني.</div>
+
+        <!-- ===== بطاقة الأوامر ===== -->
+        <div class="section-heading" style="margin-top:26px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>بطاقة الأوامر الجاهزة</span>
+        </div>
+        <p class="lead-paragraph">اضغطوا <strong>نسخ</strong> ثم الصقوا في كلود. <span class="hl hl-pink">المظلَّل بالأصفر يُبدَّل بمعطياتكم أنتم</span> — والباقي يبقى كما هو.</p>
+
+        <div class="pr">
+          <div class="pr-head"><span class="pr-n">١</span><span class="pr-t">كتاب رسمي</span>
+            <button type="button" class="pr-copy">نسخ</button></div>
+          <div class="pr-body">أنت موظف في <span class="slot">دائرة/قسم</span> تكتب كتبًا رسمية.
+اكتب كتابًا رسميًّا من <span class="slot">الجهة المُرسِلة</span> إلى <span class="slot">الجهة المُرسَل إليها</span> بشأن <span class="slot">الموضوع</span>.
+المعطيات: <span class="slot">اكتب النقاط هنا</span>
+الشروط: ثلاث فقرات، صياغة رسمية موجزة، بلا عبارات مبالغة، ولا يزيد على ١٥٠ كلمة.</div>
+        </div>
+
+        <div class="pr">
+          <div class="pr-head"><span class="pr-n">٢</span><span class="pr-t">تلخيص محضر أو تقرير</span>
+            <button type="button" class="pr-copy">نسخ</button></div>
+          <div class="pr-body">هذا نصّ <span class="slot">محضر اجتماع / تقرير</span>.
+لخّصه في صفحة واحدة على شكل ثلاثة أقسام:
+١ — القرارات المتّخذة.
+٢ — الجهة المكلَّفة بكل قرار.
+٣ — الموعد النهائي لكل قرار.
+ما لم يُذكر صراحةً في النص، اكتب «غير محدّد» ولا تستنتجه.</div>
+        </div>
+
+        <div class="pr">
+          <div class="pr-head"><span class="pr-n">٣</span><span class="pr-t">تحليل جدول</span>
+            <button type="button" class="pr-copy">نسخ</button></div>
+          <div class="pr-body">هذا جدول <span class="slot">وصف البيانات</span> بعد إخفاء الهوية.
+استخرج منه:
+١ — ثلاثة مؤشّرات رقمية مهمّة لمتخذ القرار.
+٢ — أكثر <span class="slot">فئة/منطقة</span> تكرارًا.
+٣ — رسمًا بيانيًّا واحدًا يوضّح أهمّ نتيجة.
+لا تخترع أرقامًا غير موجودة في الجدول، وإن نقص شيء فقل ذلك صراحةً.</div>
+        </div>
+
+        <div class="pr">
+          <div class="pr-head"><span class="pr-n">٤</span><span class="pr-t">جُمل التحسين — بعد أوّل جواب</span>
+            <button type="button" class="pr-copy">نسخ</button></div>
+          <div class="pr-body">اختصره إلى النصف.
+اجعله أكثر رسمية.
+احذف الفقرة <span class="slot">رقم</span>.
+أعطني ثلاث صياغات مختلفة لأختار.
+اشرح لي لماذا اخترت هذه الصيغة.</div>
+        </div>
+
+
+        <!-- ===== مواد التجريب ===== -->
+        <div class="section-heading" style="margin-top:30px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>مواد التجريب — انسخوها الآن</span>
+        </div>
+        <p class="lead-paragraph">خمس مواد <span class="hl hl-pink">وهمية بالكامل</span> نشتغل عليها اليوم بدل بيانات دوائركم. اضغطوا <strong>نسخ</strong> والصقوا في إكسل أو في كلود مباشرة — الجداول مفصولة بعلامات جدولة، فتنقسم أعمدةً وحدها.</p>
+        <div class="mini-note" style="color:var(--red);">هذه أسماء وأرقام مُختلقة لا تخصّ أشخاصًا حقيقيين. لا ترفعوا اليوم أيّ ملفٍّ من دوائركم.</div>
+
+        <div class="mat">
+          <div class="mat-head"><span class="m-n">١</span><span class="m-t">جدول شكاوى المواطنين — ٢٠ صفًّا</span><span class="m-u">للإخفاء والتحليل</span></div>
+          <div class="mat-body">
+            <div class="pr"><div class="pr-head"><span class="pr-t">الصقه في إكسل</span><button type="button" class="pr-copy">نسخ</button></div>
+              <div class="pr-body">ت	اسم المواطن	رقم الهاتف	العنوان	الشعبة	نوع الشكوى	تاريخ التقديم	أيام المعالجة	الحالة
+١	أحمد كاظم محمد	٠٧٠٠-٠٠٠-٠٠١	بغداد — الغزالية، محلة ٨٧٣، دار ٥٥	شعبة الخدمات	خطأ في البيانات	٤ أيلول	٦	قيد المراجعة
+٢	سعاد جبار علي	٠٧٠٠-٠٠٠-٠٠٢	بغداد — الغزالية، محلة ٩٢٨، دار ٥١	شعبة المالية	تأخير معاملة	٨ أيلول	١٠	مفتوحة
+٣	مروان عبد الله	٠٧٠٠-٠٠٠-٠٠٣	بغداد — الأعظمية، محلة ٨٥١، دار ٥٢	شعبة التسجيل	طلب إعفاء	٧ أيلول	١٥	قيد المراجعة
+٤	هناء سالم داود	٠٧٠٠-٠٠٠-٠٠٤	بغداد — المنصور، محلة ٣١٥، دار ٥٤	شعبة التسجيل	تأخير معاملة	١ أيلول	٧	مفتوحة
+٥	عمّار ياسين خلف	٠٧٠٠-٠٠٠-٠٠٥	بغداد — الكرادة، محلة ٧٧٥، دار ٢١	شعبة الخدمات	طلب إعفاء	٤ أيلول	١٧	مفتوحة
+٦	رغد نوري حسن	٠٧٠٠-٠٠٠-٠٠٦	بغداد — الدورة، محلة ٨١١، دار ١	شعبة التسجيل	خطأ في البيانات	٥ أيلول	١٤	قيد المراجعة
+٧	بشير مهدي عباس	٠٧٠٠-٠٠٠-٠٠٧	بغداد — الأعظمية، محلة ٥٦٠، دار ٢١	شعبة المالية	طلب إعفاء	٥ أيلول	١	مفتوحة
+٨	لمى فاضل جاسم	٠٧٠٠-٠٠٠-٠٠٨	بغداد — الأعظمية، محلة ٧١٠، دار ٧	شعبة الموارد البشرية	خطأ في البيانات	٢ أيلول	١	قيد المراجعة
+٩	سيف الدين طارق	٠٧٠٠-٠٠٠-٠٠٩	بغداد — الكرادة، محلة ٥١٨، دار ١٤	شعبة التسجيل	خطأ في البيانات	٧ أيلول	٢٣	مغلقة
+١٠	نور صباح كريم	٠٧٠٠-٠٠٠-٠١٠	بغداد — الشعلة، محلة ٣٧٤، دار ٣٧	شعبة المالية	تأخير صرف	٥ أيلول	١١	مفتوحة
+١١	وليد عدنان شاكر	٠٧٠٠-٠٠٠-٠١١	بغداد — الدورة، محلة ٦٤٠، دار ١	شعبة الخدمات	تأخير معاملة	٣ أيلول	٨	قيد المراجعة
+١٢	إيمان رعد حميد	٠٧٠٠-٠٠٠-٠١٢	بغداد — الأعظمية، محلة ٣١١، دار ٤	شعبة الخدمات	خطأ في البيانات	٣ أيلول	٢٢	قيد المراجعة
+١٣	قاسم وحيد لطيف	٠٧٠٠-٠٠٠-٠١٣	بغداد — الكاظمية، محلة ٧٥٨، دار ٣٣	شعبة المالية	تأخير صرف	٣ أيلول	١٤	قيد المراجعة
+١٤	دعاء ماجد صالح	٠٧٠٠-٠٠٠-٠١٤	بغداد — الشعلة، محلة ٤١٩، دار ٢٦	شعبة الخدمات	نقص مستمسكات	١ أيلول	٩	قيد المراجعة
+١٥	حيدر عماد جبر	٠٧٠٠-٠٠٠-٠١٥	بغداد — الدورة، محلة ٣٢٠، دار ١٤	شعبة المالية	خطأ في البيانات	٢ أيلول	٢	مفتوحة
+١٦	شيماء أنور رشيد	٠٧٠٠-٠٠٠-٠١٦	بغداد — الكاظمية، محلة ٧٥٢، دار ١٧	شعبة التسجيل	طلب إعفاء	٦ أيلول	٢٧	مغلقة
+١٧	ثامر حازم علوان	٠٧٠٠-٠٠٠-٠١٧	بغداد — الشعلة، محلة ٣٧٥، دار ٥	شعبة التسجيل	نقص مستمسكات	٤ أيلول	١	قيد المراجعة
+١٨	بيداء سعد منصور	٠٧٠٠-٠٠٠-٠١٨	بغداد — زيونة، محلة ٦٨٠، دار ٤٠	شعبة الخدمات	نقص مستمسكات	٨ أيلول	٢٧	قيد المراجعة
+١٩	علي غانم زيدان	٠٧٠٠-٠٠٠-٠١٩	بغداد — المنصور، محلة ٦٩٥، دار ١٢	شعبة المالية	سوء استقبال	٤ أيلول	٢٧	قيد المراجعة
+٢٠	رنا وسام هادي	٠٧٠٠-٠٠٠-٠٢٠	بغداد — الكاظمية، محلة ٤٩٤، دار ١١	شعبة المالية	تأخير صرف	٧ أيلول	١٦	قيد المراجعة</div></div>
+          </div>
+        </div>
+
+        <div class="mat">
+          <div class="mat-head"><span class="m-n">٢</span><span class="m-t">جدول حضور دورة تدريبية — ١٥ صفًّا</span><span class="m-u">للتحليل والرسم البياني</span></div>
+          <div class="mat-body">
+            <div class="pr"><div class="pr-head"><span class="pr-t">الصقه في إكسل</span><button type="button" class="pr-copy">نسخ</button></div>
+              <div class="pr-body">ت	اسم المتدرّب	الدائرة	الجلسة ١	الجلسة ٢	الجلسة ٣	الجلسة ٤	درجة الاختبار
+١	أحمد كاظم محمد	وزارة التخطيط	غائب	حاضر	حاضر	حاضر	٤٧
+٢	سعاد جبار علي	ديوان المحافظة	حاضر	حاضر	غائب	حاضر	٧١
+٣	مروان عبد الله	ديوان المحافظة	غائب	حاضر	حاضر	حاضر	٥٣
+٤	هناء سالم داود	وزارة الصحة	غائب	حاضر	حاضر	حاضر	٥٨
+٥	عمّار ياسين خلف	وزارة التخطيط	حاضر	حاضر	غائب	غائب	٦٠
+٦	رغد نوري حسن	وزارة التخطيط	حاضر	حاضر	حاضر	حاضر	٧٨
+٧	بشير مهدي عباس	ديوان المحافظة	حاضر	حاضر	حاضر	حاضر	٧٣
+٨	لمى فاضل جاسم	أمانة بغداد	حاضر	حاضر	حاضر	غائب	٦٧
+٩	سيف الدين طارق	أمانة بغداد	حاضر	حاضر	حاضر	غائب	٤٩
+١٠	نور صباح كريم	أمانة بغداد	حاضر	حاضر	حاضر	حاضر	٧٣
+١١	وليد عدنان شاكر	ديوان المحافظة	حاضر	حاضر	حاضر	حاضر	٦٧
+١٢	إيمان رعد حميد	وزارة التخطيط	غائب	حاضر	غائب	حاضر	٧٦
+١٣	قاسم وحيد لطيف	ديوان المحافظة	حاضر	غائب	غائب	حاضر	٨٣
+١٤	دعاء ماجد صالح	وزارة التخطيط	حاضر	حاضر	حاضر	حاضر	٧١
+١٥	حيدر عماد جبر	أمانة بغداد	غائب	غائب	غائب	غائب	٩٨</div></div>
+          </div>
+        </div>
+
+        <div class="mat">
+          <div class="mat-head"><span class="m-n">٣</span><span class="m-t">جدول بنود صرف — ٨ بنود</span><span class="m-u">للتفكير الممتدّ وترتيب الأولويات</span></div>
+          <div class="mat-body">
+            <div class="pr"><div class="pr-head"><span class="pr-t">الصقه في إكسل</span><button type="button" class="pr-copy">نسخ</button></div>
+              <div class="pr-body">ت	بند الصرف	المبلغ المطلوب (دينار)	الجهة الطالبة	الأولوية المعلنة	ملاحظة
+١	صيانة منظومة التبريد	١٢٬٠٠٠٬٠٠٠	الخدمات	عالية	توقّفت وحدتان
+٢	شراء أثاث قاعة التدريب	٢٥٬٠٠٠٬٠٠٠	التدريب	متوسطة	القاعة تعمل بأثاث قديم
+٣	تجديد اشتراك الإنترنت	٨٬٠٠٠٬٠٠٠	تقنية المعلومات	عالية	ينتهي بعد ٣ أسابيع
+٤	طباعة تقارير سنوية	٤٬٥٠٠٬٠٠٠	الإعلام	منخفضة	يمكن نشرها رقميًّا
+٥	صيانة مولّدة كهرباء	١٨٬٠٠٠٬٠٠٠	الخدمات	عالية	تعمل بنصف طاقتها
+٦	دورة تدريبية خارجية	٣٠٬٠٠٠٬٠٠٠	الموارد البشرية	متوسطة	لأربعة موظفين
+٧	أجهزة حاسوب بديلة	٢٢٬٠٠٠٬٠٠٠	تقنية المعلومات	متوسطة	٦ أجهزة عمرها ٩ سنوات
+٨	تأهيل مدخل المراجعين	١٥٬٠٠٠٬٠٠٠	الخدمات	منخفضة	شكاوى متكرّرة من الازدحام</div></div>
+          </div>
+        </div>
+
+        <div class="mat">
+          <div class="mat-head"><span class="m-n">٤</span><span class="m-t">نصّ محضر اجتماع</span><span class="m-u">للتلخيص واستخراج القرارات</span></div>
+          <div class="mat-body">
+            <div class="pr"><div class="pr-head"><span class="pr-t">الصقه في كلود</span><button type="button" class="pr-copy">نسخ</button></div>
+              <div class="pr-body">محضر اجتماع اللجنة الإدارية — الجلسة الرابعة
+التاريخ: ٢ أيلول · المكان: قاعة الاجتماعات · الحضور: ثمانية أعضاء، وغياب عضوين بعذر.
+
+افتُتح الاجتماع بمناقشة تأخّر معاملات شعبة التسجيل. عرض مدير الشعبة أن متوسّط مدّة الإنجاز ارتفع من أربعة أيام إلى أحد عشر يومًا خلال شهرين، وأرجع ذلك إلى نقص موظّفَين وإلى تعطّل منظومة الأرشفة مرّتين. اقترح تكليف موظّف من شعبة الخدمات مؤقّتًا، واعترض ممثّل الخدمات لأن شعبته تعاني النقص نفسه. اتُّفق على رفع طلب تعيين إلى الموارد البشرية، وعلى أن تتولّى تقنية المعلومات فحص المنظومة قبل نهاية الأسبوع.
+
+ثم انتقل النقاش إلى شكاوى المراجعين. عُرض أن أكثر الشكاوى تتعلّق بنقص المستمسكات، وأن كثيرًا منها كان يمكن تلافيه بلوحة إرشادية عند المدخل. كلّفت اللجنة شعبة الإعلام بإعداد لوحة ونشر القائمة على موقع الدائرة. لم يُحدَّد موعد.
+
+وفي بند الميزانية، طُرح طلب صيانة منظومة التبريد وطلب أثاث قاعة التدريب. رأى الأعضاء أن الصيانة أسبق، وأُجّل البتّ في الأثاث إلى الجلسة القادمة بعد ورود عرضين إضافيين. طلبت رئيسة اللجنة أن تُرفَق مع كل طلب صرفٍ مبرّراتٌ مكتوبة.
+
+وفي الختام، حُدّدت الجلسة القادمة بعد أسبوعين، وكُلّف مقرّر اللجنة بمتابعة تنفيذ ما اتُّفق عليه وعرض تقرير في مستهلّ الجلسة.</div></div>
+          </div>
+        </div>
+
+        <div class="mat">
+          <div class="mat-head"><span class="m-n">٥</span><span class="m-t">معطيات كتاب رسمي</span><span class="m-u">لتجربة الأمر الضعيف مقابل القوي</span></div>
+          <div class="mat-body">
+            <div class="pr"><div class="pr-head"><span class="pr-t">أ · الأمر الضعيف</span><button type="button" class="pr-copy">نسخ</button></div>
+              <div class="pr-body">اكتب لي كتاب رسمي عن التأخير</div></div>
+            <div class="pr"><div class="pr-head"><span class="pr-t">ب · المعطيات نفسها للقالب القوي</span><button type="button" class="pr-copy">نسخ</button></div>
+              <div class="pr-body">الموضوع: اعتذار عن تأخير إنجاز معاملة
+الجهة المُرسِلة: مدير شعبة التسجيل
+الجهة المُرسَل إليها: مدير الدائرة
+المعطيات:
+- رقم المعاملة: ٤٤٨/ت
+- سبب التأخير: تعطّل منظومة الأرشفة مرّتين، ونقص موظّفَين
+- الموعد الجديد للإنجاز: ١٥ أيلول
+- الإجراء المتّخذ: طلب تعيين مرفوع، وفحص المنظومة جارٍ</div></div>
+          </div>
+        </div>
+        <!-- ===== جولة التطبيق ===== -->
+        <div class="section-heading" style="margin-top:30px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>جولة التطبيق — سبعٌ وعشرون محطّة تغطّي الشجرة كلّها</span>
+        </div>
+        <p class="lead-paragraph">كل محطّة فيها <strong>سيناريو إداريّ حقيقي</strong> ثم <strong>خطوات مرقّمة</strong> ثم ما سترونه. نمشي عليها بالترتيب نفسه الذي في شجرة الأسبوع الثاني، ولا نترك بندًا.</p>
+
+        <div class="keys">
+          <div class="k-i"><span class="mode hands">افعله</span><span>معي الآن على حسابك</span></div>
+          <div class="k-i"><span class="mode watch">شاهده</span><span>أعرضه على حسابي — قد يحتاج اشتراكًا</span></div>
+        </div>
+
+        <!-- ============ الفرع ١ ============ -->
+        <div class="br-head"><span class="br-n">١</span><span class="br-t">كيف يشتغل</span><span class="br-c">خمس محطّات · البنود ٢–٢٢</span></div>
+
+        <div class="st hands">
+          <div class="st-h"><span class="st-n">١</span><span class="st-t">هل يفهم أم يتوقّع؟</span><span class="mode hands">افعله</span></div>
+          <div class="st-sc">موظّف يسألك: «هل هذا البرنامج يفهم كلامي مثل الإنسان؟» جوابك بكلامٍ لن يقنعه — لكن ثلاث تجارب أمامه تقنعه.</div>
+          <ol class="st-steps">
+            <li>اسأله حرفيًّا: <strong>«هل تفهم كلامي فهمًا كالإنسان، أم تتوقّع الكلمة التالية؟ أجب بصراحة في ثلاثة أسطر.»</strong> ← يعترف بنفسه أنه يتوقّع.</li>
+            <li>اكتب على الشاشة <strong>«العراق بلد …»</strong> واسأل القاعة قبل أن ترسل: ما الكلمة التالية؟ ستسمع «عربي، جميل، غني». ثم أرسل وقارن، وقل: <strong>«توقّع الكلمة التالية — لا تفكير بشري.»</strong></li>
+            <li>اسأله عن حدثٍ وقع الأسبوع الماضي في العراق ← لا يعرفه أو يخطئ. قل: <strong>«هذا هو التدريب على النصوص ومصدر «المعرفة» عنده — قرأ ما قرأ حتى تاريخٍ معيّن، وما بعده لا يعلمه.»</strong></li>
+            <li>وأنت ترسل أيّ سؤال، أشِر بالمؤشّر إلى الشاشة وهو يكتب كلمةً كلمة: <strong>«هذا التوليد. يختار الكلمة التالية أمامكم الآن.»</strong></li>
+          </ol>
+          <div class="st-covers"><b>يغطّي:</b> النموذج اللغوي الكبير · التدريب على النصوص ومصدر «المعرفة» · توقّع الكلمة التالية — لا تفكير بشري · التوليد</div>
+        </div>
+
+        <div class="st hands">
+          <div class="st-h"><span class="st-n">٢</span><span class="st-t">لماذا ينفد رصيدك بالعربي أسرع</span><span class="mode hands">افعله</span></div>
+          <div class="st-sc">موظّفة تشتكي: «رصيدي المجاني ينتهي بسرعة، وزميلي الذي يكتب بالإنكليزي يبقى معه رصيد.» الجواب في التقطيع، ويُرى بالعين لا يُشرح.</div>
+          <ol class="st-steps">
+            <li>الصق هذا: <strong>«قسّم هذه الجملة إلى رموز (tokens) وعُدّها: — إن الإدارة الحديثة تقوم على البيانات. — ثم افعل الشيء نفسه بترجمتها الإنكليزية وقارن العددين.»</strong></li>
+            <li>سترى العربية تستهلك رموزًا أكثر بكثير. قل: <strong>«رصيدكم يُحسب بالرموز لا بالكلمات، ولذلك ينفد بالعربي أسرع.»</strong></li>
+            <li>ثم الصق: <strong>«أعطني خمس كلمات قريبة في المعنى من كلمة (معاملة)، وخمسًا بعيدة عنها، واشرح لماذا.»</strong></li>
+            <li>قل: <strong>«هذا التمثيل الرقمي — الكلمات عنده مواقع، والقريب معنًى قريبٌ موقعًا.»</strong></li>
+            <li>وأخيرًا قارن أمرًا من كلمتين بأمرٍ من خمسة أسطر (المادّة ٥ أ و ب) — الفرق في الجواب لا في البرنامج.</li>
+          </ol>
+          <div class="st-covers"><b>يغطّي:</b> الأمر · التقطيع · التمثيل الرقمي · رحلة الأمر</div>
+        </div>
+
+        <div class="st hands">
+          <div class="st-h"><span class="st-n">٣</span><span class="st-t">حدوده الثلاثة — لمسًا لا سماعًا</span><span class="mode hands">افعله</span></div>
+          <div class="st-sc">مدير يوشك أن يبني قرارًا على رقمٍ أخرجه له البرنامج. الطريقة الوحيدة لمنعه أن يرى الخطأ يقع أمامه.</div>
+          <ol class="st-steps">
+            <li><strong>الهلوسة:</strong> اسأله عن مادّةٍ في نظامٍ أو تعليماتٍ عراقية تعرف نصّها يقينًا، واطلب رقم المادّة ونصّها حرفيًّا. اقرأ جوابه ثم اقرأ النصّ الرسمي من ملفّك. <strong>سيقولها بثقةٍ تامّة ولن يقول «لست متأكّدًا».</strong></li>
+            <li><strong>نافذة السياق:</strong> في محادثة واحدة أعطه اسمك ووظيفتك، ثم الصق محضر الاجتماع (المادّة ٤) واطلب تلخيصه، ثم اطرح عشرة أسئلة طويلة، ثم اسأله: «ما وظيفتي التي ذكرتها في أول المحادثة؟» ← يتعثّر أو يخترع.</li>
+            <li><strong>التحيّز:</strong> اسأله «صف موظفًا ناجحًا في دائرة حكومية» ثم في محادثة جديدة «صف موظفةً ناجحة في دائرة حكومية». اقرأ الوصفين بصوتٍ عالٍ وقارن الصفات.</li>
+          </ol>
+          <div class="st-covers"><b>يغطّي:</b> حدود النموذج · الهلوسة · نافذة السياق · التحيّز</div>
+        </div>
+
+        <div class="st hands">
+          <div class="st-h"><span class="st-n">٤</span><span class="st-t">أيّ نموذج تختار — بالساعة لا بالكلام</span><span class="mode hands">افعله</span></div>
+          <div class="st-sc">أمامك ثمانية بنود صرف وميزانية لا تكفيها. سؤالٌ بسيط يكفيه أسرع نموذج، وقرارٌ كهذا يستحقّ أبطأها.</div>
+          <ol class="st-steps">
+            <li>افتح قائمة النماذج أعلى المحادثة وأرِهم الخيارات المتاحة في حسابك.</li>
+            <li>اسأل سؤالًا بسيطًا («ما عاصمة الأردن؟») على <strong>هايكو — السرعة</strong> واحسب الزمن بساعتك أمامهم.</li>
+            <li>كرّر السؤال نفسه على <strong>سونيت — التوازن</strong> ثم على <strong>أوبس — الدقّة</strong>. قارن الزمن وطول الجواب، وقل: «الأسرع للسؤال العابر، والأدقّ للقرار.»</li>
+            <li>الآن الصق جدول بنود الصرف (المادّة ٣) واطلب: <strong>«رتّب هذه البنود حسب الأولوية الحقيقية لا المعلنة، واشرح لكل بندٍ لماذا، ثم اقترح ما يُؤجَّل إن توفّر نصف المبلغ فقط.»</strong></li>
+            <li>أعد الطلب نفسه مع <strong>التفكير الممتدّ</strong> مفعّلًا، وأرِهم شريط التفكير وهو يشتغل، ثم قارن عمق التبرير.</li>
+          </ol>
+          <div class="st-covers"><b>يغطّي:</b> النماذج واختيارها · هايكو · سونيت · أوبس · التفكير الممتدّ</div>
+        </div>
+
+        <div class="st hands">
+          <div class="st-h"><span class="st-n">٥</span><span class="st-t">من أمرٍ ضعيف إلى كتابٍ يُوقَّع</span><span class="mode hands">افعله</span></div>
+          <div class="st-sc">مدير شعبة التسجيل يعتذر عن تأخير معاملة، ويكتب الكتاب من الصفر في كل مرّة فيأخذ عشرين دقيقة وتختلف صياغته.</div>
+          <ol class="st-steps">
+            <li>الصق <strong>الأمر الضعيف</strong> (المادّة ٥ أ): «اكتب لي كتاب رسمي عن التأخير». اقرأ الجواب بصوتٍ عالٍ — عامٌّ لا يصلح للإرسال.</li>
+            <li>الصق <strong>القالب رقم ١</strong> من بطاقة الأوامر، واملأ فراغاته بمعطيات المادّة ٥ ب. أرسل.</li>
+            <li>أشِر بالمؤشّر إلى الفروق الأربعة في القالب: <strong>الدور · الجمهور · المهمة · الحدود</strong>. هذه القواعد الذهبية الأربع.</li>
+            <li><strong>تعيين الدور:</strong> خذ فقرةً من الجواب وقل «أنت مدقّق لغوي، صحّحها»، ثم في محادثة أخرى «أنت شاعر، أعد صياغتها». اقرأ الاثنين.</li>
+            <li><strong>التعليم بالأمثلة:</strong> أعطه صيغة كتابٍ واحدة من أرشيفك (بلا أسماء) وقل: «اكتب كتابًا جديدًا بهذا الأسلوب نفسه لموضوعٍ آخر».</li>
+            <li><strong>التكرار:</strong> على الكتاب الناتج، أرسل ثلاثًا متتالية أمامهم: «اختصره إلى النصف» ← «اجعله أكثر رسمية» ← «احذف الفقرة الثانية». قل: <strong>«هذه محادثة، ليست آلة بيع.»</strong></li>
+          </ol>
+          <div class="st-covers"><b>يغطّي:</b> هندسة الأوامر · القواعد الذهبية الأربع · تعيين الدور · التعليم بالأمثلة · عقلية التكرار مقابل اللقطة الواحدة</div>
+        </div>
+        <!-- ============ الفرع ٢ ============ -->
+        <div class="br-head"><span class="br-n">٢</span><span class="br-t">واجهات الاستخدام</span><span class="br-c">إحدى عشرة محطّة · البنود ٢٤–٦٣</span></div>
+
+        <div class="st hands">
+          <div class="st-h"><span class="st-n">٦</span><span class="st-t">محادثاتك لا تضيع</span><span class="mode hands">افعله</span></div>
+          <div class="st-sc">بعد شهرين تحتاج صيغة كتابٍ كتبتها في آذار ولا تذكر متى. الموظّف الذي لا يعرف البحث يكتبها من جديد.</div>
+          <ol class="st-steps">
+            <li>اضغط <strong>محادثة جديدة</strong> وابدأ واحدة باسمٍ واضح: اطلب منه «اقترح لهذه المحادثة عنوانًا يصف موضوعها».</li>
+            <li>افتح <strong>قائمة المحادثات</strong> وأرِهم الأرشيف كلّه.</li>
+            <li><strong>ابحث</strong> عن كلمة «تأخير» ← تظهر كل محادثة ذكرتها.</li>
+            <li><strong>ثبّت</strong> محادثة القالب الذي بنيته ← تصعد إلى الأعلى دائمًا.</li>
+            <li><strong>أرشِف</strong> محادثةً انتهيت منها، ثم افتح المؤرشفة وأرِهم أنها <strong>لم تُحذف</strong>، بل خرجت من الطريق.</li>
+          </ol>
+          <div class="st-covers"><b>يغطّي:</b> المحادثة · محادثة جديدة · المحادثات السابقة · البحث فيها · التثبيت والأرشفة</div>
+        </div>
+
+        <div class="st hands">
+          <div class="st-h"><span class="st-n">٧</span><span class="st-t">صحّح مسارك بدل أن تُراكم التصحيحات</span><span class="mode hands">افعله</span></div>
+          <div class="st-sc">طلبتَ تلخيصًا فجاء طويلًا، فكتبت «لا، أقصر»، ثم «لا، أقصد بالعربي»، ثم «لا…» — وصارت المحادثة ركامًا لا يُقرأ.</div>
+          <ol class="st-steps">
+            <li>مرّر بالمؤشّر على <strong>رسالتك أنت</strong> (لا رسالته) واضغط أيقونة <strong>التعديل</strong>.</li>
+            <li>غيّر كلمة واحدة في أمرك — مثلًا «صفحة واحدة» بدل «ملخّص» — وأعد الإرسال.</li>
+            <li>أرِهم أن المحادثة <strong>تفرّعت من تلك النقطة</strong> ولم تتكدّس تحتها التصحيحات.</li>
+            <li>الآن من قائمة النموذج أعلى المحادثة، <strong>بدّل النموذج</strong> واضغط <strong>إعادة التوليد</strong> على الجواب نفسه.</li>
+            <li>قارن الجوابين. قل: <strong>«السؤال واحد، والنموذج اثنان، والفرق يستحقّ أن تعرفه قبل أن تعتمد جوابًا.»</strong></li>
+          </ol>
+          <div class="st-covers"><b>يغطّي:</b> تعديل الرسالة وإعادة التوليد · تبديل النموذج داخل المحادثة</div>
+        </div>
+
+        <div class="st hands">
+          <div class="st-h"><span class="st-n">٨</span><span class="st-t">المشاركة برابط — ومتى لا تشارك</span><span class="mode hands">افعله</span></div>
+          <div class="st-sc">أنجزتَ تحليلًا يفيد زميلك في شعبة أخرى. ترسله له صورةً بالواتساب؟ أم رابطًا يقرأه ويكمل عليه؟</div>
+          <ol class="st-steps">
+            <li>من قائمة المحادثة (النقاط الثلاث) اختر <strong>مشاركة</strong> وانسخ الرابط.</li>
+            <li>أرسله لزميلك بجانبك، أو افتحه أنت في <strong>نافذة تصفّح خاص</strong> على الشاشة.</li>
+            <li>أرِهم أنه فُتح <strong>بلا حساب وبلا كلمة مرور</strong>.</li>
+            <li>وهنا قف وقل: <strong>«الرابط يعمل لمن يملكه كائنًا من كان. لا تشاركوا محادثةً فيها شيء من عمل دائرتكم.»</strong></li>
+            <li>ارجع وأوقف المشاركة أمامهم ← الرابط بطل.</li>
+          </ol>
+          <div class="st-covers"><b>يغطّي:</b> المشاركة برابط</div>
+        </div>
+
+        <div class="st hands">
+          <div class="st-h"><span class="st-n">٩</span><span class="st-t">صوّر الكتاب بدل أن تكتبه</span><span class="mode hands">افعله</span></div>
+          <div class="st-sc">وصلك كتابٌ ورقيّ من دائرة أخرى، والمطلوب إدخال بياناته في جدول المتابعة. الموظّف يكتبها بيده في عشر دقائق.</div>
+          <ol class="st-steps">
+            <li>صوّر بهاتفك كتابًا رسميًّا <strong>معمَّمًا لا يخصّ مواطنًا</strong>، أو عمّم اسمًا بقلمٍ قبل التصوير.</li>
+            <li>ارفع الصورة واكتب: <strong>«فرّغ نصّ هذا الكتاب، ثم استخرج في جدول: الجهة المُرسِلة، والموضوع، والتاريخ، والرقم، والمطلوب.»</strong></li>
+            <li>ارفع بعدها ملفًّا (المادّة ١ بصيغة إكسل) واسأله: «كم صفًّا فيه، وما أعمدته؟»</li>
+            <li>قل: <strong>«هاتان الخطوتان وحدهما تختصران ساعات الإدخال اليدوي في شعبتكم.»</strong></li>
+          </ol>
+          <div class="st-covers"><b>يغطّي:</b> رفع الملفات والصور</div>
+        </div>
+
+        <div class="st hands">
+          <div class="st-h"><span class="st-n">١٠</span><span class="st-t">تكلّم بدل أن تكتب</span><span class="mode hands">افعله</span></div>
+          <div class="st-sc">مدير في الخمسين يكتب على الهاتف بإصبعٍ واحد، فيتجنّب البرنامج كلّه لهذا السبب وحده.</div>
+          <ol class="st-steps">
+            <li>افتح تطبيق الهاتف واضغط أيقونة <strong>الصوت</strong>.</li>
+            <li>أملِ بصوتك بالعربية: <strong>«أريد كتابًا إلى مدير الدائرة أعتذر فيه عن تأخير المعاملة رقم أربعمئة وثمانية وأربعين، والسبب تعطّل المنظومة، والموعد الجديد الخامس عشر من أيلول.»</strong></li>
+            <li>أرِهم النصّ وقد كُتب من كلامك، والجواب جاهزًا.</li>
+            <li>قل: <strong>«من كان يكتب ببطء، هذه أهمّ محطّة اليوم له.»</strong></li>
+          </ol>
+          <div class="st-covers"><b>يغطّي:</b> المحادثة الصوتية</div>
+        </div>
+
+        <div class="st watch">
+          <div class="st-h"><span class="st-n">١١</span><span class="st-t">المشروع: يعرفك قبل أن تتكلّم</span><span class="mode watch">شاهده</span></div>
+          <div class="st-sc">تكتب في كل محادثة: «أنا مدير شعبة التدريب، والأسلوب رسميّ موجز، وهذه نماذج كتبنا». خمسة أسطر تكرّرها عشرين مرّة في الشهر.</div>
+          <ol class="st-steps">
+            <li>أنشئ مشروعًا باسم <strong>«مراسلات شعبة التدريب»</strong>.</li>
+            <li>في <strong>التعليمات الثابتة</strong> اكتب أمامهم: موقعك الوظيفي، جمهور مخاطباتك، الأسلوب المطلوب، والممنوع (المبالغة، الإطالة، الاستنتاج بلا سند).</li>
+            <li>ارفع في <strong>الملفات المرجعية — قاعدة المعرفة</strong> نموذجَي كتابٍ سابقين ودليلَ صياغةٍ إن وُجد. قل: «هذه قاعدة معرفته في هذا الموضوع، يرجع إليها في كل محادثة داخل المشروع.»</li>
+            <li>افتح <strong>محادثة داخل المشروع</strong> واكتب المعطيات وحدها: «معاملة ٤٤٨/ت — تأخير — الموعد الجديد ١٥ أيلول».</li>
+            <li>أرِهم الجواب: <strong>جاء بالأسلوب المطلوب بلا أن تشرح شيئًا.</strong> قل: «القالب الذي بنيتموه اليوم يصير هنا تعليماتٍ ثابتة لا تلصقونها كل مرّة.»</li>
+          </ol>
+          <div class="st-covers"><b>يغطّي:</b> المشاريع · التعليمات الثابتة · الملفات المرجعية · محادثات داخل سياق المشروع</div>
+        </div>
+
+        <div class="st hands">
+          <div class="st-h"><span class="st-n">١٢</span><span class="st-t">الأرتيفاكتس: مخرَجٌ لا نصّ</span><span class="mode hands">افعله</span></div>
+          <div class="st-sc">طلبتَ جدول متابعة فجاء نصًّا في وسط المحادثة، فنسختَه إلى وورد فتكسّرت أعمدته.</div>
+          <ol class="st-steps">
+            <li>اطلب: <strong>«اعمل لي جدول متابعة معاملات لشعبتي، بأعمدة: الرقم، الموضوع، الجهة، تاريخ الورود، الحالة، الملاحظات.»</strong> ← يفتح في نافذة مستقلّة.</li>
+            <li>اطلب <strong>مستندًا</strong>: «اكتب دليل إجراءات من صفحة واحدة لاستقبال المعاملات».</li>
+            <li>اطلب <strong>رسمًا</strong>: الصق جدول الحضور (المادّة ٢) واطلب «رسمًا بيانيًّا لنسبة الحضور لكل جلسة».</li>
+            <li>اطلب <strong>تصميمًا</strong>: «لوحة إرشادية للمراجعين بالمستمسكات المطلوبة».</li>
+            <li><strong>عدّل</strong> بلا إعادة الطلب: «أضف عمود الموظّف المسؤول» ← يعدّل الموجود لا يبدأ من جديد.</li>
+            <li><strong>انشره برابط</strong> ثم أرِهم الرابط، ثم <strong>أرجعه خاصًّا</strong> أمامهم.</li>
+          </ol>
+          <div class="st-covers"><b>يغطّي:</b> الأرتيفاكتس · مستندات وصفحات وتصاميم ورسوم · المعاينة والتعديل · النشر برابط أو الإبقاء خاصًّا</div>
+        </div>
+
+        <div class="st watch">
+          <div class="st-h"><span class="st-n">١٣</span><span class="st-t">كوورك: مهامّ تشتغل وأنت في اجتماع</span><span class="mode watch">شاهده</span></div>
+          <div class="st-sc">عندك مئة وعشرون شكوى في ملفّ، والمطلوب تصنيفها وتلخيصها. المحادثة تعطيك جوابًا واحدًا، وكوورك يشتغل على الملفّ كلّه بينما أنت في اجتماع.</div>
+          <ol class="st-steps">
+            <li>افتح <strong>كوورك</strong> وأنشئ مهمّة: «صنّف هذه الشكاوى حسب الشعبة والنوع، وأخرج ملخّصًا وجدولًا».</li>
+            <li>أرِهم <strong>الحالات السبع</strong> بالضغط على كل مرشّح: الكل · <strong>قيد العمل</strong> · <strong>تحتاج ردّك</strong> · <strong>جاهزة للمراجعة</strong> · مكتملة · مؤرشفة · مهمّة جديدة.</li>
+            <li>قف عند «تحتاج ردّك» وقل: <strong>«هذه قائمة عملكم اليومية. افتحوها أول ما تجلسون — هذه المهامّ واقفة بسببكم لا بسبب البرنامج.»</strong></li>
+            <li>أرِهم كيف <strong>تصل المهمّة إلى ملفاتكم</strong> وتقرأها وتكتب مخرجاتها.</li>
+            <li>افتح إعداد <strong>الأجهزة الموثوقة والمتصفّح المفضّل</strong> وقل ماذا يحدث لو أُطفئ: من وصل إلى حسابك من أيّ جهاز بدأ جلسة تصل إلى ملفاتك.</li>
+            <li><strong>ديسباتش:</strong> أرسل مهمّة تُنفَّذ بعيدًا عنك ثم تعود بالنتيجة، وأرِهم رجوعها.</li>
+          </ol>
+          <div class="st-covers"><b>يغطّي:</b> كوورك · المهام وحالاتها · قيد العمل · تحتاج ردّك · جاهزة للمراجعة · مكتملة ومؤرشفة · الوصول إلى ملفاتك · الأجهزة الموثوقة · ديسباتش</div>
+        </div>
+
+        <div class="st watch">
+          <div class="st-h"><span class="st-n">١٤</span><span class="st-t">كلود كود — تعرفونها ولا تستعملونها</span><span class="mode watch">شاهده</span></div>
+          <div class="st-sc">سيسمعون الاسم في مؤتمر أو من زميل تقنيّ، فيحسبون أنهم يفوّتون شيئًا. دقيقتان تكفيان لإزالة الوهم.</div>
+          <ol class="st-steps">
+            <li>افتح <strong>كلود كود</strong> وأرِهم شكل الواجهة.</li>
+            <li>أرِهم <strong>الأجهزة</strong> و<strong>الجلسات</strong>: أيّ جهازٍ متّصل، وأيّ جلسةٍ مفتوحة على أيّ مستودع.</li>
+            <li>أرِهم <strong>تصنيف حالة الجلسة</strong> و<strong>مظهر الكود</strong> في الإعدادات.</li>
+            <li>قل صراحةً: <strong>«هذه أداة مبرمجين. يكفيكم أن تعرفوا أنها موجودة، وأنّ ما نصنعه به هو الذي بنى ملزمتكم هذه.»</strong></li>
+          </ol>
+          <div class="st-covers"><b>يغطّي:</b> كلود كود · الأجهزة · الجلسات · تصنيف حالة الجلسة ومظهر الكود</div>
+        </div>
+
+        <div class="st watch">
+          <div class="st-h"><span class="st-n">١٥</span><span class="st-t">مهمّة تشتغل وأنت نائم</span><span class="mode watch">شاهده</span></div>
+          <div class="st-sc">كل صباح تفتح ملفّ الشكاوى، تقرأ الجديد، وتكتب ملخّصًا للمدير. عشر دقائق × اثنين وعشرين يوم عمل = أربع ساعات في الشهر.</div>
+          <ol class="st-steps">
+            <li>افتح <strong>المهام المجدولة</strong>.</li>
+            <li>أنشئ <strong>مُشغِّلًا</strong> أمامهم: «كل يوم الساعة ٨ صباحًا، راجع الملفّ الفلاني وأرسل لي ملخّصًا بالجديد في خمسة أسطر».</li>
+            <li>أرِهم <strong>سجلّ التشغيلات</strong> لمُشغِّلٍ قديم عندك: «هذه اشتغلت في اليوم الفلاني، وهذه في الذي قبله — ولم أفتحها في أيّ منهما».</li>
+            <li>ثم <strong>احذف المُشغِّل</strong> الذي أنشأته أمامهم وقل: <strong>«الحذف يوقفها نهائيًّا. لا تشغّلوا مجدولةً ثم تنسوها — تستهلك رصيدكم بصمت.»</strong></li>
+          </ol>
+          <div class="st-covers"><b>يغطّي:</b> المهام المجدولة · المُشغِّل · سجلّ التشغيلات · الإيقاف والحذف</div>
+        </div>
+
+        <div class="st watch">
+          <div class="st-h"><span class="st-n">١٦</span><span class="st-t">التخصيص والتصميم</span><span class="mode watch">شاهده</span></div>
+          <div class="st-sc">شعبة الإعلام تطلب بوسترًا لدورةٍ بعد ثلاثة أيام، والمصمّم في إجازة.</div>
+          <ol class="st-steps">
+            <li>افتح <strong>التخصيص</strong> وغيّر نمط الردّ (موجز · تفسيري · رسمي)، ثم أعد السؤال نفسه وقارن.</li>
+            <li>افتح <strong>التصميم</strong> ومرّ على <strong>القوالب الأربعة</strong>: فارغ · تطبيق جوال · شرائح · مستند.</li>
+            <li>اختر <strong>فارغ</strong> واكتب: «بوستر إعلان دورة تدريبية للمعهد، بالعربية، بلون هادئ ورسمي».</li>
+            <li>أرِهم <strong>أنظمة التصميم</strong> — كيف تُثبَّت الألوان والخطوط ليخرج كل تصميمٍ بهويّةٍ واحدة.</li>
+            <li>أرِهم <strong>اختيار النموذج</strong> داخل التصميم، وأنّ الأدقّ يعطي تفصيلًا أفضل.</li>
+          </ol>
+          <div class="st-covers"><b>يغطّي:</b> التخصيص · التصميم · القوالب الأربعة · أنظمة التصميم · اختيار النموذج</div>
+        </div>
+        <!-- ============ الفرع ٣ ============ -->
+        <div class="br-head"><span class="br-n">٣</span><span class="br-t">الإعدادات</span><span class="br-c">ثماني محطّات · البنود ٦٥–٩٥</span></div>
+
+        <div class="st hands">
+          <div class="st-h"><span class="st-n">١٧</span><span class="st-t">اضبط حسابك كما لو استلمتَ وظيفة اليوم</span><span class="mode hands">افعله</span></div>
+          <div class="st-sc">موظّف يستعمله منذ شهر ولم يفتح الإعدادات مرّة، فيشرح نفسه في كل محادثة من جديد ويشتكي أنّ الردود «عامّة».</div>
+          <ol class="st-steps">
+            <li>افتح <strong>الملف الشخصي</strong>، واملأ <strong>بماذا يناديك</strong> و<strong>طبيعة عملك</strong>.</li>
+            <li>في <strong>التعليمات الشخصية الدائمة</strong> اكتب أمامهم خمسة أسطر: «أنا مدير شعبة في دائرة حكومية عراقية · مخاطباتي رسمية موجّهة إلى مدراء ووزارات · اكتب بالعربية الفصحى الموجزة · لا تستعمل عبارات المبالغة · إن نقصت معلومة قل «غير محدّد» ولا تستنتج.»</li>
+            <li>اطرح سؤالًا واحدًا <strong>قبل</strong> الحفظ ثم <strong>بعده</strong>، واقرأ الجوابين. قل: <strong>«أعلى عائدٍ لأقلّ جهدٍ في الإعدادات كلّها.»</strong></li>
+            <li>افتح <strong>عام</strong>: اضبط <strong>الصوت — اللغة · النمط · السرعة</strong>، ثم شغّل الصوت وأرِهم الفرق.</li>
+            <li>في <strong>الإشعارات</strong> فعّل <strong>اكتمال الردّ</strong>، وأرسل طلبًا طويلًا، وانتقل إلى نافذة أخرى حتى يصلك الإشعار أمامهم. وأرِهم <strong>إشعارات الكود</strong> جنبه وقل: «هذه للمبرمجين، اتركوها.»</li>
+            <li>افتح <strong>الأذونات والمظهر</strong>: راجع <strong>أذونات الجهاز</strong> (الميكروفون · الكاميرا · الملفات)، وبدّل <strong>وضع اللون</strong> إلى الليلي و<strong>نمط الخطّ</strong> أمامهم.</li>
+          </ol>
+          <div class="st-covers"><b>يغطّي:</b> الملف الشخصي · بماذا يناديك وطبيعة عملك · التعليمات الشخصية الدائمة · عام · الصوت · الإشعارات · الأذونات والمظهر · أذونات الجهاز · وضع اللون ونمط الخطّ</div>
+        </div>
+
+        <div class="st hands">
+          <div class="st-h"><span class="st-n">١٨</span><span class="st-t">راجع أمنك كما تراجع كشف حسابك</span><span class="mode hands">افعله</span></div>
+          <div class="st-sc">موظفة سجّلت دخولها على حاسبة زميل قبل شهرين ونسيت. الجلسة ما زالت مفتوحة، وتصل إلى كل محادثاتها وملفاتها.</div>
+          <ol class="st-steps">
+            <li>افتح <strong>الحساب</strong>.</li>
+            <li>افتح <strong>الأجهزة المعتمدة</strong> واقرأ القائمة بصوتٍ عالٍ.</li>
+            <li>افتح <strong>الجلسات النشطة ومواقعها</strong> وقارنها بأجهزتك الحقيقية.</li>
+            <li><strong>أنهِ جلسةً أمامهم</strong> — أيّ جلسة، ولو كانت لك — ليروا الزرّ وأثره.</li>
+            <li>قل: <strong>«راجعوها شهريًّا. وإن رأيتم جهازًا لا تعرفونه: أنهوا الجلسة، ثم غيّروا كلمة المرور، ثم راجعوا القائمة ثانيةً.»</strong></li>
+          </ol>
+          <div class="st-covers"><b>يغطّي:</b> الحساب · الأجهزة المعتمدة · الجلسات النشطة ومواقعها</div>
+        </div>
+
+        <div class="st hands">
+          <div class="st-h"><span class="st-n">١٩</span><span class="st-t">بياناتك ملكك — خذها واحذفها</span><span class="mode hands">افعله</span></div>
+          <div class="st-sc">موظّف على وشك ترك الدائرة، ويريد نسخة من عمله. وموظّفة أخرى رفعت ملفًّا بالخطأ وتريد محوه.</div>
+          <ol class="st-steps">
+            <li>افتح <strong>الخصوصية</strong>.</li>
+            <li>اضغط <strong>تصدير البيانات</strong>، واختر المدّة والمحتوى، وأرسل الطلب.</li>
+            <li>افتح بريدك على الشاشة وأرِهم الرابط حين يصل. قل: <strong>«يبطل بعد أربعٍ وعشرين ساعة — نزّلوه فور وصوله.»</strong></li>
+            <li><strong>احذف محادثة</strong> واحدة أمامهم، وأرِهم أنها اختفت (لا كالأرشفة).</li>
+            <li>أرِهم موضع <strong>حذف الحساب</strong> <em>بلا ضغط</em>، وقل: «موجود، ونهائيّ، ولا رجعة فيه.»</li>
+            <li>وأعد القاعدة: <strong>«هذه الإعدادات تحمي بياناتكم من الاستخدام اللاحق، ولا تجعل رفع السرّي مقبولًا.»</strong></li>
+          </ol>
+          <div class="st-covers"><b>يغطّي:</b> الخصوصية · تصدير البيانات — المدّة والمحتوى · حذف المحادثات أو الحساب</div>
+        </div>
+
+        <div class="st hands">
+          <div class="st-h"><span class="st-n">٢٠</span><span class="st-t">القدرات: أطفئها ثم شغّلها ليروا الفرق</span><span class="mode hands">افعله</span></div>
+          <div class="st-sc">موظّف يقول: «عند زميلي يطلع جدول منسّق، وعندي يطلع نصّ». لا يعرف أنّ الفرق إعدادٌ واحد.</div>
+          <ol class="st-steps">
+            <li>افتح <strong>القدرات</strong>.</li>
+            <li><strong>أطفئ الأرتيفاكتس</strong> واطلب «اعمل لي جدول ميزانية» ← يطلع نصًّا في المحادثة.</li>
+            <li><strong>شغّلها</strong> واطلب الطلب نفسه ← يفتح في نافذة مستقلّة. <strong>الفرق يُرى ولا يُشرح.</strong></li>
+            <li>فعّل <strong>أرتيفاكتس ذكية</strong> واطلب «صفحة فيها حاسبة بسيطة لأيام إنجاز المعاملة» ← ناتجٌ يشتغل لا يُقرأ فقط.</li>
+            <li>أطفئ <strong>الرسوم داخل المحادثة</strong> واطلب رسمًا، ثم شغّلها وأعد الطلب.</li>
+            <li>فعّل <strong>تنفيذ الكود وإنشاء الملفات</strong>، والصق جدول الحضور (المادّة ٢) واطلب: «احسب نسبة الحضور لكل جلسة، وأخرج لي ملفّ إكسل جاهزًا للتنزيل» ← أرِهم زرّ التنزيل.</li>
+          </ol>
+          <div class="st-covers"><b>يغطّي:</b> القدرات · الأرتيفاكتس · أرتيفاكتس ذكية · الرسوم داخل المحادثة · تنفيذ الكود وإنشاء الملفات</div>
+        </div>
+
+        <div class="st watch">
+          <div class="st-h"><span class="st-n">٢١</span><span class="st-t">الموصّلات — السيناريو الكامل، ولماذا لا تفعلوها</span><span class="mode watch">شاهده</span></div>
+          <div class="st-sc"><strong>الموقف:</strong> مديرة شعبة تستقبل يوميًّا نحو أربعين رسالة، بينها طلبات إجازات ومخاطبات وزارات ورسائل شخصية من موظفين. تسمع أن كلود يستطيع قراءة بريدها وتلخيصه، فتقول: «هذا يوفّر لي ساعة كل صباح».</div>
+          <ol class="st-steps">
+            <li>افتح <strong>الإعدادات ← الموصّلات</strong> وأرِهم القائمة: <strong>درايف · البريد · التقويم</strong>.</li>
+            <li>اربط موصّلًا واحدًا أمامهم على <strong>حسابك التجريبي لا الرسمي</strong>. أرِهم شاشة الأذونات <strong>واقرأها بصوتٍ عالٍ كلمةً كلمة</strong> قبل الموافقة.</li>
+            <li>بعد الربط، اطلب: <strong>«لخّص لي رسائل اليوم في خمسة أسطر، وبيّن ما يحتاج ردًّا.»</strong> أرِهم النتيجة — مبهرة فعلًا.</li>
+            <li><strong>وهنا قف.</strong> اسألهم: «كم رسالة قرأ ليعطيني هذه الخمسة أسطر؟» الجواب: <strong>كلّها.</strong> بما فيها الشخصية، والسرّية، وما لا يخصّ الطلب.</li>
+            <li>قل: <strong>«الصلاحية تُمنح للصندوق كلّه لا لرسالةٍ واحدة. طلبٌ بريء مثل ›لخّص لي بريد اليوم‹ يمرّ على مراسلاتٍ لم تقصد إطلاعه عليها.»</strong></li>
+            <li>افتح <strong>التقويم</strong> واسأل: «ماذا يرى لو ربطتُه؟» ← مواعيد اجتماعاتك، وأسماء من تجتمع بهم، وعناوين المواضيع.</li>
+            <li>ثم <strong>افصل الموصّل أمامهم</strong> وأرِهم أنّ الصلاحية سُحبت.</li>
+            <li>واختم بالقاعدة: <strong>«لا يُربط موصّل بحساب عملٍ رسميّ إلا بقرارٍ إداريّ مكتوب يحدّد من يربط وما يُربط ولماذا — لا باجتهاد موظّف. وإن أردتم التجربة، فبحسابٍ شخصيّ وبريدٍ لا يحمل عمل الدائرة.»</strong></li>
+          </ol>
+          <div class="st-covers"><b>يغطّي:</b> الموصّلات · درايف · البريد · التقويم</div>
+        </div>
+
+        <div class="st watch">
+          <div class="st-h"><span class="st-n">٢٢</span><span class="st-t">المهارات: علّمه طريقتك مرّة واحدة</span><span class="mode watch">شاهده</span></div>
+          <div class="st-sc">شعبتك تصنّف الشكاوى بطريقة خاصّة بها: خمس فئات وأربع درجات إلحاح وقاعدة إحالة. تشرحها في كل محادثة من جديد.</div>
+          <ol class="st-steps">
+            <li>افتح <strong>المهارات</strong> و<strong>تصفّح الجاهزة</strong> — مرّ على أسمائها وما تفعله.</li>
+            <li>أرِهم <strong>رفع مهارة</strong>: ملفّ تعليماتٍ جاهز يُرفع فيعمل بها.</li>
+            <li>أرِهم <strong>إنشاء مهارة</strong> من الصفر: اسمها «تصنيف شكاوى شعبة التسجيل»، وتعليماتها فئاتُكم الخمس ودرجاتُ الإلحاح وقاعدةُ الإحالة.</li>
+            <li>استعمل <strong>الإنشاء مع كلود</strong>: اطلب منه هو أن يكتب لك المهارة — «اكتب لي مهارة تصنّف الشكاوى حسب هذه القواعد…» ← يكتبها ويصحّحها معك.</li>
+            <li>ثم شغّلها على جدول الشكاوى (المادّة ١) وأرِهم أنه صنّف بطريقتكم لا بطريقته.</li>
+          </ol>
+          <div class="st-covers"><b>يغطّي:</b> المهارات · تصفّح الجاهزة · رفع مهارة · إنشاء مهارة · الإنشاء مع كلود</div>
+        </div>
+
+        <div class="st hands">
+          <div class="st-h"><span class="st-n">٢٣</span><span class="st-t">الفوترة: اعرف ماذا يستهلكك</span><span class="mode hands">افعله</span></div>
+          <div class="st-sc">دائرة اشتركت لخمسة موظفين، وبعد شهرين جاءت فاتورة أكبر من المتوقّع — لأن مهمّة مجدولة نسيها أحدهم كانت تعمل يوميًّا.</div>
+          <ol class="st-steps">
+            <li>افتح <strong>الفوترة والاستخدام</strong> وأرِهم <strong>رصيدكم الحالي</strong>.</li>
+            <li>أرِهم <strong>إعادة الشحن التلقائي</strong> — <em>وهي مطفأة</em>. قل: <strong>«لا تفعّلوها قبل أن تعرفوا استهلاككم الطبيعي شهرًا كاملًا. تتجدّد بصمتٍ فلا تنتبهون إلا في الفاتورة.»</strong></li>
+            <li>افتح <strong>الفواتير</strong> وأرِهم كيف تُنزَّل — تحتاجونها للمحاسبة.</li>
+            <li>أرِهم موضع <strong>إلغاء الخطة</strong> بلا ضغط، وقل: «موجود ومتاح، ولا يحبسكم أحد.»</li>
+            <li>واربطها بمحطّة التقطيع: <strong>«تذكّرون أن العربية تستهلك رموزًا أكثر؟ هنا يظهر أثرها.»</strong></li>
+          </ol>
+          <div class="st-covers"><b>يغطّي:</b> الفوترة والاستخدام · أرصدة الاستخدام وإعادة الشحن التلقائي · الفواتير وإلغاء الخطة</div>
+        </div>
+
+        <div class="st watch">
+          <div class="st-h"><span class="st-n">٢٤</span><span class="st-t">كلود في كروم</span><span class="mode watch">شاهده</span></div>
+          <div class="st-sc">تفتح صفحة تعليماتٍ طويلة على موقع وزارة، وتريد خلاصتها بلا نسخٍ ولصق.</div>
+          <ol class="st-steps">
+            <li>أرِهم <strong>إضافة كلود في كروم</strong> وأين تُثبَّت.</li>
+            <li>افتح صفحةً حكومية عامّة، وشغّل الإضافة، واطلب: «لخّص هذه الصفحة في خمس نقاط».</li>
+            <li>قل: <strong>«هي ترى ما تراه أنت في الصفحة المفتوحة. فلا تفتحوها على صفحةٍ داخلية أو نظامٍ إداريّ فيه بيانات مواطنين.»</strong></li>
+          </ol>
+          <div class="st-covers"><b>يغطّي:</b> كلود في كروم</div>
+        </div>
+
+        <!-- ============ الفرع ٤ ============ -->
+        <div class="br-head"><span class="br-n">٤</span><span class="br-t">الحوكمة والاستخدام الآمن</span><span class="br-c">ثلاث محطّات · البنود ٩٧–١٠٥</span></div>
+
+        <div class="st hands">
+          <div class="st-h"><span class="st-n">٢٥</span><span class="st-t">صنّف قبل أن ترفع</span><span class="mode hands">افعله</span></div>
+          <div class="st-sc">شعبة تريد تحليل شكاوى المواطنين، وفي الجدول أسماء وهواتف وعناوين. الموظّف أمام خيارين: يرفعه كما هو، أو لا يحلّل شيئًا. والصواب ثالث.</div>
+          <ol class="st-steps">
+            <li>اعرض جدول الشكاوى (المادّة ١) على الشاشة، وصنّف أعمدته أمامهم: أيّها <strong>عام</strong>، أيّها <strong>داخلي</strong>، أيّها <strong>سرّي</strong>.</li>
+            <li>أشِر إلى <strong>البيانات الشخصية المعرِّفة</strong>: الاسم · الهاتف · العنوان التفصيلي. قل: «هذه وحدها تدلّ على شخصٍ بعينه.»</li>
+            <li>نفّذ <strong>القاعدة الثلاثية</strong> أمامهم في إكسل: <strong>احذف</strong> الهاتف والعنوان ← <strong>رمّز</strong> الاسم (م-٠٠١) ← <strong>أبقِ</strong> الشعبة والنوع والتاريخ والأيام والحالة.</li>
+            <li>احفظ <strong>جدول المطابقة</strong> في ملفٍّ منفصل وقل: «هذا يبقى على جهازك، ولا يُرفع أبدًا.»</li>
+            <li>ارفع الجدول المُخفى واطلب: <strong>«استخرج ثلاثة مؤشّرات لمتخذ القرار، وأكثر شعبةٍ شكوى، ومتوسّط أيام المعالجة، ورسمًا بيانيًّا واحدًا. لا تخترع أرقامًا غير موجودة.»</strong></li>
+            <li>أرِهم أن الجدول المُخفى <strong>أجاب على كل سؤالٍ إداريّ يهمّهم بلا اسمٍ واحد</strong>.</li>
+          </ol>
+          <div class="st-covers"><b>يغطّي:</b> تصنيف البيانات · عام وداخلي وسرّي · البيانات الشخصية المعرِّفة · إخفاء الهوية</div>
+        </div>
+
+        <div class="st hands">
+          <div class="st-h"><span class="st-n">٢٦</span><span class="st-t">الإشراف البشري — أنت من يوقّع</span><span class="mode hands">افعله</span></div>
+          <div class="st-sc">مدير اعتمد تقريرًا فيه رقمٌ خاطئ لأن البرنامج كتبه بثقة. الرقم ذهب إلى الوزارة، والتوقيع توقيعه.</div>
+          <ol class="st-steps">
+            <li>خذ آخر مخرَجٍ أنتجته اليوم — التحليل أو الكتاب — واعرضه على الشاشة.</li>
+            <li>اقرأه <strong>سطرًا سطرًا</strong> أمامهم، وضع علامةً بالقلم على كل <strong>رقم</strong> و<strong>اسم</strong> و<strong>استنادٍ نظاميّ</strong>.</li>
+            <li>خذ رقمًا واحدًا منها و<strong>تحقّق منه بنفسك</strong>: عُدّ الصفوف في إكسل، أو افتح النصّ الرسمي، وقارن.</li>
+            <li>قل: <strong>«التوقيع توقيعكم، والمسؤولية مسؤوليتكم. لا يُعتمد نصٌّ لم يمرّ على عينكم.»</strong></li>
+            <li>واسألهم سؤالًا مفتوحًا: «ما الذي لا تسمحون له أن يقرّره نيابةً عنكم أبدًا؟» — واسمع أجوبتهم.</li>
+          </ol>
+          <div class="st-covers"><b>يغطّي:</b> الإشراف البشري · المسؤولية والتوقيع · التحقّق قبل الاعتماد</div>
+        </div>
+
+        <div class="st hands">
+          <div class="st-h"><span class="st-n">٢٧</span><span class="st-t">سياسة استخدامٍ لقسمك — ثلاثة أسطر تكفي للبدء</span><span class="mode hands">افعله</span></div>
+          <div class="st-sc">مدير عام يسأل: «هل نمنعه أم نسمح به؟» والجواب الصحيح ليس أيًّا منهما، بل: نكتب من يستخدمه ولأيّ غرضٍ وبأيّ صلاحية.</div>
+          <ol class="st-steps">
+            <li>افتح مستندًا فارغًا على الشاشة واكتب أمامهم ثلاثة عناوين: <strong>من · لأيّ غرض · بأيّ صلاحية</strong>.</li>
+            <li><strong>من:</strong> «موظفو الشعبة المكلّفون بالصياغة والتحليل، بعد اطّلاعهم على هذه السياسة.»</li>
+            <li><strong>لأيّ غرض:</strong> «صياغة المخاطبات · تلخيص التقارير · تحليل بياناتٍ مُخفاة الهوية. ولا يُستخدم في قرارٍ نهائيّ بلا مراجعة بشرية.»</li>
+            <li><strong>بأيّ صلاحية:</strong> «يُمنع رفع البيانات الشخصية والسرّية · يُمنع ربط الموصّلات بحسابات العمل · كل مخرَجٍ يُراجَع ويُوقَّع من مسؤولٍ مخوَّل.»</li>
+            <li>ثم اطلب من كلود: <strong>«حوّل هذه النقاط إلى تعميمٍ إداريّ من صفحة واحدة بصياغة رسمية.»</strong> ← ويخرج التعميم أمامهم.</li>
+            <li>قل: <strong>«ثلاثة أسطر واضحة خيرٌ من سياسةٍ من عشرين صفحة لا يقرأها أحد. والباقي يأتي بالتجربة.»</strong></li>
+          </ol>
+          <div class="st-covers"><b>يغطّي:</b> سياسة استخدام مؤسسي · من يستخدم ولأيّ غرضٍ وبأيّ صلاحية</div>
+        </div>
+
+        <!-- ===== الوحدة ١ ===== -->
+        <div class="chapter-num" style="color:var(--blue);margin-top:30px;"><span class="cn-num">١</span><span class="cn-title">تطبيق الطلبة — قوالبك أنت (محطّة ٥)</span></div>
+        <p class="lead-paragraph"><span class="mode hands">بأيديكم</span> &nbsp; في الأسبوع الأول تعلّمتم أن تكتبوا <strong>أمرًا واحدًا جيّدًا</strong>. اليوم مهارة أخرى: أن تنظروا في عملكم فتروا ما <span class="hl hl-green">تكرّرونه كل أسبوع</span>، وتحوّلوه <strong>قالبًا</strong> يبقى معكم.</p>
+        <p class="lead-paragraph">الفرق بين الأمر والقالب: <strong>الأمر يُكتب مرّة لحالة واحدة، والقالب فيه فراغات تملؤها كل مرّة.</strong> الأوامر الأربعة أعلاه قوالب — لاحظوا المظلَّل بالأصفر.</p>
+
+        <div class="drill">
+          <div class="drill-head"><span class="d-n">١</span><span class="d-t">ما الذي تكرّره أنت؟</span><span class="d-time">٥ دقائق</span></div>
+          <ol>
+            <li>افتحوا الملاحظات في هواتفكم.</li>
+            <li>اكتبوا <strong>ثلاث مهام</strong> تكرّرونها في الشهر الواحد أكثر من مرّة: كتاب، تلخيص، ردّ، جدول، تعميم…</li>
+            <li>ضعوا علامة على <strong>أكثرها استهلاكًا لوقتكم</strong>.</li>
+          </ol>
+          <div class="d-out"><b>المخرَج:</b> ثلاثة أسطر في هاتفك. هذه قائمة عملك لبقية الفصل.</div>
+        </div>
+
+        <div class="drill">
+          <div class="drill-head"><span class="d-n">٢</span><span class="d-t">حوّلها قالبًا واختبرها</span><span class="d-time">١٥ دقيقة</span></div>
+          <ol>
+            <li>انسخوا الأمر الجاهز الأقرب لمهمّتكم من البطاقة أعلاه.</li>
+            <li>بدّلوا المظلَّل بمعطياتكم <strong>الحقيقية غير السرّية</strong>.</li>
+            <li>أرسلوه، واقرأوا الجواب.</li>
+            <li>حسّنوه <strong>ثلاث مرّات على الأقل</strong> بجُمل البطاقة رقم ٤ — لا تقبلوا أول جواب.</li>
+            <li>احفظوا <strong>الصيغة النهائية للأمر</strong> في ملاحظاتكم، لا الجواب.</li>
+          </ol>
+          <div class="d-out"><b>المخرَج:</b> قالب واحد جاهز، ونصّ صالح للإرسال. <b>ولماذا نحفظ الأمر لا الجواب؟</b> لأن الجواب يخدم حالة واحدة، والأمر يخدم كل الحالات القادمة.</div>
+        </div>
+
+        <div class="try-box">
+          <div class="try-title">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2"><path d="M9 3h6v5l4 9a2 2 0 0 1-2 3H7a2 2 0 0 1-2-3l4-9z" stroke-linejoin="round"/><path d="M9 3h6" stroke-linecap="round"/></svg>
+            جرّب بنفسك — الجواب الضعيف
+          </div>
+          <div class="try-line"><span class="try-tag try-do">افعل</span><span>اكتب أمرًا ناقصًا عمدًا: «اكتب لي كتاب رسمي». ثم اكتب القالب رقم ١ كاملًا.</span></div>
+          <div class="try-line"><span class="try-tag try-see">سترى</span><span>الأول يعطيك نصًّا عامًّا لا يصلح للإرسال، والثاني يعطيك كتابًا شبه جاهز. <strong>الفرق فيك لا فيه.</strong></span></div>
+        </div>
+
+        <!-- ===== الوحدة ٢ ===== -->
+        <div class="chapter-num" style="color:var(--green);margin-top:32px;"><span class="cn-num">٢</span><span class="cn-title">تطبيق الطلبة — أخفِ هوية جدولك (محطّة ٢٥)</span></div>
+        <p class="lead-paragraph"><span class="mode hands">بأيديكم</span> &nbsp; في الأسبوع الثاني قلنا: <span class="hl hl-pink">ما لا تريد خروجه من الدائرة، لا ترفعه</span>. وهذا <strong>نهيٌ</strong>. واليوم نعطيكم <strong>الطريقة</strong> التي تُبقي بياناتكم عندكم وتسمح لكم بتحليلها.</p>
+        <p class="lead-paragraph">القاعدة سطر واحد: <strong>احذف ما لا يفيد التحليل، ورمّز ما يفيده، وأبقِ ما لا يدلّ على شخص.</strong></p>
+
+        <div class="anon">
+          <div class="anon-row drop"><span class="a-v">احذف</span><span><strong>الهاتف · البريد · رقم الهوية.</strong> اسألوا أنفسكم: هل يغيّر رقم الهاتف نتيجة التحليل؟ لا. إذًا لا مبرّر لرفعه أصلًا.</span></div>
+          <div class="anon-row code"><span class="a-v">رمّز</span><span><strong>الاسم ← رمز متسلسل</strong> (م-٠٠١، م-٠٠٢). وجدول المطابقة يبقى في ملفٍ عندك على جهازك لا تُرفع نسخته.</span></div>
+          <div class="anon-row keep"><span class="a-v">أبقِ</span><span><strong>النوع · التاريخ · الحالة · المنطقة العامة.</strong> هذه هي التحليل نفسه، ولا تدلّ على شخص بعينه.</span></div>
+        </div>
+
+        <p class="dt-cap fake">جدول تدريبي — بيانات وهمية بالكامل، لا تخصّ أشخاصًا حقيقيين</p>
+        <p class="dt-cap">قبل الإخفاء</p>
+        <div class="dt-wrap">
+          <table class="dt">
+            <thead><tr><th>ت</th><th>اسم المواطن</th><th>الهاتف</th><th>العنوان</th><th>نوع الشكوى</th><th>التاريخ</th><th>الحالة</th></tr></thead>
+            <tbody>
+              <tr><td>١</td><td class="gone">أحمد كاظم محمد</td><td class="gone">٠٧٠٠-٠٠٠-٠٠١١</td><td class="gone">بغداد — الكرادة، محلة ٩٠٩، دار ١٢</td><td>تأخير معاملة</td><td>٣ أيلول</td><td>مفتوحة</td></tr>
+              <tr><td>٢</td><td class="gone">سعاد جبار علي</td><td class="gone">٠٧٠٠-٠٠٠-٠٠٢٢</td><td class="gone">بغداد — الأعظمية، محلة ٣١٢، دار ٤</td><td>نقص مستمسكات</td><td>٣ أيلول</td><td>مغلقة</td></tr>
+              <tr><td>٣</td><td class="gone">مروان عبد الله</td><td class="gone">٠٧٠٠-٠٠٠-٠٠٣٣</td><td class="gone">بغداد — الكرادة، محلة ٩١٣، دار ٧</td><td>تأخير معاملة</td><td>٤ أيلول</td><td>مفتوحة</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="dt-cap">بعد الإخفاء — هذا ما يُرفع</p>
+        <div class="dt-wrap">
+          <table class="dt">
+            <thead><tr><th>ت</th><th>الرمز</th><th>المنطقة</th><th>نوع الشكوى</th><th>التاريخ</th><th>الحالة</th></tr></thead>
+            <tbody>
+              <tr><td>١</td><td class="kept">م-٠٠١</td><td class="kept">الكرادة</td><td>تأخير معاملة</td><td>٣ أيلول</td><td>مفتوحة</td></tr>
+              <tr><td>٢</td><td class="kept">م-٠٠٢</td><td class="kept">الأعظمية</td><td>نقص مستمسكات</td><td>٣ أيلول</td><td>مغلقة</td></tr>
+              <tr><td>٣</td><td class="kept">م-٠٠٣</td><td class="kept">الكرادة</td><td>تأخير معاملة</td><td>٤ أيلول</td><td>مفتوحة</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="mini-note">لاحظوا: الجدول الثاني يجيب على كل سؤالٍ إداريّ يهمّكم — أيّ منطقة أكثر شكوى، وأيّ نوعٍ يتكرّر، وكم نسبة المغلق — <strong>بلا اسمٍ واحد</strong>.</div>
+
+        <div class="drill">
+          <div class="drill-head"><span class="d-n">٣</span><span class="d-t">أخفِ الهوية بيدك</span><span class="d-time">١٠ دقائق</span></div>
+          <ol>
+            <li>افتحوا جدولًا في الإكسل: إمّا الجدول أعلاه تنسخونه، أو جدولًا من عملكم <strong>تُخرجون منه الأسماء أولًا</strong>.</li>
+            <li>احذفوا أعمدة الهاتف والعنوان التفصيلي.</li>
+            <li>بدّلوا عمود الأسماء برموز متسلسلة.</li>
+            <li>احفظوا نسخة باسم «للتحليل»، وأبقوا الأصل عندكم مغلقًا.</li>
+          </ol>
+          <div class="d-out"><b>المخرَج:</b> ملف صالح للرفع بأمان. <b>وهذه الخطوة تصير عادة:</b> لا يُرفع ملفٌ إلا وقد مرّ عليها.</div>
+        </div>
+
+        <div class="drill">
+          <div class="drill-head"><span class="d-n">٤</span><span class="d-t">من جدول إلى قرار</span><span class="d-time">١٥ دقيقة</span></div>
+          <ol>
+            <li>ارفعوا الملف المُخفى إلى كلود.</li>
+            <li>الصقوا الأمر الجاهز رقم ٣، وبدّلوا المظلَّل.</li>
+            <li>اقرأوا المؤشّرات الثلاثة. <strong>تحقّقوا من رقمٍ واحدٍ منها بأنفسكم</strong> — عُدّوا الصفوف في الإكسل.</li>
+            <li>اطلبوا الرسم البياني، ثم حسّنوه: «اجعله عموديًّا»، «رتّب من الأكبر»، «أضف العنوان بالعربي».</li>
+          </ol>
+          <div class="d-out"><b>المخرَج:</b> رسم بياني وثلاثة مؤشّرات. <b>ولماذا نتحقّق من رقم؟</b> لأن الهلوسة لا تعلن عن نفسها — تعرفونها من الأسبوع الأول، واليوم تتدرّبون عليها.</div>
+        </div>
+
+        <!-- ===== الوحدة ٣ ===== -->
+        <div class="chapter-num" style="color:var(--purple);margin-top:32px;"><span class="cn-num">٣</span><span class="cn-title">لماذا قسمنا المحطّات قسمين</span></div>
+        <p class="lead-paragraph"><span class="mode watch">عرضٌ على الشاشة</span> &nbsp; هذا القسم <strong>تشاهدونه ولا تطبّقونه</strong> — بعض ما فيه يحتاج اشتراكًا مدفوعًا. الغرض أن تعرفوا إلى أين يمتدّ الطريق، لا أن تعملوه اليوم.</p>
+
+        <div class="screen-legend">
+          <div class="leg-item"><span class="leg-num">١</span><span><b>مشروع بتعليمات دائمة</b> — تكتب مرّة واحدة من أنت وما أسلوبك، فتبدأ كل محادثة داخله وهي عارفة. القالب الذي بنيتموه اليوم يصير <b>تعليمات ثابتة</b> لا تلصقونها كل مرّة.</span></div>
+          <div class="leg-item"><span class="leg-num">٢</span><span><b>مهمّة مجدولة</b> — تُضبط مرّة، فتعمل كل صباح وأنتم نائمون، ويصلكم الناتج جاهزًا.</span></div>
+          <div class="leg-item"><span class="leg-num">٣</span><span><b>كوورك</b> — مهامّ أكبر تصل إلى ملفاتكم وتشتغل في الخلفية بينما أنتم في اجتماع.</span></div>
+        </div>
+        <div class="mini-note" style="color:var(--purple);">الترتيب الطبيعي: أتقنوا القالب أولًا. من لم ينفعه القالب لن ينفعه المشروع، ومن لم ينفعه المشروع لن تنفعه الجدولة.</div>
+
+        <!-- ===== أخطاء اليوم ===== -->
+        <div class="section-heading" style="margin-top:30px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>خمسة أخطاء ستقع اليوم — وعلاجها</span>
+        </div>
+        <div class="oops"><span class="o-i">١</span><div><b>«الجواب عام ولا يصلح.»</b> غالبًا أرسلتم القالب بلا ملء المظلَّل. ارجعوا واملأوه.</div></div>
+        <div class="oops"><span class="o-i">٢</span><div><b>«قبلت أول جواب.»</b> أول جواب مسوّدة لا نتيجة. ثلاث جُمل تحسين تفصل بين نصٍّ عادي ونصٍّ يُوقَّع.</div></div>
+        <div class="oops"><span class="o-i">٣</span><div><b>«رفعت ملفًا فيه أسماء.»</b> توقّفوا، احذفوا المحادثة، وأخفوا الهوية ثم أعيدوا. والأهم: أخبروا مسؤولكم — الخطأ المُبلَّغ عنه أهون من المكتشَف.</div></div>
+        <div class="oops"><span class="o-i">٤</span><div><b>«أعطاني رقمًا لا أصدّقه.»</b> أحسنتم. عُدّوه بأنفسكم في الإكسل. هو مساعد لا مصدر.</div></div>
+        <div class="oops"><span class="o-i">٥</span><div><b>«انتهى رصيدي المجاني.»</b> طبيعي في يوم تطبيق مكثّف. اجلسوا مع زميلٍ وأكملوا على جهازه، وأكملوا في البيت مساءً.</div></div>
+
+        <!-- ===== مصطلحات ===== -->
+        <div class="section-heading" style="margin-top:30px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>مصطلحات هذا الأسبوع بالعربي</span>
+        </div>
+        <ul class="glossary-list">
+          <li><span class="gloss-ar">القالب</span> <span class="gloss-term">(Template)</span>: أمرٌ مكتوب مرّة بفراغات تملؤها كل مرّة، بدل كتابته من الصفر.</li>
+          <li><span class="gloss-ar">إخفاء الهوية</span> <span class="gloss-term">(Anonymization)</span>: إزالة ما يدلّ على شخصٍ بعينه من البيانات، مع إبقاء ما يصلح للتحليل.</li>
+          <li><span class="gloss-ar">جدول المطابقة</span> <span class="gloss-term">(Key file)</span>: الملف الذي يربط الرمز بصاحبه، ويبقى عندك ولا يُرفع أبدًا.</li>
+          <li><span class="gloss-ar">التحقّق المتقاطع</span> <span class="gloss-term">(Verification)</span>: أن تفحص رقمًا واحدًا من نتيجته بنفسك قبل أن تبني عليه قرارًا.</li>
+        </ul>
+
+        <!-- ===== الواجبات ===== -->
+        <div class="section-heading" style="margin-top:30px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>الواجبات التدريبية</span>
+        </div>
+
+        <div class="hw">
+          <div class="hw-head"><span class="hw-num">١</span><span class="hw-title">قوالبك الثلاثة</span><span class="scn-badge lv-easy">بسيط</span></div>
+          <p>أكملوا القوالب الثلاثة التي بدأتموها في الصف، واستعملوا كلّ واحدٍ منها <strong>مرّة واحدة على الأقل في عمل حقيقي</strong> هذا الأسبوع.</p>
+          <div class="hw-deliver"><span class="hw-tag">المُسلَّم</span><span>نصوص القوالب الثلاثة، وسطرٌ لكل واحد: كم دقيقة كانت المهمّة تأخذ قبله، وكم صارت بعده.</span></div>
+        </div>
+
+        <div class="hw">
+          <div class="hw-head"><span class="hw-num">٢</span><span class="hw-title">جدول من عملك، مُخفى الهوية</span><span class="scn-badge lv-mid">متوسط</span></div>
+          <p>خذوا جدولًا حقيقيًّا من قسمكم لا يقلّ عن عشرين صفًّا، وأخفوا هويّته بالقاعدة الثلاثية، ثم استخرجوا منه ثلاثة مؤشّرات ورسمًا بيانيًّا.</p>
+          <div class="hw-deliver"><span class="hw-tag">المُسلَّم</span><span>الجدول بعد الإخفاء (لا الأصل)، والرسم، وفقرة من خمسة أسطر: ما الذي كشفه لك الرقم ولم تكن تعرفه؟</span></div>
+        </div>
+
+        <div class="hw">
+          <div class="hw-head"><span class="hw-num">٣</span><span class="hw-title">اصطدْ هلوسة</span><span class="scn-badge lv-hard">معقّد</span></div>
+          <p>اطرحوا عليه سؤالًا في مجال تخصّصكم <strong>تعرفون جوابه يقينًا</strong> — نظام أو تعليمات أو رقم في دائرتكم — وافحصوا جوابه بدقّة.</p>
+          <div class="hw-deliver"><span class="hw-tag">المُسلَّم</span><span>السؤال، وجوابه، وموضع الخطأ إن وُجد. وإن أصاب تمامًا فقولوا ذلك — النتيجة السلبية نتيجة أيضًا.</span></div>
+        </div>
+
+        <div class="mini-note">نهاية المحاضرة الثالثة — إعداد: أ.م.د أمير هادي ★</div>
+
         <div class="page-nav">
           <button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button>
           <button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button>
@@ -3901,6 +4985,295 @@
         <div class="footer-note">٧</div>
       </div>
       <!-- ============ END SLIDE 7 ============ -->
+
+      <!-- ============ SLIDE SOL : الحلول والتعليل ============ -->
+      <div id="slide-sol" class="slide content-slide rich-slide">
+        <span class="chip" style="background:var(--teal);">دليل مراجعة</span>
+        <h2 class="page-title" style="color:var(--teal);">الحلول والتعليل</h2>
+        <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--teal)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
+        <p class="lead-paragraph">حلول أسئلة المراجعة للأسبوعين الأول والثاني، <span class="hl hl-yellow">مع تعليل كل إجابة</span> — لماذا الصحيح صحيح، ولماذا الخيارات الأخرى ليست كذلك. هذا التبويب <strong>خارج ترقيم الأسابيع</strong>، دليلٌ للمراجعة لا محاضرة جديدة.</p>
+
+        <!-- ============================================================
+             الأسبوع الأول
+             ============================================================ -->
+        <div class="sol-week"><span class="sw-n">١</span><span class="sw-t">حلول الأسبوع الأول</span></div>
+
+        <div class="sol-kind"><span>الاختيار من متعدّد</span><span class="sk-line"></span></div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">١.</span> النموذج اللغوي الكبير (LLM) يعمل بشكل أساسي عن طريق:</p>
+          <div class="sol-opts">
+            <div class="sol-opt bad"><span class="so-k">أ)</span><span>فهم النص فهمًا بشريًا حقيقيًا</span></div>
+            <div class="sol-opt ok"><span class="so-k">ب)</span><span>توقّع الكلمة التالية بناءً على أنماط تعلّمها من نصوص سابقة</span></div>
+            <div class="sol-opt bad"><span class="so-k">ج)</span><span>البحث في الإنترنت لحظيًا عن كل إجابة</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>حفظ كل إجابة سبق أن أعطاها لأي مستخدم</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> هذا تعريفه حرفيًّا. «أ» خطأ لأنه لا يفهم فهمًا بشريًّا. «ج» خطأ لأنه لا يبحث لحظيًّا — البحث أداة منفصلة تُضاف عند الحاجة. «د» خطأ لأنه لا يحفظ إجابات المستخدمين ولا يستدعيها لاحقًا.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٢.</span> "الهلوسة" (Hallucination) في الذكاء الاصطناعي تعني:</p>
+          <div class="sol-opts">
+            <div class="sol-opt bad"><span class="so-k">أ)</span><span>توقّف البرنامج عن العمل فجأة</span></div>
+            <div class="sol-opt ok"><span class="so-k">ب)</span><span>إعطاء إجابة خاطئة بثقة تامة وكأنها صحيحة</span></div>
+            <div class="sol-opt bad"><span class="so-k">ج)</span><span>طلب البرنامج توضيحًا إضافيًا من المستخدم</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>رفض البرنامج الإجابة على سؤال معيّن</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> الخطورة في <b>الثقة</b> لا في الخطأ وحده — لو قال «لست متأكّدًا» لما سُمّيت هلوسة. «د» (رفض الإجابة) سلوكٌ مختلف تمامًا ولا ضرر فيه.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٣.</span> أي أداة من أدوات كلود الأنسب لتنظيم ملفاتك وجدولة مهام تتكرر يوميًا تلقائيًا؟</p>
+          <div class="sol-opts">
+            <div class="sol-opt bad"><span class="so-k">أ)</span><span>كلود شات (Chat)</span></div>
+            <div class="sol-opt ok"><span class="so-k">ب)</span><span>كلود كوورك (Cowork)</span></div>
+            <div class="sol-opt bad"><span class="so-k">ج)</span><span>كلود كود (Claude Code)</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>كلها بنفس القدرة</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> كوورك وحده يجمع ثلاثًا: يصل إلى ملفاتك، ويشتغل بالخلفية، وتُبنى عليه الجدولة. «أ» الشات محادثة لا تصل للملفات. «ج» الكود أداة مبرمجين.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٤.</span> حسب "القواعد الذهبية الأربع" لكتابة أمر ناجح، أول خطوة هي:</p>
+          <div class="sol-opts">
+            <div class="sol-opt bad"><span class="so-k">أ)</span><span>تقديم مثال</span></div>
+            <div class="sol-opt bad"><span class="so-k">ب)</span><span>تحديد شكل الإجابة المطلوبة</span></div>
+            <div class="sol-opt ok"><span class="so-k">ج)</span><span>تحديد الموقف والسياق</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>تحديد طول الإجابة فقط</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> الترتيب مقصود — من أنت ولمن تكتب أوّلًا، ثم المهمة، ثم الشكل والطول. لو بدأت بـ«ب» أو «د» أعطاك نصًّا مضبوط الطول لكن خاطئ المضمون.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٥.</span> أي نموذج من نماذج كلود هو "الافتراضي" المتوازن لمعظم المهام اليومية؟</p>
+          <div class="sol-opts">
+            <div class="sol-opt bad"><span class="so-k">أ)</span><span>هايكو (Haiku)</span></div>
+            <div class="sol-opt ok"><span class="so-k">ب)</span><span>سونيت (Sonnet)</span></div>
+            <div class="sol-opt bad"><span class="so-k">ج)</span><span>أوبس (Opus)</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>لا فرق بين النماذج</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> هايكو للسرعة، وأوبس للدقّة في المسائل المعقّدة، وسونيت التوازن الافتراضي بينهما.</p>
+        </div>
+
+        <div class="sol-kind"><span>صح أو خطأ</span><span class="sk-line"></span></div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">١.</span> النموذج اللغوي الكبير "يفكّر" بنفس طريقة تفكير الإنسان.</p><span class="sol-badge f">خطأ</span></div>
+          <p class="sol-why">يتوقّع الكلمة التالية إحصائيًّا، ولا وعي عنده ولا فهم بالمعنى البشري.</p>
+        </div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٢.</span> يجب دائمًا التحقق من المعلومات الحسّاسة اللي يقدّمها الذكاء الاصطناعي من مصدر موثوق.</p><span class="sol-badge t">صح</span></div>
+          <p class="sol-why">هو مساعد لا مصدر — كل رقم واسم وتاريخ يخرج منه يُتحقَّق منه بنفسك قبل البناء عليه.</p>
+        </div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٣.</span> "التفكير الممتد" يُفضَّل تفعيله بكل سؤال لأنه لا يكلّف شيئًا إضافيًا.</p><span class="sol-badge f">خطأ</span></div>
+          <p class="sol-why">أبطأ ويستهلك أكثر. يُفعَّل للمسائل المركّبة لا لسؤالٍ عابر، وعبارة «لا يكلّف شيئًا» غلطٌ صريح في العبارة نفسها.</p>
+        </div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٤.</span> نافذة السياق الكبيرة تعني أن كلود يتذكر كل شيء للأبد حتى بعد إغلاق المحادثة.</p><span class="sol-badge f">خطأ</span></div>
+          <p class="sol-why">النافذة ذاكرة <b>المحادثة الواحدة</b> فقط: تمتلئ فيفقد أوّلها، وتنتهي بإغلاقها — لا تبقى للأبد.</p>
+        </div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٥.</span> الإرسال إلى وكلاء فرعيين يساعد على إبقاء المحادثة الأساسية مركّزة.</p><span class="sol-badge t">صح</span></div>
+          <p class="sol-why">العمل الثقيل يخرج من المحادثة الأساسية إلى وكيلٍ فرعي، فلا تمتلئ نافذة سياقها بتفاصيل جانبية.</p>
+        </div>
+
+        <div class="sol-kind"><span>أسئلة السيناريو</span><span class="sk-line"></span></div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">١.</span> موظف بدائرتك كتب لكلود: «اكتب لي كتاب رسمي» بدون أي تفاصيل أخرى، وحصل على نتيجة عامة جدًا ما تناسب طبيعة عمله. ما الخطأ بهذا الأمر، وكيف يصححه؟</p>
+          <p class="sol-why"><b>الخطأ:</b> الأمر خالٍ من القواعد الأربع — لا دور ولا جمهور ولا مهمة محدّدة ولا حدود. <b>التصحيح:</b> «اكتب كتابًا رسميًّا من مدير قسم التدريب إلى مدير الدائرة بشأن كذا. المعطيات: … الشروط: ثلاث فقرات، رسمي موجز، بلا مبالغة، ولا يزيد على ١٥٠ كلمة.» ثم يحسّنه بالتكرار ولا يقبل أوّل جواب.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٢.</span> مدير يستخدم كلود لتلخيص تقرير طويل، وبعد ٤٠ دقيقة لاحظ أن الإجابات بدأت تفقد دقتها وتتجاهل تفاصيل ذكرها بالبداية. ما تفسير هذا، وما الإجراء المناسب؟</p>
+          <p class="sol-why"><b>التفسير:</b> امتلأت نافذة السياق، فبدأ يفقد أوّل الكلام — ليس عطلًا ولا تراجعًا في جودته. <b>الإجراء:</b> محادثة جديدة للموضوع الجديد، وتلخيص النقاط المهمّة ولصقها في المحادثة الجديدة، وتقسيم التقرير الطويل أجزاءً بدل دفعة واحدة.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٣.</span> موظف اعتمد على رقم مالي أعطاه كلود دون التحقق منه، وتبيّن لاحقًا أنه غير دقيق. أي مبدأ من مبادئ المحاضرة كان يجب اتّباعه؟</p>
+          <p class="sol-why"><b>المبدأ:</b> الإشراف البشري والتحقّق قبل الاعتماد. الرقم يخرج بثقة تامّة ولا يُنبّهك أنه قد يكون خاطئًا، والتوقيع توقيعه والمسؤولية مسؤوليته. الواجب أن يعدّ الرقم بنفسه من المصدر قبل البناء عليه.</p>
+        </div>
+
+        <div class="sol-kind"><span>الأسئلة المقالية — نقاط التصحيح</span><span class="sk-line"></span></div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">١.</span> اشرح بأسلوبك الخاص الفرق بين "عقلية اللقطة الواحدة" و"عقلية التكرار"، ومثّل لكل منهما بموقف من عملك اليومي.</p>
+          <ul class="sol-grading">
+            <li><b>تعريف كلٍّ منهما:</b> اللقطة الواحدة تتوقّع النتيجة الكاملة من أول أمر، والتكرار يعامل الأمر محادثةً لا طلبًا نهائيًّا.</li>
+            <li><b>مثالان من عمله هو</b> — لا مثال معمَّم من المحاضرة.</li>
+            <li>ربط بالقواعد الذهبية: كتاب رسمي يُحسَّن بثلاث جُمل («أقصر» ← «أرسمي» ← «احذف الفقرة الثانية»).</li>
+            <li>استنتاج أنّ التكرار <b>أسرع فعليًّا</b> رغم أنه يبدو أطول خطوةً بخطوة.</li>
+          </ul>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٢.</span> ناقش كيف يمكن الاستفادة من أداة "المشاريع" (Projects) بتنظيم عمل دائرة حكومية تتعامل مع نفس نوع المعاملات بشكل متكرر.</p>
+          <ul class="sol-grading">
+            <li>المشروع بيئة عمل لموضوع واحد، لا محادثة عابرة.</li>
+            <li><b>التعليمات الثابتة</b> تُكتب مرّة فتنطبق على كل محادثة داخله.</li>
+            <li><b>الملفات المرجعية</b> تصير قاعدة معرفة يرجع إليها كل طلب.</li>
+            <li>تطبيقٌ على معاملة متكرّرة بعينها من عمل الطالب، لا وصفٌ نظري.</li>
+            <li>ذكر مكسب التوحيد: الصياغة تصير واحدة مهما تغيّر الموظّف الذي يكتب.</li>
+          </ul>
+        </div>
+
+        <!-- ============================================================
+             الأسبوع الثاني
+             ============================================================ -->
+        <div class="sol-week"><span class="sw-n">٢</span><span class="sw-t">حلول الأسبوع الثاني</span></div>
+
+        <div class="sol-kind"><span>الاختيار من متعدّد</span><span class="sk-line"></span></div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">١.</span> مهمة في كوورك حالتها «تحتاج ردّك» (Needs input) تعني:</p>
+          <div class="sol-opts">
+            <div class="sol-opt bad"><span class="so-k">أ)</span><span>أنها فشلت ويجب حذفها</span></div>
+            <div class="sol-opt ok"><span class="so-k">ب)</span><span>أنها متوقّفة بانتظار قرار منك لتكمل</span></div>
+            <div class="sol-opt bad"><span class="so-k">ج)</span><span>أنها اكتملت واعتُمدت</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>أنها مؤرشفة</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> «أ» خطأ لأن التوقّف ليس فشلًا. وهذه الحالة عمليًّا <b>قائمة عملك اليومية</b> — المهمّة واقفة بسببك أنت لا بسبب البرنامج.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٢.</span> إعداد «طلب أجهزة موثوقة» (Require trusted devices) وظيفته:</p>
+          <div class="sol-opts">
+            <div class="sol-opt bad"><span class="so-k">أ)</span><span>تسريع فتح التطبيق</span></div>
+            <div class="sol-opt ok"><span class="so-k">ب)</span><span>التحقّق من كل جهاز جديد قبل السماح له ببدء جلسة تصل لملفاتك</span></div>
+            <div class="sol-opt bad"><span class="so-k">ج)</span><span>تغيير لون الواجهة</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>زيادة رصيد الاستخدام</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> والأثر عند إطفائه ليس تسريب محادثة واحدة، بل <b>وصولٌ إلى مجلّدات دائرتك كلّها</b> من أي جهاز جديد.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٣.</span> رابط تصدير البيانات (Export data) يصلك:</p>
+          <div class="sol-opts">
+            <div class="sol-opt ok"><span class="so-k">أ)</span><span>على بريدك الإلكتروني، ويبطل بعد ٢٤ ساعة</span></div>
+            <div class="sol-opt bad"><span class="so-k">ب)</span><span>داخل المحادثة ويبقى دائمًا</span></div>
+            <div class="sol-opt bad"><span class="so-k">ج)</span><span>برسالة نصّية على هاتفك</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>لا يمكن تصدير البيانات إطلاقًا</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> القاعدة العملية: نزّله فور وصوله، وإلا أعدت الطلب من جديد بعد انقضاء المهلة.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٤.</span> أي خيار في «المهارات» هو الأنسب لموظف مبتدئ يريد بناء مهارة أول مرة؟</p>
+          <div class="sol-opts">
+            <div class="sol-opt bad"><span class="so-k">أ)</span><span>Upload skill</span></div>
+            <div class="sol-opt bad"><span class="so-k">ب)</span><span>Create a skill</span></div>
+            <div class="sol-opt ok"><span class="so-k">ج)</span><span>Create with Claude</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>Browse فقط</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> كلود يكتبها معه ويصحّحها خطوةً بخطوة. «أ» الرفع يفترض مهارة جاهزة أصلًا، «ب» الإنشاء اليدوي يفترض خبرة سابقة، «د» التصفّح لا يُنشئ شيئًا جديدًا.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٥.</span> «إعادة الشحن التلقائي» (Auto-reload) في الفوترة تعني:</p>
+          <div class="sol-opts">
+            <div class="sol-opt bad"><span class="so-k">أ)</span><span>إعادة تحميل الصفحة تلقائيًا</span></div>
+            <div class="sol-opt ok"><span class="so-k">ب)</span><span>شراء أرصدة استخدام تلقائيًا عند اقتراب رصيدك من النفاد</span></div>
+            <div class="sol-opt bad"><span class="so-k">ج)</span><span>حفظ المحادثات تلقائيًا</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>تحديث التطبيق تلقائيًا</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> خطرها أنها تتجدّد بصمتٍ فلا تنتبه إلا في الفاتورة — ولهذا يُنصَح بإطفائها حتى تُعرف حدود الاستهلاك الطبيعي أوّلًا.</p>
+        </div>
+
+        <div class="sol-kind"><span>صح أو خطأ</span><span class="sk-line"></span></div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">١.</span> «ديسباتش» و«كوورك» واجهتان مستقلّتان في الشريط الجانبي.</p><span class="sol-badge t">صح</span></div>
+          <p class="sol-why">كلٌّ منهما بندٌ قائم بذاته في الشريط الجانبي السبعة، ولهما وظيفتان مختلفتان.</p>
+        </div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٢.</span> المهمة المؤرشفة تُحذف نهائيًا ولا يمكن استرجاعها.</p><span class="sol-badge f">خطأ</span></div>
+          <p class="sol-why">الأرشفة <b>إخفاء من القائمة دون حذف</b> فقط — المهمّة تبقى موجودة، ويمكن العودة إليها. الحذف إجراء منفصل تمامًا.</p>
+        </div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٣.</span> تصنيف حالة الجلسة تلقائيًا يُحتسب من رصيد استخدام خطتك.</p><span class="sol-badge t">صح</span></div>
+          <p class="sol-why">نصّ الملزمة صريح: «يحدّد تلقائيًّا: متوقّفة، جاهزة للمراجعة، أو منتهية. <b>يُحتسب من رصيد استخدامك</b>».</p>
+          <div class="sol-deep">
+            <div class="sd-h">مثال يفكّ الالتباس</div>
+            <p>الطالب يقرأها فيحسبها إعدادًا شكليًّا مثل تغيير لون الواجهة، والفرق جوهري.</p>
+            <p>تخيّل عندك في الدائرة <b>موظّف أرشيف</b>. كل يوم يمرّ على الإضبارات ويكتب على كل واحدة: «مكتملة» · «ناقصة» · «تنتظر توقيعًا». هذا الموظّف <b>يشتغل</b>، وشغله يُحسب من دوامه — حتى لو أنت ما طلبت منه شيئًا اليوم، لأنه يقرأ ويحكم من نفسه.</p>
+            <p>تصنيف حالة الجلسة هو هذا بالضبط: كلود <b>يقرأ الجلسة ويحكم عليها</b>. والقراءة والحكم طلبٌ منه، والطلب يُحتسب من رصيدك — أنت ما كتبت شيئًا، لكنه اشتغل.</p>
+            <span class="sd-rule">القاعدة: كل إعداد يجعله يقرأ أو يحكم أو يولّد → يستهلك. وكل إعداد يغيّر العرض أمامك فقط (وضع اللون، مظهر الكود) → لا يستهلك.</span>
+          </div>
+        </div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٤.</span> مراجعة الجلسات النشطة إجراء أمني ينبغي تكراره دوريًا.</p><span class="sol-badge t">صح</span></div>
+          <p class="sol-why">كما تراجع كشف حسابك في المصرف — جهازٌ لا تعرفه يعني وصولًا إلى ملفاتك ومحادثاتك، لا محادثة واحدة فقط.</p>
+        </div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٥.</span> تفعيل إعدادات الخصوصية يبيح رفع البيانات السرّية للدائرة.</p><span class="sol-badge f">خطأ</span></div>
+          <p class="sol-why">تحمي من الاستخدام اللاحق فقط، ولا تجعل الرفع نفسه مقبولًا. <b>ما لا تريد خروجه من الدائرة، لا ترفعه أصلًا.</b></p>
+          <div class="sol-deep">
+            <div class="sd-h">مثال يفكّ الالتباس</div>
+            <p>الطالب يقرأ «بياناتك لن تُستخدم للتدريب» فيستنتج: «إذن الرفع صار آمنًا، أرفع أي شي.» والاستنتاج غلط، لأنه خلط بين سؤالين مختلفين.</p>
+            <p><b>مثال صندوق الأمانات:</b> تروح للمصرف وتفتح صندوق أمانات، ويوقّع لك المصرف تعهّدًا: «لن نفتح صندوقك ولن نطّلع على ما فيه.» ممتاز، والمصرف أمين فعلًا. السؤال الآن: هل هذا التعهّد يبيح لك أن تضع فيه <b>إضبارات المواطنين التي بعهدتك</b>؟ لا — لأن السؤال ليس «هل المصرف أمين؟»، بل «هل يجوز لك أصلًا أن تُخرج هذه الإضبارات من الدائرة؟»</p>
+            <p><b>مثال إداري:</b> موظّفة عندها كشف رواتب فيه أسماء ورواتب أربعين موظّفًا، وتريد معدّلات ومقارنات. تطمئنّ لإعداد الخصوصية وترفع الكشف كاملًا. لا أحد اطّلع عليه، ولا الشركة خالفت وعدها — لكن <b>الملف خرج من شبكة الدائرة</b>، وهذه مخالفة إدارية وحدها لا تُصلحها أي إعدادات. الصواب: تحذف عمود الأسماء وترفع الرواتب وحدها — نفس التحليل، ولا شيء يدلّ على أحد.</p>
+            <span class="sd-rule">القاعدة: الإذن ليس من الشركة. الإذن من دائرتك. اسأل نفسك: «منو يوقّع على إخراج هذا الملف — أنثروبيك أم مديري؟»</span>
+          </div>
+        </div>
+
+        <div class="sol-kind"><span>أسئلة السيناريو</span><span class="sk-line"></span></div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">١.</span> موظف يفتح ملف الردود كل صباح، يفحصه يدويًا، ويكتب ملخّصًا — عشر دقائق يوميًا. أي واجهة تحلّ له هذا، وكيف يُعدّها؟</p>
+          <p class="sol-why"><b>الواجهة:</b> المهام المجدولة داخل كوورك. <b>الإعداد:</b> مشروع فيه الملف ← نصّ المهمة (ماذا يفحص وماذا يرسل وبأي صيغة) ← ضبط المُشغِّل: كل يوم الساعة ٨ ← تشغيلة يدوية واحدة للتحقّق ← مراجعة سجلّ التشغيلات بعد أول يوم. المكسب: عشر دقائق × ٢٢ يومًا ≈ أربع ساعات شهريًّا.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٢.</span> مديرة فتحت «الجلسات النشطة» فوجدت جهازًا وموقعًا لا تعرفهما. ما دلالة ذلك، وما الإجراءات الواجبة فورًا؟</p>
+          <p class="sol-why"><b>الدلالة:</b> حسابها مفتوح على جهاز لا تملكه، والجلسة تصل إلى ملفاتها ومحادثاتها كلّها لا إلى محادثة واحدة. <b>الإجراءات بالترتيب:</b> إنهاء الجلسة فورًا ← تغيير كلمة المرور ← مراجعة القائمة ثانيةً ← تفعيل «طلب أجهزة موثوقة» ← إبلاغ الجهة المسؤولة إن كان حساب عمل.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٣.</span> موظف يريد أن تبقى مهامه على حاسوب الدائرة ولا تكمل في السحابة بعد إغلاق الجهاز. أي إعداد يستخدم، وما الأثر المترتّب عليه؟</p>
+          <p class="sol-why"><b>الإعداد:</b> «على حاسوبك فقط» (Only on your computer) في إعدادات كوورك. <b>الأثر:</b> المهام تبقى على جهازه وتتوقّف عند إغلاقه، ولا تكمل في السحابة — فيكسب السيطرة على مكان تنفيذها ويخسر استمراريتها. من يريد مهمّة تكمل وهو نائم، هذا الإعداد ضدّه لا معه.</p>
+        </div>
+
+        <div class="sol-kind"><span>الأسئلة المقالية — نقاط التصحيح</span><span class="sk-line"></span></div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">١.</span> اختر مهمة إدارية متكرّرة في دائرتك واشرح كيف تحوّلها إلى مهمة مجدولة: ماذا تفعل، متى تعمل، وكيف تتحقّق من نتيجتها.</p>
+          <ul class="sol-grading">
+            <li><b>اختيار مهمّة متكرّرة فعلًا</b> لا مهمّة تُنجَز مرّة واحدة.</li>
+            <li>الخطوات الخمس بالترتيب: مشروع ← نصّ المهمة ← المُشغِّل ← تشغيلة يدوية ← مراجعة السجلّ.</li>
+            <li>تحديد <b>الموعد والتكرار</b> صراحةً لا بعبارة عامّة.</li>
+            <li>طريقة التحقّق: سجلّ التشغيلات، ومقارنة الناتج بالواقع مرّة على الأقل.</li>
+          </ul>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٢.</span> ناقش الإعدادات التي يجب على دائرة حكومية ضبطها قبل السماح لموظفيها باستخدام كلود في العمل الرسمي، ولماذا كل واحد منها.</p>
+          <ul class="sol-grading">
+            <li><b>طلب أجهزة موثوقة</b> — الجلسة تصل إلى الملفات لا محادثة واحدة.</li>
+            <li><b>مراجعة الجلسات النشطة</b> دوريًّا لا مرّة واحدة.</li>
+            <li><b>منع ربط الموصّلات بحسابات العمل</b> — الصلاحية تُمنح للصندوق كلّه لا لرسالة واحدة.</li>
+            <li><b>إعادة الشحن التلقائي مطفأة</b> حتى يُعرف الاستهلاك الطبيعي أوّلًا.</li>
+            <li>سياسة مكتوبة تحدّد من يستخدم ولأي غرض وبأي صلاحية.</li>
+            <li>درجة إضافية لمن ذكر أنّ الإعدادات وحدها لا تُغني عن <b>تصنيف البيانات وإخفاء الهوية</b> قبل الرفع.</li>
+          </ul>
+        </div>
+
+        <div class="page-nav">
+          <button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button>
+          <button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button>
+        </div>
+        <div class="footer-note">🔑</div>
+      </div>
+      <!-- ============ END SLIDE SOL ============ -->
+
 
       <!-- ============ SLIDE 8 : الأسبوع الثامن ============ -->
       <div id="slide-8" class="slide content-slide">
@@ -4136,12 +5509,9 @@
    عند التمرير بدل أن يبقى ملزوقاً بالعرض.
    ============================================================ */
 (function(){
-  /* القلم أداة شرح للمدرّس لا للطالب: لا يظهر إلا إذا حمل الرابط كلمة pen.
-     الرابط العادي يبقى كما كان تماماً — لا شريط ولا طبقة ولا مستمع أحداث.
-     تُقبل ‎?pen و‎?pen=1 و‎#pen حتى لا يهم كيف كُتبت. */
-  var q = location.search + ' ' + location.hash;
-  if(!/(^|[?&#])pen\b/.test(q)) return;
-
+  /* القلم متاح للجميع — يشرح به المدرّس، ويؤشّر به الطالب على نسخته
+     الخاصة للمراجعة. الرسم محلّي على جهاز كل شخص (localStorage) ولا
+     يغادره، فتأشير طالبٍ لا يظهر عند طالبٍ آخر ولا عند المدرّس. */
   var SVGNS = 'http://www.w3.org/2000/svg';
   var STORE = 'ann:week1:';
 
@@ -5354,6 +6724,57 @@
   });
 
   paint();
+})();
+</script>
+
+
+<script>
+/* نسخ الأمر الجاهز بضغطة: الطالب واقف بهاتفه، وكتابة عشرة أسطر بيده
+   تعني أنه لن يبدأ أصلًا. نأخذ النصّ من الصندوق لا من متغيّر، فلا يفترقان. */
+(function(){
+  var cards = document.querySelectorAll('.pr');
+  if(!cards.length) return;
+
+  function copy(text){
+    if(navigator.clipboard && window.isSecureContext)
+      return navigator.clipboard.writeText(text);
+    /* متصفّح قديم أو صفحة غير مؤمّنة: الطريقة الاحتياطية */
+    return new Promise(function(res, rej){
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly', '');
+      ta.style.cssText = 'position:fixed;top:-1000px;opacity:0';
+      document.body.appendChild(ta);
+      ta.select(); ta.setSelectionRange(0, ta.value.length);
+      var ok = false;
+      try{ ok = document.execCommand('copy'); }catch(e){}
+      ta.remove();
+      ok ? res() : rej();
+    });
+  }
+
+  cards.forEach(function(card){
+    var btn = card.querySelector('.pr-copy');
+    var body = card.querySelector('.pr-body');
+    if(!btn || !body) return;
+    var timer = null;
+    btn.addEventListener('click', function(){
+      copy(body.innerText).then(function(){
+        btn.textContent = '✓ نُسخ';
+        btn.classList.add('done');
+      }).catch(function(){
+        /* تعذّر النسخ: نُظهر النصّ محدَّدًا ليأخذه بيده */
+        btn.textContent = 'انسخه يدويًّا';
+        var r = document.createRange(); r.selectNodeContents(body);
+        var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+      }).then(function(){
+        clearTimeout(timer);
+        timer = setTimeout(function(){
+          btn.textContent = 'نسخ'; btn.classList.remove('done');
+        }, 2200);
+      });
+    });
+  });
 })();
 </script>
 
