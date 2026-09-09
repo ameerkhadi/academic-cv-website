@@ -648,6 +648,31 @@
   }
 
   /* ---------- "try it" cards: action -> result ---------- */
+  /* إعلان مثبَّت أعلى الأسبوع — لافتٌ بألوان الخطر لأنه رسالة إدارية عاجلة،
+     لا شرحًا يُقرأ متى تيسّر. */
+  .announce-box{
+    width:100%; margin:10px 0 20px;
+    border:2.5px solid var(--red); border-radius:5px 14px 5px 14px/14px 5px 14px 5px;
+    background:rgba(209,52,43,0.055);
+    padding:13px 15px 14px;
+  }
+  .announce-head{
+    display:flex; align-items:center; gap:8px;
+    color:var(--red); font-weight:700;
+    font-family:'Aref Ruqaa',serif;
+    font-size:calc(clamp(15px,3.4vw,18px) * var(--fs,1));
+    margin-bottom:8px;
+  }
+  .announce-box p{
+    margin:0 0 8px; font-size:calc(14px * var(--fs,1)); line-height:1.95; color:var(--ink);
+  }
+  .announce-box p:last-of-type{ margin-bottom:0; }
+  .announce-sign{
+    margin-top:10px; padding-top:8px; border-top:1px dashed rgba(209,52,43,0.35);
+    font-size:calc(12.5px * var(--fs,1)); color:rgba(26,61,140,0.75); line-height:1.8;
+  }
+  .announce-sign b{ color:var(--ink); }
+
   .try-box{
     width:100%;
     border:2px solid var(--purple);
@@ -2237,7 +2262,7 @@
     .q-item, .sf-row, .leg-item, .mini-note, .map-tree li, .ex-card, .fb-grid,
     .pe-card, .pe-built, .pick-row, .cost-item, .pick-rule,
     .lab, .tf-st, .sort-bin, .ord-step, .mcq-opt,
-    .pr, .drill, .oops, .anon-row, .st, li{
+    .pr, .drill, .oops, .anon-row, .st, .announce-box, li{
       break-inside:avoid; page-break-inside:avoid;
     }
     /* عنوان في ذيل الصفحة ومحتواه في التي بعدها: يُدفع العنوان معه */
@@ -4071,6 +4096,17 @@
         <h2 class="page-title">الأسبوع الثالث</h2>
         <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
         <p class="lead-paragraph">اليوم <span class="hl hl-yellow">لا نشرح، بل نشتغل</span>. نفتح كلود على الشاشة، ونطبّق أمامكم، ثم تطبّقون أنتم — والمقياس واحد: أن تخرجوا بشيءٍ <strong>تستعملونه في مكتبكم غدًا</strong>، لا بفهمٍ تنسونه بعد أسبوع.</p>
+
+        <div class="announce-box">
+          <div class="announce-head">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2"><path d="M3 11v2a2 2 0 0 0 2 2h1l3 5V4l-3 5H5a2 2 0 0 0-2 2z"/><path d="M12 8a4 4 0 0 1 0 8" stroke-linecap="round"/><path d="M15 5a8 8 0 0 1 0 14" stroke-linecap="round"/></svg>
+            <span>إعلان</span>
+          </div>
+          <p>الأسبوع الثالث محاضرة تطبيقية.</p>
+          <p>يكفي أن تراجعوا محاضرتَي الأسبوع الأول والثاني والتمارين الواردة فيهما.</p>
+          <p>إن أحببتم تجربة شيء، استعدّوا لتخبرونا به خلال <strong>٩٠ ثانية</strong> فقط.</p>
+          <div class="announce-sign">مع التقدير،<br><b>د. أمير هادي</b><br>٩ أيلول ٢٠٢٦ — ١:٥٦ ظهرًا (بتوقيت بغداد)</div>
+        </div>
 
         <div class="ba-pair">
           <div class="bubble b-before"><span class="ba-tag">الأسبوع ١ و٢</span>فهمتم كيف يشتغل، وعرفتم أين تجدون كل شيء.</div>
