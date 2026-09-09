@@ -20,6 +20,7 @@
     --ruleline:rgba(63,143,214,0.28);
     --ink:#1a3d8c;
     --bark:#8a5a2b;
+    --teal:#0f7a72;
   }
 
   *{box-sizing:border-box;}
@@ -248,14 +249,15 @@
   .tab:nth-child(5){background:var(--red); transform:rotate(-1.5deg) translateY(6px);}
   .tab:nth-child(6){background:var(--pink); transform:rotate(1.2deg) translateY(6px);}
   .tab:nth-child(7){background:var(--lightblue); transform:rotate(-1deg) translateY(6px);}
-  .tab:nth-child(8){background:var(--blue); transform:rotate(1.4deg) translateY(6px);}
-  .tab:nth-child(9){background:var(--green); transform:rotate(-1.5deg) translateY(6px);}
-  .tab:nth-child(10){background:var(--orange); transform:rotate(1.2deg) translateY(6px);}
-  .tab:nth-child(11){background:var(--purple); transform:rotate(-1deg) translateY(6px);}
-  .tab:nth-child(12){background:var(--red); transform:rotate(1.4deg) translateY(6px);}
-  .tab:nth-child(13){background:var(--pink); transform:rotate(-1.5deg) translateY(6px);}
-  .tab:nth-child(14){background:var(--lightblue); transform:rotate(1.2deg) translateY(6px);}
-  .tab:nth-child(15){background:var(--blue); transform:rotate(-1deg) translateY(6px);}
+  .tab:nth-child(8){background:var(--teal); transform:rotate(1.4deg) translateY(6px);}   /* الحلول والتعليل — لون مستقلّ عن الدورة */
+  .tab:nth-child(9){background:var(--blue); transform:rotate(-1.5deg) translateY(6px);}
+  .tab:nth-child(10){background:var(--green); transform:rotate(1.2deg) translateY(6px);}
+  .tab:nth-child(11){background:var(--orange); transform:rotate(-1deg) translateY(6px);}
+  .tab:nth-child(12){background:var(--purple); transform:rotate(1.4deg) translateY(6px);}
+  .tab:nth-child(13){background:var(--red); transform:rotate(-1.5deg) translateY(6px);}
+  .tab:nth-child(14){background:var(--pink); transform:rotate(1.2deg) translateY(6px);}
+  .tab:nth-child(15){background:var(--lightblue); transform:rotate(-1deg) translateY(6px);}
+  .tab:nth-child(16){background:var(--blue); transform:rotate(1.4deg) translateY(6px);}
 
   .tab.active{
     opacity:1;
@@ -650,6 +652,96 @@
   /* ---------- "try it" cards: action -> result ---------- */
   /* إعلان مثبَّت أعلى الأسبوع — لافتٌ بألوان الخطر لأنه رسالة إدارية عاجلة،
      لا شرحًا يُقرأ متى تيسّر. */
+  /* ---------- تبويب الحلول والتعليل ---------- */
+  .sol-week{
+    display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+    margin:26px 0 4px; padding-bottom:6px; border-bottom:2.5px solid var(--ink);
+  }
+  .sol-week:first-of-type{ margin-top:6px; }
+  .sol-week .sw-n{
+    font-family:'Aref Ruqaa Ink','Aref Ruqaa',serif;
+    font-size:calc(24px * var(--fs,1)); color:var(--teal); line-height:1;
+  }
+  .sol-week .sw-t{
+    font-family:'Aref Ruqaa',serif; font-weight:700;
+    font-size:calc(18px * var(--fs,1)); color:var(--ink);
+  }
+  .sol-kind{
+    display:flex; align-items:center; gap:8px;
+    margin:20px 0 10px;
+    font-family:'Aref Ruqaa',serif; font-weight:700; color:var(--teal);
+    font-size:calc(15.5px * var(--fs,1));
+  }
+  .sol-kind .sk-line{ flex:1 1 auto; height:1.5px; background:rgba(15,122,114,0.25); }
+
+  /* بطاقة سؤال-جواب موحّدة، بلون جانبي حسب النوع */
+  .sol-item{
+    width:100%; margin:0 0 12px;
+    border:1.5px solid rgba(26,61,140,0.2); border-inline-start:5px solid var(--teal);
+    border-radius:4px 12px 12px 4px;
+    background:rgba(255,255,255,0.45);
+    padding:11px 14px 12px;
+  }
+  .sol-item .sol-q{
+    font-size:calc(14px * var(--fs,1)); line-height:1.9; color:var(--ink);
+    margin:0 0 9px; font-weight:600;
+  }
+  .sol-item .sol-q .sq-n{ color:var(--teal); font-weight:700; }
+
+  /* خيارات الاختيار من متعدد */
+  .sol-opts{ display:flex; flex-direction:column; gap:6px; margin-bottom:9px; }
+  .sol-opt{
+    display:flex; gap:8px; align-items:flex-start;
+    border:1.5px solid rgba(26,61,140,0.16); border-radius:8px;
+    padding:6px 10px 7px; font-size:calc(13px * var(--fs,1)); line-height:1.8;
+  }
+  .sol-opt .so-k{ flex:0 0 auto; font-weight:700; color:rgba(26,61,140,0.55); }
+  .sol-opt.ok{ border-color:var(--green); background:rgba(31,122,61,0.09); }
+  .sol-opt.ok .so-k{ color:var(--green); }
+  .sol-opt.ok::after{ content:'✓'; margin-inline-start:auto; color:var(--green); font-weight:700; }
+  .sol-opt.bad{ opacity:0.72; }
+  .sol-opt.bad .so-k{ text-decoration:line-through; }
+  .sol-opt{ display:flex; }
+
+  /* صح / خطأ */
+  .sol-tf-line{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:8px; }
+  .sol-tf-line .sol-q{ margin:0; flex:1 1 260px; }
+  .sol-badge{
+    flex:0 0 auto; font-weight:700; font-size:calc(12px * var(--fs,1));
+    padding:3px 13px 4px; border-radius:999px; white-space:nowrap;
+  }
+  .sol-badge.t{ background:rgba(31,122,61,0.16); color:var(--green); }
+  .sol-badge.f{ background:rgba(209,52,43,0.14); color:var(--red); }
+
+  .sol-why{
+    font-size:calc(13px * var(--fs,1)); line-height:1.9; color:var(--ink);
+    background:rgba(15,122,114,0.06); border-radius:8px;
+    padding:8px 11px 9px; margin:0;
+  }
+  .sol-why b{ color:var(--teal); }
+
+  /* المثال العميق — بارز عن التعليل العادي */
+  .sol-deep{
+    margin-top:9px; border:1.5px dashed var(--orange); border-radius:10px;
+    background:rgba(224,122,31,0.06); padding:10px 12px 11px;
+  }
+  .sol-deep .sd-h{
+    display:flex; align-items:center; gap:6px;
+    font-weight:700; color:var(--orange); font-size:calc(12px * var(--fs,1));
+    letter-spacing:0.03em; margin-bottom:6px;
+  }
+  .sol-deep p{ font-size:calc(13px * var(--fs,1)); line-height:1.95; margin:0 0 7px; color:var(--ink); }
+  .sol-deep p:last-child{ margin-bottom:0; }
+  .sol-deep .sd-rule{
+    display:block; margin-top:4px; padding-top:7px; border-top:1px dashed rgba(224,122,31,0.4);
+    font-weight:700;
+  }
+
+  /* المقالية: نقاط تصحيح */
+  .sol-grading{ margin:0; padding-inline-start:20px; }
+  .sol-grading li{ font-size:calc(13px * var(--fs,1)); line-height:1.9; margin-bottom:5px; color:var(--ink); }
+  .sol-grading li b{ color:var(--teal); }
+
   .announce-box{
     width:100%; margin:10px 0 20px;
     border:2.5px solid var(--red); border-radius:5px 14px 5px 14px/14px 5px 14px 5px;
@@ -2262,7 +2354,8 @@
     .q-item, .sf-row, .leg-item, .mini-note, .map-tree li, .ex-card, .fb-grid,
     .pe-card, .pe-built, .pick-row, .cost-item, .pick-rule,
     .lab, .tf-st, .sort-bin, .ord-step, .mcq-opt,
-    .pr, .drill, .oops, .anon-row, .st, .announce-box, li{
+    .pr, .drill, .oops, .anon-row, .st, .announce-box,
+    .sol-item, li{
       break-inside:avoid; page-break-inside:avoid;
     }
     /* عنوان في ذيل الصفحة ومحتواه في التي بعدها: يُدفع العنوان معه */
@@ -2355,6 +2448,7 @@
     <button class="tab" data-target="slide-5">٥<br>الأسبوع الخامس</button>
     <button class="tab" data-target="slide-6">٦<br>الأسبوع السادس</button>
     <button class="tab" data-target="slide-7">٧<br>الأسبوع السابع</button>
+    <button class="tab" data-target="slide-sol">🔑<br>الحلول والتعليل</button>
     <button class="tab" data-target="slide-8">٨<br>الأسبوع الثامن</button>
     <button class="tab" data-target="slide-9">٩<br>الأسبوع التاسع</button>
     <button class="tab" data-target="slide-10">١٠<br>الأسبوع العاشر</button>
@@ -4892,6 +4986,295 @@
       </div>
       <!-- ============ END SLIDE 7 ============ -->
 
+      <!-- ============ SLIDE SOL : الحلول والتعليل ============ -->
+      <div id="slide-sol" class="slide content-slide rich-slide">
+        <span class="chip" style="background:var(--teal);">دليل مراجعة</span>
+        <h2 class="page-title" style="color:var(--teal);">الحلول والتعليل</h2>
+        <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--teal)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
+        <p class="lead-paragraph">حلول أسئلة المراجعة للأسبوعين الأول والثاني، <span class="hl hl-yellow">مع تعليل كل إجابة</span> — لماذا الصحيح صحيح، ولماذا الخيارات الأخرى ليست كذلك. هذا التبويب <strong>خارج ترقيم الأسابيع</strong>، دليلٌ للمراجعة لا محاضرة جديدة.</p>
+
+        <!-- ============================================================
+             الأسبوع الأول
+             ============================================================ -->
+        <div class="sol-week"><span class="sw-n">١</span><span class="sw-t">حلول الأسبوع الأول</span></div>
+
+        <div class="sol-kind"><span>الاختيار من متعدّد</span><span class="sk-line"></span></div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">١.</span> النموذج اللغوي الكبير (LLM) يعمل بشكل أساسي عن طريق:</p>
+          <div class="sol-opts">
+            <div class="sol-opt bad"><span class="so-k">أ)</span><span>فهم النص فهمًا بشريًا حقيقيًا</span></div>
+            <div class="sol-opt ok"><span class="so-k">ب)</span><span>توقّع الكلمة التالية بناءً على أنماط تعلّمها من نصوص سابقة</span></div>
+            <div class="sol-opt bad"><span class="so-k">ج)</span><span>البحث في الإنترنت لحظيًا عن كل إجابة</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>حفظ كل إجابة سبق أن أعطاها لأي مستخدم</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> هذا تعريفه حرفيًّا. «أ» خطأ لأنه لا يفهم فهمًا بشريًّا. «ج» خطأ لأنه لا يبحث لحظيًّا — البحث أداة منفصلة تُضاف عند الحاجة. «د» خطأ لأنه لا يحفظ إجابات المستخدمين ولا يستدعيها لاحقًا.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٢.</span> "الهلوسة" (Hallucination) في الذكاء الاصطناعي تعني:</p>
+          <div class="sol-opts">
+            <div class="sol-opt bad"><span class="so-k">أ)</span><span>توقّف البرنامج عن العمل فجأة</span></div>
+            <div class="sol-opt ok"><span class="so-k">ب)</span><span>إعطاء إجابة خاطئة بثقة تامة وكأنها صحيحة</span></div>
+            <div class="sol-opt bad"><span class="so-k">ج)</span><span>طلب البرنامج توضيحًا إضافيًا من المستخدم</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>رفض البرنامج الإجابة على سؤال معيّن</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> الخطورة في <b>الثقة</b> لا في الخطأ وحده — لو قال «لست متأكّدًا» لما سُمّيت هلوسة. «د» (رفض الإجابة) سلوكٌ مختلف تمامًا ولا ضرر فيه.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٣.</span> أي أداة من أدوات كلود الأنسب لتنظيم ملفاتك وجدولة مهام تتكرر يوميًا تلقائيًا؟</p>
+          <div class="sol-opts">
+            <div class="sol-opt bad"><span class="so-k">أ)</span><span>كلود شات (Chat)</span></div>
+            <div class="sol-opt ok"><span class="so-k">ب)</span><span>كلود كوورك (Cowork)</span></div>
+            <div class="sol-opt bad"><span class="so-k">ج)</span><span>كلود كود (Claude Code)</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>كلها بنفس القدرة</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> كوورك وحده يجمع ثلاثًا: يصل إلى ملفاتك، ويشتغل بالخلفية، وتُبنى عليه الجدولة. «أ» الشات محادثة لا تصل للملفات. «ج» الكود أداة مبرمجين.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٤.</span> حسب "القواعد الذهبية الأربع" لكتابة أمر ناجح، أول خطوة هي:</p>
+          <div class="sol-opts">
+            <div class="sol-opt bad"><span class="so-k">أ)</span><span>تقديم مثال</span></div>
+            <div class="sol-opt bad"><span class="so-k">ب)</span><span>تحديد شكل الإجابة المطلوبة</span></div>
+            <div class="sol-opt ok"><span class="so-k">ج)</span><span>تحديد الموقف والسياق</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>تحديد طول الإجابة فقط</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> الترتيب مقصود — من أنت ولمن تكتب أوّلًا، ثم المهمة، ثم الشكل والطول. لو بدأت بـ«ب» أو «د» أعطاك نصًّا مضبوط الطول لكن خاطئ المضمون.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٥.</span> أي نموذج من نماذج كلود هو "الافتراضي" المتوازن لمعظم المهام اليومية؟</p>
+          <div class="sol-opts">
+            <div class="sol-opt bad"><span class="so-k">أ)</span><span>هايكو (Haiku)</span></div>
+            <div class="sol-opt ok"><span class="so-k">ب)</span><span>سونيت (Sonnet)</span></div>
+            <div class="sol-opt bad"><span class="so-k">ج)</span><span>أوبس (Opus)</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>لا فرق بين النماذج</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> هايكو للسرعة، وأوبس للدقّة في المسائل المعقّدة، وسونيت التوازن الافتراضي بينهما.</p>
+        </div>
+
+        <div class="sol-kind"><span>صح أو خطأ</span><span class="sk-line"></span></div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">١.</span> النموذج اللغوي الكبير "يفكّر" بنفس طريقة تفكير الإنسان.</p><span class="sol-badge f">خطأ</span></div>
+          <p class="sol-why">يتوقّع الكلمة التالية إحصائيًّا، ولا وعي عنده ولا فهم بالمعنى البشري.</p>
+        </div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٢.</span> يجب دائمًا التحقق من المعلومات الحسّاسة اللي يقدّمها الذكاء الاصطناعي من مصدر موثوق.</p><span class="sol-badge t">صح</span></div>
+          <p class="sol-why">هو مساعد لا مصدر — كل رقم واسم وتاريخ يخرج منه يُتحقَّق منه بنفسك قبل البناء عليه.</p>
+        </div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٣.</span> "التفكير الممتد" يُفضَّل تفعيله بكل سؤال لأنه لا يكلّف شيئًا إضافيًا.</p><span class="sol-badge f">خطأ</span></div>
+          <p class="sol-why">أبطأ ويستهلك أكثر. يُفعَّل للمسائل المركّبة لا لسؤالٍ عابر، وعبارة «لا يكلّف شيئًا» غلطٌ صريح في العبارة نفسها.</p>
+        </div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٤.</span> نافذة السياق الكبيرة تعني أن كلود يتذكر كل شيء للأبد حتى بعد إغلاق المحادثة.</p><span class="sol-badge f">خطأ</span></div>
+          <p class="sol-why">النافذة ذاكرة <b>المحادثة الواحدة</b> فقط: تمتلئ فيفقد أوّلها، وتنتهي بإغلاقها — لا تبقى للأبد.</p>
+        </div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٥.</span> الإرسال إلى وكلاء فرعيين يساعد على إبقاء المحادثة الأساسية مركّزة.</p><span class="sol-badge t">صح</span></div>
+          <p class="sol-why">العمل الثقيل يخرج من المحادثة الأساسية إلى وكيلٍ فرعي، فلا تمتلئ نافذة سياقها بتفاصيل جانبية.</p>
+        </div>
+
+        <div class="sol-kind"><span>أسئلة السيناريو</span><span class="sk-line"></span></div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">١.</span> موظف بدائرتك كتب لكلود: «اكتب لي كتاب رسمي» بدون أي تفاصيل أخرى، وحصل على نتيجة عامة جدًا ما تناسب طبيعة عمله. ما الخطأ بهذا الأمر، وكيف يصححه؟</p>
+          <p class="sol-why"><b>الخطأ:</b> الأمر خالٍ من القواعد الأربع — لا دور ولا جمهور ولا مهمة محدّدة ولا حدود. <b>التصحيح:</b> «اكتب كتابًا رسميًّا من مدير قسم التدريب إلى مدير الدائرة بشأن كذا. المعطيات: … الشروط: ثلاث فقرات، رسمي موجز، بلا مبالغة، ولا يزيد على ١٥٠ كلمة.» ثم يحسّنه بالتكرار ولا يقبل أوّل جواب.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٢.</span> مدير يستخدم كلود لتلخيص تقرير طويل، وبعد ٤٠ دقيقة لاحظ أن الإجابات بدأت تفقد دقتها وتتجاهل تفاصيل ذكرها بالبداية. ما تفسير هذا، وما الإجراء المناسب؟</p>
+          <p class="sol-why"><b>التفسير:</b> امتلأت نافذة السياق، فبدأ يفقد أوّل الكلام — ليس عطلًا ولا تراجعًا في جودته. <b>الإجراء:</b> محادثة جديدة للموضوع الجديد، وتلخيص النقاط المهمّة ولصقها في المحادثة الجديدة، وتقسيم التقرير الطويل أجزاءً بدل دفعة واحدة.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٣.</span> موظف اعتمد على رقم مالي أعطاه كلود دون التحقق منه، وتبيّن لاحقًا أنه غير دقيق. أي مبدأ من مبادئ المحاضرة كان يجب اتّباعه؟</p>
+          <p class="sol-why"><b>المبدأ:</b> الإشراف البشري والتحقّق قبل الاعتماد. الرقم يخرج بثقة تامّة ولا يُنبّهك أنه قد يكون خاطئًا، والتوقيع توقيعه والمسؤولية مسؤوليته. الواجب أن يعدّ الرقم بنفسه من المصدر قبل البناء عليه.</p>
+        </div>
+
+        <div class="sol-kind"><span>الأسئلة المقالية — نقاط التصحيح</span><span class="sk-line"></span></div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">١.</span> اشرح بأسلوبك الخاص الفرق بين "عقلية اللقطة الواحدة" و"عقلية التكرار"، ومثّل لكل منهما بموقف من عملك اليومي.</p>
+          <ul class="sol-grading">
+            <li><b>تعريف كلٍّ منهما:</b> اللقطة الواحدة تتوقّع النتيجة الكاملة من أول أمر، والتكرار يعامل الأمر محادثةً لا طلبًا نهائيًّا.</li>
+            <li><b>مثالان من عمله هو</b> — لا مثال معمَّم من المحاضرة.</li>
+            <li>ربط بالقواعد الذهبية: كتاب رسمي يُحسَّن بثلاث جُمل («أقصر» ← «أرسمي» ← «احذف الفقرة الثانية»).</li>
+            <li>استنتاج أنّ التكرار <b>أسرع فعليًّا</b> رغم أنه يبدو أطول خطوةً بخطوة.</li>
+          </ul>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٢.</span> ناقش كيف يمكن الاستفادة من أداة "المشاريع" (Projects) بتنظيم عمل دائرة حكومية تتعامل مع نفس نوع المعاملات بشكل متكرر.</p>
+          <ul class="sol-grading">
+            <li>المشروع بيئة عمل لموضوع واحد، لا محادثة عابرة.</li>
+            <li><b>التعليمات الثابتة</b> تُكتب مرّة فتنطبق على كل محادثة داخله.</li>
+            <li><b>الملفات المرجعية</b> تصير قاعدة معرفة يرجع إليها كل طلب.</li>
+            <li>تطبيقٌ على معاملة متكرّرة بعينها من عمل الطالب، لا وصفٌ نظري.</li>
+            <li>ذكر مكسب التوحيد: الصياغة تصير واحدة مهما تغيّر الموظّف الذي يكتب.</li>
+          </ul>
+        </div>
+
+        <!-- ============================================================
+             الأسبوع الثاني
+             ============================================================ -->
+        <div class="sol-week"><span class="sw-n">٢</span><span class="sw-t">حلول الأسبوع الثاني</span></div>
+
+        <div class="sol-kind"><span>الاختيار من متعدّد</span><span class="sk-line"></span></div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">١.</span> مهمة في كوورك حالتها «تحتاج ردّك» (Needs input) تعني:</p>
+          <div class="sol-opts">
+            <div class="sol-opt bad"><span class="so-k">أ)</span><span>أنها فشلت ويجب حذفها</span></div>
+            <div class="sol-opt ok"><span class="so-k">ب)</span><span>أنها متوقّفة بانتظار قرار منك لتكمل</span></div>
+            <div class="sol-opt bad"><span class="so-k">ج)</span><span>أنها اكتملت واعتُمدت</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>أنها مؤرشفة</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> «أ» خطأ لأن التوقّف ليس فشلًا. وهذه الحالة عمليًّا <b>قائمة عملك اليومية</b> — المهمّة واقفة بسببك أنت لا بسبب البرنامج.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٢.</span> إعداد «طلب أجهزة موثوقة» (Require trusted devices) وظيفته:</p>
+          <div class="sol-opts">
+            <div class="sol-opt bad"><span class="so-k">أ)</span><span>تسريع فتح التطبيق</span></div>
+            <div class="sol-opt ok"><span class="so-k">ب)</span><span>التحقّق من كل جهاز جديد قبل السماح له ببدء جلسة تصل لملفاتك</span></div>
+            <div class="sol-opt bad"><span class="so-k">ج)</span><span>تغيير لون الواجهة</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>زيادة رصيد الاستخدام</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> والأثر عند إطفائه ليس تسريب محادثة واحدة، بل <b>وصولٌ إلى مجلّدات دائرتك كلّها</b> من أي جهاز جديد.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٣.</span> رابط تصدير البيانات (Export data) يصلك:</p>
+          <div class="sol-opts">
+            <div class="sol-opt ok"><span class="so-k">أ)</span><span>على بريدك الإلكتروني، ويبطل بعد ٢٤ ساعة</span></div>
+            <div class="sol-opt bad"><span class="so-k">ب)</span><span>داخل المحادثة ويبقى دائمًا</span></div>
+            <div class="sol-opt bad"><span class="so-k">ج)</span><span>برسالة نصّية على هاتفك</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>لا يمكن تصدير البيانات إطلاقًا</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> القاعدة العملية: نزّله فور وصوله، وإلا أعدت الطلب من جديد بعد انقضاء المهلة.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٤.</span> أي خيار في «المهارات» هو الأنسب لموظف مبتدئ يريد بناء مهارة أول مرة؟</p>
+          <div class="sol-opts">
+            <div class="sol-opt bad"><span class="so-k">أ)</span><span>Upload skill</span></div>
+            <div class="sol-opt bad"><span class="so-k">ب)</span><span>Create a skill</span></div>
+            <div class="sol-opt ok"><span class="so-k">ج)</span><span>Create with Claude</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>Browse فقط</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> كلود يكتبها معه ويصحّحها خطوةً بخطوة. «أ» الرفع يفترض مهارة جاهزة أصلًا، «ب» الإنشاء اليدوي يفترض خبرة سابقة، «د» التصفّح لا يُنشئ شيئًا جديدًا.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٥.</span> «إعادة الشحن التلقائي» (Auto-reload) في الفوترة تعني:</p>
+          <div class="sol-opts">
+            <div class="sol-opt bad"><span class="so-k">أ)</span><span>إعادة تحميل الصفحة تلقائيًا</span></div>
+            <div class="sol-opt ok"><span class="so-k">ب)</span><span>شراء أرصدة استخدام تلقائيًا عند اقتراب رصيدك من النفاد</span></div>
+            <div class="sol-opt bad"><span class="so-k">ج)</span><span>حفظ المحادثات تلقائيًا</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>تحديث التطبيق تلقائيًا</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> خطرها أنها تتجدّد بصمتٍ فلا تنتبه إلا في الفاتورة — ولهذا يُنصَح بإطفائها حتى تُعرف حدود الاستهلاك الطبيعي أوّلًا.</p>
+        </div>
+
+        <div class="sol-kind"><span>صح أو خطأ</span><span class="sk-line"></span></div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">١.</span> «ديسباتش» و«كوورك» واجهتان مستقلّتان في الشريط الجانبي.</p><span class="sol-badge t">صح</span></div>
+          <p class="sol-why">كلٌّ منهما بندٌ قائم بذاته في الشريط الجانبي السبعة، ولهما وظيفتان مختلفتان.</p>
+        </div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٢.</span> المهمة المؤرشفة تُحذف نهائيًا ولا يمكن استرجاعها.</p><span class="sol-badge f">خطأ</span></div>
+          <p class="sol-why">الأرشفة <b>إخفاء من القائمة دون حذف</b> فقط — المهمّة تبقى موجودة، ويمكن العودة إليها. الحذف إجراء منفصل تمامًا.</p>
+        </div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٣.</span> تصنيف حالة الجلسة تلقائيًا يُحتسب من رصيد استخدام خطتك.</p><span class="sol-badge t">صح</span></div>
+          <p class="sol-why">نصّ الملزمة صريح: «يحدّد تلقائيًّا: متوقّفة، جاهزة للمراجعة، أو منتهية. <b>يُحتسب من رصيد استخدامك</b>».</p>
+          <div class="sol-deep">
+            <div class="sd-h">مثال يفكّ الالتباس</div>
+            <p>الطالب يقرأها فيحسبها إعدادًا شكليًّا مثل تغيير لون الواجهة، والفرق جوهري.</p>
+            <p>تخيّل عندك في الدائرة <b>موظّف أرشيف</b>. كل يوم يمرّ على الإضبارات ويكتب على كل واحدة: «مكتملة» · «ناقصة» · «تنتظر توقيعًا». هذا الموظّف <b>يشتغل</b>، وشغله يُحسب من دوامه — حتى لو أنت ما طلبت منه شيئًا اليوم، لأنه يقرأ ويحكم من نفسه.</p>
+            <p>تصنيف حالة الجلسة هو هذا بالضبط: كلود <b>يقرأ الجلسة ويحكم عليها</b>. والقراءة والحكم طلبٌ منه، والطلب يُحتسب من رصيدك — أنت ما كتبت شيئًا، لكنه اشتغل.</p>
+            <span class="sd-rule">القاعدة: كل إعداد يجعله يقرأ أو يحكم أو يولّد → يستهلك. وكل إعداد يغيّر العرض أمامك فقط (وضع اللون، مظهر الكود) → لا يستهلك.</span>
+          </div>
+        </div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٤.</span> مراجعة الجلسات النشطة إجراء أمني ينبغي تكراره دوريًا.</p><span class="sol-badge t">صح</span></div>
+          <p class="sol-why">كما تراجع كشف حسابك في المصرف — جهازٌ لا تعرفه يعني وصولًا إلى ملفاتك ومحادثاتك، لا محادثة واحدة فقط.</p>
+        </div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٥.</span> تفعيل إعدادات الخصوصية يبيح رفع البيانات السرّية للدائرة.</p><span class="sol-badge f">خطأ</span></div>
+          <p class="sol-why">تحمي من الاستخدام اللاحق فقط، ولا تجعل الرفع نفسه مقبولًا. <b>ما لا تريد خروجه من الدائرة، لا ترفعه أصلًا.</b></p>
+          <div class="sol-deep">
+            <div class="sd-h">مثال يفكّ الالتباس</div>
+            <p>الطالب يقرأ «بياناتك لن تُستخدم للتدريب» فيستنتج: «إذن الرفع صار آمنًا، أرفع أي شي.» والاستنتاج غلط، لأنه خلط بين سؤالين مختلفين.</p>
+            <p><b>مثال صندوق الأمانات:</b> تروح للمصرف وتفتح صندوق أمانات، ويوقّع لك المصرف تعهّدًا: «لن نفتح صندوقك ولن نطّلع على ما فيه.» ممتاز، والمصرف أمين فعلًا. السؤال الآن: هل هذا التعهّد يبيح لك أن تضع فيه <b>إضبارات المواطنين التي بعهدتك</b>؟ لا — لأن السؤال ليس «هل المصرف أمين؟»، بل «هل يجوز لك أصلًا أن تُخرج هذه الإضبارات من الدائرة؟»</p>
+            <p><b>مثال إداري:</b> موظّفة عندها كشف رواتب فيه أسماء ورواتب أربعين موظّفًا، وتريد معدّلات ومقارنات. تطمئنّ لإعداد الخصوصية وترفع الكشف كاملًا. لا أحد اطّلع عليه، ولا الشركة خالفت وعدها — لكن <b>الملف خرج من شبكة الدائرة</b>، وهذه مخالفة إدارية وحدها لا تُصلحها أي إعدادات. الصواب: تحذف عمود الأسماء وترفع الرواتب وحدها — نفس التحليل، ولا شيء يدلّ على أحد.</p>
+            <span class="sd-rule">القاعدة: الإذن ليس من الشركة. الإذن من دائرتك. اسأل نفسك: «منو يوقّع على إخراج هذا الملف — أنثروبيك أم مديري؟»</span>
+          </div>
+        </div>
+
+        <div class="sol-kind"><span>أسئلة السيناريو</span><span class="sk-line"></span></div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">١.</span> موظف يفتح ملف الردود كل صباح، يفحصه يدويًا، ويكتب ملخّصًا — عشر دقائق يوميًا. أي واجهة تحلّ له هذا، وكيف يُعدّها؟</p>
+          <p class="sol-why"><b>الواجهة:</b> المهام المجدولة داخل كوورك. <b>الإعداد:</b> مشروع فيه الملف ← نصّ المهمة (ماذا يفحص وماذا يرسل وبأي صيغة) ← ضبط المُشغِّل: كل يوم الساعة ٨ ← تشغيلة يدوية واحدة للتحقّق ← مراجعة سجلّ التشغيلات بعد أول يوم. المكسب: عشر دقائق × ٢٢ يومًا ≈ أربع ساعات شهريًّا.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٢.</span> مديرة فتحت «الجلسات النشطة» فوجدت جهازًا وموقعًا لا تعرفهما. ما دلالة ذلك، وما الإجراءات الواجبة فورًا؟</p>
+          <p class="sol-why"><b>الدلالة:</b> حسابها مفتوح على جهاز لا تملكه، والجلسة تصل إلى ملفاتها ومحادثاتها كلّها لا إلى محادثة واحدة. <b>الإجراءات بالترتيب:</b> إنهاء الجلسة فورًا ← تغيير كلمة المرور ← مراجعة القائمة ثانيةً ← تفعيل «طلب أجهزة موثوقة» ← إبلاغ الجهة المسؤولة إن كان حساب عمل.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٣.</span> موظف يريد أن تبقى مهامه على حاسوب الدائرة ولا تكمل في السحابة بعد إغلاق الجهاز. أي إعداد يستخدم، وما الأثر المترتّب عليه؟</p>
+          <p class="sol-why"><b>الإعداد:</b> «على حاسوبك فقط» (Only on your computer) في إعدادات كوورك. <b>الأثر:</b> المهام تبقى على جهازه وتتوقّف عند إغلاقه، ولا تكمل في السحابة — فيكسب السيطرة على مكان تنفيذها ويخسر استمراريتها. من يريد مهمّة تكمل وهو نائم، هذا الإعداد ضدّه لا معه.</p>
+        </div>
+
+        <div class="sol-kind"><span>الأسئلة المقالية — نقاط التصحيح</span><span class="sk-line"></span></div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">١.</span> اختر مهمة إدارية متكرّرة في دائرتك واشرح كيف تحوّلها إلى مهمة مجدولة: ماذا تفعل، متى تعمل، وكيف تتحقّق من نتيجتها.</p>
+          <ul class="sol-grading">
+            <li><b>اختيار مهمّة متكرّرة فعلًا</b> لا مهمّة تُنجَز مرّة واحدة.</li>
+            <li>الخطوات الخمس بالترتيب: مشروع ← نصّ المهمة ← المُشغِّل ← تشغيلة يدوية ← مراجعة السجلّ.</li>
+            <li>تحديد <b>الموعد والتكرار</b> صراحةً لا بعبارة عامّة.</li>
+            <li>طريقة التحقّق: سجلّ التشغيلات، ومقارنة الناتج بالواقع مرّة على الأقل.</li>
+          </ul>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٢.</span> ناقش الإعدادات التي يجب على دائرة حكومية ضبطها قبل السماح لموظفيها باستخدام كلود في العمل الرسمي، ولماذا كل واحد منها.</p>
+          <ul class="sol-grading">
+            <li><b>طلب أجهزة موثوقة</b> — الجلسة تصل إلى الملفات لا محادثة واحدة.</li>
+            <li><b>مراجعة الجلسات النشطة</b> دوريًّا لا مرّة واحدة.</li>
+            <li><b>منع ربط الموصّلات بحسابات العمل</b> — الصلاحية تُمنح للصندوق كلّه لا لرسالة واحدة.</li>
+            <li><b>إعادة الشحن التلقائي مطفأة</b> حتى يُعرف الاستهلاك الطبيعي أوّلًا.</li>
+            <li>سياسة مكتوبة تحدّد من يستخدم ولأي غرض وبأي صلاحية.</li>
+            <li>درجة إضافية لمن ذكر أنّ الإعدادات وحدها لا تُغني عن <b>تصنيف البيانات وإخفاء الهوية</b> قبل الرفع.</li>
+          </ul>
+        </div>
+
+        <div class="page-nav">
+          <button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button>
+          <button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button>
+        </div>
+        <div class="footer-note">🔑</div>
+      </div>
+      <!-- ============ END SLIDE SOL ============ -->
+
+
       <!-- ============ SLIDE 8 : الأسبوع الثامن ============ -->
       <div id="slide-8" class="slide content-slide">
         <span class="chip chip-ch1">الأسبوع الثامن</span>
@@ -5126,12 +5509,9 @@
    عند التمرير بدل أن يبقى ملزوقاً بالعرض.
    ============================================================ */
 (function(){
-  /* القلم أداة شرح للمدرّس لا للطالب: لا يظهر إلا إذا حمل الرابط كلمة pen.
-     الرابط العادي يبقى كما كان تماماً — لا شريط ولا طبقة ولا مستمع أحداث.
-     تُقبل ‎?pen و‎?pen=1 و‎#pen حتى لا يهم كيف كُتبت. */
-  var q = location.search + ' ' + location.hash;
-  if(!/(^|[?&#])pen\b/.test(q)) return;
-
+  /* القلم متاح للجميع — يشرح به المدرّس، ويؤشّر به الطالب على نسخته
+     الخاصة للمراجعة. الرسم محلّي على جهاز كل شخص (localStorage) ولا
+     يغادره، فتأشير طالبٍ لا يظهر عند طالبٍ آخر ولا عند المدرّس. */
   var SVGNS = 'http://www.w3.org/2000/svg';
   var STORE = 'ann:week1:';
 
