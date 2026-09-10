@@ -1620,6 +1620,7 @@
     cursor:pointer;
     box-shadow:0 4px 12px rgba(0,0,0,0.35);
   }
+  .print-btn-tab{ bottom:66px; background:var(--blue); }
   .print-btn:hover{ background:var(--accent-dark,#b52a22); }
 
   /* ---------- section building blocks (used by the rich week-1 page) ---------- */
@@ -2353,6 +2354,10 @@
     .slide:last-child{ page-break-after:auto; break-after:auto; }
     .content-slide{ align-items:stretch !important; text-align:right !important; }
 
+    /* «طباعة هذا التبويب فقط»: تخفي كل الشرائح إلا التبويب المفتوح حاليًا */
+    body.print-current .slide{ display:none !important; }
+    body.print-current .slide.active{ display:flex !important; page-break-after:auto !important; break-after:auto !important; }
+
     /* الصناديق لا تُقصّ نصفين على حدّ الصفحة: إن لم تسع نزلت كاملة للتالية.
        بدونها يبدأ أعلى الصفحة بصفوف يتيمة بلا إطار ولا عنوان. */
     .screen-frame, .scn, .hw, .try-box, .callout, .ct-bud, .gloss-row,
@@ -2422,6 +2427,16 @@
 </svg>
 
 <button class="print-btn" onclick="window.print()">🖨 طباعة كل الصفحات PDF</button>
+<button class="print-btn print-btn-tab" onclick="printCurrentTab()">🖨 طباعة هذا التبويب فقط</button>
+<script>
+  function printCurrentTab(){
+    document.body.classList.add('print-current');
+    window.print();
+  }
+  window.addEventListener('afterprint', function(){
+    document.body.classList.remove('print-current');
+  });
+</script>
 
 <div class="stage">
 
