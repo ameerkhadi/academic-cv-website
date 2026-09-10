@@ -1776,6 +1776,11 @@
   body.ann-erase .slide.active > .ann-layer{ cursor:cell; }
   body.ann-hide .ann-layer{ display:none; }
 
+  /* أثناء رسم خطّ فعليّ، تُقفَل الصفحة كلّها عن التمرير — لا الطبقة وحدها.
+     بدونها: راحة اليد على القلم البصري (Apple Pencil) أو لمسة عرَضية ثانية
+     تقع خارج حدود الطبقة تُمرّر الصفحة تحت القلم وهو يكتب، فيتزحزح السطر. */
+  body.ann-drawing{ touch-action:none; overscroll-behavior:none; }
+
   /* مؤشّر الليزر: يؤشّر ثم يتلاشى. طبقة ثابتة على الشاشة، منفصلة تمامًا عن
      طبقة الرسم — فلا يدخل التراجع ولا الحفظ ولا الطباعة ولا تراه الممحاة.
      أثرٌ يعيش أقلّ من ثانية لا يحتاج أن يتحرّك مع النص، وإحداثيات الشاشة
@@ -5811,6 +5816,7 @@
     activePointer = ev.pointerId;
     ev.preventDefault();
     try{ layer.setPointerCapture(ev.pointerId); }catch(e){}
+    document.body.classList.add('ann-drawing');
 
     if(pointing){ drawing = true; lzStart(ev); return; }
     if(erasing){
@@ -5847,6 +5853,7 @@
   function onUp(ev){
     if(ev.pointerId !== activePointer) return;
     activePointer = null;
+    document.body.classList.remove('ann-drawing');
     if(!drawing) return;
     drawing = false;
     if(pointing){ lzEnd(); return; }
@@ -6082,7 +6089,7 @@
       erasing = false; pointing = false;
       eraseBtn.classList.remove('on');
       pointBtn.classList.remove('on');
-      document.body.classList.remove('ann-erase', 'ann-point');
+      document.body.classList.remove('ann-erase', 'ann-point', 'ann-drawing');
       lzClear(); setPan(false);
     }
   }
