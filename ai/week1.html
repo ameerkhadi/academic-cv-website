@@ -1993,6 +1993,52 @@
   }
   .map-fold .map-tree{ padding:0 6px 10px; }
 
+  /* ---------- ورقة التصوير: للمدرّس وحده، تُقرأ أثناء التسجيل ---------- */
+  .rs{
+    width:100%; margin:12px 0;
+    border:2px solid rgba(26,61,140,0.3); border-radius:12px;
+    background:rgba(255,255,255,0.5); overflow:hidden;
+  }
+  .rs-h{
+    display:flex; align-items:center; gap:9px; flex-wrap:wrap;
+    padding:9px 13px 10px; background:rgba(26,61,140,0.09);
+    border-bottom:2px solid rgba(26,61,140,0.22);
+  }
+  .rs-n{
+    flex:none; width:24px; height:24px; border-radius:50%;
+    background:var(--ink); color:#fff; font-weight:700;
+    font-size:calc(12.5px * var(--fs,1));
+    display:flex; align-items:center; justify-content:center;
+  }
+  .rs-t{ font-weight:700; color:var(--ink); font-size:calc(15px * var(--fs,1)); }
+  .rs-m{
+    margin-inline-start:auto; font-size:calc(11.5px * var(--fs,1));
+    color:var(--red); font-weight:700; white-space:nowrap;
+  }
+  .rs-row{
+    display:flex; gap:10px; align-items:flex-start;
+    padding:9px 13px 10px; border-bottom:1px dashed rgba(26,61,140,0.2);
+  }
+  .rs-row:last-child{ border-bottom:none; }
+  .rs-i{
+    flex:none; min-width:38px; text-align:center;
+    background:var(--red); color:#fff; border-radius:7px;
+    font-size:calc(11.5px * var(--fs,1)); font-weight:700;
+    padding:3px 6px 4px;
+  }
+  .rs-b{ flex:1; min-width:0; font-size:calc(13px * var(--fs,1)); line-height:1.85; }
+  .rs-b em{ font-style:normal; font-weight:700; color:var(--blue); }
+  .rs-x{
+    display:block; margin-top:3px; padding-inline-start:9px;
+    border-inline-start:2.5px solid var(--green);
+    color:var(--green); font-size:calc(12.5px * var(--fs,1));
+  }
+  .rs-w{
+    display:block; margin-top:3px; padding-inline-start:9px;
+    border-inline-start:2.5px solid var(--orange);
+    color:#a8590f; font-size:calc(12.5px * var(--fs,1)); font-weight:700;
+  }
+
   /* ---------- تمارين الصف: للمدرّس وحده، خلف بوابة القلم ---------- */
   .teach{ display:none; }
   body.teacher .teach{ display:block; }
@@ -4346,6 +4392,196 @@
           <div class="leg-item"><span class="leg-num">٣</span><span>لمحطات "شاهده" (١١، ١٣، ١٤، ١٥، ١٦، ٢١، ٢٢، ٢٤): خذ لقطة شاشة احتياطية لكل واحدة قبل الحصة — إذا تعطّل الإنترنت أو تأخّرت الاستجابة أمامهم، تعرض اللقطة بدل ما تقف بصمت.</span></div>
           <div class="leg-item"><span class="leg-num">٤</span><span>«دليل المحاضر» هذا وحده محجوب عن الطلبة افتراضيًا — يظهر لك فقط بإضافة <code>?pen</code> لآخر الرابط. أمّا الباقي (مواد التجريب، جولة التطبيق، الواجبات) فظاهر للطلبة دائمًا الآن ولو فتحوا الرابط بلا <code>?pen</code>.</span></div>
         </div>
+
+        <div class="section-heading" style="margin-top:26px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>ورقة التصوير — اقرأها وأنت تسجّل</span>
+        </div>
+        <p class="lead-paragraph">بنود شجرة الأسبوع الثاني الأربعة والسبعون كلّها، موزّعة على <strong>ستّة تسجيلات</strong>. الرقم الأحمر هو رقم البند في الشجرة — فلا يسقط بندٌ ولا يتكرّر. <span class="hl hl-yellow">سجّل تسجيلًا واحدًا في الجلسة، ولا تحرّر شيئًا بعده.</span></p>
+
+        <div class="oops">
+          <span class="o-i">⚠</span>
+          <div><b>قبل الضغط على «تسجيل» — أربعة أشياء:</b> أطفئ الإشعارات (رسالة باسم شخص تظهر = إعادة تسجيل وتسريب)؛ نظّف الشريط الجانبي أو استعمل نافذة خاصة (محادثاتك تظهر بالفيديو)؛ كبّر المتصفّح ١٢٥–١٥٠٪ (طلبتك على شاشات ٦ إنش)؛ ولا تفتح أي بيانات حقيقية — المواد ١–٥ وحدها.</div>
+        </div>
+
+        <!-- ===== تسجيل ١ ===== -->
+        <div class="rs">
+          <div class="rs-h"><span class="rs-n">١</span><span class="rs-t">المفاهيم — بلا فتح كلود</span><span class="rs-m">~١٠ د · ١٦ بندًا</span></div>
+          <div class="rs-row"><span class="rs-i">١–٢</span><div class="rs-b">
+            <em>افتح:</em> صفحة الأسبوع الأول على الشاشة، لا كلود. <em>قل:</em> الآلة تدرّبت على نصوص هائلة، ومنها جاءت «معرفتها» — ثم هي تتوقّع الكلمة التالية، لا تفهم كما نفهم.
+            <span class="rs-x">المثال: اكتب «العراق بلد …» واسأل القاعة ما الكلمة التالية قبل أن تكمل.</span>
+          </div></div>
+          <div class="rs-row"><span class="rs-i">٣–٦</span><div class="rs-b">
+            <em>افتح:</em> مخطّط «رحلة الأمر» بالصفحة. <em>قل:</em> أمرك يمرّ بأربع محطات: الأمر ← التقطيع ← التمثيل الرقمي ← التوليد.
+            <span class="rs-x">المثال: كلمة واحدة قد تنقسم إلى قطعتين أو ثلاث — لا حروفًا ولا كلمةً كاملة. ولهذا يستهلك العربي أسرع.</span>
+          </div></div>
+          <div class="rs-row"><span class="rs-i">٧</span><div class="rs-b">
+            <em>قل:</em> الهلوسة = جواب خاطئ بثقة تامّة. الخطر في الثقة لا في الخطأ.
+            <span class="rs-x">المثال: اسأله عن رقم نظام أو تعليمات عراقية تعرفها يقينًا — وقارن.</span>
+          </div></div>
+          <div class="rs-row"><span class="rs-i">٨</span><div class="rs-b">
+            <em>قل:</em> نافذة السياق ذاكرة المحادثة الواحدة: تمتلئ فيسقط أوّلها، وتنتهي بإغلاقها.
+            <span class="rs-x">المثال: محادثة طويلة ثم «ما وظيفتي التي ذكرتها في أوّل الكلام؟» ← يتعثّر.</span>
+          </div></div>
+          <div class="rs-row"><span class="rs-i">٩</span><div class="rs-b">
+            <em>قل:</em> تدرّب على نصوص البشر، فورث ما فيها من ميل — والتحيّز ليس عطلًا يُصلَح بل خاصيّة تُراقَب.
+          </div></div>
+          <div class="rs-row"><span class="rs-i">١٠–١٢</span><div class="rs-b">
+            <em>افتح:</em> قائمة اختيار النموذج. <em>قل:</em> هايكو للسرعة · سونيت للتوازن وهو الافتراضي · أوبس للدقّة العالية.
+            <span class="rs-x">المثال: سؤال عابر ← هايكو. كتاب رسمي ← سونيت. تحليل عقد قانوني ← أوبس.</span>
+          </div></div>
+          <div class="rs-row"><span class="rs-i">١٣</span><div class="rs-b">
+            <em>قل:</em> التفكير الممتد يفكّر أطول قبل أن يجيب — أبطأ ويستهلك أكثر، فهو للمسألة المركّبة لا للسؤال العابر.
+          </div></div>
+          <div class="rs-row"><span class="rs-i">١٤–١٦</span><div class="rs-b">
+            <em>قل:</em> القواعد الأربع بترتيبها: الموقف ← المهمة ← الشكل ← المثال. وتعيين الدور والتعليم بالأمثلة منها. وعقلية التكرار تغلب اللقطة الواحدة.
+            <span class="rs-x">المثال: المادّة ٥ — اقرأ الأمر الضعيف ثم القالب القوي، والفرق يظهر بلا شرح.</span>
+          </div></div>
+        </div>
+
+        <!-- ===== تسجيل ٢ ===== -->
+        <div class="rs">
+          <div class="rs-h"><span class="rs-n">٢</span><span class="rs-t">المحادثة وملحقاتها</span><span class="rs-m">~٨ د · ٨ بنود</span></div>
+          <div class="rs-row"><span class="rs-i">١٧</span><div class="rs-b">
+            <em>افعل:</em> اضغط <b>New chat</b>. <em>قل:</em> لكل موضوع محادثة — فلا تمتلئ نافذة السياق بما لا يخصّه.
+          </div></div>
+          <div class="rs-row"><span class="rs-i">١٨</span><div class="rs-b">
+            <em>افعل:</em> افتح <b>Chats</b> وابحث بكلمة.
+            <span class="rs-x">المثال: ابحث «كتاب» ← تظهر كل ما كتبته عن الكتب الرسمية.</span>
+          </div></div>
+          <div class="rs-row"><span class="rs-i">١٩</span><div class="rs-b">
+            <em>افعل:</em> ثبّت محادثة، وأرشف أخرى. <em>قل:</em> الأرشفة تُخفي ولا تحذف — والمؤرشف يُسترجَع.
+          </div></div>
+          <div class="rs-row"><span class="rs-i">٢٠</span><div class="rs-b">
+            <em>افعل:</em> اضغط المشاركة وأرِهم الرابط. <em>قل:</em> ومتى <b>لا</b> تشارك: إن كان في المحادثة رقم أو اسم أو معطى من دائرتك.
+          </div></div>
+          <div class="rs-row"><span class="rs-i">٢١</span><div class="rs-b">
+            <em>افعل:</em> عدّل أمرك السابق وأعد التوليد. <em>قل:</em> تصحيح المسار أرخص من فتح محادثة جديدة.
+          </div></div>
+          <div class="rs-row"><span class="rs-i">٢٢</span><div class="rs-b">
+            <em>افعل:</em> بدّل النموذج داخل المحادثة نفسها من سونيت إلى أوبس. <em>قل:</em> لا تحتاج محادثة جديدة لتغيّر النموذج.
+          </div></div>
+          <div class="rs-row"><span class="rs-i">٢٣</span><div class="rs-b">
+            <em>افعل:</em> ارفع صورة أو ملفًّا.
+            <span class="rs-x">المثال: صوّر صفحة ورقية واطلب استخراج نصّها — أنفع ما في الهاتف لموظّف.</span>
+          </div></div>
+          <div class="rs-row"><span class="rs-i">٢٤</span><div class="rs-b">
+            <em>افعل:</em> اضغط المايك وتكلّم بالعربي. <em>قل:</em> أسرع من الكتابة على الهاتف بكثير.
+          </div></div>
+        </div>
+
+        <!-- ===== تسجيل ٣ ===== -->
+        <div class="rs">
+          <div class="rs-h"><span class="rs-n">٣</span><span class="rs-t">المشاريع والأرتيفاكتس</span><span class="rs-m">~١٠ د · ٦ بنود</span></div>
+          <div class="rs-row"><span class="rs-i">٢٥–٢٧</span><div class="rs-b">
+            <em>تدفّق واحد متّصل — لا ثلاثة عروض:</em> أنشئ مشروع «مراسلات الشعبة» ← اكتب فيه التعليمات الثابتة ← أضف ملفَّين مرجعيَّين ← افتح محادثة داخله واطلب كتابًا.
+            <span class="rs-x">قل: التعليمات تُكتب مرّة فتنطبق على كل محادثة داخل المشروع — لا على الأولى وحدها.</span>
+          </div></div>
+          <div class="rs-row"><span class="rs-i">٢٨–٣٠</span><div class="rs-b">
+            <em>تدفّق واحد متّصل:</em> اطلب مخرَجًا كأرتيفاكت (الصق محضر المادّة ٤ واطلب ملخّصًا كمستند) ← عاينه وعدّل فيه ← أرِهم النشر برابط.
+            <span class="rs-x">قل: الأرتيفاكت مخرَجٌ قائم بذاته لا نصّ داخل المحادثة — ويبقى خاصًّا حتى تنشره أنت.</span>
+          </div></div>
+        </div>
+
+        <!-- ===== تسجيل ٤ ===== -->
+        <div class="rs">
+          <div class="rs-h"><span class="rs-n">٤</span><span class="rs-t">الإعدادات</span><span class="rs-m">~٢٠ د · ١٦ بندًا</span></div>
+          <div class="rs-row"><span class="rs-i">٤٨–٤٩</span><div class="rs-b">
+            <em>افتح:</em> Profile. <em>افعل:</em> املأ «بماذا يناديك» و«طبيعة عملك»، ثم اكتب التعليمات الشخصية الدائمة.
+            <span class="rs-x">المثال: اطرح سؤالًا واحدًا قبل كتابتها وبعدها — والفرق هو الدرس كلّه.</span>
+          </div></div>
+          <div class="rs-row"><span class="rs-i">٥٠–٥١</span><div class="rs-b">
+            <em>افتح:</em> General. أرِهم إعداد الصوت (اللغة · النمط · السرعة) والإشعارات (اكتمال الردّ · إشعارات الكود).
+          </div></div>
+          <div class="rs-row"><span class="rs-i">٥٢–٥٣</span><div class="rs-b">
+            <em>افتح:</em> Account ← الأجهزة المعتمدة، ثم الجلسات النشطة ومواقعها.
+            <span class="rs-x">قل: هذه أهمّ شاشة أمنية في الحساب — راجعها دوريًّا، وأي جهاز لا تعرفه أنهِ جلسته فورًا ثم غيّر كلمة المرور.</span>
+          </div></div>
+          <div class="rs-row"><span class="rs-i">٥٤–٥٥</span><div class="rs-b">
+            <em>افتح:</em> Privacy. أرِهم تصدير البيانات (اختيار المدّة والمحتوى) وحذف المحادثات أو الحساب.
+            <span class="rs-x">قل: رابط التصدير يصل بريدك ويبطل بعد مدّة — إن تأخّرت تطلب تصديرًا جديدًا.</span>
+          </div></div>
+          <div class="rs-row"><span class="rs-i">٥٦–٥٩</span><div class="rs-b">
+            <em>افتح:</em> Capabilities. <em>افعل:</em> أطفئ «الأرتيفاكتس» واطرح طلبًا، ثم شغّلها وأعد الطلب نفسه — الفرق أمامهم مباشرة. ثم مرّ على: أرتيفاكتس ذكية · الرسوم داخل المحادثة · تنفيذ الكود وإنشاء الملفات.
+            <span class="rs-w">⚠ تحقّق قبل التسجيل أن «تنفيذ الكود» متاح على حسابك، ولا تعد الطلبة بما لا يفتحه المجاني.</span>
+          </div></div>
+          <div class="rs-row"><span class="rs-i">٦٥–٦٦</span><div class="rs-b">
+            <em>افتح:</em> Billing · Usage. أرِهم الرصيد وإعادة الشحن التلقائي والفواتير وإلغاء الخطة.
+            <span class="rs-x">قل: أبقِ إعادة الشحن التلقائي مطفأة حتى تعرف استهلاكك الطبيعي — وإلا تجدّد بصمت ولا تنتبه إلا في الفاتورة.</span>
+          </div></div>
+          <div class="rs-row"><span class="rs-i">٦٧–٦٨</span><div class="rs-b">
+            <em>افتح:</em> الأذونات والمظهر — أذونات الجهاز، ثم وضع اللون ونمط الخط.
+          </div></div>
+        </div>
+
+        <!-- ===== تسجيل ٥ ===== -->
+        <div class="rs">
+          <div class="rs-h"><span class="rs-n">٥</span><span class="rs-t">الميزات المدفوعة — الأهمّ</span><span class="rs-m">~٣٥ د · ٢٣ بندًا</span></div>
+          <div class="rs-row"><span class="rs-i">٣١–٣٤</span><div class="rs-b">
+            <em>افتح:</em> كوورك ← قائمة المهام. أرِهم الحالات الأربع: قيد العمل · تحتاج ردّك · جاهزة للمراجعة · مكتملة ومؤرشفة.
+            <span class="rs-x">قل: «تحتاج ردّك» هي قائمة عملك لهذا اليوم — لا «الكل».</span>
+          </div></div>
+          <div class="rs-row"><span class="rs-i">٣٥–٣٦</span><div class="rs-b">
+            <em>أرِهم:</em> وصول كوورك إلى مجلّد كامل، ثم إعداد الأجهزة الموثوقة والمتصفّح المفضّل.
+            <span class="rs-x">قل: أبقِ «طلب أجهزة موثوقة» مفعّلًا — الجلسة تصل إلى ملفاتك لا إلى محادثة واحدة.</span>
+          </div></div>
+          <div class="rs-row"><span class="rs-i">٣٧</span><div class="rs-b">
+            <em>قل:</em> ديسباتش يرسل مهمّة فرعية لوكيل مستقلّ ويرجع بالنتيجة وحدها — فتبقى محادثتك الأساسية مركّزة.
+          </div></div>
+          <div class="rs-row"><span class="rs-i">٣٨–٤٠</span><div class="rs-b">
+            <em>افتح:</em> كلود كود ← الأجهزة، ثم الجلسات، ثم تصنيف حالة الجلسة ومظهر الكود.
+            <span class="rs-x">قل لهم صراحةً: هذه أداة مبرمجين، أعرضها لتعرفوها لا لتستعملوها غدًا.</span>
+          </div></div>
+          <div class="rs-row"><span class="rs-i">٤١–٤٣</span><div class="rs-b">
+            <em>تدفّق واحد:</em> أنشئ مهمّة مجدولة واضبط المُشغِّل (الموعد والتكرار) ← افتح سجلّ التشغيلات ← أرِهم الإيقاف ثم الحذف.
+            <span class="rs-x">قل: حذف المُشغِّل يُنهي الجدولة نهائيًّا — وللإيقاف المؤقّت لا تستعمل الحذف.</span>
+          </div></div>
+          <div class="rs-row"><span class="rs-i">٤٤</span><div class="rs-b">
+            <em>افتح:</em> التخصيص Customize. <em>قل:</em> يضبط أسلوب كلود معك — وهو غير «التصميم» تمامًا.
+          </div></div>
+          <div class="rs-row"><span class="rs-i">٤٥–٤٧</span><div class="rs-b">
+            <em>افتح:</em> Design. أرِهم القوالب الأربعة (فارغ · تطبيق جوال · شرائح · مستند)، ثم أنظمة التصميم، ثم اختيار النموذج داخله.
+            <span class="rs-x">المثال: قالب فارغ ← «بوستر إعلان دورة تدريبية للمعهد».</span>
+          </div></div>
+          <div class="rs-row"><span class="rs-i">٦٠</span><div class="rs-b">
+            <em>افتح:</em> الموصّلات. اعرض ربط <b>درايف</b> كاملًا — وقف عند نافذة الصلاحية واقرأها بصوت عالٍ.
+            <span class="rs-x">ثم قل بجملة واحدة: «البريد والتقويم نفس الخطوات بالضبط» — ولا تُعد المسار ثلاث مرّات.</span>
+            <span class="rs-w">⚠ النقطة المحورية: الصلاحية تُمنح للصندوق كلّه لا لرسالة واحدة.</span>
+          </div></div>
+          <div class="rs-row"><span class="rs-i">٦١–٦٤</span><div class="rs-b">
+            <em>قصّة واحدة متّصلة — أربعة بنود بتسجيل واحد:</em> حاجة واحدة «مهارة تصيغ كتابًا رسميًّا بأسلوب دائرتنا»:
+            ١) <b>تصفّح الجاهزة</b> ← ابحث ولن تجدها · ٢) <b>الإنشاء مع كلود</b> ← صِف بالعربي ودعه يبنيها · ٣) <b>إنشاء مهارة</b> ← أرِهم الحقول يدويًّا · ٤) <b>رفع مهارة</b> ← ارفع نسخة ملف.
+            <span class="rs-x">قل: حقل «متى تُستعمل» هو الأهمّ — به يعرف كلود متى يستدعيها وحده.</span>
+          </div></div>
+          <div class="rs-row"><span class="rs-i">٦٩</span><div class="rs-b">
+            <em>افتح:</em> كلود في كروم.
+            <span class="rs-w">⚠ جرّبها على حسابك قبل التسجيل بيوم — تتوسّع تدريجيًّا وقد لا تكون وصلتك. إن لم تصلك فاحذف البند من التسجيل أو صِفه شفهيًّا.</span>
+          </div></div>
+        </div>
+
+        <!-- ===== تسجيل ٦ ===== -->
+        <div class="rs">
+          <div class="rs-h"><span class="rs-n">٦</span><span class="rs-t">الحوكمة والاستخدام الآمن</span><span class="rs-m">~٨ د · ٥ بنود</span></div>
+          <div class="rs-row"><span class="rs-i">٧٠</span><div class="rs-b">
+            <em>افتح:</em> جدول المادّة ١ على الشاشة. <em>افعل:</em> صنّف أعمدته أمامهم: عام · داخلي · سرّي، وبيّن السبب لكل عمود.
+          </div></div>
+          <div class="rs-row"><span class="rs-i">٧١</span><div class="rs-b">
+            <em>قل:</em> البيانات الشخصية المعرِّفة هي الاسم والهاتف والعنوان — وإخفاء الهوية إزالتها مع إبقاء ما يصلح للتحليل.
+            <span class="rs-w">⚠ الترتيب الصحيح: تُخفي الهوية بنفسك <b>قبل</b> اللصق. لا تلصق الخام ثم تطلب من كلود إخفاءه بعد أن يكون قد رآه.</span>
+          </div></div>
+          <div class="rs-row"><span class="rs-i">٧٢</span><div class="rs-b">
+            <em>قل:</em> الإشراف البشري — التوقيع توقيعك والمسؤولية مسؤوليتك، مهما كان مصدر النصّ.
+          </div></div>
+          <div class="rs-row"><span class="rs-i">٧٣</span><div class="rs-b">
+            <em>افعل — أقوى مشهد في التسجيلات الستّة:</em> الصق جدول الحضور (المادّة ٢) واسأل: «هل الحضور يؤثّر على درجة الاختبار؟» سيجيب أنّ الغائبين أعلى درجة — وحسابه صحيح تمامًا.
+            <span class="rs-x">ثم أرِهم السبب: متدرّب واحد غاب الجلسات الأربع ودرجته ٩٨. احذف سطره وأعد الحساب ← ينقلب الاستنتاج. الدرس: الرقم صحيح والنتيجة خاطئة.</span>
+          </div></div>
+          <div class="rs-row"><span class="rs-i">٧٤</span><div class="rs-b">
+            <em>قل:</em> سياسة الاستخدام المؤسسي تجيب أربعة أسئلة: من يستخدم · لأي غرض · بأي صلاحية · ومن يعتمد المخرجات قبل خروجها من الدائرة.
+          </div></div>
+        </div>
+
+        <div class="mini-note" style="color:var(--ink); opacity:0.6; transform:none;">— نهاية ورقة التصوير: ٦ تسجيلات · ٧٤ بندًا · لا بند مكرّر ولا ساقط —</div>
 
         <div class="mini-note" style="color:var(--ink); opacity:0.6; transform:none;">— نهاية دليل المحاضر، والمحطات التفصيلية تبدأ أدناه —</div>
         </div>
