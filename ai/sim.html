@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>محاكي كلود — المهارات والموصّلات</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Noto+Naskh+Arabic:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --red:#d1342b;
+    --green:#1f7a3d;
+    --blue:#1857a4;
+    --orange:#e07a1f;
+    --purple:#7a2ea6;
+    --paper:#fbf8ef;
+    --ink:#1a3d8c;
+    --teal:#0f7a72;
+  }
+  *{ box-sizing:border-box; }
+  html,body{
+    margin:0; padding:0; min-height:100vh;
+    font-family:'Noto Naskh Arabic', serif;
+    background:#5e3a1f;
+    background-image:repeating-linear-gradient(90deg, rgba(0,0,0,0.05) 0 2px, transparent 2px 9px);
+    color:var(--ink);
+    -webkit-text-size-adjust:100%;
+  }
+
+  .wrap{ max-width:660px; margin:0 auto; padding:14px 12px 70px; }
+
+  /* ===== الترويسة ===== */
+  .head{
+    background:var(--paper);
+    border:2.5px solid var(--red);
+    border-radius:14px;
+    padding:14px 16px 15px;
+    box-shadow:5px 6px 0 rgba(0,0,0,0.25);
+  }
+  .head h1{
+    margin:0 0 4px;
+    font-family:'Aref Ruqaa', serif;
+    font-size:clamp(19px,5vw,25px);
+    color:var(--red);
+  }
+  .head p{ margin:0; font-size:clamp(12.5px,3.2vw,14px); line-height:1.8; opacity:0.85; }
+  .sim-badge{
+    display:inline-block; margin-top:9px;
+    background:var(--orange); color:#fff;
+    font-size:11.5px; font-weight:700;
+    padding:3px 11px 4px; border-radius:999px;
+  }
+
+  /* ===== شريط التقدّم ===== */
+  .prog{
+    margin-top:12px; background:var(--paper);
+    border:2px solid var(--ink); border-radius:12px;
+    padding:11px 14px 12px;
+    box-shadow:4px 5px 0 rgba(0,0,0,0.2);
+  }
+  .prog-top{
+    display:flex; justify-content:space-between; align-items:baseline;
+    font-size:13px; font-weight:700; margin-bottom:7px;
+  }
+  .prog-bar{ height:9px; background:rgba(26,61,140,0.14); border-radius:999px; overflow:hidden; }
+  .prog-fill{ height:100%; width:0; background:var(--green); border-radius:999px; transition:width .35s ease; }
+  .dots{ display:flex; gap:5px; margin-top:9px; flex-wrap:wrap; }
+  .dot{
+    width:26px; height:26px; border-radius:50%;
+    border:2px solid rgba(26,61,140,0.3); background:#fff;
+    font-size:12px; font-weight:700; color:var(--ink);
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer; padding:0; font-family:inherit;
+  }
+  .dot.done{ background:var(--green); border-color:var(--green); color:#fff; }
+  .dot.cur{ border-color:var(--red); border-width:3px; color:var(--red); }
+  .dot.done.cur{ color:#fff; }
+
+  /* ===== بطاقة المهمة ===== */
+  .task{
+    margin-top:12px; background:var(--paper);
+    border:2.5px solid var(--red); border-radius:12px;
+    padding:13px 15px 14px;
+    box-shadow:4px 5px 0 rgba(0,0,0,0.2);
+  }
+  .task-tag{
+    display:inline-block; background:var(--red); color:#fff;
+    font-size:11.5px; font-weight:700; padding:3px 11px 4px;
+    border-radius:999px; margin-bottom:8px;
+  }
+  .task h2{ margin:0 0 6px; font-family:'Aref Ruqaa',serif; font-size:17px; color:var(--red); }
+  .task .goal{ margin:0; font-size:14px; line-height:1.85; }
+  .hint-btn{
+    margin-top:9px; background:none; border:1.5px dashed var(--blue);
+    color:var(--blue); font-family:inherit; font-size:12.5px; font-weight:700;
+    padding:5px 12px; border-radius:999px; cursor:pointer;
+  }
+  .hint-box{
+    display:none; margin-top:9px; font-size:13px; line-height:1.8;
+    background:rgba(24,87,164,0.08); border-inline-start:3px solid var(--blue);
+    border-radius:5px; padding:9px 12px;
+  }
+  .hint-box.show{ display:block; }
+
+  /* ===== إطار التطبيق (يشبه كلود على الهاتف) ===== */
+  .app{
+    margin-top:12px;
+    background:#1b1b1b; border:2.5px solid #3f3f3f; border-radius:15px;
+    overflow:hidden; box-shadow:5px 6px 0 rgba(0,0,0,0.3);
+    font-family:'IBM Plex Sans Arabic', sans-serif;
+  }
+  .app-bar{
+    display:flex; align-items:center; gap:9px;
+    padding:11px 13px; background:#262626; border-bottom:2px solid #3a3a3a;
+    color:#ededed; font-size:13.5px; font-weight:700;
+  }
+  .app-back{
+    background:none; border:none; color:#ededed; cursor:pointer;
+    font-size:19px; padding:0 3px; line-height:1; font-family:inherit;
+  }
+  .app-back[hidden]{ display:none; }
+  .app-title{ flex:1; min-width:0; }
+  .app-en{ direction:ltr; unicode-bidi:isolate; opacity:0.6; font-weight:400; font-size:12px; }
+  .app-body{ padding:0; min-height:290px; }
+
+  .row{
+    display:flex; align-items:center; gap:10px;
+    padding:13px 14px; border-bottom:1px solid #2e2e2e;
+    color:#e6e6e6; font-size:14px; cursor:pointer;
+    background:none; border-inline:none; border-top:none; width:100%;
+    font-family:inherit; text-align:start;
+  }
+  .row:last-child{ border-bottom:none; }
+  .row:hover, .row:focus-visible{ background:#242424; outline:none; }
+  .row .ic{ flex:none; font-size:17px; width:24px; text-align:center; }
+  .row .tx{ flex:1; min-width:0; }
+  .row .tx b{ display:block; font-weight:600; }
+  .row .tx span{
+    display:block; font-size:11.5px; opacity:0.6; margin-top:2px;
+    direction:ltr; unicode-bidi:isolate; text-align:start;
+  }
+  .row .arw{ flex:none; opacity:0.4; font-size:15px; }
+  .row.on{ background:rgba(31,122,61,0.18); }
+  .row.dim{ opacity:0.45; cursor:default; }
+
+  .empty{ padding:26px 18px; text-align:center; color:#9a9a9a; font-size:13.5px; line-height:1.9; }
+
+  .pad{ padding:14px; }
+  .lbl{ display:block; color:#c8c8c8; font-size:12.5px; font-weight:600; margin:0 0 5px; }
+  .fld{
+    width:100%; background:#111; border:1.5px solid #3f3f3f; border-radius:9px;
+    color:#ededed; font-family:inherit; font-size:13.5px; padding:10px 11px;
+    margin-bottom:12px; resize:vertical;
+  }
+  .fld:focus{ outline:none; border-color:#6a6a6a; }
+  .fld::placeholder{ color:#666; }
+
+  .btn{
+    background:#c96442; color:#fff; border:none; border-radius:9px;
+    font-family:inherit; font-size:13.5px; font-weight:600;
+    padding:11px 18px; cursor:pointer; width:100%;
+  }
+  .btn:hover{ filter:brightness(1.08); }
+  .btn.ghost{ background:none; border:1.5px solid #4a4a4a; color:#ddd; }
+  .btn[disabled]{ opacity:0.4; cursor:not-allowed; }
+  .btn + .btn{ margin-top:9px; }
+
+  .search{
+    display:flex; gap:8px; padding:12px 14px; border-bottom:1px solid #2e2e2e;
+  }
+  .search input{
+    flex:1; background:#111; border:1.5px solid #3f3f3f; border-radius:9px;
+    color:#ededed; font-family:inherit; font-size:13.5px; padding:9px 11px;
+  }
+  .search input:focus{ outline:none; border-color:#6a6a6a; }
+
+  .card{
+    margin:12px 14px; padding:12px 13px;
+    background:#232323; border:1.5px solid #3a3a3a; border-radius:10px;
+    color:#ddd; font-size:13px; line-height:1.85;
+  }
+  .card b{ color:#fff; }
+
+  .warn{
+    margin:12px 14px; padding:12px 13px;
+    background:rgba(224,122,31,0.12); border:1.5px solid var(--orange);
+    border-radius:10px; color:#f0c99a; font-size:13px; line-height:1.85;
+  }
+  .warn b{ color:var(--orange); }
+
+  .chip{
+    display:inline-block; background:#2e2e2e; color:#bbb;
+    font-size:11.5px; padding:3px 10px 4px; border-radius:999px;
+    margin:0 0 0 5px;
+  }
+  .chip.ok{ background:rgba(31,122,61,0.25); color:#7fd79b; }
+
+  .sw{
+    flex:none; width:40px; height:22px; border-radius:999px;
+    background:#3a3a3a; position:relative; transition:background .2s;
+  }
+  .sw::after{
+    content:""; position:absolute; top:2px; right:2px;
+    width:16px; height:16px; border-radius:50%; background:#8a8a8a;
+    transition:all .2s;
+  }
+  .sw.on{ background:rgba(31,122,61,0.6); }
+  .sw.on::after{ right:calc(100% - 18px); background:#fff; }
+
+  /* ===== التغذية الراجعة ===== */
+  .fb{
+    margin-top:12px; border-radius:12px; padding:13px 15px 14px;
+    font-size:13.5px; line-height:1.9; display:none;
+    box-shadow:4px 5px 0 rgba(0,0,0,0.2);
+  }
+  .fb.show{ display:block; }
+  .fb.ok{ background:#eaf7ee; border:2.5px solid var(--green); }
+  .fb.no{ background:#fdf0ef; border:2.5px solid var(--red); }
+  .fb .v{ display:block; font-weight:700; font-size:15px; margin-bottom:5px; font-family:'Aref Ruqaa',serif; }
+  .fb.ok .v{ color:var(--green); }
+  .fb.no .v{ color:var(--red); }
+  .fb .why{ display:block; margin-top:7px; padding-top:8px; border-top:1.5px dashed rgba(0,0,0,0.18); }
+  .fb .why b{ color:var(--teal); }
+
+  .nav{ display:flex; gap:9px; margin-top:12px; }
+  .nav button{
+    flex:1; background:var(--paper); border:2.5px solid var(--ink);
+    color:var(--ink); font-family:'Aref Ruqaa',serif; font-weight:700;
+    font-size:14px; padding:10px; border-radius:11px; cursor:pointer;
+    box-shadow:3px 4px 0 rgba(0,0,0,0.22);
+  }
+  .nav button[disabled]{ opacity:0.4; cursor:not-allowed; box-shadow:none; }
+  .nav button.go{ background:var(--green); color:#fff; border-color:#14562a; }
+
+  .reset{
+    display:block; margin:16px auto 0; background:none; border:none;
+    color:rgba(255,255,255,0.55); font-family:inherit; font-size:12.5px;
+    text-decoration:underline; cursor:pointer;
+  }
+
+  /* ===== شاشة الختام ===== */
+  .done-card{
+    margin-top:12px; background:var(--paper); border:3px solid var(--green);
+    border-radius:14px; padding:20px 18px; text-align:center;
+    box-shadow:5px 6px 0 rgba(0,0,0,0.25); display:none;
+  }
+  .done-card.show{ display:block; }
+  .done-card h2{ margin:0 0 8px; font-family:'Aref Ruqaa',serif; color:var(--green); font-size:21px; }
+  .done-card p{ margin:0 0 6px; font-size:13.5px; line-height:1.9; }
+  .done-list{ text-align:start; margin:12px 0 0; padding-inline-start:20px; font-size:13px; line-height:2; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="head">
+    <h1>محاكي كلود — المهارات والموصّلات</h1>
+    <p>ستّ مهمات تنفّذها بنفسك على واجهة تشبه كلود. هذه الميزات تحتاج اشتراكًا مدفوعًا في كلود الحقيقي — وهنا تجرّبها مجانًا وبلا حساب.</p>
+    <span class="sim-badge">محاكاة تدريبية — ليست كلود الحقيقي</span>
+  </div>
+
+  <div class="prog">
+    <div class="prog-top">
+      <span id="progTxt">المهمة ١ من ٦</span>
+      <span id="progPct">٠٪</span>
+    </div>
+    <div class="prog-bar"><div class="prog-fill" id="progFill"></div></div>
+    <div class="dots" id="dots"></div>
+  </div>
+
+  <div class="task">
+    <span class="task-tag" id="taskTag">المهمة ١</span>
+    <h2 id="taskTitle"></h2>
+    <p class="goal" id="taskGoal"></p>
+    <button type="button" class="hint-btn" id="hintBtn">أرني تلميحًا</button>
+    <div class="hint-box" id="hintBox"></div>
+  </div>
+
+  <div class="app">
+    <div class="app-bar">
+      <button type="button" class="app-back" id="backBtn" hidden aria-label="رجوع">→</button>
+      <span class="app-title" id="appTitle">Claude</span>
+    </div>
+    <div class="app-body" id="appBody"></div>
+  </div>
+
+  <div class="fb" id="fb"></div>
+
+  <div class="nav">
+    <button type="button" id="prevBtn">→ السابقة</button>
+    <button type="button" id="nextBtn" disabled>التالية ←</button>
+  </div>
+
+  <div class="done-card" id="doneCard">
+    <h2>أكملت الوحدة الأولى ★</h2>
+    <p>مررت على <b>أربعة احتمالات للمهارات</b> وعلى <b>الموصّلات</b> — وكلها ميزات لا يفتحها الحساب المجاني.</p>
+    <ul class="done-list">
+      <li>المهارات تُضبط من الإعدادات، لا من المحادثة</li>
+      <li>تصفّح · إنشاء مع كلود · إنشاء يدوي · رفع ملف</li>
+      <li>الموصّل يُمنح صلاحية <b>الصندوق كلّه</b> لا رسالة واحدة</li>
+    </ul>
+  </div>
+
+  <button type="button" class="reset" id="resetBtn">إعادة المحاكي من البداية</button>
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  var AR = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+  function ar(n){ return String(n).split('').map(function(d){ return AR[+d]; }).join(''); }
+
+  var STORE = 'sim:skills:v1';
+
+  /* ====== المهمات ====== */
+  var TASKS = [
+    {
+      tag:'المهمة ١', title:'أين تسكن المهارات؟',
+      goal:'ادخل إلى <b>الإعدادات</b>، ثم افتح <b>المهارات (Skills)</b>.',
+      hint:'المهارات ليست داخل المحادثة ولا في الشريط الجانبي — موضعها داخل الإعدادات، لأنها تُضبط مرّة وتنطبق على كل محادثاتك.',
+      lesson:'المهارة تُضبط <b>مرّة واحدة</b> من الإعدادات فتصير متاحة في كل محادثة — بخلاف التعليمات التي تكتبها داخل محادثة واحدة فتنتهي بانتهائها.'
+    },
+    {
+      tag:'المهمة ٢', title:'الاحتمال الأول — تصفّح الجاهزة',
+      goal:'افتح <b>تصفّح المهارات الجاهزة</b>، وابحث عن مهارة تصيغ <b>كتابًا رسميًا</b> بأسلوب دائرتك.',
+      hint:'اضغط «تصفّح الجاهزة»، ثم اكتب في مربّع البحث كلمة مثل «كتاب رسمي» واضغط بحث.',
+      lesson:'الجاهز عامّ ولا يعرف أسلوب دائرتك. فحين لا تجد ما يناسبك في المعرض — <b>تبنيها بنفسك</b>، وهذا ما تفعله في المهمات الثلاث القادمة.'
+    },
+    {
+      tag:'المهمة ٣', title:'الاحتمال الثاني — الإنشاء مع كلود',
+      goal:'ارجع للمهارات، واختر <b>الإنشاء مع كلود</b>. صف ما تريد بجملة، ثم اضغط «ابنِ المهارة».',
+      hint:'اكتب وصفًا مثل: «مهارة تصيغ كتبًا رسمية لدائرتي بثلاث فقرات وبلا عبارات مجاملة». لا يقلّ عن ١٥ حرفًا.',
+      lesson:'هذا أسرع الاحتمالات الأربعة: تصف بالعربي وكلود يكتب لك حقول المهارة. <b>راجع ما كتبه قبل الحفظ</b> — هو اقتراح لا قرار.'
+    },
+    {
+      tag:'المهمة ٤', title:'الاحتمال الثالث — إنشاء يدوي',
+      goal:'ارجع للمهارات، واختر <b>إنشاء مهارة</b>، واملأ الحقول الثلاثة ثم احفظ.',
+      hint:'ثلاثة حقول: الاسم، ومتى تُستعمل، والتعليمات. كلّها مطلوبة — لا يُفعَّل زر الحفظ قبل ملئها.',
+      lesson:'حقل «متى تُستعمل» هو الأهم: به يعرف كلود متى يستدعي المهارة تلقائيًا. وصفٌ غامض فيه = مهارة لا تشتغل أبدًا.'
+    },
+    {
+      tag:'المهمة ٥', title:'الاحتمال الرابع — رفع ملف مهارة',
+      goal:'ارجع للمهارات، واختر <b>رفع مهارة</b>، وارفع الملف المتاح.',
+      hint:'الرفع يُستعمل حين تجهّز دائرتكم مهارة موحّدة، فتوزَّع كملف على الموظفين بدل أن يبنيها كلٌّ بطريقته.',
+      lesson:'هذا احتمال <b>المؤسسة</b> لا الفرد: مهارة واحدة معتمدة تُوزَّع على القسم كلّه، فتخرج الكتب بصياغة واحدة مهما تغيّر الموظف.'
+    },
+    {
+      tag:'المهمة ٦', title:'الموصّلات — واقرأ الصلاحية',
+      goal:'ارجع للإعدادات، وافتح <b>الموصّلات</b>، واربط <b>درايف</b> — ثم اقرأ نصّ الصلاحية بعناية قبل الموافقة.',
+      hint:'بعد الضغط على «اربط» تظهر لك نافذة الصلاحية. اقرأها ثم اضغط «أوافق».',
+      lesson:'الصلاحية تُمنح <b>للمجلّد كلّه</b> لا لملف واحد. فطلبٌ بريء مثل «لخّص ملفات اليوم» قد يمرّ على ما لم تقصد إطلاعه عليه. اربط حسابًا مخصّصًا للعمل مع كلود، لا حسابك الرسمي.'
+    }
+  ];
+
+  /* ====== الحالة ====== */
+  var st = {
+    idx:0,
+    done:[],
+    screen:'home',
+    searched:false,
+    aiBuilt:false,
+    manualSaved:false,
+    uploaded:false,
+    driveOn:false,
+    aiText:'',
+    f:{ name:'', when:'', how:'' }
+  };
+
+  /* ما يبنيه الطالب يبقى كما يبقى في كلود الحقيقي: لو رجع بعد يوم
+     وجد مهاراته وموصّله كما تركها، لا لوحةً فارغة تناقض شريط تقدّمه. */
+  try{
+    var raw = localStorage.getItem(STORE);
+    if(raw){
+      var s = JSON.parse(raw);
+      if(s && Array.isArray(s.done)) st.done = s.done;
+      if(typeof s.idx === 'number') st.idx = Math.min(Math.max(s.idx,0), TASKS.length-1);
+      ['searched','aiBuilt','manualSaved','uploaded','driveOn'].forEach(function(k){
+        if(typeof s[k] === 'boolean') st[k] = s[k];
+      });
+      if(s.f && typeof s.f === 'object'){
+        st.f.name = s.f.name || ''; st.f.when = s.f.when || ''; st.f.how = s.f.how || '';
+      }
+    }
+  }catch(e){}
+
+  function save(){
+    try{
+      localStorage.setItem(STORE, JSON.stringify({
+        done:st.done, idx:st.idx,
+        searched:st.searched, aiBuilt:st.aiBuilt, manualSaved:st.manualSaved,
+        uploaded:st.uploaded, driveOn:st.driveOn, f:st.f
+      }));
+    }catch(e){}
+  }
+
+  var $ = function(id){ return document.getElementById(id); };
+  var appBody = $('appBody'), appTitle = $('appTitle'), backBtn = $('backBtn');
+
+  /* ====== إتمام المهمة ====== */
+  function complete(i){
+    if(st.done.indexOf(i) === -1){ st.done.push(i); save(); }
+    var t = TASKS[i];
+    var fb = $('fb');
+    fb.className = 'fb ok show';
+    fb.innerHTML = '<span class="v">✓ تمّت المهمة ' + ar(i+1) + '</span>' +
+                   '<span class="why"><b>لماذا هذا مهم:</b> ' + t.lesson + '</span>';
+    renderProgress();
+    $('nextBtn').disabled = false;
+    fb.scrollIntoView({ behavior:'smooth', block:'nearest' });
+  }
+
+  function nudge(msg){
+    var fb = $('fb');
+    fb.className = 'fb no show';
+    fb.innerHTML = '<span class="v">✗ ليست هذه الخطوة</span>' + msg;
+  }
+
+  function isCur(i){ return st.idx === i; }
+
+  /* ====== الشاشات ====== */
+  var SCREENS = {};
+
+  function go(name){
+    st.screen = name;
+    render();
+  }
+
+  function row(opts){
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'row' + (opts.cls ? ' ' + opts.cls : '');
+    var ic = opts.icon ? '<span class="ic">' + opts.icon + '</span>' : '';
+    var sub = opts.sub ? '<span>' + opts.sub + '</span>' : '';
+    b.innerHTML = ic + '<span class="tx"><b>' + opts.name + '</b>' + sub + '</span>' +
+                  (opts.right || '<span class="arw">‹</span>');
+    if(opts.onClick) b.addEventListener('click', opts.onClick);
+    else b.classList.add('dim');
+    return b;
+  }
+
+  function frag(){ return document.createDocumentFragment(); }
+
+  SCREENS.home = function(){
+    appTitle.innerHTML = 'Claude';
+    backBtn.hidden = true;
+    var f = frag();
+    f.appendChild(row({ icon:'✎', name:'محادثة جديدة', sub:'New chat' }));
+    f.appendChild(row({ icon:'☰', name:'المحادثات', sub:'Chats' }));
+    f.appendChild(row({ icon:'▣', name:'المشاريع', sub:'Projects' }));
+    f.appendChild(row({ icon:'⚙', name:'الإعدادات', sub:'Settings', onClick:function(){ go('settings'); } }));
+    return f;
+  };
+
+  SCREENS.settings = function(){
+    appTitle.innerHTML = 'الإعدادات <span class="app-en">Settings</span>';
+    backBtn.hidden = false;
+    backBtn.onclick = function(){ go('home'); };
+    var f = frag();
+    f.appendChild(row({ icon:'👤', name:'الملف الشخصي', sub:'Profile' }));
+    f.appendChild(row({ icon:'⚙', name:'عام', sub:'General' }));
+    f.appendChild(row({ icon:'🔒', name:'الخصوصية', sub:'Privacy' }));
+    f.appendChild(row({ icon:'◧', name:'القدرات', sub:'Capabilities' }));
+    f.appendChild(row({ icon:'🔌', name:'الموصّلات', sub:'Connectors · ' + (st.driveOn ? '1 connected' : '0 connected'),
+      onClick:function(){
+        go('connectors');
+        if(!isCur(5) && st.idx < 5){
+          nudge('الموصّلات مهمّتها رقم ٦. أكمل المهارات أوّلًا.');
+        }
+      } }));
+    f.appendChild(row({ icon:'✦', name:'المهارات', sub:'Skills',
+      onClick:function(){
+        go('skills');
+        if(isCur(0)) complete(0);
+      } }));
+    f.appendChild(row({ icon:'💳', name:'الفوترة والاستخدام', sub:'Billing · Usage' }));
+    return f;
+  };
+
+  SCREENS.skills = function(){
+    appTitle.innerHTML = 'المهارات <span class="app-en">Skills</span>';
+    backBtn.hidden = false;
+    backBtn.onclick = function(){ go('settings'); };
+    var f = frag();
+
+    var made = [];
+    if(st.aiBuilt) made.push('كتاب رسمي — بُنيت مع كلود');
+    if(st.manualSaved) made.push(st.f.name || 'مهارة يدوية');
+    if(st.uploaded) made.push('سياسة المراسلات — ملف مرفوع');
+
+    if(made.length){
+      var box = document.createElement('div');
+      box.className = 'card';
+      box.innerHTML = '<b>مهاراتك (' + ar(made.length) + ')</b><br>' +
+        made.map(function(m){ return '• ' + m + ' <span class="chip ok">مفعّلة</span>'; }).join('<br>');
+      f.appendChild(box);
+    }else{
+      var e = document.createElement('div');
+      e.className = 'empty';
+      e.innerHTML = 'لا توجد مهارات بعد.<br>اختر أحد الاحتمالات الأربعة أدناه.';
+      f.appendChild(e);
+    }
+
+    f.appendChild(row({ icon:'⌕', name:'تصفّح الجاهزة', sub:'Browse',
+      onClick:function(){ go('browse'); } }));
+    f.appendChild(row({ icon:'✨', name:'الإنشاء مع كلود', sub:'Create with Claude',
+      onClick:function(){ go('ai'); } }));
+    f.appendChild(row({ icon:'✛', name:'إنشاء مهارة', sub:'Create a skill',
+      onClick:function(){ go('manual'); } }));
+    f.appendChild(row({ icon:'⬆', name:'رفع مهارة', sub:'Upload skill',
+      onClick:function(){ go('upload'); } }));
+    return f;
+  };
+
+  SCREENS.browse = function(){
+    appTitle.innerHTML = 'تصفّح الجاهزة <span class="app-en">Browse</span>';
+    backBtn.hidden = false;
+    backBtn.onclick = function(){ go('skills'); };
+    var f = frag();
+
+    var s = document.createElement('div');
+    s.className = 'search';
+    s.innerHTML = '<input type="text" id="q" placeholder="ابحث في المهارات الجاهزة…">' +
+                  '<button type="button" class="btn" style="width:auto;padding:9px 16px" id="qb">بحث</button>';
+    f.appendChild(s);
+
+    var res = document.createElement('div');
+    res.id = 'res';
+    if(st.searched){
+      res.innerHTML = '<div class="empty">لا توجد نتائج مطابقة.<br>' +
+        'المعرض عامّ — ولا يعرف أسلوب دائرتك.</div>';
+    }else{
+      res.innerHTML =
+        '<div class="card"><b>مهارات شائعة</b><br>' +
+        '• تلخيص المستندات الطويلة<br>' +
+        '• تحويل جدول إلى رسم بياني<br>' +
+        '• مراجعة نصّ إنجليزي<br>' +
+        '• كتابة رسائل بريد قصيرة</div>';
+    }
+    f.appendChild(res);
+
+    setTimeout(function(){
+      var qb = $('qb'), q = $('q');
+      if(!qb) return;
+      qb.addEventListener('click', function(){
+        var v = (q.value || '').trim();
+        if(v.length < 2){ nudge('اكتب كلمة بحث أوّلًا — مثل «كتاب رسمي».'); return; }
+        st.searched = true;
+        render();
+        if(isCur(1)) complete(1);
+      });
+    }, 0);
+    return f;
+  };
+
+  SCREENS.ai = function(){
+    appTitle.innerHTML = 'الإنشاء مع كلود <span class="app-en">Create with Claude</span>';
+    backBtn.hidden = false;
+    backBtn.onclick = function(){ go('skills'); };
+    var f = frag();
+    var p = document.createElement('div');
+    p.className = 'pad';
+
+    if(st.aiBuilt){
+      p.innerHTML =
+        '<div class="card" style="margin:0 0 12px"><b>اقتراح كلود — راجعه قبل الحفظ</b><br>' +
+        '<b>الاسم:</b> كتاب رسمي — أسلوب الدائرة<br>' +
+        '<b>متى تُستعمل:</b> عند طلب صياغة كتاب رسمي موجَّه لجهة حكومية.<br>' +
+        '<b>التعليمات:</b> ثلاث فقرات · صيغة رسمية بضمير الغائب · بلا عبارات مجاملة · تنتهي بجملة طلب واحدة.</div>' +
+        '<div class="warn">هذا <b>اقتراح</b> كتبه كلود من وصفك، لا قرارًا نهائيًا. اقرأه وعدّله قبل الحفظ.</div>';
+    }else{
+      p.innerHTML =
+        '<label class="lbl" for="ad">صف المهارة التي تريدها بالعربي</label>' +
+        '<textarea class="fld" id="ad" rows="4" placeholder="مثال: مهارة تصيغ كتبًا رسمية لدائرتي بثلاث فقرات وبلا عبارات مجاملة"></textarea>' +
+        '<button type="button" class="btn" id="ab">ابنِ المهارة</button>';
+    }
+    f.appendChild(p);
+
+    setTimeout(function(){
+      var ab = $('ab'), ad = $('ad');
+      if(!ab) return;
+      ab.addEventListener('click', function(){
+        var v = (ad.value || '').trim();
+        if(v.length < 15){ nudge('الوصف قصير جدًّا. اكتب جملة كاملة تصف ما تريد (١٥ حرفًا فأكثر).'); return; }
+        st.aiText = v; st.aiBuilt = true;
+        render();
+        if(isCur(2)) complete(2);
+      });
+    }, 0);
+    return f;
+  };
+
+  SCREENS.manual = function(){
+    appTitle.innerHTML = 'إنشاء مهارة <span class="app-en">Create a skill</span>';
+    backBtn.hidden = false;
+    backBtn.onclick = function(){ go('skills'); };
+    var f = frag();
+    var p = document.createElement('div');
+    p.className = 'pad';
+    p.innerHTML =
+      '<label class="lbl" for="n1">اسم المهارة</label>' +
+      '<input class="fld" id="n1" type="text" placeholder="كتاب رسمي — أسلوب الدائرة">' +
+      '<label class="lbl" for="n2">متى تُستعمل؟</label>' +
+      '<input class="fld" id="n2" type="text" placeholder="عند طلب صياغة كتاب رسمي">' +
+      '<label class="lbl" for="n3">التعليمات</label>' +
+      '<textarea class="fld" id="n3" rows="3" placeholder="ثلاث فقرات · رسمي · بلا مجاملة"></textarea>' +
+      '<button type="button" class="btn" id="sv" disabled>احفظ المهارة</button>';
+    f.appendChild(p);
+
+    setTimeout(function(){
+      var n1=$('n1'), n2=$('n2'), n3=$('n3'), sv=$('sv');
+      if(!sv) return;
+      n1.value = st.f.name; n2.value = st.f.when; n3.value = st.f.how;
+      function chk(){
+        st.f.name = n1.value.trim(); st.f.when = n2.value.trim(); st.f.how = n3.value.trim();
+        sv.disabled = !(st.f.name && st.f.when && st.f.how);
+      }
+      [n1,n2,n3].forEach(function(el){ el.addEventListener('input', chk); });
+      chk();
+      sv.addEventListener('click', function(){
+        st.manualSaved = true;
+        go('skills');
+        if(isCur(3)) complete(3);
+      });
+    }, 0);
+    return f;
+  };
+
+  SCREENS.upload = function(){
+    appTitle.innerHTML = 'رفع مهارة <span class="app-en">Upload skill</span>';
+    backBtn.hidden = false;
+    backBtn.onclick = function(){ go('skills'); };
+    var f = frag();
+    var p = document.createElement('div');
+    p.className = 'pad';
+    if(st.uploaded){
+      p.innerHTML = '<div class="card" style="margin:0"><b>تمّ الرفع ✓</b><br>' +
+        'سياسة-المراسلات-الرسمية.zip <span class="chip ok">مفعّلة</span></div>';
+    }else{
+      p.innerHTML =
+        '<div class="card" style="margin:0 0 12px">ملف جاهز أعدّته دائرتك للتوزيع على الموظفين:<br>' +
+        '<b>سياسة-المراسلات-الرسمية.zip</b></div>' +
+        '<button type="button" class="btn" id="up">ارفع هذا الملف</button>';
+    }
+    f.appendChild(p);
+    setTimeout(function(){
+      var up = $('up');
+      if(!up) return;
+      up.addEventListener('click', function(){
+        st.uploaded = true;
+        render();
+        if(isCur(4)) complete(4);
+      });
+    }, 0);
+    return f;
+  };
+
+  SCREENS.connectors = function(){
+    appTitle.innerHTML = 'الموصّلات <span class="app-en">Connectors</span>';
+    backBtn.hidden = false;
+    backBtn.onclick = function(){ go('settings'); };
+    var f = frag();
+    f.appendChild(row({
+      icon:'▲', name:'درايف', sub:'Google Drive',
+      cls: st.driveOn ? 'on' : '',
+      right: st.driveOn ? '<span class="chip ok">مربوط</span>' : '<span class="chip">اربط</span>',
+      onClick: st.driveOn ? null : function(){ go('perm'); }
+    }));
+    f.appendChild(row({ icon:'✉', name:'البريد', sub:'Gmail', right:'<span class="chip">اربط</span>' }));
+    f.appendChild(row({ icon:'▦', name:'التقويم', sub:'Calendar', right:'<span class="chip">اربط</span>' }));
+    var c = document.createElement('div');
+    c.className = 'card';
+    c.innerHTML = 'الحساب المجاني يسمح بموصّل مخصّص <b>واحد</b> فقط.';
+    f.appendChild(c);
+    return f;
+  };
+
+  SCREENS.perm = function(){
+    appTitle.innerHTML = 'صلاحية الموصّل <span class="app-en">Permission</span>';
+    backBtn.hidden = false;
+    backBtn.onclick = function(){ go('connectors'); };
+    var f = frag();
+    var w = document.createElement('div');
+    w.className = 'warn';
+    w.innerHTML = '<b>اقرأ قبل الموافقة</b><br>' +
+      'بالموافقة تمنح كلود صلاحية قراءة <b>كل الملفات في درايف</b> — لا ملفًّا واحدًا تختاره. ' +
+      'أي طلب لاحق مثل «لخّص ملفات اليوم» يمرّ على المجلّد كلّه.';
+    f.appendChild(w);
+    var p = document.createElement('div');
+    p.className = 'pad';
+    p.innerHTML = '<button type="button" class="btn" id="agree">أوافق واربط</button>' +
+                  '<button type="button" class="btn ghost" id="deny">إلغاء</button>';
+    f.appendChild(p);
+    setTimeout(function(){
+      var a = $('agree'), d = $('deny');
+      if(!a) return;
+      a.addEventListener('click', function(){
+        st.driveOn = true;
+        go('connectors');
+        if(isCur(5)) complete(5);
+      });
+      d.addEventListener('click', function(){ go('connectors'); });
+    }, 0);
+    return f;
+  };
+
+  /* ====== الرسم ====== */
+  function render(){
+    save();                       /* كل انتقال شاشة يثبّت ما بُني قبله */
+    appBody.innerHTML = '';
+    var build = SCREENS[st.screen] || SCREENS.home;
+    appBody.appendChild(build());
+  }
+
+  function renderProgress(){
+    var n = st.done.length, total = TASKS.length;
+    $('progTxt').textContent = 'المهمة ' + ar(st.idx+1) + ' من ' + ar(total);
+    $('progPct').textContent = ar(Math.round(n/total*100)) + '٪';
+    $('progFill').style.width = (n/total*100) + '%';
+
+    var d = $('dots');
+    d.innerHTML = '';
+    for(var i=0;i<total;i++){
+      (function(i){
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'dot' + (st.done.indexOf(i)>-1 ? ' done' : '') + (i===st.idx ? ' cur' : '');
+        b.textContent = ar(i+1);
+        b.addEventListener('click', function(){ setTask(i); });
+        d.appendChild(b);
+      })(i);
+    }
+    $('doneCard').classList.toggle('show', n === total);
+  }
+
+  function renderTask(){
+    var t = TASKS[st.idx];
+    $('taskTag').textContent = t.tag;
+    $('taskTitle').textContent = t.title;
+    $('taskGoal').innerHTML = t.goal;
+    $('hintBox').innerHTML = t.hint;
+    $('hintBox').classList.remove('show');
+    $('prevBtn').disabled = st.idx === 0;
+    $('nextBtn').disabled = st.done.indexOf(st.idx) === -1;
+    $('nextBtn').textContent = st.idx === TASKS.length-1 ? 'إنهاء ✓' : 'التالية ←';
+    $('nextBtn').classList.toggle('go', st.done.indexOf(st.idx) > -1);
+    var fb = $('fb');
+    if(st.done.indexOf(st.idx) > -1){
+      fb.className = 'fb ok show';
+      fb.innerHTML = '<span class="v">✓ تمّت المهمة ' + ar(st.idx+1) + '</span>' +
+                     '<span class="why"><b>لماذا هذا مهم:</b> ' + t.lesson + '</span>';
+    }else{
+      fb.className = 'fb';
+      fb.innerHTML = '';
+    }
+  }
+
+  function setTask(i){
+    st.idx = Math.min(Math.max(i,0), TASKS.length-1);
+    save();
+    renderTask();
+    renderProgress();
+  }
+
+  /* ====== الأزرار ====== */
+  $('hintBtn').addEventListener('click', function(){
+    $('hintBox').classList.toggle('show');
+  });
+  $('prevBtn').addEventListener('click', function(){ setTask(st.idx-1); });
+  $('nextBtn').addEventListener('click', function(){
+    if(st.idx < TASKS.length-1) setTask(st.idx+1);
+    else { renderProgress(); $('doneCard').scrollIntoView({behavior:'smooth'}); }
+  });
+  $('resetBtn').addEventListener('click', function(){
+    if(!confirm('إعادة المحاكي من البداية ومسح تقدّمك؟')) return;
+    st.done = []; st.idx = 0; st.screen = 'home';
+    st.searched = st.aiBuilt = st.manualSaved = st.uploaded = st.driveOn = false;
+    st.f = { name:'', when:'', how:'' };
+    save(); render(); renderTask(); renderProgress();
+  });
+
+  render();
+  renderTask();
+  renderProgress();
+})();
+</script>
+</body>
+</html>
