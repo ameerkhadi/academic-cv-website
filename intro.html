@@ -161,8 +161,7 @@
 
 <div class="topbar">
   <span class="crumbs">
-    <span>University of Babylon</span><span class="sep">›</span>
-    <span>Faculty of IT</span><span class="sep">›</span>
+    <span id="crumbOrg">المعهد العالي لتدريب وتأهيل القادة</span><span class="sep">›</span>
     <span class="on" id="crumbLast">بطاقة تعريف</span>
   </span>
   <span id="stamp">وفد المعهد العالي لتدريب وتأهيل القادة</span>
@@ -369,11 +368,14 @@
   var tabs = document.querySelectorAll('.tab');
   var panes = { ar: document.getElementById('ar'), en: document.getElementById('en') };
   var crumb = document.getElementById('crumbLast');
+  var crumbOrg = document.getElementById('crumbOrg');
   var stamp = document.getElementById('stamp');
 
   var TXT = {
-    ar: { crumb:'بطاقة تعريف', stamp:'وفد المعهد العالي لتدريب وتأهيل القادة', title:'د. أمير كاظم هادي — بطاقة تعريف' },
-    en: { crumb:'Profile Card', stamp:'Delegation — Higher Institute for Training and Qualifying Leaders', title:'Dr. Ameer Kadhim Hadi — Profile Card' }
+    ar: { org:'المعهد العالي لتدريب وتأهيل القادة', crumb:'بطاقة تعريف',
+          stamp:'وفد المعهد العالي لتدريب وتأهيل القادة', title:'د. أمير كاظم هادي — بطاقة تعريف' },
+    en: { org:'Higher Institute for Training and Qualifying Leaders', crumb:'Profile Card',
+          stamp:'Delegation — Higher Institute for Training and Qualifying Leaders', title:'Dr. Ameer Kadhim Hadi — Profile Card' }
   };
 
   function setLang(l){
@@ -383,6 +385,7 @@
     panes.ar.hidden = (l !== 'ar');
     panes.en.hidden = (l !== 'en');
     tabs.forEach(function(t){ t.classList.toggle('on', t.dataset.l === l); });
+    crumbOrg.textContent = TXT[l].org;
     crumb.textContent = TXT[l].crumb;
     stamp.textContent = TXT[l].stamp;
     document.title = TXT[l].title;

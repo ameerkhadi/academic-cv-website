@@ -14,7 +14,7 @@ const academicData = {
             title: "Assistant Professor",
             subtitle: "Cloud Computing, IoT & AI Expert",
             photo: "images/profile.jpg",
-            bio: "Dedicated Assistant Professor with over 15 years of experience in tertiary education, specializing in Computer Science at the University of Babylon, Iraq. Proven track record in developing and delivering curriculum for undergraduate and postgraduate levels in Cloud Computing, IoT, Network Security, and Programming. Strong background in academic research with recent publications in AI and Blockchain technology. A Fulbright Scholar (U.S. Department of State) with a research fellowship at the University of Reading, United Kingdom. Committed to pedagogical excellence, student mentorship, and contributing to the academic mission through continuous professional development and collaborative research. Currently also lecturing on Artificial Intelligence and IT fundamentals within the Higher Diploma in Digital Leadership at the Higher Institute for Training and Qualifying Leaders in Baghdad, and teaching Cloud Computing and Virtual Networking to third-year Cybersecurity students at the University of Al-Shaab.",
+            bio: "Dedicated Assistant Professor with over 18 years of experience in tertiary education, specializing in Computer Science at the University of Babylon, Iraq. Proven track record in developing and delivering curriculum for undergraduate and postgraduate levels in Cloud Computing, IoT, Network Security, and Programming. Strong background in academic research with recent publications in AI and Blockchain technology. A scholar of the Fulbright Scholar Exchange Program (U.S. Department of State) under the Visiting Professor Programme at Kent State University, Ohio, with a research fellowship at the University of Reading, United Kingdom, and a graduate of The Hague (Netherlands) and Tunisia partnership programme in Employment and Social Affairs. Committed to pedagogical excellence, student mentorship, and contributing to the academic mission through continuous professional development and collaborative research. Currently also lecturing on Artificial Intelligence and IT fundamentals within the Higher Diploma in Digital Leadership at the Higher Institute for Training and Qualifying Leaders in Baghdad, and teaching Cloud Computing and Virtual Networking to third-year Cybersecurity students at the University of Al-Shaab.",
             email: "ameer.hadi@uobabylon.edu.iq",
             linkedin: "https://linkedin.com/in/ameer-hadi",
             googleScholar: "https://scholar.google.com/citations?user=S9uqKsIAAAAJ&hl=en",
@@ -122,7 +122,7 @@ const academicData = {
             { title: "AI Innovation Award for Hydroponic Agriculture Device", year: 2024 },
             { title: "Cloud Computing Ambassador Award", issuer: "AWS", year: 2020 },
             { title: "Science Day Award for Best Graduation Project", year: 2016 },
-            { title: "Fulbright Scholarship", issuer: "U.S. Department of State", year: 2012 }
+            { title: "Fulbright Scholar Exchange Program", issuer: "U.S. Department of State", year: 2012 }
         ],
 
         skills: {
@@ -141,7 +141,7 @@ const academicData = {
             title: "أستاذ مساعد",
             subtitle: "خبير في الحوسبة السحابية وإنترنت الأشياء والذكاء الاصطناعي",
             photo: "images/profile.jpg",
-            bio: "أستاذ مساعد متميز يتمتع بخبرة تزيد عن 15 عامًا في التعليم العالي، متخصص في علوم الحاسوب في جامعة بابل، العراق. يمتلك سجلاً حافلاً في تطوير وتقديم المناهج الدراسية لمرحلتي البكالوريوس والدراسات العليا في مجالات الحوسبة السحابية، وإنترنت الأشياء، وأمن الشبكات، والبرمجة. لديه خلفية قوية في البحث العلمي مع نشر أبحاث حديثة في الذكاء الاصطناعي وتقنية البلوكتشين. باحث فولبرايت (وزارة الخارجية الأمريكية) حصل على زمالة بحثية في جامعة ريدنغ، المملكة المتحدة. ملتزم بالتميز التربوي، وتوجيه الطلبة، والمساهمة في الرسالة الأكاديمية من خلال التطوير المهني المستمر والبحث العلمي التعاوني. يُدرّس حاليًا أيضًا مادتي الذكاء الاصطناعي وأساسيات تكنولوجيا المعلومات ضمن الدبلوم العالي في القيادة الرقمية في المعهد العالي لتدريب وتأهيل القادة في بغداد، ويُدرّس مادتي الحوسبة السحابية والشبكات الافتراضية لطلبة المرحلة الثالثة قسم الأمن السيبراني في جامعة الشعب.",
+            bio: "أستاذ مساعد متميز يتمتع بخبرة تزيد عن 18 عامًا في التعليم العالي، متخصص في علوم الحاسوب في جامعة بابل، العراق. يمتلك سجلاً حافلاً في تطوير وتقديم المناهج الدراسية لمرحلتي البكالوريوس والدراسات العليا في مجالات الحوسبة السحابية، وإنترنت الأشياء، وأمن الشبكات، والبرمجة. لديه خلفية قوية في البحث العلمي مع نشر أبحاث حديثة في الذكاء الاصطناعي وتقنية البلوكتشين. عضو برنامج فولبرايت لتبادل الأساتذة (وزارة الخارجية الأمريكية) ضمن برنامج الأستاذ الزائر في جامعة كنت ستيت، أوهايو، وحصل على زمالة بحثية في جامعة ريدنغ، المملكة المتحدة، وهو خريج برنامج شراكة لاهاي (هولندا) وتونس في دورة التشغيل والشؤون الاجتماعية. ملتزم بالتميز التربوي، وتوجيه الطلبة، والمساهمة في الرسالة الأكاديمية من خلال التطوير المهني المستمر والبحث العلمي التعاوني. يُدرّس حاليًا أيضًا مادتي الذكاء الاصطناعي وأساسيات تكنولوجيا المعلومات ضمن الدبلوم العالي في القيادة الرقمية في المعهد العالي لتدريب وتأهيل القادة في بغداد، ويُدرّس مادتي الحوسبة السحابية والشبكات الافتراضية لطلبة المرحلة الثالثة قسم الأمن السيبراني في جامعة الشعب.",
             email: "ameer.hadi@uobabylon.edu.iq",
             linkedin: "https://linkedin.com/in/ameer-hadi",
             googleScholar: "https://scholar.google.com/citations?user=S9uqKsIAAAAJ&hl=en",
@@ -249,7 +249,7 @@ const academicData = {
             { title: "جائزة الابتكار بالذكاء الاصطناعي لجهاز الزراعة المائية", year: 2024 },
             { title: "جائزة سفير الحوسبة السحابية", issuer: "AWS", year: 2020 },
             { title: "جائزة يوم العلم لأفضل مشروع تخرج", year: 2016 },
-            { title: "منحة فولبرايت", issuer: "وزارة الخارجية الأمريكية", year: 2012 }
+            { title: "برنامج فولبرايت لتبادل الأساتذة", issuer: "وزارة الخارجية الأمريكية", year: 2012 }
         ],
 
         skills: {
