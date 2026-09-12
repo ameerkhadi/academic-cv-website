@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>د. أمير كاظم هادي — بطاقة تعريف</title>
+<meta name="description" content="بطاقة تعريف — الأستاذ المساعد الدكتور أمير كاظم هادي، جامعة بابل · المعهد العالي لتدريب وتأهيل القادة.">
+<meta name="theme-color" content="#0D1117">
+<link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Tajawal:wght@300;400;500;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-deep:#0D1117; --bg-main:#161B22; --bg-card:#1C2333; --bg-card2:#21262D;
+    --orange:#FF9900; --orange2:#EC7211; --blue:#4A9EFF; --green:#3FB950;
+    --purple:#A855F7; --yellow:#F0C040;
+    --text:#E6EDF3; --text-muted:#8B949E; --text-dim:#484F58;
+    --border:#30363D; --border2:#21262D;
+    --font:'Inter',-apple-system,sans-serif;
+    --font-ar:'Tajawal','Inter',-apple-system,sans-serif;
+    --mono:'Fira Code',monospace;
+    --radius:8px;
+  }
+  *,*::before,*::after{ margin:0; padding:0; box-sizing:border-box; }
+  html{ font-size:15px; }
+  body{
+    font-family:var(--font-ar); background:var(--bg-deep); color:var(--text);
+    line-height:1.75; padding:0 0 3rem;
+  }
+  body[data-lang="en"]{ font-family:var(--font); }
+  img{ max-width:100%; display:block; }
+  a{ color:var(--blue); text-decoration:none; }
+  a:hover{ color:#74b9ff; }
+
+  /* ── شريط علوي ── */
+  .topbar{
+    background:#010409; border-bottom:1px solid var(--border);
+    padding:.4rem 1.2rem; display:flex; align-items:center; justify-content:space-between;
+    font-family:var(--mono); font-size:.66rem; color:var(--text-muted);
+    flex-wrap:wrap; gap:.5rem;
+  }
+  .crumbs{ display:flex; align-items:center; gap:.4rem; flex-wrap:wrap; }
+  .crumbs .on{ color:var(--orange); }
+  .sep{ color:var(--text-dim); }
+
+  .wrap{ max-width:820px; margin:0 auto; padding:1.6rem 1.1rem 0; }
+
+  /* ── التبويبات ── */
+  .tabs{
+    display:flex; gap:.5rem; margin-bottom:1.4rem;
+    border-bottom:1px solid var(--border); padding-bottom:.9rem;
+  }
+  .tab{
+    flex:1; background:var(--bg-card2); color:var(--text-muted);
+    border:1px solid var(--border); border-radius:100px;
+    font-family:var(--font); font-size:.85rem; font-weight:600;
+    padding:.55rem 1rem; cursor:pointer; transition:all .2s ease;
+  }
+  .tab:hover{ color:var(--text); border-color:var(--text-dim); }
+  .tab.on{ background:var(--orange); color:#0D1117; border-color:var(--orange); }
+
+  /* ── الترويسة ── */
+  .hero{
+    display:flex; align-items:center; gap:1.1rem; flex-wrap:wrap;
+    background:linear-gradient(135deg,var(--bg-card) 0%,var(--bg-main) 100%);
+    border:1px solid var(--border); border-inline-start:3px solid var(--orange);
+    border-radius:var(--radius); padding:1.3rem 1.4rem; margin-bottom:1.1rem;
+  }
+  .avatar{
+    flex:none; width:74px; height:74px; border-radius:50%;
+    object-fit:cover; border:2px solid var(--orange);
+  }
+  .hero-tx{ flex:1; min-width:200px; }
+  .hero-tx h1{ font-size:1.4rem; font-weight:700; line-height:1.4; margin-bottom:.15rem; }
+  .hero-tx .role{ color:var(--orange); font-size:.92rem; font-weight:600; }
+  .hero-tx .org{ color:var(--text-muted); font-size:.83rem; margin-top:.2rem; }
+
+  /* ── البطاقات ── */
+  .card{
+    background:var(--bg-card); border:1px solid var(--border);
+    border-radius:var(--radius); padding:1.15rem 1.3rem; margin-bottom:1.1rem;
+  }
+  .card h2{
+    font-size:.78rem; font-weight:700; letter-spacing:.08em;
+    color:var(--orange); text-transform:uppercase;
+    font-family:var(--mono); margin-bottom:.9rem;
+    padding-bottom:.5rem; border-bottom:1px solid var(--border2);
+  }
+
+  /* ── جدول البيانات ── */
+  .kv{ display:grid; grid-template-columns:max-content 1fr; gap:.65rem 1.1rem; }
+  .kv dt{
+    color:var(--text-muted); font-size:.83rem; font-weight:500;
+    white-space:nowrap; padding-top:.1rem;
+  }
+  .kv dd{ font-size:.95rem; font-weight:500; }
+  .kv dd b{ color:var(--orange); font-weight:700; }
+  .kv dd small{ display:block; color:var(--text-muted); font-size:.8rem; font-weight:400; margin-top:.1rem; }
+  @media (max-width:520px){
+    .kv{ grid-template-columns:1fr; gap:.25rem; }
+    .kv dt{ margin-top:.7rem; font-size:.75rem; text-transform:uppercase; letter-spacing:.05em; }
+  }
+
+  .bio{ font-size:.95rem; line-height:2; color:#d8e0e8; }
+  .bio b{ color:var(--text); font-weight:700; }
+
+  /* ── الشارات ── */
+  .chips{ display:flex; flex-wrap:wrap; gap:.45rem; margin-top:.2rem; }
+  .chip{
+    background:var(--bg-card2); border:1px solid var(--border);
+    border-radius:100px; padding:.32rem .85rem;
+    font-size:.79rem; color:var(--text-muted); font-weight:500;
+  }
+  .chip.hi{ border-color:var(--orange); color:var(--orange); }
+  .chip.b{ border-color:var(--blue); color:var(--blue); }
+  .chip.g{ border-color:var(--green); color:var(--green); }
+  .chip.p{ border-color:var(--purple); color:var(--purple); }
+
+  /* ── الإحصاءات ── */
+  .stats{ display:grid; grid-template-columns:repeat(auto-fit,minmax(88px,1fr)); gap:.6rem; }
+  .stat{
+    background:var(--bg-card2); border:1px solid var(--border);
+    border-radius:var(--radius); padding:.75rem .5rem; text-align:center;
+  }
+  .stat .n{ font-size:1.35rem; font-weight:700; color:var(--orange); font-family:var(--font); line-height:1.2; }
+  .stat .l{ font-size:.72rem; color:var(--text-muted); margin-top:.15rem; }
+
+  .foot{
+    text-align:center; color:var(--text-dim); font-size:.76rem;
+    font-family:var(--mono); margin-top:1.6rem; padding-top:1.1rem;
+    border-top:1px solid var(--border2);
+  }
+  .foot a{ color:var(--text-muted); }
+
+  [hidden]{ display:none !important; }
+
+  /* ── الطباعة: بطاقة بيضاء مرتّبة لملف الوفد ── */
+  @media print{
+    @page{ size:A4; margin:14mm; }
+    body{ background:#fff; color:#111; padding:0; }
+    .topbar, .tabs, .foot{ display:none !important; }
+    .wrap{ max-width:none; padding:0; }
+    .hero, .card{
+      background:#fff !important; border:1px solid #bbb !important;
+      break-inside:avoid; page-break-inside:avoid; margin-bottom:10px;
+    }
+    .hero{ border-inline-start:3px solid #EC7211 !important; }
+    .card h2{ color:#b35c00 !important; }
+    .hero-tx .role{ color:#b35c00 !important; }
+    .bio{ color:#222 !important; }
+    .kv dt{ color:#555 !important; }
+    .kv dd b{ color:#b35c00 !important; }
+    .chip, .stat{ background:#fff !important; border:1px solid #bbb !important; color:#333 !important; }
+    .stat .n{ color:#b35c00 !important; }
+    .stat .l, .kv dd small{ color:#555 !important; }
+  }
+</style>
+</head>
+<body data-lang="ar">
+
+<div class="topbar">
+  <span class="crumbs">
+    <span>University of Babylon</span><span class="sep">›</span>
+    <span>Faculty of IT</span><span class="sep">›</span>
+    <span class="on" id="crumbLast">بطاقة تعريف</span>
+  </span>
+  <span id="stamp">وفد المعهد العالي لتدريب وتأهيل القادة</span>
+</div>
+
+<div class="wrap">
+
+  <div class="tabs">
+    <button type="button" class="tab on" data-l="ar">🇮🇶 عربي</button>
+    <button type="button" class="tab" data-l="en">🌐 English</button>
+  </div>
+
+  <!-- ══════════ عربي ══════════ -->
+  <div id="ar">
+
+    <div class="hero">
+      <img class="avatar" src="images/profile.jpg" alt="د. أمير كاظم هادي">
+      <div class="hero-tx">
+        <h1>الأستاذ المساعد الدكتور أمير كاظم هادي</h1>
+        <div class="role">أستاذ مساعد · علوم الحاسوب</div>
+        <div class="org">جامعة بابل — كلية تكنولوجيا المعلومات · قسم شبكات المعلومات</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>البيانات الأساسية</h2>
+      <dl class="kv">
+        <dt>اللقب العلمي</dt>
+        <dd><b>أستاذ مساعد دكتور</b> <small>Assistant Professor</small></dd>
+
+        <dt>الاسم الثلاثي</dt>
+        <dd>أمير كاظم هادي</dd>
+
+        <dt>التدريس في مجال</dt>
+        <dd>علوم الحاسوب
+          <small>الحوسبة السحابية · إنترنت الأشياء · أمن الشبكات · البرمجة · الذكاء الاصطناعي · البلوكتشين</small></dd>
+
+        <dt>اسم الجامعة</dt>
+        <dd>جامعة بابل <small>كلية تكنولوجيا المعلومات — قسم شبكات المعلومات</small></dd>
+
+        <dt>الجهة الموفِدة</dt>
+        <dd><b>المعهد العالي لتدريب وتأهيل القادة</b> — بغداد
+          <small>تدريس مادتي الذكاء الاصطناعي وأساسيات تكنولوجيا المعلومات ضمن الدبلوم العالي في القيادة الرقمية</small></dd>
+
+        <dt>سنوات الخبرة</dt>
+        <dd>١٨ سنة في التعليم العالي</dd>
+      </dl>
+    </div>
+
+    <div class="card">
+      <h2>نبذة تعريفية</h2>
+      <p class="bio">
+        أستاذ مساعد متميز يتمتع بخبرة تزيد عن <b>١٨ عامًا</b> في التعليم العالي، متخصص في علوم الحاسوب في
+        <b>جامعة بابل</b>، العراق. يمتلك سجلًّا حافلًا في تطوير وتقديم المناهج الدراسية لمرحلتي البكالوريوس
+        والدراسات العليا في مجالات الحوسبة السحابية، وإنترنت الأشياء، وأمن الشبكات، والبرمجة. لديه خلفية
+        قوية في البحث العلمي مع نشر أبحاث حديثة في الذكاء الاصطناعي وتقنية البلوكتشين.
+        <b>باحث فولبرايت</b> (وزارة الخارجية الأمريكية) حصل على زمالة بحثية في <b>جامعة ريدنغ</b>،
+        المملكة المتحدة، و<b>خريج برنامج شراكة لاهاي (هولندا) وتونس</b>.
+        ملتزم بالتميز التربوي، وتوجيه الطلبة، والمساهمة في الرسالة الأكاديمية من خلال التطوير المهني
+        المستمر والبحث العلمي التعاوني. يُدرّس حاليًا أيضًا مادتي الذكاء الاصطناعي وأساسيات تكنولوجيا
+        المعلومات ضمن الدبلوم العالي في القيادة الرقمية في <b>المعهد العالي لتدريب وتأهيل القادة</b> في
+        بغداد، ويُدرّس مادتي الحوسبة السحابية والشبكات الافتراضية لطلبة المرحلة الثالثة قسم الأمن السيبراني
+        في <b>جامعة الشعب</b>.
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>الزمالات والبرامج الدولية</h2>
+      <div class="chips">
+        <span class="chip hi">🏅 زمالة فولبرايت — وزارة الخارجية الأمريكية</span>
+        <span class="chip b">🇬🇧 زمالة بحثية — جامعة ريدنغ، المملكة المتحدة</span>
+        <span class="chip g">🇳🇱 برنامج شراكة لاهاي — هولندا</span>
+        <span class="chip g">🇹🇳 برنامج شراكة — تونس</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>مجالات التخصص</h2>
+      <div class="chips">
+        <span class="chip">☁️ الحوسبة السحابية</span>
+        <span class="chip">🤖 الذكاء الاصطناعي</span>
+        <span class="chip">📡 إنترنت الأشياء</span>
+        <span class="chip">🔗 البلوكتشين</span>
+        <span class="chip">🔐 أمن الشبكات</span>
+        <span class="chip">💻 البرمجة</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>مؤشرات</h2>
+      <div class="stats">
+        <div class="stat"><div class="n">+١٨</div><div class="l">سنة خبرة</div></div>
+        <div class="stat"><div class="n">١٦</div><div class="l">بحثًا منشورًا</div></div>
+        <div class="stat"><div class="n">٤٧</div><div class="l">اقتباسًا</div></div>
+        <div class="stat"><div class="n">٤</div><div class="l">جوائز</div></div>
+      </div>
+    </div>
+
+    <div class="foot">
+      الملف الأكاديمي الكامل · <a href="./">ameerkhadi.github.io/academic-cv-website</a>
+    </div>
+  </div>
+
+  <!-- ══════════ English ══════════ -->
+  <div id="en" hidden>
+
+    <div class="hero">
+      <img class="avatar" src="images/profile.jpg" alt="Dr. Ameer Kadhim Hadi">
+      <div class="hero-tx">
+        <h1>Dr. Ameer Kadhim Hadi</h1>
+        <div class="role">Assistant Professor · Computer Science</div>
+        <div class="org">University of Babylon — Faculty of Information Technology · Information Network Dept.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Key Details</h2>
+      <dl class="kv">
+        <dt>Academic Title</dt>
+        <dd><b>Assistant Professor</b> <small>أستاذ مساعد دكتور</small></dd>
+
+        <dt>Full Name</dt>
+        <dd>Ameer Kadhim Hadi</dd>
+
+        <dt>Teaching Field</dt>
+        <dd>Computer Science
+          <small>Cloud Computing · IoT · Network Security · Programming · Artificial Intelligence · Blockchain</small></dd>
+
+        <dt>University</dt>
+        <dd>University of Babylon <small>Faculty of Information Technology — Information Network Department</small></dd>
+
+        <dt>Delegating Body</dt>
+        <dd><b>Higher Institute for Training and Qualifying Leaders</b> — Baghdad
+          <small>Lecturer in Artificial Intelligence and IT Fundamentals, Higher Diploma in Digital Leadership</small></dd>
+
+        <dt>Experience</dt>
+        <dd>18 years in tertiary education</dd>
+      </dl>
+    </div>
+
+    <div class="card">
+      <h2>Professional Summary</h2>
+      <p class="bio">
+        Dedicated Assistant Professor with over <b>18 years</b> of experience in tertiary education,
+        specializing in Computer Science at the <b>University of Babylon</b>, Iraq. Proven track record in
+        developing and delivering curriculum for undergraduate and postgraduate levels in Cloud Computing,
+        IoT, Network Security, and Programming. Strong background in academic research with recent
+        publications in AI and Blockchain technology. A <b>Fulbright Scholar</b> (U.S. Department of State)
+        with a research fellowship at the <b>University of Reading</b>, United Kingdom, and a
+        <b>graduate of The Hague (Netherlands) and Tunisia partnership programme</b>. Committed to
+        pedagogical excellence, student mentorship, and contributing to the academic mission through
+        continuous professional development and collaborative research. Currently also lecturing on
+        Artificial Intelligence and IT fundamentals within the Higher Diploma in Digital Leadership at the
+        <b>Higher Institute for Training and Qualifying Leaders</b> in Baghdad, and teaching Cloud Computing
+        and Virtual Networking to third-year Cybersecurity students at the <b>University of Al-Shaab</b>.
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>Fellowships &amp; International Programmes</h2>
+      <div class="chips">
+        <span class="chip hi">🏅 Fulbright Scholar — U.S. Department of State</span>
+        <span class="chip b">🇬🇧 Research Fellowship — University of Reading, UK</span>
+        <span class="chip g">🇳🇱 The Hague Partnership Programme — Netherlands</span>
+        <span class="chip g">🇹🇳 Partnership Programme — Tunisia</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Areas of Expertise</h2>
+      <div class="chips">
+        <span class="chip">☁️ Cloud Computing</span>
+        <span class="chip">🤖 Artificial Intelligence</span>
+        <span class="chip">📡 IoT</span>
+        <span class="chip">🔗 Blockchain</span>
+        <span class="chip">🔐 Network Security</span>
+        <span class="chip">💻 Programming</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>At a Glance</h2>
+      <div class="stats">
+        <div class="stat"><div class="n">18+</div><div class="l">Years Exp.</div></div>
+        <div class="stat"><div class="n">16</div><div class="l">Papers</div></div>
+        <div class="stat"><div class="n">47</div><div class="l">Citations</div></div>
+        <div class="stat"><div class="n">4</div><div class="l">Awards</div></div>
+      </div>
+    </div>
+
+    <div class="foot">
+      Full academic profile · <a href="./">ameerkhadi.github.io/academic-cv-website</a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  var tabs = document.querySelectorAll('.tab');
+  var panes = { ar: document.getElementById('ar'), en: document.getElementById('en') };
+  var crumb = document.getElementById('crumbLast');
+  var stamp = document.getElementById('stamp');
+
+  var TXT = {
+    ar: { crumb:'بطاقة تعريف', stamp:'وفد المعهد العالي لتدريب وتأهيل القادة', title:'د. أمير كاظم هادي — بطاقة تعريف' },
+    en: { crumb:'Profile Card', stamp:'Delegation — Higher Institute for Training and Qualifying Leaders', title:'Dr. Ameer Kadhim Hadi — Profile Card' }
+  };
+
+  function setLang(l){
+    document.documentElement.lang = l;
+    document.documentElement.dir = (l === 'ar') ? 'rtl' : 'ltr';
+    document.body.setAttribute('data-lang', l);
+    panes.ar.hidden = (l !== 'ar');
+    panes.en.hidden = (l !== 'en');
+    tabs.forEach(function(t){ t.classList.toggle('on', t.dataset.l === l); });
+    crumb.textContent = TXT[l].crumb;
+    stamp.textContent = TXT[l].stamp;
+    document.title = TXT[l].title;
+    try{ localStorage.setItem('intro:lang', l); }catch(e){}
+  }
+
+  tabs.forEach(function(t){
+    t.addEventListener('click', function(){ setLang(t.dataset.l); });
+  });
+
+  var saved = null;
+  try{ saved = localStorage.getItem('intro:lang'); }catch(e){}
+  setLang(saved === 'en' ? 'en' : 'ar');
+})();
+</script>
+</body>
+</html>
