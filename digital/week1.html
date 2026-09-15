@@ -1,0 +1,4229 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مقرر التحول الرقمي وتكنولوجيا المعلومات</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Aref+Ruqaa+Ink&family=Noto+Naskh+Arabic:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --red:#d1342b;
+    --green:#1f7a3d;
+    --blue:#1857a4;
+    --lightblue:#3f8fd6;
+    --orange:#e07a1f;
+    --purple:#7a2ea6;
+    --pink:#e0578f;
+    --paper:#fbf8ef;
+    --ruleline:rgba(63,143,214,0.28);
+    --ink:#1a3d8c;
+    --bark:#8a5a2b;
+    --teal:#0f7a72;
+  }
+
+  *{box-sizing:border-box;}
+
+  html,body{
+    margin:0;
+    padding:0;
+    min-height:100vh;
+    /* المتن بنسخٍ مصمَّم للقراءة الطويلة. أما العناوين والتبويبات والأزرار
+       فتُصرّح بـ Aref Ruqaa صراحةً في مواضعها، فتبقى كما هي بلا تعديل:
+       الشجرة تفصلهما وحدها، فلا حاجة إلى لمس ثلاثةٍ وعشرين موضعًا. */
+    font-family:var(--reader-font, 'Noto Naskh Arabic'), 'Aref Ruqaa', serif;
+  }
+
+  body{
+    background-color:#5e3a1f;
+    background-image:
+      linear-gradient(90deg, rgba(0,0,0,0.10) 0 2px, transparent 2px 18px),
+      repeating-linear-gradient(100deg, #6b4425 0, #6b4425 40px, #78502c 40px, #78502c 80px, #63401f 80px, #63401f 120px);
+    position:relative;
+  }
+
+  body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    background:radial-gradient(ellipse at center, rgba(0,0,0,0) 40%, rgba(0,0,0,0.35) 100%);
+    mix-blend-mode:multiply;
+  }
+
+  .stage{
+    position:relative;
+    z-index:1;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:flex-start;
+    padding:clamp(10px,2.2vw,22px) 10px clamp(14px,3vw,28px);
+    gap:0;
+  }
+
+  /* ---------- master header (on the wood background) ---------- */
+  .master-header{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    max-width:96vw;
+    margin:0 0 clamp(10px,2.4vw,16px);
+    padding:0 8px;
+  }
+  .mh-card{
+    display:flex;
+    flex-direction:column;
+    gap:3px;
+    text-align:center;
+  }
+  .mh-row{
+    font-size:calc(clamp(12px,2.8vw,15px) * var(--fs,1));
+    line-height:1.5;
+    text-shadow:0 1px 2px rgba(0,0,0,0.55);
+  }
+  .mh-row .mh-label{ font-weight:700; color:#e0a94e; }
+  .mh-row .mh-value{ font-weight:400; color:#fdf6e6; }
+  .mh-row.mh-subject .mh-value{
+    font-family:'Aref Ruqaa Ink','Aref Ruqaa',serif;
+    font-weight:700;
+    font-size:calc(clamp(19px,4.4vw,30px) * var(--fs,1));
+    color:#f0b400;
+  }
+  .mh-row .mh-blank{
+    display:inline-block;
+    min-width:120px;
+    border-bottom:1.5px dotted #dcc79c;
+    height:1em;
+  }
+  .mh-row .mh-email{
+    font-family:'Caveat',cursive;
+    font-weight:700;
+    font-size:1.15em;
+    direction:ltr;
+    unicode-bidi:isolate;
+    display:inline-block;
+  }
+
+  /* ---------- pinned platform badge ---------- */
+  /* ملصق المنصة: الرابط وحده لا يقول للطالب إلى أين يأخذه،
+     فالعنوان العربي هو ما يُقرأ والرابط سطر ثانوي تحته. */
+  .pin-badge{
+    position:relative;
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    margin:12px auto 0;
+    padding:9px 16px 10px 14px;
+    background:
+      linear-gradient(#fdf6e6, #f4e6c8);
+    border:2px dashed var(--blue);
+    border-radius:6px;
+    color:var(--ink);
+    text-decoration:none;
+    box-shadow:0 4px 10px rgba(0,0,0,0.4);
+    transform:rotate(-1.2deg);
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .pin-badge:hover,
+  .pin-badge:focus-visible{
+    transform:rotate(0deg) translateY(-2px);
+    box-shadow:0 7px 16px rgba(0,0,0,0.45);
+  }
+  .pin-badge:focus-visible{ outline:3px solid #f0b400; outline-offset:3px; }
+
+  /* الدبوس نفسه: قرص أحمر ببريق صغير، مثبَّت على حافة الملصق */
+  .pin-badge .pin-head{
+    position:absolute; top:-9px; right:14px;
+    width:15px; height:15px; border-radius:50%;
+    background:radial-gradient(circle at 34% 30%, #ff8a7a 0 22%, var(--red) 60%, #8f221c 100%);
+    box-shadow:0 2px 4px rgba(0,0,0,0.5);
+  }
+  .pin-badge .pin-text{ display:flex; flex-direction:column; line-height:1.45; }
+  .pin-badge .pin-title{
+    font-family:'Aref Ruqaa Ink','Aref Ruqaa',serif;
+    font-weight:700; font-size:calc(clamp(14px,3.2vw,18px) * var(--fs,1)); color:var(--red);
+  }
+  .pin-badge .pin-sub{
+    font-size:calc(clamp(10px,2.2vw,12.5px) * var(--fs,1)); font-weight:700; color:var(--blue); opacity:0.9;
+  }
+  .pin-badge .pin-url{
+    font-family:'Caveat',cursive; font-size:calc(clamp(10px,2.2vw,12.5px) * var(--fs,1));
+    color:rgba(26,61,140,0.7); direction:ltr; unicode-bidi:isolate;
+  }
+  .pin-badge .pin-go{
+    font-size:calc(19px * var(--fs,1)); color:var(--green); font-weight:700;
+    transition:transform .15s ease;
+  }
+  .pin-badge:hover .pin-go{ transform:translateX(-4px); }
+  .pin-badge .pin-head{
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    background:var(--red);
+    box-shadow:0 1px 2px rgba(0,0,0,0.5), inset -1px -1px 2px rgba(0,0,0,0.3), inset 1px 1px 1px rgba(255,255,255,0.6);
+    flex:none;
+  }
+  .pin-badge:hover{ background:#fff; }
+
+  /* ---------- master footer (on the wood background) ---------- */
+  .master-footer{
+    margin-top:clamp(14px,3vw,26px);
+    margin-bottom:clamp(44px,8vw,56px);
+    text-align:center;
+    font-size:calc(clamp(10.5px,2.3vw,13px) * var(--fs,1));
+    color:#dcc79c;
+    text-shadow:0 1px 2px rgba(0,0,0,0.5);
+    opacity:0.9;
+  }
+  /* رابط الصفحة الأكاديمية في سطر الحقوق: يرث لون الفوتر الفاتح على الخلفية
+     البنية، ويتمايز بخطّ متقطّع تحته ليُعرف أنه قابل للضغط. */
+  .master-footer .mf-site{
+    color:#f0dcb4; text-decoration:none;
+    white-space:nowrap;   /* وإلا انفصل السهم عن نصّه في سطر جديد على الهاتف */
+    border-bottom:1px dashed rgba(240,220,180,0.5);
+    transition:color .15s ease, border-color .15s ease;
+  }
+  .master-footer .mf-site:hover,
+  .master-footer .mf-site:focus-visible{ color:#f0b400; border-bottom-color:#f0b400; }
+  .master-footer .mf-site:focus-visible{ outline:2px solid #f0b400; outline-offset:3px; }
+  .master-footer .mf-go{ color:#9ad6a8; display:inline-block; transition:transform .15s ease; }
+  .master-footer .mf-site:hover .mf-go{ transform:translateX(-3px); }
+
+  .master-footer .mf-email{
+    font-family:'Caveat',cursive;
+    font-weight:700;
+    font-size:1.15em;
+    color:#f0dcac;
+    direction:ltr;
+    unicode-bidi:isolate;
+  }
+
+  /* ---------- tabs ---------- */
+  .tabs{
+    display:flex;
+    flex-wrap:nowrap;
+    overflow-x:auto;
+    overscroll-behavior-x:contain;
+    -webkit-overflow-scrolling:touch;
+    scroll-snap-type:x proximity;
+    gap:8px;
+    padding:4px 8px 8px;
+    position:relative;
+    z-index:3;
+    max-width:96vw;
+    justify-content:flex-start;
+    scrollbar-width:thin;
+    scrollbar-color:rgba(255,255,255,0.35) transparent;
+  }
+  .tabs::-webkit-scrollbar{ height:5px; }
+  .tabs::-webkit-scrollbar-thumb{ background:rgba(255,255,255,0.35); border-radius:4px; }
+
+  .tab{
+    font-family:'Aref Ruqaa', serif;
+    font-weight:700;
+    font-size:14px;
+    line-height:1.15;
+    color:#fff;
+    background:var(--blue);
+    border:none;
+    border-radius:10px 10px 0 0;
+    padding:7px 14px 10px;
+    cursor:pointer;
+    box-shadow:0 4px 8px rgba(0,0,0,0.35);
+    transform:rotate(-1.5deg) translateY(6px);
+    opacity:0.75;
+    transition:transform .15s ease, opacity .15s ease;
+    flex:0 0 auto;
+    scroll-snap-align:start;
+    white-space:nowrap;
+  }
+
+  .tab:nth-child(1){background:var(--blue); transform:rotate(-1.5deg) translateY(6px);}
+  .tab:nth-child(2){background:var(--green); transform:rotate(1.2deg) translateY(6px);}
+  .tab:nth-child(3){background:var(--orange); transform:rotate(-1deg) translateY(6px);}
+  .tab:nth-child(4){background:var(--purple); transform:rotate(1.4deg) translateY(6px);}
+  .tab:nth-child(5){background:var(--red); transform:rotate(-1.5deg) translateY(6px);}
+  .tab:nth-child(6){background:var(--pink); transform:rotate(1.2deg) translateY(6px);}
+  .tab:nth-child(7){background:var(--lightblue); transform:rotate(-1deg) translateY(6px);}
+  .tab:nth-child(8){background:var(--teal); transform:rotate(1.4deg) translateY(6px);}   /* الحلول والتعليل — لون مستقلّ عن الدورة */
+  .tab:nth-child(9){background:var(--blue); transform:rotate(-1.5deg) translateY(6px);}
+  .tab:nth-child(10){background:var(--green); transform:rotate(1.2deg) translateY(6px);}
+  .tab:nth-child(11){background:var(--orange); transform:rotate(-1deg) translateY(6px);}
+  .tab:nth-child(12){background:var(--purple); transform:rotate(1.4deg) translateY(6px);}
+  .tab:nth-child(13){background:var(--red); transform:rotate(-1.5deg) translateY(6px);}
+  .tab:nth-child(14){background:var(--pink); transform:rotate(1.2deg) translateY(6px);}
+  .tab:nth-child(15){background:var(--lightblue); transform:rotate(-1deg) translateY(6px);}
+  .tab:nth-child(16){background:var(--blue); transform:rotate(1.4deg) translateY(6px);}
+
+  .tab.active{
+    opacity:1;
+    transform:translateY(0) rotate(-0.6deg);
+    box-shadow:0 6px 10px rgba(0,0,0,0.4);
+  }
+
+  .tab:hover{opacity:0.95;}
+
+  /* ---------- paper ---------- */
+  .paper-wrapper{
+    position:relative;
+    z-index:2;
+  }
+
+  .tape{
+    position:absolute;
+    width:64px;
+    height:22px;
+    top:-11px;
+    opacity:0.6;
+    background:repeating-linear-gradient(45deg, rgba(255,255,255,0.55) 0 5px, rgba(255,255,255,0.15) 5px 10px);
+    box-shadow:0 2px 4px rgba(0,0,0,0.2);
+  }
+  .tape-left{ right:10%; background-color:#e8c14a; transform:rotate(-7deg); }
+  .tape-right{ left:12%; background-color:#e88ba3; transform:rotate(6deg); }
+
+  .paper{
+    position:relative;
+    width:min(94vw,780px);
+    min-height:min(calc(92vw * 1.1), 820px);
+    background-color:var(--paper);
+    background-image:repeating-linear-gradient(var(--paper), var(--paper) 27px, var(--ruleline) 28px);
+    border:2.5px solid var(--red);
+    box-shadow:0 22px 45px rgba(0,0,0,0.5), 0 6px 14px rgba(0,0,0,0.35);
+    transform:rotate(-0.5deg);
+    padding:clamp(16px,3.6vw,30px) clamp(18px,4.6vw,40px);
+    overflow:visible;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    transition:width .2s ease;
+  }
+
+  /* the week-1 tab carries the full lesson content, so its paper card grows wider */
+  /* long lecture pages: the tilt would shift content sideways the taller the page
+     gets (rotation widens the bounding box by height × sin θ), so drop it here */
+  .paper:has(.rich-slide.active){
+    width:min(97vw,900px);
+    transform:none;
+  }
+
+  .slide{
+    display:none;
+    width:100%;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    position:relative;
+  }
+  .slide.active{display:flex;}
+
+  .content-slide.active{
+    align-items:stretch;
+    text-align:right;
+  }
+
+  /* ---------- doodles ---------- */
+  .corner-doodle{
+    position:absolute;
+    width:clamp(60px,16vw,120px);
+    z-index:1;
+  }
+  .monitor-pos{ top:8px; right:6px; transform:rotate(-4deg); }
+  .folder-pos{ top:12px; left:6px; transform:rotate(5deg); }
+
+  .star{ width:18px; height:18px; }
+
+  /* ---------- title ---------- */
+  .title-wrap{
+    margin-top:clamp(46px,10vw,72px);
+    position:relative;
+  }
+
+  .eyebrow-tag{
+    display:inline-block;
+    font-family:'Aref Ruqaa', serif;
+    font-weight:700;
+    font-size:calc(clamp(13px,2.6vw,16px) * var(--fs,1));
+    color:#fff;
+    background:var(--orange);
+    padding:4px 16px;
+    border-radius:255px 15px 225px 15px/15px 225px 15px 255px;
+    transform:rotate(-2deg);
+    box-shadow:0 3px 6px rgba(0,0,0,0.25);
+    margin-bottom:14px;
+  }
+
+  .main-title{
+    font-family:'Aref Ruqaa Ink','Aref Ruqaa',serif;
+    font-weight:700;
+    color:var(--green);
+    font-size:calc(clamp(26px,6.4vw,44px) * var(--fs,1));
+    line-height:1.35;
+    margin:0;
+    text-shadow:1px 1px 0 rgba(0,0,0,0.06);
+    transform:rotate(-0.5deg);
+  }
+
+  .title-underline{
+    width:min(88%,360px);
+    height:26px;
+    margin:2px auto 0;
+    display:block;
+  }
+
+  /* ---------- info box ---------- */
+  .info-box{
+    margin-top:clamp(26px,6vw,44px);
+    border:2.5px solid var(--blue);
+    border-radius:255px 15px 225px 15px/15px 225px 15px 255px;
+    background:rgba(255,255,255,0.45);
+    padding:clamp(16px,4vw,26px) clamp(22px,6vw,38px);
+    transform:rotate(0.6deg);
+    box-shadow:2px 3px 0 rgba(24,87,164,0.08);
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    max-width:92%;
+  }
+
+  .info-line{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    font-size:calc(clamp(15px,3.4vw,20px) * var(--fs,1));
+    color:var(--ink);
+  }
+
+  .icon-sm{ width:clamp(24px,6vw,34px); flex:none; }
+
+  .institute-name{
+    font-weight:700;
+    color:var(--blue);
+    font-size:calc(clamp(16px,3.8vw,22px) * var(--fs,1));
+  }
+
+  .divider{
+    width:70%;
+    align-self:center;
+    height:2px;
+    background-image:repeating-linear-gradient(90deg, var(--purple) 0 8px, transparent 8px 14px);
+    opacity:0.6;
+    border:none;
+    margin:0;
+  }
+
+  .presenter-line .label{
+    color:var(--purple);
+    font-weight:400;
+  }
+  .presenter-line .name{
+    font-weight:700;
+    color:var(--purple);
+  }
+
+  .email-line .email{
+    font-family:'Caveat',cursive;
+    font-weight:700;
+    font-size:calc(clamp(18px,4.2vw,24px) * var(--fs,1));
+    color:var(--blue);
+    direction:ltr;
+    unicode-bidi:isolate;
+    border-bottom:2px dashed var(--lightblue);
+    padding-bottom:2px;
+  }
+
+  .deco-stars{
+    position:absolute;
+    display:flex;
+    gap:6px;
+  }
+  .stars-a{ top:14%; left:8%; }
+  .stars-b{ bottom:10%; right:8%; }
+
+  .footer-note{
+    margin-top:clamp(20px,5vw,34px);
+    font-size:calc(clamp(12px,2.6vw,14px) * var(--fs,1));
+    color:var(--ink);
+    opacity:0.65;
+    transform:rotate(-1deg);
+  }
+
+  @media (max-width:420px){
+    .tab{ padding:6px 12px 10px; font-size:calc(13px * var(--fs,1)); }
+  }
+
+  /* ---------- content-slide building blocks ---------- */
+  .chip{
+    display:inline-block;
+    font-family:'Aref Ruqaa', serif;
+    font-weight:700;
+    font-size:calc(clamp(12px,2.6vw,15px) * var(--fs,1));
+    color:#fff;
+    padding:4px 16px;
+    border-radius:255px 15px 225px 15px/15px 225px 15px 255px;
+    box-shadow:0 3px 6px rgba(0,0,0,0.25);
+    align-self:center;
+    margin-bottom:8px;
+  }
+  .chip-ch1{ background:var(--blue); transform:rotate(-1.5deg); }
+
+  .page-title{
+    font-family:'Aref Ruqaa Ink','Aref Ruqaa',serif;
+    font-weight:700;
+    color:var(--green);
+    font-size:calc(clamp(22px,5.2vw,30px) * var(--fs,1));
+    margin:2px 0 0;
+    align-self:center;
+    text-align:center;
+  }
+
+  .page-underline{
+    width:min(70%,240px);
+    height:20px;
+    margin:0 auto 14px;
+    display:block;
+    align-self:center;
+  }
+  .page-underline path{ stroke:#f0b400; }
+
+  .lead-paragraph{
+    font-size:calc(clamp(14px,3.4vw,17px) * var(--fs,1));
+    color:var(--ink);
+    line-height:1.9;
+    margin:0 0 4px;
+  }
+
+  .tip-box{
+    border:2px solid var(--green);
+    border-radius:16px 4px 16px 4px/4px 16px 4px 16px;
+    background:rgba(200,240,210,0.35);
+    padding:10px 14px;
+    font-size:calc(clamp(12.5px,3vw,14.5px) * var(--fs,1));
+    color:var(--ink);
+    max-width:230px;
+    margin:6px auto 10px;
+    transform:rotate(-1.2deg);
+    align-self:center;
+    text-align:center;
+  }
+  .tip-box .tip-title{
+    color:var(--green);
+    font-weight:700;
+    display:flex;
+    align-items:center;
+    gap:6px;
+    margin-bottom:4px;
+    justify-content:center;
+  }
+  .tip-icon{ width:22px; height:22px; flex:none; }
+
+  .page-nav{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:20px;
+    padding-top:12px;
+    border-top:2px dashed var(--ruleline);
+    width:100%;
+  }
+  .nav-btn{
+    font-family:'Aref Ruqaa', serif;
+    font-weight:700;
+    font-size:calc(14px * var(--fs,1));
+    background:#fff;
+    border:2px solid var(--blue);
+    border-radius:255px 15px 225px 15px/15px 225px 15px 255px;
+    padding:6px 16px;
+    color:var(--blue);
+    cursor:pointer;
+    box-shadow:1px 2px 0 rgba(24,87,164,0.15);
+    text-decoration:none;
+    display:inline-block;
+  }
+  .nav-btn:hover{ background:var(--blue); color:#fff; }
+  .nav-btn:disabled{ opacity:0.3; cursor:default; box-shadow:none; }
+  .nav-btn:disabled:hover{ background:#fff; color:var(--blue); }
+
+  /* ---------- glossary (terms in plain Arabic) ---------- */
+  .glossary-list{
+    list-style:none;
+    padding:0;
+    margin:0 0 6px;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+  .glossary-list li{
+    font-size:calc(clamp(12.5px,3vw,14.5px) * var(--fs,1));
+    color:var(--ink);
+    line-height:1.7;
+    border-bottom:1px dashed var(--ruleline);
+    padding-bottom:6px;
+  }
+  .gloss-term{
+    font-weight:700;
+    color:var(--blue);
+    unicode-bidi:isolate;
+  }
+  .gloss-ar{
+    font-weight:700;
+    color:var(--green);
+  }
+
+  /* ---------- review questions (no answers shown) ---------- */
+  .quiz-note{
+    font-size:calc(clamp(12px,2.8vw,14px) * var(--fs,1));
+    color:var(--red);
+    margin:4px 0 10px;
+  }
+  .mcq-item{ margin:10px 0 14px; font-size:calc(clamp(13px,3vw,15px) * var(--fs,1)); color:var(--ink); line-height:1.7; }
+  .mcq-item .q-num{ font-weight:700; color:var(--red); }
+  .mcq-options{ list-style:none; padding:0; margin:6px 0 0; display:flex; flex-direction:column; gap:4px; }
+  .mcq-options li{ font-size:calc(clamp(12.5px,2.9vw,14.5px) * var(--fs,1)); color:var(--ink); }
+  .opt-letter{ font-weight:700; color:var(--blue); }
+
+  .blank-line{
+    display:block;
+    border-bottom:1.5px dotted var(--ruleline);
+    height:1.7em;
+    margin:2px 0 4px;
+  }
+
+  .tf-item{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    font-size:calc(clamp(13px,3vw,15px) * var(--fs,1));
+    color:var(--ink);
+    padding:6px 0;
+    border-bottom:1px dashed var(--ruleline);
+  }
+  .tf-boxes{
+    display:inline-flex;
+    gap:10px;
+    font-size:calc(clamp(11px,2.5vw,13px) * var(--fs,1));
+    color:var(--ink);
+    opacity:.85;
+    white-space:nowrap;
+    flex:none;
+  }
+  .tf-boxes span{ display:inline-flex; align-items:center; gap:3px; }
+  .tf-boxes .box{
+    display:inline-block;
+    width:13px;
+    height:13px;
+    border:1.5px solid var(--ink);
+    border-radius:2px;
+  }
+
+  /* ================= WEEK 2 VISUAL LANGUAGE ================= */
+
+  /* ---------- nav-pill section headings (look like the app's own nav item) ---------- */
+  .nav-pill{
+    display:inline-flex;
+    align-items:center;
+    gap:9px;
+    align-self:flex-start;
+    background:#2b2b2b;
+    color:#f2f2f2;
+    font-family:'Aref Ruqaa', serif;
+    font-weight:700;
+    font-size:calc(clamp(14px,3.4vw,17.5px) * var(--fs,1));
+    padding:8px 18px 9px;
+    border-radius:999px;
+    margin:28px 0 12px;
+    box-shadow:3px 4px 0 rgba(0,0,0,0.22);
+    max-width:100%;
+  }
+  .nav-pill:first-of-type{ margin-top:8px; }
+  .nav-pill .np-en{
+    font-family:'Caveat', cursive;
+    font-size:1.12em;
+    color:#f5c453;
+    direction:ltr;
+    unicode-bidi:isolate;
+  }
+
+  /* ---------- "try it" cards: action -> result ---------- */
+  /* إعلان مثبَّت أعلى الأسبوع — لافتٌ بألوان الخطر لأنه رسالة إدارية عاجلة،
+     لا شرحًا يُقرأ متى تيسّر. */
+  /* ---------- تبويب الحلول والتعليل ---------- */
+  .sol-week{
+    display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+    margin:26px 0 4px; padding-bottom:6px; border-bottom:2.5px solid var(--ink);
+  }
+  .sol-week:first-of-type{ margin-top:6px; }
+  .sol-week .sw-n{
+    font-family:'Aref Ruqaa Ink','Aref Ruqaa',serif;
+    font-size:calc(24px * var(--fs,1)); color:var(--teal); line-height:1;
+  }
+  .sol-week .sw-t{
+    font-family:'Aref Ruqaa',serif; font-weight:700;
+    font-size:calc(18px * var(--fs,1)); color:var(--ink);
+  }
+  .sol-kind{
+    display:flex; align-items:center; gap:8px;
+    margin:20px 0 10px;
+    font-family:'Aref Ruqaa',serif; font-weight:700; color:var(--teal);
+    font-size:calc(15.5px * var(--fs,1));
+  }
+  .sol-kind .sk-line{ flex:1 1 auto; height:1.5px; background:rgba(15,122,114,0.25); }
+
+  /* بطاقة سؤال-جواب موحّدة، بلون جانبي حسب النوع */
+  .sol-item{
+    width:100%; margin:0 0 12px;
+    border:1.5px solid rgba(26,61,140,0.2); border-inline-start:5px solid var(--teal);
+    border-radius:4px 12px 12px 4px;
+    background:rgba(255,255,255,0.45);
+    padding:11px 14px 12px;
+  }
+  .sol-item .sol-q{
+    font-size:calc(14px * var(--fs,1)); line-height:1.9; color:var(--ink);
+    margin:0 0 9px; font-weight:600;
+  }
+  .sol-item .sol-q .sq-n{ color:var(--teal); font-weight:700; }
+
+  /* خيارات الاختيار من متعدد */
+  .sol-opts{ display:flex; flex-direction:column; gap:6px; margin-bottom:9px; }
+  .sol-opt{
+    display:flex; gap:8px; align-items:flex-start;
+    border:1.5px solid rgba(26,61,140,0.16); border-radius:8px;
+    padding:6px 10px 7px; font-size:calc(13px * var(--fs,1)); line-height:1.8;
+  }
+  .sol-opt .so-k{ flex:0 0 auto; font-weight:700; color:rgba(26,61,140,0.55); }
+  .sol-opt.ok{ border-color:var(--green); background:rgba(31,122,61,0.09); }
+  .sol-opt.ok .so-k{ color:var(--green); }
+  .sol-opt.ok::after{ content:'✓'; margin-inline-start:auto; color:var(--green); font-weight:700; }
+  .sol-opt.bad{ opacity:0.72; }
+  .sol-opt.bad .so-k{ text-decoration:line-through; }
+  .sol-opt{ display:flex; }
+
+  /* صح / خطأ */
+  .sol-tf-line{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:8px; }
+  .sol-tf-line .sol-q{ margin:0; flex:1 1 260px; }
+  .sol-badge{
+    flex:0 0 auto; font-weight:700; font-size:calc(12px * var(--fs,1));
+    padding:3px 13px 4px; border-radius:999px; white-space:nowrap;
+  }
+  .sol-badge.t{ background:rgba(31,122,61,0.16); color:var(--green); }
+  .sol-badge.f{ background:rgba(209,52,43,0.14); color:var(--red); }
+
+  .sol-why{
+    font-size:calc(13px * var(--fs,1)); line-height:1.9; color:var(--ink);
+    background:rgba(15,122,114,0.06); border-radius:8px;
+    padding:8px 11px 9px; margin:0;
+  }
+  .sol-why b{ color:var(--teal); }
+
+  /* المثال العميق — بارز عن التعليل العادي */
+  .sol-deep{
+    margin-top:9px; border:1.5px dashed var(--orange); border-radius:10px;
+    background:rgba(224,122,31,0.06); padding:10px 12px 11px;
+  }
+  .sol-deep .sd-h{
+    display:flex; align-items:center; gap:6px;
+    font-weight:700; color:var(--orange); font-size:calc(12px * var(--fs,1));
+    letter-spacing:0.03em; margin-bottom:6px;
+  }
+  .sol-deep p{ font-size:calc(13px * var(--fs,1)); line-height:1.95; margin:0 0 7px; color:var(--ink); }
+  .sol-deep p:last-child{ margin-bottom:0; }
+  .sol-deep .sd-rule{
+    display:block; margin-top:4px; padding-top:7px; border-top:1px dashed rgba(224,122,31,0.4);
+    font-weight:700;
+  }
+
+  /* المقالية: نقاط تصحيح */
+  .sol-grading{ margin:0; padding-inline-start:20px; }
+  .sol-grading li{ font-size:calc(13px * var(--fs,1)); line-height:1.9; margin-bottom:5px; color:var(--ink); }
+  .sol-grading li b{ color:var(--teal); }
+
+  .announce-box{
+    width:100%; margin:10px 0 20px;
+    border:2.5px solid var(--red); border-radius:5px 14px 5px 14px/14px 5px 14px 5px;
+    background:rgba(209,52,43,0.055);
+    padding:13px 15px 14px;
+  }
+  .announce-head{
+    display:flex; align-items:center; gap:8px;
+    color:var(--red); font-weight:700;
+    font-family:'Aref Ruqaa',serif;
+    font-size:calc(clamp(15px,3.4vw,18px) * var(--fs,1));
+    margin-bottom:8px;
+  }
+  .announce-box p{
+    margin:0 0 8px; font-size:calc(14px * var(--fs,1)); line-height:1.95; color:var(--ink);
+  }
+  .announce-box p:last-of-type{ margin-bottom:0; }
+  .announce-sign{
+    margin-top:10px; padding-top:8px; border-top:1px dashed rgba(209,52,43,0.35);
+    font-size:calc(12.5px * var(--fs,1)); color:rgba(26,61,140,0.75); line-height:1.8;
+  }
+  .announce-sign b{ color:var(--ink); }
+
+  .try-box{
+    width:100%;
+    border:2px solid var(--purple);
+    border-radius:14px 5px 14px 5px/5px 14px 5px 14px;
+    background:rgba(122,46,166,0.06);
+    padding:10px 13px 11px;
+    margin:4px 0 18px;
+  }
+  .try-title{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    color:var(--purple);
+    font-weight:700;
+    font-size:calc(clamp(12.5px,3vw,14.5px) * var(--fs,1));
+    margin-bottom:5px;
+  }
+  .try-line{
+    display:flex;
+    align-items:flex-start;
+    gap:8px;
+    font-size:calc(clamp(12px,2.9vw,13.8px) * var(--fs,1));
+    line-height:1.72;
+    color:var(--ink);
+    padding:3px 0;
+  }
+  .try-tag{
+    flex:none;
+    font-weight:700;
+    font-size:calc(11px * var(--fs,1));
+    padding:2px 9px 3px;
+    border-radius:999px;
+    color:#fff;
+    margin-top:3px;
+  }
+  .try-do{ background:var(--blue); }
+  .try-see{ background:var(--green); }
+
+  /* ---------- scenario cards (situation -> solution) ---------- */
+  .scn{
+    width:100%;
+    border:2px solid var(--blue);
+    border-radius:14px;
+    background:rgba(255,255,255,0.55);
+    padding:12px 14px 13px;
+    margin:10px 0 16px;
+  }
+  .scn-head{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    flex-wrap:wrap;
+    margin-bottom:6px;
+  }
+  .scn-badge{
+    flex:none;
+    font-size:calc(11px * var(--fs,1));
+    font-weight:700;
+    color:#fff;
+    padding:3px 11px 4px;
+    border-radius:999px;
+  }
+  .lv-easy{ background:var(--green); }
+  .lv-mid{  background:var(--orange); }
+  .lv-hard{ background:var(--red); }
+  .scn-title{
+    font-weight:700;
+    color:var(--blue);
+    font-size:calc(clamp(13.5px,3.2vw,16px) * var(--fs,1));
+  }
+  .scn-lbl{
+    display:block;
+    font-weight:700;
+    color:var(--red);
+    font-size:calc(clamp(12px,2.9vw,13.5px) * var(--fs,1));
+    margin:9px 0 3px;
+  }
+  .scn p{
+    margin:0;
+    font-size:calc(clamp(12.5px,3vw,14px) * var(--fs,1));
+    line-height:1.75;
+    color:var(--ink);
+  }
+  .scn ol{
+    margin:0;
+    padding:0 20px 0 0;
+    font-size:calc(clamp(12.5px,3vw,14px) * var(--fs,1));
+    line-height:1.75;
+    color:var(--ink);
+  }
+  .scn ol li{ padding:1px 0; }
+  .tool-chips{
+    display:flex;
+    flex-wrap:wrap;
+    gap:5px;
+    margin-top:9px;
+  }
+  .tool-chip{
+    font-size:calc(11px * var(--fs,1));
+    font-weight:700;
+    color:var(--purple);
+    border:1.5px solid rgba(122,46,166,0.45);
+    background:rgba(122,46,166,0.07);
+    padding:2px 9px 3px;
+    border-radius:999px;
+  }
+
+  /* ---------- assignment cards ---------- */
+  .hw{
+    width:100%;
+    border-right:5px solid var(--orange);
+    border-top:1.5px solid rgba(224,122,31,0.3);
+    border-bottom:1.5px solid rgba(224,122,31,0.3);
+    border-left:1.5px solid rgba(224,122,31,0.3);
+    background:rgba(224,122,31,0.06);
+    border-radius:5px 13px 13px 5px;
+    padding:11px 13px 12px;
+    margin:8px 0 14px;
+  }
+  .hw-head{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    margin-bottom:5px;
+    flex-wrap:wrap;
+  }
+  .hw-num{
+    width:27px;
+    height:27px;
+    border-radius:50%;
+    background:var(--orange);
+    color:#fff;
+    font-weight:700;
+    font-size:calc(14px * var(--fs,1));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex:none;
+  }
+  .hw-title{
+    font-weight:700;
+    color:var(--ink);
+    font-size:calc(clamp(13.5px,3.2vw,15.5px) * var(--fs,1));
+  }
+  .hw p{
+    margin:0;
+    font-size:calc(clamp(12.5px,3vw,14px) * var(--fs,1));
+    line-height:1.75;
+    color:var(--ink);
+  }
+  .hw-deliver{
+    display:flex;
+    gap:8px;
+    align-items:flex-start;
+    margin-top:7px;
+    font-size:calc(clamp(12px,2.9vw,13.5px) * var(--fs,1));
+    line-height:1.7;
+    color:var(--ink);
+  }
+  .hw-tag{
+    flex:none;
+    font-size:calc(11px * var(--fs,1));
+    font-weight:700;
+    color:#fff;
+    background:var(--green);
+    padding:2px 9px 3px;
+    border-radius:999px;
+    margin-top:3px;
+  }
+
+  /* ---------- شجرة كلود: نفس محتوى الخريطة بشكل شجرة ---------- */
+  .ct-wrap{ margin:10px 0 4px; }
+  .ct-canopy{ max-width:720px; margin:8px auto 2px; }
+  /* التيجان على شبكة من أربعة أعمدة، ورسم الأغصان يتمدّد على نفس الشبكة؛
+     non-scaling-stroke يبقي سماكة الغصن ثابتة رغم التمدّد. */
+  .ct-crowns{ display:grid; grid-template-columns:repeat(4,1fr); gap:6px; align-items:end; }
+  .ct-crown{
+    border:2.5px solid var(--bc); background:color-mix(in srgb, var(--bc) 9%, #fff);
+    border-radius:14px; padding:7px 6px 8px; text-align:center; line-height:1.5;
+  }
+  .ct-crown b{ display:block; font-size:calc(clamp(12.5px,3vw,17px) * var(--fs,1)); color:var(--bc); }
+  .ct-crown i{ display:block; font-style:normal; font-size:calc(clamp(10.5px,2.4vw,13.5px) * var(--fs,1)); color:var(--bc); opacity:0.8; }
+  .ct-limbs{ display:block; width:100%; height:clamp(74px,17vw,116px); }
+  .ct-limbs path{ vector-effect:non-scaling-stroke; fill:none; stroke:var(--bark); stroke-linecap:round; }
+  .ct-trunkwrap{ display:flex; flex-direction:column; align-items:center; margin-top:-2px; }
+  .ct-stem{ width:13px; height:26px; background:var(--bark); border-radius:0 0 4px 4px; }
+  .ct-trunk{
+    background:var(--red); color:#fff; border-radius:16px; padding:7px 26px 8px;
+    text-align:center; box-shadow:3px 4px 0 rgba(0,0,0,0.2);
+  }
+  .ct-trunk b{ display:block; font-size:calc(19px * var(--fs,1)); }
+  .ct-trunk i{ font-style:normal; font-family:'Caveat',cursive; font-size:calc(16px * var(--fs,1)); color:#ffd9a8; direction:ltr; unicode-bidi:isolate; }
+
+  .ct-boughs{ display:flex; flex-direction:column; gap:24px; margin-top:20px; }
+  .ct-bough{ --bc:var(--blue); }
+  .ct-bough.g{ --bc:var(--green); } .ct-bough.o{ --bc:var(--orange); } .ct-bough.p{ --bc:var(--purple); }
+  .ct-head{
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--bc); color:#fff; font-weight:700; font-size:calc(16px * var(--fs,1));
+    padding:6px 16px 7px; border-radius:255px 14px 225px 14px/14px 225px 14px 255px;
+    box-shadow:3px 4px 0 rgba(0,0,0,0.18);
+  }
+  .ct-limb{ position:relative; margin:10px 4px 0 0; padding:8px 30px 2px 0; }
+  .ct-limb::before{
+    content:""; position:absolute; top:0; bottom:16px; right:11px; width:3px; border-radius:3px;
+    background:linear-gradient(to bottom, var(--bark), rgba(138,90,43,0.22));
+  }
+  .ct-bud{ position:relative; margin-bottom:15px; }
+  /* الفرع المنحني: عمودي نازل من الجذع ثم ينعطف يسارًا إلى البرعم */
+  .ct-bud::before{
+    content:""; position:absolute; right:-19px; top:9px; width:17px; height:13px;
+    border-right:3px solid rgba(138,90,43,0.6);
+    border-bottom:3px solid rgba(138,90,43,0.6);
+    border-bottom-right-radius:13px;
+  }
+  .ct-name{
+    display:inline-block; font-weight:700; font-size:calc(15px * var(--fs,1)); color:var(--bc);
+    border-bottom:2px solid rgba(0,0,0,0.08); padding-bottom:1px;
+  }
+  .ct-en{ font-family:'Caveat',cursive; font-size:calc(16px * var(--fs,1)); color:var(--purple); margin-right:5px; direction:ltr; unicode-bidi:isolate; }
+  .ct-star{ color:#c99500; }
+  .ct-leaves{ display:flex; flex-wrap:wrap; gap:6px 7px; margin-top:7px; }
+  .ct-leaf{
+    font-size:calc(13px * var(--fs,1)); line-height:1.6; padding:3px 11px 4px;
+    border:1.5px solid color-mix(in srgb, var(--bc) 45%, transparent);
+    background:color-mix(in srgb, var(--bc) 7%, transparent);
+    border-radius:13px 0 13px 0;
+  }
+  .ct-leaf .ct-en{ font-size:calc(14px * var(--fs,1)); }
+  /* حدود متقطّعة = تفرّع من الورقة نفسها */
+  .ct-leaf.twig{ border-style:dashed; border-radius:0 13px 0 13px; background:transparent; }
+  .ct-key{
+    display:flex; flex-wrap:wrap; gap:8px 16px; margin-top:14px; font-size:calc(13px * var(--fs,1));
+    color:rgba(26,61,140,0.8);
+  }
+
+  /* ---------- the full map of Claude ---------- */
+  .map-tree{
+    width:100%;
+    margin:8px 0 18px;
+    font-size:calc(clamp(11.5px,2.8vw,13.5px) * var(--fs,1));
+    color:var(--ink);
+    line-height:1.7;
+  }
+  .map-root{
+    display:inline-block;
+    background:var(--ink);
+    color:#fff;
+    font-family:'Aref Ruqaa Ink','Aref Ruqaa',serif;
+    font-weight:700;
+    font-size:calc(clamp(16px,4vw,21px) * var(--fs,1));
+    padding:6px 20px 8px;
+    border-radius:999px;
+    margin-bottom:8px;
+    box-shadow:3px 4px 0 rgba(26,61,140,0.2);
+  }
+  .map-tree ul{
+    list-style:none;
+    margin:0;
+    padding:0 15px 0 0;
+    position:relative;
+  }
+  .map-tree ul::before{
+    content:"";
+    position:absolute;
+    top:0;
+    bottom:11px;
+    right:2px;
+    border-right:1.5px solid rgba(63,143,214,0.3);
+  }
+  .map-tree li{
+    position:relative;
+    padding:2px 13px 2px 0;
+  }
+  .map-tree li::before{
+    content:"";
+    position:absolute;
+    top:13px;
+    right:2px;
+    width:9px;
+    border-top:1.5px solid rgba(63,143,214,0.3);
+  }
+  .m1{
+    display:inline-block;
+    font-weight:700;
+    color:#fff;
+    background:var(--blue);
+    padding:2px 12px 3px;
+    border-radius:8px;
+    font-size:1.06em;
+    margin:4px 0 2px;
+  }
+  .m1.g{ background:var(--green); }
+  .m1.o{ background:var(--orange); }
+  .m1.p{ background:var(--purple); }
+  .m2{ font-weight:700; color:var(--blue); }
+  .map-tree em{
+    font-style:normal;
+    direction:ltr;
+    unicode-bidi:isolate;
+    color:var(--lightblue);
+    font-size:0.92em;
+  }
+
+  /* ---------- app screens drawn into the notebook ---------- */
+  .screen-block{
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px;
+    align-items:flex-start;
+    margin:8px 0 16px;
+    width:100%;
+  }
+  .screen-frame{
+    flex:1 1 262px;
+    max-width:350px;
+    border:2.5px solid var(--ink);
+    border-radius:15px;
+    background:#fff;
+    box-shadow:4px 5px 0 rgba(26,61,140,0.13);
+    overflow:hidden;
+  }
+  .screen-frame.dark{ background:#1b1b1b; border-color:#3f3f3f; box-shadow:4px 5px 0 rgba(0,0,0,0.28); }
+  .sf-bar{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    padding:8px 12px;
+    background:#eef4fc;
+    border-bottom:2px solid rgba(26,61,140,0.2);
+    font-size:calc(12.5px * var(--fs,1));
+    font-weight:700;
+    color:var(--blue);
+  }
+  .screen-frame.dark .sf-bar{ background:#262626; border-bottom-color:#3a3a3a; color:#ededed; }
+  .sf-bar .sf-en{ direction:ltr; unicode-bidi:isolate; }
+  .sf-row{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    padding:9px 12px;
+    border-bottom:1px solid rgba(26,61,140,0.1);
+    font-size:calc(13.5px * var(--fs,1));
+    color:var(--ink);
+  }
+  .screen-frame.dark .sf-row{ border-bottom-color:rgba(255,255,255,0.09); color:#e6e6e6; }
+  .sf-row:last-child{ border-bottom:none; }
+  .sf-row.on{ background:rgba(31,122,61,0.08); }
+  .screen-frame.dark .sf-row.sel{ background:#3a3a3a; border-radius:999px; }
+  .sf-name{
+    flex:1;
+    font-weight:700;
+    direction:ltr;
+    unicode-bidi:isolate;
+    text-align:left;
+    min-width:0;
+  }
+  .sf-sub{
+    display:block;
+    font-size:calc(11.5px * var(--fs,1));
+    opacity:0.72;
+    font-weight:400;
+    direction:ltr;
+    unicode-bidi:isolate;
+    text-align:left;
+  }
+  .sf-num{
+    width:20px;
+    height:20px;
+    border-radius:50%;
+    background:var(--red);
+    color:#fff;
+    font-size:calc(11.5px * var(--fs,1));
+    font-weight:700;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex:none;
+  }
+
+  /* ---------- numbered legend beside a screen ---------- */
+  .screen-legend{
+    flex:1 1 235px;
+    display:flex;
+    flex-direction:column;
+    gap:7px;
+    min-width:0;
+  }
+  .leg-item{
+    display:flex;
+    align-items:flex-start;
+    gap:8px;
+    font-size:calc(clamp(12.5px,3vw,14px) * var(--fs,1));
+    line-height:1.7;
+    color:var(--ink);
+  }
+  .leg-num{
+    width:20px;
+    height:20px;
+    border-radius:50%;
+    background:var(--red);
+    color:#fff;
+    font-size:calc(11.5px * var(--fs,1));
+    font-weight:700;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex:none;
+    margin-top:3px;
+  }
+  .leg-item b{ color:var(--blue); }
+
+  /* ---------- settings rows with drawn toggles ---------- */
+  .set-row{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:8px 11px;
+    margin:6px 0;
+    background:rgba(255,255,255,0.55);
+    border:1.5px solid rgba(24,87,164,0.3);
+    border-radius:11px;
+  }
+  .set-ic{ width:24px; height:24px; flex:none; }
+  .set-txt{ flex:1; min-width:0; }
+  .set-name{
+    font-weight:700;
+    color:var(--blue);
+    font-size:calc(clamp(12.5px,3vw,15px) * var(--fs,1));
+    display:block;
+  }
+  .set-desc{
+    font-size:calc(clamp(11px,2.6vw,13px) * var(--fs,1));
+    color:var(--ink);
+    opacity:.8;
+    display:block;
+    margin-top:1px;
+    line-height:1.6;
+  }
+  .toggle{
+    flex:none;
+    width:38px;
+    height:21px;
+    border-radius:999px;
+    border:2px solid var(--green);
+    background:rgba(163,220,175,0.55);
+    position:relative;
+    transform:rotate(-1deg);
+  }
+  .toggle::after{
+    content:"";
+    position:absolute;
+    top:1.5px;
+    left:1.5px;
+    width:14px;
+    height:14px;
+    border-radius:50%;
+    background:var(--green);
+  }
+  .toggle.off{ border-color:#9aa7b4; background:rgba(154,167,180,0.22); transform:rotate(1deg); }
+  .toggle.off::after{ left:auto; right:1.5px; background:#9aa7b4; }
+
+  /* ---------- before / after speech bubbles ---------- */
+  .ba-prompt{
+    font-size:calc(clamp(12px,2.8vw,13.5px) * var(--fs,1));
+    color:var(--purple);
+    font-weight:700;
+    margin:12px 0 3px;
+  }
+  .ba-pair{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin:4px 0 10px;
+  }
+  .bubble{
+    flex:1 1 235px;
+    border-radius:14px 14px 14px 5px;
+    padding:9px 12px 10px;
+    font-size:calc(clamp(11.5px,2.8vw,13.5px) * var(--fs,1));
+    line-height:1.7;
+    color:var(--ink);
+  }
+  .bubble .ba-tag{
+    display:block;
+    font-weight:700;
+    font-size:calc(clamp(11px,2.5vw,12.5px) * var(--fs,1));
+    margin-bottom:3px;
+  }
+  .b-before{ background:rgba(209,52,43,0.09); border:1.5px dashed rgba(209,52,43,0.55); }
+  .b-before .ba-tag{ color:var(--red); }
+  .b-after{ background:rgba(31,122,61,0.10); border:1.5px solid rgba(31,122,61,0.6); }
+  .b-after .ba-tag{ color:var(--green); }
+
+  .content-slide::after{
+    content:"★";
+    position:absolute;
+    bottom:6px;
+    left:12px;
+    font-size:calc(15px * var(--fs,1));
+    opacity:0.7;
+    color:var(--orange);
+    transform:rotate(-8deg);
+  }
+  .content-slide:nth-of-type(3n+2)::after{ color:var(--purple); transform:rotate(6deg); }
+  .content-slide:nth-of-type(3n)::after{ color:var(--green); transform:rotate(-4deg); }
+
+  .mini-note{
+    margin-top:10px;
+    align-self:center;
+    font-size:calc(clamp(12px,2.8vw,14px) * var(--fs,1));
+    color:var(--red);
+    opacity:0.85;
+    transform:rotate(0.8deg);
+    text-align:center;
+  }
+
+  /* ---------- الأسبوع الثالث: أدوات التطبيق ---------- */
+
+  /* شارة تفصل ما يعمله الطالب بيده عمّا يعرضه المدرّس */
+  .mode{
+    display:inline-flex; align-items:center; gap:6px;
+    font-size:calc(11.5px * var(--fs,1)); font-weight:700; letter-spacing:0.03em;
+    padding:3px 11px 4px; border-radius:999px; white-space:nowrap;
+  }
+  .mode.hands{ background:var(--green); color:#fff; }
+  .mode.watch{ background:rgba(122,46,166,0.14); color:var(--purple);
+               box-shadow:inset 0 0 0 1.5px var(--purple); }
+
+  /* محطّة تطبيق: بندٌ من الشجرة يُنفَّذ الآن أو يُشاهَد */
+  .st{
+    width:100%; margin:9px 0;
+    border:1.5px solid rgba(26,61,140,0.22); border-radius:11px;
+    background:rgba(255,255,255,0.45); padding:10px 13px 11px;
+    border-inline-start-width:5px;
+  }
+  .st.hands{ border-inline-start-color:var(--green); }
+  .st.watch{ border-inline-start-color:var(--purple); background:rgba(122,46,166,0.045); }
+  .st-h{ display:flex; align-items:center; gap:9px; flex-wrap:wrap; margin-bottom:6px; }
+  .st-n{
+    flex:0 0 auto; width:23px; height:23px; border-radius:50%;
+    color:#fff; font-weight:700; font-size:calc(12px * var(--fs,1));
+    display:flex; align-items:center; justify-content:center;
+  }
+  .st.hands .st-n{ background:var(--green); }
+  .st.watch .st-n{ background:var(--purple); }
+  .st-t{
+    font-family:'Aref Ruqaa',serif; font-weight:700;
+    font-size:calc(15px * var(--fs,1)); color:var(--ink); line-height:1.5;
+  }
+  .st-en{ font-size:calc(11.5px * var(--fs,1)); color:rgba(26,61,140,0.6);
+          direction:ltr; unicode-bidi:isolate; }
+  .st-b{ display:flex; gap:8px; align-items:flex-start; margin-top:5px; }
+  .st-b > span:last-child{ flex:1 1 auto; min-width:0;
+    font-size:calc(13.5px * var(--fs,1)); line-height:1.9; color:var(--ink); }
+  .st-tag{
+    flex:0 0 auto; font-size:calc(10.5px * var(--fs,1)); font-weight:700;
+    padding:2px 8px 3px; border-radius:999px; margin-top:4px; white-space:nowrap;
+  }
+  .st-tag.do{ background:var(--blue); color:#fff; }
+  .st-tag.see{ background:rgba(31,122,61,0.16); color:var(--green); }
+  .st-tag.why{ background:rgba(209,52,43,0.13); color:var(--red); }
+
+  /* سيناريو المحطّة: الموقف الإداري الذي يبرّر الأداة */
+  .st-sc{
+    border-inline-start:4px solid var(--orange);
+    background:rgba(224,122,31,0.07);
+    border-radius:4px; padding:9px 12px 10px; margin:8px 0 10px;
+    font-size:calc(13.5px * var(--fs,1)); line-height:1.95;
+  }
+  .st-sc::before{
+    content:'السيناريو'; display:block;
+    font-size:calc(10.5px * var(--fs,1)); font-weight:700; letter-spacing:0.08em;
+    color:var(--orange); margin-bottom:3px;
+  }
+  .st-steps{ margin:8px 0 0; padding-inline-start:19px; }
+  .st-steps li{
+    font-size:calc(13.5px * var(--fs,1)); line-height:1.95; margin-bottom:5px;
+  }
+  .st-steps li::marker{ color:var(--blue); font-weight:700; }
+  .st-covers{
+    margin-top:9px; padding-top:7px; border-top:1px dashed rgba(26,61,140,0.22);
+    font-size:calc(11.5px * var(--fs,1)); color:rgba(26,61,140,0.7);
+  }
+  .st-covers b{ color:var(--ink); }
+
+  /* مادّة تجريب: جدول أو نصّ يُنسخ ويُشتغل عليه */
+  .mat{
+    width:100%; margin:14px 0;
+    border:2px solid var(--green); border-radius:12px;
+    background:rgba(31,122,61,0.04); overflow:hidden;
+  }
+  .mat-head{
+    display:flex; align-items:center; gap:9px; flex-wrap:wrap;
+    background:rgba(31,122,61,0.11); padding:9px 13px 10px;
+    border-bottom:1.5px solid rgba(31,122,61,0.22);
+  }
+  .mat-head .m-n{
+    flex:0 0 auto; width:24px; height:24px; border-radius:50%;
+    background:var(--green); color:#fff; font-weight:700;
+    font-size:calc(12.5px * var(--fs,1));
+    display:flex; align-items:center; justify-content:center;
+  }
+  .mat-head .m-t{ font-weight:700; color:var(--green); font-size:calc(14.5px * var(--fs,1)); }
+  .mat-head .m-u{
+    margin-inline-start:auto; font-size:calc(11.5px * var(--fs,1));
+    color:rgba(31,122,61,0.85); font-weight:700;
+  }
+  .mat-body{ padding:11px 13px 13px; }
+  .mat-body .pr{ margin:0; }
+
+  /* فاصل فرع من الشجرة */
+  .br-head{
+    display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+    margin:26px 0 4px; padding-bottom:6px;
+    border-bottom:2.5px solid var(--ink);
+  }
+  .br-head .br-n{
+    font-family:'Aref Ruqaa Ink','Aref Ruqaa',serif;
+    font-size:calc(26px * var(--fs,1)); color:var(--red); line-height:1;
+  }
+  .br-head .br-t{
+    font-family:'Aref Ruqaa',serif; font-weight:700;
+    font-size:calc(18px * var(--fs,1)); color:var(--ink);
+  }
+  .br-head .br-c{
+    margin-inline-start:auto; font-size:calc(11.5px * var(--fs,1));
+    color:rgba(26,61,140,0.65); font-weight:700; white-space:nowrap;
+  }
+
+  /* مفاتيح القراءة أعلى الجولة */
+  .keys{ display:flex; flex-wrap:wrap; gap:9px; margin:12px 0 4px; }
+  .keys .k-i{
+    display:flex; align-items:center; gap:7px;
+    border:1.5px solid rgba(26,61,140,0.2); border-radius:9px;
+    padding:7px 12px 8px; background:rgba(255,255,255,0.5);
+    font-size:calc(13px * var(--fs,1)); line-height:1.6;
+  }
+
+  /* بطاقة أمر جاهز: تُنسخ بضغطة، فلا يقف أحد أمام صندوق فارغ */
+  .pr{
+    width:100%; margin:12px 0;
+    border:2px solid var(--blue); border-radius:12px;
+    background:rgba(24,87,164,0.05); overflow:hidden;
+  }
+  .pr-head{
+    display:flex; align-items:center; gap:9px; flex-wrap:wrap;
+    background:rgba(24,87,164,0.11); padding:8px 13px 9px;
+    border-bottom:1.5px solid rgba(24,87,164,0.2);
+  }
+  .pr-head .pr-n{
+    flex:0 0 auto; width:24px; height:24px; border-radius:50%;
+    background:var(--blue); color:#fff; font-weight:700;
+    font-size:calc(12.5px * var(--fs,1));
+    display:flex; align-items:center; justify-content:center;
+  }
+  .pr-head .pr-t{
+    font-weight:700; color:var(--blue); font-size:calc(14px * var(--fs,1));
+  }
+  .pr-copy{
+    margin-inline-start:auto; cursor:pointer;
+    border:1.5px solid var(--blue); border-radius:999px;
+    background:#fff; color:var(--blue);
+    font-family:inherit; font-weight:700; font-size:calc(12px * var(--fs,1));
+    padding:5px 14px 6px; white-space:nowrap;
+  }
+  .pr-copy:hover{ background:var(--blue); color:#fff; }
+  .pr-copy:focus-visible{ outline:2px solid #f0b400; outline-offset:2px; }
+  .pr-copy.done{ background:var(--green); border-color:var(--green); color:#fff; }
+  .pr-body{
+    padding:12px 14px 14px; font-size:calc(13.5px * var(--fs,1));
+    line-height:2; color:var(--ink); white-space:pre-wrap;
+  }
+  /* الفراغات التي يملؤها الطالب — تُرى فورًا فلا يرسل القالب كما هو */
+  .pr-body .slot{
+    background:rgba(240,180,0,0.3); border-bottom:2px solid #d99b00;
+    padding:0 4px; border-radius:3px; font-weight:700;
+  }
+
+  /* تمرين تطبيقي بوقت محدّد */
+  .drill{
+    width:100%; margin:14px 0 6px;
+    border:2.5px solid var(--green); border-radius:14px;
+    background:rgba(31,122,61,0.05); padding:12px 14px 14px;
+  }
+  .drill-head{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:9px; }
+  .drill-head .d-n{
+    flex:0 0 auto; width:27px; height:27px; border-radius:50%;
+    background:var(--green); color:#fff; font-weight:700;
+    font-size:calc(13.5px * var(--fs,1));
+    display:flex; align-items:center; justify-content:center;
+  }
+  .drill-head .d-t{
+    font-family:'Aref Ruqaa',serif; font-weight:700;
+    font-size:calc(16px * var(--fs,1)); color:var(--ink);
+  }
+  .drill-head .d-time{
+    margin-inline-start:auto; font-size:calc(12px * var(--fs,1)); font-weight:700;
+    color:var(--green); background:rgba(31,122,61,0.13);
+    padding:3px 11px 4px; border-radius:999px; white-space:nowrap;
+  }
+  .drill ol{ margin:0; padding-inline-start:20px; }
+  .drill li{ font-size:calc(14px * var(--fs,1)); line-height:1.95; margin-bottom:6px; }
+  .drill .d-out{
+    margin-top:10px; padding-top:9px; border-top:1.5px dashed rgba(31,122,61,0.4);
+    font-size:calc(13.5px * var(--fs,1)); line-height:1.9;
+  }
+  .drill .d-out b{ color:var(--green); }
+
+  /* جدول بيانات التدريب: قبل الإخفاء وبعده */
+  .dt-wrap{ width:100%; overflow-x:auto; margin:10px 0 4px; }
+  .dt{
+    border-collapse:collapse; width:100%; min-width:440px;
+    font-size:calc(12.5px * var(--fs,1)); line-height:1.7;
+  }
+  .dt th{
+    background:rgba(26,61,140,0.1); color:var(--ink); font-weight:700;
+    text-align:start; padding:7px 9px; border:1px solid rgba(26,61,140,0.2);
+    white-space:nowrap;
+  }
+  .dt td{
+    padding:6px 9px; border:1px solid rgba(26,61,140,0.16);
+    color:var(--ink); vertical-align:top;
+  }
+  .dt .gone{ background:rgba(209,52,43,0.12); text-decoration:line-through;
+             text-decoration-color:var(--red); }
+  .dt .kept{ background:rgba(31,122,61,0.12); font-weight:700; }
+  .dt-cap{
+    font-size:calc(12px * var(--fs,1)); color:rgba(26,61,140,0.75);
+    margin:0 0 4px; font-weight:700;
+  }
+  .dt-cap.fake{ color:var(--red); }
+
+  /* قاعدة الإخفاء الثلاثية */
+  .anon{ display:flex; flex-direction:column; gap:8px; margin:12px 0; }
+  .anon-row{
+    display:flex; gap:11px; align-items:flex-start;
+    border-inline-start:4px solid var(--blue); border-radius:4px;
+    background:rgba(24,87,164,0.06); padding:9px 12px 10px;
+  }
+  .anon-row.drop{ border-inline-start-color:var(--red); background:rgba(209,52,43,0.06); }
+  .anon-row.keep{ border-inline-start-color:var(--green); background:rgba(31,122,61,0.07); }
+  .anon-row .a-v{
+    flex:0 0 auto; font-weight:700; font-size:calc(13px * var(--fs,1));
+    min-width:74px;
+  }
+  .anon-row.code .a-v{ color:var(--blue); }
+  .anon-row.drop .a-v{ color:var(--red); }
+  .anon-row.keep .a-v{ color:var(--green); }
+  .anon-row span:last-child{ flex:1 1 auto; min-width:0;
+    font-size:calc(13.5px * var(--fs,1)); line-height:1.9; }
+
+  /* أخطاء اليوم: ما سيقع، وما تفعله حين يقع */
+  .oops{
+    display:flex; gap:10px; align-items:flex-start;
+    border:1.5px solid rgba(224,122,31,0.5); border-radius:10px;
+    background:rgba(224,122,31,0.07); padding:10px 12px 11px; margin:8px 0;
+  }
+  .oops .o-i{ flex:0 0 auto; color:var(--orange); font-weight:700;
+              font-size:calc(15px * var(--fs,1)); }
+  .oops div{ flex:1 1 auto; min-width:0; font-size:calc(13.5px * var(--fs,1)); line-height:1.9; }
+  .oops b{ color:var(--ink); }
+
+  @media (max-width:520px){
+    .pr-head{ gap:7px; padding:7px 10px 8px; }
+    .pr-copy{ padding:5px 11px 6px; }
+    .drill-head .d-time{ margin-inline-start:0; }
+  }
+
+  /* ---------- اختيار القارئ: خطّه وحجمه ----------
+     القارئ الوحيد الذي يعرف ما يريح عينه هو القارئ. */
+  .reader-btn{
+    position:fixed; bottom:70px; left:18px; z-index:201;
+    display:flex; align-items:center; gap:7px;
+    background:#2f2823; color:#f2e9dc;
+    border:1.5px solid rgba(255,255,255,0.18); border-radius:24px;
+    padding:9px 15px; cursor:pointer;
+    font-family:'Aref Ruqaa',serif; font-weight:700; font-size:13.5px;
+    box-shadow:0 5px 16px rgba(0,0,0,0.4);
+  }
+  .reader-btn .aa{ font-family:Georgia,serif; font-size:15px; line-height:1; letter-spacing:-0.5px; }
+  .reader-btn:hover{ background:#3d342c; }
+  .reader-btn:focus-visible{ outline:2px solid #f0b400; outline-offset:2px; }
+
+  .reader-panel{
+    position:fixed; bottom:118px; left:18px; z-index:202;
+    display:none; width:min(88vw,290px);
+    background:var(--paper); color:var(--ink);
+    border:2.5px solid var(--red); border-radius:12px;
+    padding:15px 16px 16px;
+    box-shadow:0 18px 40px rgba(0,0,0,0.5);
+  }
+  .reader-panel.open{ display:block; }
+  .reader-panel h4{
+    font-family:'Aref Ruqaa',serif; margin:0 0 3px;
+    font-size:16px; color:var(--red);
+  }
+  .reader-panel .rp-note{ font-size:12px; color:rgba(26,61,140,0.7); margin:0 0 13px; line-height:1.75; }
+  .reader-panel .rp-lab{
+    font-size:11.5px; font-weight:700; color:rgba(26,61,140,0.65);
+    display:block; margin:0 0 6px; letter-spacing:0.04em;
+  }
+  .rp-fonts{ display:flex; gap:6px; margin-bottom:15px; }
+  .rp-fonts button{
+    flex:1 1 0; min-width:0; cursor:pointer;
+    border:2px solid rgba(26,61,140,0.28); border-radius:9px;
+    background:rgba(255,255,255,0.6); color:var(--ink);
+    padding:9px 4px 10px; font-size:15px; line-height:1.3;
+  }
+  .rp-fonts button[aria-pressed="true"]{
+    border-color:var(--green); background:rgba(31,122,61,0.12); font-weight:700;
+  }
+  .rp-fonts button:focus-visible{ outline:2px solid #f0b400; outline-offset:2px; }
+  .rp-size{ display:flex; align-items:center; gap:9px; }
+  .rp-size button{
+    flex:0 0 auto; width:42px; height:42px; cursor:pointer;
+    border:2px solid rgba(26,61,140,0.28); border-radius:10px;
+    background:rgba(255,255,255,0.6); color:var(--ink);
+    font-size:21px; font-weight:700; line-height:1;
+  }
+  .rp-size button:disabled{ opacity:0.35; cursor:default; }
+  .rp-size button:focus-visible{ outline:2px solid #f0b400; outline-offset:2px; }
+  .rp-size .rp-val{
+    flex:1 1 auto; text-align:center; font-weight:700; font-size:16px;
+    font-family:'Aref Ruqaa',serif;
+  }
+  .rp-reset{
+    display:block; margin:13px auto 0; cursor:pointer;
+    background:none; border:none; color:var(--red);
+    font-family:'Aref Ruqaa',serif; font-weight:700; font-size:12.5px;
+    text-decoration:underline; padding:4px;
+  }
+  .rp-reset:focus-visible{ outline:2px solid #f0b400; outline-offset:2px; }
+
+  @media (max-width:560px){
+    .reader-btn{ bottom:64px; left:14px; padding:8px 12px; font-size:12.5px; }
+    .reader-panel{ bottom:108px; left:14px; }
+  }
+
+  .print-btn{
+    position:fixed;
+    bottom:18px;
+    left:18px;
+    z-index:200;
+    background:var(--red);
+    color:#fff;
+    border:none;
+    border-radius:24px;
+    padding:11px 20px;
+    font-family:'Aref Ruqaa', serif;
+    font-weight:700;
+    font-size:14px;
+    cursor:pointer;
+    box-shadow:0 4px 12px rgba(0,0,0,0.35);
+  }
+  .print-btn-tab{ bottom:66px; background:var(--blue); }
+  .print-btn:hover{ background:var(--accent-dark,#b52a22); }
+
+  /* ---------- section building blocks (used by the rich week-1 page) ---------- */
+  .section-heading{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    color:var(--red);
+    font-weight:700;
+    font-size:calc(clamp(15px,3.6vw,19px) * var(--fs,1));
+    border-bottom:2.5px solid var(--red);
+    padding-bottom:4px;
+    margin:16px 0 8px;
+    width:fit-content;
+    align-self:flex-start;
+  }
+  .section-heading:first-of-type{ margin-top:4px; }
+  .arrow-icon{ width:18px; height:18px; flex:none; }
+
+  .chapter-num{
+    display:flex;
+    align-items:baseline;
+    gap:10px;
+    border-bottom:3px solid currentColor;
+    padding:2px 4px 6px;
+    margin:20px 0 10px;
+    align-self:flex-start;
+    width:fit-content;
+  }
+  .chapter-num:first-of-type{ margin-top:4px; }
+  .chapter-num .cn-num{
+    font-family:'Aref Ruqaa Ink','Aref Ruqaa',serif;
+    font-weight:700;
+    font-size:calc(clamp(30px,7.5vw,44px) * var(--fs,1));
+    line-height:1;
+  }
+  .chapter-num .cn-title{
+    font-family:'Aref Ruqaa', serif;
+    font-weight:700;
+    font-size:calc(clamp(15px,3.6vw,19px) * var(--fs,1));
+  }
+
+  /* بند flex لا يصغر دون أطول كلمة فيه افتراضًا (min-width:auto)، فيدفع
+     الصفحة عرضًا حين يكبّر القارئ الخطّ — فيصغّرها المتصفّح ويضيع التكبير.
+     هذا يسمح للبند بالانكماش فينكسر السطر بدل أن تتمدّد الصفحة. */
+  .paper li, .paper li > *{ min-width:0; }
+
+  .bullet-list{
+    list-style:none;
+    padding:0;
+    margin:0 0 6px;
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+  }
+  .bullet-list li{
+    display:flex;
+    align-items:flex-start;
+    gap:8px;
+    font-size:calc(clamp(13px,3.1vw,15.5px) * var(--fs,1));
+    color:var(--ink);
+    line-height:1.7;
+  }
+  .bullet-mark{
+    color:var(--green);
+    font-weight:700;
+    display:inline-block;
+    transform:rotate(-6deg);
+    flex:none;
+  }
+
+  .hl{ padding:0 4px; border-radius:3px; box-decoration-break:clone; -webkit-box-decoration-break:clone; }
+  .hl-yellow{ background:rgba(255,224,102,0.65); }
+  .hl-green{ background:rgba(163,220,175,0.6); }
+  .hl-pink{ background:rgba(240,170,195,0.55); }
+  .hl-blue{ background:rgba(150,200,240,0.55); }
+
+  .components-grid{
+    display:flex;
+    flex-wrap:wrap;
+    gap:9px;
+    justify-content:center;
+    margin:6px 0 8px;
+  }
+  .component-card{
+    flex:1 1 115px;
+    max-width:145px;
+    border:2px solid var(--blue);
+    border-radius:14px 4px 14px 4px/4px 14px 4px 14px;
+    background:rgba(255,255,255,0.5);
+    padding:9px 7px;
+    text-align:center;
+  }
+  .component-card .c-icon{ width:26px; height:26px; margin-bottom:4px; }
+  .component-card .c-name{
+    font-weight:700;
+    color:var(--blue);
+    font-size:calc(clamp(12.5px,3vw,14.5px) * var(--fs,1));
+    display:block;
+  }
+  .component-card .c-ex{
+    font-size:calc(clamp(10.5px,2.6vw,12px) * var(--fs,1));
+    color:var(--ink);
+    opacity:0.75;
+    display:block;
+    margin-top:2px;
+  }
+
+  /* ---------- "coming later" placeholder ---------- */
+  .coming-soon{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:14px;
+    min-height:320px;
+    text-align:center;
+  }
+  .coming-soon .big-icon{
+    width:64px;
+    height:64px;
+  }
+  .coming-soon .cs-title{
+    font-family:'Aref Ruqaa Ink','Aref Ruqaa',serif;
+    font-weight:700;
+    color:var(--orange);
+    font-size:calc(clamp(24px,5.6vw,32px) * var(--fs,1));
+    margin:0;
+  }
+  .coming-soon .cs-sub{
+    color:var(--ink);
+    font-size:calc(clamp(14px,3.2vw,17px) * var(--fs,1));
+    max-width:85%;
+    line-height:1.8;
+    margin:0;
+  }
+
+  /* ---------- طبقة التأشير بالقلم ----------
+     الطبقة داخل الشريحة نفسها لا فوق الشاشة، فالرسم بإحداثيات المستند
+     ويتحرّك مع النص عند التمرير. وSVG لا canvas: صفحة بطول آلاف البكسلات
+     تكسر الـcanvas بحجم ذاكرته، أما المسارات فلا وزن لها. */
+  .ann-layer{
+    position:absolute; top:0; right:0; bottom:0; left:0;
+    /* svg عنصر مُستبدَل: inset:0 وحده يتركه بحجمه الأصلي 300×150 ولا يمدّده،
+       فلا بدّ من width/height صراحةً وإلا غطّى ركناً من الشريحة فقط. */
+    width:100%; height:100%;
+    overflow:visible;
+    z-index:6;
+    pointer-events:none;
+  }
+  .ann-layer path{ fill:none; stroke-linecap:round; stroke-linejoin:round; }
+  .ann-layer path.hl{ mix-blend-mode:multiply; }
+  body.ann-on  .slide.active > .ann-layer{ pointer-events:auto; touch-action:none; cursor:crosshair; }
+  body.ann-erase .slide.active > .ann-layer{ cursor:cell; }
+  body.ann-hide .ann-layer{ display:none; }
+
+  /* أثناء رسم خطّ فعليّ، تُقفَل الصفحة كلّها عن التمرير — لا الطبقة وحدها.
+     بدونها: راحة اليد على القلم البصري (Apple Pencil) أو لمسة عرَضية ثانية
+     تقع خارج حدود الطبقة تُمرّر الصفحة تحت القلم وهو يكتب، فيتزحزح السطر. */
+  body.ann-drawing{ touch-action:none; overscroll-behavior:none; }
+
+  /* مؤشّر الليزر: يؤشّر ثم يتلاشى. طبقة ثابتة على الشاشة، منفصلة تمامًا عن
+     طبقة الرسم — فلا يدخل التراجع ولا الحفظ ولا الطباعة ولا تراه الممحاة.
+     أثرٌ يعيش أقلّ من ثانية لا يحتاج أن يتحرّك مع النص، وإحداثيات الشاشة
+     المباشرة أبسط وأأمن من حساب مصفوفة الشريحة. */
+  .ann-laser{
+    position:fixed; top:0; right:0; bottom:0; left:0;
+    width:100%; height:100%;
+    display:none; pointer-events:none; z-index:290;   /* دون الشريط: لا يغشاه */
+  }
+  body.ann-point .ann-laser{ display:block; }
+  .ann-laser path{
+    fill:none; stroke:#ff2020; stroke-width:7;
+    stroke-linecap:round; stroke-linejoin:round; stroke-opacity:0.92;
+    filter:drop-shadow(0 0 5px rgba(255,20,20,0.95)) drop-shadow(0 0 15px rgba(255,70,40,0.6));
+    transition:opacity .7s ease;
+  }
+  .ann-laser path.fade{ opacity:0; }
+  .ann-laser .tip{
+    fill:#fff; stroke:#ff2020; stroke-width:4;
+    filter:drop-shadow(0 0 7px rgba(255,20,20,1)) drop-shadow(0 0 18px rgba(255,70,40,0.7));
+    transition:opacity .3s ease;
+  }
+  .ann-laser .tip.off{ opacity:0; }
+  /* النقطة الحمراء هي المؤشّر داخل الورقة، فلا حاجة لمؤشّر النظام فوقها */
+  body.ann-point .slide.active > .ann-layer{ cursor:none; }
+  body.ann-point .sheet-body{ cursor:none; }
+  .ann-bar button.ann-laser-btn .ic{ color:#ff4b4b; }
+
+  /* وضع اليد: القلم يتنحّى. الطبقة تصير شفّافة للمس، فيمرّر المتصفّح
+     الصفحة بنفسه — بعزمه وارتداده وكل ما فيه — بلا سطر جافاسكربت واحد.
+     وككسبٍ ثانٍ: تمارين الصف والروابط تحت الطبقة تعود قابلة للضغط. */
+  body.ann-pan .slide.active > .ann-layer{ pointer-events:none !important; }
+  .ann-bar .ann-nav{ display:flex; gap:2px; align-items:center; }
+  .ann-bar button.ann-hand-btn.on{ background:rgba(255,255,255,0.28); }
+  .ann-bar .ann-nav button{ padding:6px 9px; }
+
+  .ann-bar{
+    position:fixed; bottom:18px; right:18px; z-index:300;
+    display:flex; align-items:center; gap:7px;
+    padding:7px 9px;
+    background:rgba(28,22,16,0.92);
+    border:1.5px solid rgba(255,255,255,0.16);
+    border-radius:26px;
+    box-shadow:0 6px 18px rgba(0,0,0,0.45);
+    font-family:'Aref Ruqaa', serif;
+    backdrop-filter:blur(4px);
+    max-width:calc(100vw - 36px);
+    flex-wrap:wrap; justify-content:flex-end;
+  }
+  .ann-bar button{
+    font-family:'Aref Ruqaa', serif; font-size:13px; font-weight:700;
+    color:#f3ece0; background:transparent;
+    border:1.5px solid transparent; border-radius:16px;
+    padding:5px 11px; cursor:pointer; line-height:1.6;
+    white-space:nowrap;
+  }
+  .ann-bar button:hover{ background:rgba(255,255,255,0.12); }
+  .ann-bar button:focus-visible{ outline:2px solid #f0b400; outline-offset:2px; }
+  .ann-bar .ann-main{ background:var(--red); border-color:rgba(255,255,255,0.25); padding:6px 14px; }
+  .ann-bar .ann-main.on{ background:#1f7a3d; }
+  .ann-bar .ann-tools{ display:none; align-items:center; gap:6px; flex-wrap:wrap; }
+  body.ann-on .ann-bar .ann-tools{ display:flex; }
+  .ann-bar .ann-sep{ width:1px; height:20px; background:rgba(255,255,255,0.2); }
+
+  .ann-swatch{
+    width:24px; height:24px; padding:0; border-radius:50%;
+    /* حلقة فاتحة حول كل لون: بدونها يختفي الأسود تمامًا فوق شريط أسود */
+    border:2px solid rgba(255,255,255,0.55);
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,0.18);
+    cursor:pointer; flex:0 0 auto;
+  }
+  .ann-swatch.sel{ border-color:#fff; box-shadow:0 0 0 2px rgba(255,255,255,0.35); }
+  .ann-size{ display:inline-flex; align-items:center; gap:6px; }
+  .ann-size .dot{
+    display:inline-block; border-radius:50%; background:#f3ece0;
+    transition:width .12s ease, height .12s ease; flex:0 0 auto;
+  }
+  .ann-bar button.on{ background:rgba(255,255,255,0.2); border-color:rgba(255,255,255,0.4); }
+
+  .ann-bar .ic{ font-size:15px; line-height:1; }
+  /* الأزرار أيقونات فقط: لوحة «؟» تشرح كلًّا منها، فلا داعي لثمانية عناوين
+     تمدّ الشريط إلى ألف بكسل. الوصف باقٍ في title لمن يمرّ بالفأرة. */
+  .ann-bar .lbl{ display:none; }
+  .ann-bar .ann-main .lbl{ display:inline; margin-inline-start:5px; }
+  @media (max-width:560px){
+    /* فوق زرّ الطباعة لا بجانبه: الشريط يعرض كامل الشاشة تقريباً فيغطّيه */
+    .ann-bar{ gap:3px; padding:5px 5px; bottom:72px; right:14px; }
+    .ann-bar button{ padding:5px 6px; }
+    .ann-bar .ann-main{ padding:5px 8px; }
+    .ann-bar .ann-sep{ display:none; }        /* الفواصل ترف لا يتحمّله عرض الهاتف */
+    .ann-bar .ann-size{ gap:0; }
+    .ann-bar .ann-grip{ padding:4px 1px; }
+    .ann-bar .ann-colors{ grid-template-columns:repeat(4,auto); gap:4px; }
+    .ann-swatch{ width:19px; height:19px; border-width:1.5px; }
+    .ann-bar .ann-help{ font-size:calc(12px * var(--fs,1)); }
+  }
+
+  /* الألوان في شبكة: ثمانية في صف على الحاسوب، وأربعة في صفّين على الهاتف،
+     فلا يتمزّق الشريط كلما أُضيف لون. */
+  .ann-colors{ display:grid; grid-template-columns:repeat(8,auto); gap:5px; align-items:center; }
+
+  /* التعليمات ملتصقة بالشريط لا بالشاشة، فتتبعه أينما سحبته */
+  .ann-help{
+    display:none;
+    position:absolute; bottom:calc(100% + 9px); right:0;
+    width:max-content; max-width:min(330px, calc(100vw - 40px));
+    background:rgba(24,19,13,0.97); color:#f3ece0;
+    border:1.5px solid rgba(255,255,255,0.18); border-radius:14px;
+    padding:9px 13px 10px;
+    font-family:'Aref Ruqaa',serif; font-size:12.5px; line-height:1.95;
+    box-shadow:0 8px 22px rgba(0,0,0,0.5);
+    text-align:right;
+  }
+  .ann-bar.help-open .ann-help{ display:block; }
+  /* عند سحب الشريط إلى أعلى الشاشة تنقلب اللوحة لأسفله */
+  .ann-bar.help-below .ann-help{ bottom:auto; top:calc(100% + 9px); }
+  .ann-help b{ color:#f5c453; }
+  .ann-help .k{
+    display:inline-block; min-width:17px; text-align:center;
+    background:rgba(255,255,255,0.14); border-radius:5px;
+    padding:0 5px; margin-inline-end:4px; font-weight:700;
+  }
+  .ann-help hr{ border:none; border-top:1px solid rgba(255,255,255,0.16); margin:6px 0; }
+
+  /* هوية المطبوع: لا تظهر على الشاشة إطلاقاً */
+  .print-id, .print-foot{ display:none; }
+
+  /* مقبض سحب الشريط: السحب من المقبض وحده، وإلا صار كل ضغط على لون سحبًا */
+  .ann-grip{
+    cursor:grab; color:#cbbfae; font-size:16px; line-height:1;
+    padding:4px 3px; user-select:none; touch-action:none; flex:0 0 auto;
+  }
+  .ann-grip:active{ cursor:grabbing; }
+  .ann-bar.moved{ bottom:auto; right:auto; }
+
+  /* ---------- الورقة الفارغة العائمة ---------- */
+  .sheet{
+    position:fixed; z-index:320; display:none;
+    flex-direction:column;
+    border:2.5px solid var(--red); border-radius:10px;
+    box-shadow:0 16px 40px rgba(0,0,0,0.55);
+    overflow:hidden;
+  }
+  .sheet.open{ display:flex; }
+  .sheet-head{
+    display:flex; align-items:center; gap:6px;
+    background:#1c1610; color:#f3ece0;
+    padding:6px 8px; font-family:'Aref Ruqaa',serif; font-weight:700; font-size:13px;
+  }
+  .sheet-head .sh-grip{ cursor:grab; color:#cbbfae; font-size:16px; padding:2px 4px; touch-action:none; }
+  .sheet-head .sh-grip:active{ cursor:grabbing; }
+  .sheet-head .sh-title{ flex:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .sheet-head button{
+    font-family:'Aref Ruqaa',serif; font-size:12.5px; font-weight:700;
+    color:#f3ece0; background:transparent; border:1.5px solid transparent;
+    border-radius:13px; padding:4px 9px; cursor:pointer; white-space:nowrap;
+  }
+  .sheet-head button:hover{ background:rgba(255,255,255,0.14); }
+  .sheet-head button:focus-visible{ outline:2px solid #f0b400; outline-offset:2px; }
+  .sheet-head .sh-close{ color:#ffb4ab; }
+
+  /* الورق نفسه بنفس مسطّرة الدفتر */
+  .sheet-body{
+    position:relative; flex:1; overflow:hidden;
+    background-color:#fbf8ef;
+    background-image:repeating-linear-gradient(#fbf8ef, #fbf8ef 27px, rgba(63,143,214,0.28) 28px);
+    touch-action:none;
+  }
+  .sheet-body svg{ position:absolute; top:0; left:0; width:100%; height:100%; }
+  .sheet-body svg path{ fill:none; stroke-linecap:round; stroke-linejoin:round; }
+  .sheet-body svg path.hl{ mix-blend-mode:multiply; }
+
+  /* مقبض التحجيم في الزاوية السفلى اليسرى — جهة «النهاية» في صفحة عربية */
+  .sheet-resize{
+    position:absolute; bottom:0; left:0; width:22px; height:22px;
+    cursor:nesw-resize; touch-action:none;
+    background:linear-gradient(45deg, rgba(209,52,43,0.75) 0 32%, transparent 32%);
+  }
+
+  /* أيقونة الاستدعاء داخل شريط الأدوات */
+  .ann-bar .sheet-toggle.on{ background:rgba(255,255,255,0.2); border-color:rgba(255,255,255,0.4); }
+
+  /* ---------- الخريطة مطويّة: نفس محتوى الشجرة، فلا تُعرض إلا لمن يطلبها ---------- */
+  .map-fold{
+    width:100%; margin:14px 0 6px;
+    border:2px dashed rgba(26,61,140,0.35); border-radius:12px;
+    background:rgba(255,255,255,0.4);
+  }
+  .map-fold > summary{
+    display:flex; align-items:center; gap:9px; flex-wrap:wrap;
+    padding:10px 14px 11px; cursor:pointer; list-style:none;
+    font-family:'Aref Ruqaa',serif; font-weight:700; color:var(--blue);
+  }
+  .map-fold > summary::-webkit-details-marker{ display:none; }
+  .map-fold > summary:hover{ background:rgba(24,87,164,0.05); border-radius:10px; }
+  .map-fold > summary:focus-visible{ outline:2px solid #f0b400; outline-offset:2px; border-radius:10px; }
+  .mf-arrow{ color:var(--red); font-size:calc(16px * var(--fs,1)); transition:transform .18s ease; display:inline-block; }
+  .map-fold[open] .mf-arrow{ transform:rotate(-90deg); }
+  .mf-title{ font-size:calc(clamp(15px,3.4vw,18px) * var(--fs,1)); }
+  .mf-count{
+    font-size:calc(11.5px * var(--fs,1)); font-weight:700; color:#fff; background:var(--blue);
+    padding:2px 9px 3px; border-radius:999px;
+  }
+  .mf-hint{ font-size:calc(12px * var(--fs,1)); font-weight:400; color:rgba(26,61,140,0.65); }
+  .map-fold[open] .mf-hint{ display:none; }
+  .map-fold .map-note{
+    font-size:calc(13px * var(--fs,1)); line-height:1.95; color:rgba(26,61,140,0.8);
+    margin:0 14px 4px; padding-top:2px;
+  }
+  .map-fold .map-tree{ padding:0 6px 10px; }
+
+  /* ---------- ورقة التصوير: للمدرّس وحده، تُقرأ أثناء التسجيل ---------- */
+  .rs{
+    width:100%; margin:12px 0;
+    border:2px solid rgba(26,61,140,0.3); border-radius:12px;
+    background:rgba(255,255,255,0.5); overflow:hidden;
+  }
+  .rs-h{
+    display:flex; align-items:center; gap:9px; flex-wrap:wrap;
+    padding:9px 13px 10px; background:rgba(26,61,140,0.09);
+    border-bottom:2px solid rgba(26,61,140,0.22);
+  }
+  .rs-n{
+    flex:none; width:24px; height:24px; border-radius:50%;
+    background:var(--ink); color:#fff; font-weight:700;
+    font-size:calc(12.5px * var(--fs,1));
+    display:flex; align-items:center; justify-content:center;
+  }
+  .rs-t{ font-weight:700; color:var(--ink); font-size:calc(15px * var(--fs,1)); }
+  .rs-m{
+    margin-inline-start:auto; font-size:calc(11.5px * var(--fs,1));
+    color:var(--red); font-weight:700; white-space:nowrap;
+  }
+  .rs-row{
+    display:flex; gap:10px; align-items:flex-start;
+    padding:9px 13px 10px; border-bottom:1px dashed rgba(26,61,140,0.2);
+  }
+  .rs-row:last-child{ border-bottom:none; }
+  .rs-i{
+    flex:none; min-width:38px; text-align:center;
+    background:var(--red); color:#fff; border-radius:7px;
+    font-size:calc(11.5px * var(--fs,1)); font-weight:700;
+    padding:3px 6px 4px;
+  }
+  .rs-b{ flex:1; min-width:0; font-size:calc(13px * var(--fs,1)); line-height:1.85; }
+  .rs-b em{ font-style:normal; font-weight:700; color:var(--blue); }
+  .rs-x{
+    display:block; margin-top:3px; padding-inline-start:9px;
+    border-inline-start:2.5px solid var(--green);
+    color:var(--green); font-size:calc(12.5px * var(--fs,1));
+  }
+  .rs-w{
+    display:block; margin-top:3px; padding-inline-start:9px;
+    border-inline-start:2.5px solid var(--orange);
+    color:#a8590f; font-size:calc(12.5px * var(--fs,1)); font-weight:700;
+  }
+
+  /* ---------- تمارين الصف: للمدرّس وحده، خلف بوابة القلم ---------- */
+  .teach{ display:none; }
+  body.teacher .teach{ display:block; }
+
+  .lab{
+    width:100%; margin:14px 0 6px;
+    border:2.5px solid var(--purple); border-radius:16px;
+    background:rgba(122,46,166,0.045); padding:12px 14px 14px;
+  }
+  .lab-tag{
+    display:inline-flex; align-items:center; gap:7px;
+    background:var(--purple); color:#fff; font-weight:700; font-size:calc(12px * var(--fs,1));
+    padding:3px 12px 4px; border-radius:999px; margin-bottom:9px;
+  }
+  .lab-q{
+    font-family:'Aref Ruqaa Ink','Aref Ruqaa',serif; font-weight:700;
+    font-size:calc(clamp(16px,3.6vw,21px) * var(--fs,1)); color:var(--ink); line-height:1.75; margin-bottom:10px;
+  }
+  .lab-body{ display:flex; flex-wrap:wrap; gap:14px; align-items:flex-start; }
+
+  /* الصفوف أهداف ضغط كبيرة: الطالب واقف أمام الشاشة لا جالس أمامها */
+  .lab-screen{ flex:1 1 280px; max-width:380px; }
+  .lab-screen .sf-row{ cursor:pointer; transition:background .15s ease, box-shadow .15s ease; padding:12px 12px; }
+  .lab-screen .sf-row:hover{ background:rgba(255,255,255,0.14); }
+  .lab-screen.done .sf-row{ cursor:default; }
+  .lab-screen .sf-row.ok{
+    background:rgba(31,122,61,0.5) !important;
+    box-shadow:inset 4px 0 0 #4ade80;
+  }
+  .lab-screen .sf-row.bad{
+    background:rgba(209,52,43,0.45) !important;
+    box-shadow:inset 4px 0 0 #ff8a80;
+  }
+
+  .lab-side{ flex:1 1 240px; min-width:0; display:flex; flex-direction:column; gap:9px; }
+  .lab-fb{
+    display:none; border-radius:11px; padding:9px 12px 10px;
+    font-size:calc(13.5px * var(--fs,1)); line-height:1.95;
+  }
+  .lab-fb.show{ display:block; }
+  .lab-fb.ok{  border:2px solid var(--green); background:rgba(31,122,61,0.09); }
+  .lab-fb.bad{ border:2px solid var(--red);   background:rgba(209,52,43,0.08); }
+  .lab-fb .fb-v{ font-weight:700; display:block; margin-bottom:3px; }
+  .lab-fb.ok  .fb-v{ color:var(--green); }
+  .lab-fb.bad .fb-v{ color:var(--red); }
+
+  .lab-again{
+    align-self:flex-start;
+    font-family:'Aref Ruqaa',serif; font-weight:700; font-size:calc(13px * var(--fs,1));
+    color:#fff; background:var(--purple); border:none; border-radius:999px;
+    padding:7px 16px 8px; cursor:pointer;
+  }
+  .lab-again:hover{ background:#5f2183; }
+  .lab-again:focus-visible{ outline:2px solid #f0b400; outline-offset:2px; }
+
+  /* الأنواع التي تحتاج العرض كاملًا: الميدان فوق، والتصحيح تحته */
+  .lab-body.stack{ display:block; }
+  .lab-body.stack .lab-main{ min-width:0; }
+  .lab-body.stack .lab-side{ margin-top:11px; }
+
+  /* أنواع التمارين الأخرى — نفس منطق التصحيح: أخضر/أحمر مع بيان السبب */
+  .lab-hint{ font-size:calc(12.5px * var(--fs,1)); color:rgba(26,61,140,0.7); margin-bottom:9px; }
+
+  /* قرصا «صح» و«خطأ» يُسحبان */
+  .tf-chips{ display:flex; gap:10px; margin-bottom:12px; }
+  .tf-chip{
+    font-family:'Aref Ruqaa',serif; font-weight:700; font-size:calc(16px * var(--fs,1)); color:#fff;
+    padding:9px 22px 10px; border-radius:999px; cursor:grab;
+    touch-action:none; user-select:none;
+    box-shadow:3px 4px 0 rgba(0,0,0,0.2);
+  }
+  .tf-chip.yes{ background:var(--green); } .tf-chip.no{ background:var(--red); }
+  .tf-chip.lifted{ opacity:0.35; }
+  .lab-ghost{ position:fixed; z-index:9999; pointer-events:none; opacity:0.92; cursor:grabbing; }
+
+  .tf-list{ display:flex; flex-direction:column; gap:9px; }
+  .tf-st{
+    border:2px dashed rgba(26,61,140,0.35); border-radius:11px;
+    background:rgba(255,255,255,0.5); padding:11px 13px 12px;
+    font-size:calc(14px * var(--fs,1)); line-height:1.9; transition:background .15s ease, border-color .15s ease;
+  }
+  .tf-st.over{ border-color:var(--purple); background:rgba(122,46,166,0.1); }
+  .tf-st.ok{  border:2px solid var(--green); background:rgba(31,122,61,0.09); }
+  .tf-st.bad{ border:2px solid var(--red);   background:rgba(209,52,43,0.08); }
+  .tf-st .tf-why{ display:none; font-size:calc(13px * var(--fs,1)); line-height:1.9; margin-top:6px; padding-top:6px;
+                  border-top:1px dashed rgba(26,61,140,0.25); }
+  .tf-st.ok .tf-why, .tf-st.bad .tf-why{ display:block; }
+  .tf-st .tf-v{ font-weight:700; }
+  .tf-st.ok  .tf-v{ color:var(--green); } .tf-st.bad .tf-v{ color:var(--red); }
+
+  /* سلال التصنيف */
+  .sort-cards{ display:flex; flex-wrap:wrap; gap:9px; margin-bottom:12px; }
+  .sort-card{
+    border:2px solid var(--blue); background:rgba(255,255,255,0.65);
+    border-radius:10px; padding:8px 13px 9px; font-size:calc(13.5px * var(--fs,1)); font-weight:700;
+    cursor:grab; touch-action:none; user-select:none;
+  }
+  .sort-card.lifted{ opacity:0.35; }
+  .sort-card.placed{ cursor:default; border-color:var(--green); background:rgba(31,122,61,0.12); }
+  .sort-bins{ display:flex; flex-wrap:wrap; gap:11px; }
+  .sort-bin{
+    --bg:var(--green);
+    flex:1 1 170px; min-height:112px;
+    border:2.5px dashed color-mix(in srgb, var(--bg) 60%, transparent);
+    background:color-mix(in srgb, var(--bg) 6%, transparent);
+    border-radius:13px; padding:9px 11px 11px;
+  }
+  .sort-bin.mid{ --bg:var(--orange); } .sort-bin.hi{ --bg:var(--red); }
+  .sort-bin.over{ border-style:solid; background:color-mix(in srgb, var(--bg) 16%, transparent); }
+  .sort-bin > b{ display:block; color:var(--bg); font-size:calc(14.5px * var(--fs,1)); margin-bottom:7px; }
+  .sort-bin .bin-in{ display:flex; flex-wrap:wrap; gap:6px; }
+
+  /* ترتيب الخطوات بالضغط */
+  .ord-list{ display:flex; flex-direction:column; gap:8px; }
+  .ord-step{
+    display:flex; gap:10px; align-items:flex-start;
+    border:2px solid rgba(26,61,140,0.3); background:rgba(255,255,255,0.55);
+    border-radius:11px; padding:10px 12px 11px; font-size:calc(14px * var(--fs,1)); line-height:1.9;
+    cursor:pointer; transition:background .15s ease;
+  }
+  .ord-step:hover{ background:rgba(24,87,164,0.06); }
+  .ord-step .ord-n{
+    flex:0 0 auto; width:27px; height:27px; border-radius:50%;
+    background:rgba(26,61,140,0.15); color:rgba(26,61,140,0.6);
+    display:flex; align-items:center; justify-content:center; font-weight:700; font-size:calc(13px * var(--fs,1));
+  }
+  .ord-step.ok{ border-color:var(--green); background:rgba(31,122,61,0.09); cursor:default; }
+  .ord-step.ok .ord-n{ background:var(--green); color:#fff; }
+  .ord-step.bad{ border-color:var(--red); background:rgba(209,52,43,0.08); }
+  .ord-step.bad .ord-n{ background:var(--red); color:#fff; }
+
+  /* اختيارات */
+  .mcq-stem{
+    border-right:5px solid var(--blue); background:rgba(24,87,164,0.07);
+    border-radius:5px 12px 12px 5px; padding:10px 13px 11px; margin-bottom:11px;
+    font-size:calc(14px * var(--fs,1)); line-height:1.95;
+  }
+  .mcq-opts{ display:flex; flex-direction:column; gap:8px; }
+  .mcq-opt{
+    display:flex; gap:10px; align-items:flex-start;
+    border:2px solid rgba(26,61,140,0.3); background:rgba(255,255,255,0.55);
+    border-radius:11px; padding:10px 12px 11px; font-size:calc(14px * var(--fs,1)); line-height:1.9; cursor:pointer;
+  }
+  .mcq-opt:hover{ background:rgba(24,87,164,0.06); }
+  .mcq-opt .mo-k{ flex:0 0 auto; font-weight:700; color:var(--blue); }
+  .mcq-opt.ok{  border-color:var(--green); background:rgba(31,122,61,0.09); }
+  .mcq-opt.bad{ border-color:var(--red);   background:rgba(209,52,43,0.08); }
+  .mcq-opt .mo-why{ display:none; }
+
+
+
+  /* ---------- مهمة واحدة عبر أربع واجهات ---------- */
+  .pick{ width:100%; margin:14px 0 6px; }
+  .pick-task{
+    border-right:5px solid var(--blue); background:rgba(24,87,164,0.07);
+    border-radius:5px 12px 12px 5px; padding:9px 13px 10px; margin-bottom:12px;
+    font-size:calc(14px * var(--fs,1)); line-height:1.95;
+  }
+  .pick-rows{ display:flex; flex-direction:column; gap:9px; }
+  .pick-row{
+    --kc:var(--ink);
+    display:flex; gap:10px; align-items:flex-start;
+    border:1.5px solid color-mix(in srgb, var(--kc) 45%, transparent);
+    background:color-mix(in srgb, var(--kc) 6%, transparent);
+    border-radius:11px; padding:8px 11px 9px; font-size:calc(13.5px * var(--fs,1)); line-height:1.9;
+  }
+  .pick-row.win{ --kc:var(--green); border-width:2.5px; }
+  .pick-row.no{  --kc:var(--red); }
+  .pick-name{
+    flex:0 0 auto; min-width:96px; font-weight:700; color:var(--kc);
+    display:flex; align-items:center; gap:6px;
+  }
+  .pick-name .pn-en{ font-family:'Caveat',cursive; font-size:calc(15px * var(--fs,1)); opacity:0.9; }
+  .pick-verdict{ font-weight:700; }
+  .pick-rule{
+    margin-top:12px; border:2px solid var(--purple); border-radius:12px;
+    background:rgba(122,46,166,0.06); padding:9px 13px 11px; font-size:calc(13.5px * var(--fs,1)); line-height:2;
+  }
+  .pick-rule b{ color:var(--purple); }
+
+  /* ---------- إعداد خاطئ وأثره ---------- */
+  .cost{ display:flex; flex-direction:column; gap:11px; width:100%; margin:12px 0 6px; }
+  .cost-item{
+    border:2px solid rgba(209,52,43,0.55); border-radius:12px;
+    background:rgba(209,52,43,0.05); padding:10px 13px 11px;
+  }
+  .cost-h{ font-weight:700; font-size:calc(14.5px * var(--fs,1)); color:var(--red); margin-bottom:4px; }
+  .cost-l{ display:flex; gap:8px; align-items:flex-start; font-size:calc(13.5px * var(--fs,1)); line-height:1.9; margin-top:4px; }
+  .cost-l .cl-tag{
+    flex:0 0 auto; font-size:calc(11px * var(--fs,1)); font-weight:700; color:#fff;
+    padding:2px 9px 3px; border-radius:999px;
+  }
+  .cost-l.what .cl-tag{ background:#6b5a45; }
+  .cost-l.harm .cl-tag{ background:var(--red); }
+  .cost-l.fix  .cl-tag{ background:var(--green); }
+
+  /* ---------- توضيح القواعد الذهبية الأربع ---------- */
+  .pe-rules{ display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:12px 0 4px; width:100%; }
+  @media (max-width:600px){ .pe-rules{ grid-template-columns:1fr; } }
+
+  .pe-card{
+    --pc:var(--blue);
+    border:2px solid var(--pc); border-radius:14px 5px 14px 5px/5px 14px 5px 14px;
+    background:rgba(255,255,255,0.5); padding:10px 13px 12px; min-width:0;
+  }
+  .pe-card.g{ --pc:var(--green); } .pe-card.o{ --pc:var(--orange); } .pe-card.p{ --pc:var(--purple); }
+  .pe-head{ display:flex; align-items:center; gap:8px; margin-bottom:5px; }
+  .pe-n{
+    flex:0 0 auto; width:25px; height:25px; border-radius:50%;
+    background:var(--pc); color:#fff; font-weight:700; font-size:calc(13px * var(--fs,1));
+    display:flex; align-items:center; justify-content:center;
+  }
+  .pe-t{ font-weight:700; font-size:calc(15px * var(--fs,1)); color:var(--pc); }
+  .pe-m{ font-size:calc(13.5px * var(--fs,1)); line-height:1.9; margin-bottom:7px; }
+
+  /* السطران: الضعيف ثم القويّ، وبينهما الفرق كلّه */
+  .pe-line{ display:flex; gap:7px; align-items:flex-start; font-size:calc(13px * var(--fs,1)); line-height:1.85; margin-top:5px; }
+  .pe-line .pe-mk{ flex:0 0 auto; font-weight:700; font-size:calc(14px * var(--fs,1)); }
+  .pe-line.bad  .pe-mk{ color:var(--red); }
+  .pe-line.good .pe-mk{ color:var(--green); }
+  .pe-line.bad{  background:rgba(209,52,43,0.07); }
+  .pe-line.good{ background:rgba(31,122,61,0.07); }
+  .pe-line{ padding:5px 8px; border-radius:7px; }
+  .pe-why{ font-size:calc(12.5px * var(--fs,1)); line-height:1.85; color:rgba(26,61,140,0.78); margin-top:7px; }
+
+  /* الأمر كاملًا: كل قاعدة مقطع ملوّن فتُرى القواعد الأربع مركّبة */
+  .pe-full{ margin:18px 0 4px; width:100%; }
+  .pe-weak{
+    border:2px dashed rgba(209,52,43,0.6); background:rgba(209,52,43,0.06);
+    border-radius:10px; padding:9px 13px 11px; margin-bottom:12px; font-size:calc(13.5px * var(--fs,1)); line-height:1.9;
+  }
+  .pe-built{ border:2px solid var(--green); border-radius:12px; overflow:hidden; }
+  .pe-seg{
+    --sc:var(--blue);
+    border-right:6px solid var(--sc);
+    background:color-mix(in srgb, var(--sc) 7%, transparent);
+    padding:8px 12px 9px; font-size:calc(13.5px * var(--fs,1)); line-height:1.95;
+  }
+  .pe-seg.g{ --sc:var(--green); } .pe-seg.o{ --sc:var(--orange); } .pe-seg.p{ --sc:var(--purple); }
+  .pe-tag{
+    display:inline-block; font-size:calc(11px * var(--fs,1)); font-weight:700; color:#fff;
+    background:var(--sc); padding:2px 9px 3px; border-radius:999px; margin-inline-end:7px;
+  }
+  .pe-out{
+    background:rgba(31,122,61,0.1); border-top:2px solid var(--green);
+    padding:8px 12px 9px; font-size:calc(13px * var(--fs,1)); line-height:1.9;
+  }
+
+  /* ---------- مثال عقلية التكرار مقابل اللقطة الواحدة ---------- */
+  .ex-iter{ width:100%; margin:10px 0 6px; }
+  .ex-iter .ex-lead{ font-size:calc(14.5px * var(--fs,1)); line-height:2; margin:0 0 12px; }
+
+  /* لكلٍّ ارتفاعه: بطاقة اللقطة الواحدة أقصر، ومدّها لطول جارتها يترك فراغًا */
+  .ex-pair{ display:flex; flex-wrap:wrap; gap:14px; align-items:flex-start; }
+  .ex-card{
+    flex:1 1 280px; min-width:0;
+    border-radius:14px 5px 14px 5px/5px 14px 5px 14px;
+    padding:11px 14px 13px;
+  }
+  .ex-card.bad{  border:2px dashed rgba(209,52,43,0.6); background:rgba(209,52,43,0.06); }
+  .ex-card.good{ border:2px solid  rgba(31,122,61,0.7); background:rgba(31,122,61,0.06); }
+
+  .ex-chip{
+    display:inline-flex; align-items:center; gap:6px;
+    font-size:calc(12px * var(--fs,1)); font-weight:700; color:#fff;
+    padding:3px 11px 4px; border-radius:999px; margin-bottom:8px;
+  }
+  .ex-card.bad  .ex-chip{ background:var(--red); }
+  .ex-card.good .ex-chip{ background:var(--green); }
+
+  /* الأمر كما يُكتب: خطّ جانبي يميّزه عن الشرح حوله */
+  .ex-prompt{
+    border-right:4px solid rgba(26,61,140,0.35);
+    background:rgba(255,255,255,0.55);
+    border-radius:4px 10px 10px 4px;
+    padding:7px 11px 8px; margin:6px 0 8px;
+    font-size:calc(13.5px * var(--fs,1)); line-height:1.95;
+  }
+  .ex-note{ font-size:calc(13px * var(--fs,1)); line-height:1.95; }
+
+  /* جولات التكرار: رقم الجولة ثم ما تكتبه ثم ما يحدث */
+  .ex-rounds{ list-style:none; margin:4px 0 0; padding:0; display:flex; flex-direction:column; gap:8px; }
+  .ex-rounds li{ display:flex; gap:9px; align-items:flex-start; font-size:calc(13.5px * var(--fs,1)); line-height:1.9; }
+  .ex-rn{
+    flex:0 0 auto; width:23px; height:23px; margin-top:2px;
+    border-radius:50%; background:var(--green); color:#fff;
+    display:flex; align-items:center; justify-content:center;
+    font-size:calc(12.5px * var(--fs,1)); font-weight:700;
+  }
+  .ex-rounds .ex-said{ font-weight:700; }
+  .ex-rounds .ex-got{ color:rgba(26,61,140,0.75); }
+
+  /* جدول الملاحظة: عقيمة مقابل تعمل */
+  .fb-grid{
+    display:grid; grid-template-columns:1fr 1fr; gap:0;
+    border:2px solid rgba(26,61,140,0.45); border-radius:10px;
+    overflow:hidden; margin:14px 0 6px; font-size:calc(13px * var(--fs,1));
+  }
+  .fb-grid > div{ padding:8px 11px; line-height:1.85; border-bottom:1px solid rgba(26,61,140,0.16); }
+  .fb-grid > div:nth-child(2n){ border-inline-start:1px solid rgba(26,61,140,0.16); }
+  .fb-grid > div:nth-last-child(-n+2){ border-bottom:none; }
+  .fb-grid .fb-h{ font-weight:700; color:#fff; }
+  .fb-grid .fb-h.bad{  background:var(--red); }
+  .fb-grid .fb-h.good{ background:var(--green); }
+  /* على الهاتف ينهار العمودان إلى عمود واحد، فيسقط العنوانان ويتوالى النصّ
+     بلا ما يدلّ على أيّ خليّة عقيمة وأيّها صحيحة — والاقتران هو كل الفائدة.
+     فنُخفي العنوانين ونعلّم كل سطر بعلامته ولونه، ونفصل بين كل زوج وآخر. */
+  @media (max-width:520px){
+    .fb-grid{ grid-template-columns:1fr; }
+    .fb-grid > div{ border-bottom:none; }
+    .fb-grid > div:nth-child(2n){ border-inline-start:none; }
+    .fb-grid .fb-h{ display:none; }
+    .fb-grid .fb-b, .fb-grid .fb-g{ display:flex; gap:7px; align-items:flex-start; }
+    .fb-grid .fb-b{ background:rgba(209,52,43,0.07); }
+    .fb-grid .fb-g{ background:rgba(31,122,61,0.07);
+                    border-bottom:2px solid rgba(26,61,140,0.22); padding-bottom:10px; }
+    .fb-grid .fb-g:last-child{ border-bottom:none; }
+    .fb-grid .fb-b::before, .fb-grid .fb-g::before{
+      flex:0 0 auto; font-weight:700; font-size:calc(14px * var(--fs,1)); line-height:1.6;
+    }
+    .fb-grid .fb-b::before{ content:"✗"; color:var(--red); }
+    .fb-grid .fb-g::before{ content:"✓"; color:var(--green); }
+  }
+
+  @media print{
+    *{ -webkit-print-color-adjust:exact; print-color-adjust:exact; color-adjust:exact; }
+    @page{ size:A4; margin:8mm; }
+    body{ background:#fff !important; }
+    .print-btn, .tabs, .tape, .master-header, .master-footer,
+    .ann-bar, .sheet, .ann-laser, .reader-btn, .reader-panel, .pr-copy,
+    /* الشجرة والخريطة محتوًى واحد بنسبة تامّة، فطباعتهما معًا هدر ورق:
+       تُطبع الشجرة وحدها، وهي تحمل البنود كلها. */
+    .map-fold, .teach{ display:none !important; }
+    /* التأشير يُطبع لأنه داخل الشريحة، ولا يُطبع الشريط */
+    .ann-layer{ display:block !important; }
+    .paper-wrapper{ transform:none !important; }
+    .paper{
+      display:block !important;
+      border:none !important;
+      box-shadow:none !important;
+      transform:none !important;
+      width:auto !important;
+      min-height:0 !important;
+      padding:0 !important;
+      background:none !important;
+    }
+    .slide{
+      display:flex !important;
+      flex-direction:column;
+      border:2.5px solid var(--red);
+      background-color:var(--paper);
+      background-image:repeating-linear-gradient(var(--paper), var(--paper) 27px, var(--ruleline) 28px);
+      padding:14mm 10mm;
+      min-height:277mm;
+      page-break-after:always;
+      break-after:page;
+      box-sizing:border-box;
+    }
+    .slide:last-child{ page-break-after:auto; break-after:auto; }
+    .content-slide{ align-items:stretch !important; text-align:right !important; }
+
+    /* «طباعة هذا التبويب فقط»: تخفي كل الشرائح إلا التبويب المفتوح حاليًا */
+    body.print-current .slide{ display:none !important; }
+    body.print-current .slide.active{ display:flex !important; page-break-after:auto !important; break-after:auto !important; }
+
+    /* الصناديق لا تُقصّ نصفين على حدّ الصفحة: إن لم تسع نزلت كاملة للتالية.
+       بدونها يبدأ أعلى الصفحة بصفوف يتيمة بلا إطار ولا عنوان. */
+    .screen-frame, .scn, .hw, .try-box, .callout, .ct-bud, .gloss-row,
+    .q-item, .sf-row, .leg-item, .mini-note, .map-tree li, .ex-card, .fb-grid,
+    .pe-card, .pe-built, .pick-row, .cost-item, .pick-rule,
+    .lab, .tf-st, .sort-bin, .ord-step, .mcq-opt,
+    .pr, .drill, .oops, .anon-row, .st, .announce-box,
+    .sol-item, li{
+      break-inside:avoid; page-break-inside:avoid;
+    }
+    /* عنوان في ذيل الصفحة ومحتواه في التي بعدها: يُدفع العنوان معه */
+    .section-heading, .chapter-heading, .nav-pill, .ct-head, .scn-head, .hw-head{
+      break-after:avoid; page-break-after:avoid;
+    }
+
+    /* هوية أعلى كل تبويب مطبوع */
+    .print-id{
+      display:block !important;
+      border-bottom:1.5px solid var(--red);
+      padding-bottom:5px; margin-bottom:12px;
+      font-size:9.5pt; line-height:1.7; color:var(--ink);
+    }
+    .print-id .pi-title{ font-weight:700; color:var(--red); }
+    .print-id .pi-meta{ display:block; font-size:8.5pt; opacity:0.85; }
+    .print-id .pi-url{ direction:ltr; unicode-bidi:isolate; font-family:'Caveat',cursive; font-size:10pt; }
+
+    /* شريط أسفل كل صفحة. العناصر الثابتة تتكرر على كل صفحة عند الطباعة في كروم. */
+    .print-foot{
+      display:block !important;
+      position:fixed; bottom:0; left:0; right:0;
+      z-index:9999;              /* بدونه ترسم خلفية الورقة فوقه فيختفي رغم وجوده */
+      font-size:8pt; text-align:center; color:var(--ink); opacity:0.85;
+      border-top:1px solid rgba(26,61,140,0.35);
+      padding-top:3px; background:transparent;
+    }
+    .slide{ padding-bottom:20mm !important; }   /* مكان للشريط فلا يركب النص */
+  }
+</style>
+
+<script>
+/* يُقرأ الاختيار المحفوظ قبل رسم الصفحة، وإلا ظهرت بالخطّ الافتراضي لحظةً ثم قفزت. */
+(function(){
+  var FONTS = {
+    naskh:"'Noto Naskh Arabic', serif",
+    clear:"'IBM Plex Sans Arabic', sans-serif",
+    ruqaa:"'Aref Ruqaa', serif"
+  };
+  try{
+    var f = localStorage.getItem('reader:font');
+    var z = parseFloat(localStorage.getItem('reader:fs'));
+    if(f && FONTS[f]) document.documentElement.style.setProperty('--reader-font', FONTS[f]);
+    if(z >= 0.9 && z <= 1.5) document.documentElement.style.setProperty('--fs', z);
+  }catch(e){}
+})();
+</script>
+</head>
+<body>
+
+<!-- reusable sketchy filter -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <filter id="sketchy" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="7" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="3.2"/>
+    </filter>
+  </defs>
+</svg>
+
+<button class="print-btn" onclick="window.print()">🖨 طباعة كل الصفحات PDF</button>
+<button class="print-btn print-btn-tab" onclick="printCurrentTab()">🖨 طباعة هذا التبويب فقط</button>
+<script>
+  function printCurrentTab(){
+    document.body.classList.add('print-current');
+    window.print();
+  }
+  window.addEventListener('afterprint', function(){
+    document.body.classList.remove('print-current');
+  });
+</script>
+
+<div class="stage">
+
+  <div class="master-header">
+    <div class="mh-card">
+      <div class="mh-row mh-subject"><span class="mh-label">المادة:</span> <span class="mh-value">دفتر محاضرات التحول الرقمي وتكنولوجيا المعلومات</span></div>
+      <div class="mh-row"><span class="mh-label">الاسم:</span> <span class="mh-value"><span class="mh-blank"></span></span></div>
+      <div class="mh-row"><span class="mh-label">المدرسة:</span> <span class="mh-value">المعهد العالي لتأهيل وتدريب القادة</span></div>
+      <div class="mh-row"><span class="mh-label">السنة:</span> <span class="mh-value">٢٠٢٦</span></div>
+      <div class="mh-row"><span class="mh-label">الإيميل:</span> <span class="mh-value mh-email">amer.hadi@alshaab.edu.iq</span></div>
+    </div>
+  </div>
+<style>
+  /* ---------- إضافات خاصة بدفتر التحول الرقمي: مسار المراحل ---------- */
+  .eras-track{
+    display:flex; flex-wrap:wrap; align-items:stretch; gap:0;
+    margin:14px 0 6px;
+  }
+  .era-box{
+    flex:1 1 190px; min-width:160px;
+    background:rgba(255,255,255,0.55);
+    border:2px solid rgba(26,61,140,0.28);
+    border-radius:12px;
+    padding:12px 13px 13px;
+    position:relative;
+  }
+  .era-box.now{ border-color:var(--green); background:rgba(31,122,61,0.08); }
+  .era-num{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:22px; height:22px; border-radius:50%;
+    background:var(--ink); color:#fff; font-weight:700;
+    font-size:calc(11.5px * var(--fs,1)); margin-bottom:6px;
+  }
+  .era-box.now .era-num{ background:var(--green); }
+  .era-ar{ display:block; font-weight:700; color:var(--ink); font-size:calc(15px * var(--fs,1)); }
+  .era-box.now .era-ar{ color:var(--green); }
+  .era-en{ display:block; direction:ltr; unicode-bidi:isolate; font-size:calc(11.5px * var(--fs,1));
+           color:rgba(26,61,140,0.65); font-family:'IBM Plex Sans Arabic',sans-serif; margin-bottom:6px; }
+  .era-def{ font-size:calc(12.5px * var(--fs,1)); line-height:1.8; color:var(--ink); }
+  .era-ex{ margin-top:6px; font-size:calc(11.5px * var(--fs,1)); line-height:1.7; opacity:0.8; }
+  .era-ex b{ color:var(--teal); }
+  .era-arrow{
+    flex:0 0 auto; align-self:center; width:26px; text-align:center;
+    color:var(--red); font-size:20px; font-weight:700;
+    padding:0 2px;
+  }
+  @media (max-width:640px){ .era-arrow{ width:100%; text-align:center; transform:rotate(90deg); } }
+
+  /* ---------- بطاقة مواصفة جهاز ---------- */
+  .spec-grid{ display:flex; flex-wrap:wrap; gap:11px; margin:12px 0; }
+  .spec-card{
+    flex:1 1 260px; background:rgba(255,255,255,0.5);
+    border:1.5px solid rgba(26,61,140,0.22); border-radius:11px;
+    padding:11px 13px 12px; border-inline-start-width:5px; border-inline-start-color:var(--blue);
+  }
+  .spec-card.g{ border-inline-start-color:var(--green); }
+  .spec-card.o{ border-inline-start-color:var(--orange); }
+  .spec-card.p{ border-inline-start-color:var(--purple); }
+  .spec-card.t{ border-inline-start-color:var(--teal); }
+  .spec-head{ display:flex; align-items:baseline; gap:7px; margin-bottom:5px; }
+  .spec-ar{ font-weight:700; color:var(--ink); font-size:calc(14.5px * var(--fs,1)); }
+  .spec-en{ direction:ltr; unicode-bidi:isolate; font-size:calc(11px * var(--fs,1));
+            color:rgba(26,61,140,0.6); font-family:'IBM Plex Sans Arabic',sans-serif; }
+  .spec-def{ font-size:calc(13px * var(--fs,1)); line-height:1.85; }
+  .spec-tip{ margin-top:6px; font-size:calc(12px * var(--fs,1)); line-height:1.75; color:var(--teal); }
+  .spec-tip b{ color:var(--teal); }
+
+  /* ---------- مقارنة جدولية بسيطة (أوفس) ---------- */
+  .cmp-table{ width:100%; border-collapse:collapse; margin:12px 0; font-size:calc(13px * var(--fs,1)); }
+  .cmp-table th, .cmp-table td{ border:1.5px solid rgba(26,61,140,0.2); padding:8px 10px; text-align:center; }
+  .cmp-table th{ background:rgba(26,61,140,0.08); color:var(--ink); font-weight:700; }
+  .cmp-table td:first-child{ text-align:right; font-weight:700; color:var(--ink); background:rgba(255,255,255,0.4); }
+  .cmp-table .msft{ color:var(--blue); font-family:'IBM Plex Sans Arabic',sans-serif; direction:ltr; unicode-bidi:isolate; }
+  .cmp-table .goog{ color:var(--green); font-family:'IBM Plex Sans Arabic',sans-serif; direction:ltr; unicode-bidi:isolate; }
+</style>
+  <div class="tabs">
+    <button class="tab active" data-target="slide-1">١<br>الأسبوع الأول</button>
+    <button class="tab" data-target="slide-2">٢<br>الأسبوع الثاني</button>
+    <button class="tab" data-target="slide-3">٣<br>الأسبوع الثالث</button>
+    <button class="tab" data-target="slide-4">٤<br>الأسبوع الرابع</button>
+    <button class="tab" data-target="slide-5">٥<br>الأسبوع الخامس</button>
+    <button class="tab" data-target="slide-6">٦<br>الأسبوع السادس</button>
+  </div>
+
+  <div class="paper-wrapper">
+    <div class="tape tape-left"></div>
+    <div class="tape tape-right"></div>
+
+    <div class="paper">
+
+      <!-- ============ SLIDE 1 : الأسبوع الأول ============ -->
+      <div id="slide-1" class="slide content-slide rich-slide active">
+        <span class="chip chip-ch1">الأسبوع الأول</span>
+        <h2 class="page-title">مدخل إلى تكنولوجيا المعلومات والتحوّل الرقمي</h2>
+        <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
+        <p class="lead-paragraph">جلستان بالساعة فقط — فلا حشو ولا مصطلحات بلا تفسير. كل ما بهذه الصفحة تحتاجونه <span class="hl hl-yellow">فعلًا بمكتبكم</span>، مشروحًا بلغة بسيطة لمن لم يسبق أن درس حاسوبًا.</p>
+
+        <!-- ===== ١ · ما هي تكنولوجيا المعلومات ===== -->
+        <div class="section-heading" style="margin-top:14px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>ما هي تكنولوجيا المعلومات؟</span>
+        </div>
+        <p class="lead-paragraph">تعريفٌ واحد يكفي: تكنولوجيا المعلومات <strong>(IT — Information Technology)</strong> هي كل وسيلة تُستعمل لتخزين المعلومة أو معالجتها أو نقلها. خمسة عناصر فقط تُكوّنها معًا — لا عنصر واحد وحده يكفي:</p>
+
+        <div class="components-grid">
+          <div class="component-card">
+            <svg class="c-icon" viewBox="0 0 40 40"><rect x="6" y="10" width="28" height="18" rx="2" fill="#eaf4ff" stroke="var(--blue)" stroke-width="2.5"/><rect x="14" y="30" width="12" height="3" fill="var(--blue)"/></svg>
+            <span class="c-name">الأجهزة</span>
+            <span class="c-ex">Hardware — حاسوب، طابعة، هاتف</span>
+          </div>
+          <div class="component-card">
+            <svg class="c-icon" viewBox="0 0 40 40"><circle cx="20" cy="20" r="15" fill="#e6f6ea" stroke="var(--green)" stroke-width="2.5"/><path d="M13 20 h14 M20 13 v14" stroke="var(--green)" stroke-width="2.5" stroke-linecap="round"/></svg>
+            <span class="c-name">البرمجيات</span>
+            <span class="c-ex">Software — البرامج والتطبيقات</span>
+          </div>
+          <div class="component-card">
+            <svg class="c-icon" viewBox="0 0 40 40"><rect x="8" y="6" width="24" height="28" rx="2" fill="#fdf0ea" stroke="var(--orange)" stroke-width="2.5"/><path d="M13 14 h14 M13 20 h14 M13 26 h9" stroke="var(--orange)" stroke-width="2"/></svg>
+            <span class="c-name">البيانات</span>
+            <span class="c-ex">Data — الأرقام والملفات والسجلّات</span>
+          </div>
+          <div class="component-card">
+            <svg class="c-icon" viewBox="0 0 40 40"><circle cx="10" cy="10" r="4" fill="#f3e9fb" stroke="var(--purple)" stroke-width="2"/><circle cx="30" cy="10" r="4" fill="#f3e9fb" stroke="var(--purple)" stroke-width="2"/><circle cx="20" cy="30" r="4" fill="#f3e9fb" stroke="var(--purple)" stroke-width="2"/><path d="M13 12 L18 27 M27 12 L22 27" stroke="var(--purple)" stroke-width="2"/></svg>
+            <span class="c-name">الشبكات</span>
+            <span class="c-ex">Networks — الإنترنت وربط الأجهزة</span>
+          </div>
+          <div class="component-card">
+            <svg class="c-icon" viewBox="0 0 40 40"><circle cx="20" cy="13" r="6" fill="#fdf3f2" stroke="var(--red)" stroke-width="2.5"/><path d="M9 33 Q9 22 20 22 Q31 22 31 33" fill="none" stroke="var(--red)" stroke-width="2.5" stroke-linecap="round"/></svg>
+            <span class="c-name">الأشخاص</span>
+            <span class="c-ex">People — من يشغّل هذا كلّه</span>
+          </div>
+        </div>
+        <p class="lead-paragraph" style="margin-top:8px;">اغيب عنصرٌ واحد فقط وتتعطّل الأربعة الباقية: حاسوبٌ بلا من يشغّله قطعة أثاث، وبيانات بلا شبكة تبقى حبيسة جهازها.</p>
+
+        <!-- ===== ٢ · من التناظري إلى التحوّل الرقمي ===== -->
+        <div class="section-heading" style="margin-top:26px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>من التناظري إلى التحوّل الرقمي — أربع مراحل</span>
+        </div>
+        <p class="lead-paragraph">ثلاث كلمات تُستعمل بالخطأ كمترادفات، وهي فعليًا <span class="hl hl-pink">ثلاث درجات مختلفة</span> من نفس الطريق. اقرؤوها بترتيبها:</p>
+
+        <div class="eras-track">
+          <div class="era-box">
+            <span class="era-num">١</span>
+            <span class="era-ar">تناظري</span>
+            <span class="era-en">Analog</span>
+            <div class="era-def">لا حوسبة إطلاقًا. الوثيقة ورقة، والحفظ خزانة، والتواصل حضورٌ أو هاتف أرضي.</div>
+            <div class="era-ex"><b>مثال:</b> ملفّ ورقي بخزانة الأرشيف.</div>
+          </div>
+          <div class="era-arrow">←</div>
+          <div class="era-box">
+            <span class="era-num">٢</span>
+            <span class="era-ar">الرقمنة</span>
+            <span class="era-en">Digitization</span>
+            <div class="era-def">تحويل <strong>الشيء نفسه</strong> من صيغة تناظرية إلى صيغة رقمية، بلا تغيير بالإجراء.</div>
+            <div class="era-ex"><b>مثال:</b> مسح الملف الورقي وحفظه PDF — الإجراء ما زال يدويًا.</div>
+          </div>
+          <div class="era-arrow">←</div>
+          <div class="era-box">
+            <span class="era-num">٣</span>
+            <span class="era-ar">رقمنة الأعمال</span>
+            <span class="era-en">Digitalization</span>
+            <div class="era-def">استعمال الأدوات الرقمية <strong>لتحسين الإجراء نفسه</strong>، لا فقط تحويل شكل الملف.</div>
+            <div class="era-ex"><b>مثال:</b> استمارة إلكترونية تُعبّأ وتُرسل مباشرة، بدل الطباعة والتوقيع والمسح.</div>
+          </div>
+          <div class="era-arrow">←</div>
+          <div class="era-box now">
+            <span class="era-num">٤</span>
+            <span class="era-ar">التحوّل الرقمي</span>
+            <span class="era-en">Digital Transformation</span>
+            <div class="era-def">تغييرٌ <strong>شامل</strong> بثقافة المؤسسة وهيكلها عبر التقنية — لا أداة مضافة، بل طريقة عمل جديدة.</div>
+            <div class="era-ex"><b>مثال:</b> دائرة كاملة تنتقل لنظام إلكتروني متكامل يغيّر كيف تُتّخذ القرارات فيها.</div>
+          </div>
+        </div>
+
+        <div class="oops" style="margin-top:12px;">
+          <span class="o-i">⚠</span>
+          <div><b>الفرق الذي يلخّص الثلاثة:</b> الرقمنة تُحوّل <b>الملف</b>. رقمنة الأعمال تُحوّل <b>الإجراء</b>. التحوّل الرقمي يُحوّل <b>المؤسسة كلّها</b>. أغلب الدوائر تتوقّف عند الأولى وتظنّ أنها أنجزت الثالثة.</div>
+        </div>
+
+        <!-- ===== ٣ · أدوات التكنولوجيا التي تحتاجها ===== -->
+        <div class="section-heading" style="margin-top:26px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>أدوات التكنولوجيا التي تحتاجها</span>
+        </div>
+        <p class="lead-paragraph">أربعة أشياء فقط تكفي أي موظّف اليوم — بلا تعقيد وبلا شهادة برمجة.</p>
+
+        <div class="chapter-num" style="color:var(--blue);"><span class="cn-num">١</span><span class="cn-title">الحاسوب ومواصفاته</span></div>
+        <p class="lead-paragraph" style="margin-top:0;">حين تشترون حاسوبًا أو تطلبون واحدًا من دائرتكم، هذه الكلمات الخمس هي كل ما تحتاجون فهمه:</p>
+
+        <div class="spec-grid">
+          <div class="spec-card">
+            <div class="spec-head"><span class="spec-ar">المعالج</span><span class="spec-en">CPU</span></div>
+            <div class="spec-def">"عقل" الجهاز — كل عملية تمرّ منه. كلما كان أسرع، كلما فُتحت البرامج وأُنجزت الحسابات أسرع.</div>
+            <div class="spec-tip"><b>تدورون عليه:</b> جيلٌ حديث (i5 فأعلى) لعمل مكتبي يومي بلا تهنّج.</div>
+          </div>
+          <div class="spec-card g">
+            <div class="spec-head"><span class="spec-ar">الذاكرة العشوائية</span><span class="spec-en">RAM</span></div>
+            <div class="spec-def">طاولة العمل المؤقّتة: كل ملف مفتوح الآن يشغل مكانًا عليها. تُفرَّغ كليًا عند إطفاء الجهاز.</div>
+            <div class="spec-tip"><b>تدورون عليه:</b> ٨ جيجابايت حدٌّ أدنى مريح لفتح عدّة برامج معًا.</div>
+          </div>
+          <div class="spec-card o">
+            <div class="spec-head"><span class="spec-ar">التخزين</span><span class="spec-en">HDD / SSD</span></div>
+            <div class="spec-def">الخزانة الدائمة: كل ملف تحفظونه يبقى هنا حتى بعد الإطفاء. الـSSD أسرع بكثير من الـHDD القديم.</div>
+            <div class="spec-tip"><b>تدورون عليه:</b> SSD لا HDD — الفرق بالسرعة يُحسّ من أول تشغيل.</div>
+          </div>
+          <div class="spec-card p">
+            <div class="spec-head"><span class="spec-ar">الشاشة</span><span class="spec-en">Display</span></div>
+            <div class="spec-def">حجمها بالإنش (قطريًا)، ودقّتها (عدد النقاط) تحدّد وضوح النص والصور.</div>
+            <div class="spec-tip"><b>تدورون عليه:</b> ١٤ إنش فأكبر للعمل المكتبي المريح.</div>
+          </div>
+          <div class="spec-card t">
+            <div class="spec-head"><span class="spec-ar">نظام التشغيل</span><span class="spec-en">Operating System</span></div>
+            <div class="spec-def">البرنامج الأساسي الذي يدير كل شيء آخر بالجهاز — Windows أو macOS غالبًا بالعمل المكتبي.</div>
+            <div class="spec-tip"><b>تدورون عليه:</b> نسخة محدَّثة ومرخّصة رسميًّا — النسخ غير المرخّصة تتوقّف عن التحديثات الأمنية.</div>
+          </div>
+        </div>
+
+        <div class="chapter-num" style="color:var(--green); margin-top:22px;"><span class="cn-num">٢</span><span class="cn-title">البرامج التي يجب أن تعرفها</span></div>
+        <p class="lead-paragraph" style="margin-top:0;">حزمتان تغطّيان تقريبًا كل مستند تكتبونه — وكثير من الدوائر تستعمل الاثنتين معًا:</p>
+
+        <table class="cmp-table">
+          <tr><th>الغرض</th><th>Microsoft Office</th><th>Google Workspace</th></tr>
+          <tr><td>مستند نصّي</td><td class="msft">Word</td><td class="goog">Docs</td></tr>
+          <tr><td>جدول بيانات</td><td class="msft">Excel</td><td class="goog">Sheets</td></tr>
+          <tr><td>عرض تقديمي</td><td class="msft">PowerPoint</td><td class="goog">Slides</td></tr>
+        </table>
+        <p class="lead-paragraph" style="margin-top:0;">الفرق العملي: ملفّات <strong>Office</strong> تُحفظ على جهازكم افتراضيًا وتحتاج ترخيصًا، بينما <strong>Google Workspace</strong> يعمل من المتصفّح مباشرة ويُحفظ تلقائيًا على السحابة — وهذا ما نشرحه بالفقرة القادمة.</p>
+
+        <p class="lead-paragraph"><strong>ذكاء اصطناعي (AI):</strong> برامج مساعدة تفهم لغتكم الطبيعية وتساعدكم على الكتابة والتلخيص والتحليل بمجرّد أن تطلبوا منها بجملة عادية — بلا حاجة لتعلّم أوامر برمجية. سنتوسّع بها لاحقًا؛ اليوم يكفي أن تعرفوا أنها <span class="hl hl-yellow">أداة رابعة</span> إلى جانب الأوفس، لا بديلًا عنه.</p>
+
+        <div class="chapter-num" style="color:var(--orange); margin-top:22px;"><span class="cn-num">٣</span><span class="cn-title">التخزين السحابي</span></div>
+        <p class="lead-paragraph" style="margin-top:0;">بدل حفظ الملف على جهاز واحد قد يتعطّل أو يُسرَق، تحفظونه على خوادم بعيدة تصلون إليها من أي جهاز متّصل بالإنترنت. المثال الأشهر: <strong>Google Drive</strong>.</p>
+
+        <div class="screen-frame" style="max-width:380px;">
+          <div class="sf-bar"><span class="sf-en">Google Drive</span></div>
+          <div class="sf-row"><span class="sf-num">١</span><span class="sf-name">My Drive<span class="sf-sub">ملفّاتي</span></span></div>
+          <div class="sf-row"><span class="sf-num">٢</span><span class="sf-name">Shared with me<span class="sf-sub">شارَكَها معي أحد</span></span></div>
+          <div class="sf-row"><span class="sf-num">٣</span><span class="sf-name">Recent<span class="sf-sub">آخر ما فتحتُه</span></span></div>
+          <div class="sf-row"><span class="sf-num">٤</span><span class="sf-name">Starred<span class="sf-sub">المفضَّلة بنجمة</span></span></div>
+          <div class="sf-row"><span class="sf-num">٥</span><span class="sf-name">Trash<span class="sf-sub">سلّة المهملات</span></span></div>
+        </div>
+        <ul class="bullet-list">
+          <li><span class="bullet-mark">✔</span>ارفعوا الملف مرّة واحدة، وافتحوه من الجوال أو الحاسوب أو أي جهاز — نفس النسخة بالضبط.</li>
+          <li><span class="bullet-mark">✔</span>«المشاركة» تمنح شخصًا رابطًا لملفّكم دون إرساله كمرفق — وتقدرون تسحبون الصلاحية وقتما شئتم.</li>
+        </ul>
+
+        <div class="chapter-num" style="color:var(--purple); margin-top:22px;"><span class="cn-num">٤</span><span class="cn-title">الإيميل والمراسلات</span></div>
+        <p class="lead-paragraph" style="margin-top:0;">البريد الإلكتروني الرسمي بالعمل اليوم غالبًا <strong>Gmail</strong> (أو ما يشبهه). الحقول الثلاثة بأعلى الرسالة هي أكثر ما يُخطئ فيه المبتدئون:</p>
+
+        <div class="screen-frame dark" style="max-width:420px;">
+          <div class="sf-bar"><span class="sf-en">New Message</span></div>
+          <div class="sf-row"><span class="sf-num">To</span><span class="sf-name">إلى<span class="sf-sub">المُرسَل إليه مباشرة — المطلوب منه الردّ أو التنفيذ</span></span></div>
+          <div class="sf-row"><span class="sf-num">Cc</span><span class="sf-name">نسخة مطّلع عليه<span class="sf-sub">Carbon Copy — يرى الرسالة للعلم فقط، لا يُطلب منه شيء</span></span></div>
+          <div class="sf-row"><span class="sf-num">Bcc</span><span class="sf-name">نسخة مخفية<span class="sf-sub">Blind Carbon Copy — يراها هو، ولا يعرف بقية المستلمين بوجوده</span></span></div>
+        </div>
+
+        <div class="try-box">
+          <div class="try-title">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2"><path d="M9 3h6v5l4 9a2 2 0 0 1-2 3H7a2 2 0 0 1-2-3l4-9z" stroke-linejoin="round"/><path d="M9 3h6" stroke-linecap="round"/></svg>
+            جرّب بنفسك — كتابة إيميل رسمي
+          </div>
+          <div class="try-line"><span class="try-tag try-do">السيناريو</span><span>تُرسلون تذكيرًا بموعد اجتماع الأحد. <strong>To:</strong> رئيس القسم (المطلوب حضوره). <strong>Cc:</strong> السكرتارية (للعلم وترتيب القاعة). <strong>Bcc:</strong> نفسكم (نسخة تصلكم توثّق أنكم أرسلتموه).</span></div>
+          <div class="try-line"><span class="try-tag try-see">افعلوا</span><span>افتحوا Gmail، اضغطوا <strong>Compose</strong>، واكتبوا موضوعًا واضحًا مثل «تذكير — اجتماع الأحد ١٠ صباحًا»، ثم املأوا الحقول الثلاثة بحسب السيناريو أعلاه.</span></div>
+        </div>
+
+        <div class="section-heading" style="margin-top:26px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>مصطلحات هذا الأسبوع بالعربي</span>
+        </div>
+        <ul class="glossary-list">
+          <li><span class="gloss-ar">تكنولوجيا المعلومات</span> <span class="gloss-term">(IT)</span>: كل وسيلة لتخزين المعلومة أو معالجتها أو نقلها.</li>
+          <li><span class="gloss-ar">الرقمنة</span> <span class="gloss-term">(Digitization)</span>: تحويل شيء تناظري إلى صيغة رقمية، بلا تغيير بالإجراء.</li>
+          <li><span class="gloss-ar">رقمنة الأعمال</span> <span class="gloss-term">(Digitalization)</span>: استعمال الأدوات الرقمية لتحسين الإجراء نفسه.</li>
+          <li><span class="gloss-ar">التحوّل الرقمي</span> <span class="gloss-term">(Digital Transformation)</span>: تغيير شامل بثقافة المؤسسة وهيكلها عبر التقنية.</li>
+          <li><span class="gloss-ar">المعالج</span> <span class="gloss-term">(CPU)</span>: الجزء الذي يُنفّذ كل عملية حسابية بالجهاز.</li>
+          <li><span class="gloss-ar">الذاكرة العشوائية</span> <span class="gloss-term">(RAM)</span>: مساحة العمل المؤقّتة التي تُفرَّغ عند الإطفاء.</li>
+          <li><span class="gloss-ar">التخزين السحابي</span> <span class="gloss-term">(Cloud Storage)</span>: حفظ الملفّات على خوادم بعيدة تصلون إليها من أي جهاز.</li>
+          <li><span class="gloss-ar">نسخة مطّلع عليه</span> <span class="gloss-term">(Cc)</span>: يرى الرسالة للعلم، بلا طلب ردّ منه.</li>
+          <li><span class="gloss-ar">نسخة مخفية</span> <span class="gloss-term">(Bcc)</span>: يراها المستلم، ولا يظهر اسمه لبقية المستلمين.</li>
+        </ul>
+
+        <div class="mini-note">نهاية المحاضرة الأولى — إعداد: أ.م.د أمير هادي ★</div>
+        <div class="page-nav">
+          <button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button>
+          <button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button>
+        </div>
+        <div class="footer-note">١</div>
+      </div>
+      <!-- ============ END SLIDE 1 ============ -->
+
+      <!-- ============ SLIDE 2 : الأسبوع الثاني ============ -->
+      <div id="slide-2" class="slide content-slide">
+        <span class="chip chip-ch1">الأسبوع الثاني</span>
+        <h2 class="page-title">الأسبوع الثاني</h2>
+        <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
+        <div class="coming-soon">
+          <svg class="big-icon" viewBox="0 0 40 40"><g filter="url(#sketchy)"><circle cx="20" cy="20" r="15" fill="#fde3c4" stroke="var(--orange)" stroke-width="2.5"/><path d="M20 12 v9 l6 4" fill="none" stroke="var(--orange)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></g></svg>
+          <p class="cs-title">تنزل لاحقاً</p>
+          <p class="cs-sub">محتوى هذا الأسبوع سيُضاف قريباً.</p>
+        </div>
+        <div class="page-nav">
+          <button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button>
+          <button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button>
+        </div>
+        <div class="footer-note">٢</div>
+      </div>
+      <!-- ============ END SLIDE 2 ============ -->
+
+      <!-- ============ SLIDE 3 : الأسبوع الثالث ============ -->
+      <div id="slide-3" class="slide content-slide">
+        <span class="chip chip-ch1">الأسبوع الثالث</span>
+        <h2 class="page-title">الأسبوع الثالث</h2>
+        <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
+        <div class="coming-soon">
+          <svg class="big-icon" viewBox="0 0 40 40"><g filter="url(#sketchy)"><circle cx="20" cy="20" r="15" fill="#fde3c4" stroke="var(--orange)" stroke-width="2.5"/><path d="M20 12 v9 l6 4" fill="none" stroke="var(--orange)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></g></svg>
+          <p class="cs-title">تنزل لاحقاً</p>
+          <p class="cs-sub">محتوى هذا الأسبوع سيُضاف قريباً.</p>
+        </div>
+        <div class="page-nav">
+          <button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button>
+          <button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button>
+        </div>
+        <div class="footer-note">٣</div>
+      </div>
+      <!-- ============ END SLIDE 3 ============ -->
+
+      <!-- ============ SLIDE 4 : الأسبوع الرابع ============ -->
+      <div id="slide-4" class="slide content-slide">
+        <span class="chip chip-ch1">الأسبوع الرابع</span>
+        <h2 class="page-title">الأسبوع الرابع</h2>
+        <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
+        <div class="coming-soon">
+          <svg class="big-icon" viewBox="0 0 40 40"><g filter="url(#sketchy)"><circle cx="20" cy="20" r="15" fill="#fde3c4" stroke="var(--orange)" stroke-width="2.5"/><path d="M20 12 v9 l6 4" fill="none" stroke="var(--orange)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></g></svg>
+          <p class="cs-title">تنزل لاحقاً</p>
+          <p class="cs-sub">محتوى هذا الأسبوع سيُضاف قريباً.</p>
+        </div>
+        <div class="page-nav">
+          <button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button>
+          <button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button>
+        </div>
+        <div class="footer-note">٤</div>
+      </div>
+      <!-- ============ END SLIDE 4 ============ -->
+
+      <!-- ============ SLIDE 5 : الأسبوع الخامس ============ -->
+      <div id="slide-5" class="slide content-slide">
+        <span class="chip chip-ch1">الأسبوع الخامس</span>
+        <h2 class="page-title">الأسبوع الخامس</h2>
+        <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
+        <div class="coming-soon">
+          <svg class="big-icon" viewBox="0 0 40 40"><g filter="url(#sketchy)"><circle cx="20" cy="20" r="15" fill="#fde3c4" stroke="var(--orange)" stroke-width="2.5"/><path d="M20 12 v9 l6 4" fill="none" stroke="var(--orange)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></g></svg>
+          <p class="cs-title">تنزل لاحقاً</p>
+          <p class="cs-sub">محتوى هذا الأسبوع سيُضاف قريباً.</p>
+        </div>
+        <div class="page-nav">
+          <button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button>
+          <button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button>
+        </div>
+        <div class="footer-note">٥</div>
+      </div>
+      <!-- ============ END SLIDE 5 ============ -->
+
+      <!-- ============ SLIDE 6 : الأسبوع السادس ============ -->
+      <div id="slide-6" class="slide content-slide">
+        <span class="chip chip-ch1">الأسبوع السادس</span>
+        <h2 class="page-title">الأسبوع السادس</h2>
+        <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
+        <div class="coming-soon">
+          <svg class="big-icon" viewBox="0 0 40 40"><g filter="url(#sketchy)"><circle cx="20" cy="20" r="15" fill="#fde3c4" stroke="var(--orange)" stroke-width="2.5"/><path d="M20 12 v9 l6 4" fill="none" stroke="var(--orange)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></g></svg>
+          <p class="cs-title">تنزل لاحقاً</p>
+          <p class="cs-sub">محتوى هذا الأسبوع سيُضاف قريباً.</p>
+        </div>
+        <div class="page-nav">
+          <button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button>
+          <button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button>
+        </div>
+        <div class="footer-note">٦</div>
+      </div>
+      <!-- ============ END SLIDE 6 ============ -->
+      <!-- ============ END SLIDE 15 ============ -->
+
+      <!-- NEW SLIDES GET ADDED HERE, right above this comment -->
+
+    </div>
+  </div>
+
+  <div class="master-footer">
+    جميع الحقوق محفوظة © د. أمير هادي &nbsp;•&nbsp; <span class="mf-email">amer.hadi@alshaab.edu.iq</span> &nbsp;•&nbsp; <a class="mf-site" href="https://ameerkhadi.github.io/academic-cv-website/" target="_blank" rel="noopener" title="الصفحة الأكاديمية — تفتح في صفحة جديدة">الصفحة الأكاديمية <span class="mf-go" aria-hidden="true">←</span></a> &nbsp;•&nbsp; ٢٠٢٦
+  </div>
+</div>
+
+<script>
+  var tabsList = Array.from(document.querySelectorAll('.tab'));
+
+  function activateTab(tab){
+    document.querySelectorAll('.tab').forEach(function(t){ t.classList.remove('active'); });
+    document.querySelectorAll('.slide').forEach(function(s){ s.classList.remove('active'); });
+    tab.classList.add('active');
+    document.getElementById(tab.dataset.target).classList.add('active');
+    updateNavButtons();
+  }
+
+  function navigateSlide(delta){
+    var activeTab = document.querySelector('.tab.active');
+    var idx = tabsList.indexOf(activeTab);
+    var newIdx = idx + delta;
+    if(newIdx < 0 || newIdx >= tabsList.length) return;
+    activateTab(tabsList[newIdx]);
+    tabsList[newIdx].scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'});
+  }
+
+  function updateNavButtons(){
+    var idx = tabsList.indexOf(document.querySelector('.tab.active'));
+    document.querySelectorAll('.nav-prev').forEach(function(b){ b.disabled = (idx <= 0); });
+    document.querySelectorAll('.nav-next').forEach(function(b){ b.disabled = (idx >= tabsList.length - 1); });
+  }
+
+  tabsList.forEach(function(tab){
+    tab.addEventListener('click', function(){
+      activateTab(tab);
+      tab.scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'});
+    });
+  });
+
+  updateNavButtons();
+  tabsList[0].scrollIntoView({inline:'start', block:'nearest'});
+
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'ArrowRight'){ navigateSlide(-1); }
+    else if(e.key === 'ArrowLeft'){ navigateSlide(1); }
+  });
+
+  /* هوية المطبوع: تُبنى مرة هنا بدل تكرارها خمس عشرة مرة في الـHTML.
+     مخفية على الشاشة، وتظهر أعلى كل تبويب عند الطباعة. */
+  (function(){
+    var COURSE = 'دفتر محاضرات الذكاء الاصطناعي وتحليل البيانات';
+    var WHO    = 'د. أمير هادي · المعهد العالي لتأهيل وتدريب القادة · ٢٠٢٦';
+    var URL    = 'ameerkhadi.github.io/academic-cv-website/ai/week1';
+    var SITE   = 'ameerkhadi.github.io/academic-cv-website';
+
+    document.querySelectorAll('.slide').forEach(function(slide){
+      var tab = document.querySelector('.tab[data-target="' + slide.id + '"]');
+      var box = document.createElement('div');
+      box.className = 'print-id';
+      box.innerHTML = '<span class="pi-title"></span>' +
+                      '<span class="pi-meta"></span>' +
+                      '<span class="pi-meta pi-url"></span>';
+      /* نصّ التبويب «١<br>الأسبوع الأول»، وtextContent يلصقهما بلا مسافة
+         لأن <br> لا يضيف حرفاً. نأخذ ما بعد الفاصل: اسم الأسبوع وحده. */
+      var name = tab ? tab.innerHTML.split(/<br\s*\/?>/i).pop()
+                          .replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim() : '';
+      box.children[0].textContent = COURSE + (name ? ' — ' + name : '');
+      box.children[1].textContent = WHO;
+      box.children[2].textContent = URL;
+      slide.insertBefore(box, slide.firstChild);
+    });
+
+    var foot = document.createElement('div');
+    foot.className = 'print-foot';
+    foot.textContent = COURSE + ' — د. أمير هادي — ' + SITE;
+    document.body.appendChild(foot);
+  })();
+</script>
+
+<script>
+/* ============================================================
+   التأشير بالقلم على المحاضرة
+   الرسم يعيش داخل الشريحة نفسها لا فوق الشاشة، فيتحرّك مع النص
+   عند التمرير بدل أن يبقى ملزوقاً بالعرض.
+   ============================================================ */
+(function(){
+  /* القلم متاح للجميع — يشرح به المدرّس، ويؤشّر به الطالب على نسخته
+     الخاصة للمراجعة. الرسم محلّي على جهاز كل شخص (localStorage) ولا
+     يغادره، فتأشير طالبٍ لا يظهر عند طالبٍ آخر ولا عند المدرّس. */
+  var SVGNS = 'http://www.w3.org/2000/svg';
+  var STORE = 'ann:week1:';
+
+  var PENS = [
+    { name:'أسود',       color:'#1c1c1c', width:3.2, alpha:1,    hl:false },
+    { name:'أحمر',       color:'#ff1f3d', width:3.2, alpha:1,    hl:false },
+    { name:'برتقالي',    color:'#ff7a00', width:3.2, alpha:1,    hl:false },
+    { name:'أخضر',       color:'#00a844', width:3.2, alpha:1,    hl:false },
+    { name:'أزرق',       color:'#0057ff', width:3.2, alpha:1,    hl:false },
+    { name:'بنفسجي',     color:'#7b2ff7', width:3.2, alpha:1,    hl:false },
+    { name:'وردي غامق',  color:'#d1006b', width:3.2, alpha:1,    hl:false },
+    { name:'مُظلِّل',      color:'#ffd400', width:19,  alpha:0.45, hl:true  }
+  ];
+
+  /* مضاعِف واحد يسري على كل الأقلام، فيكبر المُظلِّل بنسبته لا بمقدار القلم. */
+  var SIZES = [
+    { name:'رفيع', mul:0.7, dot:5  },
+    { name:'عادي', mul:1,   dot:8  },
+    { name:'عريض', mul:1.6, dot:12 },
+    { name:'أعرض', mul:2.4, dot:16 }
+  ];
+
+  var pen = 1, size = 1, erasing = false, pointing = false, panning = false,
+      drawing = false, activePointer = null;
+  var cur = null, pts = [];
+
+  // سجلّ الأفعال لكل شريحة: إضافة مسار أو محو مجموعة، ليعمل التراجع في الحالتين
+  var history = {};
+
+  // ---------- الطبقة ----------
+
+  function layerOf(slide){
+    var l = slide.querySelector(':scope > .ann-layer');
+    if(!l){
+      l = document.createElementNS(SVGNS, 'svg');
+      l.setAttribute('class', 'ann-layer');
+      slide.insertBefore(l, slide.firstChild);
+      restore(slide, l);
+    }
+    return l;
+  }
+
+  function activeSlide(){ return document.querySelector('.slide.active'); }
+
+  /* تحويل موضع الإصبع إلى إحداثيات الرسم.
+     نستعمل مصفوفة الشاشة لا طرح الحواف، لأن الورقة مائلة rotate(-0.5deg)
+     في بعض التبويبات، والطرح البسيط ينحرف معها. */
+  function toLocal(layer, ev){
+    var m = layer.getScreenCTM();
+    if(!m) return { x:0, y:0 };
+    var inv = m.inverse();
+    var p = layer.createSVGPoint ? layer.createSVGPoint() : new DOMPoint();
+    p.x = ev.clientX; p.y = ev.clientY;
+    var r = p.matrixTransform(inv);
+    return { x:r.x, y:r.y };
+  }
+
+  // ---------- الرسم ----------
+
+  /* منحنيات تربيعية عبر منتصف كل ضلعين: تعطي خطاً ناعماً بدل خطوط مكسّرة. */
+  function pathData(p){
+    if(p.length === 0) return '';
+    if(p.length === 1) return 'M' + p[0].x + ' ' + p[0].y + ' l0.01 0.01';
+    var d = 'M' + p[0].x + ' ' + p[0].y;
+    for(var i = 1; i < p.length - 1; i++){
+      var mx = (p[i].x + p[i+1].x) / 2, my = (p[i].y + p[i+1].y) / 2;
+      d += ' Q' + p[i].x + ' ' + p[i].y + ' ' + mx + ' ' + my;
+    }
+    var last = p[p.length-1];
+    d += ' L' + last.x + ' ' + last.y;
+    return d;
+  }
+
+  function startStroke(layer, pt, pressure){
+    var s = PENS[pen];
+    cur = document.createElementNS(SVGNS, 'path');
+    cur.setAttribute('stroke', s.color);
+    /* المُظلِّل يكبر بنصف الوتيرة: سطر النصّ نحو ٢٨ بكسل، والمضاعِف الكامل
+       يجعله يغطّي سطراً ونصفاً فيحجب ما تحته بدل أن يبرزه. */
+    var mul = SIZES[size].mul;
+    if(s.hl) mul = 1 + (mul - 1) * 0.55;
+    cur.setAttribute('stroke-width', (s.width * mul * pressure).toFixed(2));
+    cur.setAttribute('stroke-opacity', String(s.alpha));
+    if(s.hl) cur.setAttribute('class', 'hl');
+    layer.appendChild(cur);
+    pts = [pt];
+    cur.setAttribute('d', pathData(pts));
+  }
+
+  function extendStroke(pt){
+    var last = pts[pts.length-1];
+    if(Math.abs(pt.x - last.x) + Math.abs(pt.y - last.y) < 1.4) return;
+    pts.push(pt);
+    cur.setAttribute('d', pathData(pts));
+  }
+
+  // ---------- الممحاة: تحذف المسار كاملاً عند لمسه ----------
+
+  function eraseAt(layer, ev){
+    var R = 10, ring = [[0,0],[R,0],[-R,0],[0,R],[0,-R],[7,7],[-7,7],[7,-7],[-7,-7]];
+    var hit = [];
+    for(var i = 0; i < ring.length; i++){
+      var els = document.elementsFromPoint(ev.clientX + ring[i][0], ev.clientY + ring[i][1]);
+      for(var j = 0; j < els.length; j++){
+        var el = els[j];
+        if(el.tagName === 'path' && el.parentNode === layer && hit.indexOf(el) === -1){
+          hit.push(el);
+        }
+      }
+    }
+    /* نسجّل ترتيب كل مسار قبل الحذف، وإلا أعاده التراجع إلى مقدّمة الطبقة
+       فتغيّر ما يعلو ما — وهو ظاهر مع المُظلِّل الشفّاف. */
+    var kids = Array.prototype.slice.call(layer.children);
+    var gone = hit.map(function(el){ return { el: el, i: kids.indexOf(el) }; })
+                  .sort(function(a, b){ return a.i - b.i; });
+    gone.forEach(function(o){ o.el.remove(); });
+    return gone;
+  }
+
+  // ---------- مؤشّر الليزر ----------
+
+  /* لا يُخزَّن ولا يُسجَّل: يُرسم على طبقته الثابتة، ثم يتلاشى ويُحذف من الصفحة.
+     هذا هو الفرق بينه وبين القلم: القلم يقول «انتبه لهذا لاحقًا»،
+     والمؤشّر يقول «انظر هنا الآن». */
+  var laser = document.createElementNS(SVGNS, 'svg');
+  laser.setAttribute('class', 'ann-laser');
+  var tip = document.createElementNS(SVGNS, 'circle');
+  tip.setAttribute('class', 'tip off');
+  tip.setAttribute('r', '6');
+  laser.appendChild(tip);
+  var lzCur = null, lzPts = [];
+
+  function lzTip(x, y){
+    tip.setAttribute('cx', x); tip.setAttribute('cy', y);
+    tip.classList.remove('off');
+  }
+  function lzHideTip(){ tip.classList.add('off'); }
+
+  function lzStart(ev){
+    lzCur = document.createElementNS(SVGNS, 'path');
+    laser.insertBefore(lzCur, tip);          /* النقطة تبقى فوق الأثر */
+    lzPts = [{ x:ev.clientX, y:ev.clientY }];
+    lzCur.setAttribute('d', pathData(lzPts));
+    lzTip(ev.clientX, ev.clientY);
+  }
+
+  function lzExtend(ev){
+    lzTip(ev.clientX, ev.clientY);
+    if(!lzCur) return;
+    var last = lzPts[lzPts.length - 1];
+    if(Math.abs(ev.clientX - last.x) + Math.abs(ev.clientY - last.y) < 1.4) return;
+    lzPts.push({ x:ev.clientX, y:ev.clientY });
+    if(lzPts.length > 700) lzPts.shift();    /* أثرٌ لا ينمو بلا حدّ */
+    lzCur.setAttribute('d', pathData(lzPts));
+  }
+
+  function lzEnd(){
+    lzHideTip();
+    if(!lzCur) return;
+    var el = lzCur; lzCur = null; lzPts = [];
+    /* إطارٌ واحد قبل إضافة الصنف، وإلا لم يبدأ الانتقال أصلًا */
+    requestAnimationFrame(function(){ el.classList.add('fade'); });
+    setTimeout(function(){ el.remove(); }, 900);
+  }
+
+  function lzClear(){
+    lzCur = null; lzPts = [];
+    laser.querySelectorAll('path').forEach(function(p){ p.remove(); });
+    lzHideTip();
+  }
+
+  // ---------- السجلّ والحفظ ----------
+
+  function push(slide, action){
+    (history[slide.id] = history[slide.id] || []).push(action);
+    save(slide);
+  }
+
+  function undo(){
+    var slide = activeSlide(); if(!slide) return;
+    var h = history[slide.id]; if(!h || !h.length) return;
+    var a = h.pop();
+    if(a.type === 'add' && a.el.parentNode){ a.el.remove(); }
+    else if(a.type === 'erase'){
+      var layer = layerOf(slide);
+      a.els.forEach(function(o){ layer.insertBefore(o.el, layer.children[o.i] || null); });
+    }
+    save(slide);
+  }
+
+  function clearAll(){
+    var slide = activeSlide(); if(!slide) return;
+    var layer = layerOf(slide);
+    while(layer.firstChild) layer.removeChild(layer.firstChild);
+    history[slide.id] = [];
+    save(slide);
+  }
+
+  function save(slide){
+    var layer = slide.querySelector(':scope > .ann-layer'); if(!layer) return;
+    var out = [];
+    layer.querySelectorAll('path').forEach(function(p){
+      out.push({
+        d: p.getAttribute('d'),
+        c: p.getAttribute('stroke'),
+        w: p.getAttribute('stroke-width'),
+        o: p.getAttribute('stroke-opacity'),
+        h: p.classList.contains('hl') ? 1 : 0
+      });
+    });
+    try{
+      if(out.length) localStorage.setItem(STORE + slide.id, JSON.stringify(out));
+      else localStorage.removeItem(STORE + slide.id);
+    }catch(e){}
+  }
+
+  function restore(slide, layer){
+    var raw = null;
+    try{ raw = localStorage.getItem(STORE + slide.id); }catch(e){ return; }
+    if(!raw) return;
+    var arr; try{ arr = JSON.parse(raw); }catch(e){ return; }
+    if(!Array.isArray(arr)) return;
+    arr.forEach(function(s){
+      var p = document.createElementNS(SVGNS, 'path');
+      p.setAttribute('d', s.d);
+      p.setAttribute('stroke', s.c);
+      p.setAttribute('stroke-width', s.w);
+      p.setAttribute('stroke-opacity', s.o);
+      if(s.h) p.setAttribute('class', 'hl');
+      layer.appendChild(p);
+    });
+  }
+
+  // ---------- أحداث المؤشّر ----------
+
+  function onDown(ev){
+    if(!document.body.classList.contains('ann-on')) return;
+    if(panning) return;                                /* اليد: الصفحة تمرّ، ولا نرسم */
+    if(activePointer !== null) return;                 // إصبعان: اتركهما للتمرير
+    if(ev.button !== undefined && ev.button !== 0) return;
+    var slide = activeSlide(); if(!slide) return;
+    var layer = layerOf(slide);
+    if(ev.target !== layer && ev.target.parentNode !== layer) return;
+
+    activePointer = ev.pointerId;
+    ev.preventDefault();
+    try{ layer.setPointerCapture(ev.pointerId); }catch(e){}
+    document.body.classList.add('ann-drawing');
+
+    if(pointing){ drawing = true; lzStart(ev); return; }
+    if(erasing){
+      drawing = true;
+      var removed = eraseAt(layer, ev);
+      if(removed.length) push(slide, { type:'erase', els: removed });
+      return;
+    }
+    drawing = true;
+    var pr = (ev.pointerType === 'pen' && ev.pressure > 0) ? (0.55 + ev.pressure * 0.9) : 1;
+    startStroke(layer, toLocal(layer, ev), pr);
+  }
+
+  function onMove(ev){
+    /* في نمط المؤشّر تتبع النقطةُ الإصبعَ ولو لم يضغط، ليعرف أين يؤشّر قبل أن يبدأ */
+    if(panning) return;
+    if(pointing && document.body.classList.contains('ann-on')){
+      if(drawing && ev.pointerId === activePointer){ ev.preventDefault(); lzExtend(ev); }
+      else lzTip(ev.clientX, ev.clientY);
+      return;
+    }
+    if(!drawing || ev.pointerId !== activePointer) return;
+    ev.preventDefault();
+    var slide = activeSlide(); if(!slide) return;
+    var layer = layerOf(slide);
+    if(erasing){
+      var removed = eraseAt(layer, ev);
+      if(removed.length) push(slide, { type:'erase', els: removed });
+      return;
+    }
+    extendStroke(toLocal(layer, ev));
+  }
+
+  function onUp(ev){
+    if(ev.pointerId !== activePointer) return;
+    activePointer = null;
+    document.body.classList.remove('ann-drawing');
+    if(!drawing) return;
+    drawing = false;
+    if(pointing){ lzEnd(); return; }
+    var slide = activeSlide();
+    if(!erasing && cur && slide) push(slide, { type:'add', el: cur });
+    cur = null; pts = [];
+  }
+
+  // ---------- الشريط ----------
+
+  var bar = document.createElement('div');
+  bar.className = 'ann-bar';
+
+  var main = document.createElement('button');
+  main.className = 'ann-main';
+  main.type = 'button';
+  main.innerHTML = '<span class="ic"></span><span class="lbl"></span>';
+  main.firstChild.textContent = '✏️';
+  main.lastChild.textContent = 'قلم';
+  bar.appendChild(main);
+
+  var tools = document.createElement('div');
+  tools.className = 'ann-tools';
+  bar.appendChild(tools);
+
+  var colors = document.createElement('div');
+  colors.className = 'ann-colors';
+  tools.appendChild(colors);
+
+  var swatches = PENS.map(function(s, i){
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'ann-swatch';
+    b.title = s.name;
+    b.setAttribute('aria-label', s.name);
+    b.style.background = s.hl ? s.color : s.color;
+    if(s.hl) b.style.opacity = '0.75';
+    b.addEventListener('click', function(){
+      pen = i; erasing = false; pointing = false;
+      document.body.classList.remove('ann-erase', 'ann-point');
+      eraseBtn.classList.remove('on');
+      pointBtn.classList.remove('on');
+      lzClear(); setPan(false);
+      swatches.forEach(function(x){ x.classList.remove('sel'); });
+      b.classList.add('sel');
+    });
+    colors.appendChild(b);
+    return b;
+  });
+  swatches[pen].classList.add('sel');
+
+  function sep(){ var s = document.createElement('span'); s.className = 'ann-sep'; tools.appendChild(s); }
+  function tool(icon, label, title, fn){
+    var b = document.createElement('button');
+    b.type = 'button'; b.title = title;
+    b.innerHTML = '<span class="ic"></span><span class="lbl"></span>';
+    b.firstChild.textContent = icon;
+    b.lastChild.textContent = label;
+    b.addEventListener('click', fn);
+    tools.appendChild(b);
+    return b;
+  }
+  function setLabel(b, label){ b.lastChild.textContent = label; }
+
+  sep();
+
+  /* زرّ واحد يدور على المستويات بدل أربعة أزرار — الشريط ضيّق على الهاتف.
+     النقطة داخله تكبر وتصغر فتُري السُمك قبل الرسم. */
+  var sizeBtn = document.createElement('button');
+  sizeBtn.type = 'button';
+  sizeBtn.className = 'ann-size';
+  sizeBtn.innerHTML = '<span class="dot"></span><span class="lbl"></span>';
+  function paintSize(){
+    var z = SIZES[size];
+    sizeBtn.firstChild.style.width  = z.dot + 'px';
+    sizeBtn.firstChild.style.height = z.dot + 'px';
+    sizeBtn.lastChild.textContent = z.name;   /* مخفي بصريًا، يبقى لقارئ الشاشة */
+    sizeBtn.title = 'سُمك القلم: ' + z.name + ' — اضغط للتالي (S أو + و −)';
+  }
+  function bumpSize(step){
+    size = (size + step + SIZES.length) % SIZES.length;
+    paintSize();
+  }
+  sizeBtn.addEventListener('click', function(){ bumpSize(1); });
+  paintSize();
+  tools.appendChild(sizeBtn);
+
+  var sheetBtn = tool('📄', 'ورقة', 'ورقة فارغة عائمة فوق المحاضرة (W)', function(){
+    setSheet(!sheet.classList.contains('open'));
+  });
+
+  sep();
+
+  /* ثلاثة أنماط يقصي بعضها بعضًا: قلمٌ يكتب، وممحاةٌ تمحو، ومؤشّرٌ لا يترك أثرًا. */
+  var pointBtn = tool('◉', 'مؤشّر',
+      'مؤشّر ليزر — يؤشّر ثم يتلاشى، ولا يبقى في الصفحة ولا في الطباعة (P)', function(){
+    pointing = !pointing;
+    pointBtn.classList.toggle('on', pointing);
+    document.body.classList.toggle('ann-point', pointing);
+    if(pointing){
+      setPan(false);
+      erasing = false;
+      eraseBtn.classList.remove('on');
+      document.body.classList.remove('ann-erase');
+    }else{
+      lzClear();
+    }
+  });
+  pointBtn.classList.add('ann-laser-btn');
+
+  var eraseBtn = tool('⌫', 'ممحاة', 'ممحاة — امسح الخط بمرور الممحاة عليه (E)', function(){
+    erasing = !erasing;
+    eraseBtn.classList.toggle('on', erasing);
+    document.body.classList.toggle('ann-erase', erasing);
+    if(erasing){
+      setPan(false);
+      pointing = false;
+      pointBtn.classList.remove('on');
+      document.body.classList.remove('ann-point');
+      lzClear();
+    }
+  });
+  tool('↶', 'تراجع', 'تراجع عن آخر خطوة (Z)', undo);
+  sep();
+
+  /* ---------- التنقّل في الصفحة والقلم شغّال ----------
+     زرّان يقفزان شاشةً كاملة إلا قليلًا (يبقى السطران الأخيران ظاهرين
+     ليلتقط الطالب الخيط)، ويدٌ تُنحّي الطبقة فيمرّر الإصبع الصفحة نفسها. */
+  var navG = document.createElement('div');
+  navG.className = 'ann-nav';
+  tools.appendChild(navG);
+
+  function navBtn(icon, label, title, fn){
+    var b = document.createElement('button');
+    b.type = 'button'; b.title = title;
+    b.innerHTML = '<span class="ic"></span><span class="lbl"></span>';
+    b.firstChild.textContent = icon;
+    b.lastChild.textContent = label;
+    b.addEventListener('click', fn);
+    navG.appendChild(b);
+    return b;
+  }
+
+  /* هدفٌ نتتبّعه بأنفسنا: ضغطتان متتاليتان تنقلان شاشتين لا شاشة واحدة،
+     لأن scrollTo السلس يبدأ من موضعه الحالي لا من حيث كان ذاهبًا. */
+  var jumpTo = null, jumpClear = null;
+  function jump(dir){
+    var step = Math.round(window.innerHeight * 0.85);
+    var max  = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+    var base = (jumpTo === null) ? window.scrollY : jumpTo;
+    jumpTo = Math.max(0, Math.min(max, base + dir * step));
+    try{ window.scrollTo({ top: jumpTo, behavior:'smooth' }); }
+    catch(e){ window.scrollTo(0, jumpTo); }
+    clearTimeout(jumpClear);
+    jumpClear = setTimeout(function(){ jumpTo = null; }, 800);
+  }
+
+  navBtn('▲', 'أعلى', 'اصعد شاشةً كاملة — يعمل والقلم شغّال', function(){ jump(-1); });
+
+  var handBtn = navBtn('✋', 'يد',
+      'وضع اليد — مرّر الصفحة بإصبعك واضغط التمارين، بلا إيقاف القلم (G)', function(){
+    setPan(!panning);
+  });
+  handBtn.classList.add('ann-hand-btn');
+
+  navBtn('▼', 'أسفل', 'انزل شاشةً كاملة — يعمل والقلم شغّال', function(){ jump(1); });
+
+  /* اليد ليست نمطًا رابعًا يُقصي الثلاثة، بل تعليقٌ مؤقّت لها:
+     تُطفئها فتعود إلى ما كنت عليه — قلمًا كان أو ممحاةً أو مؤشّرًا. */
+  function setPan(on){
+    panning = on;
+    handBtn.classList.toggle('on', on);
+    document.body.classList.toggle('ann-pan', on);
+    if(on) lzHideTip();
+  }
+
+  var hideBtn = tool('👁', 'إخفاء', 'إخفاء التأشير مؤقتاً بلا حذف (H)', function(){
+    var h = document.body.classList.toggle('ann-hide');
+    setLabel(hideBtn, h ? 'إظهار' : 'إخفاء');
+    hideBtn.classList.toggle('on', h);
+  });
+  tool('🗑', 'مسح الكل', 'يمسح تأشير هذا التبويب وحده', function(){
+    if(confirm('مسح كل التأشير في هذا التبويب؟')) clearAll();
+  });
+
+  /* التعليمات داخل الشريط: تُفتح عند الحاجة وتُغلق، ولا تفرض نفسها. */
+  var help = document.createElement('div');
+  help.className = 'ann-help';
+  help.innerHTML =
+    '<b>التمرير بالصفحة</b><br>' +
+    'اضغط <b>▲</b> و<b>▼</b> لتقفز شاشةً، أو <b>✋</b> لتمرّر بإصبعك بلا إيقاف القلم. ' +
+    'وعجلة الماوس تعمل دائمًا.' +
+    '<hr>' +
+    '<span class="k">١…٨</span>الألوان<br>' +
+    '<span class="k">S</span>سُمك القلم &nbsp; <span class="k">+</span><span class="k">−</span>أدقّ<br>' +
+    '<span class="k">W</span>ورقة فارغة عائمة<br>' +
+    '<span class="k">P</span>مؤشّر ليزر — يؤشّر ويتلاشى<br>' +
+    '<span class="k">G</span>وضع اليد — تمرّر وتضغط بلا إيقاف القلم<br>' +
+    '<span class="k">E</span>ممحاة &nbsp; <span class="k">Z</span>تراجع<br>' +
+    '<span class="k">H</span>إخفاء التأشير &nbsp; <span class="k">Esc</span>إيقاف' +
+    '<hr>' +
+    'اسحب <b>⠿</b> لتحريك الشريط، ونقرتان عليه تُرجعانه مكانه.';
+  bar.appendChild(help);
+
+  var helpBtn = tool('؟', 'تعليمات', 'التعليمات والاختصارات — اضغط لإظهارها أو إخفائها', function(){
+    var open = !bar.classList.contains('help-open');
+    bar.classList.toggle('help-open', open);
+    helpBtn.classList.toggle('on', open);
+    if(open) placeHelp();
+    try{ localStorage.setItem(STORE + 'help', open ? '1' : '0'); }catch(e){}
+  });
+
+  /* اللوحة فوق الشريط عادةً؛ فإن اقترب الشريط من أعلى الشاشة خرجت منها،
+     فنقلبها لأسفله. يُعاد الحساب بعد كل سحب وعند تغيّر المقاس أو الزوم. */
+  function placeHelp(){
+    if(!bar.classList.contains('help-open')) return;
+    bar.classList.remove('help-below');
+    var r = bar.getBoundingClientRect();
+    if(r.top - help.offsetHeight - 12 < 0) bar.classList.add('help-below');
+  }
+  try{
+    if(localStorage.getItem(STORE + 'help') === '1') helpBtn.click();
+  }catch(e){}
+
+  function setOn(on){
+    document.body.classList.toggle('ann-on', on);
+    main.classList.toggle('on', on);
+    main.firstChild.textContent = on ? '■' : '✏️';
+    setLabel(main, on ? 'إيقاف القلم' : 'قلم');
+    var slide = activeSlide();
+    if(on && slide) layerOf(slide);
+    else {
+      erasing = false; pointing = false;
+      eraseBtn.classList.remove('on');
+      pointBtn.classList.remove('on');
+      document.body.classList.remove('ann-erase', 'ann-point', 'ann-drawing');
+      lzClear(); setPan(false);
+    }
+  }
+  main.addEventListener('click', function(){ setOn(!document.body.classList.contains('ann-on')); });
+
+  // ============================================================
+  //  تحريك الشريط + الورقة الفارغة العائمة
+  // ============================================================
+
+  /* يبقي عنصراً ثابتاً داخل الشاشة. يُستدعى بعد كل سحب وعند تغيّر المقاس
+     أو الزوم، وإلا انزلق خارج الحافة ولم يعد يُسترجَع. */
+  function clampToView(el, pos){
+    var w = el.offsetWidth, h = el.offsetHeight;
+    var maxL = Math.max(0, window.innerWidth  - w);
+    var maxT = Math.max(0, window.innerHeight - h);
+    return { left: Math.min(Math.max(0, pos.left), maxL),
+             top:  Math.min(Math.max(0, pos.top ), maxT) };
+  }
+
+  /* يجعل عنصراً قابلاً للسحب من مقبض بعينه. onEnd يحفظ الموضع. */
+  function makeDraggable(el, handle, onEnd){
+    handle.addEventListener('pointerdown', function(ev){
+      if(ev.button !== undefined && ev.button !== 0) return;
+      ev.preventDefault(); ev.stopPropagation();
+      var r = el.getBoundingClientRect();
+      var dx = ev.clientX - r.left, dy = ev.clientY - r.top;
+      try{ handle.setPointerCapture(ev.pointerId); }catch(e){}
+
+      function move(e){
+        if(e.pointerId !== ev.pointerId) return;
+        var p = clampToView(el, { left: e.clientX - dx, top: e.clientY - dy });
+        el.style.left = p.left + 'px';
+        el.style.top  = p.top  + 'px';
+      }
+      function up(e){
+        if(e.pointerId !== ev.pointerId) return;
+        handle.removeEventListener('pointermove', move);
+        handle.removeEventListener('pointerup', up);
+        handle.removeEventListener('pointercancel', up);
+        if(onEnd) onEnd();
+      }
+      el.classList.add('moved');
+      el.style.left = r.left + 'px';
+      el.style.top  = r.top  + 'px';
+      handle.addEventListener('pointermove', move);
+      handle.addEventListener('pointerup', up);
+      handle.addEventListener('pointercancel', up);
+    });
+  }
+
+  // ---------- مقبض الشريط ----------
+
+  var grip = document.createElement('span');
+  grip.className = 'ann-grip';
+  grip.textContent = '⠿';
+  grip.title = 'اسحب لتحريك الشريط · نقرتان لإعادته مكانه';
+  bar.insertBefore(grip, bar.firstChild);
+
+  function saveBarPos(){
+    try{
+      localStorage.setItem(STORE + 'bar',
+        JSON.stringify({ left: parseFloat(bar.style.left), top: parseFloat(bar.style.top) }));
+    }catch(e){}
+  }
+  makeDraggable(bar, grip, function(){ saveBarPos(); placeHelp(); });
+
+  grip.addEventListener('dblclick', function(){
+    bar.classList.remove('moved');
+    bar.style.left = bar.style.top = '';
+    try{ localStorage.removeItem(STORE + 'bar'); }catch(e){}
+  });
+
+  (function restoreBar(){
+    var raw = null;
+    try{ raw = localStorage.getItem(STORE + 'bar'); }catch(e){ return; }
+    if(!raw) return;
+    var p; try{ p = JSON.parse(raw); }catch(e){ return; }
+    if(!p || isNaN(p.left) || isNaN(p.top)) return;
+    bar.classList.add('moved');
+    var c = clampToView(bar, p);
+    bar.style.left = c.left + 'px';
+    bar.style.top  = c.top  + 'px';
+  })();
+
+  // ---------- الورقة الفارغة ----------
+
+  var sheet = document.createElement('div');
+  sheet.className = 'sheet';
+  sheet.innerHTML =
+    '<div class="sheet-head">' +
+      '<span class="sh-grip" title="اسحب لتحريك الورقة">⠿</span>' +
+      '<span class="sh-title">ورقة فارغة</span>' +
+      '<button type="button" class="sh-undo" title="تراجع عن آخر خطوة">↶</button>' +
+      '<button type="button" class="sh-clear" title="مسح الورقة">🗑</button>' +
+      '<button type="button" class="sh-png" title="حفظ الورقة صورة PNG لإرسالها للطلبة">💾 صورة</button>' +
+      '<button type="button" class="sh-close" title="إغلاق الورقة">✕</button>' +
+    '</div>' +
+    '<div class="sheet-body"><svg></svg><span class="sheet-resize" title="اسحب لتغيير الحجم"></span></div>';
+  document.body.appendChild(sheet);
+
+  var shBody   = sheet.querySelector('.sheet-body');
+  var shSvg    = sheet.querySelector('.sheet-body svg');
+  var shResize = sheet.querySelector('.sheet-resize');
+  var shHist   = [];
+
+  function sheetDefault(){
+    var w = Math.min(560, Math.round(window.innerWidth  * 0.72));
+    var h = Math.min(440, Math.round(window.innerHeight * 0.55));
+    return { w:w, h:h,
+             left: Math.round((window.innerWidth  - w) / 2),
+             top:  Math.round((window.innerHeight - h) / 2) };
+  }
+
+  function saveSheet(){
+    var strokes = [];
+    shSvg.querySelectorAll('path').forEach(function(p){
+      strokes.push({ d:p.getAttribute('d'), c:p.getAttribute('stroke'),
+                     w:p.getAttribute('stroke-width'), o:p.getAttribute('stroke-opacity'),
+                     h:p.classList.contains('hl') ? 1 : 0 });
+    });
+    try{
+      localStorage.setItem(STORE + 'sheet', JSON.stringify({
+        left: parseFloat(sheet.style.left), top: parseFloat(sheet.style.top),
+        w: sheet.offsetWidth, h: sheet.offsetHeight, strokes: strokes
+      }));
+    }catch(e){}
+  }
+
+  (function restoreSheet(){
+    var d = sheetDefault(), st = null;
+    try{ st = JSON.parse(localStorage.getItem(STORE + 'sheet') || 'null'); }catch(e){}
+    var w = (st && st.w) || d.w, h = (st && st.h) || d.h;
+    sheet.style.width  = w + 'px';
+    sheet.style.height = h + 'px';
+    var pos = clampToView(sheet, {
+      left: (st && !isNaN(st.left)) ? st.left : d.left,
+      top:  (st && !isNaN(st.top )) ? st.top  : d.top
+    });
+    sheet.style.left = pos.left + 'px';
+    sheet.style.top  = pos.top  + 'px';
+    if(st && st.strokes) st.strokes.forEach(function(s){
+      var p = document.createElementNS(SVGNS, 'path');
+      p.setAttribute('d', s.d); p.setAttribute('stroke', s.c);
+      p.setAttribute('stroke-width', s.w); p.setAttribute('stroke-opacity', s.o);
+      if(s.h) p.setAttribute('class', 'hl');
+      shSvg.appendChild(p);
+    });
+  })();
+
+  makeDraggable(sheet, sheet.querySelector('.sh-grip'), saveSheet);
+
+  shResize.addEventListener('pointerdown', function(ev){
+    ev.preventDefault(); ev.stopPropagation();
+    var r = sheet.getBoundingClientRect();
+    try{ shResize.setPointerCapture(ev.pointerId); }catch(e){}
+    function move(e){
+      if(e.pointerId !== ev.pointerId) return;
+      /* المقبض في الزاوية اليسرى: السحب يسارًا يوسّع والحافة اليمنى ثابتة */
+      var w = Math.max(240, r.right - e.clientX);
+      var h = Math.max(200, e.clientY - r.top);
+      sheet.style.width  = Math.min(w, window.innerWidth  - 8) + 'px';
+      sheet.style.height = Math.min(h, window.innerHeight - 8) + 'px';
+      sheet.style.left   = (r.right - sheet.offsetWidth) + 'px';
+    }
+    function up(e){
+      if(e.pointerId !== ev.pointerId) return;
+      shResize.removeEventListener('pointermove', move);
+      shResize.removeEventListener('pointerup', up);
+      saveSheet();
+    }
+    shResize.addEventListener('pointermove', move);
+    shResize.addEventListener('pointerup', up);
+  });
+
+  // الرسم على الورقة: نفس الأقلام والألوان والسُمك، بسجلّ تراجع مستقل
+  var shDrawing = false, shPointer = null, shCur = null, shPts = [];
+
+  shBody.addEventListener('pointerdown', function(ev){
+    if(ev.target === shResize) return;
+    if(panning) return;                                /* اليد تُسكِت اللوح أيضًا */
+    if(shPointer !== null) return;
+    if(ev.button !== undefined && ev.button !== 0) return;
+    ev.preventDefault();
+    shPointer = ev.pointerId; shDrawing = true;
+    try{ shBody.setPointerCapture(ev.pointerId); }catch(e){}
+
+    if(pointing){ lzStart(ev); return; }
+    if(erasing){
+      var hit = eraseAt(shSvg, ev);
+      if(hit.length){ shHist.push({ type:'erase', els:hit }); saveSheet(); }
+      return;
+    }
+    var s = PENS[pen];
+    var mul = SIZES[size].mul; if(s.hl) mul = 1 + (mul - 1) * 0.55;
+    shCur = document.createElementNS(SVGNS, 'path');
+    shCur.setAttribute('stroke', s.color);
+    shCur.setAttribute('stroke-width', (s.width * mul).toFixed(2));
+    shCur.setAttribute('stroke-opacity', String(s.alpha));
+    if(s.hl) shCur.setAttribute('class', 'hl');
+    shSvg.appendChild(shCur);
+    shPts = [toLocal(shSvg, ev)];
+    shCur.setAttribute('d', pathData(shPts));
+  });
+
+  shBody.addEventListener('pointermove', function(ev){
+    if(pointing){
+      if(shDrawing && ev.pointerId === shPointer){ ev.preventDefault(); lzExtend(ev); }
+      else lzTip(ev.clientX, ev.clientY);
+      return;
+    }
+    if(!shDrawing || ev.pointerId !== shPointer) return;
+    ev.preventDefault();
+    if(erasing){
+      var hit = eraseAt(shSvg, ev);
+      if(hit.length){ shHist.push({ type:'erase', els:hit }); saveSheet(); }
+      return;
+    }
+    var pt = toLocal(shSvg, ev), last = shPts[shPts.length - 1];
+    if(Math.abs(pt.x - last.x) + Math.abs(pt.y - last.y) < 1.4) return;
+    shPts.push(pt);
+    shCur.setAttribute('d', pathData(shPts));
+  });
+
+  function shEnd(ev){
+    if(ev.pointerId !== shPointer) return;
+    shPointer = null;
+    if(!shDrawing) return;
+    if(pointing){ shDrawing = false; lzEnd(); return; }
+    shDrawing = false;
+    if(!erasing && shCur){ shHist.push({ type:'add', el:shCur }); saveSheet(); }
+    shCur = null; shPts = [];
+  }
+  shBody.addEventListener('pointerup', shEnd);
+  shBody.addEventListener('pointercancel', shEnd);
+
+  sheet.querySelector('.sh-undo').addEventListener('click', function(){
+    var a = shHist.pop(); if(!a) return;
+    if(a.type === 'add' && a.el.parentNode) a.el.remove();
+    else if(a.type === 'erase') a.els.forEach(function(o){
+      shSvg.insertBefore(o.el, shSvg.children[o.i] || null);
+    });
+    saveSheet();
+  });
+
+  sheet.querySelector('.sh-clear').addEventListener('click', function(){
+    if(!confirm('مسح كل ما في الورقة؟')) return;
+    while(shSvg.firstChild) shSvg.removeChild(shSvg.firstChild);
+    shHist = []; saveSheet();
+  });
+
+  /* حفظ الورقة صورة: نرسم الورق والمسطّرة على canvas ثم نضع فوقهما الـSVG.
+     الخطوط لها stroke وwidth كسمات لا كأصناف، فتُرسم صحيحة خارج الصفحة. */
+  sheet.querySelector('.sh-png').addEventListener('click', function(){
+    var W = shBody.clientWidth, H = shBody.clientHeight, SCALE = 2;
+    var clone = shSvg.cloneNode(true);
+    clone.setAttribute('xmlns', SVGNS);
+    clone.setAttribute('width', W); clone.setAttribute('height', H);
+    clone.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+    clone.querySelectorAll('path').forEach(function(p){
+      p.setAttribute('fill', 'none');
+      p.setAttribute('stroke-linecap', 'round');
+      p.setAttribute('stroke-linejoin', 'round');
+    });
+    var xml = new XMLSerializer().serializeToString(clone);
+    var img = new Image();
+    img.onload = function(){
+      var c = document.createElement('canvas');
+      c.width = W * SCALE; c.height = H * SCALE;
+      var g = c.getContext('2d');
+      g.scale(SCALE, SCALE);
+      g.fillStyle = '#fbf8ef'; g.fillRect(0, 0, W, H);
+      g.strokeStyle = 'rgba(63,143,214,0.28)'; g.lineWidth = 1;
+      for(var y = 27.5; y < H; y += 28){
+        g.beginPath(); g.moveTo(0, y); g.lineTo(W, y); g.stroke();
+      }
+      g.drawImage(img, 0, 0, W, H);
+      c.toBlob(function(blob){
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        /* اسم لاتيني: الأسماء العربية تتشوّه في بعض برامج البريد وأنظمة الملفات */
+        a.download = 'lecture-board-' + new Date().toISOString().slice(0,16).replace(/[:T]/g,'-') + '.png';
+        document.body.appendChild(a); a.click(); a.remove();
+        setTimeout(function(){ URL.revokeObjectURL(a.href); }, 4000);
+      }, 'image/png');
+    };
+    img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(xml);
+  });
+
+  function setSheet(on){
+    sheet.classList.toggle('open', on);
+    sheetBtn.classList.toggle('on', on);
+    if(on && !document.body.classList.contains('ann-on')) setOn(true);
+  }
+  sheet.querySelector('.sh-close').addEventListener('click', function(){ setSheet(false); });
+
+  window.addEventListener('resize', function(){
+    placeHelp();
+    [[bar, bar.classList.contains('moved')], [sheet, true]].forEach(function(pair){
+      var el = pair[0]; if(!pair[1] || !el.style.left) return;
+      var c = clampToView(el, { left: parseFloat(el.style.left), top: parseFloat(el.style.top) });
+      el.style.left = c.left + 'px'; el.style.top = c.top + 'px';
+    });
+  });
+
+  document.addEventListener('keydown', function(e){
+    if(!document.body.classList.contains('ann-on')) return;
+    var t = e.target;
+    if(t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
+    var k = e.key;
+    if(k >= '1' && k <= '8'){ swatches[+k - 1].click(); }
+    else if(k === 's' || k === 'S'){ bumpSize(1); }
+    else if(k === '+' || k === '='){ bumpSize(1); }
+    else if(k === '-' || k === '_'){ bumpSize(-1); }
+    else if(k === 'p' || k === 'P' || k === 'ح'){ pointBtn.click(); }
+    else if(k === 'g' || k === 'G' || k === 'ل'){ handBtn.click(); }
+    else if(k === 'e' || k === 'E' || k === 'ث'){ eraseBtn.click(); }
+    else if(k === 'z' || k === 'Z' || k === 'ء'){ undo(); }
+    else if(k === 'h' || k === 'H' || k === 'ا'){ hideBtn.click(); }
+    else if(k === 'w' || k === 'W'){ setSheet(!sheet.classList.contains('open')); }
+    else if(k === 'Escape'){ setOn(false); }
+    else return;
+    e.preventDefault();
+  });
+
+  // ---------- التشغيل ----------
+
+  function attach(){
+    document.querySelectorAll('.slide').forEach(function(slide){
+      var layer = layerOf(slide);
+      layer.addEventListener('pointerdown', onDown);
+      layer.addEventListener('pointermove', onMove);
+      layer.addEventListener('pointerup', onUp);
+      layer.addEventListener('pointercancel', onUp);
+      layer.addEventListener('pointerleave', function(){ if(pointing && !drawing) lzHideTip(); });
+    });
+  }
+
+  shBody.addEventListener('pointerleave', function(){ if(pointing && !shDrawing) lzHideTip(); });
+
+  /* النقطة تتبع الإصبع في كل الصفحة — حتى فوق الحاشية البنية والتبويبات —
+     أما الأثر المتوهّج فيُرسم فوق الورقة واللوح وحدهما: الضغط على الحاشية
+     يبقى للتمرير كما طُلب، ولو التقطناه هناك لتعطّل تمرير الصفحة باللمس. */
+  document.addEventListener('pointermove', function(ev){
+    if(!pointing || panning || !document.body.classList.contains('ann-on')) return;
+    if(drawing || shDrawing) return;
+    lzTip(ev.clientX, ev.clientY);
+  }, { passive:true });
+
+  document.body.appendChild(laser);
+  document.body.appendChild(bar);
+  attach();
+})();
+</script>
+
+<script>
+/* ============================================================
+   تمارين الصف — تظهر خلف بوابة القلم وحدها.
+   بالضغط والسحب بمؤشّر واحد: pointerdown/move/up يعمل بالماوس واللمس
+   والقلم بنفس الشيفرة، على عكس drag & drop المعياري الذي لا يعمل على
+   شاشة اللمس إطلاقًا — والشاشة التفاعلية في الصف لمسٌ لا ماوس.
+   ============================================================ */
+(function(){
+  var q = location.search + ' ' + location.hash;
+  if(!/(^|[?&#])pen\b/.test(q)) return;
+  document.body.classList.add('teacher');
+
+  var AR = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+
+  /* بيان النتيجة في جانب التمرين */
+  function say(fb, ok, head, text){
+    fb.className = 'lab-fb show ' + (ok ? 'ok' : 'bad');
+    fb.innerHTML = '<span class="fb-v"></span><span class="fb-t"></span>';
+    fb.querySelector('.fb-v').textContent = head;
+    fb.querySelector('.fb-t').textContent = text || '';
+  }
+  function clearFb(fb){ fb.className = 'lab-fb'; fb.textContent = ''; }
+
+  /* ---------- سحبٌ بمؤشّر واحد: شبحٌ يتبع الإصبع، والهدف يُقرأ من نقطة الإفلات ----------
+     الشبح pointer-events:none، فـ elementFromPoint يرى ما تحته لا الشبحَ نفسه. */
+  function dragify(root, srcSel, tgtSel, onDrop){
+    root.addEventListener('pointerdown', function(ev){
+      var src = ev.target.closest(srcSel);
+      if(!src || !root.contains(src) || src.classList.contains('placed')) return;
+      ev.preventDefault();
+
+      var r = src.getBoundingClientRect();
+      var ghost = src.cloneNode(true);
+      ghost.className = src.className + ' lab-ghost';
+      ghost.style.width  = r.width + 'px';
+      ghost.style.left   = r.left + 'px';
+      ghost.style.top    = r.top + 'px';
+      ghost.style.margin = '0';
+      document.body.appendChild(ghost);
+      src.classList.add('lifted');
+
+      var dx = ev.clientX - r.left, dy = ev.clientY - r.top, over = null;
+      try{ src.setPointerCapture(ev.pointerId); }catch(e){}
+
+      function targetAt(x, y){
+        var el = document.elementFromPoint(x, y);
+        if(!el) return null;
+        var t = el.closest(tgtSel);
+        return (t && root.contains(t)) ? t : null;
+      }
+      function mark(t){
+        if(t === over) return;
+        if(over) over.classList.remove('over');
+        over = t;
+        if(over) over.classList.add('over');
+      }
+      function move(e){
+        ghost.style.left = (e.clientX - dx) + 'px';
+        ghost.style.top  = (e.clientY - dy) + 'px';
+        mark(targetAt(e.clientX, e.clientY));
+      }
+      function up(e){
+        src.removeEventListener('pointermove', move);
+        src.removeEventListener('pointerup', up);
+        src.removeEventListener('pointercancel', up);
+        ghost.remove();
+        src.classList.remove('lifted');
+        mark(null);
+        var t = targetAt(e.clientX, e.clientY);
+        if(t) onDrop(src, t);
+      }
+      src.addEventListener('pointermove', move);
+      src.addEventListener('pointerup', up);
+      src.addEventListener('pointercancel', up);
+    });
+  }
+
+  /* ---------- ١ · أشِر على الشاشة ---------- */
+  function labScreen(lab, fb, again){
+    var answer = lab.getAttribute('data-answer');
+    var screen = lab.querySelector('.lab-screen');
+
+    screen.addEventListener('pointerdown', function(ev){
+      if(screen.classList.contains('done')) return;      /* أُجيب: لا يُغيَّر الجواب */
+      var row = ev.target.closest('.sf-row');
+      if(!row || !row.dataset.k) return;
+      ev.preventDefault();
+
+      var right = row.dataset.k === answer;
+      row.classList.add(right ? 'ok' : 'bad');
+      var correct = screen.querySelector('.sf-row[data-k="' + answer + '"]');
+      /* يُبرز الصواب مع الخطأ: التصحيح بلا إراءة الصواب لا يعلّم */
+      if(!right && correct) correct.classList.add('ok');
+      screen.classList.add('done');
+
+      say(fb, right, right ? '✓ إجابة صحيحة' : '✗ ليست هي',
+          right ? row.dataset.why
+                : row.dataset.why + '  والصواب: ' + ((correct && correct.dataset.why) || ''));
+    });
+
+    return function(){
+      screen.classList.remove('done');
+      screen.querySelectorAll('.sf-row').forEach(function(r){ r.classList.remove('ok','bad'); });
+    };
+  }
+
+  /* ---------- ٢ · صح وخطأ بالسحب ---------- */
+  function labTf(lab, fb){
+    var sts  = Array.prototype.slice.call(lab.querySelectorAll('.tf-st'));
+    var done = 0, hits = 0;
+
+    dragify(lab, '.tf-chip', '.tf-st', function(chip, st){
+      if(st.classList.contains('ok') || st.classList.contains('bad')) return;
+      var right = chip.dataset.v === st.dataset.a;
+      var truth = st.dataset.a === 'y' ? 'صح' : 'خطأ';
+      st.classList.add(right ? 'ok' : 'bad');
+      st.querySelector('.tf-why').innerHTML =
+        '<span class="tf-v">' + (right ? '✓ حكمٌ صحيح' : '✗ الصواب: ' + truth) + '</span> ' +
+        st.dataset.why;
+      done++; if(right) hits++;
+      say(fb, right, right ? '✓ أصبت' : '✗ الصواب: ' + truth,
+          done === sts.length
+            ? 'انتهت العبارات — ' + AR[hits] + ' من ' + AR[sts.length] + ' صحيحة.'
+            : 'بقيت ' + AR[sts.length - done] + ' من ' + AR[sts.length] + '.');
+    });
+
+    return function(){
+      done = 0; hits = 0;
+      sts.forEach(function(st){
+        st.classList.remove('ok','bad','over');
+        st.querySelector('.tf-why').innerHTML = '';
+      });
+    };
+  }
+
+  /* ---------- ٣ · صنّف في ثلاث سلال ---------- */
+  function labSort(lab, fb){
+    var tray  = lab.querySelector('.sort-cards');
+    var cards = Array.prototype.slice.call(lab.querySelectorAll('.sort-card'));
+    var placed = 0;
+
+    dragify(lab, '.sort-card', '.sort-bin', function(card, bin){
+      var right = card.dataset.bin === bin.dataset.bin;
+      if(right){
+        /* الصحيحة وحدها تستقرّ في السلّة؛ الخاطئة تُردّ فيبقى الجدول صادقًا */
+        bin.querySelector('.bin-in').appendChild(card);
+        card.classList.add('placed');
+        placed++;
+        say(fb, true, '✓ في مكانها', card.dataset.why +
+            (placed === cards.length ? '  اكتمل التصنيف.' : ''));
+      }else{
+        var name = bin.querySelector('b').textContent;
+        say(fb, false, '✗ ليست «' + name + '»', card.dataset.why);
+      }
+    });
+
+    return function(){
+      placed = 0;
+      cards.forEach(function(c){ c.classList.remove('placed','lifted'); tray.appendChild(c); });
+      lab.querySelectorAll('.sort-bin').forEach(function(b){ b.classList.remove('over'); });
+    };
+  }
+
+  /* ---------- ٤ · رتّب الخطوات بالضغط ---------- */
+  function labOrd(lab, fb){
+    var steps = Array.prototype.slice.call(lab.querySelectorAll('.ord-step'));
+    var next  = 1, timer = null;
+
+    lab.addEventListener('pointerdown', function(ev){
+      var step = ev.target.closest('.ord-step');
+      if(!step || !lab.contains(step) || step.classList.contains('ok')) return;
+      ev.preventDefault();
+
+      if(+step.dataset.o === next){
+        step.classList.remove('bad');
+        step.classList.add('ok');
+        step.querySelector('.ord-n').textContent = AR[next];
+        next++;
+        say(fb, true, '✓ الخطوة ' + AR[next - 1], step.dataset.why +
+            (next > steps.length ? '  اكتمل الترتيب.' : ''));
+      }else{
+        step.classList.add('bad');
+        say(fb, false, '✗ ليست الآن', step.dataset.why);
+        clearTimeout(timer);
+        timer = setTimeout(function(){ step.classList.remove('bad'); }, 1400);
+      }
+    });
+
+    return function(){
+      next = 1; clearTimeout(timer);
+      steps.forEach(function(s){
+        s.classList.remove('ok','bad');
+        s.querySelector('.ord-n').textContent = '؟';
+      });
+    };
+  }
+
+  /* ---------- ٥ · سيناريو واختيارات ---------- */
+  function labMcq(lab, fb){
+    var answer = lab.getAttribute('data-answer');
+    var opts   = lab.querySelector('.mcq-opts');
+
+    opts.addEventListener('pointerdown', function(ev){
+      if(opts.classList.contains('done')) return;
+      var opt = ev.target.closest('.mcq-opt');
+      if(!opt) return;
+      ev.preventDefault();
+
+      var right   = opt.dataset.k === answer;
+      var correct = opts.querySelector('.mcq-opt[data-k="' + answer + '"]');
+      opt.classList.add(right ? 'ok' : 'bad');
+      if(!right && correct) correct.classList.add('ok');
+      opts.classList.add('done');
+
+      say(fb, right, right ? '✓ إجابة صحيحة' : '✗ ليست هي',
+          right ? opt.dataset.why
+                : opt.dataset.why + '  والصواب «' + answer + '»: ' +
+                  ((correct && correct.dataset.why) || ''));
+    });
+
+    return function(){
+      opts.classList.remove('done');
+      opts.querySelectorAll('.mcq-opt').forEach(function(o){ o.classList.remove('ok','bad'); });
+    };
+  }
+
+  var KINDS = { screen:labScreen, tf:labTf, sort:labSort, ord:labOrd, mcq:labMcq };
+
+  document.querySelectorAll('.lab').forEach(function(lab){
+    var kind  = lab.getAttribute('data-kind') || 'screen';
+    var build = KINDS[kind];
+    if(!build) return;
+    var fb    = lab.querySelector('.lab-fb');
+    var again = lab.querySelector('.lab-again');
+    var reset = build(lab, fb, again);
+    if(again) again.addEventListener('click', function(){ clearFb(fb); reset(); });
+  });
+})();
+</script>
+
+
+<button type="button" class="reader-btn" id="readerBtn"
+        aria-expanded="false" aria-controls="readerPanel"
+        title="اختر خطّ القراءة وحجمه">
+  <span class="aa">Aa</span><span>الخط</span>
+</button>
+
+<div class="reader-panel" id="readerPanel" role="dialog" aria-label="خطّ القراءة وحجمه">
+  <h4>اقرأ كما يريحك</h4>
+  <p class="rp-note">اختيارك يُحفظ على جهازك، ويبقى في كل الأسابيع.</p>
+
+  <span class="rp-lab">شكل الحرف</span>
+  <div class="rp-fonts" id="rpFonts">
+    <button type="button" data-f="naskh" style="font-family:'Noto Naskh Arabic',serif">نسخ</button>
+    <button type="button" data-f="clear" style="font-family:'IBM Plex Sans Arabic',sans-serif">واضح</button>
+    <button type="button" data-f="ruqaa" style="font-family:'Aref Ruqaa',serif">خطّي</button>
+  </div>
+
+  <span class="rp-lab">الحجم</span>
+  <div class="rp-size">
+    <button type="button" id="rpDown" aria-label="أصغر">−</button>
+    <span class="rp-val" id="rpVal">١٠٠٪</span>
+    <button type="button" id="rpUp" aria-label="أكبر">+</button>
+  </div>
+
+  <button type="button" class="rp-reset" id="rpReset">إعادة الضبط</button>
+</div>
+
+<script>
+/* ============================================================
+   خطّ القارئ وحجمه — للطالب لا للمدرّس، فلا بوابة عليه.
+   الأحجام مضاعِف واحد ‎--fs‎ يضرب كل قياسات المحتوى، فتكبر الصفحة
+   كلّها متناسقةً: النصّ والعناوين والشروح معًا، لا النصّ وحده.
+   ============================================================ */
+(function(){
+  var FONTS = {
+    naskh:"'Noto Naskh Arabic', serif",
+    clear:"'IBM Plex Sans Arabic', sans-serif",
+    ruqaa:"'Aref Ruqaa', serif"
+  };
+  var STEPS = [0.9, 1, 1.15, 1.3, 1.5];
+  var AR = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+  function ar(n){ return String(n).replace(/[0-9]/g, function(d){ return AR[+d]; }); }
+
+  var root  = document.documentElement;
+  var btn   = document.getElementById('readerBtn');
+  var panel = document.getElementById('readerPanel');
+  var val   = document.getElementById('rpVal');
+  var up    = document.getElementById('rpUp');
+  var down  = document.getElementById('rpDown');
+  var picks = Array.prototype.slice.call(document.querySelectorAll('#rpFonts button'));
+
+  var font = 'naskh', step = 1;
+  try{
+    var f = localStorage.getItem('reader:font');
+    if(f && FONTS[f]) font = f;
+    var z = STEPS.indexOf(parseFloat(localStorage.getItem('reader:fs')));
+    if(z !== -1) step = z;
+  }catch(e){}
+
+  function paint(){
+    root.style.setProperty('--reader-font', FONTS[font]);
+    root.style.setProperty('--fs', STEPS[step]);
+    val.textContent = ar(Math.round(STEPS[step] * 100)) + '٪';
+    up.disabled   = step === STEPS.length - 1;
+    down.disabled = step === 0;
+    picks.forEach(function(b){
+      b.setAttribute('aria-pressed', b.dataset.f === font ? 'true' : 'false');
+    });
+    try{
+      localStorage.setItem('reader:font', font);
+      localStorage.setItem('reader:fs', String(STEPS[step]));
+    }catch(e){}
+  }
+
+  picks.forEach(function(b){
+    b.addEventListener('click', function(){ font = b.dataset.f; paint(); });
+  });
+  up.addEventListener('click',   function(){ if(step < STEPS.length-1){ step++; paint(); } });
+  down.addEventListener('click', function(){ if(step > 0){ step--; paint(); } });
+  document.getElementById('rpReset').addEventListener('click', function(){
+    font = 'naskh'; step = 1; paint();
+  });
+
+  function open(on){
+    panel.classList.toggle('open', on);
+    btn.setAttribute('aria-expanded', on ? 'true' : 'false');
+  }
+  btn.addEventListener('click', function(e){
+    e.stopPropagation();
+    open(!panel.classList.contains('open'));
+  });
+  panel.addEventListener('click', function(e){ e.stopPropagation(); });
+  document.addEventListener('click', function(){ open(false); });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && panel.classList.contains('open')) open(false);
+  });
+
+  paint();
+})();
+</script>
+
+
+<script>
+/* نسخ الأمر الجاهز بضغطة: الطالب واقف بهاتفه، وكتابة عشرة أسطر بيده
+   تعني أنه لن يبدأ أصلًا. نأخذ النصّ من الصندوق لا من متغيّر، فلا يفترقان. */
+(function(){
+  var cards = document.querySelectorAll('.pr');
+  if(!cards.length) return;
+
+  function copy(text){
+    if(navigator.clipboard && window.isSecureContext)
+      return navigator.clipboard.writeText(text);
+    /* متصفّح قديم أو صفحة غير مؤمّنة: الطريقة الاحتياطية */
+    return new Promise(function(res, rej){
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly', '');
+      ta.style.cssText = 'position:fixed;top:-1000px;opacity:0';
+      document.body.appendChild(ta);
+      ta.select(); ta.setSelectionRange(0, ta.value.length);
+      var ok = false;
+      try{ ok = document.execCommand('copy'); }catch(e){}
+      ta.remove();
+      ok ? res() : rej();
+    });
+  }
+
+  cards.forEach(function(card){
+    var btn = card.querySelector('.pr-copy');
+    var body = card.querySelector('.pr-body');
+    if(!btn || !body) return;
+    var timer = null;
+    btn.addEventListener('click', function(){
+      copy(body.innerText).then(function(){
+        btn.textContent = '✓ نُسخ';
+        btn.classList.add('done');
+      }).catch(function(){
+        /* تعذّر النسخ: نُظهر النصّ محدَّدًا ليأخذه بيده */
+        btn.textContent = 'انسخه يدويًّا';
+        var r = document.createRange(); r.selectNodeContents(body);
+        var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+      }).then(function(){
+        clearTimeout(timer);
+        timer = setTimeout(function(){
+          btn.textContent = 'نسخ'; btn.classList.remove('done');
+        }, 2200);
+      });
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
