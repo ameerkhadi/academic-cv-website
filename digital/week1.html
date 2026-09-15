@@ -2588,6 +2588,7 @@
   .tab:nth-child(4){background:#be123c;}
   .tab:nth-child(5){background:#0369a1;}
   .tab:nth-child(6){background:#4d7c0f;}
+  .tab:nth-child(7){background:var(--teal);}   /* الحلول والتعليل — لون مستقلّ عن أسابيع الدورة */
 </style>
   <div class="tabs">
     <button class="tab active" data-target="slide-1">١<br>الأسبوع الأول</button>
@@ -2596,6 +2597,7 @@
     <button class="tab" data-target="slide-4">٤<br>الأسبوع الرابع</button>
     <button class="tab" data-target="slide-5">٥<br>الأسبوع الخامس</button>
     <button class="tab" data-target="slide-6">٦<br>الأسبوع السادس</button>
+    <button class="tab" data-target="slide-sol">🔑<br>الحلول والتعليل</button>
   </div>
 
   <div class="paper-wrapper">
@@ -3107,7 +3109,145 @@
         <div class="footer-note">٦</div>
       </div>
       <!-- ============ END SLIDE 6 ============ -->
-      <!-- ============ END SLIDE 15 ============ -->
+
+      <!-- ============ SLIDE SOL : الحلول والتعليل ============ -->
+      <div id="slide-sol" class="slide content-slide rich-slide">
+        <span class="chip" style="background:var(--teal);">دليل مراجعة</span>
+        <h2 class="page-title" style="color:var(--teal);">الحلول والتعليل</h2>
+        <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--teal)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
+        <p class="lead-paragraph">حلول أسئلة مراجعة الأسبوع الأول، <span class="hl hl-yellow">مع تعليل كل إجابة</span> — لماذا الصحيح صحيح، ولماذا الخيارات الأخرى ليست كذلك. هذا التبويب <strong>خارج ترقيم الأسابيع</strong>، دليلٌ للمراجعة لا محاضرة جديدة.</p>
+
+        <div class="sol-week"><span class="sw-n">١</span><span class="sw-t">حلول الأسبوع الأول</span></div>
+
+        <div class="sol-kind"><span>الاختيار من متعدّد</span><span class="sk-line"></span></div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">١.</span> تكنولوجيا المعلومات (IT) تُعرَّف بأنها:</p>
+          <div class="sol-opts">
+            <div class="sol-opt bad"><span class="so-k">أ)</span><span>الحاسوب فقط</span></div>
+            <div class="sol-opt ok"><span class="so-k">ب)</span><span>كل وسيلة تُستعمل لتخزين المعلومة أو معالجتها أو نقلها</span></div>
+            <div class="sol-opt bad"><span class="so-k">ج)</span><span>الإنترنت فقط</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>البرمجة فقط</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> «أ» و«ج» يحصران IT بعنصر واحد من عناصرها الخمسة (الأجهزة أو الشبكات)، و«د» يخلط بينها وبين تخصّص مختلف تمامًا — البرمجة أداة قد تُستعمل داخل IT، وليست تعريفها.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٢.</span> الفرق بين "الرقمنة" و"رقمنة الأعمال" هو:</p>
+          <div class="sol-opts">
+            <div class="sol-opt bad"><span class="so-k">أ)</span><span>لا فرق، مترادفان تمامًا</span></div>
+            <div class="sol-opt ok"><span class="so-k">ب)</span><span>الرقمنة تُحوّل صيغة الملف، ورقمنة الأعمال تُحسّن الإجراء نفسه</span></div>
+            <div class="sol-opt bad"><span class="so-k">ج)</span><span>رقمنة الأعمال أقدم تاريخيًا من الرقمنة</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>الرقمنة خاصة بالشركات فقط</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> الرقمنة تُبقي الإجراء يدويًا وتُبدّل شكل الملف فقط (مسح ورقة وحفظها PDF)، بينما رقمنة الأعمال تُغيّر الإجراء ذاته (استمارة تُعبَّأ وتُرسَل مباشرة). «ج» و«د» عكس ترتيب المراحل الفعلي وليسا مرتبطين بحجم الجهة.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٣.</span> الذاكرة العشوائية (RAM) تُفرَّغ:</p>
+          <div class="sol-opts">
+            <div class="sol-opt bad"><span class="so-k">أ)</span><span>كل ساعة تلقائيًا</span></div>
+            <div class="sol-opt bad"><span class="so-k">ب)</span><span>عند إغلاق البرنامج فقط</span></div>
+            <div class="sol-opt ok"><span class="so-k">ج)</span><span>عند إطفاء الجهاز</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>لا تُفرَّغ أبدًا</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> RAM طاولة عمل مؤقّتة لا خزانة دائمة — إغلاق برنامج واحد («ب») يُفرّغ مساحته هو فقط لا الذاكرة كلّها، وإطفاء الجهاز هو ما يُصفّرها بالكامل.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٤.</span> خانة "نسخة مخفية" (Bcc) بالإيميل تعني أنّ المستلم بها:</p>
+          <div class="sol-opts">
+            <div class="sol-opt bad"><span class="so-k">أ)</span><span>يظهر اسمه لبقية المستلمين</span></div>
+            <div class="sol-opt ok"><span class="so-k">ب)</span><span>يرى الرسالة، ولا يعرف بقية المستلمين بوجوده</span></div>
+            <div class="sol-opt bad"><span class="so-k">ج)</span><span>مطلوب منه الردّ إلزاميًا</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>تُحذف الرسالة عنده تلقائيًا بعد ساعة</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> «مخفية» تصف ظهور الاسم لا بقاء الرسالة — لا علاقة لها بحذف تلقائي («د»)، ولا تفرض ردًّا («ج») كما تفعل To.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٥.</span> مركز البيانات (Data Center) هو:</p>
+          <div class="sol-opts">
+            <div class="sol-opt bad"><span class="so-k">أ)</span><span>برنامج لتنظيم الملفات</span></div>
+            <div class="sol-opt ok"><span class="so-k">ب)</span><span>مبنى يضمّ آلاف السيرفرات، بتبريد وطاقة احتياطية</span></div>
+            <div class="sol-opt bad"><span class="so-k">ج)</span><span>نوع من أنواع الذاكرة العشوائية</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>اسم آخر للراوتر</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> مركز البيانات مبنى فعلي لا برنامج ولا مكوّن داخل الحاسوب — هذا هو "مكان" السحابة الحقيقي، بمواقع محدّدة حول العالم.</p>
+        </div>
+
+        <div class="sol-kind"><span>أسئلة السيناريو</span><span class="sk-line"></span></div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">١.</span> موظف يستقبل يوميًا عشرين ملف سكان ورقي بحاجة أرشفتها إلكترونيًا، فيمسحها ويحفظها PDF بلا أي تغيير آخر بالإجراء. أي مرحلة من مراحل التحوّل الرقمي يمثّلها هذا العمل، ولماذا؟</p>
+          <p class="sol-why"><b>الإجابة:</b> الرقمنة (Digitization). المسح وحفظ PDF غيّر صيغة الملف من ورقي إلى رقمي، لكن الإجراء نفسه بقي يدويًا بالضبط كما كان — لا أحد حسّن طريقة الاستلام أو الأرشفة، فقط شكل الملف تغيّر.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٢.</span> دائرة استلمت ثلاثة ملفّات PDF منفصلة تخصّ معاملة واحدة، وتحتاج تسليمها للجهة الأعلى كملف واحد مرتّب. ما العملية المناسبة على أداة مثل iLovePDF؟</p>
+          <p class="sol-why"><b>الإجابة:</b> الدمج (Merge). هي العملية التي توحّد عدّة ملفات منفصلة في ملف واحد — عكس الفصل (Split) الذي يستخرج صفحات من ملف واحد إلى عدّة ملفات.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٣.</span> مدير أرسل رسالة تحوي معلومة حسّاسة بخانة To لعشرة موظفين، فظهرت أسماء الجميع لبعضهم البعض. ما الخطأ، وما الحقل الذي كان ينبغي استعماله بدلًا من ذلك؟</p>
+          <p class="sol-why"><b>الخطأ:</b> استعمال To (أو Cc) يعرض عناوين كل المستلمين لبعضهم. <b>التصحيح:</b> خانة Bcc (نسخة مخفية) — تصل الرسالة لكل مستلم دون أن يرى أسماء بقية المستلمين.</p>
+        </div>
+
+        <div class="sol-kind"><span>الأسئلة المقالية — نقاط التصحيح</span><span class="sk-line"></span></div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">١.</span> الفرق بين الرقمنة ورقمنة الأعمال والتحوّل الرقمي، بمثال واحد متكامل من واقع دائرة حكومية يمرّ بالمراحل الثلاث بالترتيب.</p>
+          <ul class="sol-grading">
+            <li><b>تعريف دقيق لكل مرحلة:</b> الرقمنة تُحوّل الملف، رقمنة الأعمال تُحسّن الإجراء، التحوّل الرقمي يُغيّر المؤسسة كلّها.</li>
+            <li><b>مثال واحد يمرّ بالمراحل الثلاث بالترتيب</b> — لا ثلاثة أمثلة منفصلة: كمعاملة ورقية تُمسح PDF (رقمنة)، ثم تصير استمارة إلكترونية تُرسَل مباشرة (رقمنة أعمال)، ثم تتكامل ضمن نظام إلكتروني يُغيّر طريقة اتّخاذ القرار بالدائرة كلّها (تحوّل رقمي).</li>
+            <li>الإشارة إلى أنّ أغلب الدوائر تتوقّف عند المرحلة الأولى وتظنّ أنها أنجزت الثالثة.</li>
+          </ul>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٢.</span> أهمية مركز البيانات والسيرفر في عمل أداة تخزين سحابي مثل Google Drive، وما الذي يحدث فعليًا حين يُرفع إليها ملف.</p>
+          <ul class="sol-grading">
+            <li><b>تعريف السيرفر:</b> حاسوب مخصّص يبقى يعمل باستمرار ليستجيب لطلبات الأجهزة الأخرى.</li>
+            <li><b>تعريف مركز البيانات:</b> المبنى الذي يضمّ آلاف السيرفرات هذه فعليًا — بمواقع حقيقية حول العالم، لا فضاء مجرّد.</li>
+            <li><b>ما يحدث عند الرفع:</b> الملف يُرسَل عبر الراوتر ومزوّد الإنترنت إلى سيرفرات جوجل داخل مركز بياناتها، ويُحفظ هناك، وأي طلب لفتحه لاحقًا من أي جهاز يمرّ بنفس المسار بالعكس.</li>
+            <li>ربط الفكرة بأنّ "السحابة" ليست تجريدًا، بل أجهزة فعلية.</li>
+          </ul>
+        </div>
+
+        <div class="sol-kind"><span>صح أو خطأ</span><span class="sk-line"></span></div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">١.</span> الرقمنة (Digitization) تعني تغييرًا شاملًا بثقافة المؤسسة وهيكلها.</p><span class="sol-badge f">خطأ</span></div>
+          <p class="sol-why">هذا تعريف التحوّل الرقمي، لا الرقمنة. الرقمنة تُحوّل صيغة الملف فقط، بلا تغيير بالإجراء أو الثقافة.</p>
+        </div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٢.</span> الـSSD أسرع من الـHDD بالتخزين.</p><span class="sol-badge t">صح</span></div>
+          <p class="sol-why">الفرق بالسرعة يُحسّ من أول تشغيل للجهاز، ولهذا يُنصح به كمطلوب عادةً عند شراء حاسوب.</p>
+        </div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٣.</span> Google Workspace يحتاج ترخيصًا يُحفظ على الجهاز، تمامًا مثل Microsoft Office.</p><span class="sol-badge f">خطأ</span></div>
+          <p class="sol-why">العكس هو الصحيح: Office يُحفظ على الجهاز افتراضيًا ويحتاج ترخيصًا، بينما Google Workspace يعمل من المتصفّح مباشرة ويُحفظ تلقائيًا على السحابة.</p>
+        </div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٤.</span> السيرفر جهاز يبقى يعمل باستمرار ليستجيب لطلبات أجهزة أخرى.</p><span class="sol-badge t">صح</span></div>
+          <p class="sol-why">هذا تعريفه بالضبط — حاسوب مخصّص لا يجلس عليه أحد مباشرة عادةً، ووظيفته الاستجابة المستمرّة.</p>
+        </div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٥.</span> عملية "الدمج" (Merge) بأداة iLovePDF تُقسّم ملفًا واحدًا إلى عدّة ملفات.</p><span class="sol-badge f">خطأ</span></div>
+          <p class="sol-why">هذا وصف عملية الفصل (Split) عكسًا تمامًا. الدمج يوحّد عدّة ملفات في ملف واحد.</p>
+        </div>
+
+        <div class="mini-note">نهاية دليل الحلول — إعداد: أ.م.د أمير هادي ★</div>
+        <div class="page-nav">
+          <button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button>
+          <button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button>
+        </div>
+      </div>
+      <!-- ============ END SLIDE SOL ============ -->
 
       <!-- NEW SLIDES GET ADDED HERE, right above this comment -->
 
