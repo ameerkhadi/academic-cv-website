@@ -2552,7 +2552,7 @@
     color:var(--red); font-size:20px; font-weight:700;
     padding:0 2px;
   }
-  @media (max-width:640px){ .era-arrow{ width:100%; text-align:center; transform:rotate(90deg); } }
+  @media (max-width:640px){ .era-arrow{ width:100%; text-align:center; transform:rotate(-90deg); } }
 
   /* ---------- بطاقة مواصفة جهاز ---------- */
   .spec-grid{ display:flex; flex-wrap:wrap; gap:11px; margin:12px 0; }
@@ -2692,62 +2692,12 @@
           <div><b>الفرق الذي يلخّص الثلاثة:</b> الرقمنة تُحوّل <b>الملف</b>. رقمنة الأعمال تُحوّل <b>الإجراء</b>. التحوّل الرقمي يُحوّل <b>المؤسسة كلّها</b>. أغلب الدوائر تتوقّف عند الأولى وتظنّ أنها أنجزت الثالثة.</div>
         </div>
 
-        <!-- ===== ٣ · الشبكات: كيف تعمل ===== -->
-        <div class="section-heading" style="margin-top:26px;">
-          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
-          <span>الشبكات — كيف يصل الطلب إلى وجهته</span>
-        </div>
-        <p class="lead-paragraph">الشبكة (Network) عدّة أجهزة مرتبطة معًا تتبادل البيانات — أبسطها جهازان يتشاركان طابعة بمكتب واحد. الإنترنت شبكة الشبكات: ملايين الشبكات المحلية حول العالم مرتبطة ببعضها. أي طلب بسيط — فتح صفحة، أو رفع ملف — يمرّ بأربع محطات:</p>
-
-        <div class="eras-track">
-          <div class="era-box">
-            <span class="era-num">١</span>
-            <span class="era-ar">الجهاز</span>
-            <span class="era-en">Device</span>
-            <div class="era-def">نقطة انطلاق الطلب — حاسوب أو هاتف.</div>
-          </div>
-          <div class="era-arrow">←</div>
-          <div class="era-box">
-            <span class="era-num">٢</span>
-            <span class="era-ar">الراوتر</span>
-            <span class="era-en">Router</span>
-            <div class="era-def">يصل الجهاز بالشبكة المحلية، ويوجّه الطلب نحو الإنترنت.</div>
-          </div>
-          <div class="era-arrow">←</div>
-          <div class="era-box">
-            <span class="era-num">٣</span>
-            <span class="era-ar">مزوّد خدمة الإنترنت</span>
-            <span class="era-en">ISP</span>
-            <div class="era-def">الجسر بين الشبكة المحلية وبقية الإنترنت حول العالم.</div>
-          </div>
-          <div class="era-arrow">←</div>
-          <div class="era-box now">
-            <span class="era-num">٤</span>
-            <span class="era-ar">السيرفر</span>
-            <span class="era-en">Server</span>
-            <div class="era-def">الجهاز الذي يملك المعلومة المطلوبة، ويُعيد الجواب بنفس الطريق.</div>
-          </div>
-        </div>
-
-        <div class="spec-grid" style="margin-top:14px;">
-          <div class="spec-card p">
-            <div class="spec-head"><span class="spec-ar">السيرفر</span><span class="spec-en">Server — الخادم</span></div>
-            <div class="spec-def">حاسوب قوي مخصّص، يبقى يعمل باستمرار، ووظيفته الاستجابة لطلبات أجهزة أخرى — لا شخص يجلس عليه مباشرة عادة.</div>
-            <div class="spec-tip"><b>مثال:</b> فتح Gmail أو Google Drive يُرسل الطلب إلى سيرفرات جوجل، وهي من ترجع الجواب.</div>
-          </div>
-          <div class="spec-card t">
-            <div class="spec-head"><span class="spec-ar">مركز البيانات</span><span class="spec-en">Data Center</span></div>
-            <div class="spec-def">مبنى يضمّ آلاف السيرفرات مصفوفة بخزائن، مع تبريد مستمر وطاقة احتياطية وحراسة مشدّدة.</div>
-            <div class="spec-tip"><b>مثال:</b> هذا هو "مكان" السحابة فعليًا — ليست فضاءً مجرّدًا، بل مبانٍ حقيقية بمواقع محدّدة حول العالم.</div>
-          </div>
-        </div>
-
-        <!-- ===== ٤ · أدوات التكنولوجيا التي تحتاجها ===== -->
+        <!-- ===== ٣ · أدوات التكنولوجيا التي تحتاجها ===== -->
         <div class="section-heading" style="margin-top:26px;">
           <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
           <span>أدوات التكنولوجيا التي تحتاجها</span>
         </div>
-        <p class="lead-paragraph">خمسة أشياء تكفي أي موظّف اليوم — بلا تعقيد وبلا شهادة برمجة.</p>
+        <p class="lead-paragraph">ستة أشياء تكفي أي موظّف اليوم — بلا تعقيد وبلا شهادة برمجة.</p>
 
         <div class="chapter-num" style="color:var(--blue);"><span class="cn-num">١</span><span class="cn-title">الحاسوب ومواصفاته</span></div>
         <p class="lead-paragraph" style="margin-top:0;">عند شراء حاسوب أو طلبه من الدائرة، هذه الكلمات الخمس هي كل ما يلزم فهمه:</p>
@@ -2792,7 +2742,53 @@
         <p class="lead-paragraph" style="margin-top:0;">الفرق العملي: ملفّات <strong>Office</strong> تُحفظ على الجهاز افتراضيًا وتحتاج ترخيصًا، بينما <strong>Google Workspace</strong> يعمل من المتصفّح مباشرة ويُحفظ تلقائيًا على السحابة.</p>
         <p class="lead-paragraph"><strong>ذكاء اصطناعي (AI):</strong> برامج مساعدة تفهم اللغة الطبيعية وتساعد على الكتابة والتلخيص والتحليل بمجرّد طلبٍ بجملة عادية، بلا أوامر برمجية. أداة رابعة إلى جانب الأوفس، لا بديلًا عنه.</p>
 
-        <div class="chapter-num" style="color:var(--red); margin-top:22px;"><span class="cn-num">٣</span><span class="cn-title">عمليات على المستندات — مثال iLovePDF</span></div>
+        <div class="chapter-num" style="color:var(--teal); margin-top:22px;"><span class="cn-num">٣</span><span class="cn-title">الشبكات — كيف يصل الطلب إلى وجهته</span></div>
+        <p class="lead-paragraph" style="margin-top:0;">الشبكة (Network) عدّة أجهزة مرتبطة معًا تتبادل البيانات — أبسطها جهازان يتشاركان طابعة بمكتب واحد. الإنترنت شبكة الشبكات: ملايين الشبكات المحلية حول العالم مرتبطة ببعضها. أي طلب بسيط — فتح صفحة، أو رفع ملف — يمرّ بأربع محطات:</p>
+
+        <div class="eras-track">
+          <div class="era-box">
+            <span class="era-num">١</span>
+            <span class="era-ar">الجهاز</span>
+            <span class="era-en">Device</span>
+            <div class="era-def">نقطة انطلاق الطلب — حاسوب أو هاتف.</div>
+          </div>
+          <div class="era-arrow">←</div>
+          <div class="era-box">
+            <span class="era-num">٢</span>
+            <span class="era-ar">الراوتر</span>
+            <span class="era-en">Router</span>
+            <div class="era-def">يصل الجهاز بالشبكة المحلية، ويوجّه الطلب نحو الإنترنت.</div>
+          </div>
+          <div class="era-arrow">←</div>
+          <div class="era-box">
+            <span class="era-num">٣</span>
+            <span class="era-ar">مزوّد خدمة الإنترنت</span>
+            <span class="era-en">ISP</span>
+            <div class="era-def">الجسر بين الشبكة المحلية وبقية الإنترنت حول العالم.</div>
+          </div>
+          <div class="era-arrow">←</div>
+          <div class="era-box now">
+            <span class="era-num">٤</span>
+            <span class="era-ar">السيرفر</span>
+            <span class="era-en">Server</span>
+            <div class="era-def">الجهاز الذي يملك المعلومة المطلوبة، ويُعيد الجواب بنفس الطريق.</div>
+          </div>
+        </div>
+
+        <div class="spec-grid" style="margin-top:14px;">
+          <div class="spec-card p">
+            <div class="spec-head"><span class="spec-ar">السيرفر</span><span class="spec-en">Server — الخادم</span></div>
+            <div class="spec-def">حاسوب قوي مخصّص، يبقى يعمل باستمرار، ووظيفته الاستجابة لطلبات أجهزة أخرى — لا شخص يجلس عليه مباشرة عادة.</div>
+            <div class="spec-tip"><b>مثال:</b> فتح Gmail أو Google Drive يُرسل الطلب إلى سيرفرات جوجل، وهي من ترجع الجواب.</div>
+          </div>
+          <div class="spec-card t">
+            <div class="spec-head"><span class="spec-ar">مركز البيانات</span><span class="spec-en">Data Center</span></div>
+            <div class="spec-def">مبنى يضمّ آلاف السيرفرات مصفوفة بخزائن، مع تبريد مستمر وطاقة احتياطية وحراسة مشدّدة.</div>
+            <div class="spec-tip"><b>مثال:</b> هذا هو "مكان" السحابة فعليًا — ليست فضاءً مجرّدًا، بل مبانٍ حقيقية بمواقع محدّدة حول العالم.</div>
+          </div>
+        </div>
+
+        <div class="chapter-num" style="color:var(--red); margin-top:22px;"><span class="cn-num">٤</span><span class="cn-title">عمليات على المستندات — مثال iLovePDF</span></div>
         <p class="lead-paragraph" style="margin-top:0;">صيغة PDF قياسية للمستندات الرسمية لأنها تحافظ على التنسيق على أي جهاز يفتحها. أدوات مجانية عبر الإنترنت مثل <strong>iLovePDF</strong> تُنجز أشهر العمليات عليها بلا برامج مدفوعة:</p>
 
         <div class="components-grid">
@@ -2823,7 +2819,7 @@
           </div>
         </div>
 
-        <div class="chapter-num" style="color:var(--orange); margin-top:22px;"><span class="cn-num">٤</span><span class="cn-title">التخزين السحابي</span></div>
+        <div class="chapter-num" style="color:var(--orange); margin-top:22px;"><span class="cn-num">٥</span><span class="cn-title">التخزين السحابي</span></div>
         <p class="lead-paragraph" style="margin-top:0;">بدل حفظ الملف على جهاز واحد قد يتعطّل أو يُسرَق، يُحفظ على سيرفرات بعيدة داخل مركز بيانات — ويصل إليه أي جهاز متّصل بالإنترنت. المثال الأشهر: <strong>Google Drive</strong>.</p>
 
         <div class="screen-frame" style="max-width:380px;">
@@ -2839,7 +2835,7 @@
           <li><span class="bullet-mark">✔</span>«المشاركة» تمنح شخصًا رابطًا للملف دون إرساله كمرفق، ويمكن سحب الصلاحية في أي وقت.</li>
         </ul>
 
-        <div class="chapter-num" style="color:var(--purple); margin-top:22px;"><span class="cn-num">٥</span><span class="cn-title">الإيميل والمراسلات</span></div>
+        <div class="chapter-num" style="color:var(--purple); margin-top:22px;"><span class="cn-num">٦</span><span class="cn-title">الإيميل والمراسلات</span></div>
         <p class="lead-paragraph" style="margin-top:0;">البريد الإلكتروني الرسمي بالعمل اليوم غالبًا <strong>Gmail</strong> أو ما يشبهه. الحقول الثلاثة بأعلى الرسالة هي أكثر ما يُخطئ فيه المبتدئون:</p>
 
         <div class="screen-frame dark" style="max-width:420px;">
