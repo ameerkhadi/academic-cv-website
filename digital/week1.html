@@ -2706,7 +2706,7 @@
           <div class="spec-card">
             <div class="spec-head"><span class="spec-ar">المعالج</span><span class="spec-en">CPU</span></div>
             <div class="spec-def">"عقل" الجهاز — كل عملية تمرّ منه. كلما كان أسرع، فُتحت البرامج وأُنجزت الحسابات أسرع.</div>
-            <div class="spec-tip"><b>المطلوب عادةً:</b> جيلٌ حديث (i5 فأعلى) لعمل مكتبي يومي بلا تهنّج.</div>
+            <div class="spec-tip"><b>المطلوب عادةً:</b> جيلٌ حديث (i5 فأعلى) لأداء سلس ومستقر بالعمل المكتبي اليومي.</div>
           </div>
           <div class="spec-card g">
             <div class="spec-head"><span class="spec-ar">الذاكرة العشوائية</span><span class="spec-en">RAM</span></div>
@@ -2727,6 +2727,44 @@
             <div class="spec-head"><span class="spec-ar">نظام التشغيل</span><span class="spec-en">Operating System</span></div>
             <div class="spec-def">البرنامج الأساسي الذي يدير كل شيء آخر بالجهاز — Windows أو macOS غالبًا بالعمل المكتبي.</div>
             <div class="spec-tip"><b>المطلوب عادةً:</b> نسخة محدَّثة ومرخّصة رسميًّا — النسخ غير المرخّصة تتوقّف عن التحديثات الأمنية.</div>
+          </div>
+        </div>
+
+        <p class="lead-paragraph" style="margin-top:14px;"><strong>عدد الأنوية (Cores):</strong> كل نواة بالمعالج وحدة مستقلة تُنفّذ عملياتها الخاصة بالتوازي الحقيقي مع باقي الأنوية، لا بالتبديل السريع بينها فقط. زيادة عدد الأنوية تعني تنفيذ عدّة برامج بنفس اللحظة دون أن يُبطئ أحدها الآخر.</p>
+
+        <div class="spec-grid">
+          <div class="spec-card">
+            <svg viewBox="0 0 90 90" width="86" height="86" style="display:block;margin:2px auto 9px;">
+              <g stroke="var(--blue)" stroke-width="2">
+                <line x1="10" y1="20" x2="2" y2="20"/><line x1="10" y1="45" x2="2" y2="45"/><line x1="10" y1="70" x2="2" y2="70"/>
+                <line x1="80" y1="20" x2="88" y2="20"/><line x1="80" y1="45" x2="88" y2="45"/><line x1="80" y1="70" x2="88" y2="70"/>
+                <line x1="20" y1="10" x2="20" y2="2"/><line x1="45" y1="10" x2="45" y2="2"/><line x1="70" y1="10" x2="70" y2="2"/>
+                <line x1="20" y1="80" x2="20" y2="88"/><line x1="45" y1="80" x2="45" y2="88"/><line x1="70" y1="80" x2="70" y2="88"/>
+              </g>
+              <rect x="10" y="10" width="70" height="70" rx="4" fill="#eaf4ff" stroke="var(--blue)" stroke-width="2.5"/>
+              <rect x="22" y="22" width="46" height="46" rx="2" fill="#c9e2fb" stroke="var(--blue)" stroke-width="2"/>
+              <text x="45" y="49" text-anchor="middle" font-size="11" font-weight="700" fill="var(--blue)" font-family="'IBM Plex Sans Arabic',sans-serif">نواة</text>
+            </svg>
+            <div class="spec-head"><span class="spec-ar">نواة واحدة</span><span class="spec-en">Single-Core</span></div>
+            <div class="spec-def">ينفّذ عملية واحدة فعليًا بكل لحظة، ويتنقّل بينها بسرعة كبيرة توحي بالتزامن — يبدأ الجهاز بالتباطؤ عند فتح عدّة برامج معًا.</div>
+          </div>
+          <div class="spec-card g">
+            <svg viewBox="0 0 90 90" width="86" height="86" style="display:block;margin:2px auto 9px;">
+              <g stroke="var(--green)" stroke-width="2">
+                <line x1="10" y1="20" x2="2" y2="20"/><line x1="10" y1="45" x2="2" y2="45"/><line x1="10" y1="70" x2="2" y2="70"/>
+                <line x1="80" y1="20" x2="88" y2="20"/><line x1="80" y1="45" x2="88" y2="45"/><line x1="80" y1="70" x2="88" y2="70"/>
+                <line x1="20" y1="10" x2="20" y2="2"/><line x1="45" y1="10" x2="45" y2="2"/><line x1="70" y1="10" x2="70" y2="2"/>
+                <line x1="20" y1="80" x2="20" y2="88"/><line x1="45" y1="80" x2="45" y2="88"/><line x1="70" y1="80" x2="70" y2="88"/>
+              </g>
+              <rect x="10" y="10" width="70" height="70" rx="4" fill="#e6f6ea" stroke="var(--green)" stroke-width="2.5"/>
+              <rect x="16" y="16" width="26" height="26" rx="2" fill="#bfe8c9" stroke="var(--green)" stroke-width="1.6"/>
+              <rect x="48" y="16" width="26" height="26" rx="2" fill="#bfe8c9" stroke="var(--green)" stroke-width="1.6"/>
+              <rect x="16" y="48" width="26" height="26" rx="2" fill="#bfe8c9" stroke="var(--green)" stroke-width="1.6"/>
+              <rect x="48" y="48" width="26" height="26" rx="2" fill="#bfe8c9" stroke="var(--green)" stroke-width="1.6"/>
+            </svg>
+            <div class="spec-head"><span class="spec-ar">عدّة أنوية</span><span class="spec-en">Multi-Core</span></div>
+            <div class="spec-def">كل نواة تعمل باستقلالية وبالتوازي الحقيقي — فتح متصفّح وبرنامج تحرير وطباعة ملف بنفس اللحظة دون أن يُزاحم أحدها الآخر.</div>
+            <div class="spec-tip"><b>الشائع اليوم:</b> رباعية (٤) أو سداسية (٦) الأنوية للعمل المكتبي، وأكثر للتصميم والمونتاج.</div>
           </div>
         </div>
 
