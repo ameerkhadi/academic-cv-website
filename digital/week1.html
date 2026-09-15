@@ -127,7 +127,11 @@
     box-shadow:0 4px 10px rgba(0,0,0,0.4);
     transform:rotate(-1.2deg);
     transition:transform .15s ease, box-shadow .15s ease;
+    font:inherit;
+    cursor:pointer;
   }
+  .pin-badge:disabled,
+  .pin-badge.pin-soon{ cursor:default; }
   .pin-badge:hover,
   .pin-badge:focus-visible{
     transform:rotate(0deg) translateY(-2px);
@@ -2494,6 +2498,25 @@
       <div class="mh-row"><span class="mh-label">السنة:</span> <span class="mh-value">٢٠٢٦</span></div>
       <div class="mh-row"><span class="mh-label">الإيميل:</span> <span class="mh-value mh-email">amer.hadi@alshaab.edu.iq</span></div>
     </div>
+
+    <button type="button" class="pin-badge" id="platformBtn" onclick="showPlatformSoon()">
+      <span class="pin-head"></span>
+      <span class="pin-text">
+        <span class="pin-title" id="platformBtnTitle">الذهاب إلى المنصة</span>
+        <span class="pin-sub" id="platformBtnSub">منصّة المادة الإلكترونية</span>
+      </span>
+      <span class="pin-go" id="platformBtnGo">←</span>
+    </button>
+    <script>
+      function showPlatformSoon(){
+        var btn = document.getElementById('platformBtn');
+        document.getElementById('platformBtnTitle').textContent = 'قريبًا';
+        document.getElementById('platformBtnSub').textContent = 'تُفتح المنصة الأسبوع القادم';
+        document.getElementById('platformBtnGo').textContent = '⏳';
+        btn.classList.add('pin-soon');
+        btn.disabled = true;
+      }
+    </script>
   </div>
 <style>
   /* ---------- إضافات خاصة بدفتر التحول الرقمي: مسار المراحل ---------- */
@@ -2557,6 +2580,14 @@
   .cmp-table td:first-child{ text-align:right; font-weight:700; color:var(--ink); background:rgba(255,255,255,0.4); }
   .cmp-table .msft{ color:var(--blue); font-family:'IBM Plex Sans Arabic',sans-serif; direction:ltr; unicode-bidi:isolate; }
   .cmp-table .goog{ color:var(--green); font-family:'IBM Plex Sans Arabic',sans-serif; direction:ltr; unicode-bidi:isolate; }
+
+  /* ---------- ألوان تبويبات خاصة بدفتر التحول الرقمي: مختلفة عن دفتر الذكاء الاصطناعي ---------- */
+  .tab:nth-child(1){background:#0e7c86;}
+  .tab:nth-child(2){background:#c2410c;}
+  .tab:nth-child(3){background:#6d28d9;}
+  .tab:nth-child(4){background:#be123c;}
+  .tab:nth-child(5){background:#0369a1;}
+  .tab:nth-child(6){background:#4d7c0f;}
 </style>
   <div class="tabs">
     <button class="tab active" data-target="slide-1">١<br>الأسبوع الأول</button>
@@ -2578,14 +2609,13 @@
         <span class="chip chip-ch1">الأسبوع الأول</span>
         <h2 class="page-title">مدخل إلى تكنولوجيا المعلومات والتحوّل الرقمي</h2>
         <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
-        <p class="lead-paragraph">جلستان بالساعة فقط — فلا حشو ولا مصطلحات بلا تفسير. كل ما بهذه الصفحة تحتاجونه <span class="hl hl-yellow">فعلًا بمكتبكم</span>، مشروحًا بلغة بسيطة لمن لم يسبق أن درس حاسوبًا.</p>
 
         <!-- ===== ١ · ما هي تكنولوجيا المعلومات ===== -->
         <div class="section-heading" style="margin-top:14px;">
           <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
           <span>ما هي تكنولوجيا المعلومات؟</span>
         </div>
-        <p class="lead-paragraph">تعريفٌ واحد يكفي: تكنولوجيا المعلومات <strong>(IT — Information Technology)</strong> هي كل وسيلة تُستعمل لتخزين المعلومة أو معالجتها أو نقلها. خمسة عناصر فقط تُكوّنها معًا — لا عنصر واحد وحده يكفي:</p>
+        <p class="lead-paragraph">تكنولوجيا المعلومات <strong>(IT — Information Technology)</strong> هي كل وسيلة تُستعمل لتخزين المعلومة أو معالجتها أو نقلها. خمسة عناصر تُكوّنها معًا — لا عنصر واحد وحده يكفي:</p>
 
         <div class="components-grid">
           <div class="component-card">
@@ -2614,14 +2644,14 @@
             <span class="c-ex">People — من يشغّل هذا كلّه</span>
           </div>
         </div>
-        <p class="lead-paragraph" style="margin-top:8px;">اغيب عنصرٌ واحد فقط وتتعطّل الأربعة الباقية: حاسوبٌ بلا من يشغّله قطعة أثاث، وبيانات بلا شبكة تبقى حبيسة جهازها.</p>
+        <p class="lead-paragraph" style="margin-top:8px;">غياب عنصر واحد فقط يُعطّل الأربعة الباقية: حاسوبٌ بلا من يشغّله قطعة أثاث، وبيانات بلا شبكة تبقى حبيسة جهازها.</p>
 
         <!-- ===== ٢ · من التناظري إلى التحوّل الرقمي ===== -->
         <div class="section-heading" style="margin-top:26px;">
           <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
           <span>من التناظري إلى التحوّل الرقمي — أربع مراحل</span>
         </div>
-        <p class="lead-paragraph">ثلاث كلمات تُستعمل بالخطأ كمترادفات، وهي فعليًا <span class="hl hl-pink">ثلاث درجات مختلفة</span> من نفس الطريق. اقرؤوها بترتيبها:</p>
+        <p class="lead-paragraph">ثلاث كلمات تُستعمل بالخطأ كمترادفات، وهي فعليًا <span class="hl hl-pink">ثلاث درجات مختلفة</span> من نفس الطريق:</p>
 
         <div class="eras-track">
           <div class="era-box">
@@ -2637,7 +2667,7 @@
             <span class="era-ar">الرقمنة</span>
             <span class="era-en">Digitization</span>
             <div class="era-def">تحويل <strong>الشيء نفسه</strong> من صيغة تناظرية إلى صيغة رقمية، بلا تغيير بالإجراء.</div>
-            <div class="era-ex"><b>مثال:</b> مسح الملف الورقي وحفظه PDF — الإجراء ما زال يدويًا.</div>
+            <div class="era-ex"><b>مثال:</b> مسح الملف الورقي وحفظه PDF — الإجراء يبقى يدويًا.</div>
           </div>
           <div class="era-arrow">←</div>
           <div class="era-box">
@@ -2645,7 +2675,7 @@
             <span class="era-ar">رقمنة الأعمال</span>
             <span class="era-en">Digitalization</span>
             <div class="era-def">استعمال الأدوات الرقمية <strong>لتحسين الإجراء نفسه</strong>، لا فقط تحويل شكل الملف.</div>
-            <div class="era-ex"><b>مثال:</b> استمارة إلكترونية تُعبّأ وتُرسل مباشرة، بدل الطباعة والتوقيع والمسح.</div>
+            <div class="era-ex"><b>مثال:</b> استمارة إلكترونية تُعبَّأ وتُرسَل مباشرة، بدل الطباعة والتوقيع والمسح.</div>
           </div>
           <div class="era-arrow">←</div>
           <div class="era-box now">
@@ -2662,46 +2692,96 @@
           <div><b>الفرق الذي يلخّص الثلاثة:</b> الرقمنة تُحوّل <b>الملف</b>. رقمنة الأعمال تُحوّل <b>الإجراء</b>. التحوّل الرقمي يُحوّل <b>المؤسسة كلّها</b>. أغلب الدوائر تتوقّف عند الأولى وتظنّ أنها أنجزت الثالثة.</div>
         </div>
 
-        <!-- ===== ٣ · أدوات التكنولوجيا التي تحتاجها ===== -->
+        <!-- ===== ٣ · الشبكات: كيف تعمل ===== -->
+        <div class="section-heading" style="margin-top:26px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>الشبكات — كيف يصل الطلب إلى وجهته</span>
+        </div>
+        <p class="lead-paragraph">الشبكة (Network) عدّة أجهزة مرتبطة معًا تتبادل البيانات — أبسطها جهازان يتشاركان طابعة بمكتب واحد. الإنترنت شبكة الشبكات: ملايين الشبكات المحلية حول العالم مرتبطة ببعضها. أي طلب بسيط — فتح صفحة، أو رفع ملف — يمرّ بأربع محطات:</p>
+
+        <div class="eras-track">
+          <div class="era-box">
+            <span class="era-num">١</span>
+            <span class="era-ar">الجهاز</span>
+            <span class="era-en">Device</span>
+            <div class="era-def">نقطة انطلاق الطلب — حاسوب أو هاتف.</div>
+          </div>
+          <div class="era-arrow">←</div>
+          <div class="era-box">
+            <span class="era-num">٢</span>
+            <span class="era-ar">الراوتر</span>
+            <span class="era-en">Router</span>
+            <div class="era-def">يصل الجهاز بالشبكة المحلية، ويوجّه الطلب نحو الإنترنت.</div>
+          </div>
+          <div class="era-arrow">←</div>
+          <div class="era-box">
+            <span class="era-num">٣</span>
+            <span class="era-ar">مزوّد خدمة الإنترنت</span>
+            <span class="era-en">ISP</span>
+            <div class="era-def">الجسر بين الشبكة المحلية وبقية الإنترنت حول العالم.</div>
+          </div>
+          <div class="era-arrow">←</div>
+          <div class="era-box now">
+            <span class="era-num">٤</span>
+            <span class="era-ar">السيرفر</span>
+            <span class="era-en">Server</span>
+            <div class="era-def">الجهاز الذي يملك المعلومة المطلوبة، ويُعيد الجواب بنفس الطريق.</div>
+          </div>
+        </div>
+
+        <div class="spec-grid" style="margin-top:14px;">
+          <div class="spec-card p">
+            <div class="spec-head"><span class="spec-ar">السيرفر</span><span class="spec-en">Server — الخادم</span></div>
+            <div class="spec-def">حاسوب قوي مخصّص، يبقى يعمل باستمرار، ووظيفته الاستجابة لطلبات أجهزة أخرى — لا شخص يجلس عليه مباشرة عادة.</div>
+            <div class="spec-tip"><b>مثال:</b> فتح Gmail أو Google Drive يُرسل الطلب إلى سيرفرات جوجل، وهي من ترجع الجواب.</div>
+          </div>
+          <div class="spec-card t">
+            <div class="spec-head"><span class="spec-ar">مركز البيانات</span><span class="spec-en">Data Center</span></div>
+            <div class="spec-def">مبنى يضمّ آلاف السيرفرات مصفوفة بخزائن، مع تبريد مستمر وطاقة احتياطية وحراسة مشدّدة.</div>
+            <div class="spec-tip"><b>مثال:</b> هذا هو "مكان" السحابة فعليًا — ليست فضاءً مجرّدًا، بل مبانٍ حقيقية بمواقع محدّدة حول العالم.</div>
+          </div>
+        </div>
+
+        <!-- ===== ٤ · أدوات التكنولوجيا التي تحتاجها ===== -->
         <div class="section-heading" style="margin-top:26px;">
           <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
           <span>أدوات التكنولوجيا التي تحتاجها</span>
         </div>
-        <p class="lead-paragraph">أربعة أشياء فقط تكفي أي موظّف اليوم — بلا تعقيد وبلا شهادة برمجة.</p>
+        <p class="lead-paragraph">خمسة أشياء تكفي أي موظّف اليوم — بلا تعقيد وبلا شهادة برمجة.</p>
 
         <div class="chapter-num" style="color:var(--blue);"><span class="cn-num">١</span><span class="cn-title">الحاسوب ومواصفاته</span></div>
-        <p class="lead-paragraph" style="margin-top:0;">حين تشترون حاسوبًا أو تطلبون واحدًا من دائرتكم، هذه الكلمات الخمس هي كل ما تحتاجون فهمه:</p>
+        <p class="lead-paragraph" style="margin-top:0;">عند شراء حاسوب أو طلبه من الدائرة، هذه الكلمات الخمس هي كل ما يلزم فهمه:</p>
 
         <div class="spec-grid">
           <div class="spec-card">
             <div class="spec-head"><span class="spec-ar">المعالج</span><span class="spec-en">CPU</span></div>
-            <div class="spec-def">"عقل" الجهاز — كل عملية تمرّ منه. كلما كان أسرع، كلما فُتحت البرامج وأُنجزت الحسابات أسرع.</div>
-            <div class="spec-tip"><b>تدورون عليه:</b> جيلٌ حديث (i5 فأعلى) لعمل مكتبي يومي بلا تهنّج.</div>
+            <div class="spec-def">"عقل" الجهاز — كل عملية تمرّ منه. كلما كان أسرع، فُتحت البرامج وأُنجزت الحسابات أسرع.</div>
+            <div class="spec-tip"><b>المطلوب عادةً:</b> جيلٌ حديث (i5 فأعلى) لعمل مكتبي يومي بلا تهنّج.</div>
           </div>
           <div class="spec-card g">
             <div class="spec-head"><span class="spec-ar">الذاكرة العشوائية</span><span class="spec-en">RAM</span></div>
             <div class="spec-def">طاولة العمل المؤقّتة: كل ملف مفتوح الآن يشغل مكانًا عليها. تُفرَّغ كليًا عند إطفاء الجهاز.</div>
-            <div class="spec-tip"><b>تدورون عليه:</b> ٨ جيجابايت حدٌّ أدنى مريح لفتح عدّة برامج معًا.</div>
+            <div class="spec-tip"><b>المطلوب عادةً:</b> ٨ جيجابايت حدٌّ أدنى مريح لفتح عدّة برامج معًا.</div>
           </div>
           <div class="spec-card o">
             <div class="spec-head"><span class="spec-ar">التخزين</span><span class="spec-en">HDD / SSD</span></div>
-            <div class="spec-def">الخزانة الدائمة: كل ملف تحفظونه يبقى هنا حتى بعد الإطفاء. الـSSD أسرع بكثير من الـHDD القديم.</div>
-            <div class="spec-tip"><b>تدورون عليه:</b> SSD لا HDD — الفرق بالسرعة يُحسّ من أول تشغيل.</div>
+            <div class="spec-def">الخزانة الدائمة: كل ملف يُحفظ هنا يبقى حتى بعد الإطفاء. الـSSD أسرع بكثير من الـHDD القديم.</div>
+            <div class="spec-tip"><b>المطلوب عادةً:</b> SSD لا HDD — الفرق بالسرعة يُحسّ من أول تشغيل.</div>
           </div>
           <div class="spec-card p">
             <div class="spec-head"><span class="spec-ar">الشاشة</span><span class="spec-en">Display</span></div>
             <div class="spec-def">حجمها بالإنش (قطريًا)، ودقّتها (عدد النقاط) تحدّد وضوح النص والصور.</div>
-            <div class="spec-tip"><b>تدورون عليه:</b> ١٤ إنش فأكبر للعمل المكتبي المريح.</div>
+            <div class="spec-tip"><b>المطلوب عادةً:</b> ١٤ إنش فأكبر للعمل المكتبي المريح.</div>
           </div>
           <div class="spec-card t">
             <div class="spec-head"><span class="spec-ar">نظام التشغيل</span><span class="spec-en">Operating System</span></div>
             <div class="spec-def">البرنامج الأساسي الذي يدير كل شيء آخر بالجهاز — Windows أو macOS غالبًا بالعمل المكتبي.</div>
-            <div class="spec-tip"><b>تدورون عليه:</b> نسخة محدَّثة ومرخّصة رسميًّا — النسخ غير المرخّصة تتوقّف عن التحديثات الأمنية.</div>
+            <div class="spec-tip"><b>المطلوب عادةً:</b> نسخة محدَّثة ومرخّصة رسميًّا — النسخ غير المرخّصة تتوقّف عن التحديثات الأمنية.</div>
           </div>
         </div>
 
-        <div class="chapter-num" style="color:var(--green); margin-top:22px;"><span class="cn-num">٢</span><span class="cn-title">البرامج التي يجب أن تعرفها</span></div>
-        <p class="lead-paragraph" style="margin-top:0;">حزمتان تغطّيان تقريبًا كل مستند تكتبونه — وكثير من الدوائر تستعمل الاثنتين معًا:</p>
+        <div class="chapter-num" style="color:var(--green); margin-top:22px;"><span class="cn-num">٢</span><span class="cn-title">البرامج التي يجب معرفتها</span></div>
+        <p class="lead-paragraph" style="margin-top:0;">حزمتان تغطّيان تقريبًا كل مستند، وكثير من الدوائر تستعمل الاثنتين معًا:</p>
 
         <table class="cmp-table">
           <tr><th>الغرض</th><th>Microsoft Office</th><th>Google Workspace</th></tr>
@@ -2709,28 +2789,58 @@
           <tr><td>جدول بيانات</td><td class="msft">Excel</td><td class="goog">Sheets</td></tr>
           <tr><td>عرض تقديمي</td><td class="msft">PowerPoint</td><td class="goog">Slides</td></tr>
         </table>
-        <p class="lead-paragraph" style="margin-top:0;">الفرق العملي: ملفّات <strong>Office</strong> تُحفظ على جهازكم افتراضيًا وتحتاج ترخيصًا، بينما <strong>Google Workspace</strong> يعمل من المتصفّح مباشرة ويُحفظ تلقائيًا على السحابة — وهذا ما نشرحه بالفقرة القادمة.</p>
+        <p class="lead-paragraph" style="margin-top:0;">الفرق العملي: ملفّات <strong>Office</strong> تُحفظ على الجهاز افتراضيًا وتحتاج ترخيصًا، بينما <strong>Google Workspace</strong> يعمل من المتصفّح مباشرة ويُحفظ تلقائيًا على السحابة.</p>
+        <p class="lead-paragraph"><strong>ذكاء اصطناعي (AI):</strong> برامج مساعدة تفهم اللغة الطبيعية وتساعد على الكتابة والتلخيص والتحليل بمجرّد طلبٍ بجملة عادية، بلا أوامر برمجية. أداة رابعة إلى جانب الأوفس، لا بديلًا عنه.</p>
 
-        <p class="lead-paragraph"><strong>ذكاء اصطناعي (AI):</strong> برامج مساعدة تفهم لغتكم الطبيعية وتساعدكم على الكتابة والتلخيص والتحليل بمجرّد أن تطلبوا منها بجملة عادية — بلا حاجة لتعلّم أوامر برمجية. سنتوسّع بها لاحقًا؛ اليوم يكفي أن تعرفوا أنها <span class="hl hl-yellow">أداة رابعة</span> إلى جانب الأوفس، لا بديلًا عنه.</p>
+        <div class="chapter-num" style="color:var(--red); margin-top:22px;"><span class="cn-num">٣</span><span class="cn-title">عمليات على المستندات — مثال iLovePDF</span></div>
+        <p class="lead-paragraph" style="margin-top:0;">صيغة PDF قياسية للمستندات الرسمية لأنها تحافظ على التنسيق على أي جهاز يفتحها. أدوات مجانية عبر الإنترنت مثل <strong>iLovePDF</strong> تُنجز أشهر العمليات عليها بلا برامج مدفوعة:</p>
 
-        <div class="chapter-num" style="color:var(--orange); margin-top:22px;"><span class="cn-num">٣</span><span class="cn-title">التخزين السحابي</span></div>
-        <p class="lead-paragraph" style="margin-top:0;">بدل حفظ الملف على جهاز واحد قد يتعطّل أو يُسرَق، تحفظونه على خوادم بعيدة تصلون إليها من أي جهاز متّصل بالإنترنت. المثال الأشهر: <strong>Google Drive</strong>.</p>
+        <div class="components-grid">
+          <div class="component-card">
+            <svg class="c-icon" viewBox="0 0 40 40"><rect x="6" y="8" width="14" height="18" rx="1.5" fill="#eaf4ff" stroke="var(--blue)" stroke-width="2"/><rect x="20" y="14" width="14" height="18" rx="1.5" fill="#eaf4ff" stroke="var(--blue)" stroke-width="2"/></svg>
+            <span class="c-name">دمج</span>
+            <span class="c-ex">Merge — توحيد عدّة ملفات بملف واحد</span>
+          </div>
+          <div class="component-card">
+            <svg class="c-icon" viewBox="0 0 40 40"><rect x="10" y="6" width="20" height="28" rx="2" fill="#e6f6ea" stroke="var(--green)" stroke-width="2"/><path d="M10 20 h20" stroke="var(--green)" stroke-width="2" stroke-dasharray="3 2"/></svg>
+            <span class="c-name">فصل</span>
+            <span class="c-ex">Split — استخراج صفحات محدّدة كملف منفصل</span>
+          </div>
+          <div class="component-card">
+            <svg class="c-icon" viewBox="0 0 40 40"><rect x="12" y="10" width="16" height="20" rx="2" fill="#fdf0ea" stroke="var(--orange)" stroke-width="2"/><path d="M16 16 L24 24 M24 16 L16 24" stroke="var(--orange)" stroke-width="2"/></svg>
+            <span class="c-name">ضغط</span>
+            <span class="c-ex">Compress — تصغير حجم الملف لإرساله بسهولة</span>
+          </div>
+          <div class="component-card">
+            <svg class="c-icon" viewBox="0 0 40 40"><rect x="8" y="10" width="24" height="20" rx="2" fill="#f3e9fb" stroke="var(--purple)" stroke-width="2"/><path d="M13 20 h14 M20 15 l0 10" stroke="var(--purple)" stroke-width="2"/></svg>
+            <span class="c-name">تحويل</span>
+            <span class="c-ex">Convert — بين PDF وWord للتعديل عليه</span>
+          </div>
+          <div class="component-card">
+            <svg class="c-icon" viewBox="0 0 40 40"><rect x="10" y="6" width="20" height="28" rx="2" fill="#fdf3f2" stroke="var(--red)" stroke-width="2"/><path d="M14 26 q4 -6 8 0 q4 -6 8 0" fill="none" stroke="var(--red)" stroke-width="2"/></svg>
+            <span class="c-name">توقيع إلكتروني</span>
+            <span class="c-ex">Sign — إضافة توقيع رقمي بلا طباعة</span>
+          </div>
+        </div>
+
+        <div class="chapter-num" style="color:var(--orange); margin-top:22px;"><span class="cn-num">٤</span><span class="cn-title">التخزين السحابي</span></div>
+        <p class="lead-paragraph" style="margin-top:0;">بدل حفظ الملف على جهاز واحد قد يتعطّل أو يُسرَق، يُحفظ على سيرفرات بعيدة داخل مركز بيانات — ويصل إليه أي جهاز متّصل بالإنترنت. المثال الأشهر: <strong>Google Drive</strong>.</p>
 
         <div class="screen-frame" style="max-width:380px;">
           <div class="sf-bar"><span class="sf-en">Google Drive</span></div>
-          <div class="sf-row"><span class="sf-num">١</span><span class="sf-name">My Drive<span class="sf-sub">ملفّاتي</span></span></div>
-          <div class="sf-row"><span class="sf-num">٢</span><span class="sf-name">Shared with me<span class="sf-sub">شارَكَها معي أحد</span></span></div>
-          <div class="sf-row"><span class="sf-num">٣</span><span class="sf-name">Recent<span class="sf-sub">آخر ما فتحتُه</span></span></div>
+          <div class="sf-row"><span class="sf-num">١</span><span class="sf-name">My Drive<span class="sf-sub">الملفّات الخاصة</span></span></div>
+          <div class="sf-row"><span class="sf-num">٢</span><span class="sf-name">Shared with me<span class="sf-sub">شارَكَها أحدٌ آخر</span></span></div>
+          <div class="sf-row"><span class="sf-num">٣</span><span class="sf-name">Recent<span class="sf-sub">آخر ما فُتح</span></span></div>
           <div class="sf-row"><span class="sf-num">٤</span><span class="sf-name">Starred<span class="sf-sub">المفضَّلة بنجمة</span></span></div>
           <div class="sf-row"><span class="sf-num">٥</span><span class="sf-name">Trash<span class="sf-sub">سلّة المهملات</span></span></div>
         </div>
         <ul class="bullet-list">
-          <li><span class="bullet-mark">✔</span>ارفعوا الملف مرّة واحدة، وافتحوه من الجوال أو الحاسوب أو أي جهاز — نفس النسخة بالضبط.</li>
-          <li><span class="bullet-mark">✔</span>«المشاركة» تمنح شخصًا رابطًا لملفّكم دون إرساله كمرفق — وتقدرون تسحبون الصلاحية وقتما شئتم.</li>
+          <li><span class="bullet-mark">✔</span>رفع الملف مرّة واحدة يتيح فتحه من الجوال أو الحاسوب أو أي جهاز — نفس النسخة بالضبط.</li>
+          <li><span class="bullet-mark">✔</span>«المشاركة» تمنح شخصًا رابطًا للملف دون إرساله كمرفق، ويمكن سحب الصلاحية في أي وقت.</li>
         </ul>
 
-        <div class="chapter-num" style="color:var(--purple); margin-top:22px;"><span class="cn-num">٤</span><span class="cn-title">الإيميل والمراسلات</span></div>
-        <p class="lead-paragraph" style="margin-top:0;">البريد الإلكتروني الرسمي بالعمل اليوم غالبًا <strong>Gmail</strong> (أو ما يشبهه). الحقول الثلاثة بأعلى الرسالة هي أكثر ما يُخطئ فيه المبتدئون:</p>
+        <div class="chapter-num" style="color:var(--purple); margin-top:22px;"><span class="cn-num">٥</span><span class="cn-title">الإيميل والمراسلات</span></div>
+        <p class="lead-paragraph" style="margin-top:0;">البريد الإلكتروني الرسمي بالعمل اليوم غالبًا <strong>Gmail</strong> أو ما يشبهه. الحقول الثلاثة بأعلى الرسالة هي أكثر ما يُخطئ فيه المبتدئون:</p>
 
         <div class="screen-frame dark" style="max-width:420px;">
           <div class="sf-bar"><span class="sf-en">New Message</span></div>
@@ -2742,10 +2852,10 @@
         <div class="try-box">
           <div class="try-title">
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2"><path d="M9 3h6v5l4 9a2 2 0 0 1-2 3H7a2 2 0 0 1-2-3l4-9z" stroke-linejoin="round"/><path d="M9 3h6" stroke-linecap="round"/></svg>
-            جرّب بنفسك — كتابة إيميل رسمي
+            مثال تطبيقي — تذكير رسمي بموعد اجتماع
           </div>
-          <div class="try-line"><span class="try-tag try-do">السيناريو</span><span>تُرسلون تذكيرًا بموعد اجتماع الأحد. <strong>To:</strong> رئيس القسم (المطلوب حضوره). <strong>Cc:</strong> السكرتارية (للعلم وترتيب القاعة). <strong>Bcc:</strong> نفسكم (نسخة تصلكم توثّق أنكم أرسلتموه).</span></div>
-          <div class="try-line"><span class="try-tag try-see">افعلوا</span><span>افتحوا Gmail، اضغطوا <strong>Compose</strong>، واكتبوا موضوعًا واضحًا مثل «تذكير — اجتماع الأحد ١٠ صباحًا»، ثم املأوا الحقول الثلاثة بحسب السيناريو أعلاه.</span></div>
+          <div class="try-line"><span class="try-tag try-do">الموقف</span><span>تذكيرٌ بموعد اجتماع الأحد. <strong>To:</strong> رئيس القسم (المطلوب حضوره). <strong>Cc:</strong> السكرتارية (للعلم وترتيب القاعة). <strong>Bcc:</strong> المُرسِل نفسه (نسخة توثّق الإرسال).</span></div>
+          <div class="try-line"><span class="try-tag try-see">الخطوات</span><span>فتح Gmail، والضغط على <strong>Compose</strong>، وكتابة موضوع واضح مثل «تذكير — اجتماع الأحد ١٠ صباحًا»، ثم تعبئة الحقول الثلاثة بحسب الموقف أعلاه.</span></div>
         </div>
 
         <div class="section-heading" style="margin-top:26px;">
@@ -2759,10 +2869,111 @@
           <li><span class="gloss-ar">التحوّل الرقمي</span> <span class="gloss-term">(Digital Transformation)</span>: تغيير شامل بثقافة المؤسسة وهيكلها عبر التقنية.</li>
           <li><span class="gloss-ar">المعالج</span> <span class="gloss-term">(CPU)</span>: الجزء الذي يُنفّذ كل عملية حسابية بالجهاز.</li>
           <li><span class="gloss-ar">الذاكرة العشوائية</span> <span class="gloss-term">(RAM)</span>: مساحة العمل المؤقّتة التي تُفرَّغ عند الإطفاء.</li>
-          <li><span class="gloss-ar">التخزين السحابي</span> <span class="gloss-term">(Cloud Storage)</span>: حفظ الملفّات على خوادم بعيدة تصلون إليها من أي جهاز.</li>
+          <li><span class="gloss-ar">السيرفر</span> <span class="gloss-term">(Server)</span>: جهاز مخصّص يستجيب باستمرار لطلبات أجهزة أخرى.</li>
+          <li><span class="gloss-ar">مركز البيانات</span> <span class="gloss-term">(Data Center)</span>: مبنى يضمّ آلاف السيرفرات، وهو المكان الفعلي للسحابة.</li>
+          <li><span class="gloss-ar">التخزين السحابي</span> <span class="gloss-term">(Cloud Storage)</span>: حفظ الملفّات على سيرفرات بعيدة تصلها أي جهاز متّصل.</li>
           <li><span class="gloss-ar">نسخة مطّلع عليه</span> <span class="gloss-term">(Cc)</span>: يرى الرسالة للعلم، بلا طلب ردّ منه.</li>
           <li><span class="gloss-ar">نسخة مخفية</span> <span class="gloss-term">(Bcc)</span>: يراها المستلم، ولا يظهر اسمه لبقية المستلمين.</li>
         </ul>
+
+        <div class="section-heading" style="margin-top:26px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>أسئلة للمراجعة</span>
+        </div>
+        <p class="quiz-note">بدون حلول — الإجابة تُكتب بالمساحة الفارغة، والحل يُناقش بالمحاضرة الجاية.</p>
+
+        <div class="mcq-item">
+          <span class="q-num">١.</span> تكنولوجيا المعلومات (IT) تُعرَّف بأنها:
+          <ul class="mcq-options">
+            <li><span class="opt-letter">أ)</span> الحاسوب فقط</li>
+            <li><span class="opt-letter">ب)</span> كل وسيلة تُستعمل لتخزين المعلومة أو معالجتها أو نقلها</li>
+            <li><span class="opt-letter">ج)</span> الإنترنت فقط</li>
+            <li><span class="opt-letter">د)</span> البرمجة فقط</li>
+          </ul>
+        </div>
+        <div class="mcq-item">
+          <span class="q-num">٢.</span> الفرق بين "الرقمنة" و"رقمنة الأعمال" هو:
+          <ul class="mcq-options">
+            <li><span class="opt-letter">أ)</span> لا فرق، مترادفان تمامًا</li>
+            <li><span class="opt-letter">ب)</span> الرقمنة تُحوّل صيغة الملف، ورقمنة الأعمال تُحسّن الإجراء نفسه</li>
+            <li><span class="opt-letter">ج)</span> رقمنة الأعمال أقدم تاريخيًا من الرقمنة</li>
+            <li><span class="opt-letter">د)</span> الرقمنة خاصة بالشركات فقط</li>
+          </ul>
+        </div>
+        <div class="mcq-item">
+          <span class="q-num">٣.</span> الذاكرة العشوائية (RAM) تُفرَّغ:
+          <ul class="mcq-options">
+            <li><span class="opt-letter">أ)</span> كل ساعة تلقائيًا</li>
+            <li><span class="opt-letter">ب)</span> عند إغلاق البرنامج فقط</li>
+            <li><span class="opt-letter">ج)</span> عند إطفاء الجهاز</li>
+            <li><span class="opt-letter">د)</span> لا تُفرَّغ أبدًا</li>
+          </ul>
+        </div>
+        <div class="mcq-item">
+          <span class="q-num">٤.</span> خانة "نسخة مخفية" (Bcc) بالإيميل تعني أنّ المستلم بها:
+          <ul class="mcq-options">
+            <li><span class="opt-letter">أ)</span> يظهر اسمه لبقية المستلمين</li>
+            <li><span class="opt-letter">ب)</span> يرى الرسالة، ولا يعرف بقية المستلمين بوجوده</li>
+            <li><span class="opt-letter">ج)</span> مطلوب منه الردّ إلزاميًا</li>
+            <li><span class="opt-letter">د)</span> تُحذف الرسالة عنده تلقائيًا بعد ساعة</li>
+          </ul>
+        </div>
+        <div class="mcq-item">
+          <span class="q-num">٥.</span> مركز البيانات (Data Center) هو:
+          <ul class="mcq-options">
+            <li><span class="opt-letter">أ)</span> برنامج لتنظيم الملفات</li>
+            <li><span class="opt-letter">ب)</span> مبنى يضمّ آلاف السيرفرات، بتبريد وطاقة احتياطية</li>
+            <li><span class="opt-letter">ج)</span> نوع من أنواع الذاكرة العشوائية</li>
+            <li><span class="opt-letter">د)</span> اسم آخر للراوتر</li>
+          </ul>
+        </div>
+
+        <div class="section-heading" style="margin-top:22px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>أسئلة سيناريو (إجابة قصيرة)</span>
+        </div>
+        <div class="mcq-item">
+          <span class="q-num">١.</span> موظف يستقبل يوميًا عشرين ملف سكان ورقي بحاجة أرشفتها إلكترونيًا، فيمسحها ويحفظها PDF بلا أي تغيير آخر بالإجراء. أي مرحلة من مراحل التحوّل الرقمي يمثّلها هذا العمل، ولماذا؟
+          <span class="blank-line"></span>
+          <span class="blank-line"></span>
+        </div>
+        <div class="mcq-item">
+          <span class="q-num">٢.</span> دائرة استلمت ثلاثة ملفّات PDF منفصلة تخصّ معاملة واحدة، وتحتاج تسليمها للجهة الأعلى كملف واحد مرتّب. ما العملية المناسبة على أداة مثل iLovePDF؟
+          <span class="blank-line"></span>
+          <span class="blank-line"></span>
+        </div>
+        <div class="mcq-item">
+          <span class="q-num">٣.</span> مدير أرسل رسالة تحوي معلومة حسّاسة بخانة To لعشرة موظفين، فظهرت أسماء الجميع لبعضهم البعض. ما الخطأ، وما الحقل الذي كان ينبغي استعماله بدلًا من ذلك؟
+          <span class="blank-line"></span>
+          <span class="blank-line"></span>
+        </div>
+
+        <div class="section-heading" style="margin-top:22px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>أسئلة مقالية</span>
+        </div>
+        <div class="mcq-item">
+          <span class="q-num">١.</span> الفرق بين الرقمنة ورقمنة الأعمال والتحوّل الرقمي، بمثال واحد متكامل من واقع دائرة حكومية يمرّ بالمراحل الثلاث بالترتيب.
+          <span class="blank-line"></span>
+          <span class="blank-line"></span>
+          <span class="blank-line"></span>
+        </div>
+        <div class="mcq-item">
+          <span class="q-num">٢.</span> أهمية مركز البيانات والسيرفر في عمل أداة تخزين سحابي مثل Google Drive، وما الذي يحدث فعليًا حين يُرفع إليها ملف.
+          <span class="blank-line"></span>
+          <span class="blank-line"></span>
+          <span class="blank-line"></span>
+        </div>
+
+        <div class="section-heading" style="margin-top:22px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>صح أو خطأ</span>
+        </div>
+        <div class="tf-item"><span>١. الرقمنة (Digitization) تعني تغييرًا شاملًا بثقافة المؤسسة وهيكلها.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+        <div class="tf-item"><span>٢. الـSSD أسرع من الـHDD بالتخزين.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+        <div class="tf-item"><span>٣. Google Workspace يحتاج ترخيصًا يُحفظ على الجهاز، تمامًا مثل Microsoft Office.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+        <div class="tf-item"><span>٤. السيرفر جهاز يبقى يعمل باستمرار ليستجيب لطلبات أجهزة أخرى.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+        <div class="tf-item"><span>٥. عملية "الدمج" (Merge) بأداة iLovePDF تُقسّم ملفًا واحدًا إلى عدّة ملفات.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
 
         <div class="mini-note">نهاية المحاضرة الأولى — إعداد: أ.م.د أمير هادي ★</div>
         <div class="page-nav">
