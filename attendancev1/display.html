@@ -114,7 +114,7 @@
     <div class="glass side">
       <div class="stat"><div class="big" id="cnt" style="color:var(--green)">0</div>
         <div class="label">سجّلوا حضورهم</div></div>
-      <div class="stat"><div class="big" id="rem" style="color:var(--amber)">122</div>
+      <div class="stat"><div class="big" id="rem" style="color:var(--amber)">124</div>
         <div class="label">لم يسجّلوا بعد</div></div>
       <div class="tabs">
         <button class="tab active" id="tabP" onclick="switchTab('present')">الحاضرون <i id="nP">0</i></button>
@@ -335,7 +335,7 @@ async function tick(){
 
     document.getElementById('lifeTxt').textContent = life;
     document.getElementById('cnt').textContent = st.count || 0;
-    document.getElementById('rem').textContent = (st.total || 122) - (st.count || 0);
+    document.getElementById('rem').textContent = (st.total || 124) - (st.count || 0);
     document.getElementById('nP').textContent = st.count || 0;
 
     window.__recent = st.recent || [];
