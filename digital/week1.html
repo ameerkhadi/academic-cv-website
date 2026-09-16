@@ -1989,32 +1989,59 @@
   /* أيقونة الاستدعاء داخل شريط الأدوات */
   .ann-bar .sheet-toggle.on{ background:rgba(255,255,255,0.2); border-color:rgba(255,255,255,0.4); }
 
-  /* ---------- الموقّت العائم ---------- */
+  /* ---------- الموقّت العائم: شكل قرص ساعة خشبي صغير ---------- */
   .timer{
     position:fixed; z-index:320; display:none;
-    align-items:center; gap:8px;
-    background:rgba(28,22,16,0.94); color:#f3ece0;
-    border:2px solid var(--red); border-radius:18px;
-    padding:7px 12px; box-shadow:0 10px 26px rgba(0,0,0,0.5);
-    font-family:'Aref Ruqaa', serif; backdrop-filter:blur(4px);
+    flex-direction:column; align-items:center; gap:8px;
+    width:126px;
+    background:linear-gradient(#241a10, #17110a); color:#f3ece0;
+    border:2.5px solid #caa24a; border-radius:20px;
+    padding:8px 9px 11px; box-shadow:0 12px 28px rgba(0,0,0,0.55), inset 0 0 0 1px rgba(255,255,255,0.05);
+    font-family:'Aref Ruqaa', serif;
   }
   .timer.open{ display:flex; }
-  .timer .tm-grip{ cursor:grab; color:#cbbfae; font-size:16px; touch-action:none; user-select:none; }
+  .timer .tm-top{ display:flex; align-items:center; justify-content:space-between; width:100%; }
+  .timer .tm-grip{ cursor:grab; color:#cbbfae; font-size:15px; touch-action:none; user-select:none; }
   .timer .tm-grip:active{ cursor:grabbing; }
-  .timer .tm-display{
-    font-family:'Caveat', cursive; font-weight:700; font-size:27px;
-    min-width:66px; text-align:center; direction:ltr; unicode-bidi:isolate; color:#f5c453;
+  .timer .tm-close{
+    font-size:12px; color:#ffb4ab; background:transparent; border:none; cursor:pointer;
+    width:20px; height:20px; padding:0; line-height:1;
   }
-  .timer button{
+  .timer .tm-close:hover{ color:#ff8a7a; }
+  .timer .tm-dial{
+    width:92px; height:92px; border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, #3a2c18, #1a130b 72%);
+    border:3px solid #caa24a;
+    box-shadow:inset 0 2px 7px rgba(0,0,0,0.55), 0 3px 8px rgba(0,0,0,0.4);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .timer .tm-display{
+    font-family:'Caveat', cursive; font-weight:700; font-size:28px;
+    direction:ltr; unicode-bidi:isolate; color:#f5c453;
+    text-shadow:0 0 8px rgba(245,196,83,0.35);
+  }
+  .timer .tm-controls{ display:flex; align-items:center; gap:10px; }
+  .timer .tm-toggle, .timer .tm-reset{
     font-family:'Aref Ruqaa', serif; font-size:14px; font-weight:700;
-    color:#f3ece0; background:rgba(255,255,255,0.08); border:1.5px solid rgba(255,255,255,0.2);
-    border-radius:50%; width:29px; height:29px; padding:0; cursor:pointer; line-height:1;
+    color:#f3ece0; background:rgba(255,255,255,0.08); border:1.5px solid rgba(255,255,255,0.22);
+    border-radius:50%; width:30px; height:30px; padding:0; cursor:pointer; line-height:1;
     display:inline-flex; align-items:center; justify-content:center;
   }
-  .timer button:hover{ background:rgba(255,255,255,0.18); }
+  .timer .tm-toggle:hover, .timer .tm-reset:hover{ background:rgba(255,255,255,0.18); }
   .timer button:focus-visible{ outline:2px solid #f0b400; outline-offset:2px; }
   .timer .tm-toggle.on{ background:#1f7a3d; border-color:rgba(255,255,255,0.35); }
-  .timer .tm-close{ color:#ffb4ab; }
+
+  /* تنبيه ٤٥ دقيقة: نبض بصري بلا صوت — يجذب الانتباه لفترة قصيرة ثم يتوقّف تلقائيًا */
+  @keyframes tm-pulse{
+    0%, 100%{ box-shadow:0 12px 28px rgba(0,0,0,0.55), 0 0 0 0 rgba(209,52,43,0); border-color:#caa24a; }
+    50%{ box-shadow:0 12px 28px rgba(0,0,0,0.55), 0 0 0 14px rgba(209,52,43,0.38); border-color:var(--red); }
+  }
+  .timer.alert{ animation:tm-pulse 0.85s ease-in-out infinite; }
+  @keyframes tm-btn-pulse{
+    0%, 100%{ box-shadow:0 0 0 0 rgba(209,52,43,0); background:rgba(255,255,255,0.08); }
+    50%{ box-shadow:0 0 0 9px rgba(209,52,43,0.4); background:rgba(209,52,43,0.4); }
+  }
+  .ann-bar .tm-flash{ animation:tm-btn-pulse 0.85s ease-in-out infinite; }
 
   /* ---------- الخريطة مطويّة: نفس محتوى الشجرة، فلا تُعرض إلا لمن يطلبها ---------- */
   .map-fold{
@@ -4307,16 +4334,21 @@
   var timer = document.createElement('div');
   timer.className = 'timer';
   timer.innerHTML =
-    '<span class="tm-grip" title="اسحب لتحريك الموقّت">⠿</span>' +
-    '<span class="tm-display">٠٠:٠٠</span>' +
-    '<button type="button" class="tm-toggle" title="تشغيل (T)">▶</button>' +
-    '<button type="button" class="tm-reset" title="تصفير">↺</button>' +
-    '<button type="button" class="tm-close" title="إغلاق الموقّت">✕</button>';
+    '<div class="tm-top">' +
+      '<span class="tm-grip" title="اسحب لتحريك الموقّت">⠿</span>' +
+      '<button type="button" class="tm-close" title="إغلاق الموقّت">✕</button>' +
+    '</div>' +
+    '<div class="tm-dial"><span class="tm-display">٠٠:٠٠</span></div>' +
+    '<div class="tm-controls">' +
+      '<button type="button" class="tm-toggle" title="تشغيل (T)">▶</button>' +
+      '<button type="button" class="tm-reset" title="تصفير">↺</button>' +
+    '</div>';
   document.body.appendChild(timer);
 
   var tmDisplay = timer.querySelector('.tm-display');
   var tmToggle  = timer.querySelector('.tm-toggle');
   var tmSeconds = 0, tmRunning = false, tmInt = null;
+  var tm45Fired = false, tmAlertTO = null;
   var TM_AR = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
   function tmArabic(n){ return String(n).replace(/[0-9]/g, function(d){ return TM_AR[+d]; }); }
   function tmPaint(){
@@ -4326,12 +4358,29 @@
   }
   tmPaint();
 
+  /* تنبيه بصري بلا صوت عند بلوغ ٤٥ دقيقة: نبض لثوانٍ معدودة ثم يتوقّف من نفسه،
+     على قرص الموقّت وعلى زرّه بالشريط معًا — فيُلاحَظ حتى لو كانت اللوحة مغلقة. */
+  function tmClearAlert(){
+    if(tmAlertTO){ clearTimeout(tmAlertTO); tmAlertTO = null; }
+    timer.classList.remove('alert');
+    if(timerBtn) timerBtn.classList.remove('tm-flash');
+  }
+  function tmFireAlert(){
+    tmClearAlert();
+    timer.classList.add('alert');
+    if(timerBtn) timerBtn.classList.add('tm-flash');
+    tmAlertTO = setTimeout(tmClearAlert, 6500);
+  }
+
   function tmStart(){
     if(tmRunning) return;
     tmRunning = true;
     tmToggle.textContent = '⏸';
     tmToggle.classList.add('on');
-    tmInt = setInterval(function(){ tmSeconds++; tmPaint(); }, 1000);
+    tmInt = setInterval(function(){
+      tmSeconds++; tmPaint();
+      if(tmSeconds === 2700 && !tm45Fired){ tm45Fired = true; tmFireAlert(); }
+    }, 1000);
   }
   function tmPause(){
     tmRunning = false;
@@ -4341,7 +4390,7 @@
   }
   tmToggle.addEventListener('click', function(){ tmRunning ? tmPause() : tmStart(); });
   timer.querySelector('.tm-reset').addEventListener('click', function(){
-    tmPause(); tmSeconds = 0; tmPaint();
+    tmPause(); tmSeconds = 0; tm45Fired = false; tmClearAlert(); tmPaint();
   });
 
   (function placeTimer(){
