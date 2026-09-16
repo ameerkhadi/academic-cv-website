@@ -1960,9 +1960,57 @@
     cursor:nesw-resize; touch-action:none;
     background:linear-gradient(45deg, rgba(209,52,43,0.75) 0 32%, transparent 32%);
   }
+  /* مقبضا التحجيم من جهة واحدة: الحافة اليمنى (عرض فقط) والحافة السفلى (طول فقط) —
+     يسمحان بالتوسيع من أي جهة لا من الزاوية وحدها. */
+  .sheet-resize-r{
+    position:absolute; top:0; right:0; bottom:22px; width:9px;
+    cursor:ew-resize; touch-action:none;
+  }
+  .sheet-resize-b{
+    position:absolute; left:22px; right:0; bottom:0; height:9px;
+    cursor:ns-resize; touch-action:none;
+  }
+  .sheet-resize-r:hover, .sheet-resize-b:hover{ background:rgba(209,52,43,0.18); }
+
+  /* مبدّل الصفحات داخل رأس الورقة: يسمح بإضافة صفحة ثانية وثالثة والتنقّل بينها */
+  .sheet-head .sh-pager{ display:inline-flex; align-items:center; gap:2px; flex:none; }
+  .sheet-head .sh-pager button{ padding:3px 8px; }
+  .sheet-head .sh-pager button:disabled{ opacity:0.3; cursor:default; }
+  .sheet-head .sh-pager button:disabled:hover{ background:transparent; }
+  .sheet-head .sh-pageno{
+    font-size:12px; min-width:28px; text-align:center; color:#f3ece0; white-space:nowrap;
+  }
+  .sheet-head .sh-addpage{ color:#9ad6a8; }
 
   /* أيقونة الاستدعاء داخل شريط الأدوات */
   .ann-bar .sheet-toggle.on{ background:rgba(255,255,255,0.2); border-color:rgba(255,255,255,0.4); }
+
+  /* ---------- الموقّت العائم ---------- */
+  .timer{
+    position:fixed; z-index:320; display:none;
+    align-items:center; gap:8px;
+    background:rgba(28,22,16,0.94); color:#f3ece0;
+    border:2px solid var(--red); border-radius:18px;
+    padding:7px 12px; box-shadow:0 10px 26px rgba(0,0,0,0.5);
+    font-family:'Aref Ruqaa', serif; backdrop-filter:blur(4px);
+  }
+  .timer.open{ display:flex; }
+  .timer .tm-grip{ cursor:grab; color:#cbbfae; font-size:16px; touch-action:none; user-select:none; }
+  .timer .tm-grip:active{ cursor:grabbing; }
+  .timer .tm-display{
+    font-family:'Caveat', cursive; font-weight:700; font-size:27px;
+    min-width:66px; text-align:center; direction:ltr; unicode-bidi:isolate; color:#f5c453;
+  }
+  .timer button{
+    font-family:'Aref Ruqaa', serif; font-size:14px; font-weight:700;
+    color:#f3ece0; background:rgba(255,255,255,0.08); border:1.5px solid rgba(255,255,255,0.2);
+    border-radius:50%; width:29px; height:29px; padding:0; cursor:pointer; line-height:1;
+    display:inline-flex; align-items:center; justify-content:center;
+  }
+  .timer button:hover{ background:rgba(255,255,255,0.18); }
+  .timer button:focus-visible{ outline:2px solid #f0b400; outline-offset:2px; }
+  .timer .tm-toggle.on{ background:#1f7a3d; border-color:rgba(255,255,255,0.35); }
+  .timer .tm-close{ color:#ffb4ab; }
 
   /* ---------- الخريطة مطويّة: نفس محتوى الشجرة، فلا تُعرض إلا لمن يطلبها ---------- */
   .map-fold{
@@ -2368,7 +2416,7 @@
     @page{ size:A4; margin:8mm; }
     body{ background:#fff !important; }
     .print-btn, .tabs, .tape, .master-header, .master-footer,
-    .ann-bar, .sheet, .ann-laser, .reader-btn, .reader-panel, .pr-copy,
+    .ann-bar, .sheet, .timer, .ann-laser, .reader-btn, .reader-panel, .pr-copy,
     /* الشجرة والخريطة محتوًى واحد بنسبة تامّة، فطباعتهما معًا هدر ورق:
        تُطبع الشجرة وحدها، وهي تحمل البنود كلها. */
     .map-fold, .teach{ display:none !important; }
@@ -6405,7 +6453,8 @@
     '<hr>' +
     '<span class="k">١…٨</span>الألوان<br>' +
     '<span class="k">S</span>سُمك القلم &nbsp; <span class="k">+</span><span class="k">−</span>أدقّ<br>' +
-    '<span class="k">W</span>ورقة فارغة عائمة<br>' +
+    '<span class="k">W</span>ورقة فارغة عائمة — قابلة للتوسيع من أي جهة، وتقبل صفحات إضافية<br>' +
+    '<span class="k">T</span>موقّت عائم للتتبّع<br>' +
     '<span class="k">P</span>مؤشّر ليزر — يؤشّر ويتلاشى<br>' +
     '<span class="k">G</span>وضع اليد — تمرّر وتضغط بلا إيقاف القلم<br>' +
     '<span class="k">E</span>ممحاة &nbsp; <span class="k">Z</span>تراجع<br>' +
@@ -6538,18 +6587,35 @@
     '<div class="sheet-head">' +
       '<span class="sh-grip" title="اسحب لتحريك الورقة">⠿</span>' +
       '<span class="sh-title">ورقة فارغة</span>' +
+      '<span class="sh-pager">' +
+        '<button type="button" class="sh-prev" title="الصفحة السابقة">‹</button>' +
+        '<span class="sh-pageno">١/١</span>' +
+        '<button type="button" class="sh-next" title="الصفحة التالية">›</button>' +
+        '<button type="button" class="sh-addpage" title="إضافة صفحة جديدة">+ صفحة</button>' +
+      '</span>' +
       '<button type="button" class="sh-undo" title="تراجع عن آخر خطوة">↶</button>' +
-      '<button type="button" class="sh-clear" title="مسح الورقة">🗑</button>' +
-      '<button type="button" class="sh-png" title="حفظ الورقة صورة PNG لإرسالها للطلبة">💾 صورة</button>' +
+      '<button type="button" class="sh-clear" title="مسح هذه الصفحة">🗑</button>' +
+      '<button type="button" class="sh-png" title="حفظ هذه الصفحة صورة PNG لإرسالها للطلبة">💾 صورة</button>' +
       '<button type="button" class="sh-close" title="إغلاق الورقة">✕</button>' +
     '</div>' +
-    '<div class="sheet-body"><svg></svg><span class="sheet-resize" title="اسحب لتغيير الحجم"></span></div>';
+    '<div class="sheet-body"><svg></svg>' +
+      '<span class="sheet-resize" title="اسحب لتغيير الحجم من الزاوية"></span>' +
+      '<span class="sheet-resize-r" title="اسحب لتوسيع العرض"></span>' +
+      '<span class="sheet-resize-b" title="اسحب لتوسيع الطول"></span>' +
+    '</div>';
   document.body.appendChild(sheet);
 
-  var shBody   = sheet.querySelector('.sheet-body');
-  var shSvg    = sheet.querySelector('.sheet-body svg');
-  var shResize = sheet.querySelector('.sheet-resize');
-  var shHist   = [];
+  var shBody    = sheet.querySelector('.sheet-body');
+  var shSvg     = sheet.querySelector('.sheet-body svg');
+  var shResize  = sheet.querySelector('.sheet-resize');
+  var shResizeR = sheet.querySelector('.sheet-resize-r');
+  var shResizeB = sheet.querySelector('.sheet-resize-b');
+  var shPrevBtn = sheet.querySelector('.sh-prev');
+  var shNextBtn = sheet.querySelector('.sh-next');
+  var shPageNo  = sheet.querySelector('.sh-pageno');
+  var shHist    = [];
+  var shPages   = [[]];
+  var shPageIdx = 0;
 
   function sheetDefault(){
     var w = Math.min(560, Math.round(window.innerWidth  * 0.72));
@@ -6559,20 +6625,62 @@
              top:  Math.round((window.innerHeight - h) / 2) };
   }
 
-  function saveSheet(){
+  /* يلتقط مسارات الصفحة المعروضة حاليًا داخل shPages قبل أي حفظ أو تبديل صفحة */
+  function shCapture(){
     var strokes = [];
     shSvg.querySelectorAll('path').forEach(function(p){
       strokes.push({ d:p.getAttribute('d'), c:p.getAttribute('stroke'),
                      w:p.getAttribute('stroke-width'), o:p.getAttribute('stroke-opacity'),
                      h:p.classList.contains('hl') ? 1 : 0 });
     });
+    shPages[shPageIdx] = strokes;
+  }
+
+  function saveSheet(){
+    shCapture();
     try{
       localStorage.setItem(STORE + 'sheet', JSON.stringify({
         left: parseFloat(sheet.style.left), top: parseFloat(sheet.style.top),
-        w: sheet.offsetWidth, h: sheet.offsetHeight, strokes: strokes
+        w: sheet.offsetWidth, h: sheet.offsetHeight,
+        pages: shPages, cur: shPageIdx
       }));
     }catch(e){}
   }
+
+  /* يرسم صفحة shPageIdx الحالية على الـSVG، ويحدّث رقم الصفحة وأزرار التنقّل */
+  function shRenderPage(){
+    while(shSvg.firstChild) shSvg.removeChild(shSvg.firstChild);
+    (shPages[shPageIdx] || []).forEach(function(s){
+      var p = document.createElementNS(SVGNS, 'path');
+      p.setAttribute('d', s.d); p.setAttribute('stroke', s.c);
+      p.setAttribute('stroke-width', s.w); p.setAttribute('stroke-opacity', s.o);
+      if(s.h) p.setAttribute('class', 'hl');
+      shSvg.appendChild(p);
+    });
+    shHist = [];
+    var AR = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+    function ar(n){ return String(n).replace(/[0-9]/g, function(d){ return AR[+d]; }); }
+    shPageNo.textContent = ar(shPageIdx + 1) + '/' + ar(shPages.length);
+    shPrevBtn.disabled = shPageIdx === 0;
+    shNextBtn.disabled = shPageIdx === shPages.length - 1;
+  }
+
+  function shGoto(i){
+    if(i < 0 || i >= shPages.length || i === shPageIdx) return;
+    shCapture();
+    shPageIdx = i;
+    shRenderPage();
+    saveSheet();
+  }
+  shPrevBtn.addEventListener('click', function(){ shGoto(shPageIdx - 1); });
+  shNextBtn.addEventListener('click', function(){ shGoto(shPageIdx + 1); });
+  sheet.querySelector('.sh-addpage').addEventListener('click', function(){
+    shCapture();
+    shPages.push([]);
+    shPageIdx = shPages.length - 1;
+    shRenderPage();
+    saveSheet();
+  });
 
   (function restoreSheet(){
     var d = sheetDefault(), st = null;
@@ -6586,13 +6694,9 @@
     });
     sheet.style.left = pos.left + 'px';
     sheet.style.top  = pos.top  + 'px';
-    if(st && st.strokes) st.strokes.forEach(function(s){
-      var p = document.createElementNS(SVGNS, 'path');
-      p.setAttribute('d', s.d); p.setAttribute('stroke', s.c);
-      p.setAttribute('stroke-width', s.w); p.setAttribute('stroke-opacity', s.o);
-      if(s.h) p.setAttribute('class', 'hl');
-      shSvg.appendChild(p);
-    });
+    if(st && st.pages && st.pages.length) shPages = st.pages;
+    shPageIdx = (st && typeof st.cur === 'number' && st.cur < shPages.length) ? st.cur : 0;
+    shRenderPage();
   })();
 
   makeDraggable(sheet, sheet.querySelector('.sh-grip'), saveSheet);
@@ -6618,6 +6722,46 @@
     }
     shResize.addEventListener('pointermove', move);
     shResize.addEventListener('pointerup', up);
+  });
+
+  /* الحافة اليمنى: عرض فقط، الحافة اليسرى ثابتة */
+  shResizeR.addEventListener('pointerdown', function(ev){
+    ev.preventDefault(); ev.stopPropagation();
+    var r = sheet.getBoundingClientRect();
+    try{ shResizeR.setPointerCapture(ev.pointerId); }catch(e){}
+    function move(e){
+      if(e.pointerId !== ev.pointerId) return;
+      var w = Math.max(240, e.clientX - r.left);
+      sheet.style.width = Math.min(w, window.innerWidth - r.left - 8) + 'px';
+    }
+    function up(e){
+      if(e.pointerId !== ev.pointerId) return;
+      shResizeR.removeEventListener('pointermove', move);
+      shResizeR.removeEventListener('pointerup', up);
+      saveSheet();
+    }
+    shResizeR.addEventListener('pointermove', move);
+    shResizeR.addEventListener('pointerup', up);
+  });
+
+  /* الحافة السفلى: طول فقط، الحافة العلوية ثابتة */
+  shResizeB.addEventListener('pointerdown', function(ev){
+    ev.preventDefault(); ev.stopPropagation();
+    var r = sheet.getBoundingClientRect();
+    try{ shResizeB.setPointerCapture(ev.pointerId); }catch(e){}
+    function move(e){
+      if(e.pointerId !== ev.pointerId) return;
+      var h = Math.max(200, e.clientY - r.top);
+      sheet.style.height = Math.min(h, window.innerHeight - r.top - 8) + 'px';
+    }
+    function up(e){
+      if(e.pointerId !== ev.pointerId) return;
+      shResizeB.removeEventListener('pointermove', move);
+      shResizeB.removeEventListener('pointerup', up);
+      saveSheet();
+    }
+    shResizeB.addEventListener('pointermove', move);
+    shResizeB.addEventListener('pointerup', up);
   });
 
   // الرسم على الورقة: نفس الأقلام والألوان والسُمك، بسجلّ تراجع مستقل
@@ -6691,7 +6835,7 @@
   });
 
   sheet.querySelector('.sh-clear').addEventListener('click', function(){
-    if(!confirm('مسح كل ما في الورقة؟')) return;
+    if(!confirm('مسح هذه الصفحة؟')) return;
     while(shSvg.firstChild) shSvg.removeChild(shSvg.firstChild);
     shHist = []; saveSheet();
   });
@@ -6741,9 +6885,70 @@
   }
   sheet.querySelector('.sh-close').addEventListener('click', function(){ setSheet(false); });
 
+  // ---------- الموقّت العائم ----------
+
+  var timer = document.createElement('div');
+  timer.className = 'timer';
+  timer.innerHTML =
+    '<span class="tm-grip" title="اسحب لتحريك الموقّت">⠿</span>' +
+    '<span class="tm-display">٠٠:٠٠</span>' +
+    '<button type="button" class="tm-toggle" title="تشغيل (T)">▶</button>' +
+    '<button type="button" class="tm-reset" title="تصفير">↺</button>' +
+    '<button type="button" class="tm-close" title="إغلاق الموقّت">✕</button>';
+  document.body.appendChild(timer);
+
+  var tmDisplay = timer.querySelector('.tm-display');
+  var tmToggle  = timer.querySelector('.tm-toggle');
+  var tmSeconds = 0, tmRunning = false, tmInt = null;
+  var TM_AR = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+  function tmArabic(n){ return String(n).replace(/[0-9]/g, function(d){ return TM_AR[+d]; }); }
+  function tmPaint(){
+    var m = Math.floor(tmSeconds / 60), s = tmSeconds % 60;
+    var mm = (m < 10 ? '0' + m : '' + m), ss = (s < 10 ? '0' + s : '' + s);
+    tmDisplay.textContent = tmArabic(mm) + ':' + tmArabic(ss);
+  }
+  tmPaint();
+
+  function tmStart(){
+    if(tmRunning) return;
+    tmRunning = true;
+    tmToggle.textContent = '⏸';
+    tmToggle.classList.add('on');
+    tmInt = setInterval(function(){ tmSeconds++; tmPaint(); }, 1000);
+  }
+  function tmPause(){
+    tmRunning = false;
+    tmToggle.textContent = '▶';
+    tmToggle.classList.remove('on');
+    clearInterval(tmInt); tmInt = null;
+  }
+  tmToggle.addEventListener('click', function(){ tmRunning ? tmPause() : tmStart(); });
+  timer.querySelector('.tm-reset').addEventListener('click', function(){
+    tmPause(); tmSeconds = 0; tmPaint();
+  });
+
+  (function placeTimer(){
+    var pos = clampToView(timer, { left:16, top:16 });
+    timer.style.left = pos.left + 'px';
+    timer.style.top  = pos.top  + 'px';
+  })();
+
+  makeDraggable(timer, timer.querySelector('.tm-grip'), function(){});
+
+  var timerBtn = tool('⏱', 'موقّت', 'موقّت للتتبّع أثناء الشرح أو التسجيل (T)', function(){
+    setTimerOpen(!timer.classList.contains('open'));
+  });
+
+  function setTimerOpen(on){
+    timer.classList.toggle('open', on);
+    timerBtn.classList.toggle('on', on);
+    if(on && !document.body.classList.contains('ann-on')) setOn(true);
+  }
+  timer.querySelector('.tm-close').addEventListener('click', function(){ setTimerOpen(false); });
+
   window.addEventListener('resize', function(){
     placeHelp();
-    [[bar, bar.classList.contains('moved')], [sheet, true]].forEach(function(pair){
+    [[bar, bar.classList.contains('moved')], [sheet, true], [timer, true]].forEach(function(pair){
       var el = pair[0]; if(!pair[1] || !el.style.left) return;
       var c = clampToView(el, { left: parseFloat(el.style.left), top: parseFloat(el.style.top) });
       el.style.left = c.left + 'px'; el.style.top = c.top + 'px';
@@ -6765,6 +6970,7 @@
     else if(k === 'z' || k === 'Z' || k === 'ء'){ undo(); }
     else if(k === 'h' || k === 'H' || k === 'ا'){ hideBtn.click(); }
     else if(k === 'w' || k === 'W'){ setSheet(!sheet.classList.contains('open')); }
+    else if(k === 't' || k === 'T'){ setTimerOpen(!timer.classList.contains('open')); }
     else if(k === 'Escape'){ setOn(false); }
     else return;
     e.preventDefault();
