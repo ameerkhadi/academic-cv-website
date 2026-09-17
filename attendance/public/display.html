@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>شاشة الحضور</title>
+<link rel="stylesheet" href="/css/app.css">
+<style>
+  body { background: #0d1620; color: #f2f5f8; }
+  .screen { min-height: 100dvh; display: flex; flex-direction: column; }
+  .head {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    padding: 18px 28px; border-bottom: 2px solid var(--gold); flex-wrap: wrap;
+  }
+  .head h1 { margin: 0; font-size: clamp(20px, 2.6vw, 32px); }
+  .head .sub { color: #9fb0c0; font-size: clamp(13px, 1.4vw, 18px); }
+  .counter { text-align: center; }
+  .counter .n { font-size: clamp(30px, 5vw, 62px); font-weight: 800; color: var(--gold); line-height: 1; }
+  .counter .l { font-size: 13px; color: #9fb0c0; }
+  .body { flex: 1; display: flex; align-items: center; justify-content: center; padding: 20px; }
+  .qrbox { background: #fff; padding: clamp(14px, 2vw, 28px); border-radius: 22px; line-height: 0; }
+  .qrbox svg { width: min(58vh, 78vw); height: auto; display: block; }
+  .side { padding: 0 clamp(16px, 4vw, 60px); max-width: 520px; }
+  .side h2 { font-size: clamp(20px, 2.4vw, 30px); margin: 0 0 14px; }
+  .side ol { font-size: clamp(15px, 1.7vw, 22px); line-height: 2; color: #d5dee6; padding-inline-start: 22px; margin: 0; }
+  .bar { height: 12px; background: #1c2c3c; }
+  .bar > div { height: 100%; background: linear-gradient(90deg, var(--gold), #e6c48d); transition: width .95s linear; }
+  .foot { padding: 12px 28px 18px; text-align: center; color: #8b9bab; font-size: clamp(12px, 1.3vw, 16px); }
+  .foot strong { color: #e6c48d; }
+  .idle { text-align: center; padding: 40px 20px; }
+  .idle .icon { font-size: 70px; }
+  .idle h2 { font-size: clamp(22px, 3vw, 36px); margin: 14px 0 8px; }
+  .idle p { color: #9fb0c0; font-size: clamp(14px, 1.6vw, 20px); }
+  @media (max-width: 820px) { .body { flex-direction: column; gap: 24px; } .side { max-width: none; } }
+</style>
+</head>
+<body>
+<div class="screen">
+  <div class="head">
+    <div>
+      <h1 id="subject">شاشة الحضور</h1>
+      <div class="sub" id="hall"></div>
+    </div>
+    <div class="counter">
+      <div class="n" id="count">—</div>
+      <div class="l">سجّلوا حضورهم الآن</div>
+    </div>
+  </div>
+
+  <div class="body">
+    <div id="live" style="display:flex;align-items:center;gap:clamp(16px,4vw,60px);flex-wrap:wrap;justify-content:center" hidden>
+      <div class="qrbox" id="qr"></div>
+      <div class="side">
+        <h2>امسح الرمز بكاميرا هاتفك</h2>
+        <ol>
+          <li>افتح الكاميرا ووجّهها نحو الرمز.</li>
+          <li>اضغط الرابط الذي يظهر.</li>
+          <li>اسمح بالوصول إلى الموقع.</li>
+        </ol>
+        <p style="color:#e6c48d;font-size:clamp(14px,1.6vw,20px);margin-top:18px">
+          الرمز يتغيّر كل <span id="slotSec">30</span> ثانية. صورة الرمز لا تنفع خارج القاعة.
+        </p>
+      </div>
+    </div>
+
+    <div id="idle" class="idle">
+      <div class="icon">⏸️</div>
+      <h2 id="idleTitle">لا توجد نافذة حضور مفتوحة</h2>
+      <p id="idleText">افتح المحاضرة ثم نافذة الحضور من لوحة التدريسي.</p>
+    </div>
+  </div>
+
+  <div class="bar"><div id="bar" style="width:0"></div></div>
+  <div class="foot">تغلق النافذة بعد <strong id="remain">—</strong></div>
+</div>
+
+<script src="/js/qrcode.js"></script>
+<script type="module" src="/js/display.js"></script>
+</body>
+</html>

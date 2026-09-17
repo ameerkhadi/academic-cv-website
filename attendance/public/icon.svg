@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="حضور">
+  <rect width="512" height="512" rx="96" fill="#14212f"/>
+  <g fill="none" stroke="#c39a63" stroke-width="26" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="96" y="96" width="120" height="120" rx="18"/>
+    <rect x="296" y="96" width="120" height="120" rx="18"/>
+    <rect x="96" y="296" width="120" height="120" rx="18"/>
+    <path d="M296 330 l44 46 l76 -92"/>
+  </g>
+  <g fill="#c39a63">
+    <rect x="136" y="136" width="40" height="40" rx="6"/>
+    <rect x="336" y="136" width="40" height="40" rx="6"/>
+    <rect x="136" y="336" width="40" height="40" rx="6"/>
+  </g>
+</svg>

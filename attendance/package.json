@@ -1,0 +1,14 @@
+{
+  "name": "hall-attendance",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "نظام حضور القاعة الكبيرة - 122 طالب / 5 مواد",
+  "main": "server.js",
+  "scripts": {
+    "start": "node --disable-warning=ExperimentalWarning server.js",
+    "import": "node scripts/import-students.mjs",
+    "seed-subjects": "node scripts/seed-subjects.mjs"
+  },
+  "engines": { "node": ">=22.5.0" }
+}

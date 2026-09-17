@@ -1,0 +1,15 @@
+# /etc/cloudflared/config.yml
+# يفتح نفقاً من سيرفرك الداخلي إلى اسم نطاق عام على HTTPS بلا فتح أي منفذ.
+#
+#   cloudflared tunnel login
+#   cloudflared tunnel create attendance
+#   cloudflared tunnel route dns attendance attend.example.com
+#   sudo cloudflared service install
+#
+tunnel: attendance
+credentials-file: /etc/cloudflared/attendance.json
+
+ingress:
+  - hostname: attend.example.com
+    service: http://127.0.0.1:8787
+  - service: http_status:404

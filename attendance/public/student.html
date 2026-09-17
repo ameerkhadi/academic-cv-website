@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#14212f">
+<title>سجلّ حضوري</title>
+<link rel="stylesheet" href="/css/app.css">
+<link rel="manifest" href="/manifest.webmanifest">
+</head>
+<body>
+<header class="topbar">
+  <div>
+    <h1>سجلّ حضوري</h1>
+    <div class="sub" id="who">جارٍ التحميل…</div>
+  </div>
+</header>
+
+<main class="wrap narrow">
+  <div id="msg" class="msg info" hidden></div>
+
+  <section class="card" id="howto">
+    <h2>كيف أسجّل حضوري؟</h2>
+    <p class="hint">امسح رمز QR المعروض على شاشة القاعة بكاميرا هاتفك عندما يفتح التدريسي نافذة الحضور. الرمز يتغيّر كل ثلاثين ثانية، فامسحه من الشاشة مباشرة.</p>
+    <ul class="muted" style="padding-inline-start:18px;margin:0">
+      <li>اسمح للمتصفح بالوصول إلى موقعك، فالتسجيل مسموح من داخل القاعة فقط.</li>
+      <li>هاتفك مرتبط باسمك وحدك، ولا يمكن التسجيل به لزميل آخر.</li>
+      <li>عند ضعف الشبكة يُحفظ حضورك على الهاتف ويُرسل تلقائياً عند عودة الاتصال.</li>
+    </ul>
+  </section>
+
+  <section class="card" id="historyCard" hidden>
+    <h2>محاضراتي</h2>
+    <p class="hint" id="historyHint"></p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>المادة</th><th>التاريخ</th><th>الحالة</th><th>التدقيقات</th></tr></thead>
+        <tbody id="historyBody"></tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<script type="module" src="/js/student.js"></script>
+</body>
+</html>

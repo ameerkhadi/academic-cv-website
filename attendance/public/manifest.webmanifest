@@ -1,0 +1,14 @@
+{
+  "name": "حضور القاعة",
+  "short_name": "الحضور",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#14212f",
+  "theme_color": "#14212f",
+  "lang": "ar",
+  "dir": "rtl",
+  "icons": [
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

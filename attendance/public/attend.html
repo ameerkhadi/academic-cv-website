@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#14212f">
+<title>تسجيل الحضور</title>
+<link rel="stylesheet" href="/css/app.css">
+<link rel="manifest" href="/manifest.webmanifest">
+</head>
+<body>
+<header class="topbar">
+  <div>
+    <h1>تسجيل الحضور</h1>
+    <div class="sub" id="subLine">جارٍ التحقق من الرمز…</div>
+  </div>
+  <nav><a href="/">سجلّي</a></nav>
+</header>
+
+<main class="wrap narrow">
+  <div id="msg" class="msg info" hidden></div>
+
+  <section id="working" class="card bigresult">
+    <div class="icon">⏳</div>
+    <h2 id="workingTitle">جارٍ التحقق…</h2>
+    <p id="workingText">لا تغلق الصفحة.</p>
+  </section>
+
+  <section id="result" class="card bigresult" hidden>
+    <div class="icon" id="resIcon">✅</div>
+    <h2 id="resTitle"></h2>
+    <p id="resText"></p>
+    <p id="resSummary" class="muted"></p>
+    <div style="margin-top:18px"><a class="btn ghost" href="/">عرض سجلّي</a></div>
+  </section>
+
+  <section id="retry" class="card" hidden>
+    <button class="btn big gold" id="retryBtn">إعادة المحاولة</button>
+    <p class="muted center" style="margin-top:10px">إن انتهت صلاحية الرمز، امسح الرمز المعروض على الشاشة من جديد.</p>
+  </section>
+
+  <section id="enroll" class="card" hidden>
+    <h2>تسجيل جهازك لأول مرة</h2>
+    <p class="hint">اختر اسمك من القائمة. يُربط اسمك بهذا الهاتف نهائياً، ولن يستطيع أي جهاز آخر التسجيل باسمك.</p>
+    <div class="field">
+      <label for="search">ابحث عن اسمك</label>
+      <input id="search" type="search" placeholder="اكتب جزءاً من اسمك" autocomplete="off">
+    </div>
+    <div class="namelist" id="names"></div>
+    <div id="confirm" hidden style="margin-top:16px">
+      <div class="msg info">الاسم المختار: <strong id="chosenName"></strong></div>
+      <div class="field" id="codeField">
+        <label for="code">رقمك الجامعي (للتأكيد)</label>
+        <input id="code" type="text" inputmode="numeric" autocomplete="off" placeholder="اكتب رقمك الجامعي">
+      </div>
+      <button class="btn big gold" id="enrollBtn">تأكيد وربط الجهاز</button>
+    </div>
+  </section>
+
+  <section id="rebindBox" class="card" hidden>
+    <h2>غيّرت هاتفك؟</h2>
+    <p class="hint">أرسل طلباً للتدريسي لفكّ ارتباط جهازك القديم، ثم أعد المسح بعد موافقته.</p>
+    <div class="field">
+      <label for="rbStudent">اسمك</label>
+      <select id="rbStudent"></select>
+    </div>
+    <div class="field">
+      <label for="rbCode">رقمك الجامعي</label>
+      <input id="rbCode" type="text" inputmode="numeric" autocomplete="off">
+    </div>
+    <div class="field">
+      <label for="rbReason">السبب</label>
+      <input id="rbReason" type="text" placeholder="مثال: تعطل الهاتف القديم">
+    </div>
+    <button class="btn ghost" id="rebindBtn">إرسال الطلب</button>
+  </section>
+</main>
+
+<script type="module" src="/js/attend.js"></script>
+</body>
+</html>

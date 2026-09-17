@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#14212f">
+<title>لوحة التدريسي — الحضور</title>
+<link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+
+<div id="loginView" hidden>
+  <header class="topbar"><div><h1>لوحة التدريسي</h1><div class="sub">نظام حضور القاعة</div></div></header>
+  <main class="wrap narrow">
+    <section class="card">
+      <h2>تسجيل الدخول</h2>
+      <p class="hint">أدخل كلمة مرور اللوحة. عند أول تشغيل تجدها في ملف data/admin-password.txt على الخادم.</p>
+      <div id="loginMsg" class="msg bad" hidden></div>
+      <div class="field">
+        <label for="password">كلمة المرور</label>
+        <input id="password" type="password" autocomplete="current-password">
+      </div>
+      <button class="btn big" id="loginBtn">دخول</button>
+    </section>
+  </main>
+</div>
+
+<div id="appView" hidden>
+<header class="topbar">
+  <div>
+    <h1>لوحة التدريسي</h1>
+    <div class="sub" id="termLine"></div>
+  </div>
+  <nav>
+    <a href="/display" target="_blank" rel="noopener">شاشة العرض ↗</a>
+    <button id="logoutBtn">خروج</button>
+  </nav>
+</header>
+
+<main class="wrap">
+  <div id="msg" class="msg info" hidden></div>
+
+  <div class="tabs">
+    <button data-tab="live" class="active">المحاضرة الآن</button>
+    <button data-tab="students">الطلبة والأجهزة</button>
+    <button data-tab="subjects">المواد والجدول</button>
+    <button data-tab="reports">التقارير</button>
+    <button data-tab="settings">الإعدادات</button>
+  </div>
+
+  <!-- ===== المحاضرة الآن ===== -->
+  <section class="panel active" id="tab-live">
+    <div class="stats">
+      <div class="stat"><div class="n" id="stPresent">—</div><div class="l">سجّلوا في التدقيق الحالي</div></div>
+      <div class="stat"><div class="n" id="stTotal">—</div><div class="l">مجموع الطلبة</div></div>
+      <div class="stat"><div class="n" id="stChecks">—</div><div class="l">تدقيقات هذه المحاضرة</div></div>
+      <div class="stat"><div class="n" id="stFlags">—</div><div class="l">حالات تحتاج مراجعة</div></div>
+    </div>
+
+    <section class="card">
+      <h2 id="sessionTitle">لم تُفتح محاضرة</h2>
+      <p class="hint" id="sessionHint">اختر المادة ثم افتح المحاضرة، ثم افتح نافذة الحضور في وقت تختاره أنت.</p>
+      <div class="row" id="subjectButtons"></div>
+      <div class="row" style="margin-top:14px">
+        <button class="btn gold" id="openCheckBtn" disabled>افتح نافذة الحضور</button>
+        <button class="btn ghost" id="extendBtn" disabled>+ دقيقة</button>
+        <button class="btn ghost" id="closeCheckBtn" disabled>أغلق النافذة</button>
+        <div class="spacer"></div>
+        <button class="btn ghost" id="closeSessionBtn" disabled>إنهاء المحاضرة</button>
+      </div>
+      <div class="msg info" id="checkState" hidden></div>
+      <div class="row" style="margin-top:10px">
+        <label style="margin:0" for="enrollToggle">
+          <input type="checkbox" id="enrollToggle" style="width:auto;min-height:auto;margin-left:6px">
+          فتح التسجيل الأولي (ربط أجهزة الطلبة بأسمائهم)
+        </label>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="row">
+        <h2 style="margin:0">كشف الحضور</h2>
+        <div class="spacer"></div>
+        <input id="rosterSearch" type="search" placeholder="ابحث باسم الطالب" style="max-width:240px">
+        <select id="rosterFilter" style="max-width:170px">
+          <option value="all">الكل</option>
+          <option value="absent">الغائبون</option>
+          <option value="present">الحاضرون</option>
+          <option value="flagged">تحتاج مراجعة</option>
+        </select>
+        <button class="btn sm ghost" id="exportSessionBtn">تصدير CSV</button>
+      </div>
+      <div class="tablewrap" style="margin-top:12px">
+        <table>
+          <thead><tr><th>#</th><th>الاسم</th><th>الحالة</th><th>التدقيقات</th><th>ملاحظات النظام</th><th>تعديل</th></tr></thead>
+          <tbody id="rosterBody"><tr><td colspan="6" class="muted">لا توجد محاضرة مفتوحة.</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+  </section>
+
+  <!-- ===== الطلبة ===== -->
+  <section class="panel" id="tab-students">
+    <section class="card">
+      <h2>استيراد الأسماء</h2>
+      <p class="hint">الصق الأسماء، سطراً لكل طالب. الصيغة: الاسم الكامل، ثم فاصلة، ثم الرقم الجامعي (اختياري)، ثم رمز تأكيد (اختياري). الاستيراد يحدّث الموجود ولا يحذف شيئاً.</p>
+      <div class="field">
+        <textarea id="csv" rows="7" placeholder="أحمد علي حسين,12345&#10;زينب كريم جواد,12346"></textarea>
+      </div>
+      <button class="btn" id="importBtn">استيراد</button>
+    </section>
+
+    <section class="card" id="rebindCard" hidden>
+      <h2>طلبات تغيير الجهاز</h2>
+      <p class="hint">وافق فقط بعد التأكد من هوية الطالب. الموافقة تفكّ ارتباط جهازه القديم ليربط جهازاً جديداً خلال 24 ساعة.</p>
+      <div id="rebindList"></div>
+    </section>
+
+    <section class="card">
+      <div class="row">
+        <h2 style="margin:0">قائمة الطلبة</h2>
+        <div class="spacer"></div>
+        <input id="studentSearch" type="search" placeholder="بحث" style="max-width:220px">
+      </div>
+      <div class="tablewrap" style="margin-top:12px">
+        <table>
+          <thead><tr><th>#</th><th>الاسم</th><th>الرقم الجامعي</th><th>الجهاز</th><th>إجراء</th></tr></thead>
+          <tbody id="studentsBody"></tbody>
+        </table>
+      </div>
+    </section>
+  </section>
+
+  <!-- ===== المواد ===== -->
+  <section class="panel" id="tab-subjects">
+    <section class="card">
+      <h2>المواد الخمس وجدولها الأسبوعي</h2>
+      <p class="hint">حدّد يوم كل مادة ووقتها. النظام يعرض مواد اليوم تلقائياً في تبويب المحاضرة.</p>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>المادة</th><th>الرمز</th><th>اليوم</th><th>من</th><th>إلى</th><th>مفعّلة</th></tr></thead>
+          <tbody id="subjectsBody"></tbody>
+        </table>
+      </div>
+      <div class="row" style="margin-top:14px">
+        <button class="btn ghost" id="addSubjectBtn">+ مادة</button>
+        <div class="spacer"></div>
+        <button class="btn" id="saveSubjectsBtn">حفظ الجدول</button>
+      </div>
+    </section>
+  </section>
+
+  <!-- ===== التقارير ===== -->
+  <section class="panel" id="tab-reports">
+    <section class="card">
+      <div class="row">
+        <h2 style="margin:0">نسب الحضور</h2>
+        <div class="spacer"></div>
+        <select id="reportSubject" style="max-width:230px"></select>
+        <button class="btn sm ghost" id="exportSummaryBtn">تصدير CSV</button>
+      </div>
+      <p class="hint" id="reportHint"></p>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>#</th><th>الاسم</th><th>حاضر</th><th>جزئي</th><th>غائب</th><th>بعذر</th><th>النسبة</th></tr></thead>
+          <tbody id="reportBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>المحاضرات السابقة</h2>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>التاريخ</th><th>المادة</th><th>التدقيقات</th><th>الحاضرون</th><th></th></tr></thead>
+          <tbody id="sessionsBody"></tbody>
+        </table>
+      </div>
+    </section>
+  </section>
+
+  <!-- ===== الإعدادات ===== -->
+  <section class="panel" id="tab-settings">
+    <section class="card">
+      <h2>سياج القاعة</h2>
+      <p class="hint">قف داخل القاعة واضغط "استخدم موقعي الحالي" لتثبيت إحداثيات القاعة. نصف القطر يشمل خطأ قياس الهاتف.</p>
+      <div class="grid2">
+        <div class="field"><label for="hall_lat">خط العرض</label><input id="hall_lat" inputmode="decimal"></div>
+        <div class="field"><label for="hall_lng">خط الطول</label><input id="hall_lng" inputmode="decimal"></div>
+        <div class="field"><label for="radius_m">نصف القطر (متر)</label><input id="radius_m" type="number" min="20" max="1000"></div>
+        <div class="field"><label for="max_accuracy_m">أقصى خطأ مقبول (متر)</label><input id="max_accuracy_m" type="number" min="20" max="1000"></div>
+      </div>
+      <div class="row">
+        <button class="btn ghost" id="useLocationBtn">استخدم موقعي الحالي</button>
+        <label style="margin:0">
+          <input type="checkbox" id="require_geo" style="width:auto;min-height:auto;margin-left:6px">
+          إلزام الموقع الجغرافي
+        </label>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>نافذة الحضور</h2>
+      <div class="grid2">
+        <div class="field"><label for="check_seconds">مدة النافذة (ثانية)</label><input id="check_seconds" type="number" min="30" max="900"></div>
+        <div class="field"><label for="slot_seconds">تغيّر رمز QR كل (ثانية)</label><input id="slot_seconds" type="number" min="10" max="120"></div>
+        <div class="field"><label for="late_minutes">مهلة الإرسال المتأخر (دقيقة)</label><input id="late_minutes" type="number" min="0" max="240"></div>
+        <div class="field">
+          <label for="present_rule">قاعدة احتساب الحضور</label>
+          <select id="present_rule">
+            <option value="all">يجب حضور كل التدقيقات</option>
+            <option value="any">يكفي تدقيق واحد</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>عام</h2>
+      <div class="grid2">
+        <div class="field"><label for="term_name">اسم الفصل</label><input id="term_name"></div>
+        <div class="field"><label for="hall_name">اسم القاعة</label><input id="hall_name"></div>
+        <div class="field"><label for="timezone">المنطقة الزمنية</label><input id="timezone"></div>
+        <div class="field"><label for="newPassword">كلمة مرور جديدة (اختياري)</label><input id="newPassword" type="password" autocomplete="new-password"></div>
+      </div>
+      <div class="row">
+        <button class="btn" id="saveSettingsBtn">حفظ الإعدادات</button>
+        <div class="spacer"></div>
+        <button class="btn ghost danger" id="purgeGeoBtn">حذف الإحداثيات المخزّنة</button>
+      </div>
+      <p class="hint" style="margin-top:10px">حذف الإحداثيات يبقي حالة الحضور والرايات كما هي، ويمسح مواقع الطلبة من قاعدة البيانات.</p>
+    </section>
+  </section>
+</main>
+</div>
+
+<script type="module" src="/js/admin.js"></script>
+</body>
+</html>

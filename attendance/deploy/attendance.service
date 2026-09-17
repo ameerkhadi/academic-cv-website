@@ -1,0 +1,28 @@
+# نسخ الملف إلى /etc/systemd/system/attendance.service ثم:
+#   sudo systemctl daemon-reload && sudo systemctl enable --now attendance
+[Unit]
+Description=نظام حضور القاعة
+After=network.target
+
+[Service]
+Type=simple
+User=attendance
+WorkingDirectory=/opt/attendance
+Environment=NODE_ENV=production
+Environment=PORT=8787
+Environment=HOST=127.0.0.1
+Environment=DATA_DIR=/var/lib/attendance
+Environment=TRUST_PROXY=1
+# اضبط كلمة المرور هنا أو اتركها ليولّدها النظام في DATA_DIR/admin-password.txt
+# Environment=ADMIN_PASSWORD=ضع-كلمة-مرور-قوية
+ExecStart=/usr/bin/node --disable-warning=ExperimentalWarning /opt/attendance/server.js
+Restart=always
+RestartSec=3
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/attendance
+
+[Install]
+WantedBy=multi-user.target
