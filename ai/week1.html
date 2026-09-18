@@ -6482,6 +6482,7 @@
     '<span class="k">١…٨</span>الألوان<br>' +
     '<span class="k">S</span>سُمك القلم &nbsp; <span class="k">+</span><span class="k">−</span>أدقّ<br>' +
     '<span class="k">W</span>ورقة فارغة عائمة — قابلة للتوسيع من أي جهة، وتقبل صفحات إضافية<br>' +
+    '<span class="k">Ctrl+V</span>لصق صورة (سكرين شوت مثلًا) على الورقة المفتوحة<br>' +
     '<span class="k">T</span>موقّت عائم للتتبّع<br>' +
     '<span class="k">P</span>مؤشّر ليزر — يؤشّر ويتلاشى<br>' +
     '<span class="k">G</span>وضع اليد — تمرّر وتضغط بلا إيقاف القلم<br>' +
@@ -6653,15 +6654,20 @@
              top:  Math.round((window.innerHeight - h) / 2) };
   }
 
-  /* يلتقط مسارات الصفحة المعروضة حاليًا داخل shPages قبل أي حفظ أو تبديل صفحة */
+  /* يلتقط محتوى الصفحة المعروضة حاليًا (خطوط وصور) داخل shPages قبل أي حفظ أو تبديل صفحة */
   function shCapture(){
-    var strokes = [];
-    shSvg.querySelectorAll('path').forEach(function(p){
-      strokes.push({ d:p.getAttribute('d'), c:p.getAttribute('stroke'),
-                     w:p.getAttribute('stroke-width'), o:p.getAttribute('stroke-opacity'),
-                     h:p.classList.contains('hl') ? 1 : 0 });
+    var items = [];
+    Array.prototype.forEach.call(shSvg.children, function(el){
+      if(el.tagName === 'image'){
+        items.push({ t:'i', href:el.getAttribute('href'), x:el.getAttribute('x'),
+                     y:el.getAttribute('y'), iw:el.getAttribute('width'), ih:el.getAttribute('height') });
+      }else if(el.tagName === 'path'){
+        items.push({ d:el.getAttribute('d'), c:el.getAttribute('stroke'),
+                     w:el.getAttribute('stroke-width'), o:el.getAttribute('stroke-opacity'),
+                     h:el.classList.contains('hl') ? 1 : 0 });
+      }
     });
-    shPages[shPageIdx] = strokes;
+    shPages[shPageIdx] = items;
   }
 
   function saveSheet(){
@@ -6672,18 +6678,27 @@
         w: sheet.offsetWidth, h: sheet.offsetHeight,
         pages: shPages, cur: shPageIdx
       }));
-    }catch(e){}
+      return true;
+    }catch(e){ return false; }
   }
 
   /* يرسم صفحة shPageIdx الحالية على الـSVG، ويحدّث رقم الصفحة وأزرار التنقّل */
   function shRenderPage(){
     while(shSvg.firstChild) shSvg.removeChild(shSvg.firstChild);
     (shPages[shPageIdx] || []).forEach(function(s){
-      var p = document.createElementNS(SVGNS, 'path');
-      p.setAttribute('d', s.d); p.setAttribute('stroke', s.c);
-      p.setAttribute('stroke-width', s.w); p.setAttribute('stroke-opacity', s.o);
-      if(s.h) p.setAttribute('class', 'hl');
-      shSvg.appendChild(p);
+      if(s.t === 'i'){
+        var img = document.createElementNS(SVGNS, 'image');
+        img.setAttribute('href', s.href);
+        img.setAttribute('x', s.x); img.setAttribute('y', s.y);
+        img.setAttribute('width', s.iw); img.setAttribute('height', s.ih);
+        shSvg.appendChild(img);
+      }else{
+        var p = document.createElementNS(SVGNS, 'path');
+        p.setAttribute('d', s.d); p.setAttribute('stroke', s.c);
+        p.setAttribute('stroke-width', s.w); p.setAttribute('stroke-opacity', s.o);
+        if(s.h) p.setAttribute('class', 'hl');
+        shSvg.appendChild(p);
+      }
     });
     shHist = [];
     var AR = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
@@ -6692,6 +6707,60 @@
     shPrevBtn.disabled = shPageIdx === 0;
     shNextBtn.disabled = shPageIdx === shPages.length - 1;
   }
+
+  /* لصق صورة (سكرين شوت مثلًا) من الحافظة مباشرة على الورقة المفتوحة —
+     تُصغَّر وتُعاد ضغطها أولًا حتى لا تمتلئ سعة التخزين المحلي بسرعة. */
+  function shInsertImage(dataUrl, naturalW, naturalH){
+    var maxW = shBody.clientWidth * 0.85;
+    var maxH = shBody.clientHeight * 0.85;
+    var scale = Math.min(1, maxW / naturalW, maxH / naturalH);
+    var w = naturalW * scale, h = naturalH * scale;
+    var offset = (shSvg.querySelectorAll('image').length % 6) * 22;
+    var img = document.createElementNS(SVGNS, 'image');
+    img.setAttribute('href', dataUrl);
+    img.setAttribute('x', 10 + offset);
+    img.setAttribute('y', 10 + offset);
+    img.setAttribute('width', w);
+    img.setAttribute('height', h);
+    shSvg.appendChild(img);
+    shHist.push({ type:'add', el:img });
+    var ok = saveSheet();
+    if(!ok){
+      alert('الصورة كبيرة على سعة التخزين المتاحة — ستبقى ظاهرة الآن، لكن قد لا تُحفظ بعد إعادة تحميل الصفحة. جرّب صورة أصغر أو امسح صورًا قديمة.');
+    }
+  }
+
+  function shCompressAndInsert(file){
+    var reader = new FileReader();
+    reader.onload = function(e){
+      var im = new Image();
+      im.onload = function(){
+        var MAXDIM = 1100;
+        var scale = Math.min(1, MAXDIM / Math.max(im.naturalWidth, im.naturalHeight));
+        var cw = Math.max(1, Math.round(im.naturalWidth * scale));
+        var ch = Math.max(1, Math.round(im.naturalHeight * scale));
+        var c = document.createElement('canvas');
+        c.width = cw; c.height = ch;
+        c.getContext('2d').drawImage(im, 0, 0, cw, ch);
+        var dataUrl = c.toDataURL('image/jpeg', 0.82);
+        shInsertImage(dataUrl, cw, ch);
+      };
+      im.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  document.addEventListener('paste', function(ev){
+    if(!sheet.classList.contains('open')) return;
+    var items = (ev.clipboardData && ev.clipboardData.items) || [];
+    for(var i = 0; i < items.length; i++){
+      if(items[i].type && items[i].type.indexOf('image/') === 0){
+        var file = items[i].getAsFile();
+        if(file){ shCompressAndInsert(file); ev.preventDefault(); }
+        break;
+      }
+    }
+  });
 
   function shGoto(i){
     if(i < 0 || i >= shPages.length || i === shPageIdx) return;
