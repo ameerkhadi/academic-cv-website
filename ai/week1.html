@@ -2550,6 +2550,9 @@
   }
 </style>
 
+<!-- مكتبة محلية لبناء ملف PDF من صفحات الورقة عند التصدير — لا اعتماد على الإنترنت وقت التشغيل -->
+<script src="../vendor/jspdf.umd.min.js"></script>
+
 <script>
 /* يُقرأ الاختيار المحفوظ قبل رسم الصفحة، وإلا ظهرت بالخطّ الافتراضي لحظةً ثم قفزت. */
 (function(){
@@ -6657,6 +6660,7 @@
       '<button type="button" class="sh-export" title="تصدير كل الملاحظات النصية كنصّ جاهز لإرساله لي بالشات">📋 تصدير</button>' +
       '<button type="button" class="sh-clear" title="مسح هذه الصفحة">🗑</button>' +
       '<button type="button" class="sh-png" title="حفظ هذه الصفحة صورة PNG لإرسالها للطلبة">💾 صورة</button>' +
+      '<button type="button" class="sh-pdf" title="تصدير كل صفحات الورقة كملف PDF واحد">📕 PDF</button>' +
       '<button type="button" class="sh-close" title="إغلاق الورقة">✕</button>' +
     '</div>' +
     '<div class="sheet-body"><svg></svg>' +
@@ -7261,32 +7265,77 @@
     }
   });
 
-  /* حفظ الورقة صورة: نرسم الورق والمسطّرة على canvas ثم نضع فوقهما الـSVG.
-     الخطوط لها stroke وwidth كسمات لا كأصناف، فتُرسم صحيحة خارج الصفحة. */
-  sheet.querySelector('.sh-png').addEventListener('click', function(){
-    var W = shBody.clientWidth, H = shBody.clientHeight, SCALE = 2;
-    var clone = shSvg.cloneNode(true);
-    clone.setAttribute('xmlns', SVGNS);
-    clone.setAttribute('width', W); clone.setAttribute('height', H);
-    clone.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
-    clone.querySelectorAll('path').forEach(function(p){
-      p.setAttribute('fill', 'none');
-      p.setAttribute('stroke-linecap', 'round');
-      p.setAttribute('stroke-linejoin', 'round');
+  /* يبني صفحة (من بيانات shPages، لا من الـDOM الحي) على canvas: الورق والمسطّرة
+     أولًا ثم الخطوط/الصور/الملاحظات فوقهما — يُستخدم لتصدير PNG وPDF معًا، فلا
+     تظهر مقابض النقل/التصغير/الحذف بالنتيجة (لأنها UI فقط وليست جزءًا من البيانات)،
+     ويُعاد تلوين المُظلِّل ومظهر الملاحظة بأنماط مضمّنة لأن التصدير مستند مستقل
+     لا يرى تنسيق الصفحة الأصلية. */
+  function shPageCanvas(items, W, H){
+    return new Promise(function(resolve){
+      var svg = document.createElementNS(SVGNS, 'svg');
+      svg.setAttribute('xmlns', SVGNS);
+      svg.setAttribute('width', W); svg.setAttribute('height', H);
+      svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+      (items || []).forEach(function(s){
+        if(s.t === 'i'){
+          var img = document.createElementNS(SVGNS, 'image');
+          img.setAttribute('href', s.href);
+          img.setAttribute('x', s.x); img.setAttribute('y', s.y);
+          img.setAttribute('width', s.iw); img.setAttribute('height', s.ih);
+          svg.appendChild(img);
+        }else if(s.t === 'n'){
+          var fo = document.createElementNS(SVGNS, 'foreignObject');
+          fo.setAttribute('x', s.x); fo.setAttribute('y', s.y);
+          fo.setAttribute('width', s.iw); fo.setAttribute('height', s.ih);
+          var box = document.createElementNS(XHTMLNS, 'div');
+          box.setAttribute('style', 'width:100%;height:100%;box-sizing:border-box;' +
+            'background:rgba(255,247,214,0.96);border:1.5px dashed #c9a227;border-radius:6px;' +
+            'padding:6px 8px;overflow:hidden;');
+          var txt = document.createElementNS(XHTMLNS, 'div');
+          txt.setAttribute('style', 'width:100%;height:100%;font:14px/1.5 Arial,sans-serif;' +
+            'color:#2a2a2a;direction:rtl;text-align:right;word-break:break-word;white-space:pre-wrap;');
+          txt.textContent = s.text || '';
+          box.appendChild(txt);
+          fo.appendChild(box);
+          svg.appendChild(fo);
+        }else{
+          var p = document.createElementNS(SVGNS, 'path');
+          p.setAttribute('d', s.d); p.setAttribute('stroke', s.c);
+          p.setAttribute('stroke-width', s.w); p.setAttribute('stroke-opacity', s.o);
+          p.setAttribute('fill', 'none');
+          p.setAttribute('stroke-linecap', 'round');
+          p.setAttribute('stroke-linejoin', 'round');
+          if(s.h) p.setAttribute('style', 'mix-blend-mode:multiply');
+          svg.appendChild(p);
+        }
+      });
+      var xml = new XMLSerializer().serializeToString(svg);
+      var img = new Image();
+      img.onload = function(){
+        var SCALE = 2;
+        var c = document.createElement('canvas');
+        c.width = W * SCALE; c.height = H * SCALE;
+        var g = c.getContext('2d');
+        g.scale(SCALE, SCALE);
+        g.fillStyle = '#fbf8ef'; g.fillRect(0, 0, W, H);
+        g.strokeStyle = 'rgba(63,143,214,0.28)'; g.lineWidth = 1;
+        for(var y = 27.5; y < H; y += 28){
+          g.beginPath(); g.moveTo(0, y); g.lineTo(W, y); g.stroke();
+        }
+        g.drawImage(img, 0, 0, W, H);
+        resolve(c);
+      };
+      img.onerror = function(){ resolve(null); };
+      img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(xml);
     });
-    var xml = new XMLSerializer().serializeToString(clone);
-    var img = new Image();
-    img.onload = function(){
-      var c = document.createElement('canvas');
-      c.width = W * SCALE; c.height = H * SCALE;
-      var g = c.getContext('2d');
-      g.scale(SCALE, SCALE);
-      g.fillStyle = '#fbf8ef'; g.fillRect(0, 0, W, H);
-      g.strokeStyle = 'rgba(63,143,214,0.28)'; g.lineWidth = 1;
-      for(var y = 27.5; y < H; y += 28){
-        g.beginPath(); g.moveTo(0, y); g.lineTo(W, y); g.stroke();
-      }
-      g.drawImage(img, 0, 0, W, H);
+  }
+
+  /* حفظ صفحة الورقة الحالية صورة PNG واحدة */
+  sheet.querySelector('.sh-png').addEventListener('click', function(){
+    shCapture();
+    var W = shBody.clientWidth, H = shBody.clientHeight;
+    shPageCanvas(shPages[shPageIdx], W, H).then(function(c){
+      if(!c) return;
       c.toBlob(function(blob){
         var a = document.createElement('a');
         a.href = URL.createObjectURL(blob);
@@ -7295,8 +7344,30 @@
         document.body.appendChild(a); a.click(); a.remove();
         setTimeout(function(){ URL.revokeObjectURL(a.href); }, 4000);
       }, 'image/png');
-    };
-    img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(xml);
+    });
+  });
+
+  /* تصدير كل صفحات الورقة (لا الحالية وحدها) بملف PDF واحد، صفحة لكل ورقة */
+  sheet.querySelector('.sh-pdf').addEventListener('click', function(){
+    shCapture();
+    var W = shBody.clientWidth, H = shBody.clientHeight;
+    var btn = sheet.querySelector('.sh-pdf');
+    var original = btn.textContent;
+    btn.disabled = true; btn.textContent = '⏳ ...';
+    Promise.all(shPages.map(function(items){ return shPageCanvas(items, W, H); }))
+      .then(function(canvases){
+        var doc = new window.jspdf.jsPDF({ unit:'px', format:[W, H] });
+        canvases.forEach(function(c, i){
+          if(i > 0) doc.addPage([W, H]);
+          if(c) doc.addImage(c.toDataURL('image/jpeg', 0.9), 'JPEG', 0, 0, W, H);
+        });
+        doc.save('lecture-board-all-pages-' + new Date().toISOString().slice(0,16).replace(/[:T]/g,'-') + '.pdf');
+        btn.disabled = false; btn.textContent = original;
+      })
+      .catch(function(){
+        btn.disabled = false; btn.textContent = original;
+        alert('تعذّر إنشاء ملف PDF — جرّب مرة أخرى.');
+      });
   });
 
   function setSheet(on){
