@@ -1973,7 +1973,20 @@
     position:absolute; left:22px; right:0; bottom:0; height:9px;
     cursor:ns-resize; touch-action:none;
   }
-  .sheet-resize-r:hover, .sheet-resize-b:hover{ background:rgba(209,52,43,0.18); }
+  /* الحافتان الباقيتان — اليسرى والعلوية — فتكتمل الجهات الأربع */
+  .sheet-resize-l{
+    position:absolute; top:0; left:0; bottom:22px; width:9px;
+    cursor:ew-resize; touch-action:none;
+  }
+  .sheet-resize-t{
+    position:absolute; left:0; right:0; top:0; height:9px;
+    cursor:ns-resize; touch-action:none;
+  }
+  .sheet-resize-r:hover, .sheet-resize-b:hover,
+  .sheet-resize-l:hover, .sheet-resize-t:hover{ background:rgba(209,52,43,0.18); }
+  /* مقبض نقل الصورة الملصوقة */
+  .sh-img-handle{ cursor:move; touch-action:none; }
+  .sh-img-handle:hover{ filter:brightness(1.15); }
 
   /* مبدّل الصفحات داخل رأس الورقة: يسمح بإضافة صفحة ثانية وثالثة والتنقّل بينها */
   .sheet-head .sh-pager{ display:inline-flex; align-items:center; gap:2px; flex:none; }
@@ -6631,6 +6644,8 @@
       '<span class="sheet-resize" title="اسحب لتغيير الحجم من الزاوية"></span>' +
       '<span class="sheet-resize-r" title="اسحب لتوسيع العرض"></span>' +
       '<span class="sheet-resize-b" title="اسحب لتوسيع الطول"></span>' +
+      '<span class="sheet-resize-l" title="اسحب لتوسيع العرض"></span>' +
+      '<span class="sheet-resize-t" title="اسحب لتوسيع الطول"></span>' +
     '</div>';
   document.body.appendChild(sheet);
 
@@ -6639,6 +6654,8 @@
   var shResize  = sheet.querySelector('.sheet-resize');
   var shResizeR = sheet.querySelector('.sheet-resize-r');
   var shResizeB = sheet.querySelector('.sheet-resize-b');
+  var shResizeL = sheet.querySelector('.sheet-resize-l');
+  var shResizeT = sheet.querySelector('.sheet-resize-t');
   var shPrevBtn = sheet.querySelector('.sh-prev');
   var shNextBtn = sheet.querySelector('.sh-next');
   var shPageNo  = sheet.querySelector('.sh-pageno');
@@ -6692,6 +6709,7 @@
         img.setAttribute('x', s.x); img.setAttribute('y', s.y);
         img.setAttribute('width', s.iw); img.setAttribute('height', s.ih);
         shSvg.appendChild(img);
+        shMakeHandle(img);
       }else{
         var p = document.createElementNS(SVGNS, 'path');
         p.setAttribute('d', s.d); p.setAttribute('stroke', s.c);
@@ -6706,6 +6724,50 @@
     shPageNo.textContent = ar(shPageIdx + 1) + '/' + ar(shPages.length);
     shPrevBtn.disabled = shPageIdx === 0;
     shNextBtn.disabled = shPageIdx === shPages.length - 1;
+  }
+
+  /* مقبض صغير بزاوية الصورة العليا اليسرى لسحبها وتحريكها فوق الورقة
+     دون أن يتعارض ذلك مع الرسم بالقلم فوق جسم الصورة نفسه. */
+  function shMakeHandle(imgEl){
+    var h = document.createElementNS(SVGNS, 'circle');
+    h.setAttribute('class', 'sh-img-handle');
+    h.setAttribute('r', 9);
+    h.setAttribute('fill', '#d1342b');
+    h.setAttribute('stroke', '#fff');
+    h.setAttribute('stroke-width', '2');
+    function place(){
+      h.setAttribute('cx', parseFloat(imgEl.getAttribute('x')));
+      h.setAttribute('cy', parseFloat(imgEl.getAttribute('y')));
+    }
+    place();
+    shSvg.appendChild(h);
+    imgEl._shHandle = h;
+
+    var hp = null, start = null, imgStart = null;
+    h.addEventListener('pointerdown', function(ev){
+      ev.preventDefault(); ev.stopPropagation();
+      if(hp !== null) return;
+      hp = ev.pointerId;
+      try{ h.setPointerCapture(ev.pointerId); }catch(e){}
+      start = toLocal(shSvg, ev);
+      imgStart = { x: parseFloat(imgEl.getAttribute('x')), y: parseFloat(imgEl.getAttribute('y')) };
+    });
+    h.addEventListener('pointermove', function(ev){
+      if(ev.pointerId !== hp) return;
+      ev.preventDefault();
+      var pt = toLocal(shSvg, ev);
+      imgEl.setAttribute('x', imgStart.x + (pt.x - start.x));
+      imgEl.setAttribute('y', imgStart.y + (pt.y - start.y));
+      place();
+    });
+    function upH(ev){
+      if(ev.pointerId !== hp) return;
+      hp = null;
+      saveSheet();
+    }
+    h.addEventListener('pointerup', upH);
+    h.addEventListener('pointercancel', upH);
+    return h;
   }
 
   /* لصق صورة (سكرين شوت مثلًا) من الحافظة مباشرة على الورقة المفتوحة —
@@ -6723,6 +6785,7 @@
     img.setAttribute('width', w);
     img.setAttribute('height', h);
     shSvg.appendChild(img);
+    shMakeHandle(img);
     shHist.push({ type:'add', el:img });
     var ok = saveSheet();
     if(!ok){
@@ -6861,6 +6924,48 @@
     shResizeB.addEventListener('pointerup', up);
   });
 
+  /* الحافة اليسرى: عرض فقط، الحافة اليمنى ثابتة */
+  shResizeL.addEventListener('pointerdown', function(ev){
+    ev.preventDefault(); ev.stopPropagation();
+    var r = sheet.getBoundingClientRect();
+    try{ shResizeL.setPointerCapture(ev.pointerId); }catch(e){}
+    function move(e){
+      if(e.pointerId !== ev.pointerId) return;
+      var w = Math.max(240, r.right - e.clientX);
+      sheet.style.width = Math.min(w, r.right - 8) + 'px';
+      sheet.style.left  = (r.right - sheet.offsetWidth) + 'px';
+    }
+    function up(e){
+      if(e.pointerId !== ev.pointerId) return;
+      shResizeL.removeEventListener('pointermove', move);
+      shResizeL.removeEventListener('pointerup', up);
+      saveSheet();
+    }
+    shResizeL.addEventListener('pointermove', move);
+    shResizeL.addEventListener('pointerup', up);
+  });
+
+  /* الحافة العلوية: طول فقط، الحافة السفلى ثابتة */
+  shResizeT.addEventListener('pointerdown', function(ev){
+    ev.preventDefault(); ev.stopPropagation();
+    var r = sheet.getBoundingClientRect();
+    try{ shResizeT.setPointerCapture(ev.pointerId); }catch(e){}
+    function move(e){
+      if(e.pointerId !== ev.pointerId) return;
+      var h = Math.max(200, r.bottom - e.clientY);
+      sheet.style.height = Math.min(h, r.bottom - 8) + 'px';
+      sheet.style.top    = (r.bottom - sheet.offsetHeight) + 'px';
+    }
+    function up(e){
+      if(e.pointerId !== ev.pointerId) return;
+      shResizeT.removeEventListener('pointermove', move);
+      shResizeT.removeEventListener('pointerup', up);
+      saveSheet();
+    }
+    shResizeT.addEventListener('pointermove', move);
+    shResizeT.addEventListener('pointerup', up);
+  });
+
   // الرسم على الورقة: نفس الأقلام والألوان والسُمك، بسجلّ تراجع مستقل
   var shDrawing = false, shPointer = null, shCur = null, shPts = [];
 
@@ -6924,7 +7029,10 @@
 
   sheet.querySelector('.sh-undo').addEventListener('click', function(){
     var a = shHist.pop(); if(!a) return;
-    if(a.type === 'add' && a.el.parentNode) a.el.remove();
+    if(a.type === 'add' && a.el.parentNode){
+      if(a.el._shHandle && a.el._shHandle.parentNode) a.el._shHandle.remove();
+      a.el.remove();
+    }
     else if(a.type === 'erase') a.els.forEach(function(o){
       shSvg.insertBefore(o.el, shSvg.children[o.i] || null);
     });
