@@ -4676,6 +4676,27 @@
     }
   });
 
+  /* أبعد نقطة يصلها أي عنصر بالصفحة (صورة، ملاحظة، أو نقاط مسار القلم) — تلزم لأن
+     حجم الورقة الحالي (shBody) قد يكون تصغّر بعد رسم المحتوى (عبر مقابض التحجيم
+     الأربعة)، فلا يعود حجمها الحالي كافيًا لاحتواء محتوى قديم رُسم لمّا كانت أكبر؛
+     التصدير يعتمد أكبر قيمة بين حجم الورقة الحالي وحدود المحتوى الفعلية فلا يُقصّ شيء. */
+  function shPageBounds(items){
+    var maxX = 0, maxY = 0;
+    (items || []).forEach(function(s){
+      if(s.t === 'i' || s.t === 'n'){
+        maxX = Math.max(maxX, parseFloat(s.x) + parseFloat(s.iw));
+        maxY = Math.max(maxY, parseFloat(s.y) + parseFloat(s.ih));
+      }else if(s.d){
+        var nums = s.d.match(/-?[\d.]+/g) || [];
+        for(var i = 0; i + 1 < nums.length; i += 2){
+          maxX = Math.max(maxX, parseFloat(nums[i]));
+          maxY = Math.max(maxY, parseFloat(nums[i + 1]));
+        }
+      }
+    });
+    return { maxX: maxX, maxY: maxY };
+  }
+
   /* يبني صفحة (من بيانات shPages، لا من الـDOM الحي) على canvas: الورق والمسطّرة
      أولًا ثم الخطوط/الصور/الملاحظات فوقهما — يُستخدم لتصدير PNG وPDF معًا، فلا
      تظهر مقابض النقل/التصغير/الحذف بالنتيجة (لأنها UI فقط وليست جزءًا من البيانات)،
@@ -4745,6 +4766,9 @@
   sheet.querySelector('.sh-png').addEventListener('click', function(){
     shCapture();
     var W = shBody.clientWidth, H = shBody.clientHeight;
+    var b = shPageBounds(shPages[shPageIdx]);
+    W = Math.max(W, Math.ceil(b.maxX) + 20);
+    H = Math.max(H, Math.ceil(b.maxY) + 20);
     shPageCanvas(shPages[shPageIdx], W, H).then(function(c){
       if(!c) return;
       c.toBlob(function(blob){
@@ -4762,14 +4786,23 @@
   sheet.querySelector('.sh-pdf').addEventListener('click', function(){
     shCapture();
     var W = shBody.clientWidth, H = shBody.clientHeight;
+    shPages.forEach(function(items){
+      var b = shPageBounds(items);
+      W = Math.max(W, Math.ceil(b.maxX) + 20);
+      H = Math.max(H, Math.ceil(b.maxY) + 20);
+    });
+    /* jsPDF يفرض اتجاه portrait افتراضيًا، وبدون تحديد الاتجاه صراحة يقلب
+       العرض والطول تلقائيًا ليحافظ عليه — فتُرسم الصورة بعرضها الأصلي فوق صفحة
+       أضيق فعليًا منه، فيُقصّ جزء منها. نحدّد الاتجاه يدويًا حسب أبعاد الورقة. */
+    var orientation = W >= H ? 'l' : 'p';
     var btn = sheet.querySelector('.sh-pdf');
     var original = btn.textContent;
     btn.disabled = true; btn.textContent = '⏳ ...';
     Promise.all(shPages.map(function(items){ return shPageCanvas(items, W, H); }))
       .then(function(canvases){
-        var doc = new window.jspdf.jsPDF({ unit:'px', format:[W, H] });
+        var doc = new window.jspdf.jsPDF({ orientation: orientation, unit:'px', format:[W, H] });
         canvases.forEach(function(c, i){
-          if(i > 0) doc.addPage([W, H]);
+          if(i > 0) doc.addPage([W, H], orientation);
           if(c) doc.addImage(c.toDataURL('image/jpeg', 0.9), 'JPEG', 0, 0, W, H);
         });
         doc.save('lecture-board-all-pages-' + new Date().toISOString().slice(0,16).replace(/[:T]/g,'-') + '.pdf');
