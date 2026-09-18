@@ -4470,7 +4470,7 @@
   // الرسم على الورقة: نفس الأقلام والألوان والسُمك، بسجلّ تراجع مستقل
   var shDrawing = false, shPointer = null, shCur = null, shPts = [];
 
-  shBody.addEventListener('pointerdown', function(ev){
+  function shOnDown(ev){
     if(ev.target === shResize) return;
     if(panning) return;                                /* اليد تُسكِت اللوح أيضًا */
     if(shPointer !== null) return;
@@ -4495,7 +4495,8 @@
     shSvg.appendChild(shCur);
     shPts = [toLocal(shSvg, ev)];
     shCur.setAttribute('d', pathData(shPts));
-  });
+  }
+  shBody.addEventListener('pointerdown', shOnDown);
 
   shBody.addEventListener('pointermove', function(ev){
     if(pointing){
@@ -4704,6 +4705,43 @@
     else if(k === 'Escape'){ setOn(false); }
     else return;
     e.preventDefault();
+  });
+
+  /* الرسم بالسبيس بدل الضغط المستمر بزرّ الماوس الأيسر: تجربة أسهل على الفأرة/لوحة
+     اللمس من إبقاء الكلك مضغوطًا أثناء السحب — تثبيت السبيس يبدأ الخط بنفس أداة
+     القلم الحالية (رسم أو محو أو مؤشّر)، ورفعه يقطعه، بالضبط كالضغط والإفلات بالماوس. */
+  var lastMove = null;
+  document.addEventListener('pointermove', function(ev){
+    lastMove = { clientX: ev.clientX, clientY: ev.clientY, pointerId: ev.pointerId,
+                 pointerType: ev.pointerType, pressure: ev.pressure, target: ev.target };
+  }, { passive:true, capture:true });
+
+  var spaceDown = false, spaceOnSheet = false;
+  document.addEventListener('keydown', function(e){
+    if(e.code !== 'Space' && e.key !== ' ') return;
+    if(!document.body.classList.contains('ann-on')) return;
+    var t = e.target;
+    if(t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
+    e.preventDefault();
+    if(spaceDown || !lastMove) return;
+    spaceOnSheet = sheet.classList.contains('open') && sheet.contains(lastMove.target);
+    if(spaceOnSheet){ if(shPointer !== null) return; }
+    else{ if(activePointer !== null) return; }
+    spaceDown = true;
+    var fake = {
+      clientX: lastMove.clientX, clientY: lastMove.clientY, pointerId: lastMove.pointerId,
+      pointerType: lastMove.pointerType, pressure: lastMove.pressure, target: lastMove.target,
+      button: 0, preventDefault: function(){}
+    };
+    if(spaceOnSheet) shOnDown(fake); else onDown(fake);
+  });
+  document.addEventListener('keyup', function(e){
+    if(e.code !== 'Space' && e.key !== ' ') return;
+    if(!spaceDown) return;
+    spaceDown = false;
+    e.preventDefault();
+    if(spaceOnSheet){ if(shPointer !== null) shEnd({ pointerId: shPointer }); }
+    else{ if(activePointer !== null) onUp({ pointerId: activePointer }); }
   });
 
   // ---------- التشغيل ----------
