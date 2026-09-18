@@ -16,11 +16,15 @@
     --orange:#e07a1f;
     --purple:#7a2ea6;
     --pink:#e0578f;
-    --paper:#fbf8ef;
-    --ruleline:rgba(63,143,214,0.28);
+    --paper:#f1f5fa;
+    --ruleline:rgba(58,102,150,0.26);
     --ink:#1a3d8c;
     --bark:#8a5a2b;
     --teal:#0f7a72;
+    /* هوية بصرية خاصة بمادة الذكاء الاصطناعي، لتمييزها عن مادة التحول الرقمي
+       التي تشاركها المحرّك نفسه — لا تُستعمل للدلالات الدائمة (صح/خطأ) */
+    --brand:#4a2f9e;
+    --brand-dark:#341f74;
   }
 
   *{box-sizing:border-box;}
@@ -36,10 +40,10 @@
   }
 
   body{
-    background-color:#5e3a1f;
+    background-color:#3a434e;
     background-image:
       linear-gradient(90deg, rgba(0,0,0,0.10) 0 2px, transparent 2px 18px),
-      repeating-linear-gradient(100deg, #6b4425 0, #6b4425 40px, #78502c 40px, #78502c 80px, #63401f 80px, #63401f 120px);
+      repeating-linear-gradient(100deg, #414d59 0, #414d59 40px, #48586a 40px, #48586a 80px, #39424c 80px, #39424c 120px);
     position:relative;
   }
 
@@ -86,6 +90,9 @@
     text-shadow:0 1px 2px rgba(0,0,0,0.55);
   }
   .mh-row .mh-label{ font-weight:700; color:#e0a94e; }
+  /* أيقونة تعريفية صغيرة لمادة الذكاء الاصطناعي، لا تظهر بمادة التحول الرقمي */
+  .mh-brand-row{ display:flex; align-items:center; justify-content:center; gap:6px; flex-wrap:wrap; }
+  .mh-brand-icon{ flex:none; fill:var(--brand); filter:drop-shadow(0 1px 1px rgba(0,0,0,0.5)); }
   .mh-row .mh-value{ font-weight:400; color:#fdf6e6; }
   .mh-row .mh-blank{
     display:inline-block;
@@ -121,7 +128,7 @@
     padding:8px;
     background:
       linear-gradient(#fdf6e6, #f4e6c8);
-    border:2px dashed var(--blue);
+    border:2px dashed var(--brand);
     border-radius:50%;
     color:var(--ink);
     text-decoration:none;
@@ -154,7 +161,7 @@
     font-weight:700;
     font-size:11.5px;
     line-height:1.2;
-    color:var(--red);
+    color:var(--brand);
     text-align:center;
   }
   /* رمز QR بدل كتابة الرابط: يُمسح بالكاميرا مباشرة، مفيد خصوصًا عند طباعة الدفتر أو عرضه على الشاشة */
@@ -465,12 +472,12 @@
     align-self:center;
     margin-bottom:8px;
   }
-  .chip-ch1{ background:var(--blue); transform:rotate(-1.5deg); }
+  .chip-ch1{ background:var(--brand); transform:rotate(-1.5deg); }
 
   .page-title{
     font-family:'Aref Ruqaa Ink','Aref Ruqaa',serif;
     font-weight:700;
-    color:var(--green);
+    color:var(--brand);
     font-size:calc(clamp(22px,5.2vw,30px) * var(--fs,1));
     margin:2px 0 0;
     align-self:center;
@@ -2559,7 +2566,10 @@
 
   <div class="master-header">
     <div class="mh-card">
-      <div class="mh-row"><span class="mh-label">المادة:</span> <span class="mh-value">محاضرات الذكاء الاصطناعي وتحليل البيانات</span></div>
+      <div class="mh-row mh-brand-row">
+        <svg class="mh-brand-icon" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2 6 6 2-6 2-2 6-2-6-6-2 6-2 2-6z"/></svg>
+        <span class="mh-label">المادة:</span> <span class="mh-value">محاضرات الذكاء الاصطناعي وتحليل البيانات</span>
+      </div>
       <div class="mh-row"><span class="mh-label">المعهد:</span> <span class="mh-value">المعهد العالي لإعداد وتأهيل القادة</span></div>
       <div class="mh-row"><span class="mh-label">من قبل:</span> <span class="mh-value">د. أمير هادي</span></div>
       <div class="mh-row"><span class="mh-label">السنة:</span> <span class="mh-value">٢٠٢٦</span></div>
