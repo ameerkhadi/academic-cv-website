@@ -1984,9 +1984,13 @@
   }
   .sheet-resize-r:hover, .sheet-resize-b:hover,
   .sheet-resize-l:hover, .sheet-resize-t:hover{ background:rgba(209,52,43,0.18); }
-  /* مقبض نقل الصورة الملصوقة */
+  /* مقابض الصورة الملصوقة: نقل، تصغير/تكبير، حذف */
   .sh-img-handle{ cursor:move; touch-action:none; }
   .sh-img-handle:hover{ filter:brightness(1.15); }
+  .sh-img-resize{ cursor:nwse-resize; touch-action:none; }
+  .sh-img-resize:hover{ filter:brightness(1.15); }
+  .sh-img-del{ cursor:pointer; touch-action:none; }
+  .sh-img-del:hover{ filter:brightness(1.3); }
 
   /* مبدّل الصفحات داخل رأس الورقة: يسمح بإضافة صفحة ثانية وثالثة والتنقّل بينها */
   .sheet-head .sh-pager{ display:inline-flex; align-items:center; gap:2px; flex:none; }
@@ -6726,48 +6730,134 @@
     shNextBtn.disabled = shPageIdx === shPages.length - 1;
   }
 
-  /* مقبض صغير بزاوية الصورة العليا اليسرى لسحبها وتحريكها فوق الورقة
-     دون أن يتعارض ذلك مع الرسم بالقلم فوق جسم الصورة نفسه. */
+  /* ثلاثة مقابض لكل صورة ملصوقة: دائرة حمراء بالزاوية العليا اليسرى للسحب والتحريك،
+     دائرة زرقاء بالزاوية السفلى اليمنى للتصغير/التكبير (تحافظ على نسبة الصورة)،
+     وزر أسود صغير بعلامة × بالزاوية العليا اليمنى للحذف. جسم الصورة نفسه يبقى حرًا للرسم فوقه. */
   function shMakeHandle(imgEl){
-    var h = document.createElementNS(SVGNS, 'circle');
-    h.setAttribute('class', 'sh-img-handle');
-    h.setAttribute('r', 9);
-    h.setAttribute('fill', '#d1342b');
-    h.setAttribute('stroke', '#fff');
-    h.setAttribute('stroke-width', '2');
-    function place(){
-      h.setAttribute('cx', parseFloat(imgEl.getAttribute('x')));
-      h.setAttribute('cy', parseFloat(imgEl.getAttribute('y')));
-    }
-    place();
-    shSvg.appendChild(h);
-    imgEl._shHandle = h;
+    var mv = document.createElementNS(SVGNS, 'circle');
+    mv.setAttribute('class', 'sh-img-handle');
+    mv.setAttribute('r', 9);
+    mv.setAttribute('fill', '#d1342b');
+    mv.setAttribute('stroke', '#fff');
+    mv.setAttribute('stroke-width', '2');
 
-    var hp = null, start = null, imgStart = null;
-    h.addEventListener('pointerdown', function(ev){
+    var rs = document.createElementNS(SVGNS, 'circle');
+    rs.setAttribute('class', 'sh-img-resize');
+    rs.setAttribute('r', 8);
+    rs.setAttribute('fill', '#2266cc');
+    rs.setAttribute('stroke', '#fff');
+    rs.setAttribute('stroke-width', '2');
+
+    var del = document.createElementNS(SVGNS, 'g');
+    del.setAttribute('class', 'sh-img-del');
+    var delBg = document.createElementNS(SVGNS, 'circle');
+    delBg.setAttribute('r', 9);
+    delBg.setAttribute('fill', '#333');
+    delBg.setAttribute('stroke', '#fff');
+    delBg.setAttribute('stroke-width', '2');
+    var delX = document.createElementNS(SVGNS, 'path');
+    delX.setAttribute('d', 'M-4,-4 L4,4 M4,-4 L-4,4');
+    delX.setAttribute('stroke', '#fff');
+    delX.setAttribute('stroke-width', '2');
+    delX.setAttribute('stroke-linecap', 'round');
+    del.appendChild(delBg); del.appendChild(delX);
+
+    function reposition(){
+      var x = parseFloat(imgEl.getAttribute('x'));
+      var y = parseFloat(imgEl.getAttribute('y'));
+      var w = parseFloat(imgEl.getAttribute('width'));
+      var hh = parseFloat(imgEl.getAttribute('height'));
+      mv.setAttribute('cx', x); mv.setAttribute('cy', y);
+      rs.setAttribute('cx', x + w); rs.setAttribute('cy', y + hh);
+      del.setAttribute('transform', 'translate(' + (x + w) + ',' + y + ')');
+    }
+    reposition();
+    shSvg.appendChild(mv);
+    shSvg.appendChild(rs);
+    shSvg.appendChild(del);
+    imgEl._shHandle = mv;
+    imgEl._shResizeHandle = rs;
+    imgEl._shDelBtn = del;
+
+    /* السحب والتحريك */
+    var mp = null, mStart = null, mImgStart = null;
+    mv.addEventListener('pointerdown', function(ev){
       ev.preventDefault(); ev.stopPropagation();
-      if(hp !== null) return;
-      hp = ev.pointerId;
-      try{ h.setPointerCapture(ev.pointerId); }catch(e){}
-      start = toLocal(shSvg, ev);
-      imgStart = { x: parseFloat(imgEl.getAttribute('x')), y: parseFloat(imgEl.getAttribute('y')) };
+      if(mp !== null) return;
+      mp = ev.pointerId;
+      try{ mv.setPointerCapture(ev.pointerId); }catch(e){}
+      mStart = toLocal(shSvg, ev);
+      mImgStart = { x: parseFloat(imgEl.getAttribute('x')), y: parseFloat(imgEl.getAttribute('y')) };
     });
-    h.addEventListener('pointermove', function(ev){
-      if(ev.pointerId !== hp) return;
+    mv.addEventListener('pointermove', function(ev){
+      if(ev.pointerId !== mp) return;
       ev.preventDefault();
       var pt = toLocal(shSvg, ev);
-      imgEl.setAttribute('x', imgStart.x + (pt.x - start.x));
-      imgEl.setAttribute('y', imgStart.y + (pt.y - start.y));
-      place();
+      imgEl.setAttribute('x', mImgStart.x + (pt.x - mStart.x));
+      imgEl.setAttribute('y', mImgStart.y + (pt.y - mStart.y));
+      reposition();
     });
-    function upH(ev){
-      if(ev.pointerId !== hp) return;
-      hp = null;
+    function mUp(ev){
+      if(ev.pointerId !== mp) return;
+      mp = null;
       saveSheet();
     }
-    h.addEventListener('pointerup', upH);
-    h.addEventListener('pointercancel', upH);
-    return h;
+    mv.addEventListener('pointerup', mUp);
+    mv.addEventListener('pointercancel', mUp);
+
+    /* التصغير والتكبير: الزاوية العليا اليسرى ثابتة، ونسبة الصورة تبقى محفوظة */
+    var rp = null, rAnchor = null, rAspect = 1;
+    rs.addEventListener('pointerdown', function(ev){
+      ev.preventDefault(); ev.stopPropagation();
+      if(rp !== null) return;
+      rp = ev.pointerId;
+      try{ rs.setPointerCapture(ev.pointerId); }catch(e){}
+      rAnchor = { x: parseFloat(imgEl.getAttribute('x')), y: parseFloat(imgEl.getAttribute('y')) };
+      var w0 = parseFloat(imgEl.getAttribute('width'));
+      var h0 = parseFloat(imgEl.getAttribute('height'));
+      rAspect = w0 / h0;
+    });
+    rs.addEventListener('pointermove', function(ev){
+      if(ev.pointerId !== rp) return;
+      ev.preventDefault();
+      var pt = toLocal(shSvg, ev);
+      var w = Math.max(30, pt.x - rAnchor.x);
+      var hh = w / rAspect;
+      if(hh < 30){ hh = 30; w = hh * rAspect; }
+      imgEl.setAttribute('width', w);
+      imgEl.setAttribute('height', hh);
+      reposition();
+    });
+    function rUp(ev){
+      if(ev.pointerId !== rp) return;
+      rp = null;
+      saveSheet();
+    }
+    rs.addEventListener('pointerup', rUp);
+    rs.addEventListener('pointercancel', rUp);
+
+    /* الحذف */
+    del.addEventListener('pointerdown', function(ev){ ev.preventDefault(); ev.stopPropagation(); });
+    del.addEventListener('click', function(ev){
+      ev.stopPropagation();
+      shDeleteImage(imgEl);
+    });
+
+    return mv;
+  }
+
+  /* يحذف صورة ملصوقة واحدة (مع مقابضها) من الصفحة الحالية، بسجلّ تراجع متوافق مع أداة الممحاة */
+  function shDeleteImage(imgEl){
+    var kids = Array.prototype.slice.call(shSvg.children);
+    var group = [imgEl];
+    if(imgEl._shHandle) group.push(imgEl._shHandle);
+    if(imgEl._shResizeHandle) group.push(imgEl._shResizeHandle);
+    if(imgEl._shDelBtn) group.push(imgEl._shDelBtn);
+    var gone = group.map(function(el){ return { el:el, i:kids.indexOf(el) }; })
+                    .sort(function(a, b){ return a.i - b.i; });
+    gone.forEach(function(o){ o.el.remove(); });
+    shHist.push({ type:'erase', els:gone });
+    saveSheet();
   }
 
   /* لصق صورة (سكرين شوت مثلًا) من الحافظة مباشرة على الورقة المفتوحة —
@@ -7031,6 +7121,8 @@
     var a = shHist.pop(); if(!a) return;
     if(a.type === 'add' && a.el.parentNode){
       if(a.el._shHandle && a.el._shHandle.parentNode) a.el._shHandle.remove();
+      if(a.el._shResizeHandle && a.el._shResizeHandle.parentNode) a.el._shResizeHandle.remove();
+      if(a.el._shDelBtn && a.el._shDelBtn.parentNode) a.el._shDelBtn.remove();
       a.el.remove();
     }
     else if(a.type === 'erase') a.els.forEach(function(o){
