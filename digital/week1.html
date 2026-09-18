@@ -1988,6 +1988,18 @@
   .sh-img-resize:hover{ filter:brightness(1.15); }
   .sh-img-del{ cursor:pointer; touch-action:none; }
   .sh-img-del:hover{ filter:brightness(1.3); }
+  /* ملاحظة نصية (رابط أو نص) توضع فوق الورقة بجانب الرسم واللصق */
+  .sh-note-box{
+    width:100%; height:100%; box-sizing:border-box;
+    background:rgba(255,247,214,0.96); border:1.5px dashed #c9a227; border-radius:6px;
+    padding:6px 8px; overflow:auto;
+  }
+  .sh-note-text{
+    width:100%; height:100%; min-height:1em; outline:none;
+    font:14px/1.5 inherit; color:#2a2a2a; direction:rtl; text-align:right;
+    word-break:break-word;
+  }
+  .sh-note-text:empty::before{ content:'اكتب نصًا أو الصق رابطًا…'; color:#9a8a5a; }
 
   /* مبدّل الصفحات داخل رأس الورقة: يسمح بإضافة صفحة ثانية وثالثة والتنقّل بينها */
   .sheet-head .sh-pager{ display:inline-flex; align-items:center; gap:2px; flex:none; }
@@ -3430,6 +3442,7 @@
      الخاصة للمراجعة. الرسم محلّي على جهاز كل شخص (localStorage) ولا
      يغادره، فتأشير طالبٍ لا يظهر عند طالبٍ آخر ولا عند المدرّس. */
   var SVGNS = 'http://www.w3.org/2000/svg';
+  var XHTMLNS = 'http://www.w3.org/1999/xhtml';
   var STORE = 'ann:digital-week1:';
 
   var PENS = [
@@ -4051,6 +4064,8 @@
         '<button type="button" class="sh-addpage" title="إضافة صفحة جديدة">+ صفحة</button>' +
       '</span>' +
       '<button type="button" class="sh-undo" title="تراجع عن آخر خطوة">↶</button>' +
+      '<button type="button" class="sh-addnote" title="إضافة ملاحظة نصية (رابط أو نص قابل للكتابة)">📝</button>' +
+      '<button type="button" class="sh-export" title="تصدير كل الملاحظات النصية كنصّ جاهز لإرساله لي بالشات">📋 تصدير</button>' +
       '<button type="button" class="sh-clear" title="مسح هذه الصفحة">🗑</button>' +
       '<button type="button" class="sh-png" title="حفظ هذه الصفحة صورة PNG لإرسالها للطلبة">💾 صورة</button>' +
       '<button type="button" class="sh-close" title="إغلاق الورقة">✕</button>' +
@@ -4093,6 +4108,11 @@
       if(el.tagName === 'image'){
         items.push({ t:'i', href:el.getAttribute('href'), x:el.getAttribute('x'),
                      y:el.getAttribute('y'), iw:el.getAttribute('width'), ih:el.getAttribute('height') });
+      }else if(el.tagName === 'foreignObject'){
+        var noteText = el.querySelector('.sh-note-text');
+        items.push({ t:'n', x:el.getAttribute('x'), y:el.getAttribute('y'),
+                     iw:el.getAttribute('width'), ih:el.getAttribute('height'),
+                     text: noteText ? noteText.textContent : '' });
       }else if(el.tagName === 'path'){
         items.push({ d:el.getAttribute('d'), c:el.getAttribute('stroke'),
                      w:el.getAttribute('stroke-width'), o:el.getAttribute('stroke-opacity'),
@@ -4125,6 +4145,21 @@
         img.setAttribute('width', s.iw); img.setAttribute('height', s.ih);
         shSvg.appendChild(img);
         shMakeHandle(img);
+      }else if(s.t === 'n'){
+        var fo = document.createElementNS(SVGNS, 'foreignObject');
+        fo.setAttribute('x', s.x); fo.setAttribute('y', s.y);
+        fo.setAttribute('width', s.iw); fo.setAttribute('height', s.ih);
+        var box = document.createElementNS(XHTMLNS, 'div');
+        box.setAttribute('class', 'sh-note-box');
+        var txt = document.createElementNS(XHTMLNS, 'div');
+        txt.setAttribute('class', 'sh-note-text');
+        txt.setAttribute('contenteditable', 'true');
+        txt.textContent = s.text || '';
+        wireNoteText(txt);
+        box.appendChild(txt);
+        fo.appendChild(box);
+        shSvg.appendChild(fo);
+        shMakeHandle(fo, true);
       }else{
         var p = document.createElementNS(SVGNS, 'path');
         p.setAttribute('d', s.d); p.setAttribute('stroke', s.c);
@@ -4141,10 +4176,12 @@
     shNextBtn.disabled = shPageIdx === shPages.length - 1;
   }
 
-  /* ثلاثة مقابض لكل صورة ملصوقة: دائرة حمراء بالزاوية العليا اليسرى للسحب والتحريك،
-     دائرة زرقاء بالزاوية السفلى اليمنى للتصغير/التكبير (تحافظ على نسبة الصورة)،
-     وزر أسود صغير بعلامة × بالزاوية العليا اليمنى للحذف. جسم الصورة نفسه يبقى حرًا للرسم فوقه. */
-  function shMakeHandle(imgEl){
+  /* ثلاثة مقابض لكل عنصر ملحق بالورقة (صورة ملصوقة أو ملاحظة نصية): دائرة حمراء
+     بالزاوية العليا اليسرى للسحب والتحريك، دائرة زرقاء بالزاوية السفلى اليمنى
+     للتصغير/التكبير، وزر أسود صغير بعلامة × بالزاوية العليا اليمنى للحذف.
+     الصورة تحافظ على نسبتها عند التصغير؛ freeResize=true يلغي هذا القيد للملاحظات
+     النصية فيسمح بتغيير العرض والطول كل لحاله. جسم العنصر يبقى حرًا للرسم فوقه. */
+  function shMakeHandle(imgEl, freeResize){
     var mv = document.createElementNS(SVGNS, 'circle');
     mv.setAttribute('class', 'sh-img-handle');
     mv.setAttribute('r', 9);
@@ -4233,8 +4270,13 @@
       ev.preventDefault();
       var pt = toLocal(shSvg, ev);
       var w = Math.max(30, pt.x - rAnchor.x);
-      var hh = w / rAspect;
-      if(hh < 30){ hh = 30; w = hh * rAspect; }
+      var hh;
+      if(freeResize){
+        hh = Math.max(30, pt.y - rAnchor.y);
+      }else{
+        hh = w / rAspect;
+        if(hh < 30){ hh = 30; w = hh * rAspect; }
+      }
       imgEl.setAttribute('width', w);
       imgEl.setAttribute('height', hh);
       reposition();
@@ -4251,14 +4293,14 @@
     del.addEventListener('pointerdown', function(ev){ ev.preventDefault(); ev.stopPropagation(); });
     del.addEventListener('click', function(ev){
       ev.stopPropagation();
-      shDeleteImage(imgEl);
+      shDeleteAttachment(imgEl);
     });
 
     return mv;
   }
 
-  /* يحذف صورة ملصوقة واحدة (مع مقابضها) من الصفحة الحالية، بسجلّ تراجع متوافق مع أداة الممحاة */
-  function shDeleteImage(imgEl){
+  /* يحذف صورة ملصوقة أو ملاحظة نصية واحدة (مع مقابضها) من الصفحة الحالية، بسجلّ تراجع متوافق مع أداة الممحاة */
+  function shDeleteAttachment(imgEl){
     var kids = Array.prototype.slice.call(shSvg.children);
     var group = [imgEl];
     if(imgEl._shHandle) group.push(imgEl._shHandle);
@@ -4325,6 +4367,41 @@
       }
     }
   });
+
+  /* تفعيل الكتابة داخل صندوق ملاحظة نصية: يمنع نقرة التموضع من إطلاق رسم بالقلم
+     تحتها، ويحفظ التغييرات تلقائيًا بعد توقّف قصير عن الكتابة (بدل كل ضغطة حرف). */
+  function wireNoteText(txt){
+    txt.addEventListener('pointerdown', function(ev){ ev.stopPropagation(); });
+    var saveTO = null;
+    txt.addEventListener('input', function(){
+      clearTimeout(saveTO);
+      saveTO = setTimeout(saveSheet, 400);
+    });
+  }
+
+  /* يضيف ملاحظة نصية فارغة (نص أو رابط) فوق الورقة، بنفس مقابض النقل والتصغير
+     والحذف المستخدَمة للصور، لكن بتحجيم حر بدل التزام نسبة الصورة. */
+  function shAddNote(){
+    var offset = (shSvg.querySelectorAll('foreignObject').length % 6) * 22;
+    var fo = document.createElementNS(SVGNS, 'foreignObject');
+    fo.setAttribute('x', 10 + offset);
+    fo.setAttribute('y', 10 + offset);
+    fo.setAttribute('width', 220);
+    fo.setAttribute('height', 90);
+    var box = document.createElementNS(XHTMLNS, 'div');
+    box.setAttribute('class', 'sh-note-box');
+    var txt = document.createElementNS(XHTMLNS, 'div');
+    txt.setAttribute('class', 'sh-note-text');
+    txt.setAttribute('contenteditable', 'true');
+    wireNoteText(txt);
+    box.appendChild(txt);
+    fo.appendChild(box);
+    shSvg.appendChild(fo);
+    shMakeHandle(fo, true);
+    shHist.push({ type:'add', el:fo });
+    saveSheet();
+    txt.focus();
+  }
 
   function shGoto(i){
     if(i < 0 || i >= shPages.length || i === shPageIdx) return;
@@ -4547,6 +4624,52 @@
     if(!confirm('مسح هذه الصفحة؟')) return;
     while(shSvg.firstChild) shSvg.removeChild(shSvg.firstChild);
     shHist = []; saveSheet();
+  });
+
+  sheet.querySelector('.sh-addnote').addEventListener('click', shAddNote);
+
+  /* يجمع كل الملاحظات النصية من كل صفحات الورقة الحالية بنصّ واحد جاهز
+     للصقه هنا بالشات، مع عنوان المادة والأسبوع الحاليين تلقائيًا من الصفحة نفسها. */
+  sheet.querySelector('.sh-export').addEventListener('click', function(){
+    shCapture();
+    var courseEl = document.querySelector('.mh-card .mh-row:first-child .mh-value');
+    var course = courseEl ? courseEl.textContent.trim() : '';
+    var activeTab = document.querySelector('.tab.active');
+    var week = activeTab ? activeTab.innerHTML.split(/<br\s*\/?>/i).pop()
+                              .replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim() : '';
+    var lines = ['مادة: ' + course + (week ? ' — ' + week : '')];
+    var noteCount = 0, imgCount = 0;
+    shPages.forEach(function(page){
+      (page || []).forEach(function(it){
+        if(it.t === 'n' && it.text && it.text.trim()){
+          noteCount++;
+          lines.push('- ' + it.text.trim().replace(/\s*\n+\s*/g, ' '));
+        }else if(it.t === 'i'){
+          imgCount++;
+        }
+      });
+    });
+    if(imgCount) lines.push('(+ ' + imgCount + ' صورة مرفقة بالورقة — نزّلها بزر 💾 صورة إذا احتجتها)');
+    if(!noteCount && !imgCount) lines.push('(ماكو ملاحظات أو صور بالورقة حاليًا)');
+    var text = lines.join('\n');
+    var exportBtn = sheet.querySelector('.sh-export');
+    var original = exportBtn.textContent;
+    function flash(ok){
+      exportBtn.textContent = ok ? '✅ تم النسخ' : '⚠️ تعذّر النسخ';
+      setTimeout(function(){ exportBtn.textContent = original; }, 1800);
+    }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(function(){ flash(true); }, function(){ flash(false); });
+    }else{
+      try{
+        var ta = document.createElement('textarea');
+        ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta); ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        flash(true);
+      }catch(e){ flash(false); }
+    }
   });
 
   /* حفظ الورقة صورة: نرسم الورق والمسطّرة على canvas ثم نضع فوقهما الـSVG.
