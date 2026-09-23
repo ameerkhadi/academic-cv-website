@@ -1898,22 +1898,32 @@ function gradesAdminView(){
       .catch(function(e){ toast(e.message); });
   }
 
-  var h='<div class="card"><h3>التوزيع المعتمد</h3>'+
+  var h='<div class="card"><h3>التوزيع المعتمد (الأساسي = 40)</h3>'+
     '<div class="tblwrap"><table><tbody>'+
-    '<tr><td>امتحان نصف الفصل</td><td class="num">25</td></tr>'+
+    '<tr><td>امتحان نصف الفصل (المد)</td><td class="num">20</td></tr>'+
     '<tr><td>الاختبارات الصفّية</td><td class="num">5</td></tr>'+
     '<tr><td>الواجبات (تُقسَّم على المحتسَبة)</td><td class="num">10</td></tr>'+
-    '<tr><td>مكافأة (سقف لكل طالب)</td><td class="num">2</td></tr>'+
+    '<tr><td>الحضور</td><td class="num">5</td></tr>'+
     '</tbody></table></div>'+
-    '<div class="note">النوع «امتحان» يدخل الـ25، والنوع «كويز» يدخل الـ5 كنسبة من مجموع كل الأسئلة. '+
+    '<div class="note">النوع «امتحان» يدخل الـ20، والنوع «كويز» يدخل الـ5 كنسبة من مجموع كل الأسئلة. '+
+    'الحضور يُسجَّل من تبويب «الحضور» ويدخل الـ5 كنقاط مباشرة لا نسبة. '+
     'الأنواع الأخرى تُعرض للطالب خارج التوزيع.</div></div>';
 
+  h+='<div class="card"><h3>الإضافي (فوق الأساسي، سقفه الكلي 9، ولا يتجاوز المجموع 40)</h3>'+
+    '<div class="tblwrap"><table><tbody>'+
+    '<tr><td>مكافأة يدوية (هذا القسم)</td><td class="num">حتى 5</td></tr>'+
+    '<tr><td>الأنشطة الثلاثة (تبويب «الأنشطة والقصص»)</td><td class="num">حتى 3</td></tr>'+
+    '<tr><td>قصة النجاح (تبويب «الأنشطة والقصص»)</td><td class="num">حتى 1</td></tr>'+
+    '</tbody></table></div></div>';
+
   h+='<div class="card"><h3>مكافأة</h3>'+
-    '<div class="note">بين 0.5 و2 لكل طالب. الخادم يرفض ما يتجاوز السقف.</div>'+
+    '<div class="note">بين 0.5 و5 لكل طالب. الخادم يرفض ما يتجاوز السقف.</div>'+
     '<div class="grid2"><div><label for="bC">رمز الطالب</label>'+
     '<input type="text" id="bC" placeholder="AC34FG" style="letter-spacing:.08em;text-transform:uppercase"></div>'+
     '<div><label for="bA">المقدار</label><select id="bA">'+
-    '<option>0.5</option><option>1</option><option>1.5</option><option>2</option></select></div></div>'+
+    '<option>0.5</option><option>1</option><option>1.5</option><option>2</option>'+
+    '<option>2.5</option><option>3</option><option>3.5</option><option>4</option>'+
+    '<option>4.5</option><option>5</option></select></div></div>'+
     '<label for="bR">السبب (اختياري)</label>'+
     '<input type="text" id="bR" placeholder="مثال: مشاركة متميزة في الأسبوع الثالث">'+
     '<button class="btn" style="margin-top:14px" onclick="giveBonus()">إضافة المكافأة</button>';
