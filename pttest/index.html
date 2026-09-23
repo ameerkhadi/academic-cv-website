@@ -906,7 +906,7 @@ function render(){
   }
 
   $('view').innerHTML = S.role==='student' ? studentView() : teacherView();
-  if(S.role==='student' && S.tab===4){
+  if(S.role==='student' && S.tab===6){
     setTimeout(drawQR,0);
     if(unreadCount()) markRead();
   }
@@ -1530,7 +1530,7 @@ function messagesAdminView(){
 
   if(msgsLoaded===null){
     api('messages',{code:S.code}).then(function(list){
-      msgsLoaded=list; if(S.tab===6) render();
+      msgsLoaded=list; if(S.tab===8) render();
     }).catch(function(e){ toast(e.message); });
     return h+'<div class="center">جارٍ تحميل السجل…</div>';
   }
