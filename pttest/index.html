@@ -340,7 +340,7 @@ function api(action,payload){
   // إجراءات الكتابة لا تمرّ عبر JSONP — الخادم يرفضها ويعيد رسالة غامضة
   var WRITE = ['upload','grade','saveLecture','saveAssignment','publish',
                'addStudents','bulkGrades','contact','deleteItem','saveSettings','unlockCode','addBonus','studentCard','saveQuiz','deleteQuiz','quizStart','quizStep','quizFinish','answer','sendToStudent','markSeen',
-               'recordAttendance','uploadActivity','approveActivity','uploadStory','approveStory','gradeSubmissionsBulk'];
+               'recordAttendance','uploadActivity','approveActivity','uploadStory','approveStory','gradeSubmissionsBulk','addAppreciation'];
   var heavy = WRITE.indexOf(action) !== -1;
   return post(payload).catch(function(){
     if(heavy) throw new Error('تعذّر الاتصال بالخادم. تحقّق من الإنترنت وأعد المحاولة.');
@@ -674,16 +674,21 @@ function cardView(){
      '<div class="kv"><span class="k">التسليمات</span>'+
      '<span class="v">'+d.submittedCount+' من '+d.totalAssignments+
      (d.lateCount?' · '+d.lateCount+' متأخر':'')+'</span></div>'+
-     '<div class="kv"><span class="k">المكافأة</span>'+
-     '<span class="v">'+d.bonusTotal+' من 2'+(d.bonusLeft?' (متاح '+d.bonusLeft+')':' — بلغ السقف')+'</span></div>'+
+     '<div class="kv"><span class="k">مكافأة</span>'+
+     '<span class="v">'+d.appreciation.bonus+' من '+d.appreciation.bonusMax+'</span></div>'+
+     '<div class="kv"><span class="k">شكر وتقدير</span>'+
+     '<span class="v">'+d.appreciation.appreciation+' من '+d.appreciation.appreciationMax+'</span></div>'+
      (d.locked?'<div class="kv"><span class="k">حالة الدخول</span>'+
        '<span class="v" style="color:var(--danger)">مقفول '+d.locked+' دقيقة</span></div>':'');
 
-  if(d.bonusLeft>0){
-    h+='<div class="meta" style="margin-top:16px">منح مكافأة الآن:</div><div class="bonusrow">';
-    [0.5,1,1.5,2].forEach(function(v){
-      if(v<=d.bonusLeft) h+='<button class="btn sm ghost" onclick="quickBonus('+v+')">+'+v+'</button>';
+  var bonusLeft=round2local(d.appreciation.bonusMax-d.appreciation.bonus);
+  var apprLeft=round2local(d.appreciation.appreciationMax-d.appreciation.appreciation);
+  if(bonusLeft>0 || apprLeft>0){
+    h+='<div class="meta" style="margin-top:16px">منح سريع:</div><div class="bonusrow">';
+    if(bonusLeft>0) [0.5,1,1.5,2].forEach(function(v){
+      if(v<=bonusLeft) h+='<button class="btn sm ghost" onclick="quickBonus('+v+')">مكافأة +'+v+'</button>';
     });
+    if(apprLeft>0) h+='<button class="btn sm ghost" onclick="quickAppreciation()">شكر وتقدير +1</button>';
     h+='</div>';
   }
 
@@ -715,10 +720,21 @@ function cardView(){
   return h;
 }
 
+function round2local(n){ return Math.round(n*100)/100; }
+
 function quickBonus(v){
   api('addBonus',{code:S.code,target:scanCode,amount:v,reason:''})
-    .then(function(r){ toast('+'+v+' لـ'+r.name+' — المجموع '+r.total);
+    .then(function(r){ toast('+'+v+' لـ'+r.name+' — مكافأته الآن '+r.total);
       bonusCache=null; loadCard(); })
+    .catch(function(e){ toast(e.message); });
+}
+
+function quickAppreciation(){
+  var reason=prompt('السبب (إلزامي):');
+  if(!reason || !reason.trim()){ toast('السبب إلزامي'); return; }
+  api('addAppreciation',{code:S.code,target:scanCode,reason:reason.trim()})
+    .then(function(r){ toast('شكر وتقدير لـ'+r.name+' — مجموعه الآن '+r.total);
+      loadCard(); })
     .catch(function(e){ toast(e.message); });
 }
 
@@ -1344,14 +1360,26 @@ function gradesView(){
 
   var E=B.extra;
   if(E && E.raw>0){
-    h+='<div class="card"><h3>الإضافي (مكافأة وأنشطة وقصة نجاح)</h3><div class="tblwrap"><table><tbody>'+
+    h+='<div class="card"><h3>الإضافي (مكافأة وشكر وتقدير وأنشطة وقصة نجاح)</h3><div class="tblwrap"><table><tbody>'+
       (E.bonus?'<tr><td>مكافأة</td><td class="num">'+E.bonus+' / '+E.bonusMax+'</td></tr>':'')+
+      (E.appreciation?'<tr><td>شكر وتقدير</td><td class="num">'+E.appreciation+' / '+E.appreciationMax+'</td></tr>':'')+
       (E.activities?'<tr><td>أنشطة معتمَدة</td><td class="num">'+E.activities+' / '+E.activitiesMax+'</td></tr>':'')+
       (E.story?'<tr><td>قصة نجاح</td><td class="num">'+E.story+' / '+E.storyMax+'</td></tr>':'')+
       '<tr><td><b>المُضاف فعلياً للمجموع</b></td><td class="num"><b>'+E.applied+'</b></td></tr>'+
       '</tbody></table></div>'+
       (E.raw>E.applied?'<div class="meta" style="margin-top:8px">رصيدك الفعلي من الإضافي '+E.raw+
         '، لكن المُضاف اقتصر على '+E.applied+' لأن المجموع النهائي لا يتجاوز '+B.outOf+'.</div>':'')+
+      ((E.bonusItems&&E.bonusItems.length)?'<div class="meta" style="margin-top:10px"><b>أسباب المكافأة:</b></div>'+
+        E.bonusItems.map(function(it){
+          return '<div class="msgin" style="margin-top:6px"><div class="row"><span>'+
+            (it.reason?esc(it.reason):'<span class="meta">بلا سبب مذكور</span>')+
+            '</span><span class="meta">+'+it.amount+'</span></div></div>';
+        }).join(''):'')+
+      ((E.appreciationItems&&E.appreciationItems.length)?'<div class="meta" style="margin-top:10px"><b>أسباب الشكر والتقدير:</b></div>'+
+        E.appreciationItems.map(function(it){
+          return '<div class="msgin" style="margin-top:6px"><div class="row"><span>'+esc(it.reason)+
+            '</span><span class="meta">+'+it.amount+'</span></div></div>';
+        }).join(''):'')+
       '</div>';
   }
 
@@ -1909,9 +1937,10 @@ function gradesAdminView(){
     'الحضور يُسجَّل من تبويب «الحضور» ويدخل الـ5 كنقاط مباشرة لا نسبة. '+
     'الأنواع الأخرى تُعرض للطالب خارج التوزيع.</div></div>';
 
-  h+='<div class="card"><h3>الإضافي (فوق الأساسي، سقفه الكلي 9، ولا يتجاوز المجموع 40)</h3>'+
+  h+='<div class="card"><h3>الإضافي (فوق الأساسي، سقفه الكلي 12، ولا يتجاوز المجموع 40)</h3>'+
     '<div class="tblwrap"><table><tbody>'+
     '<tr><td>مكافأة يدوية (هذا القسم)</td><td class="num">حتى 5</td></tr>'+
+    '<tr><td>شكر وتقدير (أدناه)</td><td class="num">حتى 3</td></tr>'+
     '<tr><td>الأنشطة الثلاثة (تبويب «الأنشطة والقصص»)</td><td class="num">حتى 3</td></tr>'+
     '<tr><td>قصة النجاح (تبويب «الأنشطة والقصص»)</td><td class="num">حتى 1</td></tr>'+
     '</tbody></table></div></div>';
@@ -1941,6 +1970,14 @@ function gradesAdminView(){
   }
   h+='</div>';
 
+  h+='<div class="card"><h3>شكر وتقدير</h3>'+
+    '<div class="note">1 درجة ثابتة لكل مرة، سقف 3 لكل طالب — منفصل تماماً عن المكافأة أعلاه.</div>'+
+    '<label for="prC">رمز الطالب</label>'+
+    '<input type="text" id="prC" placeholder="AC34FG" style="letter-spacing:.08em;text-transform:uppercase">'+
+    '<label for="prR">السبب (إلزامي)</label>'+
+    '<input type="text" id="prR" placeholder="مثال: تميّز بالإجابة الصفّية">'+
+    '<button class="btn" style="margin-top:14px" onclick="giveAppreciation()">منح شكر وتقدير (+1)</button></div>';
+
   return h+'<div class="card"><h3>رصد درجات دفعة واحدة</h3>'+
     '<div class="note">اكتب كل طالب في سطر: <b>الرمز</b> ثم مسافة ثم <b>الدرجة</b>.<br>مثال:<br>AC34FG 8<br>KM7PQR 9.5</div>'+
     '<label for="gI">اسم البند</label><input type="text" id="gI" placeholder="مثال: كويز الأسبوع الثالث">'+
@@ -1959,6 +1996,18 @@ function giveBonus(){
     .then(function(r){
       toast('مكافأة '+r.name+' — مجموعه الآن '+r.total);
       $('bC').value=''; $('bR').value=''; bonusCache=null; render();
+    }).catch(function(e){ toast(e.message); });
+}
+
+function giveAppreciation(){
+  var c=$('prC').value.trim();
+  if(!c){ toast('اكتب رمز الطالب'); return; }
+  var r=$('prR').value.trim();
+  if(!r){ toast('اكتب السبب'); return; }
+  api('addAppreciation',{code:S.code,target:c,reason:r})
+    .then(function(res){
+      toast('شكر وتقدير لـ'+res.name+' — مجموعه الآن '+res.total);
+      $('prC').value=''; $('prR').value=''; bonusCache=null; render();
     }).catch(function(e){ toast(e.message); });
 }
 
