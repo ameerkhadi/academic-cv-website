@@ -1606,6 +1606,12 @@
   .cb-c{ color:#7d8a6a; }
   .cb-s{ color:var(--green); unicode-bidi:isolate; }
 
+  .dt td.sym{ direction:ltr; text-align:center; font-weight:700;
+              font-family:'Courier New',monospace; font-size:1.25em;
+              color:var(--blue); }
+  .ltr-inline{ unicode-bidi:isolate; direction:ltr;
+               font-family:'Courier New',monospace; font-size:0.94em; }
+
   /* خلاصة نثريّة تحت المحور */
   .takeaway{
     margin:12px 0 4px; padding:11px 14px;
@@ -5720,6 +5726,38 @@
         <div class="ba-pair">
           <div class="bubble b-before"><span class="ba-tag">تستدعيها المحادثة</span>الطلب: «هذه شكوى وردت اليوم، ما تصنيفها؟»<br>ولمّا كان وصف المهارة يقول «يُستعمل عند ورود شكوى جديدة»، فُتِحت تلقائيًّا — بلا ذكرٍ لاسمها إطلاقًا.</div>
           <div class="bubble b-after"><span class="ba-tag">يستدعيها المستخدم</span>الطلب: «بمهارة تصنيف الشكاوى، ما تصنيف هذه الحالة؟»<br>فيُلزَم كلود بهذه المهارة بعينها، ولو كان الطلب غامضًا لا يطابق الوصف مطابقةً تامّة.</div>
+        </div>
+
+        <p class="dt-cap">الخطّ المائل «/» — طريقٌ يدويٌّ ثالث، وهو مرهونٌ بالسطح</p>
+        <p>إلى جانب ذكر اسم المهارة داخل الجملة، تُتيح بعضُ السطوح استدعاءً يدويًّا أصرحَ منه: كتابةُ الخطّ المائل في أوّل السطر تعرض قائمةَ المهارات المتاحة، فتُختار منها واحدةٌ بالاسم. غير أنّ هذا الطريق ليس واحدًا في كلّ السطوح، وهذا موضعُ لبسٍ شائع.</p>
+        <div class="dt-wrap">
+          <table class="dt">
+            <thead><tr><th>السطح</th><th>الاستدعاء اليدويّ المتاح</th><th>حال التوثيق</th></tr></thead>
+            <tbody>
+              <tr><td>محادثة <span class="ltr-inline">claude.ai</span></td><td>ذكرُ اسم المهارة داخل الجملة</td><td>التلقائيّ وذكرُ الاسم هما المذكوران؛ الخطّ المائل غير مذكور</td></tr>
+              <tr><td><span class="ltr-inline">Claude Code</span></td><td><b>‏/اسم-المهارة</b></td><td>موثَّقٌ صراحةً</td></tr>
+              <tr><td>إضافات <span class="ltr-inline">Microsoft 365</span></td><td><b>«/»</b> ثمّ الاختيار من القائمة</td><td>موثَّقٌ صراحةً</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="oops">
+          <span class="o-i">⚠</span>
+          <div>الواجهاتُ تسبق التوثيقَ أحيانًا، فقد يظهر الخطّ المائل في محادثة <span class="ltr-inline">claude.ai</span> قبل أن يُذكر في الوثائق. والمعوَّلُ عليه ما تُظهره الواجهةُ نفسها عند التجربة. أمّا الطريق الذي يعمل في السطوح كلِّها بلا استثناء فهو <b>ذكرُ اسم المهارة داخل الجملة</b>، وعليه يُبنى التدريب.</div>
+        </div>
+
+        <p class="dt-cap">رموزٌ أخرى — وهي خاصّةٌ ببيئة <span class="ltr-inline">Claude Code</span> لا بمحادثة الويب</p>
+        <div class="dt-wrap">
+          <table class="dt">
+            <thead><tr><th style="width:80px;">الرمز</th><th>وظيفته</th></tr></thead>
+            <tbody>
+              <tr><td class="sym">/</td><td>في أوّل السطر: أمرٌ أو مهارة</td></tr>
+              <tr><td class="sym">!</td><td>في أوّل السطر: وضعُ الطرفيّة — يُنفَّذ الأمر ويُضاف مخرَجُه إلى الجلسة</td></tr>
+              <tr><td class="sym">@</td><td>إشارةٌ إلى مسار ملفّ مع إكمالٍ تلقائيّ</td></tr>
+              <tr><td class="sym">:</td><td>رمزُ إيموجي بصيغة <span class="ltr-inline">:name:</span></td></tr>
+              <tr><td class="sym">?</td><td>على سطرٍ فارغ: لوحةُ الاختصارات</td></tr>
+            </tbody>
+          </table>
         </div>
 
         <p class="dt-cap">متى يُستعمل كلٌّ منهما — مع مثالٍ لكلّ حالة</p>
