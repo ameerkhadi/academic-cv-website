@@ -1501,6 +1501,242 @@
   }
   .dt-cap.fake{ color:var(--red); }
 
+  /* ===== رسوم محاضرة المهارات ===== */
+
+  /* رسم (٢): تشريح ملفّ المهارة */
+  .skl-file{ display:flex; flex-direction:column; gap:0; margin:10px 0 14px;
+             border:2.5px solid var(--ink); border-radius:9px; overflow:hidden; }
+  .skl-part{ padding:10px 12px 11px; }
+  .skl-card{ background:rgba(240,180,0,0.10); border-bottom:2.5px dashed var(--ink); }
+  .skl-body-part{ background:rgba(24,87,164,0.06); }
+  .skl-h{ display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-bottom:7px; }
+  .skl-badge{ background:#f0b400; color:#3a2a00; font-weight:700; border-radius:5px;
+              padding:2px 9px; font-size:calc(12px * var(--fs,1)); }
+  .skl-badge.alt{ background:var(--blue); color:#fff; }
+  .skl-when{ font-size:calc(11.5px * var(--fs,1)); color:rgba(26,61,140,0.7); font-weight:700; }
+  .skl-body{ display:flex; flex-direction:column; gap:5px; }
+  .skl-line{ font-size:calc(12.5px * var(--fs,1)); line-height:1.75; color:var(--ink);
+             background:rgba(255,255,255,0.55); border-radius:5px; padding:5px 8px; }
+  .skl-k{ font-weight:700; color:var(--red); font-family:ui-monospace,monospace; }
+  .skl-role{ margin-top:8px; font-size:calc(11.5px * var(--fs,1));
+             color:rgba(26,61,140,0.85); border-top:1px dotted rgba(26,61,140,0.3); padding-top:6px; }
+
+  /* رسم (٣): الطبقات الثلاث */
+  .lyr{ margin:10px 0 14px; }
+  .lyr-row{ display:flex; align-items:stretch; gap:8px; }
+  .lyr-when{ flex:0 0 74px; display:flex; flex-direction:column; justify-content:center;
+             text-align:center; font-weight:700; font-size:calc(11.5px * var(--fs,1));
+             color:var(--ink); }
+  .lyr-when small{ font-weight:400; opacity:0.75; }
+  .lyr-box{ flex:1; display:flex; flex-direction:column; gap:2px; border-radius:8px;
+            padding:9px 12px; border:2.5px solid; }
+  .lyr-box b{ font-size:calc(13.5px * var(--fs,1)); }
+  .lyr-box span{ font-size:calc(11.5px * var(--fs,1)); opacity:0.85; }
+  .lyr-box.l1{ background:rgba(31,122,61,0.10); border-color:var(--green); }
+  .lyr-box.l2{ background:rgba(24,87,164,0.09); border-color:var(--blue); }
+  .lyr-box.l3{ background:rgba(120,60,160,0.09); border-color:var(--purple); }
+  .lyr-cost{ flex:0 0 88px; display:flex; flex-direction:column; justify-content:center;
+             text-align:center; font-weight:700; font-size:calc(11.5px * var(--fs,1));
+             color:var(--red); }
+  .lyr-cost small{ font-weight:400; color:rgba(26,61,140,0.7); }
+  .lyr-arrow{ text-align:center; color:var(--ink); font-size:calc(12px * var(--fs,1));
+              padding:5px 0; }
+  .lyr-arrow span{ font-size:calc(11.5px * var(--fs,1)); opacity:0.8; }
+
+  /* رسم (٤): دورة الاستدعاء */
+  .flowd{ margin:10px 0 14px; text-align:center; }
+  .fl-node{ display:inline-block; border-radius:8px; padding:8px 14px; font-weight:700;
+            font-size:calc(12.5px * var(--fs,1)); border:2.5px solid var(--ink);
+            background:#fff; max-width:92%; }
+  .fl-start{ background:rgba(240,180,0,0.16); }
+  .fl-dec{ background:rgba(24,87,164,0.08); border-color:var(--blue); }
+  .fl-down{ color:var(--ink); padding:4px 0; }
+  .fl-split{ display:flex; gap:10px; margin-top:8px; }
+  .fl-branch{ flex:1; display:flex; flex-direction:column; align-items:center; gap:5px; }
+  .fl-lbl{ font-size:calc(11.5px * var(--fs,1)); font-weight:700; border-radius:20px;
+           padding:1px 12px; }
+  .fl-lbl.ok{ background:rgba(31,122,61,0.15); color:var(--green); }
+  .fl-lbl.no{ background:rgba(209,52,43,0.13); color:var(--red); }
+  .fl-yes{ border-color:var(--green); background:rgba(31,122,61,0.08); }
+  .fl-no{ border-color:var(--red); background:rgba(209,52,43,0.06); }
+
+  /* رسوم (٥) و(٦): المصفوفات الرباعية */
+  .mx4{ display:grid; grid-template-columns:auto 1fr 1fr; gap:6px; margin:10px 0 14px; }
+  .mx-col{ text-align:center; font-weight:700; font-size:calc(11.5px * var(--fs,1));
+           color:rgba(26,61,140,0.85); padding-bottom:2px; }
+  .mx-row{ display:flex; align-items:center; font-weight:700;
+           font-size:calc(11.5px * var(--fs,1)); color:rgba(26,61,140,0.85);
+           writing-mode:horizontal-tb; max-width:78px; line-height:1.4; }
+  .mx-cell{ display:flex; flex-direction:column; gap:2px; border-radius:8px; padding:9px 10px;
+            border:2px solid rgba(26,61,140,0.3); background:rgba(26,61,140,0.04); }
+  .mx-cell b{ font-size:calc(13px * var(--fs,1)); }
+  .mx-cell span{ font-size:calc(11px * var(--fs,1)); opacity:0.8; }
+  .mx-cell.hi{ border-color:var(--purple); background:rgba(120,60,160,0.10); }
+  .mx-cell.good{ border-color:var(--green); background:rgba(31,122,61,0.10); }
+  .mx-cell.bad{ border-color:rgba(209,52,43,0.45); background:rgba(209,52,43,0.05); }
+
+  /* ميزان الحكم الثلاثي */
+  .scale3{ display:flex; gap:8px; margin:10px 0 14px; }
+  .sc-item{ flex:1; display:flex; flex-direction:column; align-items:center; gap:2px;
+            border-radius:8px; padding:9px 6px; border:2.5px solid; text-align:center; }
+  .sc-item b{ font-size:calc(13px * var(--fs,1)); }
+  .sc-item span{ font-size:calc(11.5px * var(--fs,1)); }
+  .sc-yes{ border-color:var(--green); background:rgba(31,122,61,0.10); }
+  .sc-mid{ border-color:var(--orange); background:rgba(214,122,29,0.10); }
+  .sc-no{ border-color:var(--red); background:rgba(209,52,43,0.07); }
+
+  /* مقاطع الشفرة: ملفّ المهارة والسكربت */
+  .cb-cap{
+    font-size:calc(11.5px * var(--fs,1)); font-weight:700;
+    color:rgba(26,61,140,0.75); margin:12px 0 3px;
+  }
+  .codebox{
+    direction:ltr; text-align:left; unicode-bidi:plaintext;
+    font-family:ui-monospace,"Cascadia Code",Consolas,monospace;
+    font-size:calc(11px * var(--fs,1)); line-height:1.85;
+    background:#f7f4ea; color:#2a3142;
+    border:2px solid rgba(26,61,140,0.22);
+    border-inline-start:5px solid var(--blue);
+    border-radius:8px; padding:11px 13px; margin:0 0 12px;
+    overflow-x:auto; white-space:pre;
+  }
+  .codebox.yml{ border-inline-start-color:#f0b400; background:#fbf7e8; }
+  .cb-k{ color:var(--red); font-weight:700; }
+  .cb-h{ color:var(--purple); font-weight:700; }
+  .cb-c{ color:#7d8a6a; }
+  .cb-s{ color:var(--green); unicode-bidi:isolate; }
+
+  .dt code.ex{ display:inline-block; direction:ltr; unicode-bidi:isolate;
+               font-family:'Courier New',monospace; font-weight:700;
+               background:rgba(26,61,140,0.07); color:var(--blue);
+               border-radius:4px; padding:1px 6px; white-space:nowrap; }
+  .dt code.ex-rtl{ direction:rtl; }
+  .dt .ex-n{ display:block; margin-top:3px; font-size:0.9em; opacity:0.78; }
+  .dt td.sym{ direction:ltr; text-align:center; font-weight:700;
+              font-family:'Courier New',monospace; font-size:1.25em;
+              color:var(--blue); }
+  .ltr-inline{ unicode-bidi:isolate; direction:ltr;
+               font-family:'Courier New',monospace; font-size:0.94em; }
+
+  /* خلاصة نثريّة تحت المحور */
+  .takeaway{
+    margin:12px 0 4px; padding:11px 14px;
+    border-inline-start:4px solid var(--blue);
+    background:rgba(26,61,140,0.045);
+    border-radius:0 9px 9px 0;
+    font-size:calc(13.5px * var(--fs,1));
+    line-height:1.95; color:var(--ink); text-align:justify;
+  }
+  .takeaway b{ color:var(--blue); }
+
+  /* مخطّط مسار توليد الاستمارة */
+  .pipe{ display:flex; flex-direction:column; align-items:center;
+         gap:3px; margin:10px 0 14px; }
+  .pipe-row{ display:flex; align-items:stretch; gap:8px; width:100%; max-width:560px; }
+  .pipe-n{ flex:0 0 26px; display:flex; align-items:center; justify-content:center;
+           background:var(--blue); color:#fff; font-weight:700; border-radius:50%;
+           width:26px; height:26px; align-self:center;
+           font-size:calc(12px * var(--fs,1)); }
+  .pipe-b{ flex:1; border:1.8px solid rgba(26,61,140,0.35);
+           background:rgba(26,61,140,0.04); border-radius:9px;
+           padding:7px 12px 8px; text-align:center; }
+  .pipe-b.hi{ border-color:var(--green); border-width:2.5px;
+              background:rgba(31,122,61,0.07); }
+  .pipe-b b{ display:block; font-size:calc(13px * var(--fs,1)); color:var(--blue); }
+  .pipe-b.hi b{ color:var(--green); }
+  .pipe-b small{ display:block; margin-top:2px; opacity:0.78;
+                 font-size:calc(11.5px * var(--fs,1)); line-height:1.7; }
+  .pipe-a{ color:var(--blue); opacity:0.5; font-size:calc(15px * var(--fs,1)); }
+  .pipe-out{ display:flex; gap:8px; flex-wrap:wrap; justify-content:center;
+             width:100%; max-width:560px; }
+  .po-item{ flex:1 1 150px; border:2px solid var(--green);
+            background:rgba(31,122,61,0.07); border-radius:9px;
+            padding:8px 10px 9px; text-align:center; }
+  .po-i{ display:block; font-size:calc(17px * var(--fs,1));
+         color:var(--green); line-height:1.2; }
+  .po-item b{ display:block; font-size:calc(12.5px * var(--fs,1)); color:var(--green); }
+  .po-item small{ display:block; opacity:0.78; font-size:calc(11px * var(--fs,1)); }
+
+  /* طرق صناعة المهارة */
+  .ways-fan{ display:flex; align-items:center; justify-content:center; gap:10px;
+             margin:10px 0 16px; flex-wrap:wrap; }
+  .wf-col{ display:flex; flex-direction:column; gap:5px; }
+  .wf-src{ border:1.5px solid rgba(26,61,140,0.35); background:rgba(26,61,140,0.05);
+           border-radius:7px; padding:4px 11px; font-size:calc(12px * var(--fs,1));
+           font-weight:700; color:var(--blue); text-align:center; white-space:nowrap; }
+  .wf-arrow{ color:var(--blue); font-size:calc(17px * var(--fs,1)); opacity:0.55; }
+  .wf-out{ border:2.5px solid var(--green); background:rgba(31,122,61,0.07);
+           border-radius:10px; padding:11px 18px; text-align:center;
+           display:flex; flex-direction:column; gap:3px; }
+  .wf-out b{ color:var(--green); font-size:calc(13.5px * var(--fs,1)); }
+  .wf-out small{ font-size:calc(11px * var(--fs,1)); opacity:0.72; }
+
+  .way{ border:2px solid rgba(26,61,140,0.32); background:rgba(26,61,140,0.035);
+        border-radius:9px; padding:10px 13px 11px; margin:11px 0; }
+  .way-h{ display:flex; gap:8px; align-items:center; margin-bottom:6px; }
+  .way-n{ background:var(--blue); color:#fff; font-weight:700; border-radius:5px;
+          padding:1px 9px; font-size:calc(12px * var(--fs,1)); flex:none; }
+  .way-t{ font-weight:700; font-size:calc(14px * var(--fs,1)); color:var(--blue); }
+  .way-d{ font-size:calc(13px * var(--fs,1)); line-height:1.9;
+          margin:0 0 6px; text-align:justify; }
+  .way-l{ display:block; margin:4px 0; font-size:calc(12.5px * var(--fs,1));
+          line-height:1.8; }
+  .way-l b{ color:var(--ink); }
+  .way-c{ color:var(--red); opacity:0.92; }
+  .way-c b{ color:var(--red); }
+
+  /* مخطّط كلفة الرموز */
+  .tok{ display:flex; flex-direction:column; gap:9px; margin:10px 0 14px; }
+  .tok-row{ display:flex; align-items:center; gap:9px; }
+  .tok-lbl{ flex:0 0 118px; font-size:calc(11.5px * var(--fs,1));
+            font-weight:700; color:var(--ink); line-height:1.45; }
+  .tok-track{ flex:1; background:rgba(26,61,140,0.07); border-radius:5px;
+              height:26px; position:relative; overflow:hidden; }
+  .tok-fill{ display:block; height:100%; border-radius:5px; }
+  .tok-fill.a{ background:rgba(31,122,61,0.55); }
+  .tok-fill.b{ background:rgba(240,180,0,0.65); }
+  .tok-fill.c{ background:rgba(209,52,43,0.55); }
+  .tok-val{ flex:0 0 96px; text-align:center; font-weight:700;
+            font-size:calc(11.5px * var(--fs,1)); color:var(--ink); }
+  .tok-val small{ display:block; font-weight:400; opacity:0.72; }
+
+  /* خطوات البناء المرقّمة */
+  .stp{ display:flex; gap:11px; margin:11px 0; align-items:flex-start; }
+  .stp-n{ flex:0 0 30px; height:30px; border-radius:50%; background:var(--blue);
+          color:#fff; font-weight:700; display:flex; align-items:center;
+          justify-content:center; font-size:calc(13px * var(--fs,1)); }
+  .stp-b{ flex:1; }
+  .stp-t{ font-weight:700; font-size:calc(14px * var(--fs,1)); color:var(--ink);
+          margin-bottom:3px; }
+  .stp-x{ display:block; margin-top:5px; padding:6px 10px; border-radius:6px;
+          background:rgba(240,180,0,0.13); border-inline-start:3px solid #f0b400;
+          font-size:calc(12px * var(--fs,1)); }
+
+  /* بطاقات المخاطر الأمنية */
+  .rsk{ border:2px solid rgba(209,52,43,0.45); background:rgba(209,52,43,0.04);
+        border-radius:9px; padding:10px 13px 11px; margin:10px 0; }
+  .rsk-h{ display:flex; gap:8px; align-items:center; margin-bottom:6px; }
+  .rsk-n{ background:var(--red); color:#fff; font-weight:700; border-radius:5px;
+          padding:1px 9px; font-size:calc(12px * var(--fs,1)); }
+  .rsk-t{ font-weight:700; font-size:calc(14px * var(--fs,1)); color:var(--red); }
+  .rsk-l{ display:block; margin:4px 0; font-size:calc(12.5px * var(--fs,1)); }
+  .rsk-l b{ color:var(--ink); }
+
+  /* سطر ملء الفراغ داخل التمارين */
+  .pick-slot{ display:flex; align-items:center; gap:8px; margin:6px 0; }
+  .pick-slot > span:first-child{ font-weight:700; white-space:nowrap;
+                                 font-size:calc(12.5px * var(--fs,1)); }
+  .pick-slot .blank-line{ flex:1; }
+
+  @media (max-width:560px){
+    .lyr-when{ flex:0 0 58px; }
+    .lyr-cost{ flex:0 0 70px; }
+    .fl-split{ flex-direction:column; }
+    .mx4{ grid-template-columns:auto 1fr; }
+    .mx4 .mx-col:nth-of-type(3){ display:none; }
+    .scale3{ flex-direction:column; }
+  }
+
   /* قاعدة الإخفاء الثلاثية */
   .anon{ display:flex; flex-direction:column; gap:8px; margin:12px 0; }
   .anon-row{
@@ -5436,15 +5672,622 @@
       <!-- ============ END SLIDE 3 ============ -->
 
       <!-- ============ SLIDE 4 : الأسبوع الرابع ============ -->
-      <div id="slide-4" class="slide content-slide">
+      <div id="slide-4" class="slide content-slide rich-slide">
         <span class="chip chip-ch1">الأسبوع الرابع</span>
-        <h2 class="page-title">الأسبوع الرابع</h2>
+        <h2 class="page-title">المهارات في كلود</h2>
         <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
-        <div class="coming-soon">
-          <svg class="big-icon" viewBox="0 0 40 40"><g filter="url(#sketchy)"><circle cx="20" cy="20" r="15" fill="#fde3c4" stroke="var(--orange)" stroke-width="2.5"/><path d="M20 12 v9 l6 4" fill="none" stroke="var(--orange)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></g></svg>
-          <p class="cs-title">تنزل لاحقاً</p>
-          <p class="cs-sub">محتوى هذا الأسبوع سيُضاف قريباً.</p>
+
+        <p class="lead-paragraph">تعلّمنا في الأسابيع الماضية صياغةَ <strong>أمرٍ واحد جيّد</strong>، ثمّ تحويلَ الأمر المتكرّر إلى <strong>قالبٍ</strong> نحتفظ به. ويأتي هذا الأسبوع ليجيب عن سؤالٍ تالٍ: ماذا لو لم يكن المطلوب قالبًا يستدعيه الموظّف بنفسه، بل <span class="hl hl-yellow">معرفةً يستدعيها النظام تلقائيًّا حين تقتضيها الحاجة</span>؟</p>
+
+        <!-- ══════════ ١ ══════════ -->
+        <div class="section-heading" style="margin-top:26px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>١ · تعريف المهارة وأمثلتها</span>
         </div>
+
+        <p><strong>المهارة (Skill)</strong> حزمةُ تعليماتٍ مكتوبة تُعرِّف كلود بطريقة إنجاز مهمّةٍ بعينها في جهةٍ بعينها، فيرجع إليها من تلقاء نفسه كلّما اقتضت الحاجة، من غير إعادة شرحها في كلّ محادثة. وهي في جوهرها <span class="hl hl-green">دليلُ عملٍ مكتوبٌ مرّةً واحدة</span> — لا أداةٌ تنفّذ، بل تهيئةٌ تجعل التنفيذ يقع على الوجه المطلوب.</p>
+
+        <p class="cb-cap">مثال ١ — مهارةُ تعليماتٍ خالصة (أبسط صورة)</p>
+        <div class="codebox yml">---
+<span class="cb-k">name</span>:‎ صياغة-الكتاب-الرسمي
+<span class="cb-k">description</span>:‎ يصوغ الكتب الرسمية الصادرة بقالب الدائرة وعباراتها
+  المعتمدة. يُستعمل عند طلب كتاب رسمي أو مخاطبة صادرة أو تعميم إداري.
+---
+
+<span class="cb-h"># صياغة الكتاب الرسمي</span>
+
+<span class="cb-h">## التركيب الثابت</span>
+البسملة · العنوان · التحية · الموضوع · صلب الكتاب · الخاتمة · التوقيع
+
+<span class="cb-h">## قواعد الصياغة</span>
+- الفقرة الأولى تذكر السند القانوني أو الكتاب المرجعي ورقمه وتاريخه.
+- الجملة لا تتجاوز سطرين.
+- لا تُستعمل عبارات المبالغة ولا التوكيد المكرّر.
+
+<span class="cb-h">## الخاتمة المعتمدة</span>
+«… لأجل التفضّل بالاطّلاع واتّخاذ ما يلزم، مع التقدير.»</div>
+        <p><b>ما يميّزها:</b> نصٌّ فقط، بلا ملفّات ولا برامج. وهو أكثر ما يحتاجه الموظّف الإداريّ.</p>
+
+        <p class="cb-cap">مثال ٢ — مهارةٌ ذات فئاتٍ وقواعد فرز</p>
+        <div class="codebox yml">---
+<span class="cb-k">name</span>:‎ تصنيف-الشكاوى
+<span class="cb-k">description</span>:‎ يصنّف الشكاوى الواردة إلى خمس فئات مع درجة إلحاح
+  وجهة إحالة. يُستعمل عند ورود شكوى جديدة أو طلب فرز دفعة شكاوى.
+---
+
+<span class="cb-h"># تصنيف الشكاوى</span>
+
+<span class="cb-h">## الفئات الخمس</span>
+تأخير · خطأ بيانات · رفض غير مبرَّر · سوء تعامل · أخرى
+
+<span class="cb-h">## درجة الإلحاح</span>
+عالية: تجاوز المدّة القانونية، أو أثر مالي مباشر
+متوسطة: تأخير دون المدّة القانونية
+دنيا: استفسار أو طلب معلومة
+
+<span class="cb-h">## جهة الإحالة</span>
+تأخير وخطأ البيانات ← شعبة التسجيل
+رفض غير مبرَّر ← القسم القانوني
+سوء تعامل ← الموارد البشرية
+
+<span class="cb-h">## المخرَج</span>
+جدول من أربعة أعمدة: رقم الشكوى، الفئة، الإلحاح، جهة الإحالة.</div>
+        <p><b>ما يميّزها:</b> تحمل <span class="hl hl-yellow">معرفةً لا يملكها كلود</span> — فئاتكم أنتم، وقواعد إحالتكم أنتم. وهنا تكمن قيمتها الحقيقيّة.</p>
+
+        <p class="cb-cap">مثال ٣ — مهارةٌ جاهزة من الشركة المطوِّرة</p>
+        <div class="components-grid">
+          <div class="component-card">
+            <svg class="c-icon" viewBox="0 0 40 40"><rect x="8" y="5" width="24" height="30" rx="2.5" fill="#eaf4ff" stroke="var(--blue)" stroke-width="2.5"/><path d="M14 14h12M14 20h12M14 26h7" stroke="var(--blue)" stroke-width="2" stroke-linecap="round"/></svg>
+            <span class="c-name">Word</span><span class="c-ex">إنشاء المستندات وتحريرها</span>
+          </div>
+          <div class="component-card">
+            <svg class="c-icon" viewBox="0 0 40 40"><rect x="6" y="8" width="28" height="24" rx="2.5" fill="#e6f6ea" stroke="var(--green)" stroke-width="2.5"/><path d="M6 16h28M16 8v24M25 8v24" stroke="var(--green)" stroke-width="1.8"/></svg>
+            <span class="c-name">Excel</span><span class="c-ex">الجداول والتحليل</span>
+          </div>
+          <div class="component-card">
+            <svg class="c-icon" viewBox="0 0 40 40"><rect x="5" y="9" width="30" height="20" rx="2.5" fill="#fde3c4" stroke="var(--orange)" stroke-width="2.5"/><path d="M20 29v6M14 35h12" stroke="var(--orange)" stroke-width="2" stroke-linecap="round"/></svg>
+            <span class="c-name">PowerPoint</span><span class="c-ex">العروض التقديمية</span>
+          </div>
+          <div class="component-card">
+            <svg class="c-icon" viewBox="0 0 40 40"><path d="M10 4h14l6 6v26H10z" fill="#ffe8e6" stroke="var(--red)" stroke-width="2.5" stroke-linejoin="round"/><path d="M24 4v6h6" fill="none" stroke="var(--red)" stroke-width="2.5" stroke-linejoin="round"/></svg>
+            <span class="c-name">PDF</span><span class="c-ex">توليد الملفات المنسّقة</span>
+          </div>
+        </div>
+        <p><b>ما يميّزها:</b> موجودةٌ أصلًا ولا تحتاج بناءً، وتُستدعى تلقائيًّا حين يتضمّن الطلب إنشاء مستند. وهي تُبيّن أنّ المهارة ليست مفهومًا نظريًّا، بل شيءٌ يعمل في الحساب منذ اليوم الأوّل — والفارق الوحيد أنّ المهارات الخاصّة يبنيها صاحب العمل بنفسه.</p>
+
+        <div class="oops">
+          <span class="o-i">⚠</span>
+          <div>المهارات الجاهزة لا تعمل إلّا بتفعيل <b>«تنفيذ الأكواد وإنشاء الملفّات»</b> في الإعدادات. ومن غير هذا التفعيل يخرج نصٌّ عاديّ بدل الملفّ، فيُظنّ أنّ المهارة معطّلة وهي لم تُشغَّل أصلًا.</div>
+        </div>
+
+        <!-- ══════════ ٢ ══════════ -->
+        <div class="section-heading" style="margin-top:28px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>٢ · الاستدعاء: التلقائيّ واليدويّ</span>
+        </div>
+
+        <p>للمهارة طريقان للدخول إلى المحادثة، يختلفان اختلافًا جوهريًّا في <strong>من يقرّر</strong>.</p>
+
+        <p class="dt-cap">رسم (١): دورة الاستدعاء التلقائيّ</p>
+        <div class="flowd">
+          <div class="fl-node fl-start">طلب المستخدم</div>
+          <div class="fl-down">▼</div>
+          <div class="fl-node fl-dec">يقارن كلود الطلبَ بأوصاف المهارات المتاحة كلِّها</div>
+          <div class="fl-split">
+            <div class="fl-branch">
+              <span class="fl-lbl ok">طابَق الوصفُ</span>
+              <div class="fl-node fl-yes">يفتح المتن وينفّذ به</div>
+            </div>
+            <div class="fl-branch">
+              <span class="fl-lbl no">لم يطابق</span>
+              <div class="fl-node fl-no">يجيب إجابةً عامّة بلا استدعاء</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ba-pair">
+          <div class="bubble b-before"><span class="ba-tag">تستدعيها المحادثة</span>الطلب: «هذه شكوى وردت اليوم، ما تصنيفها؟»<br>ولمّا كان وصف المهارة يقول «يُستعمل عند ورود شكوى جديدة»، فُتِحت تلقائيًّا — بلا ذكرٍ لاسمها إطلاقًا.</div>
+          <div class="bubble b-after"><span class="ba-tag">يستدعيها المستخدم</span>الطلب: «بمهارة تصنيف الشكاوى، ما تصنيف هذه الحالة؟»<br>فيُلزَم كلود بهذه المهارة بعينها، ولو كان الطلب غامضًا لا يطابق الوصف مطابقةً تامّة.</div>
+        </div>
+
+        <p class="dt-cap">الخطّ المائل «/» — طريقٌ يدويٌّ ثالث، وهو مرهونٌ بالسطح</p>
+        <p>إلى جانب ذكر اسم المهارة داخل الجملة، تُتيح بعضُ السطوح استدعاءً يدويًّا أصرحَ منه: كتابةُ الخطّ المائل في أوّل السطر تعرض قائمةَ المهارات المتاحة، فتُختار منها واحدةٌ بالاسم. غير أنّ هذا الطريق ليس واحدًا في كلّ السطوح، وهذا موضعُ لبسٍ شائع.</p>
+        <div class="dt-wrap">
+          <table class="dt">
+            <thead><tr><th>السطح</th><th>الاستدعاء اليدويّ المتاح</th><th>حال التوثيق</th></tr></thead>
+            <tbody>
+              <tr><td>محادثة <span class="ltr-inline">claude.ai</span></td><td>ذكرُ اسم المهارة داخل الجملة</td><td>التلقائيّ وذكرُ الاسم هما المذكوران؛ الخطّ المائل غير مذكور</td></tr>
+              <tr><td><span class="ltr-inline">Claude Code</span></td><td><b>‏/اسم-المهارة</b></td><td>موثَّقٌ صراحةً</td></tr>
+              <tr><td>إضافات <span class="ltr-inline">Microsoft 365</span></td><td><b>«/»</b> ثمّ الاختيار من القائمة</td><td>موثَّقٌ صراحةً</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="oops">
+          <span class="o-i">⚠</span>
+          <div>الواجهاتُ تسبق التوثيقَ أحيانًا، فقد يظهر الخطّ المائل في محادثة <span class="ltr-inline">claude.ai</span> قبل أن يُذكر في الوثائق. والمعوَّلُ عليه ما تُظهره الواجهةُ نفسها عند التجربة. أمّا الطريق الذي يعمل في السطوح كلِّها بلا استثناء فهو <b>ذكرُ اسم المهارة داخل الجملة</b>، وعليه يُبنى التدريب.</div>
+        </div>
+
+        <p class="dt-cap">رموزٌ أخرى — وهي خاصّةٌ ببيئة <span class="ltr-inline">Claude Code</span> لا بمحادثة الويب</p>
+        <div class="dt-wrap">
+          <table class="dt">
+            <thead><tr><th style="width:74px;">الرمز</th><th>وظيفته</th><th>مثال</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="sym">/</td>
+                <td>في أوّل السطر: أمرٌ أو مهارة</td>
+                <td><code class="ex ex-rtl">/تصنيف-الشكاوى</code><span class="ex-n">تُستدعى المهارة بعينها من القائمة</span></td>
+              </tr>
+              <tr>
+                <td class="sym">!</td>
+                <td>في أوّل السطر: وضعُ الطرفيّة — يُنفَّذ الأمر ويُضاف مخرَجُه إلى الجلسة</td>
+                <td><code class="ex"><span class="ltr-inline">!git status</span></code><span class="ex-n">يظهر مخرَجُ الأمر ثمّ يعلّق عليه كلود</span></td>
+              </tr>
+              <tr>
+                <td class="sym">@</td>
+                <td>إشارةٌ إلى مسار ملفّ مع إكمالٍ تلقائيّ</td>
+                <td><code class="ex"><span class="ltr-inline">@reports/weekly.md</span></code><span class="ex-n">يُضمّ الملفّ إلى السياق بلا نسخِ محتواه</span></td>
+              </tr>
+              <tr>
+                <td class="sym">:</td>
+                <td>رمزُ إيموجي بصيغة <span class="ltr-inline">:name:</span></td>
+                <td><code class="ex"><span class="ltr-inline">:bulb:</span></code><span class="ex-n">يتحوّل في النصّ إلى 💡</span></td>
+              </tr>
+              <tr>
+                <td class="sym">?</td>
+                <td>على سطرٍ فارغ: لوحةُ الاختصارات</td>
+                <td><code class="ex">?</code><span class="ex-n">وحدَه بلا نصٍّ معه، وإلّا عُدَّ حرفًا عاديًّا</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="dt-cap">متى يُستعمل كلٌّ منهما — مع مثالٍ لكلّ حالة</p>
+        <div class="dt-wrap">
+          <table class="dt">
+            <thead><tr><th>الحالة</th><th>الطريق الأنسب</th><th>المثال</th></tr></thead>
+            <tbody>
+              <tr><td>العمل اليوميّ المعتاد</td><td><b>التلقائيّ</b></td><td>ورود شكوى ← تُصنَّف من غير طلبٍ صريح</td></tr>
+              <tr><td>الوصف لم يلتقط الطلب</td><td><b>اليدويّ</b></td><td>طلبٌ صيغ بألفاظٍ غير واردة في الوصف، فلم تُستدعَ المهارة فذُكِر اسمها</td></tr>
+              <tr><td>مهارتان متقاربتان</td><td><b>اليدويّ</b></td><td>وجود «تصنيف-الشكاوى» و«تصنيف-الطلبات» معًا، والمراد إحداهما بعينها</td></tr>
+              <tr><td>اختبار مهارةٍ جديدة</td><td><b>اليدويّ ثمّ التلقائيّ</b></td><td>تُجرَّب بالاسم أوّلًا للتحقّق من المتن، ثمّ يُترك الأمر للوصف ليُختبر هو</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="takeaway">
+          <b>دلالةٌ تشخيصيّة:</b> إذا عملت المهارة بالاستدعاء اليدويّ ولم تعمل تلقائيًّا، فالعلّة في <span class="hl hl-pink">الوصف</span> لا في المتن. وهذه أدقّ طريقةٍ لتشخيص مهارةٍ لا تُستدعى.
+        </div>
+
+        <!-- ══════════ ٣ ══════════ -->
+        <div class="section-heading" style="margin-top:28px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>٣ · طرق صناعة المهارة</span>
+        </div>
+
+        <p>المهارةُ في جوهرها مجلَّدٌ فيه ملفُّ <span class="ltr-inline">SKILL.md</span>، وهذا لا يتغيّر مهما اختُلف في طريق الوصول إليه. والطرق خمسةٌ تتفاوت في مقدار ما يكتبه صاحبُ العمل بيده وما يُترك لكلود، وليس بينها طريقٌ «أصحّ» من غيره: الفارقُ في مَن يملك المادّة، وفي كم من الوقت يُبذَل.</p>
+
+        <p class="dt-cap">رسم (١): الطرق الخمسة تنتهي كلُّها إلى مخرَجٍ واحد</p>
+        <div class="ways-fan">
+          <div class="wf-col">
+            <span class="wf-src">مهارةُ التوليد</span>
+            <span class="wf-src">التسجيل بالشاشة</span>
+            <span class="wf-src">التحرير في المحادثة</span>
+            <span class="wf-src">الكتابة اليدويّة</span>
+            <span class="wf-src">مستودعُ الدائرة</span>
+          </div>
+          <div class="wf-arrow">◀</div>
+          <div class="wf-out">
+            <b>مجلَّدُ المهارة</b>
+            <span class="ltr-inline">SKILL.md</span>
+            <small>+ ملفّاتٌ مساندة عند الحاجة</small>
+          </div>
+        </div>
+
+        <div class="way">
+          <div class="way-h"><span class="way-n">١</span><span class="way-t">مهارةُ التوليد <span class="ltr-inline">skill-creator</span> — أقصرُ الطرق</span></div>
+          <p class="way-d">مهارةٌ رسميّةٌ وظيفتُها صناعةُ المهارات. تُستدعى فتسأل عن المهمّة وعن قواعد الجهة، ثمّ تُخرج المجلَّد كاملًا بالاسم والوصف والمتن مهيَّأةً للتنزيل. وهي تقترح صياغةَ الوصف كذلك، وهو أصعبُ حقلٍ على المبتدئ.</p>
+          <span class="way-l"><b>مثال:</b> طلبٌ نصُّه «مهارةٌ تصوغ محاضر الاجتماعات في شعبتي»، فتسأل عن أقسام المحضر وعن صيغة التوصيات، ثمّ تُخرج المجلَّد جاهزًا.</span>
+          <span class="way-l"><b>يناسب:</b> أوّلَ مهارةٍ يبنيها موظّفٌ لم يكتب <span class="ltr-inline">SKILL.md</span> من قبل.</span>
+          <span class="way-l way-c"><b>حدُّه:</b> المخرَجُ بقدر ما وُصف له. والوصفُ الغامض يُخرج مهارةً عامّةً لا تنفع.</span>
+        </div>
+
+        <div class="way">
+          <div class="way-h"><span class="way-n">٢</span><span class="way-t">التسجيل بالشاشة — المهارةُ تُلتقَط من العمل نفسه</span></div>
+          <p class="way-d">بدل وصفِ المهمّة بالكلام، يُسجَّل إنجازُها مرّةً واحدة على الشاشة، فيستخرج كلود منها الخطواتِ ويصوغها مهارةً. ما يُلتقَط هو الترتيبُ الفعليّ لا الترتيبُ المتخيَّل، وهذا فارقٌ كبير في الأعمال الإداريّة التي تُنجَز بالعادة لا بالتعليمات المكتوبة.</p>
+          <span class="way-l"><b>مثال:</b> تسجيلُ جلسةٍ واحدة لتدقيق معاملةٍ واردة: فتحُ السجلّ، مطابقةُ الرقم، تدوينُ الملاحظة، تحديدُ جهة الإحالة — فتخرج مهارةُ «تدقيق المعاملة الواردة» بهذا الترتيب عينه.</span>
+          <span class="way-l"><b>يناسب:</b> إجراءً يعرفه الموظّفُ بالممارسة ويعجز عن تفصيله كتابةً.</span>
+          <span class="way-l way-c"><b>حدُّه:</b> متاحٌ في <span class="ltr-inline">Cowork</span> على حاسوب <span class="ltr-inline">Mac</span> دون غيره، وفي خطط <span class="ltr-inline">Pro</span> و<span class="ltr-inline">Max</span> و<span class="ltr-inline">Team</span>. وما يظهر على الشاشة أثناء التسجيل يدخل في المادّة، فالبياناتُ الحسّاسة تُغلق قبله.</span>
+        </div>
+
+        <div class="way">
+          <div class="way-h"><span class="way-n">٣</span><span class="way-t">التحرير داخل المحادثة — الطريقُ التدريجيّ</span></div>
+          <p class="way-d">تُفتح ملفّاتُ المهارة إلى جانب المحادثة وتُعدَّل فيها مباشرةً أثناء التجريب. وميزتُه أنّ التجربة والتعديل يقعان في مكانٍ واحد: المهارة تُجرَّب على حالةٍ حقيقيّة، فيظهر النقصُ، فيُسَدُّ في حينه من غير تنزيلٍ ورفعٍ في كلّ دورة.</p>
+          <span class="way-l"><b>مثال:</b> مهارةُ تصنيف الشكاوى تُجرَّب على خمس شكاوى، فيظهر أنّ فئة «سوء تعامل» تُخلط بـ«رفض غير مبرَّر»، فيُضاف سطرٌ فارقٌ بينهما في المتن وتُعاد التجربة على الشكاوى الخمس نفسها.</span>
+          <span class="way-l"><b>يناسب:</b> طورَ التنقيح بعد أن صار للمهارة متنٌ أوّليّ.</span>
+          <span class="way-l way-c"><b>حدُّه:</b> يقتضي تفعيلَ تنفيذ الأكواد وإنشاء الملفّات.</span>
+        </div>
+
+        <div class="way">
+          <div class="way-h"><span class="way-n">٤</span><span class="way-t">الكتابة اليدويّة ثمّ الرفع — أعلى الطرق في الضبط</span></div>
+          <p class="way-d">يُنشَأ مجلَّدٌ باسم المهارة، وفيه ملفُّ <span class="ltr-inline">SKILL.md</span> يبدأ بحقلَي الاسم والوصف، ثمّ المتن. ويُضغَط المجلَّد ملفًّا واحدًا ويُرفَع من إعدادات المهارات. والشرطُ الشكليُّ الذي يُخطَأ فيه كثيرًا: جذرُ الملفّ المضغوط هو مجلَّدُ المهارة نفسُه لا مجلَّدٌ يحويه.</p>
+          <span class="way-l"><b>مثال:</b> مهارةُ صياغة الكتب الرسميّة، ومعها في المجلَّد ملفُّ <span class="ltr-inline">forms/</span> فيه قوالبُ الكتب المعتمدة في الدائرة — وهذه مادّةٌ لا تُولَّد ولا تُسجَّل، إنّما تُرفَق كما هي.</span>
+          <span class="way-l"><b>يناسب:</b> المهارةَ التي تحمل مرفقاتٍ رسميّةً معتمدة، والمهارةَ التي تُراجَع قبل اعتمادها.</span>
+          <span class="way-l way-c"><b>حدُّه:</b> أبطأُ الطرق، ويقتضي معرفةً بترويسة الملفّ وبشروط الاسم والوصف.</span>
+        </div>
+
+        <div class="way">
+          <div class="way-h"><span class="way-n">٥</span><span class="way-t">مستودعُ الدائرة — الطريقُ الجماعيّ</span></div>
+          <p class="way-d">في بيئة <span class="ltr-inline">Claude Code</span> تُوضع المهارةُ في مسار <span class="ltr-inline">.claude/skills/</span> داخل مستودع الدائرة، فتصير جزءًا من المشروع لا من حساب شخص. وأثرُ ذلك أنّها تصل إلى كلّ من يعمل على المستودع، وأنّ تعديلها يمرّ بالمراجعة المعتادة، وأنّ لها تاريخًا يُعرف منه مَن غيَّر وماذا غيَّر ومتى.</p>
+          <span class="way-l"><b>مثال:</b> مهارةُ «تقرير الوحدات الأسبوعيّ» توضع في المستودع، فتعمل عند كلّ موظّفي الشعبة بنسخةٍ واحدة، ولا يبقى لكلٍّ منهم نسخةٌ تخالف الأخرى.</span>
+          <span class="way-l"><b>يناسب:</b> المهارةَ التي يشترك فيها أكثرُ من موظّف والتي يُراد ثباتُها.</span>
+          <span class="way-l way-c"><b>حدُّه:</b> يقتضي مستودعًا وبيئةَ <span class="ltr-inline">Claude Code</span>، وهو ما لا يتوفّر لكلّ دائرة.</span>
+        </div>
+
+        <p class="dt-cap">جدول المقارنة — الطرق الخمسة</p>
+        <div class="dt-wrap">
+          <table class="dt">
+            <thead><tr><th>الطريق</th><th>مَن يكتب المتن</th><th>الزمن التقديريّ</th><th>نطاق الانتفاع</th></tr></thead>
+            <tbody>
+              <tr><td>مهارةُ التوليد</td><td>كلود بإملاءِ صاحب العمل</td><td>١٠–١٥ دقيقة</td><td>الحسابُ الشخصيّ</td></tr>
+              <tr><td>التسجيل بالشاشة</td><td>كلود ممّا شاهده</td><td>مدّةُ المهمّة مرّةً واحدة</td><td>الحسابُ الشخصيّ</td></tr>
+              <tr><td>التحرير في المحادثة</td><td>الاثنان بالتناوب</td><td>دوراتٌ قصيرةٌ متكرّرة</td><td>الحسابُ الشخصيّ</td></tr>
+              <tr><td>الكتابة اليدويّة</td><td>صاحبُ العمل</td><td>٣٠–٦٠ دقيقة</td><td>الحسابُ الشخصيّ</td></tr>
+              <tr><td>مستودعُ الدائرة</td><td>صاحبُ العمل</td><td>٣٠–٦٠ دقيقة + مراجعة</td><td><b>الشعبةُ كلُّها</b></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="dt-cap">أمثلةٌ إضافيّة — حالةٌ من الدائرة وأيُّ طريقٍ يناسبها</p>
+        <div class="dt-wrap">
+          <table class="dt">
+            <thead><tr><th>الحالة</th><th>الطريق</th><th>العلّة</th></tr></thead>
+            <tbody>
+              <tr><td>مديرٌ يريد مهارةً تصوغ ردود الشكاوى، ولم يبنِ مهارةً قطّ</td><td><b>الأوّل — التوليد</b></td><td>لا يلزمه إلّا وصفُ ما يريده، والصياغةُ تُتولّى عنه</td></tr>
+              <tr><td>موظّفُ أرشيفٍ يفهرس المعاملات بترتيبٍ تعلّمه بالممارسة ويعجز عن كتابته</td><td><b>الثاني — التسجيل</b></td><td>الترتيبُ يُلتقَط من الفعل لا من الوصف</td></tr>
+              <tr><td>مهارةُ تصنيفٍ تخلط بين فئتين متقاربتين عند التجربة</td><td><b>الثالث — التحرير في المحادثة</b></td><td>التجربةُ والتعديل في مكانٍ واحد، فتقصر دورةُ التنقيح</td></tr>
+              <tr><td>مهارةٌ تُلزَم بقوالب كتبٍ رسميّةٍ معتمدةٍ لا تُعاد كتابتها</td><td><b>الرابع — الكتابة اليدويّة</b></td><td>القوالبُ تُرفَق ملفّاتٍ في المجلَّد كما هي</td></tr>
+              <tr><td>إجراءٌ اعتمدته الدائرة ولا يجوز أن تختلف فيه نسخةُ موظّفٍ عن آخر</td><td><b>الخامس — المستودع</b></td><td>نسخةٌ واحدةٌ مراجَعةٌ لها تاريخٌ يُعرف منه مَن غيَّر</td></tr>
+              <tr><td>مهارةٌ جُرِّبت في حسابٍ شخصيّ وأُريد تعميمُها بعد نجاحها</td><td><b>الأوّل ثمّ الخامس</b></td><td>التجريبُ في الأسرع، والاعتمادُ في الأثبت</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="oops">
+          <span class="o-i">⚠</span>
+          <div>المهاراتُ المخصّصة في <span class="ltr-inline">claude.ai</span> <b>فرديّةٌ لكلّ مستخدم</b>، ولا تُوزَّع مركزيًّا على منتسبي الجهة ولا تُدار من حساب المسؤول. فالمهارةُ المبنيّةُ في حسابٍ واحد لا تصل إلى بقيّة الشعبة إلّا بإعطائهم ملفَّها ليرفعه كلٌّ منهم في حسابه — أو بسلوك الطريق الخامس.</div>
+        </div>
+
+        <div class="takeaway">
+          <b>الاختيارُ العمليّ:</b> الطرقُ الأربعة الأولى تُنتج مهارةً في حسابٍ واحد، والخامس وحده يُنتج مهارةً في جهة. ولذلك يُبدأ عادةً بالأوّل للتجريب، فإذا ثبتت المهارةُ وصارت إجراءً معتمدًا نُقلت إلى الخامس.
+        </div>
+
+        <!-- ══════════ ٤ ══════════ -->
+        <div class="section-heading" style="margin-top:28px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>٤ · بناء المهارة — سبع خطوات بمثالٍ متّصل</span>
+        </div>
+
+        <p>المثال المتّصل الذي تمرّ به الخطوات جميعًا: مهارةٌ تُعِدّ <strong>الملخّص الأسبوعيّ لمدير الشعبة</strong> من تقارير الوحدات.</p>
+
+        <div class="stp">
+          <span class="stp-n">١</span>
+          <div class="stp-b">
+            <div class="stp-t">التحقّق من استحقاق المهمّة</div>
+            قبل أيّ كتابة، تُعرض المهمّة على شرطَيها: <b>التكرار</b> و<b>ثبات الإجراء</b>.
+            <span class="stp-x"><b>في المثال:</b> الملخّص يُعَدّ كلّ خميس (تكرار ✔)، وبالترتيب ذاته في كلّ مرّة (ثبات ✔) — فالمهمّة مستحقّة.</span>
+          </div>
+        </div>
+
+        <div class="stp">
+          <span class="stp-n">٢</span>
+          <div class="stp-b">
+            <div class="stp-t">صياغة الاسم</div>
+            حروفٌ صغيرة وأرقام وشرطات فقط، لا يتجاوز ٦٤ حرفًا، وتُمنع فيه كلمتا «claude» و«anthropic».
+            <span class="stp-x"><b>في المثال:</b> <code>الملخص-الاسبوعي-للشعبة</code></span>
+          </div>
+        </div>
+
+        <div class="stp">
+          <span class="stp-n">٣</span>
+          <div class="stp-b">
+            <div class="stp-t">صياغة الوصف — الحقل الحاسم</div>
+            يجمع أمرين لا ثالث لهما: <b>ماذا تفعل</b> المهارة، و<b>متى</b> تُستعمل. ويُكتب بصيغة الغائب لأنّه يُحقَن في موجّه النظام.
+            <span class="stp-x"><b>في المثال:</b> «يُعِدّ الملخّص الأسبوعي لمدير الشعبة من تقارير الوحدات الأربع بترتيب ثابت. يُستعمل عند طلب الملخّص الأسبوعي أو تجميع تقارير الوحدات.»</span>
+          </div>
+        </div>
+
+        <div class="stp">
+          <span class="stp-n">٤</span>
+          <div class="stp-b">
+            <div class="stp-t">كتابة المتن</div>
+            يحمل المتنُ ما <span class="hl hl-yellow">لا يعرفه كلود</span>:‎ أسماء الوحدات، والترتيب المعتمد، والحدود الرقميّة. وما يعرفه أصلًا لا يُشرح.
+          </div>
+        </div>
+        <div class="codebox yml"><span class="cb-h"># الملخّص الأسبوعي للشعبة</span>
+
+<span class="cb-h">## الوحدات الأربع بترتيب العرض</span>
+التسجيل · المتابعة · الأرشيف · الاستعلامات
+
+<span class="cb-h">## بنية الملخّص</span>
+لكلّ وحدة: المنجَز · المتأخّر · سبب التأخّر إن وُجد
+ثمّ فقرة ختامية: أعلى وحدة إنجازًا، وأكثر سببٍ تكرارًا للتأخير
+
+<span class="cb-h">## قواعد</span>
+- المعاملة التي تجاوزت عشرة أيام تُعدّ متأخّرة.
+- الأرقام تُذكر مطلقةً ونسبةً مئويةً معًا.
+- لا يتجاوز الملخّص صفحةً واحدة.</div>
+
+        <div class="stp">
+          <span class="stp-n">٥</span>
+          <div class="stp-b">
+            <div class="stp-t">إضافة مثالٍ محلول</div>
+            جودةُ المخرَج تتحسّن بالمثال أكثر ممّا تتحسّن بالوصف، فيُرفَق مُدخَلٌ مصغَّر ومُخرَجُه المقبول.
+            <span class="stp-x"><b>في المثال:</b> ثلاثة أسطرٍ من تقرير وحدةٍ واحدة، يقابلها شكلُ الفقرة كما يُراد أن تخرج.</span>
+          </div>
+        </div>
+
+        <div class="stp">
+          <span class="stp-n">٦</span>
+          <div class="stp-b">
+            <div class="stp-t">الاختبار على حالةٍ حقيقيّة</div>
+            تُجرَّب المهارة أوّلًا بذكر اسمها صراحةً للتحقّق من صحّة المتن، ثمّ بطلبٍ طبيعيّ لا يذكر الاسم للتحقّق من كفاية الوصف.
+            <span class="stp-x"><b>القاعدة التشخيصيّة:</b> الفشل في الحالة الثانية دون الأولى يدلّ على أنّ الخلل في الوصف لا في المتن.</span>
+          </div>
+        </div>
+
+        <div class="stp">
+          <span class="stp-n">٧</span>
+          <div class="stp-b">
+            <div class="stp-t">التنقيح بناءً على ما شُوهد</div>
+            التعديل يقوم على سلوكٍ مُلاحَظ لا على تخمين: ما الذي أغفلته المهارة؟ وما الذي فسّرته على غير وجهه؟ فيُضاف إلى المتن ما سدّ هذه الثغرة بعينها، لا أكثر.
+          </div>
+        </div>
+
+        <div class="takeaway">
+          <b>الترتيب مقصود:</b> الخطوتان <b>٣</b> و<b>٦</b> هما موضع الفشل الغالب، والخطوة <b>٤</b> هي موضع الإسراف الغالب.
+        </div>
+
+        <!-- ══════════ ٥ ══════════ -->
+        <div class="section-heading" style="margin-top:28px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>٥ · المخاطر الأمنيّة</span>
+        </div>
+
+        <p>المهارة تُملي على كلود سلوكًا وقد تُشغّل برامج، ولذلك فتثبيتُ مهارةٍ من مصدرٍ مجهول أقربُ إلى تثبيت برنامجٍ مجهول على حاسوب الدائرة منه إلى فتح ملفٍّ نصّيّ. <span class="hl hl-pink">والخطر لا يكمن فيما تُعلنه المهارة، بل فيما قد تفعله ممّا لم تُعلنه.</span></p>
+
+        <div class="rsk">
+          <div class="rsk-h"><span class="rsk-n">١</span><span class="rsk-t">مهارةٌ تفعل غير ما تصف</span></div>
+          <span class="rsk-l"><b>صورته:</b> مهارة معروضة بوصفها «منقّحة الكتب الرسميّة»، ويتضمّن متنها توجيهًا برفع نسخةٍ من كلّ نصٍّ تعالجه إلى عنوانٍ خارجيّ بذريعة «النسخ الاحتياطي».</span>
+          <span class="rsk-l"><b>أثره:</b> كلّ كتابٍ رسميّ يمرّ عليها يخرج من الدائرة من غير علم أحد.</span>
+          <span class="rsk-l"><b>ما يكشفه:</b> قراءةُ <b>كلّ</b> ملفّات المهارة لا ملفّ SKILL.md وحده، والتنبّه إلى أيّ اتّصالٍ خارجيّ لا تقتضيه الوظيفة المعلنة.</span>
+        </div>
+
+        <div class="rsk">
+          <div class="rsk-h"><span class="rsk-n">٢</span><span class="rsk-t">المهارة التي تستورد تعليماتها من الخارج</span></div>
+          <span class="rsk-l"><b>صورته:</b> مهارةٌ تجلب قواعدها لحظةَ التشغيل من رابطٍ على الإنترنت؛ سليمةٌ يوم فُحِصت، ثمّ يتغيّر محتوى الرابط بعد شهر.</span>
+          <span class="rsk-l"><b>أثره:</b> المهارة نفسها لم تتبدّل، والسلوك تبدّل — لأنّ التعليمات لم تكن فيها أصلًا. وهذا ما يجعل الفحص الواحد غير كافٍ.</span>
+          <span class="rsk-l"><b>ما يكشفه:</b> الأصل أنّ المهارة المعتمدة في عملٍ رسميّ تحمل تعليماتها في ذاتها، لا تستوردها.</span>
+        </div>
+
+        <div class="rsk">
+          <div class="rsk-h"><span class="rsk-n">٣</span><span class="rsk-t">البيانات الحسّاسة المكتوبة داخل المهارة</span></div>
+          <span class="rsk-l"><b>صورته:</b> مهارةٌ بُنيت بحسن نيّة، وأُدرجت في متنها أسماءُ مواطنين أو أرقامُ هواتف بوصفها «أمثلةً واقعيّة»، ثمّ شُورِكت مع زميلٍ لتعميم الفائدة.</span>
+          <span class="rsk-l"><b>أثره:</b> تسرّبت البيانات مع المهارة، ولا سبيل إلى استرجاعها بعد انتشارها.</span>
+          <span class="rsk-l"><b>ما يكشفه:</b> قاعدةٌ لا استثناء فيها — المهارة تحمل <b>القاعدة</b> لا <b>الحالة</b>؛ فتُذكر فيها فئاتُ الشكاوى، ولا يُذكر فيها اسمُ شاكٍ واحد.</span>
+        </div>
+
+        <div class="takeaway">
+          <b>القاعدة الجامعة للعمل الحكوميّ:</b> المهارة تُبنى داخليًّا أو تُؤخذ من الشركة المطوِّرة. وما جاء من طريقٍ ثالث لا يدخل بيئة العمل قبل فحصٍ كاملٍ لملفّاته جميعًا.
+        </div>
+
+        <!-- ══════════ ٦ ══════════ -->
+        <div class="section-heading" style="margin-top:28px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>٦ · بناء استمارة — الطريقة اليدويّة</span>
+        </div>
+
+        <p>الحالة: استمارةُ شكوى إلكترونيّة من عشرة حقول (الاسم، رقم المعاملة، الشعبة، نوع الشكوى، درجة الإلحاح، التفاصيل، التاريخ، وسيلة التواصل، المرفقات، الموافقة على المعالجة).</p>
+
+        <p class="dt-cap">ما يجري فعليًّا</p>
+        <div class="dt-wrap">
+          <table class="dt">
+            <thead><tr><th>المرحلة</th><th>العمل</th><th>الزمن التقديريّ</th></tr></thead>
+            <tbody>
+              <tr><td>إنشاء الاستمارة وتسميتها</td><td>نقراتٌ في الواجهة</td><td>دقيقة</td></tr>
+              <tr><td>إضافة الحقول العشرة</td><td>لكلّ حقل: اختيار نوعه، وكتابة عنوانه، وضبط إلزاميّته</td><td>١٠–١٥ دقيقة</td></tr>
+              <tr><td>حقول الاختيار من متعدّد</td><td>كتابة كلّ خيارٍ في سطره (٥ فئات + ٣ درجات إلحاح)</td><td>٥ دقائق</td></tr>
+              <tr><td>ربط الردود بجدول بيانات</td><td>إعدادٌ منفصل</td><td>دقيقتان</td></tr>
+              <tr><td>المراجعة والتجريب</td><td>تعبئةُ تجربةٍ والتحقّق من وصول الردّ</td><td>٣ دقائق</td></tr>
+              <tr><td colspan="2"><b>المجموع</b></td><td><b>نحو ٢٠ دقيقة</b></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="oops">
+          <span class="o-i">⚠</span>
+          <div><b>أين يكمن الإرهاق الحقيقيّ:</b> ليس في العشرين دقيقة، بل في أنّها <b>تتكرّر كاملةً</b> مع كلّ استمارةٍ جديدة. ثمّ إنّ التكرار اليدويّ يُنتج اختلافًا: استمارةٌ تسمّي الحقل «نوع الشكوى» وأخرى تسمّيه «الموضوع»، فيتعذّر جمعُ بياناتها لاحقًا في تقريرٍ واحد.</div>
+        </div>
+
+        <div class="takeaway">
+          وهذا بعينه انطباقُ الشرطين: <b>تكرارٌ</b> و<b>إجراءٌ ثابت</b> — أي أنّ المهمّة مستحقّةٌ لمهارة.
+        </div>
+
+        <!-- ══════════ ٧ ══════════ -->
+        <div class="section-heading" style="margin-top:28px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>٧ · الاستمارة بمهارةٍ تُولّد سكربت Apps Script</span>
+        </div>
+
+        <p>‏Google Apps Script لغةٌ برمجيّة تعمل داخل منظومة جوجل، وتستطيع إنشاء استمارةٍ كاملةً بحقولها وخياراتها وربطِها بجدول البيانات — بتشغيلٍ واحد. والمهارةُ هنا لا تبني الاستمارة، بل <span class="hl hl-green">تُعلّم كلود كيف يولّد السكربت الذي يبنيها وفق معايير الدائرة</span>.</p>
+
+        <p class="cb-cap">ما تحويه المهارة</p>
+        <div class="codebox yml">---
+<span class="cb-k">name</span>:‎ بناء-استمارات-الدائرة
+<span class="cb-k">description</span>:‎ يولّد سكربت Google Apps Script ينشئ استمارة جوجل كاملة
+  بحقول الدائرة المعتمدة ويربطها بجدول بيانات. يُستعمل عند طلب استمارة
+  إلكترونية جديدة أو نموذج جمع بيانات.
+---
+
+<span class="cb-h"># بناء استمارات الدائرة</span>
+
+<span class="cb-h">## الحقول الثابتة في كل استمارة</span>
+رقم المعاملة (نص، إلزامي) · الشعبة (قائمة) · التاريخ (تاريخ)
+· وسيلة التواصل (نص) · الموافقة على المعالجة (اختيار، إلزامي)
+
+<span class="cb-h">## التسميات المعتمدة — تُستعمل حرفيًّا</span>
+«نوع الشكوى» لا «الموضوع» · «درجة الإلحاح» لا «الأولوية»
+· «رقم المعاملة» لا «الرقم»
+
+<span class="cb-h">## الشعب الأربع</span>
+التسجيل · المتابعة · الأرشيف · الاستعلامات
+
+<span class="cb-h">## قواعد الإخراج</span>
+- كل استمارة تُربط بجدول بيانات في السطر نفسه من السكربت.
+- الحقول الإلزامية تُضبط إلزاميةً صراحةً في السكربت لا بالعرف.
+- يُطبع رابط التحرير ورابط النشر في السجلّ عند انتهاء التنفيذ.</div>
+
+        <p class="dt-cap">رسم (٢): ما يجري من الطلب إلى الاستمارة العاملة</p>
+        <div class="pipe">
+          <div class="pipe-row">
+            <span class="pipe-n">١</span>
+            <div class="pipe-b">
+              <b>طلبٌ بلغةٍ عاديّة</b>
+              <small>«استمارةُ شكاوى لشعبة التسجيل»</small>
+            </div>
+          </div>
+          <div class="pipe-a">▼</div>
+          <div class="pipe-row">
+            <span class="pipe-n">٢</span>
+            <div class="pipe-b hi">
+              <b>المهارةُ تُستدعى فتفرض معايير الدائرة</b>
+              <small>الحقولُ الثابتة · التسمياتُ المعتمدة حرفيًّا · الشعبُ الأربع · الإلزاميُّ من الاختياريّ</small>
+            </div>
+          </div>
+          <div class="pipe-a">▼</div>
+          <div class="pipe-row">
+            <span class="pipe-n">٣</span>
+            <div class="pipe-b">
+              <b>كلود يُخرج السكربت</b>
+              <small>نصٌّ جاهزٌ لا يكتبه أحدٌ بيده ولا يلزم فهمُه لاستعماله</small>
+            </div>
+          </div>
+          <div class="pipe-a">▼</div>
+          <div class="pipe-row">
+            <span class="pipe-n">٤</span>
+            <div class="pipe-b">
+              <b>موضعُ التشغيل</b>
+              <small><span class="ltr-inline">script.google.com</span> — تشغيلةٌ واحدة</small>
+            </div>
+          </div>
+          <div class="pipe-a">▼</div>
+          <div class="pipe-out">
+            <div class="po-item"><span class="po-i">▤</span><b>استمارةٌ عاملة</b><small>عشرةُ حقولٍ بخياراتها</small></div>
+            <div class="po-item"><span class="po-i">▦</span><b>جدولُ بيانات</b><small>مربوطٌ تلقائيًّا بالردود</small></div>
+            <div class="po-item"><span class="po-i">⧉</span><b>رابطان</b><small>رابطُ تحريرٍ ورابطُ نشر</small></div>
+          </div>
+        </div>
+
+        <div class="takeaway">
+          <b>ما يُقرأ من الرسم:</b> الخطوةُ الثانية وحدها موضعُ عملِ الدائرة، وما عداها آليّ. فالمهارةُ لا تُعلّم كلود البرمجةَ — هو يعرفها — إنّما تُعلّمه <span class="hl hl-green">معايير الدائرة</span>: أيُّ حقلٍ إلزاميّ، وبأيّ اسمٍ يُسمّى، وإلى أيّ جدولٍ تذهب الردود. ولذلك تخرج الاستماراتُ العشرُ متّسقةً ولو بناها عشرةُ موظّفين.
+        </div>
+
+        <p class="dt-cap">المقارنة بين الطريقين</p>
+        <div class="dt-wrap">
+          <table class="dt">
+            <thead><tr><th>وجه المقارنة</th><th>يدويًّا</th><th>بالمهارة</th></tr></thead>
+            <tbody>
+              <tr><td>زمن الاستمارة الأولى</td><td>٢٠ دقيقة</td><td>٣ دقائق</td></tr>
+              <tr><td>زمن الاستمارة العاشرة</td><td>٢٠ دقيقة</td><td>أقلّ من دقيقة</td></tr>
+              <tr><td>ثبات التسميات</td><td>يتفاوت بتفاوت من يبني</td><td>ثابتٌ بحكم المتن</td></tr>
+              <tr><td>الربط بجدول البيانات</td><td>خطوةٌ منفصلة تُنسى أحيانًا</td><td>داخلٌ في السكربت</td></tr>
+              <tr><td>تعديل حقلٍ في عشر استمارات</td><td>عشر مرّات يدويًّا</td><td>تعديلٌ في المتن ثمّ إعادة توليد</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="takeaway">
+          <b>الأثر الذي يستحقّ الوقوف عنده:</b> المكسب ليس اختصار الوقت فحسب، بل <span class="hl hl-yellow">توحيد التسميات</span>. فالاستماراتُ التي تُبنى بمهارةٍ واحدة تُنتج بياناتٍ قابلةً للجمع في تقريرٍ واحد، وهذا ما يتعذّر مع البناء اليدويّ المتكرّر.
+        </div>
+
+        <div class="oops">
+          <span class="o-i">⚠</span>
+          <div><b>قيدٌ عمليّ يخصّ هذه المحطّة:</b> Apps Script يُحرَّر ويُشغَّل من <code>script.google.com</code>، وهو يحتاج حاسوبًا لا هاتفًا. فهذه المحطّة — بخلاف سابقاتها — تبقى <b>عرضًا من المحاضر</b> ما دام الحضور على هواتفهم، ويبقى للدارسين منها الفهمُ والسكربتُ الجاهز لاستعماله حين يعودون إلى حواسيبهم.</div>
+        </div>
+
+        <!-- ══════════ أسئلة المراجعة ══════════ -->
+        <div class="section-heading" style="margin-top:28px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>أسئلة المراجعة</span>
+        </div>
+        <p class="quiz-note">بلا حلول — الحلّ يُناقَش في المحاضرة القادمة.</p>
+
+        <div class="mcq-item">
+          <span class="q-num">١.</span> ما الذي يُحمَّل من المهارة منذ بداية الجلسة؟
+          <ul class="mcq-options">
+            <li><span class="opt-letter">أ)</span> متن التعليمات كاملًا</li>
+            <li><span class="opt-letter">ب)</span> الاسم والوصف فقط</li>
+            <li><span class="opt-letter">ج)</span> الملفّات المرفقة</li>
+            <li><span class="opt-letter">د)</span> لا يُحمَّل شيء</li>
+          </ul>
+        </div>
+        <div class="mcq-item">
+          <span class="q-num">٢.</span> مهارةٌ عملت حين ذُكِر اسمها صراحةً، ولم تعمل حين صيغ الطلب صياغةً طبيعيّة. أين الخلل؟
+          <ul class="mcq-options">
+            <li><span class="opt-letter">أ)</span> في متن التعليمات</li>
+            <li><span class="opt-letter">ب)</span> في حقل الوصف</li>
+            <li><span class="opt-letter">ج)</span> في اسم المهارة</li>
+            <li><span class="opt-letter">د)</span> في إعدادات الحساب</li>
+          </ul>
+        </div>
+        <div class="mcq-item">
+          <span class="q-num">٣.</span> شعبةٌ فيها ستّة موظّفين، والمطلوب مهارةٌ واحدة تعمل عندهم جميعًا بنسخةٍ واحدة لا تختلف. أيُّ الطرق يحقّق ذلك؟
+          <ul class="mcq-options">
+            <li><span class="opt-letter">أ)</span> مهارة التوليد <span class="ltr-inline">skill-creator</span> في حساب رئيس الشعبة</li>
+            <li><span class="opt-letter">ب)</span> التسجيل بالشاشة مرّةً واحدة</li>
+            <li><span class="opt-letter">ج)</span> وضعها في مستودع الدائرة</li>
+            <li><span class="opt-letter">د)</span> رفعها ملفًّا مضغوطًا في حسابٍ واحد</li>
+          </ul>
+        </div>
+        <div class="mcq-item">
+          <span class="q-num">٤.</span> أيُّ هذه المعلومات لا يصحّ إدراجها داخل متن المهارة؟
+          <ul class="mcq-options">
+            <li><span class="opt-letter">أ)</span> فئات الشكاوى الخمس المعتمدة</li>
+            <li><span class="opt-letter">ب)</span> أسماء المواطنين وأرقام هواتفهم كأمثلة</li>
+            <li><span class="opt-letter">ج)</span> قاعدة احتساب التأخير بعشرة أيام</li>
+            <li><span class="opt-letter">د)</span> ترتيب عرض الوحدات الأربع</li>
+          </ul>
+        </div>
+
+        <div class="section-heading" style="margin-top:22px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>أسئلة قصيرة</span>
+        </div>
+        <div class="mcq-item">
+          <span class="q-num">١.</span> ما وجه الخطأ في هذا الوصف؟ «تُستعمل هذه المهارة لتصنيف الشكاوى. الخطوة الأولى: قراءة نصّ الشكوى. الخطوة الثانية: تحديد الفئة…»
+          <span class="blank-line"></span><span class="blank-line"></span>
+        </div>
+        <div class="mcq-item">
+          <span class="q-num">٢.</span> مهمّةٌ تتكرّر كلّ أسبوع، غير أنّ شكل مخرَجها يتغيّر بحسب طلب المدير في كلّ مرّة. أتستحقّ مهارة؟ وما العلّة؟
+          <span class="blank-line"></span><span class="blank-line"></span>
+        </div>
+        <div class="mcq-item">
+          <span class="q-num">٣.</span> ما الفرق بين ما يوضع في تعليمات البروفايل وما يوضع في متن المهارة؟ مع مثالٍ لكلٍّ منهما.
+          <span class="blank-line"></span><span class="blank-line"></span>
+        </div>
+
+        <div class="section-heading" style="margin-top:22px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>صح أو خطأ</span>
+        </div>
+        <div class="tf-item"><span>١. كلّما ازدادت المهمّة صعوبةً ازدادت حاجتها إلى مهارة.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+        <div class="tf-item"><span>٢. المهارة المخصّصة المبنيّة في حسابٍ على claude.ai تصل تلقائيًّا إلى بقيّة منتسبي الجهة.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+        <div class="tf-item"><span>٣. حقل الوصف يُكتب بصيغة الغائب لأنّه يُحقَن في موجّه النظام.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+        <div class="tf-item"><span>٤. فحص ملفّ SKILL.md وحده كافٍ للحكم على سلامة مهارةٍ أمنيًّا.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+        <div class="tf-item"><span>٥. الاستمارة المبنيّة بمهارةٍ واحدة تُنتج تسمياتٍ موحّدة قابلةً للجمع في تقرير.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+
+        <div class="mini-note">نهاية المحاضرة الرابعة — إعداد: د. أمير هادي ★</div>
+
         <div class="page-nav">
           <button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button>
           <button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button>
@@ -5784,6 +6627,118 @@
             <li><b>إعادة الشحن التلقائي مطفأة</b> حتى يُعرف الاستهلاك الطبيعي أوّلًا.</li>
             <li>سياسة مكتوبة تحدّد من يستخدم ولأي غرض وبأي صلاحية.</li>
             <li>درجة إضافية لمن ذكر أنّ الإعدادات وحدها لا تُغني عن <b>تصنيف البيانات وإخفاء الهوية</b> قبل الرفع.</li>
+          </ul>
+        </div>
+
+        <div class="sol-week"><span class="sw-n">٤</span><span class="sw-t">حلول الأسبوع الرابع — المهارات في كلود</span></div>
+
+        <div class="sol-kind"><span>الاختيار من متعدّد</span><span class="sk-line"></span></div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">١.</span> ما الذي يُحمَّل من المهارة منذ بداية الجلسة؟</p>
+          <div class="sol-opts">
+            <div class="sol-opt bad"><span class="so-k">أ)</span><span>متن التعليمات كاملًا</span></div>
+            <div class="sol-opt ok"><span class="so-k">ب)</span><span>الاسم والوصف فقط</span></div>
+            <div class="sol-opt bad"><span class="so-k">ج)</span><span>الملفّات المرفقة</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>لا يُحمَّل شيء</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> كلود يقارن الطلب بأوصاف المهارات المتاحة كلِّها، ولا يفتح المتن إلّا بعد المطابقة. و«د» خطأٌ لأنّ الوصف لو لم يكن حاضرًا منذ البداية لما أمكنت المقارنة أصلًا، ولانقطع طريق الاستدعاء التلقائيّ. <b>وهنا تكمن الدلالة العمليّة:</b> الوصفُ وحده هو ما يراه كلود قبل أن يقرّر، فهو الحقل الحاسم لا المتن.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٢.</span> مهارةٌ عملت حين ذُكِر اسمها صراحةً، ولم تعمل حين صيغ الطلب صياغةً طبيعيّة. أين الخلل؟</p>
+          <div class="sol-opts">
+            <div class="sol-opt bad"><span class="so-k">أ)</span><span>في متن التعليمات</span></div>
+            <div class="sol-opt ok"><span class="so-k">ب)</span><span>في حقل الوصف</span></div>
+            <div class="sol-opt bad"><span class="so-k">ج)</span><span>في اسم المهارة</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>في إعدادات الحساب</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> نجاحُها بالاستدعاء اليدويّ دليلٌ قاطعٌ على سلامة المتن — إذ لو كان المتن معطوبًا لفشلت في الحالتين. والفشلُ في الحالة التلقائيّة وحدها يحصر العلّة في الوصف، لأنّه الحقل الوحيد الذي تتوقّف عليه المطابقة. <b>وهذه أدقّ طريقةٍ لتشخيص مهارةٍ لا تُستدعى:</b> تُجرَّب بالاسم أوّلًا للفصل بين العطلين.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٣.</span> شعبةٌ فيها ستّة موظّفين، والمطلوب مهارةٌ واحدة تعمل عندهم جميعًا بنسخةٍ واحدة لا تختلف. أيُّ الطرق يحقّق ذلك؟</p>
+          <div class="sol-opts">
+            <div class="sol-opt bad"><span class="so-k">أ)</span><span>مهارة التوليد skill-creator في حساب رئيس الشعبة</span></div>
+            <div class="sol-opt bad"><span class="so-k">ب)</span><span>التسجيل بالشاشة مرّةً واحدة</span></div>
+            <div class="sol-opt ok"><span class="so-k">ج)</span><span>وضعها في مستودع الدائرة</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>رفعها ملفًّا مضغوطًا في حسابٍ واحد</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> «أ» و«ب» و«د» تشترك في علّةٍ واحدة: مخرَجُها مهارةٌ <b>في حسابٍ شخصيّ</b>، والمهاراتُ المخصّصة في claude.ai فرديّةٌ لكلّ مستخدم ولا تُوزَّع مركزيًّا. فلو سُلك أيٌّ منها لوجب إعطاءُ الملفّ للستّة ليرفعه كلٌّ في حسابه، ولانفصلت النسخُ عند أوّل تعديل. والمستودعُ وحده يجعلها نسخةً واحدةً لها تاريخٌ يُعرف منه مَن غيَّر وماذا غيَّر.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٤.</span> أيُّ هذه المعلومات لا يصحّ إدراجها داخل متن المهارة؟</p>
+          <div class="sol-opts">
+            <div class="sol-opt bad"><span class="so-k">أ)</span><span>فئات الشكاوى الخمس المعتمدة</span></div>
+            <div class="sol-opt ok"><span class="so-k">ب)</span><span>أسماء المواطنين وأرقام هواتفهم كأمثلة</span></div>
+            <div class="sol-opt bad"><span class="so-k">ج)</span><span>قاعدة احتساب التأخير بعشرة أيام</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>ترتيب عرض الوحدات الأربع</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> «أ» و«ج» و«د» قواعدُ عملٍ مجرَّدةٌ لا تخصّ شخصًا بعينه، وهي بالضبط ما يُراد وضعُه في المتن. أمّا «ب» فبياناتٌ شخصيّةٌ تُنسخ مع المهارة كلّما شُورِكت، ولا سبيل إلى استرجاعها بعد انتشارها. <b>والقاعدة:</b> المهارةُ تحمل القاعدة لا الحالة — فئاتُ الشكاوى تُذكر، ولا يُذكر فيها اسمُ شاكٍ واحد.</p>
+        </div>
+
+        <div class="sol-kind"><span>صح أو خطأ</span><span class="sk-line"></span></div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">١.</span> كلّما ازدادت المهمّة صعوبةً ازدادت حاجتها إلى مهارة.</p><span class="sol-badge f">خطأ</span></div>
+          <p class="sol-why">المعيار <b>التكرار وثبات الإجراء</b>، لا الصعوبة. فمهمّةٌ صعبةٌ تقع مرّةً واحدة لا تستحقّ مهارة، ومهمّةٌ سهلةٌ تتكرّر كلّ يوم بإجراءٍ ثابت تستحقّها.</p>
+        </div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٢.</span> المهارة المخصّصة المبنيّة في حسابٍ على claude.ai تصل تلقائيًّا إلى بقيّة منتسبي الجهة.</p><span class="sol-badge f">خطأ</span></div>
+          <p class="sol-why">المهاراتُ المخصّصة <b>فرديّةٌ لكلّ مستخدم</b>، لا تُوزَّع مركزيًّا ولا تُدار من حساب المسؤول. والتعميمُ إمّا بإعطاء الملفّ ليرفعه كلٌّ في حسابه، وإمّا بوضعها في مستودع الدائرة.</p>
+        </div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٣.</span> حقل الوصف يُكتب بصيغة الغائب لأنّه يُحقَن في موجّه النظام.</p><span class="sol-badge t">صح</span></div>
+          <p class="sol-why">الوصفُ يُقرأ في سياقٍ يصف المهارة لا يخاطبها، فتكون صيغةُ الغائب («يصنّف الشكاوى…») هي الموافقة له. وصيغةُ المخاطب تُضعف المطابقة.</p>
+        </div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٤.</span> فحص ملفّ SKILL.md وحده كافٍ للحكم على سلامة مهارةٍ أمنيًّا.</p><span class="sol-badge f">خطأ</span></div>
+          <p class="sol-why">المهارةُ مجلَّدٌ قد يحمل ملفّاتٍ وسكربتاتٍ ومراجعَ إلى عناوين خارجيّة، وقد يكون المتنُ سليمًا ظاهرًا والخللُ في ملفٍّ مساند. <b>والفحصُ يشمل المجلَّد كلَّه</b>، وأخطرُ ما فيه ما يجلب تعليماتِه من الإنترنت لحظةَ التشغيل: يُفحَص اليوم سليمًا ويتغيّر غدًا.</p>
+        </div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٥.</span> الاستمارة المبنيّة بمهارةٍ واحدة تُنتج تسمياتٍ موحّدة قابلةً للجمع في تقرير.</p><span class="sol-badge t">صح</span></div>
+          <p class="sol-why">التسمياتُ محكومةٌ بمتن المهارة لا باجتهاد من يبني، فتخرج الاستماراتُ العشرُ بحقلٍ اسمُه «نوع الشكوى» في كلّها. <b>وهذا هو المكسب الأكبر</b> — أكبرُ من اختصار الوقت — لأنّ البناء اليدويّ المتكرّر يُنتج «الموضوع» في استمارة و«نوع الشكوى» في أخرى، فيتعذّر جمعُهما.</p>
+        </div>
+
+        <div class="sol-kind"><span>الأسئلة القصيرة — نقاط التصحيح</span><span class="sk-line"></span></div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">١.</span> ما وجه الخطأ في هذا الوصف؟ «تُستعمل هذه المهارة لتصنيف الشكاوى. الخطوة الأولى: قراءة نصّ الشكوى. الخطوة الثانية: تحديد الفئة…»</p>
+          <ul class="sol-grading">
+            <li><b>الخطأ الجوهريّ:</b> الوصفُ امتلأ بخطوات التنفيذ، وهذه موضعُها المتنُ لا الوصف.</li>
+            <li>الوصفُ يجمع أمرين لا ثالثَ لهما: <b>ماذا تفعل</b> المهارة و<b>متى</b> تُستعمل — وقد سقط الثاني كلِّيًّا.</li>
+            <li>لا ذكر لحالة الاستعمال، فلا يجد كلود ما يطابق به الطلب، فلا تُستدعى تلقائيًّا.</li>
+            <li>أثرٌ ثانٍ: الخطواتُ في الوصف تُحمَّل في كلّ جلسة بلا فائدة، ثمّ تتكرّر في المتن.</li>
+            <li><b>الصياغة المقترحة:</b> «يصنّف الشكاوى الواردة إلى خمس فئاتٍ مع درجة إلحاحٍ وجهة إحالة. يُستعمل عند ورود شكوى جديدة أو طلب فرز دفعة شكاوى.»</li>
+            <li>درجةٌ إضافيّةٌ لمن نبّه إلى صيغة الغائب.</li>
+          </ul>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٢.</span> مهمّةٌ تتكرّر كلّ أسبوع، غير أنّ شكل مخرَجها يتغيّر بحسب طلب المدير في كلّ مرّة. أتستحقّ مهارة؟ وما العلّة؟</p>
+          <ul class="sol-grading">
+            <li><b>الجواب: لا</b> — والشرطان لا بدّ منهما معًا: التكرارُ متحقّق، وثباتُ الإجراء منتفٍ.</li>
+            <li>تعليلٌ صحيح: المهارةُ تُثبّت إجراءً، وما لا إجراءَ له ثابتًا لا تجد المهارةُ ما تثبّته.</li>
+            <li>الأثرُ العمليّ: مهارةٌ تُبنى على شكلٍ متغيّر تُصحَّح في كلّ مرّة، فتصير عبئًا لا اختصارًا.</li>
+            <li><b>تفصيلٌ يستحقّ درجةً إضافيّة:</b> قد يوجد داخل المهمّة جزءٌ ثابتٌ يستحقّ مهارةً بذاته — كجمع أرقام الوحدات وتدقيقها — ويُترك الجزءُ المتغيّر (شكل العرض) للطلب في حينه.</li>
+            <li>قَبولُ جوابٍ بـ«نعم» مشروطٌ بأن يُبنى على هذا التفصيل نفسه، لا على التكرار وحده.</li>
+          </ul>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٣.</span> ما الفرق بين ما يوضع في تعليمات البروفايل وما يوضع في متن المهارة؟ مع مثالٍ لكلٍّ منهما.</p>
+          <ul class="sol-grading">
+            <li><b>الضابط:</b> البروفايل لما يسري على المحادثات كلِّها، والمهارةُ لما يخصّ مهمّةً بعينها.</li>
+            <li>فارقٌ ثانٍ في التحميل: البروفايل حاضرٌ في كلّ محادثة، والمهارةُ لا تُفتح إلّا عند الحاجة.</li>
+            <li><b>مثالُ البروفايل:</b> «مخاطبتي بصفتي مدير شعبة» أو «اللغة العربية الفصحى» — وصفٌ لصاحب الحساب وأسلوبِه.</li>
+            <li><b>مثالُ المهارة:</b> فئاتُ الشكاوى الخمس وقواعدُ الإحالة — إجراءٌ لا يلزم إلّا عند الشكاوى.</li>
+            <li>الأثرُ الذي يُبيّن فساد الخلط: إجراءٌ يخصّ الشكاوى موضوعٌ في البروفايل يُحمَّل في كلّ محادثةٍ ولو لم تكن فيها شكوى.</li>
+            <li>درجةٌ إضافيّةٌ لمن بيّن أنّ تراكم الإجراءات في البروفايل يضيّق المحادثة على الجميع، بخلاف المهارة القائمة بذاتها.</li>
           </ul>
         </div>
 
