@@ -1629,6 +1629,34 @@
   }
   .takeaway b{ color:var(--blue); }
 
+  /* طرق صناعة المهارة */
+  .ways-fan{ display:flex; align-items:center; justify-content:center; gap:10px;
+             margin:10px 0 16px; flex-wrap:wrap; }
+  .wf-col{ display:flex; flex-direction:column; gap:5px; }
+  .wf-src{ border:1.5px solid rgba(26,61,140,0.35); background:rgba(26,61,140,0.05);
+           border-radius:7px; padding:4px 11px; font-size:calc(12px * var(--fs,1));
+           font-weight:700; color:var(--blue); text-align:center; white-space:nowrap; }
+  .wf-arrow{ color:var(--blue); font-size:calc(17px * var(--fs,1)); opacity:0.55; }
+  .wf-out{ border:2.5px solid var(--green); background:rgba(31,122,61,0.07);
+           border-radius:10px; padding:11px 18px; text-align:center;
+           display:flex; flex-direction:column; gap:3px; }
+  .wf-out b{ color:var(--green); font-size:calc(13.5px * var(--fs,1)); }
+  .wf-out small{ font-size:calc(11px * var(--fs,1)); opacity:0.72; }
+
+  .way{ border:2px solid rgba(26,61,140,0.32); background:rgba(26,61,140,0.035);
+        border-radius:9px; padding:10px 13px 11px; margin:11px 0; }
+  .way-h{ display:flex; gap:8px; align-items:center; margin-bottom:6px; }
+  .way-n{ background:var(--blue); color:#fff; font-weight:700; border-radius:5px;
+          padding:1px 9px; font-size:calc(12px * var(--fs,1)); flex:none; }
+  .way-t{ font-weight:700; font-size:calc(14px * var(--fs,1)); color:var(--blue); }
+  .way-d{ font-size:calc(13px * var(--fs,1)); line-height:1.9;
+          margin:0 0 6px; text-align:justify; }
+  .way-l{ display:block; margin:4px 0; font-size:calc(12.5px * var(--fs,1));
+          line-height:1.8; }
+  .way-l b{ color:var(--ink); }
+  .way-c{ color:var(--red); opacity:0.92; }
+  .way-c b{ color:var(--red); }
+
   /* مخطّط كلفة الرموز */
   .tok{ display:flex; flex-direction:column; gap:9px; margin:10px 0 14px; }
   .tok-row{ display:flex; align-items:center; gap:9px; }
@@ -5806,75 +5834,105 @@
         <!-- ══════════ ٣ ══════════ -->
         <div class="section-heading" style="margin-top:28px;">
           <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
-          <span>٣ · حساب استهلاك الرموز وكلفتها</span>
+          <span>٣ · طرق صناعة المهارة</span>
         </div>
 
-        <p>هنا يظهر السببُ الهندسيّ الذي جُعلت المهارات لأجله على هذا النحو: التعليمات لا تُحمَّل دفعةً واحدة، بل على ثلاث طبقاتٍ تُحمَّل كلٌّ منها في حينها.</p>
+        <p>المهارةُ في جوهرها مجلَّدٌ فيه ملفُّ <span class="ltr-inline">SKILL.md</span>، وهذا لا يتغيّر مهما اختُلف في طريق الوصول إليه. والطرق خمسةٌ تتفاوت في مقدار ما يكتبه صاحبُ العمل بيده وما يُترك لكلود، وليس بينها طريقٌ «أصحّ» من غيره: الفارقُ في مَن يملك المادّة، وفي كم من الوقت يُبذَل.</p>
 
-        <p class="dt-cap">رسم (٢): الطبقات الثلاث وكلفة كلٍّ منها</p>
-        <div class="lyr">
-          <div class="lyr-row">
-            <span class="lyr-when">دائمًا<br><small>منذ البداية</small></span>
-            <span class="lyr-box l1"><b>١. بطاقة التعريف</b><span>الاسم + الوصف</span></span>
-            <span class="lyr-cost">~١٠٠ رمز<br><small>لكلّ مهارة</small></span>
+        <p class="dt-cap">رسم (١): الطرق الخمسة تنتهي كلُّها إلى مخرَجٍ واحد</p>
+        <div class="ways-fan">
+          <div class="wf-col">
+            <span class="wf-src">مهارةُ التوليد</span>
+            <span class="wf-src">التسجيل بالشاشة</span>
+            <span class="wf-src">التحرير في المحادثة</span>
+            <span class="wf-src">الكتابة اليدويّة</span>
+            <span class="wf-src">مستودعُ الدائرة</span>
           </div>
-          <div class="lyr-arrow">▼ <span>طابَق طلبُ المستخدم الوصفَ</span></div>
-          <div class="lyr-row">
-            <span class="lyr-when">عند<br><small>المطابقة</small></span>
-            <span class="lyr-box l2"><b>٢. متن التعليمات</b><span>محتوى SKILL.md</span></span>
-            <span class="lyr-cost">&lt; ٥٠٠٠ رمز</span>
-          </div>
-          <div class="lyr-arrow">▼ <span>أحالت التعليمات إلى ملفّ</span></div>
-          <div class="lyr-row">
-            <span class="lyr-when">عند<br><small>الحاجة فقط</small></span>
-            <span class="lyr-box l3"><b>٣. الملفّات والبرامج</b><span>مراجع · سكربتات</span></span>
-            <span class="lyr-cost">صفر رمز<br><small>حتى تُقرأ</small></span>
+          <div class="wf-arrow">◀</div>
+          <div class="wf-out">
+            <b>مجلَّدُ المهارة</b>
+            <span class="ltr-inline">SKILL.md</span>
+            <small>+ ملفّاتٌ مساندة عند الحاجة</small>
           </div>
         </div>
 
-        <p class="dt-cap">رسم (٣): حسابٌ محلول — عشرون مهارة مركّبة، ونافذةُ سياقٍ سعتها ٢٠٠٬٠٠٠ رمز</p>
-        <div class="tok">
-          <div class="tok-row">
-            <span class="tok-lbl">لم تُستدعَ أيّ مهارة</span>
-            <span class="tok-track"><span class="tok-fill a" style="width:3%;"></span></span>
-            <span class="tok-val">٢٬٠٠٠ رمز<small>١٪ من النافذة</small></span>
-          </div>
-          <div class="tok-row">
-            <span class="tok-lbl">استُدعيت مهارةٌ واحدة</span>
-            <span class="tok-track"><span class="tok-fill b" style="width:7%;"></span></span>
-            <span class="tok-val">٥٬٠٠٠ رمز<small>٢٫٥٪ من النافذة</small></span>
-          </div>
-          <div class="tok-row">
-            <span class="tok-lbl">لو وُضعت التعليمات كلّها في البروفايل</span>
-            <span class="tok-track"><span class="tok-fill c" style="width:100%;"></span></span>
-            <span class="tok-val">٦٠٬٠٠٠ رمز<small>٣٠٪ من النافذة</small></span>
-          </div>
+        <div class="way">
+          <div class="way-h"><span class="way-n">١</span><span class="way-t">مهارةُ التوليد <span class="ltr-inline">skill-creator</span> — أقصرُ الطرق</span></div>
+          <p class="way-d">مهارةٌ رسميّةٌ وظيفتُها صناعةُ المهارات. تُستدعى فتسأل عن المهمّة وعن قواعد الجهة، ثمّ تُخرج المجلَّد كاملًا بالاسم والوصف والمتن مهيَّأةً للتنزيل. وهي تقترح صياغةَ الوصف كذلك، وهو أصعبُ حقلٍ على المبتدئ.</p>
+          <span class="way-l"><b>مثال:</b> طلبٌ نصُّه «مهارةٌ تصوغ محاضر الاجتماعات في شعبتي»، فتسأل عن أقسام المحضر وعن صيغة التوصيات، ثمّ تُخرج المجلَّد جاهزًا.</span>
+          <span class="way-l"><b>يناسب:</b> أوّلَ مهارةٍ يبنيها موظّفٌ لم يكتب <span class="ltr-inline">SKILL.md</span> من قبل.</span>
+          <span class="way-l way-c"><b>حدُّه:</b> المخرَجُ بقدر ما وُصف له. والوصفُ الغامض يُخرج مهارةً عامّةً لا تنفع.</span>
         </div>
 
+        <div class="way">
+          <div class="way-h"><span class="way-n">٢</span><span class="way-t">التسجيل بالشاشة — المهارةُ تُلتقَط من العمل نفسه</span></div>
+          <p class="way-d">بدل وصفِ المهمّة بالكلام، يُسجَّل إنجازُها مرّةً واحدة على الشاشة، فيستخرج كلود منها الخطواتِ ويصوغها مهارةً. ما يُلتقَط هو الترتيبُ الفعليّ لا الترتيبُ المتخيَّل، وهذا فارقٌ كبير في الأعمال الإداريّة التي تُنجَز بالعادة لا بالتعليمات المكتوبة.</p>
+          <span class="way-l"><b>مثال:</b> تسجيلُ جلسةٍ واحدة لتدقيق معاملةٍ واردة: فتحُ السجلّ، مطابقةُ الرقم، تدوينُ الملاحظة، تحديدُ جهة الإحالة — فتخرج مهارةُ «تدقيق المعاملة الواردة» بهذا الترتيب عينه.</span>
+          <span class="way-l"><b>يناسب:</b> إجراءً يعرفه الموظّفُ بالممارسة ويعجز عن تفصيله كتابةً.</span>
+          <span class="way-l way-c"><b>حدُّه:</b> متاحٌ في <span class="ltr-inline">Cowork</span> على حاسوب <span class="ltr-inline">Mac</span> دون غيره، وفي خطط <span class="ltr-inline">Pro</span> و<span class="ltr-inline">Max</span> و<span class="ltr-inline">Team</span>. وما يظهر على الشاشة أثناء التسجيل يدخل في المادّة، فالبياناتُ الحسّاسة تُغلق قبله.</span>
+        </div>
+
+        <div class="way">
+          <div class="way-h"><span class="way-n">٣</span><span class="way-t">التحرير داخل المحادثة — الطريقُ التدريجيّ</span></div>
+          <p class="way-d">تُفتح ملفّاتُ المهارة إلى جانب المحادثة وتُعدَّل فيها مباشرةً أثناء التجريب. وميزتُه أنّ التجربة والتعديل يقعان في مكانٍ واحد: المهارة تُجرَّب على حالةٍ حقيقيّة، فيظهر النقصُ، فيُسَدُّ في حينه من غير تنزيلٍ ورفعٍ في كلّ دورة.</p>
+          <span class="way-l"><b>مثال:</b> مهارةُ تصنيف الشكاوى تُجرَّب على خمس شكاوى، فيظهر أنّ فئة «سوء تعامل» تُخلط بـ«رفض غير مبرَّر»، فيُضاف سطرٌ فارقٌ بينهما في المتن وتُعاد التجربة على الشكاوى الخمس نفسها.</span>
+          <span class="way-l"><b>يناسب:</b> طورَ التنقيح بعد أن صار للمهارة متنٌ أوّليّ.</span>
+          <span class="way-l way-c"><b>حدُّه:</b> يقتضي تفعيلَ تنفيذ الأكواد وإنشاء الملفّات.</span>
+        </div>
+
+        <div class="way">
+          <div class="way-h"><span class="way-n">٤</span><span class="way-t">الكتابة اليدويّة ثمّ الرفع — أعلى الطرق في الضبط</span></div>
+          <p class="way-d">يُنشَأ مجلَّدٌ باسم المهارة، وفيه ملفُّ <span class="ltr-inline">SKILL.md</span> يبدأ بحقلَي الاسم والوصف، ثمّ المتن. ويُضغَط المجلَّد ملفًّا واحدًا ويُرفَع من إعدادات المهارات. والشرطُ الشكليُّ الذي يُخطَأ فيه كثيرًا: جذرُ الملفّ المضغوط هو مجلَّدُ المهارة نفسُه لا مجلَّدٌ يحويه.</p>
+          <span class="way-l"><b>مثال:</b> مهارةُ صياغة الكتب الرسميّة، ومعها في المجلَّد ملفُّ <span class="ltr-inline">forms/</span> فيه قوالبُ الكتب المعتمدة في الدائرة — وهذه مادّةٌ لا تُولَّد ولا تُسجَّل، إنّما تُرفَق كما هي.</span>
+          <span class="way-l"><b>يناسب:</b> المهارةَ التي تحمل مرفقاتٍ رسميّةً معتمدة، والمهارةَ التي تُراجَع قبل اعتمادها.</span>
+          <span class="way-l way-c"><b>حدُّه:</b> أبطأُ الطرق، ويقتضي معرفةً بترويسة الملفّ وبشروط الاسم والوصف.</span>
+        </div>
+
+        <div class="way">
+          <div class="way-h"><span class="way-n">٥</span><span class="way-t">مستودعُ الدائرة — الطريقُ الجماعيّ</span></div>
+          <p class="way-d">في بيئة <span class="ltr-inline">Claude Code</span> تُوضع المهارةُ في مسار <span class="ltr-inline">.claude/skills/</span> داخل مستودع الدائرة، فتصير جزءًا من المشروع لا من حساب شخص. وأثرُ ذلك أنّها تصل إلى كلّ من يعمل على المستودع، وأنّ تعديلها يمرّ بالمراجعة المعتادة، وأنّ لها تاريخًا يُعرف منه مَن غيَّر وماذا غيَّر ومتى.</p>
+          <span class="way-l"><b>مثال:</b> مهارةُ «تقرير الوحدات الأسبوعيّ» توضع في المستودع، فتعمل عند كلّ موظّفي الشعبة بنسخةٍ واحدة، ولا يبقى لكلٍّ منهم نسخةٌ تخالف الأخرى.</span>
+          <span class="way-l"><b>يناسب:</b> المهارةَ التي يشترك فيها أكثرُ من موظّف والتي يُراد ثباتُها.</span>
+          <span class="way-l way-c"><b>حدُّه:</b> يقتضي مستودعًا وبيئةَ <span class="ltr-inline">Claude Code</span>، وهو ما لا يتوفّر لكلّ دائرة.</span>
+        </div>
+
+        <p class="dt-cap">جدول المقارنة — الطرق الخمسة</p>
         <div class="dt-wrap">
           <table class="dt">
-            <thead><tr><th>الحالة</th><th>الحساب</th><th>النتيجة</th></tr></thead>
+            <thead><tr><th>الطريق</th><th>مَن يكتب المتن</th><th>الزمن التقديريّ</th><th>نطاق الانتفاع</th></tr></thead>
             <tbody>
-              <tr><td>لا استدعاء</td><td>٢٠ مهارة × ١٠٠ رمز</td><td>٢٬٠٠٠ رمز</td></tr>
-              <tr><td>استدعاءٌ واحد</td><td>٢٬٠٠٠ + ٣٬٠٠٠ (متن المستدعاة)</td><td>٥٬٠٠٠ رمز</td></tr>
-              <tr><td>الكلّ في البروفايل</td><td>٢٠ إجراءً × ٣٬٠٠٠ رمز، في <b>كلّ</b> محادثة</td><td>٦٠٬٠٠٠ رمز</td></tr>
+              <tr><td>مهارةُ التوليد</td><td>كلود بإملاءِ صاحب العمل</td><td>١٠–١٥ دقيقة</td><td>الحسابُ الشخصيّ</td></tr>
+              <tr><td>التسجيل بالشاشة</td><td>كلود ممّا شاهده</td><td>مدّةُ المهمّة مرّةً واحدة</td><td>الحسابُ الشخصيّ</td></tr>
+              <tr><td>التحرير في المحادثة</td><td>الاثنان بالتناوب</td><td>دوراتٌ قصيرةٌ متكرّرة</td><td>الحسابُ الشخصيّ</td></tr>
+              <tr><td>الكتابة اليدويّة</td><td>صاحبُ العمل</td><td>٣٠–٦٠ دقيقة</td><td>الحسابُ الشخصيّ</td></tr>
+              <tr><td>مستودعُ الدائرة</td><td>صاحبُ العمل</td><td>٣٠–٦٠ دقيقة + مراجعة</td><td><b>الشعبةُ كلُّها</b></td></tr>
             </tbody>
           </table>
         </div>
 
+        <p class="dt-cap">أمثلةٌ إضافيّة — حالةٌ من الدائرة وأيُّ طريقٍ يناسبها</p>
+        <div class="dt-wrap">
+          <table class="dt">
+            <thead><tr><th>الحالة</th><th>الطريق</th><th>العلّة</th></tr></thead>
+            <tbody>
+              <tr><td>مديرٌ يريد مهارةً تصوغ ردود الشكاوى، ولم يبنِ مهارةً قطّ</td><td><b>الأوّل — التوليد</b></td><td>لا يلزمه إلّا وصفُ ما يريده، والصياغةُ تُتولّى عنه</td></tr>
+              <tr><td>موظّفُ أرشيفٍ يفهرس المعاملات بترتيبٍ تعلّمه بالممارسة ويعجز عن كتابته</td><td><b>الثاني — التسجيل</b></td><td>الترتيبُ يُلتقَط من الفعل لا من الوصف</td></tr>
+              <tr><td>مهارةُ تصنيفٍ تخلط بين فئتين متقاربتين عند التجربة</td><td><b>الثالث — التحرير في المحادثة</b></td><td>التجربةُ والتعديل في مكانٍ واحد، فتقصر دورةُ التنقيح</td></tr>
+              <tr><td>مهارةٌ تُلزَم بقوالب كتبٍ رسميّةٍ معتمدةٍ لا تُعاد كتابتها</td><td><b>الرابع — الكتابة اليدويّة</b></td><td>القوالبُ تُرفَق ملفّاتٍ في المجلَّد كما هي</td></tr>
+              <tr><td>إجراءٌ اعتمدته الدائرة ولا يجوز أن تختلف فيه نسخةُ موظّفٍ عن آخر</td><td><b>الخامس — المستودع</b></td><td>نسخةٌ واحدةٌ مراجَعةٌ لها تاريخٌ يُعرف منه مَن غيَّر</td></tr>
+              <tr><td>مهارةٌ جُرِّبت في حسابٍ شخصيّ وأُريد تعميمُها بعد نجاحها</td><td><b>الأوّل ثمّ الخامس</b></td><td>التجريبُ في الأسرع، والاعتمادُ في الأثبت</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="oops">
+          <span class="o-i">⚠</span>
+          <div>المهاراتُ المخصّصة في <span class="ltr-inline">claude.ai</span> <b>فرديّةٌ لكلّ مستخدم</b>، ولا تُوزَّع مركزيًّا على منتسبي الجهة ولا تُدار من حساب المسؤول. فالمهارةُ المبنيّةُ في حسابٍ واحد لا تصل إلى بقيّة الشعبة إلّا بإعطائهم ملفَّها ليرفعه كلٌّ منهم في حسابه — أو بسلوك الطريق الخامس.</div>
+        </div>
+
         <div class="takeaway">
-          الفارق بين <b>٢٫٥٪</b> و<b>٣٠٪</b> ليس فرقًا في الكفاءة فحسب، بل هو <span class="hl hl-yellow">الفرقُ بين نظامٍ يتوسّع وآخرَ يختنق</span>:‎ كلّما أُضيف إجراءٌ إلى البروفايل ضاقت النافذة على الجميع، وكلّما أُضيفت مهارةٌ قائمةٌ بذاتها لم يتغيّر شيءٌ حتى تُستدعى.
+          <b>الاختيارُ العمليّ:</b> الطرقُ الأربعة الأولى تُنتج مهارةً في حسابٍ واحد، والخامس وحده يُنتج مهارةً في جهة. ولذلك يُبدأ عادةً بالأوّل للتجريب، فإذا ثبتت المهارةُ وصارت إجراءً معتمدًا نُقلت إلى الخامس.
         </div>
-
-        <div class="tip-box">
-          <div class="tip-title">
-            <svg class="tip-icon" viewBox="0 0 24 24"><circle cx="12" cy="9" r="6.5" fill="#fff3c4" stroke="var(--green)" stroke-width="2"/><rect x="9" y="16" width="6" height="4" rx="1.5" fill="none" stroke="var(--green)" stroke-width="2"/><line x1="9" y1="21" x2="15" y2="21" stroke="var(--green)" stroke-width="2" stroke-linecap="round"/></svg>
-            معنى «الكلفة»
-          </div>
-          كلفةُ مساحةٍ لا مال: كلّ رمزٍ تشغله التعليمات يُنتزَع من المحادثة نفسها.
-        </div>
-
-        <p>وأثرُها العمليّ المحسوس: محادثةٌ تنسى أوّلها أسرع، ورصيدُ رسائلَ ينفد أبكر.</p>
 
         <!-- ══════════ ٤ ══════════ -->
         <div class="section-heading" style="margin-top:28px;">
@@ -6150,12 +6208,12 @@
           </ul>
         </div>
         <div class="mcq-item">
-          <span class="q-num">٣.</span> عشرون مهارة مركّبة لم تُستدعَ أيٌّ منها — كم تستهلك تقريبًا؟
+          <span class="q-num">٣.</span> شعبةٌ فيها ستّة موظّفين، والمطلوب مهارةٌ واحدة تعمل عندهم جميعًا بنسخةٍ واحدة لا تختلف. أيُّ الطرق يحقّق ذلك؟
           <ul class="mcq-options">
-            <li><span class="opt-letter">أ)</span> ٦٠٬٠٠٠ رمز</li>
-            <li><span class="opt-letter">ب)</span> ٢٠٬٠٠٠ رمز</li>
-            <li><span class="opt-letter">ج)</span> ٢٬٠٠٠ رمز</li>
-            <li><span class="opt-letter">د)</span> لا شيء إطلاقًا</li>
+            <li><span class="opt-letter">أ)</span> مهارة التوليد <span class="ltr-inline">skill-creator</span> في حساب رئيس الشعبة</li>
+            <li><span class="opt-letter">ب)</span> التسجيل بالشاشة مرّةً واحدة</li>
+            <li><span class="opt-letter">ج)</span> وضعها في مستودع الدائرة</li>
+            <li><span class="opt-letter">د)</span> رفعها ملفًّا مضغوطًا في حسابٍ واحد</li>
           </ul>
         </div>
         <div class="mcq-item">
@@ -6190,7 +6248,7 @@
           <span>صح أو خطأ</span>
         </div>
         <div class="tf-item"><span>١. كلّما ازدادت المهمّة صعوبةً ازدادت حاجتها إلى مهارة.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
-        <div class="tf-item"><span>٢. المهارة المركّبة غير المستدعاة تستهلك متنها كاملًا من نافذة السياق.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+        <div class="tf-item"><span>٢. المهارة المخصّصة المبنيّة في حسابٍ على claude.ai تصل تلقائيًّا إلى بقيّة منتسبي الجهة.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
         <div class="tf-item"><span>٣. حقل الوصف يُكتب بصيغة الغائب لأنّه يُحقَن في موجّه النظام.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
         <div class="tf-item"><span>٤. فحص ملفّ SKILL.md وحده كافٍ للحكم على سلامة مهارةٍ أمنيًّا.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
         <div class="tf-item"><span>٥. الاستمارة المبنيّة بمهارةٍ واحدة تُنتج تسمياتٍ موحّدة قابلةً للجمع في تقرير.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
@@ -6536,6 +6594,118 @@
             <li><b>إعادة الشحن التلقائي مطفأة</b> حتى يُعرف الاستهلاك الطبيعي أوّلًا.</li>
             <li>سياسة مكتوبة تحدّد من يستخدم ولأي غرض وبأي صلاحية.</li>
             <li>درجة إضافية لمن ذكر أنّ الإعدادات وحدها لا تُغني عن <b>تصنيف البيانات وإخفاء الهوية</b> قبل الرفع.</li>
+          </ul>
+        </div>
+
+        <div class="sol-week"><span class="sw-n">٤</span><span class="sw-t">حلول الأسبوع الرابع — المهارات في كلود</span></div>
+
+        <div class="sol-kind"><span>الاختيار من متعدّد</span><span class="sk-line"></span></div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">١.</span> ما الذي يُحمَّل من المهارة منذ بداية الجلسة؟</p>
+          <div class="sol-opts">
+            <div class="sol-opt bad"><span class="so-k">أ)</span><span>متن التعليمات كاملًا</span></div>
+            <div class="sol-opt ok"><span class="so-k">ب)</span><span>الاسم والوصف فقط</span></div>
+            <div class="sol-opt bad"><span class="so-k">ج)</span><span>الملفّات المرفقة</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>لا يُحمَّل شيء</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> كلود يقارن الطلب بأوصاف المهارات المتاحة كلِّها، ولا يفتح المتن إلّا بعد المطابقة. و«د» خطأٌ لأنّ الوصف لو لم يكن حاضرًا منذ البداية لما أمكنت المقارنة أصلًا، ولانقطع طريق الاستدعاء التلقائيّ. <b>وهنا تكمن الدلالة العمليّة:</b> الوصفُ وحده هو ما يراه كلود قبل أن يقرّر، فهو الحقل الحاسم لا المتن.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٢.</span> مهارةٌ عملت حين ذُكِر اسمها صراحةً، ولم تعمل حين صيغ الطلب صياغةً طبيعيّة. أين الخلل؟</p>
+          <div class="sol-opts">
+            <div class="sol-opt bad"><span class="so-k">أ)</span><span>في متن التعليمات</span></div>
+            <div class="sol-opt ok"><span class="so-k">ب)</span><span>في حقل الوصف</span></div>
+            <div class="sol-opt bad"><span class="so-k">ج)</span><span>في اسم المهارة</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>في إعدادات الحساب</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> نجاحُها بالاستدعاء اليدويّ دليلٌ قاطعٌ على سلامة المتن — إذ لو كان المتن معطوبًا لفشلت في الحالتين. والفشلُ في الحالة التلقائيّة وحدها يحصر العلّة في الوصف، لأنّه الحقل الوحيد الذي تتوقّف عليه المطابقة. <b>وهذه أدقّ طريقةٍ لتشخيص مهارةٍ لا تُستدعى:</b> تُجرَّب بالاسم أوّلًا للفصل بين العطلين.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٣.</span> شعبةٌ فيها ستّة موظّفين، والمطلوب مهارةٌ واحدة تعمل عندهم جميعًا بنسخةٍ واحدة لا تختلف. أيُّ الطرق يحقّق ذلك؟</p>
+          <div class="sol-opts">
+            <div class="sol-opt bad"><span class="so-k">أ)</span><span>مهارة التوليد skill-creator في حساب رئيس الشعبة</span></div>
+            <div class="sol-opt bad"><span class="so-k">ب)</span><span>التسجيل بالشاشة مرّةً واحدة</span></div>
+            <div class="sol-opt ok"><span class="so-k">ج)</span><span>وضعها في مستودع الدائرة</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>رفعها ملفًّا مضغوطًا في حسابٍ واحد</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> «أ» و«ب» و«د» تشترك في علّةٍ واحدة: مخرَجُها مهارةٌ <b>في حسابٍ شخصيّ</b>، والمهاراتُ المخصّصة في claude.ai فرديّةٌ لكلّ مستخدم ولا تُوزَّع مركزيًّا. فلو سُلك أيٌّ منها لوجب إعطاءُ الملفّ للستّة ليرفعه كلٌّ في حسابه، ولانفصلت النسخُ عند أوّل تعديل. والمستودعُ وحده يجعلها نسخةً واحدةً لها تاريخٌ يُعرف منه مَن غيَّر وماذا غيَّر.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٤.</span> أيُّ هذه المعلومات لا يصحّ إدراجها داخل متن المهارة؟</p>
+          <div class="sol-opts">
+            <div class="sol-opt bad"><span class="so-k">أ)</span><span>فئات الشكاوى الخمس المعتمدة</span></div>
+            <div class="sol-opt ok"><span class="so-k">ب)</span><span>أسماء المواطنين وأرقام هواتفهم كأمثلة</span></div>
+            <div class="sol-opt bad"><span class="so-k">ج)</span><span>قاعدة احتساب التأخير بعشرة أيام</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>ترتيب عرض الوحدات الأربع</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> «أ» و«ج» و«د» قواعدُ عملٍ مجرَّدةٌ لا تخصّ شخصًا بعينه، وهي بالضبط ما يُراد وضعُه في المتن. أمّا «ب» فبياناتٌ شخصيّةٌ تُنسخ مع المهارة كلّما شُورِكت، ولا سبيل إلى استرجاعها بعد انتشارها. <b>والقاعدة:</b> المهارةُ تحمل القاعدة لا الحالة — فئاتُ الشكاوى تُذكر، ولا يُذكر فيها اسمُ شاكٍ واحد.</p>
+        </div>
+
+        <div class="sol-kind"><span>صح أو خطأ</span><span class="sk-line"></span></div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">١.</span> كلّما ازدادت المهمّة صعوبةً ازدادت حاجتها إلى مهارة.</p><span class="sol-badge f">خطأ</span></div>
+          <p class="sol-why">المعيار <b>التكرار وثبات الإجراء</b>، لا الصعوبة. فمهمّةٌ صعبةٌ تقع مرّةً واحدة لا تستحقّ مهارة، ومهمّةٌ سهلةٌ تتكرّر كلّ يوم بإجراءٍ ثابت تستحقّها.</p>
+        </div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٢.</span> المهارة المخصّصة المبنيّة في حسابٍ على claude.ai تصل تلقائيًّا إلى بقيّة منتسبي الجهة.</p><span class="sol-badge f">خطأ</span></div>
+          <p class="sol-why">المهاراتُ المخصّصة <b>فرديّةٌ لكلّ مستخدم</b>، لا تُوزَّع مركزيًّا ولا تُدار من حساب المسؤول. والتعميمُ إمّا بإعطاء الملفّ ليرفعه كلٌّ في حسابه، وإمّا بوضعها في مستودع الدائرة.</p>
+        </div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٣.</span> حقل الوصف يُكتب بصيغة الغائب لأنّه يُحقَن في موجّه النظام.</p><span class="sol-badge t">صح</span></div>
+          <p class="sol-why">الوصفُ يُقرأ في سياقٍ يصف المهارة لا يخاطبها، فتكون صيغةُ الغائب («يصنّف الشكاوى…») هي الموافقة له. وصيغةُ المخاطب تُضعف المطابقة.</p>
+        </div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٤.</span> فحص ملفّ SKILL.md وحده كافٍ للحكم على سلامة مهارةٍ أمنيًّا.</p><span class="sol-badge f">خطأ</span></div>
+          <p class="sol-why">المهارةُ مجلَّدٌ قد يحمل ملفّاتٍ وسكربتاتٍ ومراجعَ إلى عناوين خارجيّة، وقد يكون المتنُ سليمًا ظاهرًا والخللُ في ملفٍّ مساند. <b>والفحصُ يشمل المجلَّد كلَّه</b>، وأخطرُ ما فيه ما يجلب تعليماتِه من الإنترنت لحظةَ التشغيل: يُفحَص اليوم سليمًا ويتغيّر غدًا.</p>
+        </div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٥.</span> الاستمارة المبنيّة بمهارةٍ واحدة تُنتج تسمياتٍ موحّدة قابلةً للجمع في تقرير.</p><span class="sol-badge t">صح</span></div>
+          <p class="sol-why">التسمياتُ محكومةٌ بمتن المهارة لا باجتهاد من يبني، فتخرج الاستماراتُ العشرُ بحقلٍ اسمُه «نوع الشكوى» في كلّها. <b>وهذا هو المكسب الأكبر</b> — أكبرُ من اختصار الوقت — لأنّ البناء اليدويّ المتكرّر يُنتج «الموضوع» في استمارة و«نوع الشكوى» في أخرى، فيتعذّر جمعُهما.</p>
+        </div>
+
+        <div class="sol-kind"><span>الأسئلة القصيرة — نقاط التصحيح</span><span class="sk-line"></span></div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">١.</span> ما وجه الخطأ في هذا الوصف؟ «تُستعمل هذه المهارة لتصنيف الشكاوى. الخطوة الأولى: قراءة نصّ الشكوى. الخطوة الثانية: تحديد الفئة…»</p>
+          <ul class="sol-grading">
+            <li><b>الخطأ الجوهريّ:</b> الوصفُ امتلأ بخطوات التنفيذ، وهذه موضعُها المتنُ لا الوصف.</li>
+            <li>الوصفُ يجمع أمرين لا ثالثَ لهما: <b>ماذا تفعل</b> المهارة و<b>متى</b> تُستعمل — وقد سقط الثاني كلِّيًّا.</li>
+            <li>لا ذكر لحالة الاستعمال، فلا يجد كلود ما يطابق به الطلب، فلا تُستدعى تلقائيًّا.</li>
+            <li>أثرٌ ثانٍ: الخطواتُ في الوصف تُحمَّل في كلّ جلسة بلا فائدة، ثمّ تتكرّر في المتن.</li>
+            <li><b>الصياغة المقترحة:</b> «يصنّف الشكاوى الواردة إلى خمس فئاتٍ مع درجة إلحاحٍ وجهة إحالة. يُستعمل عند ورود شكوى جديدة أو طلب فرز دفعة شكاوى.»</li>
+            <li>درجةٌ إضافيّةٌ لمن نبّه إلى صيغة الغائب.</li>
+          </ul>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٢.</span> مهمّةٌ تتكرّر كلّ أسبوع، غير أنّ شكل مخرَجها يتغيّر بحسب طلب المدير في كلّ مرّة. أتستحقّ مهارة؟ وما العلّة؟</p>
+          <ul class="sol-grading">
+            <li><b>الجواب: لا</b> — والشرطان لا بدّ منهما معًا: التكرارُ متحقّق، وثباتُ الإجراء منتفٍ.</li>
+            <li>تعليلٌ صحيح: المهارةُ تُثبّت إجراءً، وما لا إجراءَ له ثابتًا لا تجد المهارةُ ما تثبّته.</li>
+            <li>الأثرُ العمليّ: مهارةٌ تُبنى على شكلٍ متغيّر تُصحَّح في كلّ مرّة، فتصير عبئًا لا اختصارًا.</li>
+            <li><b>تفصيلٌ يستحقّ درجةً إضافيّة:</b> قد يوجد داخل المهمّة جزءٌ ثابتٌ يستحقّ مهارةً بذاته — كجمع أرقام الوحدات وتدقيقها — ويُترك الجزءُ المتغيّر (شكل العرض) للطلب في حينه.</li>
+            <li>قَبولُ جوابٍ بـ«نعم» مشروطٌ بأن يُبنى على هذا التفصيل نفسه، لا على التكرار وحده.</li>
+          </ul>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٣.</span> ما الفرق بين ما يوضع في تعليمات البروفايل وما يوضع في متن المهارة؟ مع مثالٍ لكلٍّ منهما.</p>
+          <ul class="sol-grading">
+            <li><b>الضابط:</b> البروفايل لما يسري على المحادثات كلِّها، والمهارةُ لما يخصّ مهمّةً بعينها.</li>
+            <li>فارقٌ ثانٍ في التحميل: البروفايل حاضرٌ في كلّ محادثة، والمهارةُ لا تُفتح إلّا عند الحاجة.</li>
+            <li><b>مثالُ البروفايل:</b> «مخاطبتي بصفتي مدير شعبة» أو «اللغة العربية الفصحى» — وصفٌ لصاحب الحساب وأسلوبِه.</li>
+            <li><b>مثالُ المهارة:</b> فئاتُ الشكاوى الخمس وقواعدُ الإحالة — إجراءٌ لا يلزم إلّا عند الشكاوى.</li>
+            <li>الأثرُ الذي يُبيّن فساد الخلط: إجراءٌ يخصّ الشكاوى موضوعٌ في البروفايل يُحمَّل في كلّ محادثةٍ ولو لم تكن فيها شكوى.</li>
+            <li>درجةٌ إضافيّةٌ لمن بيّن أنّ تراكم الإجراءات في البروفايل يضيّق المحادثة على الجميع، بخلاف المهارة القائمة بذاتها.</li>
           </ul>
         </div>
 
