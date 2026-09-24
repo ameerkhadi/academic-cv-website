@@ -339,7 +339,8 @@ function api(action,payload){
   payload.action = action;
   // إجراءات الكتابة لا تمرّ عبر JSONP — الخادم يرفضها ويعيد رسالة غامضة
   var WRITE = ['upload','grade','saveLecture','saveAssignment','publish',
-               'addStudents','bulkGrades','contact','deleteItem','saveSettings','unlockCode','addBonus','studentCard','saveQuiz','deleteQuiz','quizStart','quizStep','quizFinish','answer','sendToStudent','markSeen'];
+               'addStudents','bulkGrades','contact','deleteItem','saveSettings','unlockCode','addBonus','studentCard','saveQuiz','deleteQuiz','quizStart','quizStep','quizFinish','answer','sendToStudent','markSeen',
+               'recordAttendance','uploadActivity','approveActivity','uploadStory','approveStory','gradeSubmissionsBulk','addAppreciation'];
   var heavy = WRITE.indexOf(action) !== -1;
   return post(payload).catch(function(){
     if(heavy) throw new Error('تعذّر الاتصال بالخادم. تحقّق من الإنترنت وأعد المحاولة.');
@@ -673,16 +674,21 @@ function cardView(){
      '<div class="kv"><span class="k">التسليمات</span>'+
      '<span class="v">'+d.submittedCount+' من '+d.totalAssignments+
      (d.lateCount?' · '+d.lateCount+' متأخر':'')+'</span></div>'+
-     '<div class="kv"><span class="k">المكافأة</span>'+
-     '<span class="v">'+d.bonusTotal+' من 2'+(d.bonusLeft?' (متاح '+d.bonusLeft+')':' — بلغ السقف')+'</span></div>'+
+     '<div class="kv"><span class="k">مكافأة</span>'+
+     '<span class="v">'+d.appreciation.bonus+' من '+d.appreciation.bonusMax+'</span></div>'+
+     '<div class="kv"><span class="k">شكر وتقدير</span>'+
+     '<span class="v">'+d.appreciation.appreciation+' من '+d.appreciation.appreciationMax+'</span></div>'+
      (d.locked?'<div class="kv"><span class="k">حالة الدخول</span>'+
        '<span class="v" style="color:var(--danger)">مقفول '+d.locked+' دقيقة</span></div>':'');
 
-  if(d.bonusLeft>0){
-    h+='<div class="meta" style="margin-top:16px">منح مكافأة الآن:</div><div class="bonusrow">';
-    [0.5,1,1.5,2].forEach(function(v){
-      if(v<=d.bonusLeft) h+='<button class="btn sm ghost" onclick="quickBonus('+v+')">+'+v+'</button>';
+  var bonusLeft=round2local(d.appreciation.bonusMax-d.appreciation.bonus);
+  var apprLeft=round2local(d.appreciation.appreciationMax-d.appreciation.appreciation);
+  if(bonusLeft>0 || apprLeft>0){
+    h+='<div class="meta" style="margin-top:16px">منح سريع:</div><div class="bonusrow">';
+    if(bonusLeft>0) [0.5,1,1.5,2].forEach(function(v){
+      if(v<=bonusLeft) h+='<button class="btn sm ghost" onclick="quickBonus('+v+')">مكافأة +'+v+'</button>';
     });
+    if(apprLeft>0) h+='<button class="btn sm ghost" onclick="quickAppreciation()">شكر وتقدير +1</button>';
     h+='</div>';
   }
 
@@ -714,10 +720,21 @@ function cardView(){
   return h;
 }
 
+function round2local(n){ return Math.round(n*100)/100; }
+
 function quickBonus(v){
   api('addBonus',{code:S.code,target:scanCode,amount:v,reason:''})
-    .then(function(r){ toast('+'+v+' لـ'+r.name+' — المجموع '+r.total);
+    .then(function(r){ toast('+'+v+' لـ'+r.name+' — مكافأته الآن '+r.total);
       bonusCache=null; loadCard(); })
+    .catch(function(e){ toast(e.message); });
+}
+
+function quickAppreciation(){
+  var reason=prompt('السبب (إلزامي):');
+  if(!reason || !reason.trim()){ toast('السبب إلزامي'); return; }
+  api('addAppreciation',{code:S.code,target:scanCode,reason:reason.trim()})
+    .then(function(r){ toast('شكر وتقدير لـ'+r.name+' — مجموعه الآن '+r.total);
+      loadCard(); })
     .catch(function(e){ toast(e.message); });
 }
 
@@ -852,12 +869,12 @@ function unreadCount(){
 function renderTabs(){
   if(scanCode && S.role==='teacher'){ $('tabs').innerHTML=''; return; }
   var names = S.role==='student'
-    ? ['المحاضرات','الواجبات','درجاتي','الاختبارات','التواصل']
-    : ['التسليمات','الواجبات','المحاضرات','الدرجات','بنك الأسئلة','الطلبة','الرسائل'];
+    ? ['المحاضرات','الواجبات','الأنشطة','قصة النجاح','درجاتي','الاختبارات','التواصل']
+    : ['التسليمات','الواجبات','المحاضرات','الدرجات','بنك الأسئلة','الطلبة','الحضور','الأنشطة والقصص','الرسائل'];
   var un=unreadCount();
   $('tabs').innerHTML = names.map(function(n,i){
     // شارة الرسائل الجديدة على تبويب «التواصل» (الأخير عند الطالب)
-    var badge = (un && S.role==='student' && i===4) ? '<span class="dot"></span>' : '';
+    var badge = (un && S.role==='student' && i===6) ? '<span class="dot"></span>' : '';
     return '<button class="tab" role="tab" aria-selected="'+(i===S.tab)+'" onclick="go('+i+')">'+
       n+badge+'</button>';
   }).join('');
@@ -889,7 +906,7 @@ function render(){
   }
 
   $('view').innerHTML = S.role==='student' ? studentView() : teacherView();
-  if(S.role==='student' && S.tab===4){
+  if(S.role==='student' && S.tab===6){
     setTimeout(drawQR,0);
     if(unreadCount()) markRead();
   }
@@ -900,8 +917,10 @@ function render(){
 function studentView(){
   if(S.tab===0) return lecturesView();
   if(S.tab===1) return assignmentsView();
-  if(S.tab===2) return gradesView();
-  if(S.tab===3) return quizReviewView();
+  if(S.tab===2) return activitiesStudentView();
+  if(S.tab===3) return storyStudentView();
+  if(S.tab===4) return gradesView();
+  if(S.tab===5) return quizReviewView();
   return contactView();
 }
 
@@ -1172,14 +1191,150 @@ function closePreview(){
   m.dataset.url=''; $('previewBody').innerHTML=''; m.className='preview-overlay hide';
 }
 
+/* ═══════════ الأنشطة الثلاثة — الطالب ═══════════ */
+
+var pickedAct={};
+function activitiesStudentView(){
+  var A=S.data.activities||[];
+  if(!A.length) return '<div class="empty">لا توجد أنشطة بعد.</div>';
+  return A.map(function(a,i){ return activityCard(a,i); }).join('');
+}
+
+function activityCard(a,i){
+  var badge = !a.submitted ? '<span class="pill none">لم يُسلَّم</span>'
+    : (a.approved ? '<span class="pill ok">مُعتمَد — 1 درجة</span>' : '<span class="pill wait">بانتظار الموافقة</span>');
+  var h='<div class="card"><div class="row"><h3>'+esc(a.title)+'</h3>'+badge+'</div>'+
+    '<div class="meta">إجابة عن سؤال المحاضرة أو تنفيذ المهمة، بملف واحد. الدرجة: 1</div>';
+
+  if(!a.submitted){
+    h+='<div class="filebox">'+
+      '<button class="btn sm ghost" onclick="document.getElementById(\'af'+i+'\').click()">اختيار الملف</button>'+
+      '<input type="file" id="af'+i+'" accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.zip,.png,.jpg,.jpeg" onchange="pickAct('+i+',\''+a.id+'\')">'+
+      '<div class="filename" id="afn'+i+'"></div>'+
+      '<div class="filemeta" id="afi'+i+'">الحد الأقصى '+S.info.maxMB+' ميغابايت</div>'+
+      '<div class="stack" style="justify-content:center;margin-top:10px">'+
+      '<button class="btn sm hide" id="aup'+i+'" onclick="uploadAct('+i+',\''+a.id+'\')">تأكيد وإرسال النشاط</button></div>'+
+      '<div class="prog hide" id="apg'+i+'"><span></span></div>'+
+      '<div id="aerr'+i+'"></div></div>';
+  } else {
+    h+='<div class="proof"><div class="proof-title">تم تسليم النشاط</div>'+
+       '<div class="kv"><span class="k">الملف</span><span class="v">'+esc(a.fileName)+'</span></div>'+
+       '<div class="meta" style="margin-top:8px">لا يمكن استبدال الملف بعد التسليم</div></div>';
+  }
+  return h+'</div>';
+}
+
+function pickAct(i,id){
+  var f=$('af'+i).files[0]; if(!f) return;
+  var mb=f.size/1024/1024, err=$('aerr'+i);
+  var ext=f.name.split('.').pop().toLowerCase();
+  if(OK_EXT.indexOf(ext)===-1){
+    err.innerHTML='<div class="err">نوع الملف غير مقبول. المسموح: '+OK_EXT.join('، ')+'</div>';
+    $('aup'+i).className='btn sm hide'; return;
+  }
+  if(mb>S.info.maxMB){
+    err.innerHTML='<div class="err">حجم الملف '+mb.toFixed(2)+' ميغابايت، والحد الأقصى '+S.info.maxMB+'.</div>';
+    $('aup'+i).className='btn sm hide'; return;
+  }
+  err.innerHTML=''; pickedAct[i]=f;
+  $('afn'+i).textContent=f.name;
+  $('afi'+i).textContent='الحجم: '+formatBytes(f.size);
+  $('aup'+i).className='btn sm';
+}
+
+function uploadAct(i,id){
+  var f=pickedAct[i]; if(!f) return;
+  if(!window.confirm('بعد التأكيد لن تتمكن من استبدال الملف. تسليم النشاط الآن؟')) return;
+  var b=$('aup'+i), pg=$('apg'+i);
+  b.disabled=true; b.innerHTML='<span class="spin"></span> جارٍ التسليم';
+  pg.className='prog'; pg.firstChild.style.width='25%';
+  var r=new FileReader();
+  r.onload=function(){
+    pg.firstChild.style.width='60%';
+    api('uploadActivity',{code:S.code,activityId:id,fileName:f.name,mimeType:f.type,base64:r.result.split(',')[1]})
+      .then(function(){ pg.firstChild.style.width='100%'; toast('تم تسليم النشاط'); load(); })
+      .catch(function(e){
+        b.disabled=false; b.textContent='تأكيد وإرسال النشاط'; pg.className='prog hide';
+        $('aerr'+i).innerHTML='<div class="err">'+esc(e.message)+'</div>';
+      });
+  };
+  r.readAsDataURL(f);
+}
+
+/* ═══════════ قصة النجاح — الطالب ═══════════ */
+
+var pickedStory=null;
+function storyStudentView(){
+  var s=S.data.story||{submitted:false};
+  var badge = !s.submitted ? '<span class="pill none">لم تُسلَّم</span>'
+    : (s.approved ? '<span class="pill ok">معتمَدة — 1 درجة</span>' : '<span class="pill wait">بانتظار الموافقة</span>');
+  var h='<div class="card"><div class="row"><h3>قصة النجاح</h3>'+badge+'</div>'+
+    '<div class="meta">قصة واحدة فقط طوال الفصل، بملف واحد. الدرجة: 1</div>';
+
+  if(!s.submitted){
+    h+='<div class="filebox">'+
+      '<button class="btn sm ghost" onclick="document.getElementById(\'sf0\').click()">اختيار الملف</button>'+
+      '<input type="file" id="sf0" accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.zip,.png,.jpg,.jpeg" onchange="pickStory()">'+
+      '<div class="filename" id="sfn0"></div>'+
+      '<div class="filemeta" id="sfi0">الحد الأقصى '+S.info.maxMB+' ميغابايت</div>'+
+      '<div class="stack" style="justify-content:center;margin-top:10px">'+
+      '<button class="btn sm hide" id="sup0" onclick="uploadStoryNow()">تأكيد وإرسال القصة</button></div>'+
+      '<div class="prog hide" id="spg0"><span></span></div>'+
+      '<div id="serr0"></div></div>';
+  } else {
+    h+='<div class="proof"><div class="proof-title">تم تسليم قصة النجاح</div>'+
+       '<div class="kv"><span class="k">الملف</span><span class="v">'+esc(s.fileName)+'</span></div>'+
+       '<div class="meta" style="margin-top:8px">لا يمكن استبدال الملف بعد التسليم</div></div>';
+  }
+  return h+'</div>';
+}
+
+function pickStory(){
+  var f=$('sf0').files[0]; if(!f) return;
+  var mb=f.size/1024/1024, err=$('serr0');
+  var ext=f.name.split('.').pop().toLowerCase();
+  if(OK_EXT.indexOf(ext)===-1){
+    err.innerHTML='<div class="err">نوع الملف غير مقبول. المسموح: '+OK_EXT.join('، ')+'</div>';
+    $('sup0').className='btn sm hide'; return;
+  }
+  if(mb>S.info.maxMB){
+    err.innerHTML='<div class="err">حجم الملف '+mb.toFixed(2)+' ميغابايت، والحد الأقصى '+S.info.maxMB+'.</div>';
+    $('sup0').className='btn sm hide'; return;
+  }
+  err.innerHTML=''; pickedStory=f;
+  $('sfn0').textContent=f.name;
+  $('sfi0').textContent='الحجم: '+formatBytes(f.size);
+  $('sup0').className='btn sm';
+}
+
+function uploadStoryNow(){
+  var f=pickedStory; if(!f) return;
+  if(!window.confirm('بعد التأكيد لن تتمكن من استبدال الملف. تسليم قصة النجاح الآن؟')) return;
+  var b=$('sup0'), pg=$('spg0');
+  b.disabled=true; b.innerHTML='<span class="spin"></span> جارٍ التسليم';
+  pg.className='prog'; pg.firstChild.style.width='25%';
+  var r=new FileReader();
+  r.onload=function(){
+    pg.firstChild.style.width='60%';
+    api('uploadStory',{code:S.code,fileName:f.name,mimeType:f.type,base64:r.result.split(',')[1]})
+      .then(function(){ pg.firstChild.style.width='100%'; toast('تم تسليم قصة النجاح'); load(); })
+      .catch(function(e){
+        b.disabled=false; b.textContent='تأكيد وإرسال القصة'; pg.className='prog hide';
+        $('serr0').innerHTML='<div class="err">'+esc(e.message)+'</div>';
+      });
+  };
+  r.readAsDataURL(f);
+}
+
 function gradesView(){
   var B=S.data.breakdown;
   if(!B) return '<div class="empty">لم تُرصد درجات بعد.</div>';
 
   var h='<div class="card"><div class="row">'+
     '<div><h3>الدرجة الحالية</h3><div class="meta">تُحدَّث تلقائياً كلما رُصدت درجة جديدة</div></div>'+
-    '<div class="seal"><span class="n">'+B.total+'</span><span class="d">من '+B.outOf+
-    (B.bonus.earned?' + '+B.bonus.earned+' مكافأة':'')+'</span></div></div></div>';
+    '<div class="seal"><span class="n">'+B.total+'</span><span class="d">من '+B.outOf+'</span></div></div>'+
+    (B.extra && B.extra.raw>0?'<div class="meta" style="margin-top:8px">'+esc(B.extra.note)+'</div>':'')+
+    '</div>';
 
   h+='<div class="card"><h3>التفصيل</h3><div class="tblwrap"><table><thead><tr>'+
      '<th>البند</th><th class="num">المحصَّل</th><th class="num">الوزن</th></tr></thead><tbody>';
@@ -1198,10 +1353,35 @@ function gradesView(){
         : '<div class="meta">لا توجد واجبات محتسَبة بعد</div>')+
      '</td><td class="num">'+B.assign.earned+'</td><td class="num">'+B.assign.weight+'</td></tr>';
 
-  if(B.bonus.earned)
-    h+='<tr><td>مكافأة</td><td class="num">'+B.bonus.earned+'</td><td class="num">حتى '+B.bonus.max+'</td></tr>';
+  if(B.attend)
+    h+='<tr><td>الحضور</td><td class="num">'+B.attend.earned+'</td><td class="num">'+B.attend.weight+'</td></tr>';
 
   h+='</tbody></table></div></div>';
+
+  var E=B.extra;
+  if(E && E.raw>0){
+    h+='<div class="card"><h3>الإضافي (مكافأة وشكر وتقدير وأنشطة وقصة نجاح)</h3><div class="tblwrap"><table><tbody>'+
+      (E.bonus?'<tr><td>مكافأة</td><td class="num">'+E.bonus+' / '+E.bonusMax+'</td></tr>':'')+
+      (E.appreciation?'<tr><td>شكر وتقدير</td><td class="num">'+E.appreciation+' / '+E.appreciationMax+'</td></tr>':'')+
+      (E.activities?'<tr><td>أنشطة معتمَدة</td><td class="num">'+E.activities+' / '+E.activitiesMax+'</td></tr>':'')+
+      (E.story?'<tr><td>قصة نجاح</td><td class="num">'+E.story+' / '+E.storyMax+'</td></tr>':'')+
+      '<tr><td><b>المُضاف فعلياً للمجموع</b></td><td class="num"><b>'+E.applied+'</b></td></tr>'+
+      '</tbody></table></div>'+
+      (E.raw>E.applied?'<div class="meta" style="margin-top:8px">رصيدك الفعلي من الإضافي '+E.raw+
+        '، لكن المُضاف اقتصر على '+E.applied+' لأن المجموع النهائي لا يتجاوز '+B.outOf+'.</div>':'')+
+      ((E.bonusItems&&E.bonusItems.length)?'<div class="meta" style="margin-top:10px"><b>أسباب المكافأة:</b></div>'+
+        E.bonusItems.map(function(it){
+          return '<div class="msgin" style="margin-top:6px"><div class="row"><span>'+
+            (it.reason?esc(it.reason):'<span class="meta">بلا سبب مذكور</span>')+
+            '</span><span class="meta">+'+it.amount+'</span></div></div>';
+        }).join(''):'')+
+      ((E.appreciationItems&&E.appreciationItems.length)?'<div class="meta" style="margin-top:10px"><b>أسباب الشكر والتقدير:</b></div>'+
+        E.appreciationItems.map(function(it){
+          return '<div class="msgin" style="margin-top:6px"><div class="row"><span>'+esc(it.reason)+
+            '</span><span class="meta">+'+it.amount+'</span></div></div>';
+        }).join(''):'')+
+      '</div>';
+  }
 
   if(B.assign.rows && B.assign.rows.length){
     h+='<div class="card"><h3>تفصيل الواجبات</h3><div class="tblwrap"><table><thead><tr>'+
@@ -1236,7 +1416,99 @@ function teacherView(){
   if(S.tab===3) return gradesAdminView();
   if(S.tab===4) return quizBankView();
   if(S.tab===5) return studentsAdminView();
+  if(S.tab===6) return attendanceAdminView();
+  if(S.tab===7) return activitiesAdminView();
   return messagesAdminView();
+}
+
+/* ═══════════ الحضور — الأدمن ═══════════ */
+
+function attendanceAdminView(){
+  return '<div class="card"><h3>تسجيل الحضور</h3>'+
+    '<div class="note">الصق أسماء الحاضرين، اسم بكل سطر. كل عملية لصق = نقطة حضور واحدة '+
+    'لكل اسم يُطابَق حرفياً (بعد توحيد الفراغات فقط) مع اسم الطالب المسجَّل، بسقف 5 نقاط لكل طالب طوال الفصل.</div>'+
+    '<label for="attT">أسماء الحاضرين</label>'+
+    '<textarea id="attT" style="min-height:180px" placeholder="أحمد كاظم محمد&#10;سعاد جبار علي"></textarea>'+
+    '<label for="attN">ملاحظة على هذه الدفعة (اختياري)</label>'+
+    '<input type="text" id="attN" placeholder="مثال: محاضرة الأسبوع الخامس">'+
+    '<button class="btn" style="margin-top:14px" onclick="submitAttendance()">تسجيل الحضور</button>'+
+    '<div id="attResult"></div></div>';
+}
+
+function submitAttendance(){
+  var t=$('attT').value.trim();
+  if(!t){ toast('الصق أسماء أولاً'); return; }
+  api('recordAttendance',{code:S.code,text:t,note:$('attN').value.trim()})
+    .then(function(r){
+      var box=$('attResult'), h='';
+      h+='<div class="note" style="margin-top:14px">سُجّل حضور '+r.recorded+' طالباً.</div>';
+      if(r.unmatched && r.unmatched.length){
+        h+='<div class="err" style="margin-top:10px"><b>أسماء غير مطابقة ('+r.unmatched.length+') — راجعها:</b><br>'+
+           r.unmatched.map(esc).join('<br>')+'</div>';
+      }
+      if(r.atCap && r.atCap.length){
+        h+='<div class="note" style="margin-top:10px"><b>بلغوا سقف 5 نقاط، لم يُضف لهم شيء:</b><br>'+
+           r.atCap.map(esc).join('<br>')+'</div>';
+      }
+      box.innerHTML=h;
+      if(!r.unmatched.length) $('attT').value='';
+      toast('سُجّل حضور '+r.recorded+' طالباً');
+    }).catch(function(e){ toast(e.message); });
+}
+
+/* ═══════════ الأنشطة وقصص النجاح — موافقة الأدمن ═══════════ */
+
+var actPending=null, storyPending=null;
+
+function activitiesAdminView(){
+  if(actPending===null){
+    api('activitiesPending',{code:S.code}).then(function(d){ actPending=d; if(S.tab===7) render(); })
+      .catch(function(e){ toast(e.message); });
+  }
+  if(storyPending===null){
+    api('storiesPending',{code:S.code}).then(function(d){ storyPending=d; if(S.tab===7) render(); })
+      .catch(function(e){ toast(e.message); });
+  }
+
+  var h='<div class="card"><h3>الأنشطة — بانتظار الموافقة</h3>';
+  if(actPending===null) h+='<div class="meta">جارٍ التحميل…</div>';
+  else if(!actPending.length) h+='<div class="meta">لا يوجد شيء بانتظار الموافقة.</div>';
+  else h+=actPending.map(function(a){
+    return '<div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--line)">'+
+      '<div class="row"><b>'+esc(a.name)+'</b><span class="meta">'+esc(a.activityTitle)+'</span></div>'+
+      '<div class="meta">'+esc(a.code)+' · '+fmtDate(a.submittedAt)+'</div>'+
+      '<div class="stack">'+
+      (a.fileUrl?'<a class="btn sm ghost" style="text-decoration:none" href="'+esc(a.fileUrl)+'" target="_blank" rel="noopener">فتح الملف</a>':'')+
+      '<button class="btn sm" onclick="approveAct(\''+a.id+'\')">موافقة (+1)</button>'+
+      '</div></div>';
+  }).join('');
+  h+='</div>';
+
+  h+='<div class="card"><h3>قصص النجاح — بانتظار الموافقة</h3>';
+  if(storyPending===null) h+='<div class="meta">جارٍ التحميل…</div>';
+  else if(!storyPending.length) h+='<div class="meta">لا يوجد شيء بانتظار الموافقة.</div>';
+  else h+=storyPending.map(function(s){
+    return '<div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--line)">'+
+      '<div class="row"><b>'+esc(s.name)+'</b></div>'+
+      '<div class="meta">'+esc(s.code)+' · '+fmtDate(s.submittedAt)+'</div>'+
+      '<div class="stack">'+
+      (s.fileUrl?'<a class="btn sm ghost" style="text-decoration:none" href="'+esc(s.fileUrl)+'" target="_blank" rel="noopener">فتح الملف</a>':'')+
+      '<button class="btn sm" onclick="approveStoryNow(\''+s.id+'\')">موافقة (+1)</button>'+
+      '</div></div>';
+  }).join('');
+  return h+'</div>';
+}
+
+function approveAct(id){
+  api('approveActivity',{code:S.code,submissionId:id})
+    .then(function(){ toast('اعتُمد النشاط'); actPending=null; render(); })
+    .catch(function(e){ toast(e.message); });
+}
+
+function approveStoryNow(id){
+  api('approveStory',{code:S.code,submissionId:id})
+    .then(function(){ toast('اعتُمدت القصة'); storyPending=null; render(); })
+    .catch(function(e){ toast(e.message); });
 }
 
 var msgsLoaded=null;
@@ -1258,7 +1530,7 @@ function messagesAdminView(){
 
   if(msgsLoaded===null){
     api('messages',{code:S.code}).then(function(list){
-      msgsLoaded=list; if(S.tab===6) render();
+      msgsLoaded=list; if(S.tab===8) render();
     }).catch(function(e){ toast(e.message); });
     return h+'<div class="center">جارٍ تحميل السجل…</div>';
   }
@@ -1362,25 +1634,35 @@ function missingHtml(){
 
 function asgById(id){ return (S.data.assignments||[]).filter(function(a){ return a.id===id; })[0]; }
 
+/**
+ * تصحيح دفعي: كل الدرجات تُدخَل محلياً بلا أي حفظ وسيط (لا استدعاء API
+ * لكل تسليم على حدة كما كان سابقاً)، ثم زر واحد "حفظ الكل" يرسلها دفعة
+ * واحدة. البطاقات كلها مفتوحة افتراضياً لتسريع الإدخال المتتالي.
+ */
 function subsHtml(){
   if(!curSubs.length) return '<div class="empty">لا توجد تسليمات لهذا الواجب بعد.</div>';
   var a=asgById(curAsg);
-  return curSubs.map(function(s,i){
+  var h='<div class="card"><div class="row"><h3>حفظ دفعي</h3>'+
+    '<span class="meta">'+curSubs.length+' تسليم</span></div>'+
+    '<div class="note">أدخل كل الدرجات بلا أي حفظ وسيط، ثم اضغط «حفظ الكل» مرة واحدة أسفل الصفحة.</div>'+
+    '<button class="btn" onclick="saveAllGrades()">حفظ الكل</button>'+
+    '<div id="bulkResult"></div></div>';
+
+  h+=curSubs.map(function(s,i){
     var done=hasGrade(s);
     return '<div class="card"><div class="row">'+
       '<div><h3>'+esc(s.name)+'</h3><div class="meta">'+esc(s.code)+' · '+
       fmtDate(s.submittedAt)+' · '+esc(s.status||'')+'</div></div>'+
-      (done?'<span class="pill ok">'+s.total+' / '+a.maxScore+'</span>'
+      (done?'<span class="pill ok">'+s.total+' / '+a.maxScore+' (مصحَّح سابقاً)</span>'
            :'<span class="pill wait">بانتظار التصحيح</span>')+'</div>'+
-      '<div class="stack">'+
-        (s.fileUrl?'<a class="btn sm ghost" style="text-decoration:none" href="'+esc(s.fileUrl)+
-          '" target="_blank" rel="noopener">فتح الملف</a>':'')+
-        '<button class="btn sm ghost" onclick="toggleGrade('+i+')">'+(done?'تعديل التقييم':'تصحيح')+'</button>'+
-      '</div><div id="gr'+i+'" class="hide">'+gradeForm(a,s,i)+'</div></div>';
+      (s.fileUrl?'<div class="stack"><a class="btn sm ghost" style="text-decoration:none" href="'+esc(s.fileUrl)+
+        '" target="_blank" rel="noopener">فتح الملف</a></div>':'')+
+      gradeForm(a,s,i)+'</div>';
   }).join('');
-}
 
-function toggleGrade(i){ var el=$('gr'+i); el.className = el.className==='hide' ? '' : 'hide'; }
+  h+='<div class="card"><button class="btn" onclick="saveAllGrades()">حفظ الكل</button><div id="bulkResult2"></div></div>';
+  return h;
+}
 
 function gradeForm(a,s,i){
   var h='<div class="scorecard" style="margin-top:14px"><div class="sc-body">';
@@ -1393,23 +1675,47 @@ function gradeForm(a,s,i){
       i+'_'+c.criterionId+'" value="'+v+'" placeholder="0"></div>';
   });
   return h+'</div></div><label for="fb'+i+'">ملاحظاتك للطالب</label>'+
-    '<textarea id="fb'+i+'" placeholder="ما أحسنه، وما يحتاج تحسيناً تحديداً">'+esc(s.feedback||'')+'</textarea>'+
-    '<button class="btn sm" style="margin-top:12px" onclick="saveGradeSub('+i+')">حفظ التقييم</button>';
+    '<textarea id="fb'+i+'" placeholder="ما أحسنه، وما يحتاج تحسيناً تحديداً">'+esc(s.feedback||'')+'</textarea>';
 }
 
-function saveGradeSub(i){
-  var s=curSubs[i], a=asgById(curAsg), scores={}, bad=false;
-  a.criteria.forEach(function(c){
-    var el=$('p'+i+'_'+c.criterionId), v=parseFloat(el.value);
-    if(isNaN(v)) v=0;
-    if(v>c.maxPoints){ bad=true; el.style.borderColor='var(--danger)'; }
-    scores[c.criterionId]=v;
-  });
-  if(bad){ toast('درجة تتجاوز الحد الأقصى للمعيار'); return; }
+/** يجمع كل الدرجات المُدخَلة محلياً بلا حفظ وسيط، ويرسلها دفعة واحدة */
+function saveAllGrades(){
+  var a=asgById(curAsg);
+  if(!a || !curSubs.length){ toast('لا يوجد شيء للحفظ'); return; }
 
-  api('grade',{code:S.code,submissionId:s.id,scores:scores,feedback:$('fb'+i).value})
+  var items=[], bad=false;
+  curSubs.forEach(function(s,i){
+    var scores={}, touched=false;
+    a.criteria.forEach(function(c){
+      var el=$('p'+i+'_'+c.criterionId);
+      if(!el) return;
+      var v=parseFloat(el.value);
+      if(el.value!=='' && !isNaN(v)) touched=true;
+      if(isNaN(v)) v=0;
+      if(v>c.maxPoints){ bad=true; el.style.borderColor='var(--danger)'; }
+      scores[c.criterionId]=v;
+    });
+    // نرسل فقط التسليمات التي أُدخلت لها درجة فعلاً، أو كانت مصحَّحة سابقاً (لتحديث الملاحظة)
+    if(touched || hasGrade(s)){
+      var fbEl=$('fb'+i);
+      items.push({submissionId:s.id, scores:scores, feedback: fbEl?fbEl.value:(s.feedback||'')});
+    }
+  });
+
+  if(bad){ toast('توجد درجة تتجاوز الحد الأقصى لمعيارها — راجع الحقول الحمراء'); return; }
+  if(!items.length){ toast('أدخل درجة واحدة على الأقل'); return; }
+
+  api('gradeSubmissionsBulk',{code:S.code,items:items})
     .then(function(r){
-      toast('حُفظ التقييم — المجموع '+r.total);
+      var msg='حُفظ '+r.saved+' من '+items.length+(r.failed?' — فشل '+r.failed:'');
+      toast(msg);
+      var box=$('bulkResult')||$('bulkResult2');
+      if(box && r.failed){
+        box.innerHTML='<div class="err" style="margin-top:10px">'+
+          r.results.filter(function(x){return !x.ok;}).map(function(x){
+            return esc(x.submissionId)+': '+esc(x.error);
+          }).join('<br>')+'</div>';
+      }
       loadSubs(curAsg);
       api('teacherData',{code:S.code}).then(function(d){ S.data=d; });
     }).catch(function(e){ toast(e.message); });
@@ -1620,22 +1926,33 @@ function gradesAdminView(){
       .catch(function(e){ toast(e.message); });
   }
 
-  var h='<div class="card"><h3>التوزيع المعتمد</h3>'+
+  var h='<div class="card"><h3>التوزيع المعتمد (الأساسي = 40)</h3>'+
     '<div class="tblwrap"><table><tbody>'+
-    '<tr><td>امتحان نصف الفصل</td><td class="num">25</td></tr>'+
+    '<tr><td>امتحان نصف الفصل (المد)</td><td class="num">20</td></tr>'+
     '<tr><td>الاختبارات الصفّية</td><td class="num">5</td></tr>'+
     '<tr><td>الواجبات (تُقسَّم على المحتسَبة)</td><td class="num">10</td></tr>'+
-    '<tr><td>مكافأة (سقف لكل طالب)</td><td class="num">2</td></tr>'+
+    '<tr><td>الحضور</td><td class="num">5</td></tr>'+
     '</tbody></table></div>'+
-    '<div class="note">النوع «امتحان» يدخل الـ25، والنوع «كويز» يدخل الـ5 كنسبة من مجموع كل الأسئلة. '+
+    '<div class="note">النوع «امتحان» يدخل الـ20، والنوع «كويز» يدخل الـ5 كنسبة من مجموع كل الأسئلة. '+
+    'الحضور يُسجَّل من تبويب «الحضور» ويدخل الـ5 كنقاط مباشرة لا نسبة. '+
     'الأنواع الأخرى تُعرض للطالب خارج التوزيع.</div></div>';
 
+  h+='<div class="card"><h3>الإضافي (فوق الأساسي، سقفه الكلي 12، ولا يتجاوز المجموع 40)</h3>'+
+    '<div class="tblwrap"><table><tbody>'+
+    '<tr><td>مكافأة يدوية (هذا القسم)</td><td class="num">حتى 5</td></tr>'+
+    '<tr><td>شكر وتقدير (أدناه)</td><td class="num">حتى 3</td></tr>'+
+    '<tr><td>الأنشطة الثلاثة (تبويب «الأنشطة والقصص»)</td><td class="num">حتى 3</td></tr>'+
+    '<tr><td>قصة النجاح (تبويب «الأنشطة والقصص»)</td><td class="num">حتى 1</td></tr>'+
+    '</tbody></table></div></div>';
+
   h+='<div class="card"><h3>مكافأة</h3>'+
-    '<div class="note">بين 0.5 و2 لكل طالب. الخادم يرفض ما يتجاوز السقف.</div>'+
+    '<div class="note">بين 0.5 و5 لكل طالب. الخادم يرفض ما يتجاوز السقف.</div>'+
     '<div class="grid2"><div><label for="bC">رمز الطالب</label>'+
     '<input type="text" id="bC" placeholder="AC34FG" style="letter-spacing:.08em;text-transform:uppercase"></div>'+
     '<div><label for="bA">المقدار</label><select id="bA">'+
-    '<option>0.5</option><option>1</option><option>1.5</option><option>2</option></select></div></div>'+
+    '<option>0.5</option><option>1</option><option>1.5</option><option>2</option>'+
+    '<option>2.5</option><option>3</option><option>3.5</option><option>4</option>'+
+    '<option>4.5</option><option>5</option></select></div></div>'+
     '<label for="bR">السبب (اختياري)</label>'+
     '<input type="text" id="bR" placeholder="مثال: مشاركة متميزة في الأسبوع الثالث">'+
     '<button class="btn" style="margin-top:14px" onclick="giveBonus()">إضافة المكافأة</button>';
@@ -1652,6 +1969,14 @@ function gradesAdminView(){
       }).join('')+'</tbody></table></div>';
   }
   h+='</div>';
+
+  h+='<div class="card"><h3>شكر وتقدير</h3>'+
+    '<div class="note">1 درجة ثابتة لكل مرة، سقف 3 لكل طالب — منفصل تماماً عن المكافأة أعلاه.</div>'+
+    '<label for="prC">رمز الطالب</label>'+
+    '<input type="text" id="prC" placeholder="AC34FG" style="letter-spacing:.08em;text-transform:uppercase">'+
+    '<label for="prR">السبب (إلزامي)</label>'+
+    '<input type="text" id="prR" placeholder="مثال: تميّز بالإجابة الصفّية">'+
+    '<button class="btn" style="margin-top:14px" onclick="giveAppreciation()">منح شكر وتقدير (+1)</button></div>';
 
   return h+'<div class="card"><h3>رصد درجات دفعة واحدة</h3>'+
     '<div class="note">اكتب كل طالب في سطر: <b>الرمز</b> ثم مسافة ثم <b>الدرجة</b>.<br>مثال:<br>AC34FG 8<br>KM7PQR 9.5</div>'+
@@ -1671,6 +1996,18 @@ function giveBonus(){
     .then(function(r){
       toast('مكافأة '+r.name+' — مجموعه الآن '+r.total);
       $('bC').value=''; $('bR').value=''; bonusCache=null; render();
+    }).catch(function(e){ toast(e.message); });
+}
+
+function giveAppreciation(){
+  var c=$('prC').value.trim();
+  if(!c){ toast('اكتب رمز الطالب'); return; }
+  var r=$('prR').value.trim();
+  if(!r){ toast('اكتب السبب'); return; }
+  api('addAppreciation',{code:S.code,target:c,reason:r})
+    .then(function(res){
+      toast('شكر وتقدير لـ'+res.name+' — مجموعه الآن '+res.total);
+      $('prC').value=''; $('prR').value=''; bonusCache=null; render();
     }).catch(function(e){ toast(e.message); });
 }
 
