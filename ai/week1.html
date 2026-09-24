@@ -1606,6 +1606,12 @@
   .cb-c{ color:#7d8a6a; }
   .cb-s{ color:var(--green); unicode-bidi:isolate; }
 
+  .dt code.ex{ display:inline-block; direction:ltr; unicode-bidi:isolate;
+               font-family:'Courier New',monospace; font-weight:700;
+               background:rgba(26,61,140,0.07); color:var(--blue);
+               border-radius:4px; padding:1px 6px; white-space:nowrap; }
+  .dt code.ex-rtl{ direction:rtl; }
+  .dt .ex-n{ display:block; margin-top:3px; font-size:0.9em; opacity:0.78; }
   .dt td.sym{ direction:ltr; text-align:center; font-weight:700;
               font-family:'Courier New',monospace; font-size:1.25em;
               color:var(--blue); }
@@ -5749,13 +5755,33 @@
         <p class="dt-cap">رموزٌ أخرى — وهي خاصّةٌ ببيئة <span class="ltr-inline">Claude Code</span> لا بمحادثة الويب</p>
         <div class="dt-wrap">
           <table class="dt">
-            <thead><tr><th style="width:80px;">الرمز</th><th>وظيفته</th></tr></thead>
+            <thead><tr><th style="width:74px;">الرمز</th><th>وظيفته</th><th>مثال</th></tr></thead>
             <tbody>
-              <tr><td class="sym">/</td><td>في أوّل السطر: أمرٌ أو مهارة</td></tr>
-              <tr><td class="sym">!</td><td>في أوّل السطر: وضعُ الطرفيّة — يُنفَّذ الأمر ويُضاف مخرَجُه إلى الجلسة</td></tr>
-              <tr><td class="sym">@</td><td>إشارةٌ إلى مسار ملفّ مع إكمالٍ تلقائيّ</td></tr>
-              <tr><td class="sym">:</td><td>رمزُ إيموجي بصيغة <span class="ltr-inline">:name:</span></td></tr>
-              <tr><td class="sym">?</td><td>على سطرٍ فارغ: لوحةُ الاختصارات</td></tr>
+              <tr>
+                <td class="sym">/</td>
+                <td>في أوّل السطر: أمرٌ أو مهارة</td>
+                <td><code class="ex ex-rtl">/تصنيف-الشكاوى</code><span class="ex-n">تُستدعى المهارة بعينها من القائمة</span></td>
+              </tr>
+              <tr>
+                <td class="sym">!</td>
+                <td>في أوّل السطر: وضعُ الطرفيّة — يُنفَّذ الأمر ويُضاف مخرَجُه إلى الجلسة</td>
+                <td><code class="ex"><span class="ltr-inline">!git status</span></code><span class="ex-n">يظهر مخرَجُ الأمر ثمّ يعلّق عليه كلود</span></td>
+              </tr>
+              <tr>
+                <td class="sym">@</td>
+                <td>إشارةٌ إلى مسار ملفّ مع إكمالٍ تلقائيّ</td>
+                <td><code class="ex"><span class="ltr-inline">@reports/weekly.md</span></code><span class="ex-n">يُضمّ الملفّ إلى السياق بلا نسخِ محتواه</span></td>
+              </tr>
+              <tr>
+                <td class="sym">:</td>
+                <td>رمزُ إيموجي بصيغة <span class="ltr-inline">:name:</span></td>
+                <td><code class="ex"><span class="ltr-inline">:bulb:</span></code><span class="ex-n">يتحوّل في النصّ إلى 💡</span></td>
+              </tr>
+              <tr>
+                <td class="sym">?</td>
+                <td>على سطرٍ فارغ: لوحةُ الاختصارات</td>
+                <td><code class="ex">?</code><span class="ex-n">وحدَه بلا نصٍّ معه، وإلّا عُدَّ حرفًا عاديًّا</span></td>
+              </tr>
             </tbody>
           </table>
         </div>
