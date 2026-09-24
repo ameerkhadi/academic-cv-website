@@ -1629,6 +1629,34 @@
   }
   .takeaway b{ color:var(--blue); }
 
+  /* مخطّط مسار توليد الاستمارة */
+  .pipe{ display:flex; flex-direction:column; align-items:center;
+         gap:3px; margin:10px 0 14px; }
+  .pipe-row{ display:flex; align-items:stretch; gap:8px; width:100%; max-width:560px; }
+  .pipe-n{ flex:0 0 26px; display:flex; align-items:center; justify-content:center;
+           background:var(--blue); color:#fff; font-weight:700; border-radius:50%;
+           width:26px; height:26px; align-self:center;
+           font-size:calc(12px * var(--fs,1)); }
+  .pipe-b{ flex:1; border:1.8px solid rgba(26,61,140,0.35);
+           background:rgba(26,61,140,0.04); border-radius:9px;
+           padding:7px 12px 8px; text-align:center; }
+  .pipe-b.hi{ border-color:var(--green); border-width:2.5px;
+              background:rgba(31,122,61,0.07); }
+  .pipe-b b{ display:block; font-size:calc(13px * var(--fs,1)); color:var(--blue); }
+  .pipe-b.hi b{ color:var(--green); }
+  .pipe-b small{ display:block; margin-top:2px; opacity:0.78;
+                 font-size:calc(11.5px * var(--fs,1)); line-height:1.7; }
+  .pipe-a{ color:var(--blue); opacity:0.5; font-size:calc(15px * var(--fs,1)); }
+  .pipe-out{ display:flex; gap:8px; flex-wrap:wrap; justify-content:center;
+             width:100%; max-width:560px; }
+  .po-item{ flex:1 1 150px; border:2px solid var(--green);
+            background:rgba(31,122,61,0.07); border-radius:9px;
+            padding:8px 10px 9px; text-align:center; }
+  .po-i{ display:block; font-size:calc(17px * var(--fs,1));
+         color:var(--green); line-height:1.2; }
+  .po-item b{ display:block; font-size:calc(12.5px * var(--fs,1)); color:var(--green); }
+  .po-item small{ display:block; opacity:0.78; font-size:calc(11px * var(--fs,1)); }
+
   /* طرق صناعة المهارة */
   .ways-fan{ display:flex; align-items:center; justify-content:center; gap:10px;
              margin:10px 0 16px; flex-wrap:wrap; }
@@ -6116,48 +6144,53 @@
 
 <span class="cb-h">## قواعد الإخراج</span>
 - كل استمارة تُربط بجدول بيانات في السطر نفسه من السكربت.
-- الحقول الإلزامية تُضبط صراحةً بـ setRequired(true).
+- الحقول الإلزامية تُضبط إلزاميةً صراحةً في السكربت لا بالعرف.
 - يُطبع رابط التحرير ورابط النشر في السجلّ عند انتهاء التنفيذ.</div>
 
-        <p class="cb-cap">السكربت الذي تُولّده</p>
-        <div class="codebox"><span class="cb-c">// تُنشئ استمارة شكاوى كاملة وتربطها بجدول بيانات</span>
-<span class="cb-k">function</span> createComplaintForm() {
-  <span class="cb-k">const</span> form = FormApp.create(<span class="cb-s">'استمارة الشكاوى — شعبة التسجيل'</span>);
-  form.setDescription(<span class="cb-s">'تُعالَج الشكاوى خلال عشرة أيام عمل من تاريخ التقديم.'</span>);
+        <p class="dt-cap">رسم (٢): ما يجري من الطلب إلى الاستمارة العاملة</p>
+        <div class="pipe">
+          <div class="pipe-row">
+            <span class="pipe-n">١</span>
+            <div class="pipe-b">
+              <b>طلبٌ بلغةٍ عاديّة</b>
+              <small>«استمارةُ شكاوى لشعبة التسجيل»</small>
+            </div>
+          </div>
+          <div class="pipe-a">▼</div>
+          <div class="pipe-row">
+            <span class="pipe-n">٢</span>
+            <div class="pipe-b hi">
+              <b>المهارةُ تُستدعى فتفرض معايير الدائرة</b>
+              <small>الحقولُ الثابتة · التسمياتُ المعتمدة حرفيًّا · الشعبُ الأربع · الإلزاميُّ من الاختياريّ</small>
+            </div>
+          </div>
+          <div class="pipe-a">▼</div>
+          <div class="pipe-row">
+            <span class="pipe-n">٣</span>
+            <div class="pipe-b">
+              <b>كلود يُخرج السكربت</b>
+              <small>نصٌّ جاهزٌ لا يكتبه أحدٌ بيده ولا يلزم فهمُه لاستعماله</small>
+            </div>
+          </div>
+          <div class="pipe-a">▼</div>
+          <div class="pipe-row">
+            <span class="pipe-n">٤</span>
+            <div class="pipe-b">
+              <b>موضعُ التشغيل</b>
+              <small><span class="ltr-inline">script.google.com</span> — تشغيلةٌ واحدة</small>
+            </div>
+          </div>
+          <div class="pipe-a">▼</div>
+          <div class="pipe-out">
+            <div class="po-item"><span class="po-i">▤</span><b>استمارةٌ عاملة</b><small>عشرةُ حقولٍ بخياراتها</small></div>
+            <div class="po-item"><span class="po-i">▦</span><b>جدولُ بيانات</b><small>مربوطٌ تلقائيًّا بالردود</small></div>
+            <div class="po-item"><span class="po-i">⧉</span><b>رابطان</b><small>رابطُ تحريرٍ ورابطُ نشر</small></div>
+          </div>
+        </div>
 
-  form.addTextItem().setTitle(<span class="cb-s">'رقم المعاملة'</span>).setRequired(<span class="cb-k">true</span>);
-
-  form.addListItem()
-      .setTitle(<span class="cb-s">'الشعبة'</span>)
-      .setChoiceValues([<span class="cb-s">'التسجيل'</span>, <span class="cb-s">'المتابعة'</span>, <span class="cb-s">'الأرشيف'</span>, <span class="cb-s">'الاستعلامات'</span>])
-      .setRequired(<span class="cb-k">true</span>);
-
-  form.addMultipleChoiceItem()
-      .setTitle(<span class="cb-s">'نوع الشكوى'</span>)
-      .setChoiceValues([<span class="cb-s">'تأخير'</span>, <span class="cb-s">'خطأ بيانات'</span>, <span class="cb-s">'رفض غير مبرَّر'</span>,
-                        <span class="cb-s">'سوء تعامل'</span>, <span class="cb-s">'أخرى'</span>])
-      .setRequired(<span class="cb-k">true</span>);
-
-  form.addMultipleChoiceItem()
-      .setTitle(<span class="cb-s">'درجة الإلحاح'</span>)
-      .setChoiceValues([<span class="cb-s">'عالية'</span>, <span class="cb-s">'متوسطة'</span>, <span class="cb-s">'دنيا'</span>]);
-
-  form.addParagraphTextItem().setTitle(<span class="cb-s">'تفاصيل الشكوى'</span>).setRequired(<span class="cb-k">true</span>);
-  form.addDateItem().setTitle(<span class="cb-s">'تاريخ الواقعة'</span>);
-  form.addTextItem().setTitle(<span class="cb-s">'وسيلة التواصل'</span>);
-
-  form.addMultipleChoiceItem()
-      .setTitle(<span class="cb-s">'الموافقة على معالجة البيانات'</span>)
-      .setChoiceValues([<span class="cb-s">'أوافق'</span>])
-      .setRequired(<span class="cb-k">true</span>);
-
-  <span class="cb-c">// ربط الردود بجدول بيانات جديد</span>
-  <span class="cb-k">const</span> sheet = SpreadsheetApp.create(<span class="cb-s">'ردود استمارة الشكاوى'</span>);
-  form.setDestination(FormApp.DestinationType.SPREADSHEET, sheet.getId());
-
-  Logger.log(<span class="cb-s">'رابط التحرير: '</span> + form.getEditUrl());
-  Logger.log(<span class="cb-s">'رابط النشر: '</span>  + form.getPublishedUrl());
-}</div>
+        <div class="takeaway">
+          <b>ما يُقرأ من الرسم:</b> الخطوةُ الثانية وحدها موضعُ عملِ الدائرة، وما عداها آليّ. فالمهارةُ لا تُعلّم كلود البرمجةَ — هو يعرفها — إنّما تُعلّمه <span class="hl hl-green">معايير الدائرة</span>: أيُّ حقلٍ إلزاميّ، وبأيّ اسمٍ يُسمّى، وإلى أيّ جدولٍ تذهب الردود. ولذلك تخرج الاستماراتُ العشرُ متّسقةً ولو بناها عشرةُ موظّفين.
+        </div>
 
         <p class="dt-cap">المقارنة بين الطريقين</p>
         <div class="dt-wrap">
