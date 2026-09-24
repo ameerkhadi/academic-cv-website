@@ -1629,6 +1629,60 @@
   }
   .takeaway b{ color:var(--blue); }
 
+  /* مسار الإعدادات — فتات التنقّل */
+  .crumbs{ display:flex; flex-direction:column; gap:9px; margin:10px 0 6px; }
+  .crumb-row{ border:1.6px solid rgba(26,61,140,0.28); border-radius:9px;
+              background:rgba(26,61,140,0.035); padding:8px 12px 10px; }
+  .crumb-tag{ display:block; font-size:calc(11px * var(--fs,1)); font-weight:700;
+              color:var(--blue); opacity:0.8; margin-bottom:6px; }
+  .crumb-line{ display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
+  .crumb{ border:1.4px solid rgba(26,61,140,0.3); background:#fff;
+          border-radius:6px; padding:3px 10px;
+          font-size:calc(12px * var(--fs,1)); white-space:nowrap; }
+  .crumb.hi{ border-color:var(--green); border-width:2px; font-weight:700;
+             color:var(--green); background:rgba(31,122,61,0.07); }
+  .crumb-a{ color:var(--blue); opacity:0.45; font-size:calc(13px * var(--fs,1)); }
+  .crumb-note{ font-size:calc(12.5px * var(--fs,1)); opacity:0.82; margin:2px 0 12px; }
+
+  /* نُفِّذ كذا ← ظهر كذا */
+  .doit{ display:flex; flex-direction:column; gap:0; margin:9px 0;
+         border-radius:9px; overflow:hidden;
+         border:1.8px solid rgba(26,61,140,0.28); }
+  .doit-q{ background:rgba(26,61,140,0.07); padding:8px 12px 9px;
+           font-size:calc(13px * var(--fs,1)); line-height:1.85; }
+  .doit-a{ background:rgba(31,122,61,0.055); padding:8px 12px 9px;
+           font-size:calc(12.5px * var(--fs,1)); line-height:1.9;
+           border-top:1.5px dashed rgba(26,61,140,0.25); }
+  .doit-k{ display:inline-block; font-weight:700; border-radius:5px;
+           padding:1px 9px; margin-inline-end:7px;
+           font-size:calc(11px * var(--fs,1)); color:#fff; }
+  .doit-q .doit-k{ background:var(--blue); }
+  .doit-a .doit-k{ background:var(--green); }
+
+  /* طبقات الصلاحيّة */
+  .scope{ display:flex; flex-direction:column; align-items:center;
+          gap:3px; margin:10px 0 14px; }
+  .scope-l{ display:flex; align-items:stretch; gap:8px;
+            width:100%; max-width:580px; }
+  .scope-n{ flex:0 0 26px; width:26px; height:26px; border-radius:50%;
+            display:flex; align-items:center; justify-content:center;
+            align-self:center; color:#fff; font-weight:700;
+            font-size:calc(12px * var(--fs,1)); }
+  .scope-b{ flex:1; border-radius:9px; padding:8px 13px 9px; border:2px solid; }
+  .scope-b > b{ display:block; font-size:calc(13px * var(--fs,1)); }
+  .scope-b small{ display:block; margin-top:3px; line-height:1.85;
+                  font-size:calc(11.8px * var(--fs,1)); opacity:0.86; }
+  .s1 .scope-n{ background:var(--red); }
+  .s1 .scope-b{ border-color:rgba(209,52,43,0.5); background:rgba(209,52,43,0.05); }
+  .s1 .scope-b b{ color:var(--red); }
+  .s2 .scope-n{ background:var(--orange); }
+  .s2 .scope-b{ border-color:rgba(230,126,34,0.5); background:rgba(230,126,34,0.05); }
+  .s2 .scope-b b{ color:var(--orange); }
+  .s3 .scope-n{ background:var(--green); }
+  .s3 .scope-b{ border-color:rgba(31,122,61,0.5); background:rgba(31,122,61,0.05); }
+  .s3 .scope-b b{ color:var(--green); }
+  .scope-a{ color:var(--blue); opacity:0.5; font-size:calc(11.5px * var(--fs,1)); }
+
   /* مخطّط مسار توليد الاستمارة */
   .pipe{ display:flex; flex-direction:column; align-items:center;
          gap:3px; margin:10px 0 14px; }
@@ -6292,15 +6346,272 @@
       <!-- ============ END SLIDE 4 ============ -->
 
       <!-- ============ SLIDE 5 : الأسبوع الخامس ============ -->
-      <div id="slide-5" class="slide content-slide">
+      <div id="slide-5" class="slide content-slide rich-slide">
         <span class="chip chip-ch1">الأسبوع الخامس</span>
-        <h2 class="page-title">الأسبوع الخامس</h2>
+        <h2 class="page-title">الموصِّلات</h2>
         <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
-        <div class="coming-soon">
-          <svg class="big-icon" viewBox="0 0 40 40"><g filter="url(#sketchy)"><circle cx="20" cy="20" r="15" fill="#fde3c4" stroke="var(--orange)" stroke-width="2.5"/><path d="M20 12 v9 l6 4" fill="none" stroke="var(--orange)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></g></svg>
-          <p class="cs-title">تنزل لاحقاً</p>
-          <p class="cs-sub">محتوى هذا الأسبوع سيُضاف قريباً.</p>
+
+        <p>عرفنا في الأسبوع الثاني أنّ ربط موصّل البريد بحساب العمل من الإعدادات الثلاثة المكلِفة، وأُرجئ تفصيلُه. وهذا الأسبوع موضعُ التفصيل: ما الموصِّل، ومن أين يُوصَل، وما الذي يصير في يد كلود حين يُوصَل — <span class="hl hl-yellow">وما الذي لا يصير</span>.</p>
+
+        <!-- ══════════ ١ ══════════ -->
+        <div class="section-heading" style="margin-top:28px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>١ · ما الموصِّل</span>
         </div>
+
+        <p><b>الموصِّل (Connector)</b> أداةٌ تصل كلود بتطبيقٍ خارجيّ — كالبريد والتقويم وملفّات درايف — فيقرأ منه ويُنفّذ فيه من داخل المحادثة نفسها، بلا نسخٍ ولا لصقٍ ولا تنقّلٍ بين الشاشات.</p>
+
+        <p class="dt-cap">رسم (١): الفارق بين النقل اليدويّ والوصل الحيّ</p>
+        <div class="ba-pair">
+          <div class="bubble b-before"><span class="ba-tag">بلا موصِّل</span>فتحُ البريد، ونسخُ الرسائل، ولصقُها في المحادثة، ثمّ نقلُ الجواب يدويًّا إلى البريد من جديد.<br>والمادّة <b>لقطةٌ ثابتة</b>: ما لُصق هو ما يعرفه، وما وصل بعد اللصق لا يعلمه.</div>
+          <div class="bubble b-after"><span class="ba-tag">بموصِّل</span>سؤالٌ واحد داخل المحادثة، فيقرأ كلود من المصدر مباشرةً ويُنفّذ فيه.<br>والمادّة <b>وصلٌ حيّ</b>: يقرأ حالَ المصدر لحظةَ السؤال لا حالَه قبل ساعة.</div>
+        </div>
+
+        <div class="takeaway">
+          <b>الفارق الذي يُبنى عليه الباقي:</b> رفعُ الملفّ يُعطي كلود <span class="hl hl-green">نسخةً</span> تنتهي بانتهاء المحادثة. والموصِّلُ يُعطيه <span class="hl hl-pink">طريقًا</span> يبقى مفتوحًا حتى يُغلَق. ومن هنا جاء أنّ الموصِّل أنفعُ وأخطرُ في آنٍ واحد.
+        </div>
+
+        <!-- ══════════ ٢ ══════════ -->
+        <div class="section-heading" style="margin-top:28px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>٢ · من أين يُوصَل</span>
+        </div>
+
+        <p>للموصِّلات مدخلان، والمُدار فيهما واحد:</p>
+
+        <p class="dt-cap">رسم (٢): مسارا الوصول إلى الموصِّلات</p>
+        <div class="crumbs">
+          <div class="crumb-row">
+            <span class="crumb-tag">المسار الأوّل — الإعدادات</span>
+            <div class="crumb-line">
+              <span class="crumb">الإعدادات</span><span class="crumb-a">‹</span>
+              <span class="crumb"><span class="ltr-inline">Customize</span> · التخصيص</span><span class="crumb-a">‹</span>
+              <span class="crumb hi"><span class="ltr-inline">Connectors</span> · الموصِّلات</span>
+            </div>
+          </div>
+          <div class="crumb-row">
+            <span class="crumb-tag">المسار الثاني — من داخل المحادثة</span>
+            <div class="crumb-line">
+              <span class="crumb">صندوق الكتابة</span><span class="crumb-a">‹</span>
+              <span class="crumb">زرّ <b>+</b></span><span class="crumb-a">‹</span>
+              <span class="crumb hi">قائمة الموصِّلات</span>
+            </div>
+          </div>
+        </div>
+        <p class="crumb-note">والمسار الأوّل هو موضعُ الإدارة: منه يُوصَل الموصِّل، ومنه تُراجَع صلاحيّاته، ومنه يُفصَل.</p>
+
+        <p class="dt-cap">نوعان يختلفان اختلافًا جوهريًّا في الثقة</p>
+        <div class="dt-wrap">
+          <table class="dt">
+            <thead><tr><th>النوع</th><th>مصدره</th><th>الفحص</th><th>حدُّ الخطّة المجانيّة</th></tr></thead>
+            <tbody>
+              <tr><td><b>موصِّلات الدليل</b><br><span class="ltr-inline">Directory</span></td><td>مجموعةٌ معتمدة من الشركة المطوِّرة — البريد، التقويم، درايف، وغيرها</td><td>مفحوصةٌ ومعتمَدة</td><td>متاحة</td></tr>
+              <tr><td><b>موصِّلات مخصّصة</b><br><span class="ltr-inline">Custom · MCP</span></td><td>خوادمُ يحدّدها المستخدم بنفسه</td><td><span class="hl hl-pink">غير مفحوصةٍ من الشركة المطوِّرة</span></td><td><b>موصِّلٌ واحد</b></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="oops">
+          <span class="o-i">⚠</span>
+          <div>الموصِّل المخصّص يصل كلود بخادمٍ لم تفحصه الشركة المطوِّرة، والبيانات تُعالَج على بنية ذلك الطرف وقد تكون خارج البلد. وضابطُه في العمل الحكوميّ: ما جاء من جهةٍ غير موثوقة لا يُوصَل بحسابٍ فيه مراسلاتُ الدائرة.</div>
+        </div>
+
+        <!-- ══════════ ٣ ══════════ -->
+        <div class="section-heading" style="margin-top:28px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>٣ · موصِّل التقويم — مثالٌ مطبَّق</span>
+        </div>
+
+        <p>ما يستطيعه كلود بعد وصل التقويم: الاطّلاع على المواعيد والتقاويم — ومنها المشتركة التي لك وصولٌ إليها — وإنشاء المواعيد وتعديلها <span class="hl hl-pink">وحذفها</span>، وإيجاد الوقت المشترك بين عدّة مدعوّين، وإدارة قوائم المدعوّين والردّ على الدعوات، وضبط الاجتماعات المتكرّرة.</p>
+
+        <p class="dt-cap">نُفِّذ كذا ← ظهر كذا</p>
+
+        <div class="doit">
+          <div class="doit-q"><span class="doit-k">الطلب</span>«ما مواعيدي غدًا؟»</div>
+          <div class="doit-a"><span class="doit-k">ما يظهر</span>قائمةٌ بمواعيد الغد بأوقاتها وعناوينها وأسماء المدعوّين — مقروءةً من التقويم لحظتَها لا من ذاكرة المحادثة.</div>
+        </div>
+
+        <div class="doit">
+          <div class="doit-q"><span class="doit-k">الطلب</span>«أين يتّسع وقتٌ مشترك لي ولرؤساء الشعب الأربع، ساعةً واحدة، خلال الأسبوع القادم؟»</div>
+          <div class="doit-a"><span class="doit-k">ما يظهر</span>فتراتٌ مقترحةٌ خاليةٌ عند الجميع، مستخرَجةٌ بمقارنة تقاويمهم — وهذا ما يتعذّر يدويًّا إلّا بجولةِ اتّصالات.</div>
+        </div>
+
+        <div class="doit">
+          <div class="doit-q"><span class="doit-k">الطلب</span>«اجتماعٌ لمتابعة المعاملات المتأخّرة، الأحد العاشرة صباحًا، ساعة، ومعه رؤساء الشعب.»</div>
+          <div class="doit-a"><span class="doit-k">ما يظهر</span>موعدٌ مُنشَأ في التقويم بعنوانه ووقته ومدعوّيه، وتصل الدعوةُ إليهم. <b>والأثر هنا كتابةٌ لا قراءة</b> — فهو يغيّر في المصدر لا يطّلع عليه فحسب.</div>
+        </div>
+
+        <div class="tip-box">
+          <div class="tip-title">
+            <svg class="tip-icon" viewBox="0 0 24 24"><circle cx="12" cy="9" r="6.5" fill="#fff3c4" stroke="var(--green)" stroke-width="2"/><rect x="9" y="16" width="6" height="4" rx="1.5" fill="none" stroke="var(--green)" stroke-width="2"/><line x1="9" y1="21" x2="15" y2="21" stroke="var(--green)" stroke-width="2" stroke-linecap="round"/></svg>
+            الحذف متاح
+          </div>
+          موصِّل التقويم يملك الحذف كما يملك الإنشاء — وطلبٌ فضفاض مثل «نظّف تقويمي» قد يُفهَم أوسعَ ممّا قُصد.
+        </div>
+
+        <!-- ══════════ ٤ ══════════ -->
+        <div class="section-heading" style="margin-top:28px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>٤ · موصِّل البريد — مثالٌ مطبَّق</span>
+        </div>
+
+        <p>ما يستطيعه كلود بعد وصل البريد: البحثُ في الرسائل وقراءتُها بلغةٍ طبيعيّة، وصياغةُ الرسائل، والإرسالُ والردُّ والتحويل، والاطّلاعُ على بيانات المرفقات الوصفيّة، وإدارةُ التصنيفات والسلاسل، وعرضُ المسوّدات المحفوظة.</p>
+
+        <p class="dt-cap">نُفِّذ كذا ← ظهر كذا</p>
+
+        <div class="doit">
+          <div class="doit-q"><span class="doit-k">الطلب</span>«ما الرسائل الواردة هذا الأسبوع التي تخصّ المعاملة ٤٥٧؟»</div>
+          <div class="doit-a"><span class="doit-k">ما يظهر</span>الرسائلُ المطابقة بمرسِليها وتواريخها وخلاصةِ كلٍّ منها — بحثٌ بالمعنى لا بمطابقة الكلمة حرفًا بحرف.</div>
+        </div>
+
+        <div class="doit">
+          <div class="doit-q"><span class="doit-k">الطلب</span>«ما الرسائل التي تنتظر ردًّا منّي منذ أكثر من ثلاثة أيّام؟»</div>
+          <div class="doit-a"><span class="doit-k">ما يظهر</span>قائمةُ متابعةٍ مستخرَجةٌ من السلاسل التي آخِرُها ليس منك — وهذا ما لا يُنتجه فرزُ الصندوق بالتاريخ وحده.</div>
+        </div>
+
+        <div class="doit">
+          <div class="doit-q"><span class="doit-k">الطلب</span>«ردٌّ على رسالة الموارد البشريّة يُثبت استلام الكتاب ويَعِد بالجواب قبل الخميس.»</div>
+          <div class="doit-a"><span class="doit-k">ما يظهر</span>نصُّ الردّ معروضًا في المحادثة، <b>ومعه طلبُ إذنٍ قبل الإرسال</b> — فلا يخرج شيءٌ من صندوقك حتى تُقرّه.</div>
+        </div>
+
+        <div class="oops">
+          <span class="o-i">⚠</span>
+          <div><b>حدٌّ يُغفَل:</b> يطّلع كلود على بيانات المرفقات الوصفيّة — اسمُ الملفّ ونوعُه وحجمُه — <b>لا على محتواها</b>. فمن سأل عن رقمٍ داخل مرفقٍ مرسَل لم يجد جوابًا من الموصِّل، وموضعُ ذلك رفعُ الملفّ إلى المحادثة.</div>
+        </div>
+
+        <!-- ══════════ ٥ ══════════ -->
+        <div class="section-heading" style="margin-top:28px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>٥ · ما هي صلاحيّته</span>
+        </div>
+
+        <p>هنا موضعُ اللبس الأكبر. فالصلاحيّة ليست شيئًا واحدًا، بل <b>ثلاث طبقاتٍ</b> تتفاوت سَعةً، والخلطُ بينها هو ما يجعل موظّفًا يطمئنّ حيث ينبغي أن يحترس.</p>
+
+        <p class="dt-cap">رسم (٣): طبقات الصلاحيّة الثلاث</p>
+        <div class="scope">
+          <div class="scope-l s1">
+            <span class="scope-n">١</span>
+            <div class="scope-b">
+              <b>نطاق المنح — الأوسع</b>
+              <small>المنح يقع على <b>المصدر كلِّه</b>: الصندوق بأسره والتقويم بأسره. لا على رسالةٍ بعينها ولا موعدٍ بعينه.</small>
+            </div>
+          </div>
+          <div class="scope-a">▼ يضيّقه</div>
+          <div class="scope-l s2">
+            <span class="scope-n">٢</span>
+            <div class="scope-b">
+              <b>مرآة صلاحيّاتك</b>
+              <small>لا يبلغ كلود ما لا تبلغه أنت. فما لا وصول لك إليه في حسابك لا وصول له إليه.</small>
+            </div>
+          </div>
+          <div class="scope-a">▼ يضيّقه</div>
+          <div class="scope-l s3">
+            <span class="scope-n">٣</span>
+            <div class="scope-b">
+              <b>لحظة الاستعمال</b>
+              <small>لا يقرأ إلّا حين يُطلب منه، ويأخذ أدنى ما تحتاجه الإجابة. ويلتمس الإذن قبل الإرسال والردّ والتحويل.</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="takeaway">
+          <b>القاعدة التي تُقاس بها المخاطرة:</b> الخطرُ يُقدَّر بالطبقة <b>١</b> لا بالطبقة <b>٣</b>. فالطبقة الثالثة عادةٌ تشغيليّة — وهي في خطط الفرق والمؤسّسات <span class="hl hl-pink">قابلةٌ لأن يرفعها المسؤول</span> فتُنفَّذ الإجراءاتُ بلا استئذان. أمّا نطاق المنح فيبقى على حاله: الصندوق كلُّه.</div>
+
+        <p class="dt-cap">ما يقع وما لا يقع</p>
+        <div class="dt-wrap">
+          <table class="dt">
+            <thead><tr><th>الظنّ الشائع</th><th>الواقع</th></tr></thead>
+            <tbody>
+              <tr><td>«الصلاحية على الرسالة التي أسأل عنها»</td><td>المنح على الصندوق كلِّه، والسؤالُ يحدّد ما يُقرأ لا ما يُمكن قراءتُه</td></tr>
+              <tr><td>«يقرأ بريدي في كلّ وقت»</td><td>لا يقرأ إلّا حين يُطلب منه، ويأخذ أدنى ما تحتاجه الإجابة</td></tr>
+              <tr><td>«قد يرسل رسالةً من تلقاء نفسه»</td><td>يلتمس الإذن قبل الإرسال — <b>ما لم يُرفَع هذا الشرط في خطط الفرق</b></td></tr>
+              <tr><td>«يرى ما لا أراه أنا في المنظومة»</td><td>لا يبلغ ما لا تبلغه أنت — صلاحيّاتُه مرآةُ صلاحيّاتك</td></tr>
+              <tr><td>«يُدرَّب على مراسلاتي»</td><td>بيانات موصِّلات البريد والتقويم والدرايف لا تُدرَّب عليها النماذج</td></tr>
+              <tr><td>«يقرأ ما في المرفقات»</td><td>بيانات المرفقات الوصفيّة دون محتواها</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="takeaway">
+          <b>وصلًا بما تعلّمناه في الأسبوع الثاني:</b> قيل هناك إنّ الصلاحية تُمنح للصندوق كلِّه لا لرسالةٍ واحدة، وإنّ طلبًا بريئًا مثل «لخّص لي بريد اليوم» يمرّ على مراسلاتٍ لم تُقصَد. وهذا هو أثرُ الطبقة الأولى بعينه. والعلاجُ هو هو: <span class="hl hl-green">حسابٌ مخصّصٌ للعمل مع كلود لا الحساب الرسميّ</span>، أو إبقاءُ الموصِّل مفصولًا واللصقُ اليدويّ بعد إخفاء الهوية.
+        </div>
+
+        <!-- ══════════ ٦ ══════════ -->
+        <div class="section-heading" style="margin-top:28px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>٦ · تمارين</span>
+        </div>
+        <p class="quiz-note">الحلول في تبويب «الحلول والتعليل» 🔑</p>
+
+        <div class="mcq-item">
+          <span class="q-num">١.</span> موظّف وصل البريد بحسابه الرسميّ، ثمّ سأل: «ما الرسائل التي تخصّ المعاملة ٤٥٧؟» فظنّ أنّ الصلاحية اقتصرت على تلك الرسائل. أين وهمُه؟
+          <ul class="mcq-options">
+            <li><span class="opt-letter">أ)</span> لا وهم — السؤال هو الذي يحدّد نطاق المنح</li>
+            <li><span class="opt-letter">ب)</span> المنح وقع على الصندوق كلِّه، والسؤال حدّد ما قُرئ لا ما يمكن قراءتُه</li>
+            <li><span class="opt-letter">ج)</span> الموصِّل لا يقرأ الرسائل أصلًا</li>
+            <li><span class="opt-letter">د)</span> الوهم في أنّ البحث بالمعنى لا يعمل على أرقام المعاملات</li>
+          </ul>
+        </div>
+
+        <div class="mcq-item">
+          <span class="q-num">٢.</span> أيُّ هذه الطلبات يُنتظر فيه طلبُ إذنٍ قبل التنفيذ؟
+          <ul class="mcq-options">
+            <li><span class="opt-letter">أ)</span> «ما مواعيدي غدًا؟»</li>
+            <li><span class="opt-letter">ب)</span> «ما الرسائل التي تنتظر ردًّا منّي؟»</li>
+            <li><span class="opt-letter">ج)</span> «ردٌّ على رسالة الموارد البشريّة يُثبت الاستلام»</li>
+            <li><span class="opt-letter">د)</span> «كم اجتماعًا لي هذا الأسبوع؟»</li>
+          </ul>
+        </div>
+
+        <div class="mcq-item">
+          <span class="q-num">٣.</span> مديرٌ أراد استخراج رقمٍ من جدولٍ وصله <b>مرفقًا</b> في رسالة. فسأل كلود والموصِّل موصول، فلم يجد الرقم. ما العلّة؟
+          <ul class="mcq-options">
+            <li><span class="opt-letter">أ)</span> الموصِّل يطّلع على بيانات المرفق الوصفيّة دون محتواه</li>
+            <li><span class="opt-letter">ب)</span> الرسالة قديمة تجاوزت نافذة السياق</li>
+            <li><span class="opt-letter">ج)</span> الجداول لا تُقرأ في كلود</li>
+            <li><span class="opt-letter">د)</span> الموصِّل يحتاج خطّةً مدفوعة لقراءة المرفقات</li>
+          </ul>
+        </div>
+
+        <div class="mcq-item">
+          <span class="q-num">٤.</span> دائرةٌ رأت أنّ الاستئذان قبل الإرسال يكفي ضمانًا، فأذنت بربط الموصِّل بالحسابات الرسميّة كلِّها. أين الخلل في هذا التقدير؟
+          <ul class="mcq-options">
+            <li><span class="opt-letter">أ)</span> لا خلل — الاستئذان ضمانٌ كافٍ</li>
+            <li><span class="opt-letter">ب)</span> الاستئذان طبقةٌ تشغيليّة قد تُرفَع إداريًّا، ونطاقُ المنح يبقى على الصندوق كلِّه</li>
+            <li><span class="opt-letter">ج)</span> الخلل في أنّ الاستئذان يُبطئ العمل</li>
+            <li><span class="opt-letter">د)</span> الخلل في أنّ الموصِّلات غير متاحة للدوائر</li>
+          </ul>
+        </div>
+
+        <div class="section-heading" style="margin-top:22px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>صح أو خطأ</span>
+        </div>
+        <div class="tf-item"><span>١. الموصِّل يبلغ في المنظومة ما لا تبلغه أنت بحسابك.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+        <div class="tf-item"><span>٢. موصِّل التقويم يملك حذف المواعيد كما يملك إنشاءها.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+        <div class="tf-item"><span>٣. الموصِّل المخصّص مفحوصٌ من الشركة المطوِّرة كموصِّلات الدليل.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+        <div class="tf-item"><span>٤. رفع الملفّ يُعطي نسخةً تنتهي بانتهاء المحادثة، والموصِّل يُعطي طريقًا يبقى حتى يُفصَل.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+        <div class="tf-item"><span>٥. بيانات موصِّلات البريد والتقويم والدرايف تُدرَّب عليها النماذج.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+
+        <div class="section-heading" style="margin-top:22px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>أسئلة قصيرة</span>
+        </div>
+        <div class="mcq-item">
+          <span class="q-num">١.</span> ما الفرق بين نطاق المنح ولحظة الاستعمال؟ ولماذا يُقدَّر الخطر بالأوّل لا بالثاني؟
+          <span class="blank-line"></span><span class="blank-line"></span><span class="blank-line"></span>
+        </div>
+        <div class="mcq-item">
+          <span class="q-num">٢.</span> مهمّةٌ في دائرتك تستحقّ وصل موصِّل التقويم، وأخرى لا تستحقّه ويكفيها النقل اليدويّ. اذكر المهمّتين وعلّل.
+          <span class="blank-line"></span><span class="blank-line"></span><span class="blank-line"></span>
+        </div>
+        <div class="mcq-item">
+          <span class="q-num">٣.</span> ما الاحتياطات التي تسبق وصل موصِّل البريد بحسابٍ فيه مراسلات رسميّة؟
+          <span class="blank-line"></span><span class="blank-line"></span><span class="blank-line"></span>
+        </div>
+
+        <div class="mini-note">نهاية المحاضرة الخامسة — إعداد: د. أمير هادي ★</div>
+
         <div class="page-nav">
           <button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button>
           <button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button>
@@ -6734,6 +7045,117 @@
             <li><b>مثالُ المهارة:</b> فئاتُ الشكاوى الخمس وقواعدُ الإحالة — إجراءٌ لا يلزم إلّا عند الشكاوى.</li>
             <li>الأثرُ الذي يُبيّن فساد الخلط: إجراءٌ يخصّ الشكاوى موضوعٌ في البروفايل يُحمَّل في كلّ محادثةٍ ولو لم تكن فيها شكوى.</li>
             <li>درجةٌ إضافيّةٌ لمن بيّن أنّ تراكم الإجراءات في البروفايل يضيّق المحادثة على الجميع، بخلاف المهارة القائمة بذاتها.</li>
+          </ul>
+        </div>
+
+        <div class="sol-week"><span class="sw-n">٥</span><span class="sw-t">حلول الأسبوع الخامس — الموصِّلات</span></div>
+
+        <div class="sol-kind"><span>الاختيار من متعدّد</span><span class="sk-line"></span></div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">١.</span> موظّف وصل البريد بحسابه الرسميّ، ثمّ سأل: «ما الرسائل التي تخصّ المعاملة ٤٥٧؟» فظنّ أنّ الصلاحية اقتصرت على تلك الرسائل. أين وهمُه؟</p>
+          <div class="sol-opts">
+            <div class="sol-opt bad"><span class="so-k">أ)</span><span>لا وهم — السؤال هو الذي يحدّد نطاق المنح</span></div>
+            <div class="sol-opt ok"><span class="so-k">ب)</span><span>المنح وقع على الصندوق كلِّه، والسؤال حدّد ما قُرئ لا ما يمكن قراءتُه</span></div>
+            <div class="sol-opt bad"><span class="so-k">ج)</span><span>الموصِّل لا يقرأ الرسائل أصلًا</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>الوهم في أنّ البحث بالمعنى لا يعمل على أرقام المعاملات</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> الخلط هنا بين <b>ما يقع فعلًا</b> و<b>ما يمكن أن يقع</b>. فالسؤال وجّه القراءة إلى رسائل المعاملة، غير أنّ المنح الذي وقع لحظةَ الوصل كان على الصندوق بأسره. و«أ» تقلب العلاقة: السؤال يوجّه الاستعمال ولا ينشئ الصلاحية. و«ج» تنفي ما هو من صميم عمل الموصِّل.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٢.</span> أيُّ هذه الطلبات يُنتظر فيه طلبُ إذنٍ قبل التنفيذ؟</p>
+          <div class="sol-opts">
+            <div class="sol-opt bad"><span class="so-k">أ)</span><span>«ما مواعيدي غدًا؟»</span></div>
+            <div class="sol-opt bad"><span class="so-k">ب)</span><span>«ما الرسائل التي تنتظر ردًّا منّي؟»</span></div>
+            <div class="sol-opt ok"><span class="so-k">ج)</span><span>«ردٌّ على رسالة الموارد البشريّة يُثبت الاستلام»</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>«كم اجتماعًا لي هذا الأسبوع؟»</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> الضابط سؤالٌ واحد: <b>أيقرأ هذا الطلبُ أم يكتب؟</b> فـ«أ» و«ب» و«د» قراءةٌ خالصة لا تغيّر في المصدر شيئًا. و«ج» وحده إخراجُ رسالةٍ باسمك إلى جهةٍ خارج حسابك، ولذلك يُستأذَن قبله. <b>وتنبيهٌ يلزم:</b> إنشاء موعدٍ في التقويم كتابةٌ كذلك، وإن لم يبدُ كالإرسال.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٣.</span> مديرٌ أراد استخراج رقمٍ من جدولٍ وصله مرفقًا في رسالة، فسأل كلود والموصِّل موصول، فلم يجد الرقم. ما العلّة؟</p>
+          <div class="sol-opts">
+            <div class="sol-opt ok"><span class="so-k">أ)</span><span>الموصِّل يطّلع على بيانات المرفق الوصفيّة دون محتواه</span></div>
+            <div class="sol-opt bad"><span class="so-k">ب)</span><span>الرسالة قديمة تجاوزت نافذة السياق</span></div>
+            <div class="sol-opt bad"><span class="so-k">ج)</span><span>الجداول لا تُقرأ في كلود</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>الموصِّل يحتاج خطّةً مدفوعة لقراءة المرفقات</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> حدٌّ مقصود في الموصِّل: يبلغ اسمَ الملفّ ونوعَه وحجمَه، لا ما بداخله. و«ب» خطأ لأنّ نافذة السياق تخصّ المحادثة لا الصندوق — وقِدَمُ الرسالة لا يمنع البحث عنها. و«ج» خطأ لأنّ الجداول تُقرأ إذا رُفعت إلى المحادثة، <b>وهذا هو العلاج</b>: تنزيلُ المرفق ورفعُه إلى المحادثة.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٤.</span> دائرةٌ رأت أنّ الاستئذان قبل الإرسال يكفي ضمانًا، فأذنت بربط الموصِّل بالحسابات الرسميّة كلِّها. أين الخلل في هذا التقدير؟</p>
+          <div class="sol-opts">
+            <div class="sol-opt bad"><span class="so-k">أ)</span><span>لا خلل — الاستئذان ضمانٌ كافٍ</span></div>
+            <div class="sol-opt ok"><span class="so-k">ب)</span><span>الاستئذان طبقةٌ تشغيليّة قد تُرفَع إداريًّا، ونطاقُ المنح يبقى على الصندوق كلِّه</span></div>
+            <div class="sol-opt bad"><span class="so-k">ج)</span><span>الخلل في أنّ الاستئذان يُبطئ العمل</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>الخلل في أنّ الموصِّلات غير متاحة للدوائر</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> هذا أخطر الأوهام إداريًّا، لأنّه يبني سياسةً على أضعف الطبقات. فالاستئذان (الطبقة ٣) عادةٌ تشغيليّة، وهي في خطط الفرق والمؤسّسات قابلةٌ لأن يرفعها المسؤول فتُنفَّذ الإجراءات بلا استئذان — <b>ولا يتغيّر بذلك نطاقُ المنح شيئًا</b>: يبقى على الصندوق كلِّه. <b>والقاعدة:</b> السياسة تُبنى على الطبقة ١، وما دونها ضماناتٌ قد تُعدَّل.</p>
+        </div>
+
+        <div class="sol-kind"><span>صح أو خطأ</span><span class="sk-line"></span></div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">١.</span> الموصِّل يبلغ في المنظومة ما لا تبلغه أنت بحسابك.</p><span class="sol-badge f">خطأ</span></div>
+          <p class="sol-why">صلاحيّاتُه <b>مرآةُ صلاحيّاتك</b>: ما لا وصول لك إليه لا وصول له إليه. وهذه الطبقة الثانية من طبقات الصلاحيّة الثلاث.</p>
+        </div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٢.</span> موصِّل التقويم يملك حذف المواعيد كما يملك إنشاءها.</p><span class="sol-badge t">صح</span></div>
+          <p class="sol-why">الإنشاء والتعديل والحذف كلُّها داخلةٌ في قدرته. ولذلك يُتحرَّز من الطلب الفضفاض: «نظّف تقويمي» قد يُفهَم أوسعَ ممّا قُصد، والتحديد هنا وقايةٌ لا تزيُّد.</p>
+        </div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٣.</span> الموصِّل المخصّص مفحوصٌ من الشركة المطوِّرة كموصِّلات الدليل.</p><span class="sol-badge f">خطأ</span></div>
+          <p class="sol-why">موصِّلات الدليل مفحوصةٌ معتمَدة، أمّا المخصّص فيصل كلود بخادمٍ يحدّده المستخدم ولم تفحصه الشركة، وبياناتُه تُعالَج على بنية ذلك الطرف وقد تكون خارج البلد. والخطّة المجانيّة تسمح بموصِّلٍ مخصّصٍ واحد.</p>
+        </div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٤.</span> رفع الملفّ يُعطي نسخةً تنتهي بانتهاء المحادثة، والموصِّل يُعطي طريقًا يبقى حتى يُفصَل.</p><span class="sol-badge t">صح</span></div>
+          <p class="sol-why">هذا الفارق تُبنى عليه بقيّة المحاضرة: النسخة لقطةٌ ثابتة محدودةُ الأثر، والطريق وصلٌ حيٌّ متجدّد — ومنه جاء أنّ الموصِّل أنفعُ وأخطرُ معًا.</p>
+        </div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٥.</span> بيانات موصِّلات البريد والتقويم والدرايف تُدرَّب عليها النماذج.</p><span class="sol-badge f">خطأ</span></div>
+          <p class="sol-why">بيانات هذه الموصِّلات لا تُدرَّب عليها النماذج. <b>على أنّ هذا لا يُغني عن الاحتياط</b>: منعُ التدريب شيء، ونطاقُ المنح الواقع على الصندوق كلِّه شيءٌ آخر — والثاني هو موضع التقدير عند رسم السياسة.</p>
+        </div>
+
+        <div class="sol-kind"><span>الأسئلة القصيرة — نقاط التصحيح</span><span class="sk-line"></span></div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">١.</span> ما الفرق بين نطاق المنح ولحظة الاستعمال؟ ولماذا يُقدَّر الخطر بالأوّل لا بالثاني؟</p>
+          <ul class="sol-grading">
+            <li><b>نطاق المنح:</b> ما يجوز بلوغُه — الصندوق كلُّه والتقويم كلُّه، ويثبت لحظةَ الوصل.</li>
+            <li><b>لحظة الاستعمال:</b> ما يُبلَغ فعلًا — لا يقرأ إلّا حين يُطلب، ويأخذ أدنى ما تحتاجه الإجابة.</li>
+            <li>تعليلٌ صحيح: الأولى <b>بنيويّة</b> لا تتغيّر بالاستعمال، والثانية <b>سلوكيّة</b> قد تُعدَّل.</li>
+            <li>ذكرُ أنّ الاستئذان قابلٌ لأن يُرفَع إداريًّا في خطط الفرق والمؤسّسات.</li>
+            <li>درجةٌ إضافيّةٌ لمن قال إنّ تقدير الخطر يُبنى على <b>أسوأ ما يمكن أن يقع</b> لا على المعتاد.</li>
+          </ul>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٢.</span> مهمّةٌ في دائرتك تستحقّ وصل موصِّل التقويم، وأخرى لا تستحقّه ويكفيها النقل اليدويّ. اذكر المهمّتين وعلّل.</p>
+          <ul class="sol-grading">
+            <li><b>مهمّتان من عمله هو</b> لا مثالان معمَّمان من المحاضرة.</li>
+            <li>المستحقّة تجمع وصفين: <b>تكرارًا</b>، و<b>حاجةً إلى حال المصدر لحظتَها</b> — كإيجاد وقتٍ مشترك بين عدّة رؤساء شعب، إذ يتعذّر يدويًّا إلّا بجولة اتّصالات.</li>
+            <li>غيرُ المستحقّة تقع مرّةً أو لا تحتاج إلّا لقطةً ثابتة — كاستخراج مواعيد يومٍ واحد يُنسخ في سطرين.</li>
+            <li>تعليلٌ يربط بالفارق بين <b>النسخة</b> و<b>الطريق</b> لا بالسهولة وحدها.</li>
+            <li>درجةٌ إضافيّةٌ لمن وازن الفائدةَ بنطاق المنح: مهمّةٌ واحدةٌ متكرّرة قد لا تسوّغ منحًا على التقويم كلِّه.</li>
+          </ul>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٣.</span> ما الاحتياطات التي تسبق وصل موصِّل البريد بحسابٍ فيه مراسلات رسميّة؟</p>
+          <ul class="sol-grading">
+            <li><b>حسابٌ مخصّصٌ للعمل مع كلود</b> لا الحساب الرسميّ — وهذا أقواها أثرًا لأنّه يضيّق نطاق المنح نفسَه.</li>
+            <li>أو إبقاءُ الموصِّل مفصولًا واللصقُ اليدويّ بعد إخفاء الهوية.</li>
+            <li>الاقتصارُ على موصِّلات الدليل المفحوصة دون المخصّصة في بيئة العمل.</li>
+            <li>مراجعةُ الموصِّلات وصلاحيّاتها دوريًّا من مدخل الإعدادات، وفصلُ ما انتهت الحاجةُ إليه.</li>
+            <li>إبقاءُ الاستئذان قبل الإرسال قائمًا وعدمُ رفعه إداريًّا.</li>
+            <li>درجةٌ إضافيّةٌ لمن ذكر أنّ هذه إجراءاتٌ تُكتب في <b>سياسة استخدامٍ مؤسّسيّة</b> لا تُترك لاجتهاد كلّ موظّف.</li>
           </ul>
         </div>
 
