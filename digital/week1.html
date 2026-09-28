@@ -2561,6 +2561,189 @@
   .ltr-inline{ unicode-bidi:isolate; direction:ltr;
                font-family:'Courier New',monospace; font-size:0.94em; }
 
+  /* ══════════════════════════════════════════════════════════════
+     مكوّنات الأسبوع الثاني — صور · أدوات · خطوات · ملفّات · مسرد · مصادر
+     ══════════════════════════════════════════════════════════════ */
+
+  /* ─── صورة بإطارٍ وتعليقٍ مرقّم ─── */
+  .fig{
+    margin:18px 0; padding:10px 10px 0;
+    background:#fff; border:1.5px solid rgba(26,61,140,0.18);
+    border-radius:12px; box-shadow:0 2px 10px rgba(26,61,140,0.07);
+    break-inside:avoid; page-break-inside:avoid;
+  }
+  .fig img, .fig svg.fig-art{
+    display:block; width:100%; height:auto; border-radius:8px;
+    border:1px solid rgba(0,0,0,0.08); background:#f6f3ea;
+  }
+  .fig-cap{
+    display:flex; align-items:flex-start; gap:8px;
+    padding:9px 4px 10px;
+    font-size:calc(12.5px * var(--fs,1)); line-height:1.85;
+    color:var(--ink); text-align:justify;
+  }
+  .fig-n{
+    flex:0 0 auto; background:var(--blue); color:#fff;
+    border-radius:6px; padding:1px 8px; font-weight:800;
+    font-size:calc(11.5px * var(--fs,1)); white-space:nowrap;
+  }
+  .fig-cap > span:last-child{ flex:1; }
+  .fig-src{ display:block; margin-top:4px; color:#6b7280;
+            font-size:0.87em; font-weight:400; }
+  .fig-half{ max-width:64%; margin-inline:auto; }
+
+  /* ─── بطاقة أداة ─── */
+  .tool{
+    margin:16px 0; border:1.5px solid rgba(15,122,114,0.30);
+    border-radius:13px; background:rgba(15,122,114,0.035);
+    overflow:hidden; break-inside:avoid; page-break-inside:avoid;
+  }
+  .tool-h{
+    display:flex; align-items:center; gap:9px; flex-wrap:wrap;
+    padding:9px 13px; background:rgba(15,122,114,0.10);
+    border-bottom:1px solid rgba(15,122,114,0.20);
+  }
+  .tool-ic{ font-size:1.2em; line-height:1; }
+  .tool-name{ font-weight:800; color:var(--teal);
+              font-size:calc(14.5px * var(--fs,1)); }
+  .tool-en{
+    unicode-bidi:isolate; direction:ltr;
+    font-family:'Courier New',monospace; font-size:calc(11.5px * var(--fs,1));
+    color:#4b5563; background:#fff; border:1px solid rgba(0,0,0,0.10);
+    border-radius:5px; padding:1px 6px;
+  }
+  .tool-free{
+    margin-inline-start:auto; font-size:calc(11px * var(--fs,1));
+    font-weight:700; color:var(--green); background:rgba(31,122,61,0.12);
+    border-radius:20px; padding:2px 10px; white-space:nowrap;
+  }
+  .tool-b{ padding:4px 13px 11px; }
+  .tool-row{
+    display:flex; gap:9px; padding:6px 0;
+    border-bottom:1px dashed rgba(26,61,140,0.13);
+    font-size:calc(13px * var(--fs,1)); line-height:1.9;
+  }
+  .tool-row:last-child{ border-bottom:0; }
+  .tool-k{ flex:0 0 76px; font-weight:800; color:var(--blue); }
+  .tool-v{ flex:1; text-align:justify; }
+  .tool-v a{ color:var(--blue); }
+
+  /* ─── خطوات التطبيق ─── */
+  .walk{ margin:14px 0; }
+  .wk{
+    margin:0 0 10px; padding:11px 14px;
+    border:1.5px solid rgba(26,61,140,0.16); border-radius:12px;
+    background:#fff; break-inside:avoid; page-break-inside:avoid;
+  }
+  .wk-h{ display:flex; align-items:center; gap:9px;
+         margin-bottom:5px; flex-wrap:wrap; }
+  .wk-n{
+    flex:0 0 auto; width:27px; height:27px; border-radius:50%;
+    background:var(--blue); color:#fff; font-weight:800;
+    display:flex; align-items:center; justify-content:center;
+    font-size:calc(13px * var(--fs,1));
+  }
+  .wk-t{ font-weight:800; color:var(--ink);
+         font-size:calc(14px * var(--fs,1)); }
+  .wk-where{
+    margin-inline-start:auto; font-size:calc(11px * var(--fs,1));
+    color:var(--purple); background:rgba(122,46,166,0.10);
+    border-radius:20px; padding:2px 10px; font-weight:700; white-space:nowrap;
+  }
+  .wk-b{ font-size:calc(13.2px * var(--fs,1)); line-height:1.95;
+         text-align:justify; }
+  .wk-res, .wk-warn{
+    margin-top:7px; padding:7px 11px; border-radius:8px;
+    font-size:calc(12.8px * var(--fs,1)); line-height:1.88; text-align:justify;
+  }
+  .wk-res{ background:rgba(31,122,61,0.07); border-inline-start:3px solid var(--green); }
+  .wk-res  > b:first-child{ color:var(--green); }
+  .wk-warn{ background:rgba(224,122,31,0.08); border-inline-start:3px solid var(--orange); }
+  .wk-warn > b:first-child{ color:var(--orange); }
+
+  /* ─── ملفّات جاهزة للتحميل ─── */
+  .files{ display:flex; flex-wrap:wrap; gap:9px; margin:14px 0; }
+  .fl{
+    display:flex; align-items:center; gap:8px;
+    padding:9px 13px; border-radius:11px; text-decoration:none;
+    border:1.5px solid rgba(26,61,140,0.22); background:#fff;
+    color:var(--ink); font-weight:700;
+    font-size:calc(12.8px * var(--fs,1)); transition:.15s;
+  }
+  .fl:hover{ background:rgba(26,61,140,0.06); border-color:var(--blue); }
+  .fl-ic{ font-size:1.2em; line-height:1; }
+  .fl-x{ unicode-bidi:isolate; direction:ltr;
+         font-family:'Courier New',monospace; font-size:0.82em; color:#6b7280; }
+
+  /* ─── أمثلة قريبة من الواقع ─── */
+  .exs{ display:grid; grid-template-columns:repeat(auto-fit,minmax(245px,1fr));
+        gap:10px; margin:14px 0; }
+  .ex-c{
+    padding:10px 12px; border-radius:11px; background:#fff;
+    border:1.5px solid rgba(224,87,143,0.28);
+    font-size:calc(12.6px * var(--fs,1)); line-height:1.82;
+    text-align:justify; break-inside:avoid;
+  }
+  .ex-c > b:first-child{ display:block; color:var(--pink); margin-bottom:3px;
+                         font-size:calc(13px * var(--fs,1)); }
+
+  /* ─── مسرد المصطلحات ─── */
+  .gloss-wrap{ overflow-x:auto; margin:14px 0; }
+  table.gloss{ width:100%; border-collapse:collapse; background:#fff;
+               font-size:calc(12.8px * var(--fs,1)); }
+  table.gloss th{
+    background:rgba(26,61,140,0.10); color:var(--blue); font-weight:800;
+    padding:8px 11px; border:1px solid rgba(26,61,140,0.16); text-align:right;
+  }
+  table.gloss td{ padding:8px 11px; border:1px solid rgba(26,61,140,0.12);
+                  line-height:1.82; vertical-align:top; text-align:justify; }
+  table.gloss td.en{
+    unicode-bidi:isolate; direction:ltr; text-align:left;
+    font-family:'Segoe UI',Arial,sans-serif; font-weight:700;
+    color:var(--teal); white-space:nowrap;
+  }
+  table.gloss tr:nth-child(even) td{ background:rgba(26,61,140,0.022); }
+
+  /* ─── المصادر ─── */
+  .srcs{ margin:14px 0; padding:12px 15px; border-radius:12px;
+         background:rgba(0,0,0,0.028); border:1px dashed rgba(26,61,140,0.25); }
+  .src{ display:flex; gap:9px; padding:7px 0;
+        font-size:calc(12.6px * var(--fs,1)); line-height:1.85;
+        border-bottom:1px dashed rgba(26,61,140,0.12); }
+  .src:last-child{ border-bottom:0; }
+  .src-n{ flex:0 0 auto; color:var(--red); font-weight:800; }
+  .src-b{ flex:1; text-align:justify; }
+  .src-b a{ color:var(--blue); unicode-bidi:isolate; direction:ltr;
+            word-break:break-all; font-size:0.93em; }
+  .src-kind{
+    display:inline-block; font-size:0.82em; font-weight:700; color:#fff;
+    background:var(--purple); border-radius:20px; padding:1px 8px;
+    margin-inline-end:6px; vertical-align:middle;
+  }
+
+  /* ─── نصُّ طلبٍ يُنسَخ كما هو ─── */
+  .pbox{
+    margin:10px 0; border-radius:10px; overflow:hidden;
+    border:1.5px solid rgba(122,46,166,0.30); background:#fff;
+    break-inside:avoid;
+  }
+  .pbox-h{
+    display:flex; align-items:center; gap:7px;
+    padding:6px 12px; background:rgba(122,46,166,0.10);
+    border-bottom:1px solid rgba(122,46,166,0.20);
+    font-size:calc(11.5px * var(--fs,1)); font-weight:800; color:var(--purple);
+  }
+  .pbox-b{
+    padding:11px 14px; unicode-bidi:plaintext;
+    font-size:calc(12.8px * var(--fs,1)); line-height:2.05;
+    color:#1f2937; white-space:pre-wrap; text-align:justify;
+  }
+
+  @media (max-width:640px){
+    .tool-k{ flex:0 0 64px; }
+    .fig-half{ max-width:100%; }
+  }
+
 </style>
 
 <!-- مكتبة محلية لبناء ملف PDF من صفحات الورقة عند التصدير — لا اعتماد على الإنترنت وقت التشغيل -->
@@ -3144,12 +3327,12 @@
         <h2 class="page-title">الرقمنة — من الورقة إلى البيانات</h2>
         <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
 
-        <p class="lead-paragraph">عرّفنا في الأسبوع الأول الرقمنة تعريفًا سريعًا وفرّقناها عن رقمنة الأعمال والتحوّل الرقمي. وهذا الأسبوع يقف عندها وحدها، لأنّ أكثر ما يُنفَق من مالٍ ووقتٍ في مشاريع الرقمنة <span class="hl hl-yellow">يُنفَق على درجةٍ لا تُجيب عن أسئلة المدير</span>.</p>
+        <p class="lead-paragraph">عرّفنا في الأسبوع الأول الرقمنة تعريفًا سريعًا وفرّقناها عن رقمنة الأعمال والتحوّل الرقميّ. وهذا الأسبوع يقف عندها وحدها، لأنّ أكثر ما يُنفَق من مالٍ ووقتٍ في مشاريع الرقمنة <span class="hl hl-yellow">يُنفَق على درجةٍ لا تُجيب عن سؤالٍ واحد</span>. وفي آخر هذه الصفحة يكون القارئ قادرًا على أن يأخذ ورقةً من دائرته ويحوّلها إلى جدولٍ يُجيبه — بأدواتٍ مجّانيّةٍ كلِّها، وبهاتفٍ واحدٍ إن لم يتوفّر غيرُه.</p>
 
         <div class="ba-prompt">
-          <b>تحدّي الساعة:</b> كتابٌ صادرٌ من دائرتك سنة ٢٠١٩ عن موضوعٍ بعينه — كم يستغرق إيجاده؟<br>
-          تُجمَع الأجوبة على السبورة، وهي في العادة ساعاتٌ أو أيام. ثمّ يُبحَث في مجلّد الحوسبة السحابية بكلمةٍ واحدة فيظهر المستند في ثانيتين.<br>
-          <b>والفكرة التي يُبنى عليها الأسبوع:</b> الورق يحفظ المعلومة، ولا يسمح بالبحث فيها.
+          <b>نقطة البداية:</b> موظّفٌ في شعبة التسجيل، يدخل عليه مراجعٌ يسأل عن كتابٍ صادرٍ من الدائرة سنة ٢٠١٩.<br>
+          في الأرشيف الورقيّ: فتحُ السجلّ، وتقليبُ الصفحات، وسؤالُ زميلٍ أقدم، وقد يمرّ نصفُ يوم. وفي المجلّد السحابيّ: كلمةٌ واحدةٌ في خانة البحث، فيظهر الكتابُ في ثانيتين.<br>
+          <b>والفكرة التي يُبنى عليها الأسبوع كلُّه:</b> الورق <span class="hl hl-yellow">يحفظ</span> المعلومة، ولا <span class="hl hl-pink">يبحث</span> فيها.
         </div>
 
         <!-- ══════════ ١ ══════════ -->
@@ -3158,7 +3341,27 @@
           <span>١ · ما الرقمنة</span>
         </div>
 
-        <p><b>الرقمنة</b> تحويلُ المعلومة من شكلها المادّيّ — ورقٍ أو صورةٍ أو صوتٍ أو توقيعٍ أو استمارة — إلى صيغةٍ رقميّةٍ يقرؤها الحاسوب ويبحث فيها ويخزّنها ويشاركها، <b>مع بقاء الإجراء نفسِه كما هو</b>. فالمعاملة التي كانت تمرّ على خمسة توقيعاتٍ تبقى تمرّ على خمسةٍ، وإنّما تغيّر وعاءُ المعلومة لا طريقُها.</p>
+        <p><b>الرقمنة</b> <span class="ltr-inline">(Digitization)</span> تحويلُ المعلومة من شكلها المادّيّ — ورقٍ أو صورةٍ أو صوتٍ أو توقيعٍ أو استمارة — إلى صيغةٍ رقميّةٍ يقرؤها الحاسوب ويبحث فيها ويخزّنها ويشاركها، <b>مع بقاء الإجراء نفسِه كما هو</b>. فالمعاملة التي كانت تمرّ على خمسة توقيعاتٍ تبقى تمرّ على خمسةٍ، وإنّما تغيّر وعاءُ المعلومة لا طريقُها.</p>
+
+        <p>وأقربُ ما يوضّح المعنى أمثلةٌ يمرّ عليها الطالبُ في يومه:</p>
+
+        <div class="exs">
+          <div class="ex-c"><b>١ · هويّة الطالب</b>كانت بطاقةً تُنسى في البيت وتُفقَد وتُعاد طباعتُها بمعاملة. وحين صارت في تطبيقٍ على الهاتف، صار التحقّقُ منها بمسح رمزٍ في ثانية — <b>والإجراءُ نفسُه لم يتغيّر</b>: ما زال هناك تحقّقٌ من الهويّة، وإنّما تغيّر وعاؤها.</div>
+
+          <div class="ex-c"><b>٢ · سجلّ الغياب</b>دفترٌ يحمله المعيد إلى القاعة ويوقّع فيه الطلبة. وحين صار نموذجًا إلكترونيًّا، تجمّعت الأسماءُ في جدولٍ يُعرَف منه فورًا مَن تجاوز نسبةَ الغياب — ولم يعد أحدٌ يجمع بالورقة والقلم آخر الفصل.</div>
+
+          <div class="ex-c"><b>٣ · درجات الامتحان</b>ورقةٌ تُعلَّق على لوحة الإعلانات فيزدحم عليها الطلبة ويصوّرونها بهواتفهم. وفي صيغتها الرقميّة يرى كلُّ طالبٍ درجتَه وحدَه، ويُحسَب المعدّلُ آليًّا بلا خطأٍ في الجمع.</div>
+
+          <div class="ex-c"><b>٤ · وصلُ المولّدة</b>قصاصةٌ صغيرةٌ تُحفَظ في الدرج وتضيع بعد شهرين. وأكثرُ الناس يصوّرونها بالهاتف — <b>وهذه رقمنةٌ ناقصة</b> كما سيتبيّن بعد قليل: الصورةُ محفوظةٌ، ولا يُجمَع منها ما دُفِع في السنة.</div>
+
+          <div class="ex-c"><b>٥ · محاضرةُ الأستاذ</b>ملزمةٌ تُصوَّر وتُوزَّع، فتصل النسخةُ العاشرةُ باهتةً لا تُقرأ. وفي صيغتها الرقميّة تصل إلى الجميع بالجودة نفسِها، ويُبحَث في داخلها عن مصطلحٍ في لحظة.</div>
+
+          <div class="ex-c"><b>٦ · وصفةُ الطبيب</b>خطُّ يدٍ يُقرأ بصعوبة، فيقع الخطأُ في الصيدليّة. وفي النظام الرقميّ يصل اسمُ الدواء وجرعتُه مكتوبةً، ويُنبَّه إذا تعارض دواءان — <b>وهنا الرقمنةُ تحمي مريضًا لا تنظّم ملفًّا فحسب</b>.</div>
+        </div>
+
+        <div class="takeaway">
+          <b>الميزانُ الذي يفرّق بين رقمنةٍ ورقمنةِ أعمال:</b> إذا بقيت الخطواتُ كما هي وتغيّر الوعاءُ فحسب ← <span class="hl hl-yellow">رقمنة</span>. وإذا تغيّرت الخطواتُ نفسُها — حُذفت خطوةٌ أو اختُصر توقيعٌ أو صار الإجراءُ آليًّا ← <span class="hl hl-pink">رقمنةُ أعمال</span>، وهي موضوعُ الأسبوع القادم. والمثالُ الثاني أعلاه (سجلّ الغياب) بدأ رقمنةً وانتهى إلى رقمنة أعمال حين صار الحسابُ آليًّا — وهكذا تتّصل الحلقتان.
+        </div>
 
         <!-- ══════════ ٢ ══════════ -->
         <div class="section-heading" style="margin-top:28px;">
@@ -3166,11 +3369,24 @@
           <span>٢ · درجات الرقمنة الثلاث</span>
         </div>
 
-        <p>هذه أهمّ فكرةٍ في الأسبوع. والدرجاتُ الثلاث تُعرَض على ورقةٍ واحدةٍ ليظهر الفرق:</p>
+        <p>هذه أهمّ فكرةٍ في الأسبوع كلِّه، ومَن فهمها فهم الباقي. والدرجاتُ الثلاث تظهر أوضحَ ما تكون حين تمرّ عليها <b>ورقةٌ واحدةٌ بعينها</b>، فنرى في كلّ درجةٍ ماذا صار ممكنًا وماذا بقي متعذّرًا.</p>
 
         <div class="ba-prompt" style="text-align:center;">
-          <b>الورقة:</b> سجلّ الإجازات السنوية لقسم الموارد البشرية — خمس صفحاتٍ بخطّ اليد.<br>
+          <b>الورقة:</b> سجلّ الإجازات السنوية لقسم الموارد البشرية — خمس صفحاتٍ بخطّ اليد، فيها ستّون موظّفًا.<br>
           <b>وسؤال المدير العام:</b> «كم موظّفًا تجاوز ٢٠ يوم إجازةٍ هذه السنة؟»
+        </div>
+
+        <div class="fig">
+          <img src="img/w2/page1.jpg" alt="الصفحة الأولى من سجلّ الإجازات الورقيّ" width="1240" height="1754" loading="lazy">
+          <div class="fig-cap"><span class="fig-n">شكل ١</span><span>الصفحةُ الأولى من السجلّ كما هي على الورق — اثنا عشرَ موظّفًا في خمسة أعمدة، وخمسُ صفحاتٍ مثلُها. وكلُّ ما في هذه الصفحة مقروءٌ للعين، ولا شيءَ منه مقروءٌ للحاسوب.<span class="fig-src">مادّةٌ تدريبيّةٌ أُعِدَّت لهذه المحاضرة — الأسماءُ والبياناتُ غيرُ حقيقيّة.</span></span></div>
+        </div>
+
+        <p>وهذا السجلُّ نفسُه متاحٌ بصيغه الثلاث، ليجرّب القارئ عليه ما يقرؤه هنا:</p>
+
+        <div class="files">
+          <a class="fl" href="files/w2/register-print.pdf" download><span class="fl-ic">📄</span><span>السجلّ الورقيّ — قبل الرقمنة<span class="fl-x"> PDF</span></span></a>
+          <a class="fl" href="files/w2/register-scanned.pdf" download><span class="fl-ic">🖼️</span><span>بعد المسح الضوئيّ — الدرجة الأولى<span class="fl-x"> PDF</span></span></a>
+          <a class="fl" href="files/w2/register-data.xlsx" download><span class="fl-ic">📊</span><span>الجدول النهائيّ — الدرجة الثالثة<span class="fl-x"> XLSX</span></span></a>
         </div>
 
         <div class="eras-track">
@@ -3180,7 +3396,7 @@
             <span class="era-en">رقمنةٌ شكليّة</span>
             <div class="era-def">مُسِحت الصفحاتُ ضوئيًّا وحُفظت ملفًّا واحدًا. صار السجلّ على الحاسوب ولم يعد في الخزانة، ويمكن إرسالُه بالبريد.</div>
             <div class="era-ex"><b>أيجيب عن سؤال المدير؟</b> لا. تُفتَح الصفحاتُ وتُقرأ بالعين ويُعَدُّ يدويًّا — العملُ هو هو، إنّما على الشاشة.</div>
-            <div class="era-ex"><b>اختبارٌ أمام القاعة:</b> بحثٌ عن اسمٍ داخل الملفّ ← النتيجة صفر. الحاسوبُ يرى صورةً لا يرى كلمات.</div>
+            <div class="era-ex"><b>الاختبارُ الحاسم:</b> بحثٌ عن اسمٍ داخل الملفّ ← <b>النتيجة صفر</b>. فالحاسوبُ يرى صورةً ولا يرى كلمات — كما نرى نحن لوحةً مكتوبةً بلغةٍ لا نعرف حروفَها.</div>
           </div>
           <div class="era-arrow">←</div>
           <div class="era-box">
@@ -3215,12 +3431,14 @@
         </div>
 
         <div class="drill">
-          <div class="drill-head"><span class="d-n">؟</span><span class="d-t">سؤالٌ تفاعليّ</span><span class="d-time">٣ دقائق</span></div>
+          <div class="drill-head"><span class="d-n">؟</span><span class="d-t">وقفةُ تفكير</span></div>
+          <p>ورقةٌ واحدةٌ تمرّ على يد القارئ في دائرته أو كلّيّته — استمارةٌ، أو سجلٌّ، أو قائمةُ أسماء:</p>
           <ol>
-            <li>ورقةٌ واحدةٌ من دائرتك — في أيّ درجةٍ هي الآن؟</li>
-            <li>وإلى أيّ درجةٍ ينبغي أن تصل؟ ولماذا هذه الدرجة بعينها؟</li>
+            <li>في أيّ درجةٍ من الثلاث هي الآن؟</li>
+            <li>وإلى أيّ درجةٍ ينبغي أن تصل؟ ولماذا هذه الدرجة بعينها لا التي فوقها؟</li>
+            <li>وما السؤالُ الذي سيصير ممكنًا حين تبلغ تلك الدرجة، وهو اليوم متعذّر؟</li>
           </ol>
-          <div class="d-out"><b>المخرَج:</b> ثلاثة أو أربعة أجوبةٍ بصوتٍ عالٍ، ويُقارَن بينها — فالاختلافُ في الجواب هو الدرس.</div>
+          <div class="d-out"><b>ملاحظة:</b> لا جوابَ واحدًا صحيحًا هنا. والاختلافُ بين إجابات الزملاء هو الدرسُ بعينه — فورقةُ العيادة ليست كورقة المخزن، ولا كلُّ ورقةٍ تستحقّ الدرجة الثالثة.</div>
         </div>
 
         <!-- ══════════ ٣ ══════════ -->
@@ -3237,13 +3455,90 @@
             <tbody>
               <tr><td>ورقٌ ومستندات</td><td>الماسح الضوئيّ المكتبيّ · وتطبيقاتُ المسح في الهاتف</td><td><b>الهاتف يكفي للبداية</b> — ولا يلزم شراءُ جهازٍ لتجربةٍ أولى</td></tr>
               <tr><td>صورةُ نصٍّ إلى نصّ</td><td>تمييزُ النص آليًّا <span class="ltr-inline">(OCR)</span> — ومنه ما هو مجّانيٌّ يدعم العربية</td><td>دقّةُ العربية تتأثّر بجودة الورقة وخطّ اليد</td></tr>
-              <tr><td>جداولُ ورقيّة</td><td>الذكاء الاصطناعيّ — تُرفَع صورةُ الجدول فيُخرِج جدولًا جاهزًا</td><td><b>موضعُ الإبهار في المحاضرة</b> — ومن الدرجة الأولى إلى الثالثة مباشرةً</td></tr>
+              <tr><td>جداولُ ورقيّة</td><td>الذكاء الاصطناعيّ — تُرفَع صورةُ الجدول فيُخرِج جدولًا جاهزًا</td><td><b>أسرعُ قفزةٍ في الجدول</b> — من الدرجة الأولى إلى الثالثة بخطوةٍ واحدة</td></tr>
               <tr><td>استماراتٌ ورقيّة</td><td>نماذجُ إلكترونيّة</td><td>الإجاباتُ تذهب إلى جدولٍ مباشرةً بلا إدخالٍ يدويّ</td></tr>
               <tr><td>صوتٌ واجتماعات</td><td>التحويلُ من الكلام إلى نصّ</td><td>محاضرُ الاجتماعات — وأكثرُ ما يُهمَل رقمنتُه</td></tr>
               <tr><td>توقيعٌ وختم</td><td>التوقيعُ الإلكترونيّ</td><td>يُراجَع إطارُه القانونيّ قبل الاعتماد عليه رسميًّا</td></tr>
               <tr><td>الحفظ</td><td>حوسبةٌ سحابيّة بصلاحيّاتٍ ونسخٍ احتياطيّ</td><td><b>رقمنةٌ بلا حفظٍ آمنٍ خطر</b> — فالنسخة الوحيدة على جهازٍ واحدٍ أهشُّ من الورق</td></tr>
             </tbody>
           </table>
+        </div>
+
+        <p style="margin-top:20px;">والأدواتُ المستعملة في تطبيق هذا الأسبوع خمسٌ، كلُّها مجّانيّةٌ ولا تحتاج إلى شراءٍ ولا إلى جهازٍ خاصّ. وهذا تعريفٌ بكلٍّ منها قبل الدخول في الخطوات:</p>
+
+        <div class="tool">
+          <div class="tool-h">
+            <span class="tool-ic">📱</span>
+            <span class="tool-name">تطبيقُ المسح في الهاتف</span>
+            <span class="tool-en">Scanner app</span>
+            <span class="tool-free">مجّانيّ</span>
+          </div>
+          <div class="tool-b">
+            <div class="tool-row"><span class="tool-k">ما هو</span><span class="tool-v">تطبيقٌ يستعمل كاميرا الهاتف، غير أنّه ليس كاميرا: يكشف حوافّ الورقة ويقصّها، ويعدّل الميلان، ويرفع التباين حتّى يصير الخطُّ أسودَ والورقةُ بيضاء، ثمّ يجمع الصفحات في ملفٍّ واحد.</span></div>
+            <div class="tool-row"><span class="tool-k">من أين</span><span class="tool-v">مدمَجٌ في تطبيق <b>Google Drive</b> على أندرويد (زرّ ＋ ثمّ «مسح ضوئيّ»)، وفي تطبيق <b>الملفّات</b> على الآيفون. والمستقلُّ منه <a href="https://www.microsoft.com/en-us/microsoft-365/microsoft-lens" target="_blank" rel="noopener">Microsoft Lens</a>.</span></div>
+            <div class="tool-row"><span class="tool-k">لماذا</span><span class="tool-v">صورةُ الكاميرا العاديّة مائلةٌ وظلالُها متفاوتة، فتفشل عليها أداةُ تمييز النصّ. وملفُّ المسح يرفع نسبةَ النجاح من نحو النصف إلى ما فوق التسعين بالمئة.</span></div>
+            <div class="tool-row"><span class="tool-k">البديل</span><span class="tool-v">ماسحٌ ضوئيٌّ مكتبيّ — أدقُّ وأسرعُ في الكمّيّات الكبيرة، ولا يلزم لتجربةٍ أولى.</span></div>
+          </div>
+        </div>
+
+        <div class="tool">
+          <div class="tool-h">
+            <span class="tool-ic">🔤</span>
+            <span class="tool-name">تمييزُ النصّ آليًّا</span>
+            <span class="tool-en">OCR</span>
+            <span class="tool-free">مجّانيّ</span>
+          </div>
+          <div class="tool-b">
+            <div class="tool-row"><span class="tool-k">ما هو</span><span class="tool-v">تقنيّةٌ تقرأ الحروفَ داخل الصورة وتحوّلها إلى نصٍّ يقبل النسخَ والبحثَ والتعديل. واسمُها بالإنكليزيّة <span class="ltr-inline">Optical Character Recognition</span>.</span></div>
+            <div class="tool-row"><span class="tool-k">من أين</span><span class="tool-v">أيسرُ طريقٍ إليها: رفعُ الملفّ إلى <a href="https://drive.google.com" target="_blank" rel="noopener">Google Drive</a> ثمّ فتحُه بـ<b>محرّر مستندات Google</b> — فيجري التمييزُ تلقائيًّا ويظهر النصُّ تحت الصورة.</span></div>
+            <div class="tool-row"><span class="tool-k">حدودُها</span><span class="tool-v">دقّتُها على العربيّة المطبوعة عاليةٌ جدًّا، وعلى <b>خطّ اليد</b> متفاوتةٌ بحسب وضوح الخطّ وجودة المسح. ولا تفهم الجدولَ جدولًا — تقرؤه سطورًا متتابعة.</span></div>
+            <div class="tool-row"><span class="tool-k">البديل</span><span class="tool-v">أدواتٌ متخصّصةٌ بالعربيّة، ومنها ما هو مدفوع. وفي أكثر الحالات يكفي المجّانيّ.</span></div>
+          </div>
+        </div>
+
+        <div class="tool">
+          <div class="tool-h">
+            <span class="tool-ic">🤖</span>
+            <span class="tool-name">مساعدُ الذكاء الاصطناعيّ</span>
+            <span class="tool-en">AI assistant</span>
+            <span class="tool-free">خطّةٌ مجّانيّة</span>
+          </div>
+          <div class="tool-b">
+            <div class="tool-row"><span class="tool-k">ما هو</span><span class="tool-v">مساعدٌ يقبل الصورةَ ويفهم ما فيها، فيُخرِج من صورة الجدول <b>جدولًا بأعمدةٍ وصفوف</b> لا نصًّا متتابعًا. وهو الفرقُ بينه وبين تمييز النصّ.</span></div>
+            <div class="tool-row"><span class="tool-k">من أين</span><span class="tool-v"><a href="https://claude.ai" target="_blank" rel="noopener">Claude</a> · <a href="https://chatgpt.com" target="_blank" rel="noopener">ChatGPT</a> · <a href="https://gemini.google.com" target="_blank" rel="noopener">Gemini</a> — وكلُّها تعمل من المتصفّح بلا تنصيب.</span></div>
+            <div class="tool-row"><span class="tool-k">كيف</span><span class="tool-v">تُرفَع صورُ الصفحات، ويُكتَب طلبٌ واحدٌ يحدّد الأعمدةَ المطلوبة بأسمائها. وكلّما كان الطلبُ أدقَّ كان الجدولُ أنظفَ — وصيغةُ الطلب هي نصفُ النتيجة.</span></div>
+            <div class="tool-row"><span class="tool-k">تنبيه</span><span class="tool-v"><b>لا تُرفَع بياناتٌ شخصيّةٌ أو سرّيّة.</b> والتجربةُ تكون على بياناتٍ تدريبيّةٍ أو مُستبدَلةِ الأسماء. وتبقى المراجعةُ البشريّةُ لازمةً — فالمخرَجُ يُقارَن بالأصل قبل اعتماده.</span></div>
+          </div>
+        </div>
+
+        <div class="tool">
+          <div class="tool-h">
+            <span class="tool-ic">📊</span>
+            <span class="tool-name">جدولُ البيانات</span>
+            <span class="tool-en">Spreadsheet</span>
+            <span class="tool-free">مجّانيّ</span>
+          </div>
+          <div class="tool-b">
+            <div class="tool-row"><span class="tool-k">ما هو</span><span class="tool-v">المكانُ الذي يصير فيه الرقمُ رقمًا. وما دامت المعلومةُ في خانةٍ ضمن عمودٍ له اسم، أمكن فرزُها وعدُّها وجمعُها وتصفيتُها.</span></div>
+            <div class="tool-row"><span class="tool-k">من أين</span><span class="tool-v"><a href="https://sheets.google.com" target="_blank" rel="noopener">Google Sheets</a> من المتصفّح، أو <b>Excel</b> إن كان منصَّبًا.</span></div>
+            <div class="tool-row"><span class="tool-k">الأهمّ فيه</span><span class="tool-v"><b>المرشِّح</b> <span class="ltr-inline">(Filter)</span> — وهو الذي يُجيب عن سؤال المدير في ثوانٍ. و<b>الجدولُ المحوريّ</b> <span class="ltr-inline">(Pivot Table)</span> يُجيب عمّا لم يُسأل عنه بعد.</span></div>
+            <div class="tool-row"><span class="tool-k">شرطٌ لازم</span><span class="tool-v">صفٌّ واحدٌ للعناوين، وخانةٌ واحدةٌ لكلّ معلومة، ولا خانةَ مدموجة. <b>وجدولٌ مزخرفٌ غيرُ منظَّمٍ لا يُحسَب عليه شيء.</b></span></div>
+          </div>
+        </div>
+
+        <div class="tool">
+          <div class="tool-h">
+            <span class="tool-ic">☁️</span>
+            <span class="tool-name">الحفظُ السحابيّ</span>
+            <span class="tool-en">Cloud storage</span>
+            <span class="tool-free">مجّانيّ حتّى حدّ</span>
+          </div>
+          <div class="tool-b">
+            <div class="tool-row"><span class="tool-k">ما هو</span><span class="tool-v">مساحةٌ على خوادمَ خارجيّة، نسخُها متعدّدةٌ في مواضعَ متفرّقة، يُبلَغ إليها من أيّ جهاز.</span></div>
+            <div class="tool-row"><span class="tool-k">من أين</span><span class="tool-v"><a href="https://drive.google.com" target="_blank" rel="noopener">Google Drive</a> · <a href="https://onedrive.live.com" target="_blank" rel="noopener">OneDrive</a></span></div>
+            <div class="tool-row"><span class="tool-k">لماذا يُذكَر هنا</span><span class="tool-v">لأنّ الورق متفرّقٌ في خزائن، فتلفُ بعضِه لا يُتلف كلَّه. أمّا نسخةٌ رقميّةٌ وحيدةٌ على حاسوبٍ واحد، فعطبٌ واحدٌ يُذهبها جميعًا. <b>ورقمنةٌ بلا نسخةٍ احتياطيّةٍ أهشُّ من الورق الذي حلّت محلَّه.</b></span></div>
+            <div class="tool-row"><span class="tool-k">الصلاحيّات</span><span class="tool-v">أينما اجتمع أرشيفٌ كاملٌ في موضعٍ واحدٍ وجب تحديدُ مَن يبلغه ومَن يعدّله — <b>والمشاركةُ «لأيّ شخصٍ لديه الرابط» خطأٌ شائعٌ مكلف</b>.</span></div>
+          </div>
         </div>
 
         <!-- ══════════ ٤ ══════════ -->
@@ -3274,61 +3569,165 @@
         <div class="st decide"><div class="st-h"><span class="st-n">٨</span><span class="st-t">مصير الورق الأصليّ</span></div><div class="st-b"><span class="st-tag why">القرار</span><span>احتفاظٌ أو إتلافٌ بحسب الضوابط المعتمدة — <b>ولا يُتلَف شيءٌ قبل ضبط الجودة</b>.</span></div></div>
 
         <div class="drill">
-          <div class="drill-head"><span class="d-n">★</span><span class="d-t">نشاط المجاميع</span><span class="d-time">١٠ دقائق</span></div>
-          <p>لكلّ مجموعةٍ دائرةٌ مختلفة: بلديّة · مستشفى · مدرسة · دائرة تقاعد.</p>
+          <div class="drill-head"><span class="d-n">★</span><span class="d-t">تمرينُ تطبيق</span></div>
+          <p>أربعُ جهاتٍ مختلفة: <b>بلديّة</b> · <b>مستشفى</b> · <b>مدرسة</b> · <b>دائرة تقاعد</b>. والمطلوب عن واحدةٍ منها ثلاثةُ أجوبة:</p>
           <ol>
-            <li>ما الذي تبدأ المجموعةُ برقمنته أوّلًا؟ ولماذا هو بالذات؟</li>
-            <li>إلى أيّ درجةٍ من الثلاث؟</li>
-            <li>وما أكبرُ مخاطرةٍ تواجهها؟</li>
+            <li>ما الذي يُرقمَن أوّلًا؟ ولماذا هو بالذات دون غيره؟</li>
+            <li>إلى أيّ درجةٍ من الثلاث؟ وما الذي يجعل تلك الدرجة كافيةً أو غيرَ كافية؟</li>
+            <li>وما أكبرُ مخاطرةٍ تواجه هذا المشروع؟</li>
           </ol>
-          <div class="d-out"><b>المخرَج:</b> دقيقةٌ لكلّ مجموعةٍ أمام الجميع — ويُلاحَظ أنّ الأولويّة تختلف باختلاف الدائرة، <b>فلا وصفةَ واحدةً للرقمنة</b>.</div>
+          <div class="d-out"><b>ما الذي يظهر من المقارنة:</b> الأولويّة تختلف باختلاف الجهة اختلافًا كبيرًا. فالمستشفى يبدأ بملفّ المريض لأنّه يُطلَب كلّ يومٍ ويتعلّق بحياةٍ، والتقاعدُ يبدأ بالأضابير النشطة لا بالمتوفَّين، والبلديّةُ بإجازات البناء لأنّها أكثرُ ما يُراجَع عليه. <b>فلا وصفةَ واحدةً للرقمنة</b> — وإنّما سؤالٌ واحدٌ يُسأل في كلّ جهة: أيُّ ورقةٍ تُطلَب أكثر؟</div>
         </div>
 
         <!-- ══════════ ٥ ══════════ -->
         <div class="section-heading" style="margin-top:28px;">
           <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
-          <span>٥ · التطبيق الحيّ — رحلةُ ورقةٍ واحدة</span>
+          <span>٥ · التطبيق خطوةً بخطوة — رحلةُ ورقةٍ واحدة</span>
         </div>
 
-        <p>ورقةٌ واحدةٌ تمرّ على الدرجات الثلاث أمام القاعة. والمادّةُ جاهزةٌ في مجلّد المحاضرة: سجلُّ إجازاتٍ من خمس صفحاتٍ فيه ستّون موظّفًا.</p>
-
-        <div class="try-box">
-          <div class="try-title">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2"><path d="M9 3h6v5l4 9a2 2 0 0 1-2 3H7a2 2 0 0 1-2-3l4-9z" stroke-linejoin="round"/><path d="M9 3h6" stroke-linecap="round"/></svg>
-            الدرجة الأولى — صورةٌ فقط
-          </div>
-          <div class="try-line"><span class="try-tag try-do">يُنفَّذ</span><span>تُصوَّر الصفحاتُ الخمسُ بتطبيق المسح في الهاتف، فتُرفَع إلى المجلّد السحابيّ مباشرةً.</span></div>
-          <div class="try-line"><span class="try-tag try-see">يظهر</span><span>ملفٌّ أنيقٌ يبدو كالورقة. ثمّ يُبحَث داخله عن اسمٍ من السجلّ — <b>والنتيجة صفر</b>. وهنا تسكت القاعة.</span></div>
-        </div>
-
-        <div class="try-box">
-          <div class="try-title">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2"><path d="M9 3h6v5l4 9a2 2 0 0 1-2 3H7a2 2 0 0 1-2-3l4-9z" stroke-linejoin="round"/><path d="M9 3h6" stroke-linecap="round"/></svg>
-            الدرجة الثانية — نصٌّ قابلٌ للبحث
-          </div>
-          <div class="try-line"><span class="try-tag try-do">يُنفَّذ</span><span>يُفتَح الملفُّ نفسُه بمحرّر المستندات السحابيّ، فيمرّ على تمييز النص آليًّا.</span></div>
-          <div class="try-line"><span class="try-tag try-see">يظهر</span><span>النصُّ العربيُّ قابلًا للتعديل، والبحثُ عن الاسم نفسِه يصل إليه الآن. <b>غير أنّ جمع الأرقام ما زال متعذّرًا.</b></span></div>
-        </div>
-
-        <div class="try-box">
-          <div class="try-title">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2"><path d="M9 3h6v5l4 9a2 2 0 0 1-2 3H7a2 2 0 0 1-2-3l4-9z" stroke-linejoin="round"/><path d="M9 3h6" stroke-linecap="round"/></svg>
-            الدرجة الثالثة — بياناتٌ منظّمة
-          </div>
-          <div class="try-line"><span class="try-tag try-do">يُنفَّذ</span><span>تُرفَع صورُ الصفحات الخمس إلى مساعد ذكاءٍ اصطناعيّ مع طلبٍ واحد: تحويلُها إلى جدولٍ بأعمدة الاسم والرقم الوظيفيّ والشعبة وأيّام الإجازة والشهر.</span></div>
-          <div class="try-line"><span class="try-tag try-see">يظهر</span><span>جدولٌ فيه أرقامٌ تُجمَع وتُفرَز. ثمّ يُسأل أمامهم سؤالُ المدير — <b>١٧ موظّفًا</b> — ومعه ثلاثةُ أجوبةٍ لم تُطلَب: <b>١١</b> منهم في شعبةٍ واحدة، و<b>٤</b> لم يأخذوا إجازةً إطلاقًا، والذروةُ في حزيران وآب.</span></div>
-        </div>
-        <div class="takeaway">
-          <b>فخٌّ مقصود:</b> في السجلّ أربعةُ موظّفين عندهم عشرون يومًا بالضبط. فمن اختار «أكبر من أو يساوي» خرج له ٢١ لا ١٧ — <b>وصياغةُ السؤال تغيّر الرقمَ الذي يُتَّخذ عليه القرار</b>.
-        </div>
+        <p>هذا هو قلبُ الأسبوع. ورقةٌ واحدةٌ — سجلُّ الإجازات نفسُه — تمرّ على الدرجات الثلاث في اثنتَي عشرة خطوةً موصوفةً وصفًا كاملًا، بحيث يستطيع القارئ أن يعيدها بنفسه على ورقةٍ من عنده. والملفّاتُ المستعملةُ هنا هي المرفوعةُ في أوّل الصفحة، والأدواتُ هي الخمسُ المعرَّفةُ في المحور الثالث.</p>
 
         <div class="takeaway">
-          <b>الجسر إلى الأسبوع القادم:</b> يُنشَأ أمامهم في دقيقتين نموذجٌ إلكترونيٌّ بدل الاستمارة الورقية، ويملؤه ثلاثةٌ من هواتفهم فتظهر إجاباتُهم في جدولٍ أمام الجميع. <span class="hl hl-pink">وهذا لم يَعُد رقمنة — هذه رقمنةُ أعمال</span>، وهي موضوع الأسبوع القادم.
+          <b>قبل البدء — ما يُحتاج إليه:</b> هاتفٌ فيه كاميرا، وحسابُ بريدٍ إلكترونيّ واحد، واتّصالٌ بالإنترنت. <span class="hl hl-green">ولا يلزم شراءُ شيء، ولا تنصيبُ برنامجٍ على الحاسوب.</span> والوقتُ المتوقَّع للرحلة كاملةً على خمس صفحاتٍ: نحو عشرين دقيقة في المرّة الأولى، وأقلُّ من خمسٍ بعد التمرّس.
+        </div>
+
+        <p class="takeaway" style="border-inline-start-color:var(--purple); background:rgba(122,46,166,0.05);"><b>المرحلة الأولى — من الورق إلى صورة (الدرجة الأولى)</b></p>
+
+        <div class="walk">
+
+          <div class="wk">
+            <div class="wk-h"><span class="wk-n">١</span><span class="wk-t">تهيئةُ الورقة قبل التصوير</span><span class="wk-where">على الطاولة</span></div>
+            <div class="wk-b">الصفحةُ تُبسَط على سطحٍ <b>داكنٍ</b> لا فاتح، حتّى يتبيّن حدُّ الورقة من الخلفيّة فتعرف الأداةُ أين تقصّ. والإضاءةُ تأتي من الجانب لا من فوق الرأس مباشرةً، لئلّا يقع ظلُّ اليد أو الهاتف على النصّ. وتُزال المشابكُ والدبابيسُ لأنّها تُحدث ظلًّا يُقرأ حرفًا.</div>
+            <div class="wk-warn"><b>أكثرُ ما يُفسد النتيجة هنا:</b> ورقةٌ مطويّةٌ لم تُفرَد، فيقع الطيُّ خطًّا أسودَ يقطع السطر. وثوانٍ في الفرد تُوفّر إعادةَ العمل كلِّه.</div>
+          </div>
+
+          <div class="wk">
+            <div class="wk-h"><span class="wk-n">٢</span><span class="wk-t">المسحُ بتطبيق الهاتف</span><span class="wk-where">Google Drive</span></div>
+            <div class="wk-b">في تطبيق Drive على الهاتف: زرُّ <b>＋</b> في أسفل الشاشة، ثمّ خيارُ <b>«مسح ضوئيّ»</b> <span class="ltr-inline">(Scan)</span>. تُلتقَط الصفحاتُ الخمسُ واحدةً بعد أخرى — ولكلِّ صفحةٍ التقاطةٌ مستقلّة، وزرُّ ＋ الصغير يضيف الصفحةَ التالية إلى الملفّ نفسِه.<br>
+            وقبل الحفظ تُضبَط ثلاثةُ أمور: <b>حدودُ القصّ</b> إن أخطأت الأداةُ في تحديدها، و<b>التدويرُ</b> إن كانت الصفحةُ مقلوبة، ونمطُ الألوان <b>«أبيض وأسود»</b> للنصّ المكتوب لأنّه يرفع التباين. ثمّ يُحفَظ الملفُّ باسمٍ واضح: <span class="ltr-inline">leave-register-2024.pdf</span>.</div>
+            <div class="wk-res"><b>النتيجة:</b> ملفٌّ واحدٌ فيه خمسُ صفحاتٍ نظيفةٍ مستوية، حجمُه نحوَ بضعة ميغابايت، مرفوعٌ إلى الحساب السحابيّ في اللحظة نفسِها.</div>
+          </div>
+
+          <div class="wk">
+            <div class="wk-h"><span class="wk-n">٣</span><span class="wk-t">الاختبارُ الأوّل — أين نحن الآن؟</span><span class="wk-where">أيُّ قارئ PDF</span></div>
+            <div class="wk-b">يُفتَح الملفُّ، ويُطلَب البحثُ داخله <span class="ltr-inline">(Ctrl + F)</span> عن اسمٍ يراه القارئ بعينه مكتوبًا في الصفحة الأولى.</div>
+            <div class="wk-res"><b>النتيجة:</b> <b>لا نتائج</b>. والاسمُ ظاهرٌ للعين وغائبٌ عن الحاسوب، لأنّ ما في الملفّ صورةٌ لا حروف. <span class="hl hl-yellow">وهذه هي الدرجةُ الأولى بعينها</span> — وهي التي تُسمّى في كثيرٍ من الدوائر «أكملنا الرقمنة».</div>
+          </div>
+
+        </div>
+
+        <p class="takeaway" style="border-inline-start-color:var(--purple); background:rgba(122,46,166,0.05);"><b>المرحلة الثانية — من صورةٍ إلى نصٍّ يُبحَث فيه (الدرجة الثانية)</b></p>
+
+        <div class="walk">
+
+          <div class="wk">
+            <div class="wk-h"><span class="wk-n">٤</span><span class="wk-t">فتحُ الملفّ بمحرّر المستندات</span><span class="wk-where">Google Docs</span></div>
+            <div class="wk-b">في <a href="https://drive.google.com" target="_blank" rel="noopener">Drive</a> على المتصفّح: نقرةٌ يمنى على الملفّ ← <b>«فتح باستخدام»</b> ← <b>«مستندات Google»</b>. ويجري تمييزُ النصّ تلقائيًّا بلا أيّ إعدادٍ يُضبَط، وقد يستغرق من عشرين ثانيةً إلى دقيقةٍ بحسب عدد الصفحات.</div>
+            <div class="wk-res"><b>النتيجة:</b> مستندٌ جديدٌ فيه صورةُ كلّ صفحةٍ، وتحتها <b>نصُّها مكتوبًا بحروفٍ حقيقيّة</b> تقبل التحديد والنسخ.</div>
+          </div>
+
+          <div class="wk">
+            <div class="wk-h"><span class="wk-n">٥</span><span class="wk-t">مراجعةُ ما قرأته الأداة</span><span class="wk-where">Google Docs</span></div>
+            <div class="wk-b">النصُّ الناتجُ يُقارَن بالصورة التي فوقه. والخطأُ المتوقَّعُ في العربيّة يقع في مواضعَ معروفة: الهمزات، والتاءُ المربوطة تُقرأ هاءً، والأرقامُ المتشابهةُ في خطّ اليد — و<b>١</b> و<b>٧</b> أكثرُها التباسًا، و<b>٥</b> و<b>٦</b> بعدهما.</div>
+            <div class="wk-warn"><b>قاعدةٌ لا يُستغنى عنها:</b> ما لم تُراجَع نتيجةُ التمييز، بُنيت كلُّ الخطوات التالية على خطأٍ لا يظهر إلّا حين يُعتمَد الرقمُ في قرار.</div>
+          </div>
+
+          <div class="wk">
+            <div class="wk-h"><span class="wk-n">٦</span><span class="wk-t">الاختبارُ الثاني — ماذا صار ممكنًا؟</span><span class="wk-where">Google Docs</span></div>
+            <div class="wk-b">يُعاد البحثُ عن الاسم نفسِه الذي فشل في الخطوة الثالثة.</div>
+            <div class="wk-res"><b>النتيجة:</b> الاسمُ يُوجَد، ويُنتقَل إليه في لحظة، ويمكن نسخُه ولصقُه في كتابٍ رسميّ. <span class="hl hl-green">وهذه هي الدرجةُ الثانية.</span></div>
+            <div class="wk-warn"><b>وما زال متعذّرًا:</b> سؤالُ المدير. فـ«٢٣ يومًا» في هذا المستند <b>كلمةٌ داخل سطر</b> لا رقمٌ في خانة — ولا يُجمَع ما ليس في خانة. ولو أراد القارئ عدَّ مَن تجاوز العشرين، لعاد يقرأ السطور واحدًا واحدًا كما كان مع الورق.</div>
+          </div>
+
+        </div>
+
+        <p class="takeaway" style="border-inline-start-color:var(--purple); background:rgba(122,46,166,0.05);"><b>المرحلة الثالثة — من نصٍّ إلى بياناتٍ تُحسَب (الدرجة الثالثة)</b></p>
+
+        <div class="walk">
+
+          <div class="wk">
+            <div class="wk-h"><span class="wk-n">٧</span><span class="wk-t">رفعُ الصور إلى المساعد</span><span class="wk-where">مساعد ذكاء اصطناعيّ</span></div>
+            <div class="wk-b">تُفتَح واجهةُ المساعد في المتصفّح، وتُرفَع صورُ الصفحات الخمس — أو ملفُّ المسح نفسُه. والفرقُ بين هذه الخطوة وبين تمييز النصّ أنّ المساعد <b>يفهم ترتيبَ الجدول</b>: يعرف أنّ هذا العمودَ أسماءٌ وهذا أيّام، فيُخرِج صفوفًا وأعمدة لا سطورًا متتابعة.</div>
+            <div class="wk-warn"><b>قبل الرفع:</b> البياناتُ المرفوعةُ هنا تدريبيّةٌ أو مُستبدَلةُ الأسماء. <b>ولا تُرفَع أسماءُ موظّفين حقيقيّين ولا أرقامٌ وظيفيّةٌ ولا أيُّ بيانٍ شخصيّ.</b></div>
+          </div>
+
+          <div class="wk">
+            <div class="wk-h"><span class="wk-n">٨</span><span class="wk-t">صياغةُ الطلب</span><span class="wk-where">مساعد ذكاء اصطناعيّ</span></div>
+            <div class="wk-b">الطلبُ المبهَم يُخرِج جدولًا مبهَمًا. والطلبُ الذي يسمّي الأعمدةَ بأسمائها ويحدّد صيغةَ كلّ خانةٍ يُخرِج جدولًا جاهزًا للّصق. وهذا نصُّه كما يُكتَب حرفيًّا:</div>
+            <div class="pbox">
+              <div class="pbox-h"><span>📋</span><span>نصُّ الطلب — يُنسَخ كما هو</span></div>
+              <div class="pbox-b">هذه صورُ سجلّ إجازاتٍ مكتوبٍ بخطّ اليد، خمسُ صفحات.
+المطلوب تحويلُها إلى جدولٍ واحدٍ بهذه الأعمدة بالضبط وبهذا الترتيب:
+الاسم | الرقم الوظيفيّ | الشعبة | أيّام الإجازة | الشهر
+
+شروط:
+— «أيّام الإجازة» رقمٌ مجرّدٌ بلا كلمة «يوم».
+— «الشهر» اسمُ الشهر كما هو مكتوبٌ في السجلّ.
+— كلُّ موظّفٍ في صفٍّ واحد.
+— ما تعذّرت قراءتُه يُكتَب في خانته: غير واضح — ولا يُخمَّن.
+— النتيجةُ بصيغةٍ تقبل اللصقَ في جدول بيانات.</div>
+            </div>
+            <div class="wk-res"><b>لماذا هذه الشروط بالذات:</b> شرطُ «الرقم المجرّد» هو الذي يجعل الجمعَ ممكنًا، إذ «٢٣ يومًا» نصٌّ و«٢٣» رقم. وشرطُ «لا يُخمَّن» هو صمّامُ الأمان — فالخانةُ المكتوبُ فيها «غير واضح» تُراجَع، والخانةُ المخمَّنةُ تمرّ وهي خطأ.</div>
+          </div>
+
+          <div class="wk">
+            <div class="wk-h"><span class="wk-n">٩</span><span class="wk-t">ضبطُ الجودة — مقابلةُ عيّنة</span><span class="wk-where">العين والأصل</span></div>
+            <div class="wk-b">تُختار ستّةُ صفوفٍ من الستّين — عشرةٌ بالمئة — <b>اختيارًا عشوائيًّا لا من أوّل الجدول</b>، وتُقابَل خانةً بخانةٍ بالصفحة الأصليّة. ويُنظَر بخاصّةٍ إلى عمود الأيّام، لأنّه العمودُ الذي سيُبنى عليه الجواب.</div>
+            <div class="fig fig-half">
+              <img src="img/w2/page3.jpg" alt="الصفحة الثالثة من السجلّ — تُقابَل بها صفوفُ العيّنة" width="1240" height="1754" loading="lazy">
+              <div class="fig-cap"><span class="fig-n">شكل ٢</span><span>الأصلُ الذي تُقابَل به العيّنة. والمقابلةُ تكون على هذه الصورة لا على الذاكرة — خانةً بخانة.</span></div>
+            </div>
+            <div class="wk-warn"><b>ولماذا لا تُقرَأ الصفوفُ الأولى:</b> لأنّ أوّلَ الجدول غالبًا أصحُّه — فالصفحةُ الأولى أوضحُ مسحًا، والخطُّ في أوّل السجلّ أهدأُ منه في آخره. والعيّنةُ من الأوّل تُطمئن وهي لا تفحص.</div>
+            <div class="wk-res"><b>معيارُ القبول:</b> خطأٌ واحدٌ في ستّة صفوفٍ يعني نحوَ عشرةٍ بالمئة في الجدول كلِّه — وهذا يردّ العملَ إلى الخطوة السابعة بمسحٍ أوضح، لا يُمرَّر.</div>
+          </div>
+
+          <div class="wk">
+            <div class="wk-h"><span class="wk-n">١٠</span><span class="wk-t">نقلُ الجدول إلى جدول البيانات</span><span class="wk-where">Google Sheets</span></div>
+            <div class="wk-b">يُنسَخ الجدولُ ويُلصَق في ورقةٍ جديدةٍ في <a href="https://sheets.google.com" target="_blank" rel="noopener">Sheets</a>، بحيث يقع صفُّ العناوين في الصفّ الأوّل. ثمّ يُتحقَّق من أمرٍ واحدٍ قبل أيّ حساب: <b>هل عمودُ الأيّام أرقامٌ حقًّا؟</b> والعلامةُ أنّ محتوى الخانة يستقرّ إلى <b>يمين</b> الخانة إن كان نصًّا، وإلى <b>يسارها</b> إن كان رقمًا.</div>
+            <div class="wk-warn"><b>عقبةٌ شائعةٌ هنا:</b> الأرقامُ المكتوبةُ بالصيغة العربيّة <span class="ltr-inline">٢٣</span> تُلصَق نصًّا لا رقمًا، فلا يعمل عليها الجمع. وعلاجُها استبدالُها بالصيغة اللاتينيّة <span class="ltr-inline">23</span> — ويكفي أن يُطلَب ذلك في الخطوة الثامنة ضمن الشروط.</div>
+          </div>
+
+          <div class="wk">
+            <div class="wk-h"><span class="wk-n">١١</span><span class="wk-t">الجواب عن سؤال المدير</span><span class="wk-where">Google Sheets</span></div>
+            <div class="wk-b">يُحدَّد صفُّ العناوين، ثمّ <b>بيانات ← إنشاء عامل تصفية</b> <span class="ltr-inline">(Data → Create a filter)</span>. ومن سهم عمود «أيّام الإجازة» تُختار <b>التصفية حسب الشرط ← أكبر من ← ٢٠</b>. ويظهر عددُ الصفوف الظاهرة في أسفل الشاشة.</div>
+            <div class="wk-res"><b>الجواب: ١٧ موظّفًا.</b> وقد استغرق من لحظة الطلب إلى الرقم نحوَ خمس ثوانٍ — وهو السؤالُ نفسُه الذي تعذّر في الدرجتين الأولى والثانية. <span class="hl hl-green">وهذه هي الدرجةُ الثالثة.</span></div>
+          </div>
+
+          <div class="wk">
+            <div class="wk-h"><span class="wk-n">١٢</span><span class="wk-t">ما لم يُسأل عنه — وهو الأهمّ</span><span class="wk-where">Google Sheets</span></div>
+            <div class="wk-b">القيمةُ الحقيقيّةُ للدرجة الثالثة ليست في جواب السؤال المطروح، بل في الأسئلة التي لم تخطر ببال أحد. ومن <b>إدراج ← جدول محوريّ</b> <span class="ltr-inline">(Insert → Pivot table)</span>، بجعل «الشعبة» صفوفًا و«أيّام الإجازة» مجموعًا، تظهر في ثوانٍ ثلاثةُ أجوبةٍ لم تُطلَب:</div>
+            <div class="wk-res"><b>١١</b> من الموظّفين السبعةَ عشرَ في <b>شعبةٍ واحدة</b> — وهذا مؤشّرُ خللٍ في توزيع العمل لا مؤشّرُ إجازات.<br><b>٤</b> موظّفين لم يأخذوا إجازةً إطلاقًا طولَ السنة — وقد يدلّ على إرهاقٍ وظيفيّ، أو على أنّ أحدًا لا يستطيع أن يحلّ محلَّهم.<br>وذروةُ الإجازات في <b>حزيران وآب</b> — وهو ما يُبنى عليه تخطيطُ الملاك في الصيف القادم.</div>
+          </div>
+
         </div>
 
         <div class="oops">
           <span class="o-i">⚠</span>
-          <div><b>خطّةٌ بديلة:</b> لقطاتُ شاشةٍ جاهزةٌ لكلّ خطوةٍ في مجلّد المحاضرة، تُعرَض إن انقطع الإنترنت. وملفُّ الجدول النهائيّ محفوظٌ كذلك — فالعرضُ الحيُّ لا يُبنى على شبكةٍ وحدها.</div>
+          <div><b>حدُّ السؤال — ونقطةٌ تستحقّ التوقّف:</b> في هذا السجلّ <b>أربعةُ موظّفين</b> أيّامُهم عشرون بالضبط. فمَن اختار في الخطوة الحادية عشرة <b>«أكبر من ٢٠»</b> خرج له <b>١٧</b>، ومَن اختار <b>«أكبر من أو يساوي ٢٠»</b> خرج له <b>٢١</b>.
+          <br><br>والبياناتُ واحدة، والأداةُ واحدة، والفرقُ أربعةُ موظّفين — <b>وقد يكون بينهم مَن يُحال إلى لجنةٍ أو يُخصَم من رصيده</b>.
+          <br><b>والدرسُ:</b> «تجاوز العشرين» عبارةٌ غيرُ دقيقةٍ إداريًّا، ويُسأل عن معناها قبل تشغيل المرشِّح لا بعده. <span class="hl hl-pink">فصياغةُ السؤال تغيّر الرقمَ الذي يُتَّخذ عليه القرار</span> — وهذا أخطرُ ما في العمل بالبيانات، وأقلُّه انتباهًا.</div>
+        </div>
+
+        <!-- ══════════ ٦ ══════════ -->
+        <div class="section-heading" style="margin-top:28px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>٦ · متى <u>لا</u> نُرقمِن</span>
+        </div>
+
+        <p>كلُّ ما سبق يقول كيف نُرقمِن. وهذا المحورُ يقول متى لا نفعل — وهو محورٌ نادرًا ما يُذكَر في دوراتِ الرقمنة، وكثيرًا ما تُهدَر الميزانيّاتُ لإغفاله.</p>
+
+        <div class="exs">
+          <div class="ex-c"><b>حين لا يُعرَف السؤال</b>مشروعٌ لا يستطيع صاحبُه أن يذكر ثلاثةَ أسئلةٍ سيجيب عنها هو مشروعٌ يُؤجَّل لا يُموَّل. <b>والغايةُ تُحدَّد قبل الأداة.</b></div>
+          <div class="ex-c"><b>حين لا يُقرأ الأصل</b>ورقةٌ باهتةٌ أو خطُّ يدٍ متداخلٌ لا تُخرِج منه الأداةُ إلّا خطأً مُتقَنَ الشكل. <b>ورقمنةُ الرديء تُنتج بياناتٍ رديئةً تبدو حسنة.</b></div>
+          <div class="ex-c"><b>حين لا يوجد مَن يستقبلها</b>جدولٌ لا أحدَ مسؤولٌ عن تحديثه يشيخ في أشهر، ويصير أخطرَ من الورق لأنّه يُوثَق به وهو قديم.</div>
+          <div class="ex-c"><b>حين الكلفةُ فوق الفائدة</b>أرشيفٌ من ثلاثين سنةً يُطلَب منه ملفٌّ في العام مرّةً لا يستحقّ الدرجة الثالثة. <b>والدرجةُ الأولى له كافيةٌ ورشيدة.</b></div>
+          <div class="ex-c"><b>حين لا يُؤمَّن الحفظ</b>رقمنةٌ بلا نسخةٍ احتياطيّةٍ ولا صلاحيّاتٍ محدَّدةٍ تُنشئ خطرًا جديدًا: أرشيفٌ كاملٌ في ملفٍّ واحدٍ يُنسَخ في ثانية.</div>
+          <div class="ex-c"><b>وفرقٌ لا بدّ منه</b>الرقمنةُ ليست الحفظ. فالحفظُ غايتُه بقاءُ الأصل سليمًا مئةَ سنة، والرقمنةُ غايتُها الاستعمالُ اليوم. <b>ومشروعٌ يخلط بينهما يُنفق على الأولى ويُطالَب بالثانية.</b></div>
+        </div>
+
+        <div class="takeaway">
+          <b>الجسرُ إلى الأسبوع القادم:</b> في الخطوات الاثنتَي عشرةَ كلِّها بقي إجراءُ الإجازة كما هو — استمارةٌ تُملأ بخطّ اليد، ثمّ تُجمَع، ثمّ تُنقَل. وكلُّ ما صنعناه أنّنا حسّنّا <b>وعاءَ المعلومة</b> بعد أن كُتِبت.<br>
+          فلو حُذفت الاستمارةُ الورقيّةُ من أوّلها، وصار الموظّفُ يقدّم طلبَه في نموذجٍ إلكترونيّ تصل إجابتُه إلى الجدول في لحظة تقديمها — لسقطت خطواتٌ كاملةٌ من الرحلة: لا مسحَ، ولا تمييزَ نصّ، ولا مراجعةَ عيّنة. <span class="hl hl-pink">وهذا لم يَعُد رقمنة — هذه رقمنةُ أعمال</span>، وهي موضوع الأسبوع القادم.
         </div>
 
         <!-- ══════════ التمارين ══════════ -->
@@ -3408,6 +3807,58 @@
           <div class="hw-head"><span class="hw-num">١</span><span class="hw-title">ورقةٌ من دائرتك إلى الدرجة الثالثة</span><span class="scn-badge lv-mid">متوسّط</span></div>
           <p>ورقةٌ حقيقيّةٌ من دائرة الدارس — <b>غيرُ سرّيّةٍ ولا تحمل بياناتٍ شخصيّة</b> — تمرّ على الدرجات الثلاث حتّى تصير جدولًا.</p>
           <div class="hw-deliver"><span class="hw-tag">المُسلَّم</span><span>ملفُّ الجدول · وجملةٌ واحدة: <b>«ماذا ستتيح لي هذه البيانات الآن؟»</b> — وجوابٌ لا يذكر سؤالًا جديدًا صار ممكنًا يدلّ على أنّ الورقة لم تكن تستحقّ الدرجة الثالثة.</span></div>
+        </div>
+
+        <!-- ══════════ مسرد المصطلحات ══════════ -->
+        <div class="section-heading" style="margin-top:30px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>📖 مسرد المصطلحات</span>
+        </div>
+
+        <p>المصطلحُ العربيُّ يُفهَم به الدرس، والمقابلُ الإنكليزيُّ يُبحَث به في الإنترنت ويُقرَأ في أدلّة الأدوات. وكلُّ ما في هذا الأسبوع مجموعٌ هنا:</p>
+
+        <div class="gloss-wrap">
+          <table class="gloss">
+            <thead><tr><th style="width:26%;">المصطلح</th><th style="width:26%;">English</th><th>التعريف في سطر</th></tr></thead>
+            <tbody>
+              <tr><td>الرقمنة</td><td class="en">Digitization</td><td>تحويلُ المعلومة من وعاءٍ مادّيٍّ إلى صيغةٍ رقميّة، مع بقاء الإجراء كما هو.</td></tr>
+              <tr><td>رقمنةُ الأعمال</td><td class="en">Digitalization</td><td>تغييرُ الإجراء نفسِه بالأدوات الرقميّة — حذفُ خطوةٍ أو أتمتتُها، لا نقلُ وعائها.</td></tr>
+              <tr><td>التحوّلُ الرقميّ</td><td class="en">Digital Transformation</td><td>تغييرٌ في نموذج العمل والثقافة المؤسّسيّة كلِّها، والرقمنةُ جزءٌ صغيرٌ منه.</td></tr>
+              <tr><td>المسحُ الضوئيّ</td><td class="en">Scanning</td><td>التقاطُ صورةٍ مستويةٍ عاليةِ التباين للورقة — وهو الدرجةُ الأولى.</td></tr>
+              <tr><td>تمييزُ النصّ آليًّا</td><td class="en">OCR</td><td>قراءةُ الحروف داخل الصورة وتحويلُها نصًّا يقبل البحثَ والنسخ — وهو الدرجةُ الثانية.</td></tr>
+              <tr><td>البياناتُ المنظّمة</td><td class="en">Structured Data</td><td>معلومةٌ في خانةٍ ضمن عمودٍ له اسم، فتُعَدُّ وتُفرَز وتُحسَب — وهي الدرجةُ الثالثة.</td></tr>
+              <tr><td>البياناتُ الوصفيّة</td><td class="en">Metadata</td><td>بياناتٌ عن الملفّ لا في داخله — تاريخُه، ومَن أنشأه، وإلى أيّ قسمٍ يعود. وبها يُفهرَس الأرشيف.</td></tr>
+              <tr><td>الفهرسة</td><td class="en">Indexing</td><td>إنشاءُ جدولٍ يربط كلَّ ملفٍّ ببياناته الوصفيّة — وهي الخطوةُ التي تبلغ بالمشروع الدرجةَ الثالثة.</td></tr>
+              <tr><td>ضبطُ الجودة</td><td class="en">Quality Control</td><td>فحصُ عيّنةٍ عشوائيّةٍ ومقابلتُها بالأصل قبل اعتماد المخرَج أو إتلاف الورق.</td></tr>
+              <tr><td>الدقّة</td><td class="en">Resolution / DPI</td><td>عددُ النقاط في البوصة عند المسح. و٣٠٠ كافيةٌ للنصّ، وما دونها يُضعف تمييزَ الحروف.</td></tr>
+              <tr><td>الحفظُ السحابيّ</td><td class="en">Cloud Storage</td><td>مساحةُ تخزينٍ على خوادمَ خارجيّةٍ نسخُها متعدّدة، يُبلَغ إليها من أيّ جهاز.</td></tr>
+              <tr><td>النسخُ الاحتياطيّ</td><td class="en">Backup</td><td>نسخةٌ ثانيةٌ في موضعٍ مستقلّ. ونسخةٌ واحدةٌ على جهازٍ واحدٍ ليست نسخًا احتياطيًّا.</td></tr>
+              <tr><td>الصلاحيّات</td><td class="en">Access Permissions</td><td>تحديدُ مَن يرى ومَن يعدّل ومَن يحذف — ويُضبَط قبل رفع الأرشيف لا بعده.</td></tr>
+              <tr><td>المرشِّح</td><td class="en">Filter</td><td>إظهارُ الصفوف المطابقة لشرطٍ وإخفاءُ غيرها — وهو الذي أجاب عن سؤال المدير.</td></tr>
+              <tr><td>الجدولُ المحوريّ</td><td class="en">Pivot Table</td><td>تلخيصُ جدولٍ كبيرٍ بالتجميع والعدّ — وبه ظهرت الأجوبةُ التي لم تُطلَب.</td></tr>
+              <tr><td>النموذجُ الإلكترونيّ</td><td class="en">Online Form</td><td>استمارةٌ تُملأ من المتصفّح أو الهاتف، وتصل إجاباتُها إلى جدولٍ في لحظة الإرسال.</td></tr>
+              <tr><td>التوقيعُ الإلكترونيّ</td><td class="en">e-Signature</td><td>توقيعٌ رقميٌّ موثَّقٌ يقوم مقام الخطّيّ — ويُراجَع إطارُه القانونيّ قبل الاعتماد.</td></tr>
+              <tr><td>الحفظُ طويلُ الأمد</td><td class="en">Digital Preservation</td><td>ضمانُ بقاء الملفّ مقروءًا بعد عقود — وهو غيرُ الرقمنة وإن اشتبه بها.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- ══════════ المصادر ══════════ -->
+        <div class="section-heading" style="margin-top:28px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>📚 المصادر</span>
+        </div>
+
+        <div class="srcs">
+          <div class="src"><span class="src-n">١.</span><span class="src-b"><span class="src-kind">فيديو</span><b>Introduction to Digitization</b> — Northern New York Library Network. ندوةٌ تمهيديّةٌ في الرقمنة، منها أُخذ محورُ «متى لا نُرقمِن» والتفريقُ بين الرقمنة والحفظ طويل الأمد.<br><a href="https://www.youtube.com/watch?v=QLqgiChFug8" target="_blank" rel="noopener">youtube.com/watch?v=QLqgiChFug8</a></span></div>
+
+          <div class="src"><span class="src-n">٢.</span><span class="src-b"><span class="src-kind">دليل</span><b>Federal Agencies Digital Guidelines Initiative — FADGI</b>. المرجعُ المعتمَد في معايير دقّة المسح وضبط الجودة، ومنه معيارُ ٣٠٠ نقطةٍ في البوصة للنصّ.<br><a href="https://www.digitizationguidelines.gov" target="_blank" rel="noopener">digitizationguidelines.gov</a></span></div>
+
+          <div class="src"><span class="src-n">٣.</span><span class="src-b"><span class="src-kind">مساعدة</span><b>مساعدة Google Drive — المسح الضوئيّ وتمييز النصّ</b>. الشرحُ الرسميُّ للخطوتين الثانية والرابعة في التطبيق.<br><a href="https://support.google.com/drive/answer/3145593" target="_blank" rel="noopener">support.google.com/drive/answer/3145593</a></span></div>
+
+          <div class="src"><span class="src-n">٤.</span><span class="src-b"><span class="src-kind">مساعدة</span><b>مساعدة Google Sheets — المرشِّح والجدول المحوريّ</b>. الشرحُ الرسميُّ للخطوتين الحاديةَ عشرةَ والثانيةَ عشرة.<br><a href="https://support.google.com/docs/answer/3540681" target="_blank" rel="noopener">support.google.com/docs/answer/3540681</a></span></div>
+
+          <div class="src"><span class="src-n">٥.</span><span class="src-b"><span class="src-kind">ملفّات</span><b>سجلُّ الإجازات التدريبيّ</b> — أُعِدَّ لهذه المحاضرة خاصّةً، وبياناتُه وأسماؤه <b>غيرُ حقيقيّة</b>، ولا يعود إلى دائرةٍ بعينها. وهو المرفوعُ بصيغه الثلاث في أوّل هذه الصفحة.</span></div>
         </div>
 
         <div class="mini-note">نهاية الأسبوع الثاني — إعداد: د. أمير هادي ★</div>
