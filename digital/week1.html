@@ -2721,6 +2721,22 @@
     margin-inline-end:6px; vertical-align:middle;
   }
 
+  /* ─── مخطّط المسار ─── */
+  .dgm{
+    margin:18px 0; padding:14px 14px 10px; background:#fff;
+    border:1.5px solid rgba(26,61,140,0.18); border-radius:14px;
+    box-shadow:0 2px 10px rgba(26,61,140,0.07);
+    break-inside:avoid; page-break-inside:avoid;
+  }
+  .dgm-t{
+    text-align:center; font-family:'Aref Ruqaa',serif; color:var(--red);
+    font-size:calc(17px * var(--fs,1)); margin-bottom:6px;
+  }
+  .dgm svg{ display:block; width:100%; height:auto;
+            font-family:'Noto Naskh Arabic',serif; }
+  .dgm-c{ margin-top:8px; text-align:center; color:#6b7280;
+          font-size:calc(12px * var(--fs,1)); line-height:1.85; }
+
   /* ─── نصُّ طلبٍ يُنسَخ كما هو ─── */
   .pbox{
     margin:10px 0; border-radius:10px; overflow:hidden;
@@ -3445,6 +3461,120 @@
         <div class="section-heading" style="margin-top:28px;">
           <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
           <span>٣ · أدوات الرقمنة</span>
+        </div>
+
+
+        <p>وقبل الدخول في الأدوات واحدةً واحدة، هذا مسارُ الرقمنة كاملًا في مخطّطٍ واحد — من الورقة في اليد إلى حمايتها بعد الخزن:</p>
+
+        <div class="dgm">
+          <div class="dgm-t">طريقُ الرقمنة — من الورقة إلى الحماية</div>
+          <svg viewBox="0 0 900 650" role="img" aria-label="مخطّط طريق الرقمنة من الورقة إلى الحماية">
+            <defs>
+              <marker id="ahw2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M0 0 L10 5 L0 10 z" fill="#1857a4"/>
+              </marker>
+            </defs>
+
+            <!-- ───── الورقة ───── -->
+            <g filter="url(#sketchy)">
+              <path d="M745 75 h85 l20 20 v105 h-105 z" fill="#fdfbf4" stroke="#8a5a2b" stroke-width="2.4" stroke-linejoin="round"/>
+              <path d="M830 75 v20 h20" fill="none" stroke="#8a5a2b" stroke-width="2.4" stroke-linejoin="round"/>
+            </g>
+            <g stroke="#8a5a2b" stroke-width="2" stroke-linecap="round" opacity="0.5">
+              <line x1="760" y1="118" x2="836" y2="118"/>
+              <line x1="760" y1="136" x2="836" y2="136"/>
+              <line x1="760" y1="154" x2="818" y2="154"/>
+              <line x1="760" y1="172" x2="836" y2="172"/>
+            </g>
+            <text x="797" y="228" text-anchor="middle" font-size="16.5" font-weight="700" fill="#1a3d8c">ورقة مكتوبة باليد</text>
+            <text x="797" y="250" text-anchor="middle" font-size="12.5" fill="#6b7280">المُدخَل</text>
+
+            <line x1="730" y1="135" x2="670" y2="135" stroke="#1857a4" stroke-width="2.6" marker-end="url(#ahw2)"/>
+
+            <!-- ───── المسح ───── -->
+            <rect x="480" y="70" width="175" height="160" rx="12" fill="rgba(24,87,164,0.06)" stroke="#1857a4" stroke-width="2.6" filter="url(#sketchy)"/>
+            <text x="567" y="105" text-anchor="middle" font-size="19" font-weight="700" fill="#1857a4">المسح</text>
+            <text x="567" y="126" text-anchor="middle" font-size="12.5" fill="#6b7280" font-family="Courier New, monospace">Scan</text>
+            <line x1="500" y1="140" x2="635" y2="140" stroke="#1857a4" stroke-width="1.4" opacity="0.35"/>
+            <text x="567" y="167" text-anchor="middle" font-size="15" fill="#25303f">الهاتف</text>
+            <text x="567" y="195" text-anchor="middle" font-size="15" fill="#25303f">ماسح ضوئيّ</text>
+            <text x="567" y="216" text-anchor="middle" font-size="12.5" fill="#6b7280">ثلاثةٌ في واحد</text>
+
+            <!-- الدقّة -->
+            <rect x="470" y="254" width="195" height="54" rx="10" fill="rgba(224,122,31,0.08)" stroke="#e07a1f" stroke-width="1.8" stroke-dasharray="6 4"/>
+            <text x="567" y="277" text-anchor="middle" font-size="13.5" font-weight="700" fill="#e07a1f">الدقّة: ٣٠٠ نقطة لكلّ إنش</text>
+            <text x="567" y="298" text-anchor="middle" direction="ltr" font-size="12" fill="#6b7280" font-family="Courier New, monospace">300 DPI</text>
+
+            <!-- ───── المخرَج ───── -->
+            <path d="M468 150 H437" stroke="#1857a4" stroke-width="2.6" fill="none"/>
+            <path d="M437 150 V110 H408" stroke="#1857a4" stroke-width="2.4" fill="none" marker-end="url(#ahw2)"/>
+            <path d="M437 150 V192 H408" stroke="#1857a4" stroke-width="2.4" fill="none" marker-end="url(#ahw2)"/>
+
+            <rect x="212" y="77" width="188" height="66" rx="11" fill="rgba(31,122,61,0.07)" stroke="#1f7a3d" stroke-width="2.4" filter="url(#sketchy)"/>
+            <text x="306" y="104" text-anchor="middle" font-size="16" font-weight="700" fill="#1f7a3d">ملفّ</text>
+            <text x="306" y="128" text-anchor="middle" font-size="14" fill="#25303f" font-family="Courier New, monospace">PDF</text>
+
+            <rect x="212" y="159" width="188" height="66" rx="11" fill="rgba(122,46,166,0.07)" stroke="#7a2ea6" stroke-width="2.4" filter="url(#sketchy)"/>
+            <text x="306" y="186" text-anchor="middle" font-size="16" font-weight="700" fill="#7a2ea6">صورة</text>
+            <text x="306" y="210" text-anchor="middle" font-size="14" fill="#25303f" font-family="Courier New, monospace">JPEG</text>
+
+            <text x="306" y="250" text-anchor="middle" font-size="12.5" fill="#6b7280">المُخرَج</text>
+
+            <!-- ───── الفاصل ───── -->
+            <line x1="40" y1="332" x2="860" y2="332" stroke="#1a3d8c" stroke-width="1.6" stroke-dasharray="7 6" opacity="0.3"/>
+            <text x="450" y="364" text-anchor="middle" font-size="14.5" font-weight="700" fill="#1a3d8c">ثمّ أربعُ خطواتٍ بعد المسح</text>
+
+            <!-- ───── الخطوات الأربع ───── -->
+            <rect x="679" y="382" width="190" height="140" rx="12" fill="#fff" stroke="#0f7a72" stroke-width="2.4" filter="url(#sketchy)"/>
+            <circle cx="774" cy="410" r="16" fill="#0f7a72"/>
+            <text x="774" y="416" text-anchor="middle" font-size="15" font-weight="700" fill="#ffffff">١</text>
+            <text x="774" y="450" text-anchor="middle" font-size="15.5" font-weight="700" fill="#0f7a72">تسمية الملفّات</text>
+            <text x="774" y="477" text-anchor="middle" font-size="12.5" fill="#4b5563">اسمٌ يدلّ على المحتوى</text>
+            <text x="774" y="498" text-anchor="middle" font-size="12.5" fill="#4b5563">والتاريخ والجهة</text>
+
+            <path d="M672 444 L660 452 L672 460" fill="none" stroke="#1857a4" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+
+            <rect x="463" y="382" width="190" height="140" rx="12" fill="#fff" stroke="#0f7a72" stroke-width="2.4" filter="url(#sketchy)"/>
+            <circle cx="558" cy="410" r="16" fill="#0f7a72"/>
+            <text x="558" y="416" text-anchor="middle" font-size="15" font-weight="700" fill="#ffffff">٢</text>
+            <text x="558" y="450" text-anchor="middle" font-size="15.5" font-weight="700" fill="#0f7a72">تعديل الملفّات</text>
+            <text x="558" y="477" text-anchor="middle" font-size="12.5" fill="#4b5563">ضبطُ الجودة</text>
+            <text x="558" y="498" text-anchor="middle" font-size="12.5" fill="#4b5563">والقصُّ والتدوير</text>
+
+            <path d="M456 444 L444 452 L456 460" fill="none" stroke="#1857a4" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+
+            <rect x="247" y="382" width="190" height="140" rx="12" fill="#fff" stroke="#0f7a72" stroke-width="2.4" filter="url(#sketchy)"/>
+            <circle cx="342" cy="410" r="16" fill="#0f7a72"/>
+            <text x="342" y="416" text-anchor="middle" font-size="15" font-weight="700" fill="#ffffff">٣</text>
+            <text x="342" y="450" text-anchor="middle" font-size="15.5" font-weight="700" fill="#0f7a72">نقل الملفّات</text>
+            <text x="342" y="477" text-anchor="middle" font-size="12.5" fill="#4b5563">عبر الشبكة</text>
+            <text x="342" y="498" text-anchor="middle" font-size="12.5" fill="#4b5563">أو الذاكرة</text>
+
+            <path d="M240 444 L228 452 L240 460" fill="none" stroke="#1857a4" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+
+            <rect x="31" y="382" width="190" height="140" rx="12" fill="#fff" stroke="#0f7a72" stroke-width="2.4" filter="url(#sketchy)"/>
+            <circle cx="126" cy="410" r="16" fill="#0f7a72"/>
+            <text x="126" y="416" text-anchor="middle" font-size="15" font-weight="700" fill="#ffffff">٤</text>
+            <text x="126" y="450" text-anchor="middle" font-size="15.5" font-weight="700" fill="#0f7a72">خزن الملفّات</text>
+            <text x="126" y="477" text-anchor="middle" font-size="12.5" fill="#4b5563">داخليّ · خارجيّ</text>
+            <text x="126" y="498" text-anchor="middle" font-size="12.5" fill="#4b5563">وخزنٌ سحابيّ</text>
+
+            <!-- وصلاتٌ إلى شريط الحماية -->
+            <g stroke="#d1342b" stroke-width="1.8" stroke-dasharray="5 4" opacity="0.55">
+              <line x1="774" y1="522" x2="774" y2="548"/>
+              <line x1="558" y1="522" x2="558" y2="548"/>
+              <line x1="342" y1="522" x2="342" y2="548"/>
+              <line x1="126" y1="522" x2="126" y2="548"/>
+            </g>
+
+            <!-- ───── الحماية ───── -->
+            <rect x="31" y="548" width="838" height="80" rx="14" fill="rgba(209,52,43,0.055)" stroke="#d1342b" stroke-width="2.6" stroke-dasharray="9 5" filter="url(#sketchy)"/>
+            <circle cx="820" cy="578" r="16" fill="#d1342b"/>
+            <text x="820" y="584" text-anchor="middle" font-size="15" font-weight="700" fill="#ffffff">٥</text>
+            <text x="450" y="584" text-anchor="middle" font-size="17" font-weight="700" fill="#d1342b">حماية الرقمنة</text>
+            <text x="450" y="612" text-anchor="middle" font-size="13" fill="#4b5563">صلاحيّاتٌ محدَّدةٌ ونسخٌ احتياطيّ — ترافق الخطوات الأربع كلَّها ولا تأتي بعدها</text>
+          </svg>
+          <div class="dgm-c">الخطُّ المتّصل مسارُ الملفّ، والخطُّ المتقطّعُ الأحمرُ يدلّ على أنّ الحماية تغطّي الخطوات جميعًا لا الأخيرةَ وحدها.</div>
         </div>
 
         <p>الأدواتُ تُصنَّف بحسب المادّة المُرقمَنة لا بحسب أسمائها، فالقائدُ يحتاج أن يعرف <b>ماذا يُرقمِن</b> أوّلًا ثمّ يسأل عن الأداة.</p>
