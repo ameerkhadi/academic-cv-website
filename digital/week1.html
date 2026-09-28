@@ -1313,6 +1313,8 @@
   }
   .st.hands .st-n{ background:var(--green); }
   .st.watch .st-n{ background:var(--purple); }
+  .st.decide{ border-inline-start-color:var(--blue); }
+  .st.decide .st-n{ background:var(--blue); }
   .st-t{
     font-family:'Aref Ruqaa',serif; font-weight:700;
     font-size:calc(15px * var(--fs,1)); color:var(--ink); line-height:1.5;
@@ -2545,6 +2547,20 @@
     }
     .slide{ padding-bottom:20mm !important; }   /* مكان للشريط فلا يركب النص */
   }
+  /* خلاصة نثريّة تحت المحور */
+  .takeaway{
+    margin:13px 0 5px; padding:11px 15px;
+    border-inline-start:4px solid var(--blue);
+    background:rgba(26,61,140,0.05);
+    border-radius:0 10px 10px 0;
+    font-size:calc(13.5px * var(--fs,1));
+    line-height:1.95; color:var(--ink); text-align:justify;
+  }
+  .takeaway b{ color:var(--blue); }
+
+  .ltr-inline{ unicode-bidi:isolate; direction:ltr;
+               font-family:'Courier New',monospace; font-size:0.94em; }
+
 </style>
 
 <!-- مكتبة محلية لبناء ملف PDF من صفحات الورقة عند التصدير — لا اعتماد على الإنترنت وقت التشغيل -->
@@ -3123,15 +3139,279 @@
       <!-- ============ END SLIDE 1 ============ -->
 
       <!-- ============ SLIDE 2 : الأسبوع الثاني ============ -->
-      <div id="slide-2" class="slide content-slide">
+      <div id="slide-2" class="slide content-slide rich-slide">
         <span class="chip chip-ch1">الأسبوع الثاني</span>
-        <h2 class="page-title">الأسبوع الثاني</h2>
+        <h2 class="page-title">الرقمنة — من الورقة إلى البيانات</h2>
         <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
-        <div class="coming-soon">
-          <svg class="big-icon" viewBox="0 0 40 40"><g filter="url(#sketchy)"><circle cx="20" cy="20" r="15" fill="#fde3c4" stroke="var(--orange)" stroke-width="2.5"/><path d="M20 12 v9 l6 4" fill="none" stroke="var(--orange)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></g></svg>
-          <p class="cs-title">تنزل لاحقاً</p>
-          <p class="cs-sub">محتوى هذا الأسبوع سيُضاف قريباً.</p>
+
+        <p class="lead-paragraph">عرّفنا في الأسبوع الأول الرقمنة تعريفًا سريعًا وفرّقناها عن رقمنة الأعمال والتحوّل الرقمي. وهذا الأسبوع يقف عندها وحدها، لأنّ أكثر ما يُنفَق من مالٍ ووقتٍ في مشاريع الرقمنة <span class="hl hl-yellow">يُنفَق على درجةٍ لا تُجيب عن أسئلة المدير</span>.</p>
+
+        <div class="ba-prompt">
+          <b>تحدّي الساعة:</b> كتابٌ صادرٌ من دائرتك سنة ٢٠١٩ عن موضوعٍ بعينه — كم يستغرق إيجاده؟<br>
+          تُجمَع الأجوبة على السبورة، وهي في العادة ساعاتٌ أو أيام. ثمّ يُبحَث في مجلّد الحوسبة السحابية بكلمةٍ واحدة فيظهر المستند في ثانيتين.<br>
+          <b>والفكرة التي يُبنى عليها الأسبوع:</b> الورق يحفظ المعلومة، ولا يسمح بالبحث فيها.
         </div>
+
+        <!-- ══════════ ١ ══════════ -->
+        <div class="section-heading" style="margin-top:28px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>١ · ما الرقمنة</span>
+        </div>
+
+        <p><b>الرقمنة</b> تحويلُ المعلومة من شكلها المادّيّ — ورقٍ أو صورةٍ أو صوتٍ أو توقيعٍ أو استمارة — إلى صيغةٍ رقميّةٍ يقرؤها الحاسوب ويبحث فيها ويخزّنها ويشاركها، <b>مع بقاء الإجراء نفسِه كما هو</b>. فالمعاملة التي كانت تمرّ على خمسة توقيعاتٍ تبقى تمرّ على خمسةٍ، وإنّما تغيّر وعاءُ المعلومة لا طريقُها.</p>
+
+        <!-- ══════════ ٢ ══════════ -->
+        <div class="section-heading" style="margin-top:28px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>٢ · درجات الرقمنة الثلاث</span>
+        </div>
+
+        <p>هذه أهمّ فكرةٍ في الأسبوع. والدرجاتُ الثلاث تُعرَض على ورقةٍ واحدةٍ ليظهر الفرق:</p>
+
+        <div class="ba-prompt" style="text-align:center;">
+          <b>الورقة:</b> سجلّ الإجازات السنوية لقسم الموارد البشرية — خمس صفحاتٍ بخطّ اليد.<br>
+          <b>وسؤال المدير العام:</b> «كم موظّفًا تجاوز ٢٠ يوم إجازةٍ هذه السنة؟»
+        </div>
+
+        <div class="eras-track">
+          <div class="era-box">
+            <span class="era-num">١</span>
+            <span class="era-ar">صورةٌ فقط</span>
+            <span class="era-en">رقمنةٌ شكليّة</span>
+            <div class="era-def">مُسِحت الصفحاتُ ضوئيًّا وحُفظت ملفًّا واحدًا. صار السجلّ على الحاسوب ولم يعد في الخزانة، ويمكن إرسالُه بالبريد.</div>
+            <div class="era-ex"><b>أيجيب عن سؤال المدير؟</b> لا. تُفتَح الصفحاتُ وتُقرأ بالعين ويُعَدُّ يدويًّا — العملُ هو هو، إنّما على الشاشة.</div>
+            <div class="era-ex"><b>اختبارٌ أمام القاعة:</b> بحثٌ عن اسمٍ داخل الملفّ ← النتيجة صفر. الحاسوبُ يرى صورةً لا يرى كلمات.</div>
+          </div>
+          <div class="era-arrow">←</div>
+          <div class="era-box">
+            <span class="era-num">٢</span>
+            <span class="era-ar">نصٌّ قابلٌ للبحث</span>
+            <span class="era-en">بعد تمييز النص آليًّا</span>
+            <div class="era-def">مُرِّر الملفُّ نفسُه على أداة تمييز النص، فصار الحاسوب «يقرأ» الكلمات.</div>
+            <div class="era-ex"><b>ما الذي تغيّر؟</b> البحثُ عن «علي حسين» يصل إلى صفحته في ثانية، ويمكن نسخُ فقرةٍ ولصقُها في كتابٍ رسميّ.</div>
+            <div class="era-ex"><b>أيجيب عن السؤال؟</b> جزئيًّا. نجد أيَّ موظّفٍ بسرعة، <b>ولا نستطيع العدّ ولا الجمع</b> — فـ«٢٣ يومًا» ما زالت كلمةً داخل نصّ لا رقمًا في خانة.</div>
+          </div>
+          <div class="era-arrow">←</div>
+          <div class="era-box now">
+            <span class="era-num">٣</span>
+            <span class="era-ar">بياناتٌ منظّمة</span>
+            <span class="era-en">جدول</span>
+            <div class="era-def">حُوِّل السجلّ إلى جدولٍ بأعمدة: الاسم · الرقم الوظيفيّ · الشعبة · أيّام الإجازة · الشهر.</div>
+            <div class="era-ex"><b>أيجيب عن السؤال؟</b> نعم، في خمس ثوانٍ بمرشِّحٍ على عمود الأيّام: <b>١٧ موظّفًا</b>.</div>
+            <div class="era-ex"><b>ويجيب عمّا لم يُسأل بعد:</b> أيُّ شعبةٍ أكثرُ إجازات؟ وفي أيّ شهرٍ تتركّز فيُخطَّط لتوزيع العمل؟ ومَن لم يأخذ إجازةً إطلاقًا — وقد يدلّ على إرهاقٍ وظيفيّ؟</div>
+          </div>
+        </div>
+
+        <div class="takeaway">
+          <b>هنا تظهر القيمة الحقيقيّة:</b> الورقةُ في الدرجة الثالثة لم تَعُد مستندًا يُحفَظ، بل صارت <span class="hl hl-green">معلومةً تُتَّخذ عليها قرارات</span>. وما دون ذلك حفظٌ أنيقٌ للورق.
+        </div>
+
+        <div class="oops">
+          <span class="o-i">⚠</span>
+          <div><b>الخطأ الشائع عند القادة:</b> يظنّ المدير أنّ مسح الأرشيف ضوئيًّا يعني أنّه رقمنه — والحقيقة أنّه بلغ <b>الدرجة الأولى فحسب</b>.
+          <br><br><b>سيناريو للنقاش:</b> مديرٌ عامّ خصّص ميزانيّةً وفريقًا ثلاثةَ أشهرٍ لمسح مئة ألف ورقةٍ من أرشيف المديرية، ثمّ أعلن في الاجتماع: «أكملنا الرقمنة مئةً بالمئة». وبعد شهرٍ طلبت الوزارة إحصائيّةً بعدد العقود المنتهية خلال خمس سنوات — فإذا كلُّ ما لديهم صور، وعادوا يقرؤون الملفّات واحدًا واحدًا كما كانوا مع الورق.
+          <br><br><b>أين الخطأ؟</b> لم يُسأل قبل البدء: <b>ما الأسئلة التي أريد أن تجيبني عنها هذه البيانات؟</b>
+          <br><b>والدرسُ للقائد:</b> تُحدَّد الدرجةُ المطلوبة قبل المشروع. فليس كلُّ ورقةٍ تحتاج الثالثة — والأرشيفُ القديم النادرُ الاستعمال قد تكفيه الأولى. أمّا ما تُتَّخذ عليه القرارات فلا بدّ أن يبلغ الثالثة.</div>
+        </div>
+
+        <div class="drill">
+          <div class="drill-head"><span class="d-n">؟</span><span class="d-t">سؤالٌ تفاعليّ</span><span class="d-time">٣ دقائق</span></div>
+          <ol>
+            <li>ورقةٌ واحدةٌ من دائرتك — في أيّ درجةٍ هي الآن؟</li>
+            <li>وإلى أيّ درجةٍ ينبغي أن تصل؟ ولماذا هذه الدرجة بعينها؟</li>
+          </ol>
+          <div class="d-out"><b>المخرَج:</b> ثلاثة أو أربعة أجوبةٍ بصوتٍ عالٍ، ويُقارَن بينها — فالاختلافُ في الجواب هو الدرس.</div>
+        </div>
+
+        <!-- ══════════ ٣ ══════════ -->
+        <div class="section-heading" style="margin-top:28px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>٣ · أدوات الرقمنة</span>
+        </div>
+
+        <p>الأدواتُ تُصنَّف بحسب المادّة المُرقمَنة لا بحسب أسمائها، فالقائدُ يحتاج أن يعرف <b>ماذا يُرقمِن</b> أوّلًا ثمّ يسأل عن الأداة.</p>
+
+        <div class="dt-wrap">
+          <table class="dt">
+            <thead><tr><th>ما الذي يُرقمَن؟</th><th>الأداة</th><th>ملاحظةٌ للقائد</th></tr></thead>
+            <tbody>
+              <tr><td>ورقٌ ومستندات</td><td>الماسح الضوئيّ المكتبيّ · وتطبيقاتُ المسح في الهاتف</td><td><b>الهاتف يكفي للبداية</b> — ولا يلزم شراءُ جهازٍ لتجربةٍ أولى</td></tr>
+              <tr><td>صورةُ نصٍّ إلى نصّ</td><td>تمييزُ النص آليًّا <span class="ltr-inline">(OCR)</span> — ومنه ما هو مجّانيٌّ يدعم العربية</td><td>دقّةُ العربية تتأثّر بجودة الورقة وخطّ اليد</td></tr>
+              <tr><td>جداولُ ورقيّة</td><td>الذكاء الاصطناعيّ — تُرفَع صورةُ الجدول فيُخرِج جدولًا جاهزًا</td><td><b>موضعُ الإبهار في المحاضرة</b> — ومن الدرجة الأولى إلى الثالثة مباشرةً</td></tr>
+              <tr><td>استماراتٌ ورقيّة</td><td>نماذجُ إلكترونيّة</td><td>الإجاباتُ تذهب إلى جدولٍ مباشرةً بلا إدخالٍ يدويّ</td></tr>
+              <tr><td>صوتٌ واجتماعات</td><td>التحويلُ من الكلام إلى نصّ</td><td>محاضرُ الاجتماعات — وأكثرُ ما يُهمَل رقمنتُه</td></tr>
+              <tr><td>توقيعٌ وختم</td><td>التوقيعُ الإلكترونيّ</td><td>يُراجَع إطارُه القانونيّ قبل الاعتماد عليه رسميًّا</td></tr>
+              <tr><td>الحفظ</td><td>حوسبةٌ سحابيّة بصلاحيّاتٍ ونسخٍ احتياطيّ</td><td><b>رقمنةٌ بلا حفظٍ آمنٍ خطر</b> — فالنسخة الوحيدة على جهازٍ واحدٍ أهشُّ من الورق</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- ══════════ ٤ ══════════ -->
+        <div class="section-heading" style="margin-top:28px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>٤ · سيناريو رقمنة</span>
+        </div>
+
+        <div class="scn">
+          <div class="scn-head"><span class="scn-badge">سيناريو</span><span class="scn-title">أضابير الموظّفين في مديريّة</span></div>
+          <p>مديرٌ عامٌّ استلم مديريّةً فيها <b>خمسةُ آلاف إضبارةٍ ورقيّة</b>، والوزارةُ تطلب رقمنتها خلال ستّة أشهر. والقائدُ لا يمسح الأوراق بنفسه — إنّما يتّخذ ثمانية قراراتٍ بالترتيب:</p>
+        </div>
+
+        <div class="st decide"><div class="st-h"><span class="st-n">١</span><span class="st-t">الجرد</span></div><div class="st-b"><span class="st-tag why">القرار</span><span>ما الموجود؟ وكم حجمُه؟ ولا يُخطَّط لِما لم يُعَدّ.</span></div></div>
+
+        <div class="st decide"><div class="st-h"><span class="st-n">٢</span><span class="st-t">الأولويّة</span></div><div class="st-b"><span class="st-tag why">القرار</span><span>ما الذي يُرقمَن أوّلًا؟ <b>الأكثرُ استعمالًا لا الأقدم</b> — وهذا أشيعُ ما يُخطَأ فيه.</span></div></div>
+
+        <div class="st decide"><div class="st-h"><span class="st-n">٣</span><span class="st-t">المعايير</span></div><div class="st-b"><span class="st-tag why">القرار</span><span>طريقةُ تسمية الملفّات · ودقّةُ المسح · والصيغةُ المطلوبة قابلةً للبحث لا صورةً. ومعيارٌ لم يُكتب قبل البدء يُعاد العملُ لأجله.</span></div></div>
+
+        <div class="st hands"><div class="st-h"><span class="st-n">٤</span><span class="st-t">المسح وتمييز النص</span></div><div class="st-b"><span class="st-tag do">التنفيذ</span><span>وهنا وحدها يقع العملُ اليدويّ — وهو أقصرُ الخطوات زمنًا وأكثرُها ظهورًا.</span></div></div>
+
+        <div class="st hands"><div class="st-h"><span class="st-n">٥</span><span class="st-t">الفهرسة</span></div><div class="st-b"><span class="st-tag do">التنفيذ</span><span>جدولٌ بالاسم ورقم الإضبارة والقسم وتاريخ التعيين. <b>وهذه هي الخطوة التي تنقل المشروع إلى الدرجة الثالثة</b>، وهي أوّلُ ما يُحذَف عند ضيق الوقت.</span></div></div>
+
+        <div class="st decide"><div class="st-h"><span class="st-n">٦</span><span class="st-t">الحفظ والصلاحيّات</span></div><div class="st-b"><span class="st-tag why">القرار</span><span>مَن يرى ماذا؟ وأينما اجتمع أرشيفٌ كاملٌ في مكانٍ واحد وجب سؤالُ مَن يبلغه.</span></div></div>
+
+        <div class="st decide"><div class="st-h"><span class="st-n">٧</span><span class="st-t">ضبط الجودة</span></div><div class="st-b"><span class="st-tag see">التحقّق</span><span>عيّنةٌ عشوائيّةٌ بنسبة عشرةٍ بالمئة تُفحَص يدويًّا. وبلا فحصٍ لا يُعرَف الخللُ إلّا بعد إتلاف الأصل.</span></div></div>
+
+        <div class="st decide"><div class="st-h"><span class="st-n">٨</span><span class="st-t">مصير الورق الأصليّ</span></div><div class="st-b"><span class="st-tag why">القرار</span><span>احتفاظٌ أو إتلافٌ بحسب الضوابط المعتمدة — <b>ولا يُتلَف شيءٌ قبل ضبط الجودة</b>.</span></div></div>
+
+        <div class="drill">
+          <div class="drill-head"><span class="d-n">★</span><span class="d-t">نشاط المجاميع</span><span class="d-time">١٠ دقائق</span></div>
+          <p>لكلّ مجموعةٍ دائرةٌ مختلفة: بلديّة · مستشفى · مدرسة · دائرة تقاعد.</p>
+          <ol>
+            <li>ما الذي تبدأ المجموعةُ برقمنته أوّلًا؟ ولماذا هو بالذات؟</li>
+            <li>إلى أيّ درجةٍ من الثلاث؟</li>
+            <li>وما أكبرُ مخاطرةٍ تواجهها؟</li>
+          </ol>
+          <div class="d-out"><b>المخرَج:</b> دقيقةٌ لكلّ مجموعةٍ أمام الجميع — ويُلاحَظ أنّ الأولويّة تختلف باختلاف الدائرة، <b>فلا وصفةَ واحدةً للرقمنة</b>.</div>
+        </div>
+
+        <!-- ══════════ ٥ ══════════ -->
+        <div class="section-heading" style="margin-top:28px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>٥ · التطبيق الحيّ — رحلةُ ورقةٍ واحدة</span>
+        </div>
+
+        <p>ورقةٌ واحدةٌ تمرّ على الدرجات الثلاث أمام القاعة. والمادّةُ جاهزةٌ في مجلّد المحاضرة: سجلُّ إجازاتٍ من خمس صفحاتٍ فيه ستّون موظّفًا.</p>
+
+        <div class="try-box">
+          <div class="try-title">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2"><path d="M9 3h6v5l4 9a2 2 0 0 1-2 3H7a2 2 0 0 1-2-3l4-9z" stroke-linejoin="round"/><path d="M9 3h6" stroke-linecap="round"/></svg>
+            الدرجة الأولى — صورةٌ فقط
+          </div>
+          <div class="try-line"><span class="try-tag try-do">يُنفَّذ</span><span>تُصوَّر الصفحاتُ الخمسُ بتطبيق المسح في الهاتف، فتُرفَع إلى المجلّد السحابيّ مباشرةً.</span></div>
+          <div class="try-line"><span class="try-tag try-see">يظهر</span><span>ملفٌّ أنيقٌ يبدو كالورقة. ثمّ يُبحَث داخله عن اسمٍ من السجلّ — <b>والنتيجة صفر</b>. وهنا تسكت القاعة.</span></div>
+        </div>
+
+        <div class="try-box">
+          <div class="try-title">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2"><path d="M9 3h6v5l4 9a2 2 0 0 1-2 3H7a2 2 0 0 1-2-3l4-9z" stroke-linejoin="round"/><path d="M9 3h6" stroke-linecap="round"/></svg>
+            الدرجة الثانية — نصٌّ قابلٌ للبحث
+          </div>
+          <div class="try-line"><span class="try-tag try-do">يُنفَّذ</span><span>يُفتَح الملفُّ نفسُه بمحرّر المستندات السحابيّ، فيمرّ على تمييز النص آليًّا.</span></div>
+          <div class="try-line"><span class="try-tag try-see">يظهر</span><span>النصُّ العربيُّ قابلًا للتعديل، والبحثُ عن الاسم نفسِه يصل إليه الآن. <b>غير أنّ جمع الأرقام ما زال متعذّرًا.</b></span></div>
+        </div>
+
+        <div class="try-box">
+          <div class="try-title">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2"><path d="M9 3h6v5l4 9a2 2 0 0 1-2 3H7a2 2 0 0 1-2-3l4-9z" stroke-linejoin="round"/><path d="M9 3h6" stroke-linecap="round"/></svg>
+            الدرجة الثالثة — بياناتٌ منظّمة
+          </div>
+          <div class="try-line"><span class="try-tag try-do">يُنفَّذ</span><span>تُرفَع صورُ الصفحات الخمس إلى مساعد ذكاءٍ اصطناعيّ مع طلبٍ واحد: تحويلُها إلى جدولٍ بأعمدة الاسم والرقم الوظيفيّ والشعبة وأيّام الإجازة والشهر.</span></div>
+          <div class="try-line"><span class="try-tag try-see">يظهر</span><span>جدولٌ فيه أرقامٌ تُجمَع وتُفرَز. ثمّ يُسأل أمامهم سؤالُ المدير — <b>١٧ موظّفًا</b> — ومعه ثلاثةُ أجوبةٍ لم تُطلَب: <b>١١</b> منهم في شعبةٍ واحدة، و<b>٤</b> لم يأخذوا إجازةً إطلاقًا، والذروةُ في حزيران وآب.</span></div>
+        </div>
+        <div class="takeaway">
+          <b>فخٌّ مقصود:</b> في السجلّ أربعةُ موظّفين عندهم عشرون يومًا بالضبط. فمن اختار «أكبر من أو يساوي» خرج له ٢١ لا ١٧ — <b>وصياغةُ السؤال تغيّر الرقمَ الذي يُتَّخذ عليه القرار</b>.
+        </div>
+
+        <div class="takeaway">
+          <b>الجسر إلى الأسبوع القادم:</b> يُنشَأ أمامهم في دقيقتين نموذجٌ إلكترونيٌّ بدل الاستمارة الورقية، ويملؤه ثلاثةٌ من هواتفهم فتظهر إجاباتُهم في جدولٍ أمام الجميع. <span class="hl hl-pink">وهذا لم يَعُد رقمنة — هذه رقمنةُ أعمال</span>، وهي موضوع الأسبوع القادم.
+        </div>
+
+        <div class="oops">
+          <span class="o-i">⚠</span>
+          <div><b>خطّةٌ بديلة:</b> لقطاتُ شاشةٍ جاهزةٌ لكلّ خطوةٍ في مجلّد المحاضرة، تُعرَض إن انقطع الإنترنت. وملفُّ الجدول النهائيّ محفوظٌ كذلك — فالعرضُ الحيُّ لا يُبنى على شبكةٍ وحدها.</div>
+        </div>
+
+        <!-- ══════════ التمارين ══════════ -->
+        <div class="section-heading" style="margin-top:28px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>أسئلة المراجعة</span>
+        </div>
+        <p class="quiz-note">الحلول في تبويب «الحلول والتعليل» 🔑</p>
+
+        <div class="mcq-item">
+          <span class="q-num">١.</span> دائرةٌ مسحت أرشيفها كلَّه ضوئيًّا وحفظته ملفّاتٍ مرتّبة. في أيّ درجةٍ هي؟
+          <ul class="mcq-options">
+            <li><span class="opt-letter">أ)</span> الثالثة — البياناتُ صارت جاهزة</li>
+            <li><span class="opt-letter">ب)</span> الأولى — صورةٌ فقط لا يُبحَث فيها</li>
+            <li><span class="opt-letter">ج)</span> الثانية — النصُّ صار قابلًا للبحث</li>
+            <li><span class="opt-letter">د)</span> خارج الدرجات الثلاث</li>
+          </ul>
+        </div>
+
+        <div class="mcq-item">
+          <span class="q-num">٢.</span> ما الذي يميّز الدرجة الثالثة عن الثانية تحديدًا؟
+          <ul class="mcq-options">
+            <li><span class="opt-letter">أ)</span> جودةُ الصورة أعلى</li>
+            <li><span class="opt-letter">ب)</span> إمكانُ البحث عن الكلمات</li>
+            <li><span class="opt-letter">ج)</span> إمكانُ العدّ والفرز والحساب، لأنّ الرقم صار في خانةٍ لا كلمةً في نصّ</li>
+            <li><span class="opt-letter">د)</span> حجمُ الملفّ أصغر</li>
+          </ul>
+        </div>
+
+        <div class="mcq-item">
+          <span class="q-num">٣.</span> في سيناريو الأضابير، ما الذي يُرقمَن أوّلًا؟
+          <ul class="mcq-options">
+            <li><span class="opt-letter">أ)</span> الأقدمُ تاريخًا لأنّه الأكثرُ عُرضةً للتلف</li>
+            <li><span class="opt-letter">ب)</span> الأكثرُ استعمالًا</li>
+            <li><span class="opt-letter">ج)</span> الأصغرُ حجمًا ليُنجَز سريعًا</li>
+            <li><span class="opt-letter">د)</span> لا فرق — الترتيبُ لا أثرَ له</li>
+          </ul>
+        </div>
+
+        <div class="mcq-item">
+          <span class="q-num">٤.</span> أيُّ خطوةٍ في السيناريو هي التي تنقل المشروع إلى الدرجة الثالثة؟
+          <ul class="mcq-options">
+            <li><span class="opt-letter">أ)</span> المسحُ وتمييز النص</li>
+            <li><span class="opt-letter">ب)</span> الفهرسة</li>
+            <li><span class="opt-letter">ج)</span> ضبطُ الجودة</li>
+            <li><span class="opt-letter">د)</span> إتلافُ الورق الأصليّ</li>
+          </ul>
+        </div>
+
+        <div class="mcq-item">
+          <span class="q-num">٥.</span> السؤال الذي كان على المدير أن يسأله قبل مشروع الرقمنة هو:
+          <ul class="mcq-options">
+            <li><span class="opt-letter">أ)</span> كم ورقةً عندنا؟</li>
+            <li><span class="opt-letter">ب)</span> كم يكلّف الماسح الضوئيّ؟</li>
+            <li><span class="opt-letter">ج)</span> ما الأسئلة التي أريد أن تجيبني عنها هذه البيانات؟</li>
+            <li><span class="opt-letter">د)</span> كم موظّفًا يلزم للمسح؟</li>
+          </ul>
+        </div>
+
+        <div class="section-heading" style="margin-top:22px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>صح أو خطأ</span>
+        </div>
+        <div class="tf-item"><span>١. الرقمنة تغيّر الإجراء نفسه لا وعاء المعلومة فقط.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+        <div class="tf-item"><span>٢. كل ورقة في الدائرة يجب أن تبلغ الدرجة الثالثة.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+        <div class="tf-item"><span>٣. في الدرجة الثانية يمكن البحث عن اسم، ولا يمكن جمع الأرقام.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+        <div class="tf-item"><span>٤. ضبط الجودة يأتي بعد إتلاف الورق الأصلي.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+        <div class="tf-item"><span>٥. رقمنةٌ بلا حفظٍ آمنٍ ونسخٍ احتياطيّ أخطر من بقاء الورق.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+
+        <!-- ══════════ الواجب ══════════ -->
+        <div class="section-heading" style="margin-top:30px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>الواجب</span>
+        </div>
+
+        <div class="hw">
+          <div class="hw-head"><span class="hw-num">١</span><span class="hw-title">ورقةٌ من دائرتك إلى الدرجة الثالثة</span><span class="scn-badge lv-mid">متوسّط</span></div>
+          <p>ورقةٌ حقيقيّةٌ من دائرة الدارس — <b>غيرُ سرّيّةٍ ولا تحمل بياناتٍ شخصيّة</b> — تمرّ على الدرجات الثلاث حتّى تصير جدولًا.</p>
+          <div class="hw-deliver"><span class="hw-tag">المُسلَّم</span><span>ملفُّ الجدول · وجملةٌ واحدة: <b>«ماذا ستتيح لي هذه البيانات الآن؟»</b> — وجوابٌ لا يذكر سؤالًا جديدًا صار ممكنًا يدلّ على أنّ الورقة لم تكن تستحقّ الدرجة الثالثة.</span></div>
+        </div>
+
+        <div class="mini-note">نهاية الأسبوع الثاني — إعداد: د. أمير هادي ★</div>
+
         <div class="page-nav">
           <button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button>
           <button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button>
@@ -3342,8 +3622,94 @@
           <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٥.</span> عملية "الدمج" (Merge) بأداة iLovePDF تُقسّم ملفًا واحدًا إلى عدّة ملفات.</p><span class="sol-badge f">خطأ</span></div>
           <p class="sol-why">هذا وصف عملية الفصل (Split) عكسًا تمامًا. الدمج يوحّد عدّة ملفات في ملف واحد.</p>
         </div>
+        <div class="sol-week"><span class="sw-n">٢</span><span class="sw-t">حلول الأسبوع الثاني — الرقمنة</span></div>
+
+        <div class="sol-kind"><span>الاختيار من متعدّد</span><span class="sk-line"></span></div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">١.</span> دائرةٌ مسحت أرشيفها كلَّه ضوئيًّا وحفظته ملفّاتٍ مرتّبة. في أيّ درجةٍ هي؟</p>
+          <div class="sol-opts">
+            <div class="sol-opt bad"><span class="so-k">أ)</span><span>الثالثة — البياناتُ صارت جاهزة</span></div>
+            <div class="sol-opt ok"><span class="so-k">ب)</span><span>الأولى — صورةٌ فقط لا يُبحَث فيها</span></div>
+            <div class="sol-opt bad"><span class="so-k">ج)</span><span>الثانية — النصُّ صار قابلًا للبحث</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>خارج الدرجات الثلاث</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> «أ» هي الوهم الذي بُني عليه سيناريو المدير العامّ — فالمسحُ ينقل الورقة إلى الحاسوب ولا يجعلها بيانات. و«ج» خطأ لأنّ القابليّة للبحث لا تأتي بالمسح وحده بل بتمييز النص بعده، وهي خطوةٌ مستقلّةٌ يُغفَل عنها. و«د» خطأ لأنّ المسح هو الدرجة الأولى بعينها. <b>واختبارُ التمييز بين «أ» و«ب» في ثانية:</b> بحثٌ عن اسمٍ داخل الملفّ — فإن كانت النتيجةُ صفرًا فهي الأولى.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٢.</span> ما الذي يميّز الدرجة الثالثة عن الثانية تحديدًا؟</p>
+          <div class="sol-opts">
+            <div class="sol-opt bad"><span class="so-k">أ)</span><span>جودةُ الصورة أعلى</span></div>
+            <div class="sol-opt bad"><span class="so-k">ب)</span><span>إمكانُ البحث عن الكلمات</span></div>
+            <div class="sol-opt ok"><span class="so-k">ج)</span><span>إمكانُ العدّ والفرز والحساب، لأنّ الرقم صار في خانةٍ لا كلمةً في نصّ</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>حجمُ الملفّ أصغر</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> «ب» هي الدرجةُ الثانية نفسُها لا ما يميّز الثالثة عنها، وهذا أدقُّ الخيارات خطأً. و«أ» و«د» تشتغلان بخصائص الملفّ لا بما يمكن عملُه بالمعلومة. <b>والفاصلُ في جملةٍ:</b> في الثانية نجد «٢٣ يومًا»، وفي الثالثة نجمعها مع غيرها ونفرز عليها — والسؤال «كم موظّفًا تجاوز ٢٠؟» لا يُجاب إلّا في الثالثة.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٣.</span> في سيناريو الأضابير، ما الذي يُرقمَن أوّلًا؟</p>
+          <div class="sol-opts">
+            <div class="sol-opt bad"><span class="so-k">أ)</span><span>الأقدمُ تاريخًا لأنّه الأكثرُ عُرضةً للتلف</span></div>
+            <div class="sol-opt ok"><span class="so-k">ب)</span><span>الأكثرُ استعمالًا</span></div>
+            <div class="sol-opt bad"><span class="so-k">ج)</span><span>الأصغرُ حجمًا ليُنجَز سريعًا</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>لا فرق — الترتيبُ لا أثرَ له</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> «أ» أقربُ الخيارات إلى الإقناع، ولها وجهٌ في الحفظ لا في الرقمنة — والأرشيفُ القديم النادرُ الاستعمال قد تكفيه الدرجة الأولى. والأكثرُ استعمالًا هو الذي يُرَدُّ عليه الأثرُ من أوّل أسبوع، فيظهر نفعُ المشروع قبل أن ينفد الحماس. و«ج» تختار بالسهولة لا بالقيمة، و«د» تنفي جوهر قرار الأولويّة.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٤.</span> أيُّ خطوةٍ في السيناريو هي التي تنقل المشروع إلى الدرجة الثالثة؟</p>
+          <div class="sol-opts">
+            <div class="sol-opt bad"><span class="so-k">أ)</span><span>المسحُ وتمييز النص</span></div>
+            <div class="sol-opt ok"><span class="so-k">ب)</span><span>الفهرسة</span></div>
+            <div class="sol-opt bad"><span class="so-k">ج)</span><span>ضبطُ الجودة</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>إتلافُ الورق الأصليّ</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> المسحُ يبلغ الأولى وتمييزُ النص يبلغ الثانية — و«أ» تقف عند هذا الحدّ. أمّا الفهرسةُ فهي التي تُنشئ الجدولَ بأعمدته، وبها وحدها يصير العدُّ والفرز ممكنَين. و«ج» تفحص الجودة ولا ترفع الدرجة، و«د» تخصّ الورق لا البيانات. <b>وهذا هو موضعُ الخطر العمليّ:</b> الفهرسةُ أوّلُ ما يُحذَف عند ضيق الوقت، فيخرج المشروعُ من الدرجة الثالثة وهو يظنّ أنّه فيها.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٥.</span> السؤال الذي كان على المدير أن يسأله قبل مشروع الرقمنة هو:</p>
+          <div class="sol-opts">
+            <div class="sol-opt bad"><span class="so-k">أ)</span><span>كم ورقةً عندنا؟</span></div>
+            <div class="sol-opt bad"><span class="so-k">ب)</span><span>كم يكلّف الماسح الضوئيّ؟</span></div>
+            <div class="sol-opt ok"><span class="so-k">ج)</span><span>ما الأسئلة التي أريد أن تجيبني عنها هذه البيانات؟</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>كم موظّفًا يلزم للمسح؟</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> «أ» و«ب» و«د» أسئلةُ تنفيذٍ صحيحةٌ كلُّها، غير أنّها تأتي <b>بعد</b> تحديد الغاية لا قبلها — ومَن بدأ بها رقمن بإتقانٍ ما لا ينفع. والسؤالُ الصحيح يحدّد الدرجةَ المطلوبة، ومنها تُشتقّ الأولويّةُ والمعاييرُ والكلفة. <b>وهو الدرسُ القياديُّ في الأسبوع كلِّه:</b> الرقمنةُ تبدأ بسؤالٍ لا بماسحٍ ضوئيّ.</p>
+        </div>
+
+        <div class="sol-kind"><span>صح أو خطأ</span><span class="sk-line"></span></div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">١.</span> الرقمنة تغيّر الإجراء نفسه لا وعاء المعلومة فقط.</p><span class="sol-badge f">خطأ</span></div>
+          <p class="sol-why">الرقمنةُ تغيّر <b>وعاء المعلومة</b> مع بقاء الإجراء كما هو. أمّا تغييرُ الإجراء نفسِه فهو رقمنةُ الأعمال، وهي موضوع الأسبوع القادم. والخلطُ بينهما هو أشيعُ ما يقع في مشاريع الجهات.</p>
+        </div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٢.</span> كل ورقة في الدائرة يجب أن تبلغ الدرجة الثالثة.</p><span class="sol-badge f">خطأ</span></div>
+          <p class="sol-why">الدرجةُ تُحدَّد بحسب الغاية: الأرشيفُ القديم النادرُ الاستعمال قد تكفيه الأولى، وما تُتَّخذ عليه القرارات لا بدّ أن يبلغ الثالثة. <b>وتعميمُ الثالثة على كلّ ورقةٍ إسرافٌ</b> يستهلك الميزانيّة على ما لا يُسأل عنه أحد.</p>
+        </div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٣.</span> في الدرجة الثانية يمكن البحث عن اسم، ولا يمكن جمع الأرقام.</p><span class="sol-badge t">صح</span></div>
+          <p class="sol-why">النصُّ صار مقروءًا للحاسوب فالبحثُ يعمل، غير أنّ «٢٣ يومًا» ما زالت كلمةً داخل نصٍّ لا رقمًا في خانة — ولا يُجمَع ما ليس في خانة.</p>
+        </div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٤.</span> ضبط الجودة يأتي بعد إتلاف الورق الأصلي.</p><span class="sol-badge f">خطأ</span></div>
+          <p class="sol-why">ترتيبُهما معكوس: ضبطُ الجودة سابعًا وإتلافُ الورق ثامنًا. <b>وعكسُ الترتيب خطأٌ لا يُستدرَك</b> — فالخللُ المكتشَف بعد الإتلاف لا أصلَ يُرجَع إليه.</p>
+        </div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٥.</span> رقمنةٌ بلا حفظٍ آمنٍ ونسخٍ احتياطيّ أخطر من بقاء الورق.</p><span class="sol-badge t">صح</span></div>
+          <p class="sol-why">الورقُ متفرّقٌ في خزائن، فتلفُ بعضِه لا يُتلف كلَّه. أمّا نسخةٌ رقميّةٌ وحيدةٌ على جهازٍ واحدٍ فعطبٌ واحدٌ يُذهبها جميعًا — <b>ومع الإتلاف يكون الفقدُ نهائيًّا</b>. ولذلك جاء الحفظُ الآمن في جدول الأدوات لا خارجه.</p>
+        </div>
 
         <div class="mini-note">نهاية دليل الحلول — إعداد: د. أمير هادي ★</div>
+
         <div class="page-nav">
           <button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button>
           <button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button>
