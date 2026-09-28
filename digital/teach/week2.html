@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<title>دليل الأستاذ — الأسبوع الثاني · الرقمنة</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Noto+Naskh+Arabic:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --red:#d1342b; --green:#1f7a3d; --blue:#1857a4; --lightblue:#3f8fd6;
+    --orange:#e07a1f; --purple:#7a2ea6; --pink:#e0578f;
+    --paper:#fbf8ef; --ink:#1a3d8c; --teal:#0f7a72; --bark:#8a5a2b;
+    --fs:1;
+  }
+  *{ box-sizing:border-box; }
+  html,body{
+    margin:0; padding:0; min-height:100vh;
+    font-family:'Noto Naskh Arabic','Aref Ruqaa',serif;
+    background:#4a2d18;
+    background-image:
+      repeating-linear-gradient(90deg, rgba(0,0,0,0.05) 0 2px, transparent 2px 7px),
+      linear-gradient(160deg,#5e3a1f,#3d2412);
+  }
+
+  .wrap{ max-width:940px; margin:0 auto; padding:22px 14px 60px; }
+
+  /* ─── الترويسة ─── */
+  .top{
+    background:var(--paper); border-radius:16px 16px 0 0;
+    padding:20px 26px 16px; border-bottom:3px solid var(--red);
+    box-shadow:0 10px 34px rgba(0,0,0,0.38);
+  }
+  .badge-priv{
+    display:inline-flex; align-items:center; gap:7px;
+    background:var(--red); color:#fff; font-weight:800;
+    border-radius:20px; padding:4px 14px;
+    font-size:calc(12px * var(--fs)); letter-spacing:.3px;
+  }
+  .top h1{
+    font-family:'Aref Ruqaa',serif; color:var(--ink);
+    margin:12px 0 4px; font-size:calc(28px * var(--fs)); line-height:1.5;
+  }
+  .top .sub{ color:#6b5842; font-size:calc(13.5px * var(--fs)); line-height:1.9; }
+  .top .sub a{ color:var(--blue); }
+  .meta{ display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+  .meta span{
+    background:rgba(26,61,140,0.08); border:1px solid rgba(26,61,140,0.18);
+    border-radius:20px; padding:3px 12px; color:var(--ink);
+    font-size:calc(12px * var(--fs)); font-weight:600;
+  }
+
+  .sheet{
+    background:var(--paper); border-radius:0 0 16px 16px;
+    padding:26px; box-shadow:0 10px 34px rgba(0,0,0,0.38);
+    color:#25303f; font-size:calc(14px * var(--fs)); line-height:1.95;
+  }
+
+  h2.sec{
+    font-family:'Aref Ruqaa',serif; color:var(--red);
+    font-size:calc(21px * var(--fs)); margin:34px 0 4px;
+    border-bottom:2px dashed rgba(209,52,43,0.32); padding-bottom:7px;
+  }
+  h2.sec:first-of-type{ margin-top:6px; }
+  p{ text-align:justify; margin:9px 0; }
+
+  /* ─── قائمة التحضير ─── */
+  .prep{ margin:12px 0; }
+  .pp{
+    display:flex; gap:10px; align-items:flex-start;
+    padding:8px 12px; margin-bottom:6px; background:#fff;
+    border:1.5px solid rgba(26,61,140,0.16); border-radius:10px;
+    font-size:calc(13.2px * var(--fs)); line-height:1.85;
+  }
+  .pp .bx{
+    flex:0 0 auto; width:17px; height:17px; margin-top:4px;
+    border:2px solid var(--blue); border-radius:4px; background:#fff;
+  }
+  .pp b{ color:var(--blue); }
+
+  /* ─── الخطّ الزمني ─── */
+  .tl-wrap{ overflow-x:auto; margin:14px 0; }
+  table.tl{ width:100%; border-collapse:collapse; background:#fff;
+            font-size:calc(13px * var(--fs)); }
+  table.tl th{
+    background:rgba(26,61,140,0.10); color:var(--blue); font-weight:800;
+    padding:8px 11px; border:1px solid rgba(26,61,140,0.16); text-align:right;
+  }
+  table.tl td{ padding:8px 11px; border:1px solid rgba(26,61,140,0.12);
+               line-height:1.8; vertical-align:top; }
+  table.tl td.t{ white-space:nowrap; font-weight:800; color:var(--red);
+                 text-align:center; width:88px; }
+  table.tl tr:nth-child(even) td{ background:rgba(26,61,140,0.022); }
+
+  /* ─── السكربت ─── */
+  .blk{
+    margin:16px 0; border:1.5px solid rgba(26,61,140,0.18);
+    border-radius:13px; background:#fff; overflow:hidden;
+    break-inside:avoid;
+  }
+  .blk-h{
+    display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+    padding:9px 14px; background:rgba(26,61,140,0.08);
+    border-bottom:1px solid rgba(26,61,140,0.16);
+  }
+  .blk-n{
+    width:26px; height:26px; border-radius:50%; background:var(--blue);
+    color:#fff; font-weight:800; display:flex; align-items:center;
+    justify-content:center; font-size:calc(12.5px * var(--fs)); flex:0 0 auto;
+  }
+  .blk-t{ font-weight:800; color:var(--ink); font-size:calc(15px * var(--fs)); }
+  .blk-min{
+    margin-inline-start:auto; background:var(--red); color:#fff;
+    border-radius:20px; padding:2px 11px; font-weight:700;
+    font-size:calc(11.5px * var(--fs)); white-space:nowrap;
+  }
+  .blk-b{ padding:8px 14px 13px; }
+
+  .ln{ display:flex; gap:10px; padding:8px 0;
+       border-bottom:1px dashed rgba(26,61,140,0.12); }
+  .ln:last-child{ border-bottom:0; }
+  .ln-k{
+    flex:0 0 auto; width:74px; text-align:center; align-self:flex-start;
+    border-radius:20px; padding:2px 0; font-weight:800; color:#fff;
+    font-size:calc(11px * var(--fs)); margin-top:3px;
+  }
+  .k-say{ background:var(--blue); }
+  .k-do { background:var(--green); }
+  .k-ask{ background:var(--purple); }
+  .k-warn{ background:var(--orange); }
+  .ln-v{ flex:1; text-align:justify; font-size:calc(13.4px * var(--fs)); line-height:1.95; }
+  .ln-v i{ color:#4b5563; font-style:normal; }
+
+  .say{
+    background:rgba(26,61,140,0.05); border-inline-start:3px solid var(--blue);
+    border-radius:0 8px 8px 0; padding:8px 12px; margin:6px 0;
+    font-size:calc(13.4px * var(--fs)); line-height:2; text-align:justify;
+  }
+
+  /* ─── بنك الأسئلة ─── */
+  .qa{
+    margin:13px 0; border:1.5px solid rgba(122,46,166,0.28);
+    border-radius:13px; background:#fff; overflow:hidden; break-inside:avoid;
+  }
+  .qa-h{
+    padding:9px 14px; background:rgba(122,46,166,0.09);
+    border-bottom:1px solid rgba(122,46,166,0.20);
+    font-weight:800; color:var(--purple);
+    font-size:calc(14px * var(--fs)); line-height:1.85; text-align:justify;
+  }
+  .qa-h .qn{
+    display:inline-block; background:var(--purple); color:#fff;
+    border-radius:6px; padding:0 8px; margin-inline-end:7px;
+    font-size:calc(12px * var(--fs));
+  }
+  .qa-b{ padding:5px 14px 11px; }
+  .qa-r{ display:flex; gap:10px; padding:7px 0;
+         border-bottom:1px dashed rgba(26,61,140,0.12); }
+  .qa-r:last-child{ border-bottom:0; }
+  .qa-k{ flex:0 0 96px; font-weight:800; font-size:calc(12.3px * var(--fs)); }
+  .qa-v{ flex:1; text-align:justify; font-size:calc(13.2px * var(--fs)); line-height:1.9; }
+  .k-exp{ color:var(--green); }
+  .k-err{ color:var(--orange); }
+  .k-rep{ color:var(--blue); }
+
+  /* ─── تنبيه ─── */
+  .warn{
+    display:flex; gap:11px; margin:14px 0; padding:11px 15px;
+    background:rgba(224,122,31,0.09); border:1.5px solid rgba(224,122,31,0.32);
+    border-radius:12px; font-size:calc(13.2px * var(--fs)); line-height:1.9;
+    text-align:justify;
+  }
+  .warn .i{ flex:0 0 auto; font-size:1.25em; }
+  .warn b{ color:var(--orange); }
+
+  .note{
+    margin:13px 0; padding:11px 15px; border-radius:12px;
+    background:rgba(31,122,61,0.07); border-inline-start:4px solid var(--green);
+    font-size:calc(13.2px * var(--fs)); line-height:1.92; text-align:justify;
+  }
+  .note b{ color:var(--green); }
+
+  code.kbd{
+    unicode-bidi:isolate; direction:ltr; font-family:'Courier New',monospace;
+    background:#f1efe7; border:1px solid rgba(0,0,0,0.12); border-radius:5px;
+    padding:1px 6px; font-size:0.9em; color:#374151;
+  }
+
+  .foot{
+    margin-top:34px; padding-top:14px; text-align:center; color:#8a7a63;
+    border-top:2px dashed rgba(138,90,43,0.35); font-size:calc(12.5px * var(--fs));
+  }
+
+  @media print{
+    body{ background:#fff; }
+    .wrap{ max-width:none; padding:0; }
+    .top,.sheet{ box-shadow:none; border-radius:0; }
+    .blk,.qa,.pp{ break-inside:avoid; }
+  }
+  @media (max-width:640px){
+    .sheet{ padding:16px; }
+    .ln-k{ width:60px; }
+    .qa-k{ flex:0 0 76px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="top">
+    <span class="badge-priv">🔒 للأستاذ فقط — لا يُوزَّع على الطلبة</span>
+    <h1>دليل المحاضرة — الأسبوع الثاني<br>الرقمنة: من الورقة إلى البيانات</h1>
+    <div class="sub">
+      مقرر التحوّل الرقمي وتكنولوجيا المعلومات — «قادة المستقبل» · إعداد: د. أمير هادي<br>
+      صفحة الطالب المقابلة: <a href="../week1.html#slide-2" target="_blank" rel="noopener">الأسبوع الثاني في دفتر المقرر</a>
+    </div>
+    <div class="meta">
+      <span>⏱ ٨٠ دقيقة</span>
+      <span>🎯 ٤ محاور</span>
+      <span>🗺 مخطّط المسار</span>
+      <span>❓ ١٤ سؤالًا شفويًّا</span>
+    </div>
+  </div>
+
+  <div class="sheet">
+
+    <!-- ═══════════════ قبل المحاضرة ═══════════════ -->
+    <h2 class="sec">١ · قبل المحاضرة — قائمة التحضير</h2>
+    <p>هذه القائمة تُنجَز قبل دخول القاعة بعشر دقائق. وأكثرُ ما يُفسد التطبيق الحيَّ ليس عطلَ الإنترنت، بل حسابٌ غيرُ مسجَّلٍ الدخول أو ملفٌّ غيرُ محمَّلٍ سلفًا.</p>
+
+    <div class="prep">
+      <div class="pp"><span class="bx"></span><span><b>الحساب:</b> تسجيل الدخول إلى حساب Google على الحاسوب والهاتف معًا، والخروج من أيّ حسابٍ شخصيٍّ آخر لئلّا يظهر بريدٌ خاصٌّ على الشاشة.</span></div>
+      <div class="pp"><span class="bx"></span><span><b>الملفّات:</b> السجلّ الورقيّ مطبوعٌ <b>على ورقٍ حقيقيّ</b> — خمس صفحات. والعرضُ من الشاشة لا يصنع الأثر نفسَه، فاللمسُ جزءٌ من الدرس.</span></div>
+      <div class="pp"><span class="bx"></span><span><b>الهاتف:</b> شحنٌ كامل، والإشعاراتُ مُسكَتة، ومرآةُ الشاشة مجرَّبةٌ قبل المحاضرة لا في أثنائها.</span></div>
+      <div class="pp"><span class="bx"></span><span><b>الإضاءة:</b> سطحٌ داكنٌ تحت الورقة عند المسح — قطعةُ قماشٍ أو كرتونٍ أسود. وبلا ذلك تفشل خطوةُ المسح أمام الجميع.</span></div>
+      <div class="pp"><span class="bx"></span><span><b>حجم الخطّ:</b> تكبيرُ خطّ المتصفّح إلى <code class="kbd">150%</code> قبل البدء — فالصفّ الأخير لا يقرأ الجدول بالحجم الاعتيادي.</span></div>
+      <div class="pp"><span class="bx"></span><span><b>أسئلة التفاعل:</b> رفعُ ملفّ <code class="kbd">digital/live/w2.json</code> إلى المنصّة، وفتحُ رمز الدخول في تبويبٍ منفصل.</span></div>
+    </div>
+
+    <!-- ═══════════════ الخطّ الزمني ═══════════════ -->
+    <h2 class="sec">٢ · الخطّ الزمنيّ</h2>
+    <p>التوزيعُ مبنيٌّ على ثمانين دقيقةً بلا استراحة. وإن ضاق الوقتُ فالمحذوفُ هو تمرينُ المجاميع ويُنقَل إلى الواجب — <b>ولا يُمَسُّ محورُ الدرجات الثلاث ولا المخطّط</b>، فعليهما يقوم الأسبوعُ كلُّه.</p>
+
+    <div class="tl-wrap">
+      <table class="tl">
+        <thead><tr><th class="t">الدقيقة</th><th style="width:26%;">المحور</th><th>ما الذي يجري</th></tr></thead>
+        <tbody>
+          <tr><td class="t">٠ – ٥</td><td>الافتتاح</td><td>سؤالُ المراجع وكتابِ ٢٠١٩ — يُجمَع جوابان أو ثلاثةٌ من القاعة، ثمّ تُعرَض المقارنةُ مع البحث السحابيّ.</td></tr>
+          <tr><td class="t">٥ – ١٦</td><td>١ · ما الرقمنة</td><td>التعريفُ وأركانُه الثلاثة، وما ليست الرقمنةَ، ولماذا تُفعَل. ثمّ <b>مستوياتُ الرقمنة الثلاثة</b>.</td></tr>
+          <tr><td class="t">١٦ – ٣٤</td><td>٢ · الدرجات الثلاث</td><td><b>أهمُّ ثمانيةَ عشرَ دقيقةً في المحاضرة.</b> الورقةُ الحقيقيّةُ في اليد، وسؤالُ المدير على الشاشة، والدرجاتُ واحدةً بعد أخرى.</td></tr>
+          <tr><td class="t">٣٤ – ٣٨</td><td>وقفةُ تفكير</td><td>سؤالان للقاعة عن ورقةٍ من دوائرهم. ثلاثةُ أجوبةٍ وتُقارَن.</td></tr>
+          <tr><td class="t">٣٨ – ٥٤</td><td>٣ · المسار</td><td><b>المخطّطُ أوّلًا</b> خارطةً كاملة، ثمّ الخطواتُ الخمسُ بعد المسح — والتسميةُ والخزنُ أطولُها.</td></tr>
+          <tr><td class="t">٥٤ – ٦٦</td><td>٤ · السيناريو القياديّ</td><td>خمسةُ آلاف إضبارة، والقراراتُ الثمانية. والتركيزُ على القرار الثاني (الأولويّة) والخامس (الفهرسة).</td></tr>
+          <tr><td class="t">٦٦ – ٧٦</td><td>تمرينُ المجاميع</td><td>أربعُ مجموعات، أربعُ جهات. دقيقةٌ لكلّ مجموعةٍ في العرض.</td></tr>
+          <tr><td class="t">٧٦ – ٨٠</td><td>الجسر + الواجب</td><td>النموذجُ الإلكترونيُّ في دقيقتين وصولًا إلى الأسبوع القادم، ثمّ شرحُ الواجب.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ═══════════════ السكربت ═══════════════ -->
+    <h2 class="sec">٣ · السكربت — ماذا تقول وماذا تفعل</h2>
+    <p>العلاماتُ أربع: <span style="color:var(--blue);font-weight:800;">تقول</span> نصٌّ يُقال أو يُقارَب · <span style="color:var(--green);font-weight:800;">تفعل</span> عملٌ على الشاشة أو الورقة · <span style="color:var(--purple);font-weight:800;">تسأل</span> وقفةُ تفاعلٍ مقصودة · <span style="color:var(--orange);font-weight:800;">انتبه</span> موضعُ خطرٍ أو خطأٍ شائع.</p>
+
+    <!-- الافتتاح -->
+    <div class="blk">
+      <div class="blk-h"><span class="blk-n">١</span><span class="blk-t">الافتتاح — سؤالُ الكتاب</span><span class="blk-min">٠ – ٥</span></div>
+      <div class="blk-b">
+        <div class="ln"><span class="ln-k k-ask">تسأل</span><span class="ln-v">«مَن منكم يشتغل في دائرة، أو أبوه أو أخوه؟ — تخيّلوا مراجعًا يسأل عن كتابٍ صادرٍ سنة ٢٠١٩. <b>كم يستغرق إيجادُه؟</b>»</span></div>
+        <div class="ln"><span class="ln-k k-warn">انتبه</span><span class="ln-v">لا تقبل جوابًا واحدًا. <i>اجمع ثلاثةً واكتبها على السبورة</i> — والمدى بين أقصرِها وأطولِها هو الذي يصنع الأثر، لا الجوابُ نفسُه.</span></div>
+        <div class="ln"><span class="ln-k k-do">تفعل</span><span class="ln-v">تفتح مجلّدًا سحابيًّا فيه مستندات، وتبحث بكلمةٍ واحدة. ويظهر المستندُ في ثانيتين <b>على الشاشة أمامهم</b>.</span></div>
+        <div class="say"><b>الجملة التي تُغلق الافتتاح:</b> «الورقُ يحفظ المعلومة — ولا يبحث فيها. وكلُّ ما سنقوله اليوم فرعٌ عن هذه الجملة.»</div>
+      </div>
+    </div>
+
+    <!-- ما الرقمنة -->
+    <div class="blk">
+      <div class="blk-h"><span class="blk-n">٢</span><span class="blk-t">ما الرقمنة — والأمثلة الستّة</span><span class="blk-min">٥ – ١٢</span></div>
+      <div class="blk-b">
+        <div class="ln"><span class="ln-k k-say">تقول</span><span class="ln-v">التعريف كاملًا، مع التشديد على القيد الأخير: <b>«مع بقاء الإجراء نفسِه كما هو»</b> — وهو القيدُ الذي يفرّق الرقمنةَ عن رقمنة الأعمال، وسيُمتحَنون عليه.</span></div>
+        <div class="ln"><span class="ln-k k-do">تفعل</span><span class="ln-v">تمرّ على الأمثلة الستّة <b>سريعًا</b>، سطرًا لكلّ مثال. والهدفُ التمهيدُ لا الشرح.</span></div>
+        <div class="ln"><span class="ln-k k-ask">تسأل</span><span class="ln-v">عند المثال الرابع (وصل المولّدة): «مَن عنده صورةُ وصلٍ في هاتفه الآن؟ — <b>كم دفعتم مجموعًا هذه السنة؟</b>»</span></div>
+        <div class="ln"><span class="ln-k k-warn">انتبه</span><span class="ln-v">هنا يقع الصمتُ المفيد. الصورةُ محفوظةٌ ولا يُجمَع منها شيء — <i>وهذا أوّلُ ظهورٍ للدرجة الأولى قبل أن تُسمّى</i>. لا تسمّها الآن، اتركها تنضج.</span></div>
+        <div class="ln"><span class="ln-k k-say">تقول</span><span class="ln-v">ثمّ جدولُ <b>المستويات الثلاثة</b>: الوثيقة · الإجراء · المؤسّسة. ثلاثُ جملٍ لا أكثر — فالتفصيلُ في صفحتهم.</span></div>
+        <div class="ln"><span class="ln-k k-warn">انتبه</span><span class="ln-v"><b>هنا أخطرُ خلطٍ في الأسبوع:</b> بين «المستوى» و«الدرجة». <i>الجملةُ الفاصلة:</i> «المستوى يسأل: ما اتّساعُ التغيير؟ والدرجةُ تسأل: ما عمقُ التحويل لهذه الورقة؟» — تُقال مرّتين وتُعاد في الختام.</span></div>
+      </div>
+    </div>
+
+    <!-- الدرجات -->
+    <div class="blk">
+      <div class="blk-h"><span class="blk-n">٣</span><span class="blk-t">الدرجات الثلاث — قلبُ المحاضرة</span><span class="blk-min">١٢ – ٣٠</span></div>
+      <div class="blk-b">
+        <div class="ln"><span class="ln-k k-do">تفعل</span><span class="ln-v"><b>ترفع الورقة الحقيقيّة بيدك</b> وتمرّرها على الصفّ الأوّل. خمسُ صفحاتٍ بخطّ اليد، ستّون موظّفًا. واللمسُ مقصود.</span></div>
+        <div class="ln"><span class="ln-k k-say">تقول</span><span class="ln-v">«المدير العامّ يسأل سؤالًا واحدًا: كم موظّفًا تجاوز عشرين يومَ إجازة؟ — وسنرى متى نستطيع أن نجيبه.»</span></div>
+        <div class="ln"><span class="ln-k k-do">تفعل</span><span class="ln-v"><b>الدرجة الأولى:</b> تعرض الملفّ الممسوح، ثمّ تضغط <code class="kbd">Ctrl+F</code> وتبحث عن اسمٍ يرونه بأعينهم في الصفحة.</span></div>
+        <div class="ln"><span class="ln-k k-warn">انتبه</span><span class="ln-v"><b>أقوى لحظةٍ في المحاضرة كلِّها.</b> النتيجةُ صفر، والاسمُ أمام أعينهم. <i>اسكت ثلاث ثوانٍ كاملة قبل أن تعلّق</i> — الصمتُ هنا يعلّم أكثر من الشرح.</span></div>
+        <div class="ln"><span class="ln-k k-ask">تسأل</span><span class="ln-v">«الاسمُ موجودٌ أم غير موجود؟ — موجودٌ لعيونكم، وغيرُ موجودٍ للحاسوب. لماذا؟»</span></div>
+        <div class="ln"><span class="ln-k k-do">تفعل</span><span class="ln-v"><b>الدرجة الثانية:</b> تمييزُ النصّ، ثمّ إعادةُ البحث نفسِه — فيُوجَد. ثمّ تسأل سؤالَ المدير عليه فلا يُجاب.</span></div>
+        <div class="ln"><span class="ln-k k-do">تفعل</span><span class="ln-v"><b>الدرجة الثالثة:</b> الجدول، والمرشِّح، والجواب <b>١٧</b>. ثمّ الأجوبةُ الثلاثةُ التي لم تُطلَب.</span></div>
+        <div class="say"><b>الجملة التي تُغلق المحور:</b> «الورقةُ في الدرجة الثالثة لم تَعُد مستندًا يُحفَظ — صارت معلومةً تُتَّخذ عليها قرارات. وما دون ذلك حفظٌ أنيقٌ للورق.»</div>
+      </div>
+    </div>
+
+    <!-- الأدوات -->
+    <div class="blk">
+      <div class="blk-h"><span class="blk-n">٤</span><span class="blk-t">المسار — المخطّط والخطوات الخمس</span><span class="blk-min">٣٨ – ٥٤</span></div>
+      <div class="blk-b">
+        <div class="ln"><span class="ln-k k-do">تفعل</span><span class="ln-v"><b>تبدأ بالمخطّط.</b> تشير على المسار بإصبعك: ورقة ← مسح ← ملفّ أو صورة ← أربع خطوات ← والحمايةُ تحتها كلِّها. <b>دقيقتان</b>، ثمّ تُغلق: «هذا كلُّ الطريق، وما بقي تفصيلُه.»</span></div>
+        <div class="ln"><span class="ln-k k-say">تقول</span><span class="ln-v">ثمّ الخطواتُ الخمسُ واحدةً بعد أخرى. و<b>التسميةُ والخزنُ</b> أطولُها وأنفعُها — والثلاثُ الأخرى سطران لكلٍّ منها.</span></div>
+        <div class="ln"><span class="ln-k k-ask">تسأل</span><span class="ln-v">عند التسمية: «مَن يستطيع أن يقرأ اسمَ ملفٍّ عنده الآن فيعرف ما فيه بلا أن يفتحه؟» — والأغلبُ لا يستطيع.</span></div>
+        <div class="ln"><span class="ln-k k-ask">تسأل</span><span class="ln-v">عند الخزن: «كم نسخةً عندكم من ملفّاتكم المهمّة الآن؟» ثمّ قاعدةُ <b>٣ – ٢ – ١</b>.</span></div>
+        <div class="ln"><span class="ln-k k-warn">انتبه</span><span class="ln-v"><b>الحمايةُ ليست الخطوةَ الخامسة</b> وإن رُسمت أسفلَ المخطّط — <i>تُقال صراحةً إنّها ترافق الأربعَ كلَّها</i>، وإلّا فهمها الطلبةُ مرحلةً أخيرةً تُؤجَّل.</span></div>
+      </div>
+    </div>
+
+    <div class="blk">
+      <div class="blk-h"><span class="blk-n">٥</span><span class="blk-t">السيناريو القياديّ — ثمانية قرارات</span><span class="blk-min">٤٥ – ٥٥</span></div>
+      <div class="blk-b">
+        <div class="ln"><span class="ln-k k-say">تقول</span><span class="ln-v">«القائدُ لا يمسح الأوراق بنفسه. يتّخذ ثمانية قراراتٍ بالترتيب — وستّةٌ منها قراراتٌ لا تنفيذ.»</span></div>
+        <div class="ln"><span class="ln-k k-ask">تسأل</span><span class="ln-v">قبل عرض القرار الثاني: «بأيّ الأضابير نبدأ — <b>الأقدم أم الأكثر استعمالًا؟</b>»</span></div>
+        <div class="ln"><span class="ln-k k-warn">انتبه</span><span class="ln-v"><b>الأغلبيّةُ ستقول «الأقدم»</b> — وهو جوابٌ مقنعٌ وخطأ. <i>لا تصحّحه فورًا؛ اطلب تعليلًا أوّلًا، ثمّ فرّق بين الحفظ والرقمنة.</i></span></div>
+        <div class="ln"><span class="ln-k k-do">تفعل</span><span class="ln-v">عند القرار الخامس (الفهرسة): تتوقّف وتقول إنّها <b>أوّلُ ما يُحذَف عند ضيق الوقت</b> — فيخرج المشروعُ من الدرجة الثالثة وهو يظنّ أنّه فيها.</span></div>
+      </div>
+    </div>
+
+    <!-- التطبيق الحي -->
+    <div class="blk">
+      <div class="blk-h"><span class="blk-n">٦</span><span class="blk-t">الجسر إلى الأسبوع القادم — والواجب</span><span class="blk-min">٧٦ – ٨٠</span></div>
+      <div class="blk-b">
+        <div class="ln"><span class="ln-k k-say">تقول</span><span class="ln-v">«لاحظوا: في كلّ ما مضى بقي إجراءُ الإجازة كما هو — استمارةٌ تُملأ بخطّ اليد ثمّ تُجمَع ثمّ تُنقَل. وكلُّ ما صنعناه أنّنا حسّنّا <b>وعاءَ المعلومة بعد كتابتها</b>.»</span></div>
+        <div class="ln"><span class="ln-k k-do">تفعل</span><span class="ln-v">تُنشئ نموذجًا إلكترونيًّا بسيطًا <b>في دقيقتين أمامهم</b> — ثلاثةُ حقول: الاسم · أيّام الإجازة · الشهر. وتعرض رمزَه فيملؤه ثلاثةٌ من هواتفهم.</span></div>
+        <div class="ln"><span class="ln-k k-warn">انتبه</span><span class="ln-v">تُظهر <b>جدولَ الإجابات وهو يمتلئ لحظيًّا</b> — وهذه اللقطةُ هي التي تُبقي الأسبوع القادم في أذهانهم طوال الأسبوع.</span></div>
+        <div class="say"><b>الجملة الأخيرة:</b> «لاحظوا: لم يكن هنا مسحٌ ولا تسميةُ ملفّاتٍ ولا نقلٌ ولا خزن. حذفنا الورقةَ من أوّلها — وهذا لم يَعُد رقمنة. هذه رقمنةُ أعمال، وهي موعدُنا الأسبوع القادم.»</div>
+        <div class="ln"><span class="ln-k k-say">تقول</span><span class="ln-v">ثمّ الواجب: ورقةٌ حقيقيّةٌ <b>غيرُ سرّيّةٍ ولا تحمل بياناتٍ شخصيّة</b> تمرّ على الدرجات الثلاث حتّى تصير جدولًا، ومعها جملةٌ واحدة: «ماذا ستتيح لي هذه البيانات الآن؟»</span></div>
+      </div>
+    </div>
+
+    <h2 class="sec">٤ · بنك الأسئلة الشفويّة</h2>
+    <p>أربعةَ عشرَ سؤالًا جاهزًا للقاعة، مرتّبةً بترتيب المحاور. ولكلّ سؤالٍ ثلاثةُ أسطر: الجوابُ المتوقَّع، والخطأُ الشائعُ الذي سيأتي، والردُّ عليه. <b>والمقصودُ أن لا تحتاج إلى تأليف سؤالٍ في لحظته</b>، وأن يكون عندك جوابٌ للخطأ قبل أن يُقال.</p>
+
+    <div class="qa">
+      <div class="qa-h"><span class="qn">١</span>دائرةٌ مسحت أرشيفها كلَّه. هل رقمنته؟</div>
+      <div class="qa-b">
+        <div class="qa-r"><span class="qa-k k-exp">المتوقَّع</span><span class="qa-v">بلغت الدرجة الأولى فقط — صورةٌ لا يُبحَث فيها.</span></div>
+        <div class="qa-r"><span class="qa-k k-err">الخطأ الشائع</span><span class="qa-v">«نعم، انتهت الرقمنة» — وهو جوابُ الأغلبيّة، ومن ورائه تُصرَف ميزانيّاتٌ حقيقيّة.</span></div>
+        <div class="qa-r"><span class="qa-k k-rep">الردّ</span><span class="qa-v">لا تصحّح بالكلام — <b>ابحث أمامهم داخل الملفّ عن اسم</b>. النتيجةُ صفر، والتصحيحُ يقع بنفسه.</span></div>
+      </div>
+    </div>
+
+    <div class="qa">
+      <div class="qa-h"><span class="qn">٢</span>ما الذي يميّز الدرجة الثالثة عن الثانية؟</div>
+      <div class="qa-b">
+        <div class="qa-r"><span class="qa-k k-exp">المتوقَّع</span><span class="qa-v">إمكانُ العدّ والفرز والحساب — لأنّ الرقم صار في خانةٍ لا كلمةً في نصّ.</span></div>
+        <div class="qa-r"><span class="qa-k k-err">الخطأ الشائع</span><span class="qa-v">«إمكانُ البحث» — وهي الدرجةُ الثانيةُ نفسُها، وهذا أدقُّ الأخطاء وأكثرُها إقناعًا.</span></div>
+        <div class="qa-r"><span class="qa-k k-rep">الردّ</span><span class="qa-v">«ابحثْ في الاثنتين عن «٢٣ يومًا» — تجدها في كلتيهما. والآن اجمعْها: تستطيع في أيّهما؟»</span></div>
+      </div>
+    </div>
+
+    <div class="qa">
+      <div class="qa-h"><span class="qn">٣</span>هل كلُّ ورقةٍ يجب أن تبلغ الدرجة الثالثة؟</div>
+      <div class="qa-b">
+        <div class="qa-r"><span class="qa-k k-exp">المتوقَّع</span><span class="qa-v">لا — الدرجةُ تُحدَّد بالغاية. والأرشيفُ النادرُ الاستعمال تكفيه الأولى.</span></div>
+        <div class="qa-r"><span class="qa-k k-err">الخطأ الشائع</span><span class="qa-v">«نعم، كلَّما ارتفعنا كان أفضل» — طموحٌ يستهلك الميزانيّة على ما لا يُسأل عنه أحد.</span></div>
+        <div class="qa-r"><span class="qa-k k-rep">الردّ</span><span class="qa-v">«أرشيفٌ من ثلاثين سنةً يُطلَب منه ملفٌّ في العام مرّة — كم تدفع لترفعه إلى الثالثة؟ ومَن سيسألك عنه؟»</span></div>
+      </div>
+    </div>
+
+    <div class="qa">
+      <div class="qa-h"><span class="qn">٤</span>بأيّ الأضابير نبدأ — الأقدم أم الأكثر استعمالًا؟</div>
+      <div class="qa-b">
+        <div class="qa-r"><span class="qa-k k-exp">المتوقَّع</span><span class="qa-v">الأكثرُ استعمالًا — فيظهر أثرُ المشروع من أوّل أسبوعٍ قبل أن ينفد الحماس.</span></div>
+        <div class="qa-r"><span class="qa-k k-err">الخطأ الشائع</span><span class="qa-v">«الأقدم لأنّه معرَّضٌ للتلف» — ولهذا وجهٌ صحيحٌ <b>في الحفظ لا في الرقمنة</b>.</span></div>
+        <div class="qa-r"><span class="qa-k k-rep">الردّ</span><span class="qa-v">«جوابُك صحيحٌ لو كنّا نتكلّم عن حفظ التراث. ونحن نتكلّم عن دائرةٍ يراجعها الناسُ اليوم — فأيُّهما يخفّف الطابور؟»</span></div>
+      </div>
+    </div>
+
+    <div class="qa">
+      <div class="qa-h"><span class="qn">٥</span>أيُّ خطوةٍ تنقل المشروع إلى الدرجة الثالثة؟</div>
+      <div class="qa-b">
+        <div class="qa-r"><span class="qa-k k-exp">المتوقَّع</span><span class="qa-v">الفهرسة — فهي التي تُنشئ الجدولَ بأعمدته.</span></div>
+        <div class="qa-r"><span class="qa-k k-err">الخطأ الشائع</span><span class="qa-v">«المسحُ وتمييزُ النصّ» — وهما يبلغان الثانيةَ ويقفان.</span></div>
+        <div class="qa-r"><span class="qa-k k-rep">الردّ</span><span class="qa-v">«وهذا أخطرُ ما في الأمر: الفهرسةُ أوّلُ ما يُحذَف عند ضيق الوقت — فيخرج المشروعُ من الثالثة وهو يظنّ أنّه فيها.»</span></div>
+      </div>
+    </div>
+
+    <div class="qa">
+      <div class="qa-h"><span class="qn">٦</span>من أين نأخذ عيّنة ضبط الجودة؟</div>
+      <div class="qa-b">
+        <div class="qa-r"><span class="qa-k k-exp">المتوقَّع</span><span class="qa-v">عشوائيًّا من الجدول كلِّه، عشرةٌ بالمئة.</span></div>
+        <div class="qa-r"><span class="qa-k k-err">الخطأ الشائع</span><span class="qa-v">«من الأوّل» — وهو أصحُّ الجدول غالبًا، فالعيّنةُ منه تُطمئن وهي لا تفحص.</span></div>
+        <div class="qa-r"><span class="qa-k k-rep">الردّ</span><span class="qa-v">«الصفحةُ الأولى أوضحُ مسحًا، والخطُّ في أوّل السجلّ أهدأُ منه في آخره. فمِن أين يأتي الخطأُ إذًا؟»</span></div>
+      </div>
+    </div>
+
+    <div class="qa">
+      <div class="qa-h"><span class="qn">٧</span>رقمنّا الأرشيف وأتلفنا الورق. ما أكبر خطر؟</div>
+      <div class="qa-b">
+        <div class="qa-r"><span class="qa-k k-exp">المتوقَّع</span><span class="qa-v">نسخةٌ وحيدةٌ بلا احتياطيّ — فالفقدُ صار نهائيًّا.</span></div>
+        <div class="qa-r"><span class="qa-k k-err">الخطأ الشائع</span><span class="qa-v">«لا خطر، صار على الحاسوب» — ثقةٌ في وسيطٍ أهشَّ من الذي حلّ محلَّه.</span></div>
+        <div class="qa-r"><span class="qa-k k-rep">الردّ</span><span class="qa-v">«الورقُ في عشر خزائن، فحريقُ خزانةٍ يُتلف عُشرَه. وهذا الملفُّ في قرصٍ واحد — فكم يُتلف عطبٌ واحد؟»</span></div>
+      </div>
+    </div>
+
+    <div class="qa">
+      <div class="qa-h"><span class="qn">٨</span>ما الفرق بين الرقمنة والحفظ طويل الأمد؟</div>
+      <div class="qa-b">
+        <div class="qa-r"><span class="qa-k k-exp">المتوقَّع</span><span class="qa-v">الحفظُ غايتُه بقاءُ الأصل مئةَ سنة، والرقمنةُ غايتُها الاستعمالُ اليوم.</span></div>
+        <div class="qa-r"><span class="qa-k k-err">الخطأ الشائع</span><span class="qa-v">«هما شيءٌ واحد» — وعليه تُصرَف ميزانيّةٌ على الأولى ويُطالَب الفريقُ بالثانية.</span></div>
+        <div class="qa-r"><span class="qa-k k-rep">الردّ</span><span class="qa-v">«مصحفٌ مخطوطٌ عمرُه ثلاثُمئة سنة: أتريده مقروءًا للحاسوب، أم تريده سليمًا بعد مئة سنةٍ أخرى؟ — القراران مختلفان والميزانيّتان مختلفتان.»</span></div>
+      </div>
+    </div>
+
+    <div class="qa">
+      <div class="qa-h"><span class="qn">٩</span>مديرٌ يقول: «نرقمن كلَّ شيء وبعدين نشوف شنو ينفعنا». رأيكم؟</div>
+      <div class="qa-b">
+        <div class="qa-r"><span class="qa-k k-exp">المتوقَّع</span><span class="qa-v">الغايةُ لم تُحدَّد — ومنها تُشتقّ الدرجةُ والأولويّةُ والمعاييرُ والكلفة.</span></div>
+        <div class="qa-r"><span class="qa-k k-err">الخطأ الشائع</span><span class="qa-v">«صحيح، المهمّ نبدأ» — والبدءُ بلا غايةٍ يُنتج رقمنةً متقنةً لما لا ينفع.</span></div>
+        <div class="qa-r"><span class="qa-k k-rep">الردّ</span><span class="qa-v">«اذكرْ لي ثلاثةَ أسئلةٍ ستجيب عنها هذه البيانات. — مَن لا يستطيع ذكرَها، مشروعُه يُؤجَّل لا يُموَّل.»</span></div>
+      </div>
+    </div>
+
+    <div class="qa">
+      <div class="qa-h"><span class="qn">١٠</span>ما الفرق بين ما فعلناه اليوم ورقمنة الأعمال؟</div>
+      <div class="qa-b">
+        <div class="qa-r"><span class="qa-k k-exp">المتوقَّع</span><span class="qa-v">اليومَ حسّنّا وعاءَ المعلومة بعد كتابتها، والإجراءُ كما هو. ورقمنةُ الأعمال تحذف الخطوةَ من أصلها.</span></div>
+        <div class="qa-r"><span class="qa-k k-err">الخطأ الشائع</span><span class="qa-v">«الفرقُ في الأدوات» — والأدواتُ قد تكون واحدةً والفرقُ في الإجراء.</span></div>
+        <div class="qa-r"><span class="qa-k k-rep">الردّ</span><span class="qa-v">«بالنموذج الإلكترونيّ: كم خطوةً من الاثنتَي عشرةَ سقطت؟ — لا مسحَ ولا تمييزَ نصٍّ ولا مراجعةَ عيّنة. <b>سقطت تسعٌ.</b>»</span></div>
+      </div>
+    </div>
+
+    <div class="qa">
+      <div class="qa-h"><span class="qn">١١</span>ما الفرق بين «مستوى» الرقمنة و«درجتها»؟</div>
+      <div class="qa-b">
+        <div class="qa-r"><span class="qa-k k-exp">المتوقَّع</span><span class="qa-v">المستوى اتّساعُ الأثر: ورقة · إجراء · مؤسّسة. والدرجةُ عمقُ التحويل لورقةٍ واحدة: صورة · نصّ · بيانات.</span></div>
+        <div class="qa-r"><span class="qa-k k-err">الخطأ الشائع</span><span class="qa-v">خلطُهما — فيُقال «بلغنا المستوى الثالث» والمقصودُ الدرجةُ الثالثة، وهما شيئان مختلفان.</span></div>
+        <div class="qa-r"><span class="qa-k k-rep">الردّ</span><span class="qa-v">«سجلُّ الإجازات صار جدولًا — في أيّ درجة؟ الثالثة. وفي أيّ مستوى؟ <b>الأوّل</b>، لأنّ الموظّف ما زال يملأ الاستمارة بخطّ يده.»</span></div>
+      </div>
+    </div>
+
+    <div class="qa">
+      <div class="qa-h"><span class="qn">١٢</span>عندنا نسختان من الأرشيف على قرصين في غرفة الأرشيف. أهذا نسخٌ احتياطيّ؟</div>
+      <div class="qa-b">
+        <div class="qa-r"><span class="qa-k k-exp">المتوقَّع</span><span class="qa-v">لا — نسختان في الموضع نفسِه نسخةٌ واحدة. وقاعدةُ ٣–٢–١ تشترط واحدةً <b>خارج الموقع</b>.</span></div>
+        <div class="qa-r"><span class="qa-k k-err">الخطأ الشائع</span><span class="qa-v">«نعم، عندنا نسختان» — العدُّ وحدَه بلا نظرٍ في تفرّق المواضع.</span></div>
+        <div class="qa-r"><span class="qa-k k-rep">الردّ</span><span class="qa-v">«لو احترقت الغرفة الليلة — كم نسخةً تبقى؟» ثمّ: «ومتى آخرُ مرّةٍ جُرِّب <b>استرجاع</b> نسخةٍ منها؟ — نسخةٌ لم تُجرَّب ليست نسخة.»</span></div>
+      </div>
+    </div>
+
+    <div class="qa">
+      <div class="qa-h"><span class="qn">١٣</span>سؤالُ إغلاقٍ للقاعة: ما أوّلُ ورقةٍ سترقمنها في دائرتك؟ ولماذا هي؟</div>
+      <div class="qa-b">
+        <div class="qa-r"><span class="qa-k k-exp">المتوقَّع</span><span class="qa-v">ورقةٌ كثيرةُ الطلب، مع ذكرِ الدرجة المطلوبة وسؤالٍ واحدٍ ستجيب عنه.</span></div>
+        <div class="qa-r"><span class="qa-k k-err">الخطأ الشائع</span><span class="qa-v">اختيارُ الأرشيف كلِّه، أو ورقةٍ لا يُسأل عنها أحد.</span></div>
+        <div class="qa-r"><span class="qa-k k-rep">الردّ</span><span class="qa-v">«جميل. والآن السؤالُ الذي يُرافقه: <b>ما السؤالُ الذي سيصير ممكنًا ولم يكن؟</b> — إن لم يكن ثمّةَ جواب، فالورقةُ لا تستحقّ الثالثة.»</span></div>
+      </div>
+    </div>
+
+    <div class="qa">
+      <div class="qa-h"><span class="qn">١٤</span>سؤالٌ احتياطيٌّ إن سكتت القاعة تمامًا</div>
+      <div class="qa-b">
+        <div class="qa-r"><span class="qa-k k-exp">المتوقَّع</span><span class="qa-v">«ارفعوا أيديَكم: مَن فيكم صوّر ورقةً رسميّةً بهاتفه هذا الشهر؟» — الأيدي ترتفع كلُّها.</span></div>
+        <div class="qa-r"><span class="qa-k k-err">لماذا يعمل</span><span class="qa-v">لأنّه لا يحتاج إلى معرفةٍ ولا يُحرج أحدًا، ويعيد الانتباهَ بحركةٍ جسديّةٍ لا بجواب.</span></div>
+        <div class="qa-r"><span class="qa-k k-rep">المتابعة</span><span class="qa-v">«إذًا كلُّكم رقمنتم شيئًا هذا الشهر — وكلُّكم توقّفتم عند الدرجة الأولى. ولماذا توقّفنا؟»</span></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════ الخطّة البديلة ═══════════════ -->
+    <h2 class="sec">٥ · الخطّة البديلة</h2>
+
+    <div class="warn">
+      <span class="i">⚠</span>
+      <div><b>انقطع الإنترنت:</b> المحاضرةُ كلُّها تعمل بلا إنترنت عدا نموذجِ الجسر في آخرها. والورقةُ المطبوعةُ والمخطّطُ والسيناريو لا يحتاجان شبكةً — <b>والدرسُ في الفكرة لا في الاتّصال</b>.</div>
+    </div>
+
+    <div class="warn">
+      <span class="i">⚠</span>
+      <div><b>ضاق الوقت:</b> يُحذَف تمرينُ المجاميع ويُنقَل إلى الواجب. <b>ولا يُحذَف محورُ الدرجات الثلاث ولا المخطّط</b> — عليهما يقوم الأسبوعُ كلُّه.</div>
+    </div>
+
+    <div class="warn">
+      <span class="i">⚠</span>
+      <div><b>سؤالٌ لا تعرف جوابه:</b> «سؤالٌ جيّد، لا أعرف جوابَه الآن — أبحثه وأجيبك في الأسبوع القادم.» ثمّ <b>يُكتَب السؤالُ فعلًا ويُجاب عنه فعلًا</b>. ووعدٌ لا يُوفى به يُفقِد المحاضرَ أكثرَ ممّا يُفقِده الجهل.</div>
+    </div>
+
+    <!-- ═══════════════ بعد المحاضرة ═══════════════ -->
+    <h2 class="sec">٦ · بعد المحاضرة</h2>
+
+    <div class="note"><b>يُرسَل إليهم:</b> رابطُ صفحة الأسبوع الثاني، ونصُّ الواجب، وتذكيرٌ بأنّ الورقة المختارة <b>غيرُ سرّيّةٍ ولا تحمل بياناتٍ شخصيّة</b>.</div>
+
+    <div class="note"><b>يُرصَد للأسبوع القادم:</b> الأسئلةُ التي تكرّرت، والخطأُ الذي وقع فيه أكثرُ من نصف القاعة — فيُبنى عليه افتتاحُ الأسبوع الثالث.</div>
+
+    <div class="note"><b>يُقاس النجاح بثلاثة:</b> أن يذكروا الدرجات الثلاث بلا نظرٍ في الورقة · أن يميّزوا «المستوى» من «الدرجة» · وأن يذكر أحدُهم من نفسه أنّ الحماية ترافق المسار كلَّه ولا تأتي في آخره. <b>ومَن بلغ الثالثة فقد بلغ ما وراء المنهج.</b></div>
+
+    <div class="foot">دليلُ الأستاذ — الأسبوع الثاني · إعداد: د. أمير هادي ★<br>هذه الصفحة غيرُ مفهرسةٍ في محرّكات البحث وغيرُ مرتبطةٍ من صفحة الطالب.</div>
+
+  </div>
+</div>
+</body>
+</html>

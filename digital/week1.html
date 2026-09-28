@@ -150,22 +150,6 @@
   .pin-badge:focus-visible{ outline:3px solid #f0b400; outline-offset:3px; }
 
   /* الدبوس نفسه: قرص أحمر ببريق صغير، مثبَّت على حافة الملصق */
-  .pin-badge .pin-qr{
-    display:block;
-    width:70px;
-    height:70px;
-    flex:0 0 70px;
-    line-height:0;
-    background:#fff;
-    padding:2px;
-    border-radius:2px;
-  }
-  .pin-badge .pin-qr svg{
-    display:block;
-    width:100%;
-    height:100%;
-  }
-
   .pin-badge .pin-head{
     position:absolute; top:-6px; right:50%; transform:translateX(50%);
     width:12px; height:12px; border-radius:50%;
@@ -1329,6 +1313,8 @@
   }
   .st.hands .st-n{ background:var(--green); }
   .st.watch .st-n{ background:var(--purple); }
+  .st.decide{ border-inline-start-color:var(--blue); }
+  .st.decide .st-n{ background:var(--blue); }
   .st-t{
     font-family:'Aref Ruqaa',serif; font-weight:700;
     font-size:calc(15px * var(--fs,1)); color:var(--ink); line-height:1.5;
@@ -2561,6 +2547,219 @@
     }
     .slide{ padding-bottom:20mm !important; }   /* مكان للشريط فلا يركب النص */
   }
+  /* خلاصة نثريّة تحت المحور */
+  .takeaway{
+    margin:13px 0 5px; padding:11px 15px;
+    border-inline-start:4px solid var(--blue);
+    background:rgba(26,61,140,0.05);
+    border-radius:0 10px 10px 0;
+    font-size:calc(13.5px * var(--fs,1));
+    line-height:1.95; color:var(--ink); text-align:justify;
+  }
+  .takeaway b{ color:var(--blue); }
+
+  .ltr-inline{ unicode-bidi:isolate; direction:ltr;
+               font-family:'Courier New',monospace; font-size:0.94em; }
+
+  /* ══════════════════════════════════════════════════════════════
+     مكوّنات الأسبوع الثاني — صور · أدوات · خطوات · ملفّات · مسرد · مصادر
+     ══════════════════════════════════════════════════════════════ */
+
+  /* ─── صورة بإطارٍ وتعليقٍ مرقّم ─── */
+  .fig{
+    margin:18px 0; padding:10px 10px 0;
+    background:#fff; border:1.5px solid rgba(26,61,140,0.18);
+    border-radius:12px; box-shadow:0 2px 10px rgba(26,61,140,0.07);
+    break-inside:avoid; page-break-inside:avoid;
+  }
+  .fig img, .fig svg.fig-art{
+    display:block; width:100%; height:auto; border-radius:8px;
+    border:1px solid rgba(0,0,0,0.08); background:#f6f3ea;
+  }
+  .fig-cap{
+    display:flex; align-items:flex-start; gap:8px;
+    padding:9px 4px 10px;
+    font-size:calc(12.5px * var(--fs,1)); line-height:1.85;
+    color:var(--ink); text-align:justify;
+  }
+  .fig-n{
+    flex:0 0 auto; background:var(--blue); color:#fff;
+    border-radius:6px; padding:1px 8px; font-weight:800;
+    font-size:calc(11.5px * var(--fs,1)); white-space:nowrap;
+  }
+  .fig-cap > span:last-child{ flex:1; }
+  .fig-src{ display:block; margin-top:4px; color:#6b7280;
+            font-size:0.87em; font-weight:400; }
+  .fig-half{ max-width:64%; margin-inline:auto; }
+
+  /* ─── بطاقة أداة ─── */
+  .tool{
+    margin:16px 0; border:1.5px solid rgba(15,122,114,0.30);
+    border-radius:13px; background:rgba(15,122,114,0.035);
+    overflow:hidden; break-inside:avoid; page-break-inside:avoid;
+  }
+  .tool-h{
+    display:flex; align-items:center; gap:9px; flex-wrap:wrap;
+    padding:9px 13px; background:rgba(15,122,114,0.10);
+    border-bottom:1px solid rgba(15,122,114,0.20);
+  }
+  .tool-ic{ font-size:1.2em; line-height:1; }
+  .tool-name{ font-weight:800; color:var(--teal);
+              font-size:calc(14.5px * var(--fs,1)); }
+  .tool-en{
+    unicode-bidi:isolate; direction:ltr;
+    font-family:'Courier New',monospace; font-size:calc(11.5px * var(--fs,1));
+    color:#4b5563; background:#fff; border:1px solid rgba(0,0,0,0.10);
+    border-radius:5px; padding:1px 6px;
+  }
+  .tool-free{
+    margin-inline-start:auto; font-size:calc(11px * var(--fs,1));
+    font-weight:700; color:var(--green); background:rgba(31,122,61,0.12);
+    border-radius:20px; padding:2px 10px; white-space:nowrap;
+  }
+  .tool-b{ padding:4px 13px 11px; }
+  .tool-row{
+    display:flex; gap:9px; padding:6px 0;
+    border-bottom:1px dashed rgba(26,61,140,0.13);
+    font-size:calc(13px * var(--fs,1)); line-height:1.9;
+  }
+  .tool-row:last-child{ border-bottom:0; }
+  .tool-k{ flex:0 0 76px; font-weight:800; color:var(--blue); }
+  .tool-v{ flex:1; text-align:justify; }
+  .tool-v a{ color:var(--blue); }
+
+  /* ─── خطوات التطبيق ─── */
+  .walk{ margin:14px 0; }
+  .wk{
+    margin:0 0 10px; padding:11px 14px;
+    border:1.5px solid rgba(26,61,140,0.16); border-radius:12px;
+    background:#fff; break-inside:avoid; page-break-inside:avoid;
+  }
+  .wk-h{ display:flex; align-items:center; gap:9px;
+         margin-bottom:5px; flex-wrap:wrap; }
+  .wk-n{
+    flex:0 0 auto; width:27px; height:27px; border-radius:50%;
+    background:var(--blue); color:#fff; font-weight:800;
+    display:flex; align-items:center; justify-content:center;
+    font-size:calc(13px * var(--fs,1));
+  }
+  .wk-t{ font-weight:800; color:var(--ink);
+         font-size:calc(14px * var(--fs,1)); }
+  .wk-where{
+    margin-inline-start:auto; font-size:calc(11px * var(--fs,1));
+    color:var(--purple); background:rgba(122,46,166,0.10);
+    border-radius:20px; padding:2px 10px; font-weight:700; white-space:nowrap;
+  }
+  .wk-b{ font-size:calc(13.2px * var(--fs,1)); line-height:1.95;
+         text-align:justify; }
+  .wk-res, .wk-warn{
+    margin-top:7px; padding:7px 11px; border-radius:8px;
+    font-size:calc(12.8px * var(--fs,1)); line-height:1.88; text-align:justify;
+  }
+  .wk-res{ background:rgba(31,122,61,0.07); border-inline-start:3px solid var(--green); }
+  .wk-res  > b:first-child{ color:var(--green); }
+  .wk-warn{ background:rgba(224,122,31,0.08); border-inline-start:3px solid var(--orange); }
+  .wk-warn > b:first-child{ color:var(--orange); }
+
+  /* ─── ملفّات جاهزة للتحميل ─── */
+  .files{ display:flex; flex-wrap:wrap; gap:9px; margin:14px 0; }
+  .fl{
+    display:flex; align-items:center; gap:8px;
+    padding:9px 13px; border-radius:11px; text-decoration:none;
+    border:1.5px solid rgba(26,61,140,0.22); background:#fff;
+    color:var(--ink); font-weight:700;
+    font-size:calc(12.8px * var(--fs,1)); transition:.15s;
+  }
+  .fl:hover{ background:rgba(26,61,140,0.06); border-color:var(--blue); }
+  .fl-ic{ font-size:1.2em; line-height:1; }
+  .fl-x{ unicode-bidi:isolate; direction:ltr;
+         font-family:'Courier New',monospace; font-size:0.82em; color:#6b7280; }
+
+  /* ─── أمثلة قريبة من الواقع ─── */
+  .exs{ display:grid; grid-template-columns:repeat(auto-fit,minmax(245px,1fr));
+        gap:10px; margin:14px 0; }
+  .ex-c{
+    padding:10px 12px; border-radius:11px; background:#fff;
+    border:1.5px solid rgba(224,87,143,0.28);
+    font-size:calc(12.6px * var(--fs,1)); line-height:1.82;
+    text-align:justify; break-inside:avoid;
+  }
+  .ex-c > b:first-child{ display:block; color:var(--pink); margin-bottom:3px;
+                         font-size:calc(13px * var(--fs,1)); }
+
+  /* ─── مسرد المصطلحات ─── */
+  .gloss-wrap{ overflow-x:auto; margin:14px 0; }
+  table.gloss{ width:100%; border-collapse:collapse; background:#fff;
+               font-size:calc(12.8px * var(--fs,1)); }
+  table.gloss th{
+    background:rgba(26,61,140,0.10); color:var(--blue); font-weight:800;
+    padding:8px 11px; border:1px solid rgba(26,61,140,0.16); text-align:right;
+  }
+  table.gloss td{ padding:8px 11px; border:1px solid rgba(26,61,140,0.12);
+                  line-height:1.82; vertical-align:top; text-align:justify; }
+  table.gloss td.en{
+    unicode-bidi:isolate; direction:ltr; text-align:left;
+    font-family:'Segoe UI',Arial,sans-serif; font-weight:700;
+    color:var(--teal); white-space:nowrap;
+  }
+  table.gloss tr:nth-child(even) td{ background:rgba(26,61,140,0.022); }
+
+  /* ─── المصادر ─── */
+  .srcs{ margin:14px 0; padding:12px 15px; border-radius:12px;
+         background:rgba(0,0,0,0.028); border:1px dashed rgba(26,61,140,0.25); }
+  .src{ display:flex; gap:9px; padding:7px 0;
+        font-size:calc(12.6px * var(--fs,1)); line-height:1.85;
+        border-bottom:1px dashed rgba(26,61,140,0.12); }
+  .src:last-child{ border-bottom:0; }
+  .src-n{ flex:0 0 auto; color:var(--red); font-weight:800; }
+  .src-b{ flex:1; text-align:justify; }
+  .src-b a{ color:var(--blue); unicode-bidi:isolate; direction:ltr;
+            word-break:break-all; font-size:0.93em; }
+  .src-kind{
+    display:inline-block; font-size:0.82em; font-weight:700; color:#fff;
+    background:var(--purple); border-radius:20px; padding:1px 8px;
+    margin-inline-end:6px; vertical-align:middle;
+  }
+
+  /* ─── مخطّط المسار ─── */
+  .dgm{
+    margin:18px 0; padding:14px 14px 10px; background:#fff;
+    border:1.5px solid rgba(26,61,140,0.18); border-radius:14px;
+    box-shadow:0 2px 10px rgba(26,61,140,0.07);
+    break-inside:avoid; page-break-inside:avoid;
+  }
+  .dgm-t{
+    text-align:center; font-family:'Aref Ruqaa',serif; color:var(--red);
+    font-size:calc(17px * var(--fs,1)); margin-bottom:6px;
+  }
+  .dgm svg{ display:block; width:100%; height:auto;
+            font-family:'Noto Naskh Arabic',serif; }
+  .dgm-c{ margin-top:8px; text-align:center; color:#6b7280;
+          font-size:calc(12px * var(--fs,1)); line-height:1.85; }
+
+  /* ─── نصُّ طلبٍ يُنسَخ كما هو ─── */
+  .pbox{
+    margin:10px 0; border-radius:10px; overflow:hidden;
+    border:1.5px solid rgba(122,46,166,0.30); background:#fff;
+    break-inside:avoid;
+  }
+  .pbox-h{
+    display:flex; align-items:center; gap:7px;
+    padding:6px 12px; background:rgba(122,46,166,0.10);
+    border-bottom:1px solid rgba(122,46,166,0.20);
+    font-size:calc(11.5px * var(--fs,1)); font-weight:800; color:var(--purple);
+  }
+  .pbox-b{
+    padding:11px 14px; unicode-bidi:plaintext;
+    font-size:calc(12.8px * var(--fs,1)); line-height:2.05;
+    color:#1f2937; white-space:pre-wrap; text-align:justify;
+  }
+
+  @media (max-width:640px){
+    .tool-k{ flex:0 0 64px; }
+    .fig-half{ max-width:100%; }
+  }
+
 </style>
 
 <!-- مكتبة محلية لبناء ملف PDF من صفحات الورقة عند التصدير — لا اعتماد على الإنترنت وقت التشغيل -->
@@ -2703,12 +2902,24 @@
   <div class="paper-wrapper">
     <div class="tape tape-left"></div>
     <div class="tape tape-right"></div>
-    <a class="pin-badge" href="https://ameerkhadi.github.io/academic-cv-website/qada/index.html"
-       target="_blank" rel="noopener" title="افتح منصة المادة في صفحة جديدة">
-      <span class="pin-head" aria-hidden="true"></span>
-      <span class="pin-label">اذهب إلى<br>منصة المادة</span>
-      <span class="pin-qr"><svg width="66" height="66" viewBox="0 0 35 35" role="img" aria-label="رمز QR لفتح منصة المادة"><path d="M1,1H2V2H1zM2,1H3V2H2zM3,1H4V2H3zM4,1H5V2H4zM5,1H6V2H5zM6,1H7V2H6zM7,1H8V2H7zM10,1H11V2H10zM14,1H15V2H14zM19,1H20V2H19zM20,1H21V2H20zM21,1H22V2H21zM24,1H25V2H24zM27,1H28V2H27zM28,1H29V2H28zM29,1H30V2H29zM30,1H31V2H30zM31,1H32V2H31zM32,1H33V2H32zM33,1H34V2H33zM1,2H2V3H1zM7,2H8V3H7zM9,2H10V3H9zM10,2H11V3H10zM12,2H13V3H12zM13,2H14V3H13zM14,2H15V3H14zM15,2H16V3H15zM16,2H17V3H16zM18,2H19V3H18zM19,2H20V3H19zM21,2H22V3H21zM23,2H24V3H23zM27,2H28V3H27zM33,2H34V3H33zM1,3H2V4H1zM3,3H4V4H3zM4,3H5V4H4zM5,3H6V4H5zM7,3H8V4H7zM10,3H11V4H10zM11,3H12V4H11zM12,3H13V4H12zM16,3H17V4H16zM19,3H20V4H19zM21,3H22V4H21zM22,3H23V4H22zM23,3H24V4H23zM25,3H26V4H25zM27,3H28V4H27zM29,3H30V4H29zM30,3H31V4H30zM31,3H32V4H31zM33,3H34V4H33zM1,4H2V5H1zM3,4H4V5H3zM4,4H5V5H4zM5,4H6V5H5zM7,4H8V5H7zM9,4H10V5H9zM10,4H11V5H10zM12,4H13V5H12zM14,4H15V5H14zM15,4H16V5H15zM17,4H18V5H17zM18,4H19V5H18zM24,4H25V5H24zM25,4H26V5H25zM27,4H28V5H27zM29,4H30V5H29zM30,4H31V5H30zM31,4H32V5H31zM33,4H34V5H33zM1,5H2V6H1zM3,5H4V6H3zM4,5H5V6H4zM5,5H6V6H5zM7,5H8V6H7zM11,5H12V6H11zM13,5H14V6H13zM14,5H15V6H14zM17,5H18V6H17zM20,5H21V6H20zM21,5H22V6H21zM24,5H25V6H24zM27,5H28V6H27zM29,5H30V6H29zM30,5H31V6H30zM31,5H32V6H31zM33,5H34V6H33zM1,6H2V7H1zM7,6H8V7H7zM9,6H10V7H9zM11,6H12V7H11zM16,6H17V7H16zM17,6H18V7H17zM18,6H19V7H18zM19,6H20V7H19zM21,6H22V7H21zM23,6H24V7H23zM25,6H26V7H25zM27,6H28V7H27zM33,6H34V7H33zM1,7H2V8H1zM2,7H3V8H2zM3,7H4V8H3zM4,7H5V8H4zM5,7H6V8H5zM6,7H7V8H6zM7,7H8V8H7zM9,7H10V8H9zM11,7H12V8H11zM13,7H14V8H13zM15,7H16V8H15zM17,7H18V8H17zM19,7H20V8H19zM21,7H22V8H21zM23,7H24V8H23zM25,7H26V8H25zM27,7H28V8H27zM28,7H29V8H28zM29,7H30V8H29zM30,7H31V8H30zM31,7H32V8H31zM32,7H33V8H32zM33,7H34V8H33zM13,8H14V9H13zM16,8H17V9H16zM17,8H18V9H17zM20,8H21V9H20zM21,8H22V9H21zM22,8H23V9H22zM23,8H24V9H23zM24,8H25V9H24zM1,9H2V10H1zM2,9H3V10H2zM3,9H4V10H3zM4,9H5V10H4zM5,9H6V10H5zM7,9H8V10H7zM8,9H9V10H8zM9,9H10V10H9zM10,9H11V10H10zM11,9H12V10H11zM13,9H14V10H13zM14,9H15V10H14zM15,9H16V10H15zM16,9H17V10H16zM18,9H19V10H18zM21,9H22V10H21zM23,9H24V10H23zM24,9H25V10H24zM25,9H26V10H25zM26,9H27V10H26zM28,9H29V10H28zM30,9H31V10H30zM32,9H33V10H32zM2,10H3V11H2zM5,10H6V11H5zM9,10H10V11H9zM10,10H11V11H10zM15,10H16V11H15zM17,10H18V11H17zM18,10H19V11H18zM19,10H20V11H19zM20,10H21V11H20zM21,10H22V11H21zM22,10H23V11H22zM24,10H25V11H24zM25,10H26V11H25zM27,10H28V11H27zM31,10H32V11H31zM32,10H33V11H32zM33,10H34V11H33zM3,11H4V12H3zM7,11H8V12H7zM8,11H9V12H8zM10,11H11V12H10zM12,11H13V12H12zM13,11H14V12H13zM15,11H16V12H15zM16,11H17V12H16zM19,11H20V12H19zM21,11H22V12H21zM22,11H23V12H22zM25,11H26V12H25zM28,11H29V12H28zM30,11H31V12H30zM32,11H33V12H32zM1,12H2V13H1zM2,12H3V13H2zM3,12H4V13H3zM6,12H7V13H6zM8,12H9V13H8zM10,12H11V13H10zM11,12H12V13H11zM12,12H13V13H12zM16,12H17V13H16zM17,12H18V13H17zM21,12H22V13H21zM22,12H23V13H22zM23,12H24V13H23zM24,12H25V13H24zM25,12H26V13H25zM26,12H27V13H26zM28,12H29V13H28zM29,12H30V13H29zM31,12H32V13H31zM1,13H2V14H1zM3,13H4V14H3zM5,13H6V14H5zM6,13H7V14H6zM7,13H8V14H7zM9,13H10V14H9zM10,13H11V14H10zM12,13H13V14H12zM14,13H15V14H14zM15,13H16V14H15zM16,13H17V14H16zM18,13H19V14H18zM20,13H21V14H20zM23,13H24V14H23zM25,13H26V14H25zM26,13H27V14H26zM28,13H29V14H28zM29,13H30V14H29zM30,13H31V14H30zM2,14H3V15H2zM4,14H5V15H4zM6,14H7V15H6zM8,14H9V15H8zM11,14H12V15H11zM13,14H14V15H13zM14,14H15V15H14zM17,14H18V15H17zM20,14H21V15H20zM22,14H23V15H22zM24,14H25V15H24zM27,14H28V15H27zM32,14H33V15H32zM33,14H34V15H33zM1,15H2V16H1zM2,15H3V16H2zM3,15H4V16H3zM4,15H5V16H4zM5,15H6V16H5zM6,15H7V16H6zM7,15H8V16H7zM8,15H9V16H8zM10,15H11V16H10zM15,15H16V16H15zM16,15H17V16H16zM26,15H27V16H26zM29,15H30V16H29zM32,15H33V16H32zM1,16H2V17H1zM4,16H5V17H4zM5,16H6V17H5zM8,16H9V17H8zM10,16H11V17H10zM13,16H14V17H13zM15,16H16V17H15zM17,16H18V17H17zM19,16H20V17H19zM20,16H21V17H20zM21,16H22V17H21zM22,16H23V17H22zM23,16H24V17H23zM28,16H29V17H28zM29,16H30V17H29zM31,16H32V17H31zM2,17H3V18H2zM3,17H4V18H3zM4,17H5V18H4zM7,17H8V18H7zM9,17H10V18H9zM11,17H12V18H11zM13,17H14V18H13zM14,17H15V18H14zM15,17H16V18H15zM18,17H19V18H18zM21,17H22V18H21zM23,17H24V18H23zM26,17H27V18H26zM28,17H29V18H28zM29,17H30V18H29zM32,17H33V18H32zM1,18H2V19H1zM5,18H6V19H5zM6,18H7V19H6zM8,18H9V19H8zM9,18H10V19H9zM11,18H12V19H11zM14,18H15V19H14zM17,18H18V19H17zM19,18H20V19H19zM20,18H21V19H20zM21,18H22V19H21zM22,18H23V19H22zM24,18H25V19H24zM27,18H28V19H27zM30,18H31V19H30zM32,18H33V19H32zM33,18H34V19H33zM3,19H4V20H3zM4,19H5V20H4zM5,19H6V20H5zM7,19H8V20H7zM8,19H9V20H8zM10,19H11V20H10zM12,19H13V20H12zM13,19H14V20H13zM15,19H16V20H15zM16,19H17V20H16zM17,19H18V20H17zM21,19H22V20H21zM22,19H23V20H22zM25,19H26V20H25zM27,19H28V20H27zM28,19H29V20H28zM29,19H30V20H29zM30,19H31V20H30zM32,19H33V20H32zM1,20H2V21H1zM2,20H3V21H2zM4,20H5V21H4zM6,20H7V21H6zM8,20H9V21H8zM9,20H10V21H9zM11,20H12V21H11zM12,20H13V21H12zM16,20H17V21H16zM20,20H21V21H20zM22,20H23V21H22zM23,20H24V21H23zM25,20H26V21H25zM26,20H27V21H26zM28,20H29V21H28zM31,20H32V21H31zM2,21H3V22H2zM3,21H4V22H3zM6,21H7V22H6zM7,21H8V22H7zM8,21H9V22H8zM11,21H12V22H11zM12,21H13V22H12zM18,21H19V22H18zM19,21H20V22H19zM23,21H24V22H23zM24,21H25V22H24zM25,21H26V22H25zM29,21H30V22H29zM32,21H33V22H32zM1,22H2V23H1zM3,22H4V23H3zM4,22H5V23H4zM6,22H7V23H6zM9,22H10V23H9zM10,22H11V23H10zM13,22H14V23H13zM14,22H15V23H14zM17,22H18V23H17zM18,22H19V23H18zM19,22H20V23H19zM20,22H21V23H20zM21,22H22V23H21zM22,22H23V23H22zM24,22H25V23H24zM27,22H28V23H27zM30,22H31V23H30zM32,22H33V23H32zM33,22H34V23H33zM1,23H2V24H1zM7,23H8V24H7zM14,23H15V24H14zM15,23H16V24H15zM16,23H17V24H16zM17,23H18V24H17zM18,23H19V24H18zM21,23H22V24H21zM22,23H23V24H22zM23,23H24V24H23zM25,23H26V24H25zM26,23H27V24H26zM27,23H28V24H27zM30,23H31V24H30zM32,23H33V24H32zM1,24H2V25H1zM3,24H4V25H3zM5,24H6V25H5zM6,24H7V25H6zM8,24H9V25H8zM9,24H10V25H9zM10,24H11V25H10zM13,24H14V25H13zM14,24H15V25H14zM17,24H18V25H17zM21,24H22V25H21zM22,24H23V25H22zM27,24H28V25H27zM30,24H31V25H30zM31,24H32V25H31zM1,25H2V26H1zM6,25H7V26H6zM7,25H8V26H7zM8,25H9V26H8zM9,25H10V26H9zM10,25H11V26H10zM13,25H14V26H13zM15,25H16V26H15zM18,25H19V26H18zM20,25H21V26H20zM23,25H24V26H23zM25,25H26V26H25zM26,25H27V26H26zM27,25H28V26H27zM28,25H29V26H28zM29,25H30V26H29zM33,25H34V26H33zM9,26H10V27H9zM20,26H21V27H20zM22,26H23V27H22zM24,26H25V27H24zM25,26H26V27H25zM29,26H30V27H29zM31,26H32V27H31zM33,26H34V27H33zM1,27H2V28H1zM2,27H3V28H2zM3,27H4V28H3zM4,27H5V28H4zM5,27H6V28H5zM6,27H7V28H6zM7,27H8V28H7zM9,27H10V28H9zM12,27H13V28H12zM13,27H14V28H13zM16,27H17V28H16zM17,27H18V28H17zM19,27H20V28H19zM21,27H22V28H21zM22,27H23V28H22zM23,27H24V28H23zM24,27H25V28H24zM25,27H26V28H25zM27,27H28V28H27zM29,27H30V28H29zM30,27H31V28H30zM31,27H32V28H31zM32,27H33V28H32zM1,28H2V29H1zM7,28H8V29H7zM11,28H12V29H11zM12,28H13V29H12zM15,28H16V29H15zM16,28H17V29H16zM20,28H21V29H20zM22,28H23V29H22zM23,28H24V29H23zM24,28H25V29H24zM25,28H26V29H25zM29,28H30V29H29zM30,28H31V29H30zM31,28H32V29H31zM1,29H2V30H1zM3,29H4V30H3zM4,29H5V30H4zM5,29H6V30H5zM7,29H8V30H7zM9,29H10V30H9zM10,29H11V30H10zM11,29H12V30H11zM12,29H13V30H12zM16,29H17V30H16zM18,29H19V30H18zM23,29H24V30H23zM25,29H26V30H25zM26,29H27V30H26zM27,29H28V30H27zM28,29H29V30H28zM29,29H30V30H29zM1,30H2V31H1zM3,30H4V31H3zM4,30H5V31H4zM5,30H6V31H5zM7,30H8V31H7zM9,30H10V31H9zM10,30H11V31H10zM13,30H14V31H13zM14,30H15V31H14zM15,30H16V31H15zM17,30H18V31H17zM19,30H20V31H19zM20,30H21V31H20zM21,30H22V31H21zM24,30H25V31H24zM25,30H26V31H25zM26,30H27V31H26zM28,30H29V31H28zM29,30H30V31H29zM30,30H31V31H30zM1,31H2V32H1zM3,31H4V32H3zM4,31H5V32H4zM5,31H6V32H5zM7,31H8V32H7zM9,31H10V32H9zM10,31H11V32H10zM11,31H12V32H11zM14,31H15V32H14zM15,31H16V32H15zM16,31H17V32H16zM19,31H20V32H19zM21,31H22V32H21zM22,31H23V32H22zM23,31H24V32H23zM27,31H28V32H27zM30,31H31V32H30zM31,31H32V32H31zM32,31H33V32H32zM1,32H2V33H1zM7,32H8V33H7zM9,32H10V33H9zM11,32H12V33H11zM13,32H14V33H13zM14,32H15V33H14zM16,32H17V33H16zM17,32H18V33H17zM22,32H23V33H22zM23,32H24V33H23zM26,32H27V33H26zM30,32H31V33H30zM31,32H32V33H31zM1,33H2V34H1zM2,33H3V34H2zM3,33H4V34H3zM4,33H5V34H4zM5,33H6V34H5zM6,33H7V34H6zM7,33H8V34H7zM9,33H10V34H9zM10,33H11V34H10zM13,33H14V34H13zM15,33H16V34H15zM16,33H17V34H16zM18,33H19V34H18zM20,33H21V34H20zM23,33H24V34H23zM24,33H25V34H24zM25,33H26V34H25zM26,33H27V34H26zM27,33H28V34H27zM32,33H33V34H32z" fill="#1a1a1a"/></svg></span>
-    </a>
+    <button type="button" class="pin-badge" id="platformBtn" onclick="showPlatformSoon()">
+      <span class="pin-head"></span>
+      <span class="pin-text">
+        <span class="pin-title" id="platformBtnTitle">الذهاب إلى المنصة</span>
+        <span class="pin-sub" id="platformBtnSub">منصّة المادة الإلكترونية</span>
+      </span>
+      <span class="pin-go" id="platformBtnGo">←</span>
+    </button>
+    <script>
+      function showPlatformSoon(){
+        var btn = document.getElementById('platformBtn');
+        document.getElementById('platformBtnTitle').textContent = 'قريبًا';
+        document.getElementById('platformBtnSub').textContent = 'تُفتح المنصة الأسبوع القادم';
+        document.getElementById('platformBtnGo').textContent = '⏳';
+        btn.classList.add('pin-soon');
+        btn.disabled = true;
+      }
+    </script>
 
     <div class="paper">
 
@@ -3127,15 +3338,371 @@
       <!-- ============ END SLIDE 1 ============ -->
 
       <!-- ============ SLIDE 2 : الأسبوع الثاني ============ -->
-      <div id="slide-2" class="slide content-slide">
+      <div id="slide-2" class="slide content-slide rich-slide">
         <span class="chip chip-ch1">الأسبوع الثاني</span>
-        <h2 class="page-title">الأسبوع الثاني</h2>
+        <h2 class="page-title">الرقمنة — من الورقة إلى البيانات</h2>
         <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
-        <div class="coming-soon">
-          <svg class="big-icon" viewBox="0 0 40 40"><g filter="url(#sketchy)"><circle cx="20" cy="20" r="15" fill="#fde3c4" stroke="var(--orange)" stroke-width="2.5"/><path d="M20 12 v9 l6 4" fill="none" stroke="var(--orange)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></g></svg>
-          <p class="cs-title">تنزل لاحقاً</p>
-          <p class="cs-sub">محتوى هذا الأسبوع سيُضاف قريباً.</p>
+
+        <p class="lead-paragraph">عرّفنا في الأسبوع الأول الرقمنة تعريفًا سريعًا وفرّقناها عن رقمنة الأعمال والتحوّل الرقميّ. وهذا الأسبوع يقف عندها وحدها، لأنّ أكثر ما يُنفَق من مالٍ ووقتٍ في مشاريع الرقمنة <span class="hl hl-yellow">يُنفَق على درجةٍ لا تُجيب عن سؤالٍ واحد</span>. وفي آخر هذه الصفحة يكون القارئ قادرًا على أن يأخذ ورقةً من دائرته ويحوّلها إلى جدولٍ يُجيبه — بأدواتٍ مجّانيّةٍ كلِّها، وبهاتفٍ واحدٍ إن لم يتوفّر غيرُه.</p>
+
+        <div class="ba-prompt">
+          <b>نقطة البداية:</b> موظّفٌ في شعبة التسجيل، يدخل عليه مراجعٌ يسأل عن كتابٍ صادرٍ من الدائرة سنة ٢٠١٩.<br>
+          في الأرشيف الورقيّ: فتحُ السجلّ، وتقليبُ الصفحات، وسؤالُ زميلٍ أقدم، وقد يمرّ نصفُ يوم. وفي المجلّد السحابيّ: كلمةٌ واحدةٌ في خانة البحث، فيظهر الكتابُ في ثانيتين.<br>
+          <b>والفكرة التي يُبنى عليها الأسبوع كلُّه:</b> الورق <span class="hl hl-yellow">يحفظ</span> المعلومة، ولا <span class="hl hl-pink">يبحث</span> فيها.
         </div>
+
+        <!-- ══════════ ١ ══════════ -->
+        <div class="section-heading" style="margin-top:28px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>١ · ما الرقمنة</span>
+        </div>
+
+        <p><b>الرقمنة</b> <span class="ltr-inline">(Digitization)</span> تحويلُ المعلومة من شكلها المادّيّ — ورقٍ أو صورةٍ أو صوتٍ أو توقيعٍ أو استمارة — إلى صيغةٍ رقميّةٍ يقرؤها الحاسوب ويبحث فيها ويخزّنها ويشاركها، <b>مع بقاء الإجراء نفسِه كما هو</b>. فالمعاملة التي كانت تمرّ على خمسة توقيعاتٍ تبقى تمرّ على خمسةٍ، وإنّما تغيّر وعاءُ المعلومة لا طريقُها.</p>
+
+        <p>وثلاثةُ أركانٍ لا تتمّ الرقمنةُ إلّا بها مجتمعة: <b>مصدرٌ مادّيّ</b> يُبدأ منه، و<b>عمليّةُ تحويلٍ</b> تنقله، و<b>مخرَجٌ رقميٌّ يقرؤه الحاسوب</b>. فإن غاب الثالثُ بقي العملُ ناقصًا وإن بُذل فيه المال والوقت — وهذا أكثرُ ما يقع في مشاريع الجهات.</p>
+
+        <div class="oops">
+          <span class="o-i">⚠</span>
+          <div><b>وما ليست الرقمنةَ — أربعةُ اشتباهات:</b>
+          <br><b>ليست شراءَ أجهزة.</b> الماسحُ الضوئيُّ وسيلةٌ لا مشروع، ودائرةٌ اشترت عشرة ماسحاتٍ ولم تحدّد ما تُرقمِن لم تبدأ بعد.
+          <br><b>وليست موقعًا إلكترونيًّا.</b> الموقعُ واجهةُ عرض، والرقمنةُ تحويلُ المحتوى — وقد يكون الموقعُ أنيقًا والأرشيفُ خلفه ورقًا.
+          <br><b>وليست حفظًا طويلَ الأمد.</b> الحفظُ غايتُه بقاءُ الأصل عقودًا، والرقمنةُ غايتُها الاستعمالُ اليوم — والخلطُ بينهما يُنفق الميزانيّةَ على غايةٍ ويُطالَب بالأخرى.
+          <br><b>وليست تغييرًا للإجراء.</b> ما دامت الخطواتُ كما هي فهي رقمنة، وإن تغيّرت فقد انتقلنا إلى مستوًى آخر — وهو ما يأتي بعد سطور.</div>
+        </div>
+
+        <p><b>ولماذا تُفعَل أصلًا؟</b> لخمسٍ، أوّلُها أضعفُها وآخرُها هو المقصود: <b>توفيرُ المكان</b> — فخزانةٌ كاملةٌ تدخل في ملفٍّ واحد. ثمّ <b>الحفظُ من التلف</b> — فالورقُ يبهت ويحترق ويبتلّ. ثمّ <b>المشاركةُ الفوريّة</b> — فالمستندُ يصل إلى عشرةٍ في ثانية بلا استنساخ. ثمّ <b>البحثُ</b> — وهو أوّلُ ما يُحسّ به المراجع. وأخيرًا <b>اتّخاذُ القرار</b> على معلومةٍ تُعَدّ وتُفرَز — <span class="hl hl-green">وهذه وحدها هي التي تستحقّ مشروعًا</span>.</p>
+
+        <!-- ══════════ مستويات الرقمنة ══════════ -->
+        <p style="margin-top:20px;"><b>مستوياتُ الرقمنة الثلاثة</b> — وهي غيرُ الدرجات التي ستأتي في المحور التالي، والخلطُ بينهما شائع. <b>المستوى</b> يقيس <span class="hl hl-yellow">اتّساعَ الأثر</span>: أورقةٌ تغيّرت، أم إجراءٌ، أم مؤسّسةٌ كاملة؟</p>
+
+        <div class="dt-wrap">
+          <table class="dt">
+            <thead><tr><th style="width:23%;">المستوى</th><th style="width:20%;">ما الذي يتغيّر</th><th>مثالٌ من دائرة</th></tr></thead>
+            <tbody>
+              <tr><td><b>١ · مستوى الوثيقة</b><br>الرقمنة <span class="ltr-inline">Digitization</span></td><td>وعاءُ المعلومة وحدَه</td><td>سجلُّ الإجازات الورقيُّ يصير جدولًا يُبحَث فيه ويُحسَب عليه — <b>والموظّف ما زال يملأ الاستمارة بخطّ يده</b>. وهذا موضوعُ أسبوعنا.</td></tr>
+              <tr><td><b>٢ · مستوى الإجراء</b><br>رقمنةُ الأعمال <span class="ltr-inline">Digitalization</span></td><td>خطواتُ العمل نفسُها</td><td>الاستمارةُ الورقيّةُ تُحذَف من أصلها، فيقدّم الموظّفُ طلبَه في نموذجٍ إلكترونيٍّ تصل إجابتُه إلى الجدول لحظةَ الإرسال — <b>فتسقط خطواتُ المسح والإدخال كلُّها</b>. وهذا موضوعُ الأسبوع القادم.</td></tr>
+              <tr><td><b>٣ · مستوى المؤسّسة</b><br>التحوّلُ الرقميّ <span class="ltr-inline">Digital Transformation</span></td><td>نموذجُ العمل والثقافة</td><td>الدائرةُ تُقدّم خدماتِها كلَّها من بوّابةٍ واحدة، وتُقاس بمؤشّراتٍ تُستخرَج آليًّا، ويتغيّر توصيفُ الوظائف وطريقةُ اتّخاذ القرار. <b>والرقمنةُ هنا حجرٌ في بناءٍ لا البناءُ كلُّه.</b></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="takeaway">
+          <b>والفرقُ بين «المستوى» و«الدرجة» في سطر:</b> المستوى يسأل <span class="hl hl-pink">ما اتّساعُ التغيير؟</span> — ورقة أم إجراء أم مؤسّسة. والدرجةُ تسأل <span class="hl hl-green">ما عمقُ التحويل لهذه الورقة بعينها؟</span> — صورةٌ أم نصٌّ أم بيانات. <b>فورقةٌ واحدةٌ قد تبلغ الدرجةَ الثالثة وهي في المستوى الأوّل</b> — وهذا هو حالُ أكثر مشاريع الرقمنة الناجحة، ولا عيبَ فيه ما دامت الغايةُ محدَّدة.
+        </div>
+
+        <!-- ══════════ ٢ ══════════ -->
+        <div class="section-heading" style="margin-top:28px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>٢ · درجات الرقمنة الثلاث</span>
+        </div>
+
+        <p>هذه أهمّ فكرةٍ في الأسبوع كلِّه، ومَن فهمها فهم الباقي. والدرجاتُ الثلاث تظهر أوضحَ ما تكون حين تمرّ عليها <b>ورقةٌ واحدةٌ بعينها</b>، فنرى في كلّ درجةٍ ماذا صار ممكنًا وماذا بقي متعذّرًا.</p>
+
+        <div class="ba-prompt" style="text-align:center;">
+          <b>الورقة:</b> سجلّ الإجازات السنوية لقسم الموارد البشرية — خمس صفحاتٍ بخطّ اليد، فيها ستّون موظّفًا.<br>
+          <b>وسؤال المدير العام:</b> «كم موظّفًا تجاوز ٢٠ يوم إجازةٍ هذه السنة؟»
+        </div>
+
+        <div class="fig">
+          <img src="img/w2/page1.jpg" alt="الصفحة الأولى من سجلّ الإجازات الورقيّ" width="1240" height="1754" loading="lazy">
+          <div class="fig-cap"><span class="fig-n">شكل ١</span><span>الصفحةُ الأولى من السجلّ كما هي على الورق — اثنا عشرَ موظّفًا في خمسة أعمدة، وخمسُ صفحاتٍ مثلُها. وكلُّ ما في هذه الصفحة مقروءٌ للعين، ولا شيءَ منه مقروءٌ للحاسوب.<span class="fig-src">مادّةٌ تدريبيّةٌ أُعِدَّت لهذه المحاضرة — الأسماءُ والبياناتُ غيرُ حقيقيّة.</span></span></div>
+        </div>
+
+        <p>وهذا السجلُّ نفسُه متاحٌ بصيغه الثلاث، ليجرّب القارئ عليه ما يقرؤه هنا:</p>
+
+        <div class="files">
+          <a class="fl" href="files/w2/register-print.pdf" download><span class="fl-ic">📄</span><span>السجلّ الورقيّ — قبل الرقمنة<span class="fl-x"> PDF</span></span></a>
+          <a class="fl" href="files/w2/register-scanned.pdf" download><span class="fl-ic">🖼️</span><span>بعد المسح الضوئيّ — الدرجة الأولى<span class="fl-x"> PDF</span></span></a>
+          <a class="fl" href="files/w2/register-data.xlsx" download><span class="fl-ic">📊</span><span>الجدول النهائيّ — الدرجة الثالثة<span class="fl-x"> XLSX</span></span></a>
+        </div>
+
+        <div class="eras-track">
+          <div class="era-box">
+            <span class="era-num">١</span>
+            <span class="era-ar">صورةٌ فقط</span>
+            <span class="era-en">رقمنةٌ شكليّة</span>
+            <div class="era-def">مُسِحت الصفحاتُ ضوئيًّا وحُفظت ملفًّا واحدًا. صار السجلّ على الحاسوب ولم يعد في الخزانة، ويمكن إرسالُه بالبريد.</div>
+            <div class="era-ex"><b>أيجيب عن سؤال المدير؟</b> لا. تُفتَح الصفحاتُ وتُقرأ بالعين ويُعَدُّ يدويًّا — العملُ هو هو، إنّما على الشاشة.</div>
+            <div class="era-ex"><b>الاختبارُ الحاسم:</b> بحثٌ عن اسمٍ داخل الملفّ ← <b>النتيجة صفر</b>. فالحاسوبُ يرى صورةً ولا يرى كلمات — كما نرى نحن لوحةً مكتوبةً بلغةٍ لا نعرف حروفَها.</div>
+          </div>
+          <div class="era-arrow">←</div>
+          <div class="era-box">
+            <span class="era-num">٢</span>
+            <span class="era-ar">نصٌّ قابلٌ للبحث</span>
+            <span class="era-en">بعد تمييز النص آليًّا</span>
+            <div class="era-def">مُرِّر الملفُّ نفسُه على أداة تمييز النص، فصار الحاسوب «يقرأ» الكلمات.</div>
+            <div class="era-ex"><b>ما الذي تغيّر؟</b> البحثُ عن «علي حسين» يصل إلى صفحته في ثانية، ويمكن نسخُ فقرةٍ ولصقُها في كتابٍ رسميّ.</div>
+            <div class="era-ex"><b>أيجيب عن السؤال؟</b> جزئيًّا. نجد أيَّ موظّفٍ بسرعة، <b>ولا نستطيع العدّ ولا الجمع</b> — فـ«٢٣ يومًا» ما زالت كلمةً داخل نصّ لا رقمًا في خانة.</div>
+          </div>
+          <div class="era-arrow">←</div>
+          <div class="era-box now">
+            <span class="era-num">٣</span>
+            <span class="era-ar">بياناتٌ منظّمة</span>
+            <span class="era-en">جدول</span>
+            <div class="era-def">حُوِّل السجلّ إلى جدولٍ بأعمدة: الاسم · الرقم الوظيفيّ · الشعبة · أيّام الإجازة · الشهر.</div>
+            <div class="era-ex"><b>أيجيب عن السؤال؟</b> نعم، في خمس ثوانٍ بمرشِّحٍ على عمود الأيّام: <b>١٧ موظّفًا</b>.</div>
+            <div class="era-ex"><b>ويجيب عمّا لم يُسأل بعد:</b> أيُّ شعبةٍ أكثرُ إجازات؟ وفي أيّ شهرٍ تتركّز فيُخطَّط لتوزيع العمل؟ ومَن لم يأخذ إجازةً إطلاقًا — وقد يدلّ على إرهاقٍ وظيفيّ؟</div>
+          </div>
+        </div>
+
+        <div class="takeaway">
+          <b>هنا تظهر القيمة الحقيقيّة:</b> الورقةُ في الدرجة الثالثة لم تَعُد مستندًا يُحفَظ، بل صارت <span class="hl hl-green">معلومةً تُتَّخذ عليها قرارات</span>. وما دون ذلك حفظٌ أنيقٌ للورق.
+        </div>
+
+        <div class="oops">
+          <span class="o-i">⚠</span>
+          <div><b>الخطأ الشائع عند القادة:</b> يظنّ المدير أنّ مسح الأرشيف ضوئيًّا يعني أنّه رقمنه — والحقيقة أنّه بلغ <b>الدرجة الأولى فحسب</b>.
+          <br><br><b>سيناريو للنقاش:</b> مديرٌ عامّ خصّص ميزانيّةً وفريقًا ثلاثةَ أشهرٍ لمسح مئة ألف ورقةٍ من أرشيف المديرية، ثمّ أعلن في الاجتماع: «أكملنا الرقمنة مئةً بالمئة». وبعد شهرٍ طلبت الوزارة إحصائيّةً بعدد العقود المنتهية خلال خمس سنوات — فإذا كلُّ ما لديهم صور، وعادوا يقرؤون الملفّات واحدًا واحدًا كما كانوا مع الورق.
+          <br><br><b>أين الخطأ؟</b> لم يُسأل قبل البدء: <b>ما الأسئلة التي أريد أن تجيبني عنها هذه البيانات؟</b>
+          <br><b>والدرسُ للقائد:</b> تُحدَّد الدرجةُ المطلوبة قبل المشروع. فليس كلُّ ورقةٍ تحتاج الثالثة — والأرشيفُ القديم النادرُ الاستعمال قد تكفيه الأولى. أمّا ما تُتَّخذ عليه القرارات فلا بدّ أن يبلغ الثالثة.</div>
+        </div>
+
+        <div class="drill">
+          <div class="drill-head"><span class="d-n">؟</span><span class="d-t">وقفةُ تفكير</span></div>
+          <p>ورقةٌ واحدةٌ تمرّ على يد القارئ في دائرته أو كلّيّته — استمارةٌ، أو سجلٌّ، أو قائمةُ أسماء:</p>
+          <ol>
+            <li>في أيّ درجةٍ من الثلاث هي الآن؟</li>
+            <li>وإلى أيّ درجةٍ ينبغي أن تصل؟ ولماذا هذه الدرجة بعينها لا التي فوقها؟</li>
+            <li>وما السؤالُ الذي سيصير ممكنًا حين تبلغ تلك الدرجة، وهو اليوم متعذّر؟</li>
+          </ol>
+          <div class="d-out"><b>ملاحظة:</b> لا جوابَ واحدًا صحيحًا هنا. والاختلافُ بين إجابات الزملاء هو الدرسُ بعينه — فورقةُ العيادة ليست كورقة المخزن، ولا كلُّ ورقةٍ تستحقّ الدرجة الثالثة.</div>
+        </div>
+
+        <!-- ══════════ ٣ ══════════ -->
+        <div class="section-heading" style="margin-top:28px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>٣ · أدوات الرقمنة</span>
+        </div>
+
+
+        <p>وقبل الدخول في الأدوات واحدةً واحدة، هذا مسارُ الرقمنة كاملًا في مخطّطٍ واحد — من الورقة في اليد إلى حمايتها بعد الخزن:</p>
+
+        <div class="dgm">
+          <div class="dgm-t">طريقُ الرقمنة — من الورقة إلى الحماية</div>
+          <svg viewBox="0 0 900 650" role="img" aria-label="مخطّط طريق الرقمنة من الورقة إلى الحماية">
+            <defs>
+              <marker id="ahw2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M0 0 L10 5 L0 10 z" fill="#1857a4"/>
+              </marker>
+            </defs>
+
+            <!-- ───── الورقة ───── -->
+            <g filter="url(#sketchy)">
+              <path d="M745 75 h85 l20 20 v105 h-105 z" fill="#fdfbf4" stroke="#8a5a2b" stroke-width="2.4" stroke-linejoin="round"/>
+              <path d="M830 75 v20 h20" fill="none" stroke="#8a5a2b" stroke-width="2.4" stroke-linejoin="round"/>
+            </g>
+            <g stroke="#8a5a2b" stroke-width="2" stroke-linecap="round" opacity="0.5">
+              <line x1="760" y1="118" x2="836" y2="118"/>
+              <line x1="760" y1="136" x2="836" y2="136"/>
+              <line x1="760" y1="154" x2="818" y2="154"/>
+              <line x1="760" y1="172" x2="836" y2="172"/>
+            </g>
+            <text x="797" y="228" text-anchor="middle" font-size="16.5" font-weight="700" fill="#1a3d8c">ورقة مكتوبة باليد</text>
+            <text x="797" y="250" text-anchor="middle" font-size="12.5" fill="#6b7280">المُدخَل</text>
+
+            <line x1="730" y1="135" x2="670" y2="135" stroke="#1857a4" stroke-width="2.6" marker-end="url(#ahw2)"/>
+
+            <!-- ───── المسح ───── -->
+            <rect x="480" y="70" width="175" height="160" rx="12" fill="rgba(24,87,164,0.06)" stroke="#1857a4" stroke-width="2.6" filter="url(#sketchy)"/>
+            <text x="567" y="105" text-anchor="middle" font-size="19" font-weight="700" fill="#1857a4">المسح</text>
+            <text x="567" y="126" text-anchor="middle" font-size="12.5" fill="#6b7280" font-family="Courier New, monospace">Scan</text>
+            <line x1="500" y1="140" x2="635" y2="140" stroke="#1857a4" stroke-width="1.4" opacity="0.35"/>
+            <text x="567" y="167" text-anchor="middle" font-size="15" fill="#25303f">الهاتف</text>
+            <text x="567" y="195" text-anchor="middle" font-size="15" fill="#25303f">ماسح ضوئيّ</text>
+            <text x="567" y="216" text-anchor="middle" font-size="12.5" fill="#6b7280">ثلاثةٌ في واحد</text>
+
+            <!-- الدقّة -->
+            <rect x="470" y="254" width="195" height="54" rx="10" fill="rgba(224,122,31,0.08)" stroke="#e07a1f" stroke-width="1.8" stroke-dasharray="6 4"/>
+            <text x="567" y="277" text-anchor="middle" font-size="13.5" font-weight="700" fill="#e07a1f">الدقّة: ٣٠٠ نقطة لكلّ إنش</text>
+            <text x="567" y="298" text-anchor="middle" direction="ltr" font-size="12" fill="#6b7280" font-family="Courier New, monospace">300 DPI</text>
+
+            <!-- ───── المخرَج ───── -->
+            <path d="M468 150 H437" stroke="#1857a4" stroke-width="2.6" fill="none"/>
+            <path d="M437 150 V110 H408" stroke="#1857a4" stroke-width="2.4" fill="none" marker-end="url(#ahw2)"/>
+            <path d="M437 150 V192 H408" stroke="#1857a4" stroke-width="2.4" fill="none" marker-end="url(#ahw2)"/>
+
+            <rect x="212" y="77" width="188" height="66" rx="11" fill="rgba(31,122,61,0.07)" stroke="#1f7a3d" stroke-width="2.4" filter="url(#sketchy)"/>
+            <text x="306" y="104" text-anchor="middle" font-size="16" font-weight="700" fill="#1f7a3d">ملفّ</text>
+            <text x="306" y="128" text-anchor="middle" font-size="14" fill="#25303f" font-family="Courier New, monospace">PDF</text>
+
+            <rect x="212" y="159" width="188" height="66" rx="11" fill="rgba(122,46,166,0.07)" stroke="#7a2ea6" stroke-width="2.4" filter="url(#sketchy)"/>
+            <text x="306" y="186" text-anchor="middle" font-size="16" font-weight="700" fill="#7a2ea6">صورة</text>
+            <text x="306" y="210" text-anchor="middle" font-size="14" fill="#25303f" font-family="Courier New, monospace">JPEG</text>
+
+            <text x="306" y="250" text-anchor="middle" font-size="12.5" fill="#6b7280">المُخرَج</text>
+
+            <!-- ───── الفاصل ───── -->
+            <line x1="40" y1="332" x2="860" y2="332" stroke="#1a3d8c" stroke-width="1.6" stroke-dasharray="7 6" opacity="0.3"/>
+            <text x="450" y="364" text-anchor="middle" font-size="14.5" font-weight="700" fill="#1a3d8c">ثمّ أربعُ خطواتٍ بعد المسح</text>
+
+            <!-- ───── الخطوات الأربع ───── -->
+            <rect x="679" y="382" width="190" height="140" rx="12" fill="#fff" stroke="#0f7a72" stroke-width="2.4" filter="url(#sketchy)"/>
+            <circle cx="774" cy="410" r="16" fill="#0f7a72"/>
+            <text x="774" y="416" text-anchor="middle" font-size="15" font-weight="700" fill="#ffffff">١</text>
+            <text x="774" y="450" text-anchor="middle" font-size="15.5" font-weight="700" fill="#0f7a72">تسمية الملفّات</text>
+            <text x="774" y="477" text-anchor="middle" font-size="12.5" fill="#4b5563">اسمٌ يدلّ على المحتوى</text>
+            <text x="774" y="498" text-anchor="middle" font-size="12.5" fill="#4b5563">والتاريخ والجهة</text>
+
+            <path d="M672 444 L660 452 L672 460" fill="none" stroke="#1857a4" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+
+            <rect x="463" y="382" width="190" height="140" rx="12" fill="#fff" stroke="#0f7a72" stroke-width="2.4" filter="url(#sketchy)"/>
+            <circle cx="558" cy="410" r="16" fill="#0f7a72"/>
+            <text x="558" y="416" text-anchor="middle" font-size="15" font-weight="700" fill="#ffffff">٢</text>
+            <text x="558" y="450" text-anchor="middle" font-size="15.5" font-weight="700" fill="#0f7a72">تعديل الملفّات</text>
+            <text x="558" y="477" text-anchor="middle" font-size="12.5" fill="#4b5563">ضبطُ الجودة</text>
+            <text x="558" y="498" text-anchor="middle" font-size="12.5" fill="#4b5563">والقصُّ والتدوير</text>
+
+            <path d="M456 444 L444 452 L456 460" fill="none" stroke="#1857a4" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+
+            <rect x="247" y="382" width="190" height="140" rx="12" fill="#fff" stroke="#0f7a72" stroke-width="2.4" filter="url(#sketchy)"/>
+            <circle cx="342" cy="410" r="16" fill="#0f7a72"/>
+            <text x="342" y="416" text-anchor="middle" font-size="15" font-weight="700" fill="#ffffff">٣</text>
+            <text x="342" y="450" text-anchor="middle" font-size="15.5" font-weight="700" fill="#0f7a72">نقل الملفّات</text>
+            <text x="342" y="477" text-anchor="middle" font-size="12.5" fill="#4b5563">عبر الشبكة</text>
+            <text x="342" y="498" text-anchor="middle" font-size="12.5" fill="#4b5563">أو الذاكرة</text>
+
+            <path d="M240 444 L228 452 L240 460" fill="none" stroke="#1857a4" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+
+            <rect x="31" y="382" width="190" height="140" rx="12" fill="#fff" stroke="#0f7a72" stroke-width="2.4" filter="url(#sketchy)"/>
+            <circle cx="126" cy="410" r="16" fill="#0f7a72"/>
+            <text x="126" y="416" text-anchor="middle" font-size="15" font-weight="700" fill="#ffffff">٤</text>
+            <text x="126" y="450" text-anchor="middle" font-size="15.5" font-weight="700" fill="#0f7a72">خزن الملفّات</text>
+            <text x="126" y="477" text-anchor="middle" font-size="12.5" fill="#4b5563">داخليّ · خارجيّ</text>
+            <text x="126" y="498" text-anchor="middle" font-size="12.5" fill="#4b5563">وخزنٌ سحابيّ</text>
+
+            <!-- وصلاتٌ إلى شريط الحماية -->
+            <g stroke="#d1342b" stroke-width="1.8" stroke-dasharray="5 4" opacity="0.55">
+              <line x1="774" y1="522" x2="774" y2="548"/>
+              <line x1="558" y1="522" x2="558" y2="548"/>
+              <line x1="342" y1="522" x2="342" y2="548"/>
+              <line x1="126" y1="522" x2="126" y2="548"/>
+            </g>
+
+            <!-- ───── الحماية ───── -->
+            <rect x="31" y="548" width="838" height="80" rx="14" fill="rgba(209,52,43,0.055)" stroke="#d1342b" stroke-width="2.6" stroke-dasharray="9 5" filter="url(#sketchy)"/>
+            <circle cx="820" cy="578" r="16" fill="#d1342b"/>
+            <text x="820" y="584" text-anchor="middle" font-size="15" font-weight="700" fill="#ffffff">٥</text>
+            <text x="450" y="584" text-anchor="middle" font-size="17" font-weight="700" fill="#d1342b">حماية الرقمنة</text>
+            <text x="450" y="612" text-anchor="middle" font-size="13" fill="#4b5563">صلاحيّاتٌ محدَّدةٌ ونسخٌ احتياطيّ — ترافق الخطوات الأربع كلَّها ولا تأتي بعدها</text>
+          </svg>
+          <div class="dgm-c">الخطُّ المتّصل مسارُ الملفّ، والخطُّ المتقطّعُ الأحمرُ يدلّ على أنّ الحماية تغطّي الخطوات جميعًا لا الأخيرةَ وحدها.</div>
+        </div>
+
+        <p>والخطواتُ الخمسُ في أسفل المخطّط هي التي يُهمَل أكثرُها، لأنّ الانتباه كلَّه ينصرف إلى المسح وحده. وهذا تفصيلُها:</p>
+
+        <div class="walk">
+
+          <div class="wk">
+            <div class="wk-h"><span class="wk-n">١</span><span class="wk-t">تسمية الملفّات</span></div>
+            <div class="wk-b">ملفٌّ اسمُه <span class="ltr-inline">scan_0001.pdf</span> ضائعٌ بعد شهر ولو كان في مجلّدٍ مرتّب. والاسمُ الجيّد يُغني عن فتح الملفّ، وقاعدتُه: <b>التاريخُ أوّلًا، ثمّ الجهةُ، ثمّ الموضوعُ، ثمّ رقمُ الصفحات</b>.</div>
+            <div class="wk-res"><b>مثالٌ صالح:</b> <span class="ltr-inline">2025-12-31_HR_leave-register_p1-5.pdf</span><br>التاريخُ بصيغة سنة-شهر-يوم حتّى يُرتّب الحاسوبُ الملفّاتِ زمنيًّا من نفسه. و<span class="ltr-inline">HR</span> رمزُ القسم. وما بينهما شرطةٌ سفليّةٌ لا مسافة.</div>
+            <div class="wk-warn"><b>ولماذا لا تُستعمل العربيّةُ ولا المسافاتُ في الاسم:</b> لأنّ المسافةَ تكسر الروابطَ وأوامرَ النسخ، والحروفَ العربيّةَ تتحوّل رموزًا غريبةً عند النقل بين نظامٍ وآخر أو عند الرفع إلى موقع. <b>والعنوانُ العربيُّ يوضَع داخل الملفّ لا في اسمه.</b></div>
+          </div>
+
+          <div class="wk">
+            <div class="wk-h"><span class="wk-n">٢</span><span class="wk-t">تعديل الملفّات — وضبطُ الجودة</span></div>
+            <div class="wk-b">ثلاثةُ تعديلاتٍ تُجرى قبل أيّ شيءٍ آخر: <b>القصُّ</b> على حدود الورقة فتذهب الخلفيّةُ وطرفُ الطاولة، و<b>التدويرُ</b> حتّى تستقيم السطور — وميلانٌ بدرجتين يكفي لإسقاط دقّة تمييز النصّ، و<b>ضبطُ التباين</b> فيصير الخطُّ أسودَ والورقةُ بيضاء.</div>
+            <div class="wk-res"><b>وأمّا الدقّة:</b> <b>٣٠٠ نقطةٍ لكلّ إنش</b> هي المعيارُ المعتمَد للنصّ المكتوب. وما دونها يُفقِد الحروفَ الدقيقةَ فتخطئ أداةُ التمييز، وما فوقها يضاعف الحجمَ بلا فائدةٍ تُذكَر — إلّا في المخطوطات والصور التاريخيّة فتُرفَع إلى ٦٠٠.</div>
+            <div class="wk-warn"><b>والضغطُ سلاحٌ ذو حدّين:</b> يصغّر الملفَّ فيسهل نقلُه، ويُتلف تفاصيلَ الحروف إن بُولغ فيه. <b>والنسخةُ الأصليّةُ غيرُ المضغوطة تُحفَظ دائمًا</b> — فالضغطُ لا يُستردّ.</div>
+          </div>
+
+          <div class="wk">
+            <div class="wk-h"><span class="wk-n">٣</span><span class="wk-t">نقل الملفّات</span></div>
+            <div class="wk-b">طريقان لا ثالثَ لهما: <b>عبر الشبكة</b> — رفعٌ إلى مجلّدٍ سحابيٍّ أو إرسالٌ بالبريد، أو <b>عبر الذاكرة</b> — قرصٌ محمولٌ أو بطاقةُ ذاكرة. والاختيارُ بينهما ليس مسألةَ راحة.</div>
+            <div class="wk-res"><b>الشبكة:</b> فوريّةٌ، وتترك أثرًا يُعرَف منه مَن نقل ومتى، وتحفظ نسخةً في الطريق. وتحتاج اتّصالًا ثابتًا، وتقف عند حدود حجم المرفقات.</div>
+            <div class="wk-warn"><b>والذاكرةُ المحمولة أخطرُ ما يُستهان به:</b> تُفقَد وتُنسى وتُعار، وقد تحمل برامجَ ضارّةً من جهازٍ إلى آخر. <b>وأرشيفُ دائرةٍ كاملٌ في قرصٍ يُوضَع في الجيب مخاطرةٌ أمنيّةٌ لا وسيلةُ نقل.</b> فإن لزمت، فبتشفيرٍ وحذفٍ بعد النقل مباشرةً.</div>
+          </div>
+
+          <div class="wk">
+            <div class="wk-h"><span class="wk-n">٤</span><span class="wk-t">خزن الملفّات</span></div>
+            <div class="wk-b">ثلاثةُ مواضعَ لا يُغني بعضُها عن بعض: <b>داخليّ</b> — قرصُ الحاسوب نفسِه، سريعٌ ويذهب بذهاب الجهاز. و<b>خارجيّ</b> — قرصٌ منفصلٌ في الدائرة، مستقلٌّ عن الجهاز ويبقى في البناية نفسِها. و<b>سحابيّ</b> — خارج الموقع، يُبلَغ من أيّ مكان.</div>
+            <div class="wk-res"><b>والقاعدةُ المعتمَدة في الحفظ الرقميّ تُسمّى «٣ – ٢ – ١»:</b> <b>ثلاثُ</b> نسخٍ من الملفّ، على <b>وسيطين</b> مختلفين على الأقلّ، و<b>واحدةٌ</b> منها خارج موقع العمل. ومَن طبّقها لا يخسر أرشيفَه بحريقٍ ولا بعطلِ قرصٍ ولا بخطأِ حذف.</div>
+            <div class="wk-warn"><b>ونسختان على قرصين في الغرفة نفسِها نسخةٌ واحدة</b> — فما يصيب الغرفةَ يصيبهما معًا. والشرطُ في القاعدة ليس العددَ وحده بل <b>تفرّقُ المواضع</b>.</div>
+          </div>
+
+          <div class="wk">
+            <div class="wk-h"><span class="wk-n">٥</span><span class="wk-t">حماية الرقمنة</span></div>
+            <div class="wk-b">وهذه لا تأتي في آخر المسار وإن رُسمت في أسفله — <b>ترافق الخطواتِ الأربعَ كلَّها</b>، لأنّ الملفّ معرَّضٌ في كلّ واحدةٍ منها. وأركانُها ثلاثة.</div>
+            <div class="wk-res"><b>الصلاحيّات:</b> مَن يرى، ومَن يعدّل، ومَن يحذف — ثلاثةُ مستوياتٍ مختلفةٍ لا واحد. والخطأُ الشائعُ مشاركةُ المجلّد بخيار «لأيّ شخصٍ لديه الرابط»، فيكفي أن يُعاد إرسالُ الرابط مرّةً واحدةً ليخرج الأرشيفُ من الدائرة.<br><br><b>النسخُ الاحتياطيّ:</b> قاعدةُ ٣–٢–١ أعلاه، <b>مع تجربةِ الاسترجاع مرّةً في السنة على الأقلّ</b> — فنسخةٌ احتياطيّةٌ لم تُجرَّب ليست نسخةً، والعطبُ يُكتشَف يومَ الحاجة.<br><br><b>التشفير:</b> يلزم للبيانات الشخصيّة وما له صفةٌ سرّيّة، وعلى الأقراص المحمولة خاصّةً.</div>
+            <div class="wk-warn"><b>والقاعدةُ الجامعة:</b> الورقُ متفرّقٌ في خزائن، فتلفُ بعضِه لا يُتلف كلَّه — وأمّا الملفُّ فيُنسَخ كلُّه في ثانيةٍ ويُمحى كلُّه في ثانية. <b>فالرقمنةُ تضاعف النفعَ وتضاعف الخطرَ معًا</b>، ولذلك جاءت الحمايةُ ركنًا في المسار لا ملحقًا به.</div>
+          </div>
+
+        </div>
+
+        <p>الأدواتُ تُصنَّف بحسب المادّة المُرقمَنة لا بحسب أسمائها، فالقائدُ يحتاج أن يعرف <b>ماذا يُرقمِن</b> أوّلًا ثمّ يسأل عن الأداة.</p>
+
+        <div class="dt-wrap">
+          <table class="dt">
+            <thead><tr><th>ما الذي يُرقمَن؟</th><th>الأداة</th><th>ملاحظةٌ للقائد</th></tr></thead>
+            <tbody>
+              <tr><td>ورقٌ ومستندات</td><td>الماسح الضوئيّ المكتبيّ · وتطبيقاتُ المسح في الهاتف</td><td><b>الهاتف يكفي للبداية</b> — ولا يلزم شراءُ جهازٍ لتجربةٍ أولى</td></tr>
+              <tr><td>صورةُ نصٍّ إلى نصّ</td><td>تمييزُ النص آليًّا <span class="ltr-inline">(OCR)</span> — ومنه ما هو مجّانيٌّ يدعم العربية</td><td>دقّةُ العربية تتأثّر بجودة الورقة وخطّ اليد</td></tr>
+              <tr><td>جداولُ ورقيّة</td><td>الذكاء الاصطناعيّ — تُرفَع صورةُ الجدول فيُخرِج جدولًا جاهزًا</td><td><b>أسرعُ قفزةٍ في الجدول</b> — من الدرجة الأولى إلى الثالثة بخطوةٍ واحدة</td></tr>
+              <tr><td>استماراتٌ ورقيّة</td><td>نماذجُ إلكترونيّة</td><td>الإجاباتُ تذهب إلى جدولٍ مباشرةً بلا إدخالٍ يدويّ</td></tr>
+              <tr><td>صوتٌ واجتماعات</td><td>التحويلُ من الكلام إلى نصّ</td><td>محاضرُ الاجتماعات — وأكثرُ ما يُهمَل رقمنتُه</td></tr>
+              <tr><td>توقيعٌ وختم</td><td>التوقيعُ الإلكترونيّ</td><td>يُراجَع إطارُه القانونيّ قبل الاعتماد عليه رسميًّا</td></tr>
+              <tr><td>الحفظ</td><td>حوسبةٌ سحابيّة بصلاحيّاتٍ ونسخٍ احتياطيّ</td><td><b>رقمنةٌ بلا حفظٍ آمنٍ خطر</b> — فالنسخة الوحيدة على جهازٍ واحدٍ أهشُّ من الورق</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- ══════════ ٤ ══════════ -->
+        <div class="section-heading" style="margin-top:28px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>٤ · سيناريو رقمنة</span>
+        </div>
+
+        <div class="scn">
+          <div class="scn-head"><span class="scn-badge">سيناريو</span><span class="scn-title">أضابير الموظّفين في مديريّة</span></div>
+          <p>مديرٌ عامٌّ استلم مديريّةً فيها <b>خمسةُ آلاف إضبارةٍ ورقيّة</b>، والوزارةُ تطلب رقمنتها خلال ستّة أشهر. والقائدُ لا يمسح الأوراق بنفسه — إنّما يتّخذ ثمانية قراراتٍ بالترتيب:</p>
+        </div>
+
+        <div class="st decide"><div class="st-h"><span class="st-n">١</span><span class="st-t">الجرد</span></div><div class="st-b"><span class="st-tag why">القرار</span><span>ما الموجود؟ وكم حجمُه؟ ولا يُخطَّط لِما لم يُعَدّ.</span></div></div>
+
+        <div class="st decide"><div class="st-h"><span class="st-n">٢</span><span class="st-t">الأولويّة</span></div><div class="st-b"><span class="st-tag why">القرار</span><span>ما الذي يُرقمَن أوّلًا؟ <b>الأكثرُ استعمالًا لا الأقدم</b> — وهذا أشيعُ ما يُخطَأ فيه.</span></div></div>
+
+        <div class="st decide"><div class="st-h"><span class="st-n">٣</span><span class="st-t">المعايير</span></div><div class="st-b"><span class="st-tag why">القرار</span><span>طريقةُ تسمية الملفّات · ودقّةُ المسح · والصيغةُ المطلوبة قابلةً للبحث لا صورةً. ومعيارٌ لم يُكتب قبل البدء يُعاد العملُ لأجله.</span></div></div>
+
+        <div class="st hands"><div class="st-h"><span class="st-n">٤</span><span class="st-t">المسح وتمييز النص</span></div><div class="st-b"><span class="st-tag do">التنفيذ</span><span>وهنا وحدها يقع العملُ اليدويّ — وهو أقصرُ الخطوات زمنًا وأكثرُها ظهورًا.</span></div></div>
+
+        <div class="st hands"><div class="st-h"><span class="st-n">٥</span><span class="st-t">الفهرسة</span></div><div class="st-b"><span class="st-tag do">التنفيذ</span><span>جدولٌ بالاسم ورقم الإضبارة والقسم وتاريخ التعيين. <b>وهذه هي الخطوة التي تنقل المشروع إلى الدرجة الثالثة</b>، وهي أوّلُ ما يُحذَف عند ضيق الوقت.</span></div></div>
+
+        <div class="st decide"><div class="st-h"><span class="st-n">٦</span><span class="st-t">الحفظ والصلاحيّات</span></div><div class="st-b"><span class="st-tag why">القرار</span><span>مَن يرى ماذا؟ وأينما اجتمع أرشيفٌ كاملٌ في مكانٍ واحد وجب سؤالُ مَن يبلغه.</span></div></div>
+
+        <div class="st decide"><div class="st-h"><span class="st-n">٧</span><span class="st-t">ضبط الجودة</span></div><div class="st-b"><span class="st-tag see">التحقّق</span><span>عيّنةٌ عشوائيّةٌ بنسبة عشرةٍ بالمئة تُفحَص يدويًّا. وبلا فحصٍ لا يُعرَف الخللُ إلّا بعد إتلاف الأصل.</span></div></div>
+
+        <div class="st decide"><div class="st-h"><span class="st-n">٨</span><span class="st-t">مصير الورق الأصليّ</span></div><div class="st-b"><span class="st-tag why">القرار</span><span>احتفاظٌ أو إتلافٌ بحسب الضوابط المعتمدة — <b>ولا يُتلَف شيءٌ قبل ضبط الجودة</b>.</span></div></div>
+
+        <div class="drill">
+          <div class="drill-head"><span class="d-n">★</span><span class="d-t">تمرينُ تطبيق</span></div>
+          <p>أربعُ جهاتٍ مختلفة: <b>بلديّة</b> · <b>مستشفى</b> · <b>مدرسة</b> · <b>دائرة تقاعد</b>. والمطلوب عن واحدةٍ منها ثلاثةُ أجوبة:</p>
+          <ol>
+            <li>ما الذي يُرقمَن أوّلًا؟ ولماذا هو بالذات دون غيره؟</li>
+            <li>إلى أيّ درجةٍ من الثلاث؟ وما الذي يجعل تلك الدرجة كافيةً أو غيرَ كافية؟</li>
+            <li>وما أكبرُ مخاطرةٍ تواجه هذا المشروع؟</li>
+          </ol>
+          <div class="d-out"><b>ما الذي يظهر من المقارنة:</b> الأولويّة تختلف باختلاف الجهة اختلافًا كبيرًا. فالمستشفى يبدأ بملفّ المريض لأنّه يُطلَب كلّ يومٍ ويتعلّق بحياةٍ، والتقاعدُ يبدأ بالأضابير النشطة لا بالمتوفَّين، والبلديّةُ بإجازات البناء لأنّها أكثرُ ما يُراجَع عليه. <b>فلا وصفةَ واحدةً للرقمنة</b> — وإنّما سؤالٌ واحدٌ يُسأل في كلّ جهة: أيُّ ورقةٍ تُطلَب أكثر؟</div>
+        </div>
+
+        <div class="takeaway">
+          <b>الجسرُ إلى الأسبوع القادم:</b> في كلّ ما مضى بقي إجراءُ الإجازة كما هو — استمارةٌ تُملأ بخطّ اليد، ثمّ تُجمَع، ثمّ تُنقَل. وكلُّ ما صنعناه أنّنا حسّنّا <b>وعاءَ المعلومة</b> بعد أن كُتِبت.<br>
+          فلو حُذفت الاستمارةُ الورقيّةُ من أوّلها، وصار الموظّفُ يقدّم طلبَه في نموذجٍ إلكترونيٍّ تصل إجابتُه إلى الجدول في لحظة تقديمها — لسقط المسارُ كلُّه من أوّله: لا مسحَ ولا تسميةَ ملفّاتٍ ولا نقل. <span class="hl hl-pink">وهذا لم يَعُد رقمنة — هذه رقمنةُ أعمال</span>، وهي موضوع الأسبوع القادم.
+        </div>
+
+        <!-- ══════════ الواجب ══════════ -->
+        <div class="section-heading" style="margin-top:30px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>الواجب</span>
+        </div>
+
+        <div class="hw">
+          <div class="hw-head"><span class="hw-num">١</span><span class="hw-title">ورقةٌ من دائرتك إلى الدرجة الثالثة</span><span class="scn-badge lv-mid">متوسّط</span></div>
+          <p>ورقةٌ حقيقيّةٌ من دائرة الدارس — <b>غيرُ سرّيّةٍ ولا تحمل بياناتٍ شخصيّة</b> — تمرّ على الدرجات الثلاث حتّى تصير جدولًا.</p>
+          <div class="hw-deliver"><span class="hw-tag">المُسلَّم</span><span>ملفُّ الجدول · وجملةٌ واحدة: <b>«ماذا ستتيح لي هذه البيانات الآن؟»</b> — وجوابٌ لا يذكر سؤالًا جديدًا صار ممكنًا يدلّ على أنّ الورقة لم تكن تستحقّ الدرجة الثالثة.</span></div>
+        </div>
+
+        <div class="mini-note">نهاية الأسبوع الثاني — إعداد: د. أمير هادي ★</div>
+
         <div class="page-nav">
           <button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button>
           <button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button>
@@ -3346,8 +3913,8 @@
           <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٥.</span> عملية "الدمج" (Merge) بأداة iLovePDF تُقسّم ملفًا واحدًا إلى عدّة ملفات.</p><span class="sol-badge f">خطأ</span></div>
           <p class="sol-why">هذا وصف عملية الفصل (Split) عكسًا تمامًا. الدمج يوحّد عدّة ملفات في ملف واحد.</p>
         </div>
-
         <div class="mini-note">نهاية دليل الحلول — إعداد: د. أمير هادي ★</div>
+
         <div class="page-nav">
           <button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button>
           <button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button>
