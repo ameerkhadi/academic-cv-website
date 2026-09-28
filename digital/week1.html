@@ -2738,6 +2738,12 @@
           font-size:calc(12px * var(--fs,1)); line-height:1.85; }
 
   /* ─── مخطّطُ محاورِ أسبوعٍ لم يُكتَب محتواه بعد ─── */
+  .ol-tag{
+    margin-inline-start:auto; flex:0 0 auto; white-space:nowrap;
+    background:rgba(224,122,31,0.12); color:var(--orange);
+    border:1px solid rgba(224,122,31,0.35); border-radius:20px;
+    padding:2px 11px; font-weight:700; font-size:calc(11.5px * var(--fs,1));
+  }
   .outline{ margin:20px 0 6px; }
   .ol-item{
     display:flex; align-items:center; gap:12px;
@@ -2756,6 +2762,173 @@
   .ol-note{
     margin-top:14px; text-align:center; color:#8a7a63;
     font-size:calc(12.5px * var(--fs,1)); line-height:1.8;
+  }
+
+  /* ══════════════════════════════════════════════════════════════
+     تبويب الأسئلة المرشّحة — أسئلةٌ تُصحَّح في الصفحة
+     ══════════════════════════════════════════════════════════════ */
+
+  .qz-intro{
+    margin:14px 0 6px; padding:12px 16px; border-radius:12px;
+    background:rgba(26,61,140,0.05); border-inline-start:4px solid var(--blue);
+    font-size:calc(13.4px * var(--fs,1)); line-height:1.95; text-align:justify;
+  }
+  .qz-intro b{ color:var(--blue); }
+
+  .qz-score{
+    position:sticky; top:6px; z-index:5;
+    display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+    margin:14px 0 18px; padding:10px 16px; border-radius:12px;
+    background:var(--paper); border:2px solid var(--blue);
+    box-shadow:0 2px 12px rgba(26,61,140,0.14);
+    font-size:calc(13.5px * var(--fs,1)); font-weight:700; color:var(--ink);
+  }
+  .qz-score .sc-n{ color:var(--green); font-size:calc(17px * var(--fs,1)); }
+  .qz-score .sc-w{ color:var(--red); font-size:calc(17px * var(--fs,1)); }
+  .qz-score .sc-t{ color:var(--blue); font-size:calc(17px * var(--fs,1)); }
+  .qz-reset{
+    margin-inline-start:auto; border:1.5px solid var(--blue); background:#fff;
+    color:var(--blue); border-radius:20px; padding:4px 15px; cursor:pointer;
+    font-family:inherit; font-weight:700; font-size:calc(12.5px * var(--fs,1));
+  }
+  .qz-reset:hover{ background:rgba(26,61,140,0.08); }
+
+  .qz-kind{
+    display:flex; align-items:center; gap:11px; margin:28px 0 12px;
+    font-family:'Aref Ruqaa',serif; color:var(--red);
+    font-size:calc(19px * var(--fs,1));
+  }
+  .qz-kind .kk-line{ flex:1; height:2px; border-top:2px dashed rgba(209,52,43,0.32); }
+
+  .qz{
+    margin:14px 0; border:1.5px solid rgba(26,61,140,0.18);
+    border-radius:13px; background:#fff; overflow:hidden;
+    break-inside:avoid; page-break-inside:avoid;
+  }
+  .qz-h{
+    display:flex; align-items:center; gap:9px; flex-wrap:wrap;
+    padding:8px 14px; background:rgba(26,61,140,0.06);
+    border-bottom:1px solid rgba(26,61,140,0.14);
+  }
+  .qz-n{
+    width:25px; height:25px; border-radius:50%; background:var(--blue);
+    color:#fff; font-weight:800; display:flex; align-items:center;
+    justify-content:center; font-size:calc(12.5px * var(--fs,1)); flex:0 0 auto;
+  }
+  .qz-tag{
+    background:rgba(122,46,166,0.10); color:var(--purple);
+    border-radius:20px; padding:2px 11px; font-weight:700;
+    font-size:calc(11.5px * var(--fs,1));
+  }
+  .qz-wk{
+    margin-inline-start:auto; color:#6b7280; font-weight:700;
+    font-size:calc(11.5px * var(--fs,1));
+  }
+  .qz-q{
+    margin:0; padding:12px 16px 4px;
+    font-size:calc(14.2px * var(--fs,1)); line-height:1.95;
+    color:var(--ink); font-weight:700; text-align:justify;
+  }
+  .qz-scn{
+    margin:8px 16px 0; padding:9px 13px; border-radius:9px;
+    background:rgba(224,122,31,0.07); border-inline-start:3px solid var(--orange);
+    font-size:calc(13.2px * var(--fs,1)); line-height:1.9; text-align:justify;
+    font-weight:400; color:#25303f;
+  }
+
+  .qz-opts{ padding:8px 16px 4px; }
+  .qz-opt{
+    display:flex; align-items:flex-start; gap:10px; width:100%;
+    margin-bottom:8px; padding:10px 13px; cursor:pointer;
+    background:#fff; border:1.5px solid rgba(26,61,140,0.20);
+    border-radius:10px; font-family:inherit; text-align:start;
+    font-size:calc(13.4px * var(--fs,1)); line-height:1.9; color:#25303f;
+    transition:.13s;
+  }
+  .qz-opt:hover{ background:rgba(26,61,140,0.04); border-color:var(--blue); }
+  .qz-opt .ok-k{
+    flex:0 0 auto; width:22px; height:22px; border-radius:50%;
+    border:2px solid rgba(26,61,140,0.35); background:#fff;
+    display:flex; align-items:center; justify-content:center;
+    font-size:calc(11.5px * var(--fs,1)); font-weight:800; color:var(--blue);
+    margin-top:2px;
+  }
+  .qz-opt.sel{ border-color:var(--blue); background:rgba(26,61,140,0.07); }
+  .qz-opt.sel .ok-k{ background:var(--blue); color:#fff; border-color:var(--blue); }
+  .qz-opt.good{ border-color:var(--green); background:rgba(31,122,61,0.09); }
+  .qz-opt.good .ok-k{ background:var(--green); border-color:var(--green); color:#fff; }
+  .qz-opt.bad{ border-color:var(--red); background:rgba(209,52,43,0.08); }
+  .qz-opt.bad .ok-k{ background:var(--red); border-color:var(--red); color:#fff; }
+  .qz.done .qz-opt{ cursor:default; }
+  .qz.done .qz-opt:hover{ background:#fff; border-color:rgba(26,61,140,0.20); }
+  .qz.done .qz-opt.sel:hover{ background:rgba(26,61,140,0.07); }
+  .qz.done .qz-opt.good:hover{ background:rgba(31,122,61,0.09); border-color:var(--green); }
+  .qz.done .qz-opt.bad:hover{ background:rgba(209,52,43,0.08); border-color:var(--red); }
+
+  /* ─── سؤال الترتيب ─── */
+  .qz-order{ padding:8px 16px 4px; }
+  .qz-row{
+    display:flex; align-items:center; gap:10px;
+    margin-bottom:8px; padding:9px 13px;
+    background:#fff; border:1.5px solid rgba(26,61,140,0.20);
+    border-radius:10px; font-size:calc(13.4px * var(--fs,1)); line-height:1.85;
+  }
+  .qz-pos{
+    flex:0 0 auto; width:24px; height:24px; border-radius:7px;
+    background:rgba(26,61,140,0.10); color:var(--blue);
+    display:flex; align-items:center; justify-content:center;
+    font-weight:800; font-size:calc(12.5px * var(--fs,1));
+  }
+  .qz-txt{ flex:1; text-align:justify; color:#25303f; }
+  .qz-mv{ flex:0 0 auto; display:flex; gap:4px; }
+  .qz-mv button{
+    width:27px; height:27px; border-radius:7px; cursor:pointer;
+    border:1.5px solid rgba(26,61,140,0.28); background:#fff;
+    color:var(--blue); font-size:13px; line-height:1; padding:0;
+    font-family:inherit;
+  }
+  .qz-mv button:hover{ background:rgba(26,61,140,0.08); }
+  .qz-mv button:disabled{ opacity:.3; cursor:default; }
+  .qz-row.good{ border-color:var(--green); background:rgba(31,122,61,0.08); }
+  .qz-row.good .qz-pos{ background:var(--green); color:#fff; }
+  .qz-row.bad{ border-color:var(--red); background:rgba(209,52,43,0.07); }
+  .qz-row.bad .qz-pos{ background:var(--red); color:#fff; }
+  .qz.done .qz-mv{ display:none; }
+
+  /* ─── الشريط والتغذية الراجعة ─── */
+  .qz-bar{ display:flex; gap:9px; align-items:center; padding:6px 16px 13px; }
+  .qz-check, .qz-again{
+    border-radius:20px; padding:6px 20px; cursor:pointer;
+    font-family:inherit; font-weight:800;
+    font-size:calc(13px * var(--fs,1)); border:1.5px solid;
+  }
+  .qz-check{ background:var(--blue); color:#fff; border-color:var(--blue); }
+  .qz-check:hover{ filter:brightness(1.12); }
+  .qz-check:disabled{ opacity:.35; cursor:default; filter:none; }
+  .qz-again{ background:#fff; color:var(--red); border-color:var(--red); display:none; }
+  .qz-again:hover{ background:rgba(209,52,43,0.07); }
+  .qz.done .qz-again{ display:inline-block; }
+  .qz-hint{ color:#8a7a63; font-size:calc(11.8px * var(--fs,1)); }
+  .qz.done .qz-hint{ display:none; }
+
+  .qz-fb{
+    display:none; margin:0 16px 14px; padding:10px 14px; border-radius:10px;
+    font-size:calc(13.1px * var(--fs,1)); line-height:1.92; text-align:justify;
+  }
+  .qz.done .qz-fb{ display:block; }
+  .qz-fb.right{ background:rgba(31,122,61,0.08); border-inline-start:4px solid var(--green); }
+  .qz-fb.wrong{ background:rgba(209,52,43,0.07); border-inline-start:4px solid var(--red); }
+  .qz-fb .fb-v{ display:block; font-weight:800; margin-bottom:4px; }
+  .qz-fb.right .fb-v{ color:var(--green); }
+  .qz-fb.wrong .fb-v{ color:var(--red); }
+
+  @media print{
+    .qz-bar, .qz-mv, .qz-reset, .qz-score{ display:none !important; }
+    .qz-fb{ display:block !important; }
+  }
+  @media (max-width:640px){
+    .qz-q{ font-size:calc(13.4px * var(--fs,1)); }
+    .qz-opt{ font-size:calc(12.8px * var(--fs,1)); }
   }
 
   /* ─── سؤالٌ قصيرُ الإجابة ─── */
@@ -2946,6 +3119,7 @@
     <button class="tab" data-target="slide-4">٤<br>الذكاء التوليدي</button>
     <button class="tab" data-target="slide-5">٥<br>تطبيقات الذكاء</button>
     <button class="tab" data-target="slide-6">٦<br>بعد التخرّج</button>
+    <button class="tab" data-target="slide-qz">📝<br>أسئلة مرشّحة</button>
     <button class="tab" data-target="slide-sol">🔑<br>الحلول والتعليل</button>
   </div>
 
@@ -4234,8 +4408,8 @@
         <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
 
         <div class="outline">
-          <div class="ol-item"><span class="ol-n">١</span><span class="ol-t">التطبيق الأوّل</span></div>
-          <div class="ol-item"><span class="ol-n">٢</span><span class="ol-t">التطبيق الثاني</span></div>
+          <div class="ol-item"><span class="ol-n">١</span><span class="ol-t">التطبيق الأوّل</span><span class="ol-tag">مهمّ وحديث</span></div>
+          <div class="ol-item"><span class="ol-n">٢</span><span class="ol-t">التطبيق الثاني</span><span class="ol-tag">مهمّ وحديث</span></div>
           <div class="ol-item"><span class="ol-n">٣</span><span class="ol-t">الأمن السيبرانيّ والذكاء الاصطناعيّ</span></div>
         </div>
 
@@ -4256,8 +4430,8 @@
         <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
 
         <div class="outline">
-          <div class="ol-item"><span class="ol-n">١</span><span class="ol-t">التطبيق الأوّل</span></div>
-          <div class="ol-item"><span class="ol-n">٢</span><span class="ol-t">التطبيق الثاني</span></div>
+          <div class="ol-item"><span class="ol-n">١</span><span class="ol-t">التطبيق الأوّل</span><span class="ol-tag">مهمّ وحديث</span></div>
+          <div class="ol-item"><span class="ol-n">٢</span><span class="ol-t">التطبيق الثاني</span><span class="ol-tag">مهمّ وحديث</span></div>
         </div>
 
         <p class="ol-note">المحتوى التفصيليّ يُضاف لاحقًا.</p>
@@ -4273,12 +4447,12 @@
       <!-- ============ SLIDE 6 : الأسبوع السادس ============ -->
       <div id="slide-6" class="slide content-slide rich-slide">
         <span class="chip chip-ch1">الأسبوع السادس</span>
-        <h2 class="page-title">ما بعد التخرّج — زادٌ يبقى معك</h2>
+        <h2 class="page-title">مواد بعد التخرّج</h2>
         <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
 
         <div class="outline">
           <div class="ol-item"><span class="ol-n">١</span><span class="ol-t">مراجع ومصادر</span></div>
-          <div class="ol-item"><span class="ol-n">٢</span><span class="ol-t">أدوات ومواد تُؤخَذ إلى العمل</span></div>
+          <div class="ol-item"><span class="ol-n">٢</span><span class="ol-t">أشياء تأخذها معك بعد التخرّج تفيدك في عملك</span></div>
         </div>
 
         <p class="ol-note">المحتوى التفصيليّ يُضاف لاحقًا.</p>
@@ -4290,6 +4464,400 @@
         <div class="footer-note">٦</div>
       </div>
       <!-- ============ END SLIDE 6 ============ -->
+
+      <div id="slide-qz" class="slide content-slide rich-slide">
+        <span class="chip chip-ch1">مراجعة</span>
+        <h2 class="page-title">أسئلة مرشّحة</h2>
+        <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
+
+        <div class="qz-intro">
+          <b>٢٩ سؤالًا</b> من الأسابيع الأوّل والثاني والثالث، على أربعة أنواع: اختيارٌ من متعدّد · صحٌّ وخطأ · سيناريو بجوابين · ترتيب.<br>
+          <b>وطريقةُ العمل:</b> يُختار الجوابُ ويُغيَّر ما شاء القارئ، فإذا استقرّ عليه ضغط <b>«تحقّق»</b> — فيظهر الصحيحُ أخضرَ والخطأُ أحمرَ ومعهما التعليل. و<b>«حاول مرّة أخرى»</b> يعيد السؤالَ إلى حاله.<br>
+          <span class="hl hl-yellow">والتعليلُ هو المقصود لا الدرجة</span> — فالخطأُ المفهومُ سببُه أنفعُ من صوابٍ بالحدس.
+        </div>
+
+        <div class="qz-score">
+          <span>صحيح <span class="sc-n">٠</span></span>
+          <span>·</span>
+          <span>خطأ <span class="sc-w">٠</span></span>
+          <span>·</span>
+          <span>من <span class="sc-t">٢٩</span></span>
+          <button type="button" class="qz-reset">إعادة الكلّ</button>
+        </div>
+
+        <div class="qz-kind"><span>الاختيار من متعدّد</span><span class="kk-line"></span></div>
+
+      <div class="qz" data-type="mcq" data-ans="1">
+        <div class="qz-h"><span class="qz-n">١</span><span class="qz-tag">اختيار</span><span class="qz-wk">الأسبوع ١</span></div>
+        <p class="qz-q">وظيفةُ الراوتر في الشبكة هي:</p>
+        <div class="qz-opts">
+          <button type="button" class="qz-opt" data-i="0"><span class="ok-k">أ)</span><span>تخزينُ الملفّات ومشاركتُها بين الأجهزة</span></button>
+          <button type="button" class="qz-opt" data-i="1"><span class="ok-k">ب)</span><span>الجسرُ بين الشبكة المحلّيّة وبقيّة الإنترنت حول العالم</span></button>
+          <button type="button" class="qz-opt" data-i="2"><span class="ok-k">ج)</span><span>تشغيلُ البرامج نيابةً عن الأجهزة</span></button>
+          <button type="button" class="qz-opt" data-i="3"><span class="ok-k">د)</span><span>حمايةُ الأجهزة من الفيروسات</span></button>
+        </div>
+        <div class="qz-bar"><button type="button" class="qz-check">تحقّق</button><button type="button" class="qz-again">حاول مرّة أخرى</button><span class="qz-hint">الاختيارُ يُغيَّر ما دام التحقّقُ لم يقع.</span></div>
+        <div class="qz-fb"><span class="fb-v"></span>الراوترُ يصل شبكتَك الداخليّة بالعالم الخارجيّ. و«أ» وظيفةُ السيرفر أو الخادم، و«ج» وظيفةُ الحوسبة السحابيّة، و«د» وظيفةُ برامج الحماية — وكلُّها أجهزةٌ وخدماتٌ مختلفة.</div>
+      </div>
+
+      <div class="qz" data-type="mcq" data-ans="0">
+        <div class="qz-h"><span class="qz-n">٢</span><span class="qz-tag">اختيار</span><span class="qz-wk">الأسبوع ١</span></div>
+        <p class="qz-q">خانةُ «نسخة مخفيّة» <span class="ltr-inline">(Bcc)</span> في البريد الإلكترونيّ تعني أنّ المستلم بها:</p>
+        <div class="qz-opts">
+          <button type="button" class="qz-opt" data-i="0"><span class="ok-k">أ)</span><span>يستلم الرسالةَ ولا يراه بقيّةُ المستلمين</span></button>
+          <button type="button" class="qz-opt" data-i="1"><span class="ok-k">ب)</span><span>يستلم الرسالةَ متأخّرًا عن غيره</span></button>
+          <button type="button" class="qz-opt" data-i="2"><span class="ok-k">ج)</span><span>يرى الرسالةَ ولا يستطيع الردّ عليها</span></button>
+          <button type="button" class="qz-opt" data-i="3"><span class="ok-k">د)</span><span>يستلم نسخةً مختصرةً من الرسالة</span></button>
+        </div>
+        <div class="qz-bar"><button type="button" class="qz-check">تحقّق</button><button type="button" class="qz-again">حاول مرّة أخرى</button><span class="qz-hint">الاختيارُ يُغيَّر ما دام التحقّقُ لم يقع.</span></div>
+        <div class="qz-fb"><span class="fb-v"></span>وهذا موضعُ خطأٍ إداريٍّ شائع: إرسالُ رسالةٍ إلى عشرات الموظّفين بخانة «إلى» يكشف عناوينَ الجميع بعضِها لبعض — وهو إفشاءُ بياناتٍ لا يُقصَد.</div>
+      </div>
+
+      <div class="qz" data-type="mcq" data-ans="2">
+        <div class="qz-h"><span class="qz-n">٣</span><span class="qz-tag">اختيار</span><span class="qz-wk">الأسبوع ١</span></div>
+        <p class="qz-q">عمليّةُ «الدمج» <span class="ltr-inline">(Merge)</span> في أدوات معالجة ملفّات PDF:</p>
+        <div class="qz-opts">
+          <button type="button" class="qz-opt" data-i="0"><span class="ok-k">أ)</span><span>تقسّم ملفًّا واحدًا إلى عدّة ملفّات</span></button>
+          <button type="button" class="qz-opt" data-i="1"><span class="ok-k">ب)</span><span>تصغّر حجمَ الملفّ بضغطه</span></button>
+          <button type="button" class="qz-opt" data-i="2"><span class="ok-k">ج)</span><span>توحّد عدّةَ ملفّاتٍ في ملفٍّ واحد</span></button>
+          <button type="button" class="qz-opt" data-i="3"><span class="ok-k">د)</span><span>تحوّل الملفَّ إلى صيغة Word</span></button>
+        </div>
+        <div class="qz-bar"><button type="button" class="qz-check">تحقّق</button><button type="button" class="qz-again">حاول مرّة أخرى</button><span class="qz-hint">الاختيارُ يُغيَّر ما دام التحقّقُ لم يقع.</span></div>
+        <div class="qz-fb"><span class="fb-v"></span>«أ» وصفُ عمليّة الفصل <span class="ltr-inline">(Split)</span> عكسًا تمامًا، و«ب» الضغط، و«د» التحويل. والدمجُ أكثرُ ما يُحتاج إليه حين تُسلَّم معاملةٌ واحدةٌ في ملفّاتٍ متفرّقة.</div>
+      </div>
+
+      <div class="qz" data-type="mcq" data-ans="1">
+        <div class="qz-h"><span class="qz-n">٤</span><span class="qz-tag">اختيار</span><span class="qz-wk">الأسبوع ٢</span></div>
+        <p class="qz-q">دائرةٌ مسحت أرشيفها كلَّه ضوئيًّا وحفظته ملفّاتٍ مرتّبةً بأسماءٍ واضحة. في أيّ درجةٍ هي؟</p>
+        <div class="qz-opts">
+          <button type="button" class="qz-opt" data-i="0"><span class="ok-k">أ)</span><span>الثالثة — البياناتُ صارت جاهزة</span></button>
+          <button type="button" class="qz-opt" data-i="1"><span class="ok-k">ب)</span><span>الأولى — صورةٌ فقط لا يُبحَث في داخلها</span></button>
+          <button type="button" class="qz-opt" data-i="2"><span class="ok-k">ج)</span><span>الثانية — النصُّ صار قابلًا للبحث</span></button>
+          <button type="button" class="qz-opt" data-i="3"><span class="ok-k">د)</span><span>خارج الدرجات الثلاث لأنّ التسمية منظّمة</span></button>
+        </div>
+        <div class="qz-bar"><button type="button" class="qz-check">تحقّق</button><button type="button" class="qz-again">حاول مرّة أخرى</button><span class="qz-hint">الاختيارُ يُغيَّر ما دام التحقّقُ لم يقع.</span></div>
+        <div class="qz-fb"><span class="fb-v"></span>التسميةُ المرتّبةُ تسهّل الوصولَ إلى الملفّ ولا تجعل ما في داخله مقروءًا للحاسوب. <b>واختبارُ التمييز في ثانية:</b> بحثٌ عن اسمٍ داخل الملفّ — فإن كانت النتيجةُ صفرًا فهي الأولى.</div>
+      </div>
+
+      <div class="qz" data-type="mcq" data-ans="2">
+        <div class="qz-h"><span class="qz-n">٥</span><span class="qz-tag">اختيار</span><span class="qz-wk">الأسبوع ٢</span></div>
+        <p class="qz-q">ما الذي يميّز الدرجة الثالثة عن الثانية تحديدًا؟</p>
+        <div class="qz-opts">
+          <button type="button" class="qz-opt" data-i="0"><span class="ok-k">أ)</span><span>جودةُ الصورة أعلى ودقّةُ المسح أكبر</span></button>
+          <button type="button" class="qz-opt" data-i="1"><span class="ok-k">ب)</span><span>إمكانُ البحث عن الكلمات داخل الملفّ</span></button>
+          <button type="button" class="qz-opt" data-i="2"><span class="ok-k">ج)</span><span>إمكانُ العدّ والفرز والحساب، لأنّ الرقم صار في خانةٍ لا كلمةً في نصّ</span></button>
+          <button type="button" class="qz-opt" data-i="3"><span class="ok-k">د)</span><span>حجمُ الملفّ أصغر فيسهل إرسالُه</span></button>
+        </div>
+        <div class="qz-bar"><button type="button" class="qz-check">تحقّق</button><button type="button" class="qz-again">حاول مرّة أخرى</button><span class="qz-hint">الاختيارُ يُغيَّر ما دام التحقّقُ لم يقع.</span></div>
+        <div class="qz-fb"><span class="fb-v"></span>«ب» هي الدرجةُ الثانيةُ نفسُها لا ما يميّز الثالثةَ عنها — وهي أدقُّ الخيارات خطأً. وفي الثانية نجد «٢٣ يومًا»، وفي الثالثة نجمعها ونفرز عليها.</div>
+      </div>
+
+      <div class="qz" data-type="mcq" data-ans="0">
+        <div class="qz-h"><span class="qz-n">٦</span><span class="qz-tag">اختيار</span><span class="qz-wk">الأسبوع ٢</span></div>
+        <p class="qz-q">سجلُّ الإجازات صار جدولًا يُحسَب عليه، والموظّفُ ما زال يملأ الاستمارة بخطّ يده. في أيّ <b>مستوى</b> نحن؟</p>
+        <div class="qz-opts">
+          <button type="button" class="qz-opt" data-i="0"><span class="ok-k">أ)</span><span>المستوى الأوّل — مستوى الوثيقة، لأنّ الإجراء لم يتغيّر</span></button>
+          <button type="button" class="qz-opt" data-i="1"><span class="ok-k">ب)</span><span>المستوى الثاني — لأنّ العمل صار على الحاسوب</span></button>
+          <button type="button" class="qz-opt" data-i="2"><span class="ok-k">ج)</span><span>المستوى الثالث — لأنّ البيانات صارت جاهزةً للتحليل</span></button>
+          <button type="button" class="qz-opt" data-i="3"><span class="ok-k">د)</span><span>لا يُصنَّف لأنّه خليطٌ بين مستويين</span></button>
+        </div>
+        <div class="qz-bar"><button type="button" class="qz-check">تحقّق</button><button type="button" class="qz-again">حاول مرّة أخرى</button><span class="qz-hint">الاختيارُ يُغيَّر ما دام التحقّقُ لم يقع.</span></div>
+        <div class="qz-fb"><span class="fb-v"></span>هذا أشيعُ خلطٍ في المقرّر: الورقةُ بلغت <b>الدرجةَ الثالثة</b> — وهي عمقُ التحويل — وهي في <b>المستوى الأوّل</b> — وهو اتّساعُ الأثر — لأنّ الإجراء لم يُمَسّ.</div>
+      </div>
+
+      <div class="qz" data-type="mcq" data-ans="1">
+        <div class="qz-h"><span class="qz-n">٧</span><span class="qz-tag">اختيار</span><span class="qz-wk">الأسبوع ٢</span></div>
+        <p class="qz-q">أيُّ خطوةٍ في سيناريو الأضابير هي التي تنقل المشروع إلى الدرجة الثالثة؟</p>
+        <div class="qz-opts">
+          <button type="button" class="qz-opt" data-i="0"><span class="ok-k">أ)</span><span>المسحُ وتمييزُ النصّ</span></button>
+          <button type="button" class="qz-opt" data-i="1"><span class="ok-k">ب)</span><span>الفهرسة</span></button>
+          <button type="button" class="qz-opt" data-i="2"><span class="ok-k">ج)</span><span>ضبطُ الجودة</span></button>
+          <button type="button" class="qz-opt" data-i="3"><span class="ok-k">د)</span><span>إتلافُ الورق الأصليّ</span></button>
+        </div>
+        <div class="qz-bar"><button type="button" class="qz-check">تحقّق</button><button type="button" class="qz-again">حاول مرّة أخرى</button><span class="qz-hint">الاختيارُ يُغيَّر ما دام التحقّقُ لم يقع.</span></div>
+        <div class="qz-fb"><span class="fb-v"></span>المسحُ يبلغ الأولى وتمييزُ النصّ يبلغ الثانية. والفهرسةُ تُنشئ الجدولَ بأعمدته فيصير العدُّ والفرزُ ممكنَين — <b>وهي أوّلُ ما يُحذَف عند ضيق الوقت</b>.</div>
+      </div>
+
+      <div class="qz" data-type="mcq" data-ans="2">
+        <div class="qz-h"><span class="qz-n">٨</span><span class="qz-tag">اختيار</span><span class="qz-wk">الأسبوع ٢</span></div>
+        <p class="qz-q">ثلاثُ نسخٍ من الأرشيف: اثنتان على قرصين في غرفة الأرشيف، وواحدةٌ على حاسوبٍ في الغرفة المجاورة. أتنطبق قاعدةُ «٣ – ٢ – ١»؟</p>
+        <div class="qz-opts">
+          <button type="button" class="qz-opt" data-i="0"><span class="ok-k">أ)</span><span>نعم — النسخُ ثلاثٌ كما تشترط القاعدة</span></button>
+          <button type="button" class="qz-opt" data-i="1"><span class="ok-k">ب)</span><span>نعم إن كانت الأقراصُ من نوعين مختلفين</span></button>
+          <button type="button" class="qz-opt" data-i="2"><span class="ok-k">ج)</span><span>لا — إذ لا نسخةَ خارج موقع العمل</span></button>
+          <button type="button" class="qz-opt" data-i="3"><span class="ok-k">د)</span><span>لا — إذ يلزم خمسُ نسخٍ لا ثلاث</span></button>
+        </div>
+        <div class="qz-bar"><button type="button" class="qz-check">تحقّق</button><button type="button" class="qz-again">حاول مرّة أخرى</button><span class="qz-hint">الاختيارُ يُغيَّر ما دام التحقّقُ لم يقع.</span></div>
+        <div class="qz-fb"><span class="fb-v"></span>الغرفةُ المجاورةُ في البناية نفسِها ليست «خارج الموقع»: فحريقٌ أو سرقةٌ يصيب الثلاثَ معًا. <b>والشرطُ ليس العددَ وحده بل تفرّقُ المواضع.</b></div>
+      </div>
+
+      <div class="qz" data-type="mcq" data-ans="2">
+        <div class="qz-h"><span class="qz-n">٩</span><span class="qz-tag">اختيار</span><span class="qz-wk">الأسبوع ٣</span></div>
+        <p class="qz-q">ما آليّاتُ رقمنة الأعمال الثلاث؟</p>
+        <div class="qz-opts">
+          <button type="button" class="qz-opt" data-i="0"><span class="ok-k">أ)</span><span>المسحُ وتمييزُ النصّ والفهرسة</span></button>
+          <button type="button" class="qz-opt" data-i="1"><span class="ok-k">ب)</span><span>التخزينُ والمشاركةُ والحماية</span></button>
+          <button type="button" class="qz-opt" data-i="2"><span class="ok-k">ج)</span><span>الحذفُ والأتمتةُ والدمج</span></button>
+          <button type="button" class="qz-opt" data-i="3"><span class="ok-k">د)</span><span>التحليلُ والتخطيطُ والتنفيذ</span></button>
+        </div>
+        <div class="qz-bar"><button type="button" class="qz-check">تحقّق</button><button type="button" class="qz-again">حاول مرّة أخرى</button><span class="qz-hint">الاختيارُ يُغيَّر ما دام التحقّقُ لم يقع.</span></div>
+        <div class="qz-fb"><span class="fb-v"></span>«أ» آليّاتُ <b>الرقمنة</b> لا رقمنة الأعمال. وحصرُها في ثلاثٍ هو ما يجعلها أداةَ تفكير: فأمام أيّ خطوةٍ لا يوجد إلّا أربعةُ أحكام — تُحذَف أو تُؤتمَت أو تُدمَج أو تبقى.</div>
+      </div>
+
+      <div class="qz" data-type="mcq" data-ans="3">
+        <div class="qz-h"><span class="qz-n">١٠</span><span class="qz-tag">اختيار</span><span class="qz-wk">الأسبوع ٣</span></div>
+        <p class="qz-q">أيُّ هذه أصعبُ متطلّبات التحوّل الرقميّ وأكثرُها إغفالًا؟</p>
+        <div class="qz-opts">
+          <button type="button" class="qz-opt" data-i="0"><span class="ok-k">أ)</span><span>شراءُ الأجهزة والخوادم</span></button>
+          <button type="button" class="qz-opt" data-i="1"><span class="ok-k">ب)</span><span>تدريبُ الموظّفين على الأداة</span></button>
+          <button type="button" class="qz-opt" data-i="2"><span class="ok-k">ج)</span><span>اختيارُ البرنامج المناسب</span></button>
+          <button type="button" class="qz-opt" data-i="3"><span class="ok-k">د)</span><span>تغييرُ التعليمات والصلاحيّات رسميًّا</span></button>
+        </div>
+        <div class="qz-bar"><button type="button" class="qz-check">تحقّق</button><button type="button" class="qz-again">حاول مرّة أخرى</button><span class="qz-hint">الاختيارُ يُغيَّر ما دام التحقّقُ لم يقع.</span></div>
+        <div class="qz-fb"><span class="fb-v"></span>الثلاثةُ الأولى تُحَلّ بالمال والوقت — وهي لذلك أسهلُها. <b>وما دامت التعليماتُ تشترط توقيعين، فأنت تُسرّع إجراءً قديمًا لا تغيّره.</b></div>
+      </div>
+
+        <div class="qz-kind"><span>صح أو خطأ</span><span class="kk-line"></span></div>
+
+      <div class="qz" data-type="tf" data-ans="1">
+        <div class="qz-h"><span class="qz-n">١١</span><span class="qz-tag">صح وخطأ</span><span class="qz-wk">الأسبوع ٢</span></div>
+        <p class="qz-q">الرقمنة تغيّر الإجراء نفسه لا وعاء المعلومة فقط.</p>
+        <div class="qz-opts">
+          <button type="button" class="qz-opt" data-i="0"><span class="ok-k">•</span><span>صح</span></button>
+          <button type="button" class="qz-opt" data-i="1"><span class="ok-k">•</span><span>خطأ</span></button>
+        </div>
+        <div class="qz-bar"><button type="button" class="qz-check">تحقّق</button><button type="button" class="qz-again">حاول مرّة أخرى</button><span class="qz-hint">الاختيارُ يُغيَّر ما دام التحقّقُ لم يقع.</span></div>
+        <div class="qz-fb"><span class="fb-v"></span>الرقمنةُ تغيّر <b>وعاءَ المعلومة</b> مع بقاء الإجراء كما هو. وتغييرُ الإجراء نفسِه هو رقمنةُ الأعمال.</div>
+      </div>
+
+      <div class="qz" data-type="tf" data-ans="1">
+        <div class="qz-h"><span class="qz-n">١٢</span><span class="qz-tag">صح وخطأ</span><span class="qz-wk">الأسبوع ٢</span></div>
+        <p class="qz-q">كل ورقة في الدائرة يجب أن تبلغ الدرجة الثالثة.</p>
+        <div class="qz-opts">
+          <button type="button" class="qz-opt" data-i="0"><span class="ok-k">•</span><span>صح</span></button>
+          <button type="button" class="qz-opt" data-i="1"><span class="ok-k">•</span><span>خطأ</span></button>
+        </div>
+        <div class="qz-bar"><button type="button" class="qz-check">تحقّق</button><button type="button" class="qz-again">حاول مرّة أخرى</button><span class="qz-hint">الاختيارُ يُغيَّر ما دام التحقّقُ لم يقع.</span></div>
+        <div class="qz-fb"><span class="fb-v"></span>الدرجةُ تُحدَّد بالغاية: الأرشيفُ النادرُ الاستعمال قد تكفيه الأولى. <b>وتعميمُ الثالثة إسرافٌ</b> على ما لا يُسأل عنه أحد.</div>
+      </div>
+
+      <div class="qz" data-type="tf" data-ans="0">
+        <div class="qz-h"><span class="qz-n">١٣</span><span class="qz-tag">صح وخطأ</span><span class="qz-wk">الأسبوع ٢</span></div>
+        <p class="qz-q">في الدرجة الثانية يمكن البحث عن اسم، ولا يمكن جمع الأرقام.</p>
+        <div class="qz-opts">
+          <button type="button" class="qz-opt" data-i="0"><span class="ok-k">•</span><span>صح</span></button>
+          <button type="button" class="qz-opt" data-i="1"><span class="ok-k">•</span><span>خطأ</span></button>
+        </div>
+        <div class="qz-bar"><button type="button" class="qz-check">تحقّق</button><button type="button" class="qz-again">حاول مرّة أخرى</button><span class="qz-hint">الاختيارُ يُغيَّر ما دام التحقّقُ لم يقع.</span></div>
+        <div class="qz-fb"><span class="fb-v"></span>النصُّ صار مقروءًا فالبحثُ يعمل، غير أنّ «٢٣ يومًا» كلمةٌ داخل نصٍّ لا رقمٌ في خانة — <b>ولا يُجمَع ما ليس في خانة</b>.</div>
+      </div>
+
+      <div class="qz" data-type="tf" data-ans="1">
+        <div class="qz-h"><span class="qz-n">١٤</span><span class="qz-tag">صح وخطأ</span><span class="qz-wk">الأسبوع ٢</span></div>
+        <p class="qz-q">نسختان على قرصين في الغرفة نفسها تحقّقان قاعدة «٣ – ٢ – ١».</p>
+        <div class="qz-opts">
+          <button type="button" class="qz-opt" data-i="0"><span class="ok-k">•</span><span>صح</span></button>
+          <button type="button" class="qz-opt" data-i="1"><span class="ok-k">•</span><span>خطأ</span></button>
+        </div>
+        <div class="qz-bar"><button type="button" class="qz-check">تحقّق</button><button type="button" class="qz-again">حاول مرّة أخرى</button><span class="qz-hint">الاختيارُ يُغيَّر ما دام التحقّقُ لم يقع.</span></div>
+        <div class="qz-fb"><span class="fb-v"></span>ما يصيب الغرفةَ يصيبهما معًا، فهما نسخةٌ واحدةٌ من حيث المخاطرة. <b>والقاعدةُ تشترط واحدةً خارج الموقع.</b></div>
+      </div>
+
+      <div class="qz" data-type="tf" data-ans="0">
+        <div class="qz-h"><span class="qz-n">١٥</span><span class="qz-tag">صح وخطأ</span><span class="qz-wk">الأسبوع ٢</span></div>
+        <p class="qz-q">الحماية ترافق خطوات مسار الرقمنة كلّها ولا تأتي في آخرها.</p>
+        <div class="qz-opts">
+          <button type="button" class="qz-opt" data-i="0"><span class="ok-k">•</span><span>صح</span></button>
+          <button type="button" class="qz-opt" data-i="1"><span class="ok-k">•</span><span>خطأ</span></button>
+        </div>
+        <div class="qz-bar"><button type="button" class="qz-check">تحقّق</button><button type="button" class="qz-again">حاول مرّة أخرى</button><span class="qz-hint">الاختيارُ يُغيَّر ما دام التحقّقُ لم يقع.</span></div>
+        <div class="qz-fb"><span class="fb-v"></span>الملفُّ معرَّضٌ في كلّ خطوة: يُفقَد في النقل، ويُكشَف في الخزن، ويُمحى قبل النسخ الاحتياطيّ. <b>والحمايةُ المؤجَّلةُ حمايةٌ لما بقي لا لما ضاع.</b></div>
+      </div>
+
+      <div class="qz" data-type="tf" data-ans="1">
+        <div class="qz-h"><span class="qz-n">١٦</span><span class="qz-tag">صح وخطأ</span><span class="qz-wk">الأسبوع ٣</span></div>
+        <p class="qz-q">خلوّ الإجراء من الورق دليلٌ كافٍ على أنّه بلغ التحوّل الرقميّ.</p>
+        <div class="qz-opts">
+          <button type="button" class="qz-opt" data-i="0"><span class="ok-k">•</span><span>صح</span></button>
+          <button type="button" class="qz-opt" data-i="1"><span class="ok-k">•</span><span>خطأ</span></button>
+        </div>
+        <div class="qz-bar"><button type="button" class="qz-check">تحقّق</button><button type="button" class="qz-again">حاول مرّة أخرى</button><span class="qz-hint">الاختيارُ يُغيَّر ما دام التحقّقُ لم يقع.</span></div>
+        <div class="qz-fb"><span class="fb-v"></span>الورقُ نتيجةٌ لا تعريف. <b>والاختبارُ الفاصل:</b> لو عاد كلُّ شيءٍ ورقًا أتعمل الدائرة عملَها نفسَه؟ فإن عملت — أبطأَ فحسب — فليس تحوّلًا.</div>
+      </div>
+
+      <div class="qz" data-type="tf" data-ans="0">
+        <div class="qz-h"><span class="qz-n">١٧</span><span class="qz-tag">صح وخطأ</span><span class="qz-wk">الأسبوع ٣</span></div>
+        <p class="qz-q">خطوة ملء الطلب تبقى بشريّة لأنّ لها سببًا حقيقيًّا لا علاقة له بالورق.</p>
+        <div class="qz-opts">
+          <button type="button" class="qz-opt" data-i="0"><span class="ok-k">•</span><span>صح</span></button>
+          <button type="button" class="qz-opt" data-i="1"><span class="ok-k">•</span><span>خطأ</span></button>
+        </div>
+        <div class="qz-bar"><button type="button" class="qz-check">تحقّق</button><button type="button" class="qz-again">حاول مرّة أخرى</button><span class="qz-hint">الاختيارُ يُغيَّر ما دام التحقّقُ لم يقع.</span></div>
+        <div class="qz-fb"><span class="fb-v"></span>جوهرُها <b>إنسانٌ يريد شيئًا فيُعلِن عنه</b> — ولا يعرف النظامُ أنّك تريد إجازةً قبل أن تخبره. <b>وليست كلُّ خطوةٍ قابلةً للحذف.</b></div>
+      </div>
+
+      <div class="qz" data-type="tf" data-ans="0">
+        <div class="qz-h"><span class="qz-n">١٨</span><span class="qz-tag">صح وخطأ</span><span class="qz-wk">الأسبوع ١</span></div>
+        <p class="qz-q">السيرفر جهاز يبقى يعمل باستمرار ليستجيب لطلبات أجهزة أخرى.</p>
+        <div class="qz-opts">
+          <button type="button" class="qz-opt" data-i="0"><span class="ok-k">•</span><span>صح</span></button>
+          <button type="button" class="qz-opt" data-i="1"><span class="ok-k">•</span><span>خطأ</span></button>
+        </div>
+        <div class="qz-bar"><button type="button" class="qz-check">تحقّق</button><button type="button" class="qz-again">حاول مرّة أخرى</button><span class="qz-hint">الاختيارُ يُغيَّر ما دام التحقّقُ لم يقع.</span></div>
+        <div class="qz-fb"><span class="fb-v"></span>هذا تعريفُه بالضبط: حاسوبٌ مخصَّصٌ لا يجلس عليه أحدٌ عادةً، ووظيفتُه الاستجابةُ المستمرّة — وعليه تقوم كلُّ خدمةٍ سحابيّة.</div>
+      </div>
+
+        <div class="qz-kind"><span>سيناريو — جوابان</span><span class="kk-line"></span></div>
+
+      <div class="qz" data-type="scn" data-ans="1">
+        <div class="qz-h"><span class="qz-n">١٩</span><span class="qz-tag">سيناريو</span><span class="qz-wk">الأسبوع ٢</span></div>
+        <p class="qz-q">ما الخطأ الأكبر؟</p>
+        <div class="qz-scn">دائرةٌ رقمنت أرشيفَها كلَّه، ورفعته إلى حاسوبٍ واحدٍ في غرفة الأرشيف، ثمّ أتلفت الورق الأصليّ.</div>
+        <div class="qz-opts">
+          <button type="button" class="qz-opt" data-i="0"><span class="ok-k">أ)</span><span>أنّها لم تبلغ الدرجة الثالثة، فالبياناتُ ما زالت غيرَ قابلةٍ للتحليل</span></button>
+          <button type="button" class="qz-opt" data-i="1"><span class="ok-k">ب)</span><span>أنّ النسخة صارت وحيدةً بلا نسخٍ احتياطيّ، فصار الفقدُ نهائيًّا</span></button>
+        </div>
+        <div class="qz-bar"><button type="button" class="qz-check">تحقّق</button><button type="button" class="qz-again">حاول مرّة أخرى</button><span class="qz-hint">الاختيارُ يُغيَّر ما دام التحقّقُ لم يقع.</span></div>
+        <div class="qz-fb"><span class="fb-v"></span>الدرجةُ مسألةُ فائدة، وهذه مسألةُ <b>بقاء</b>. فالورقُ متفرّقٌ في خزائن، أمّا نسخةٌ رقميّةٌ وحيدةٌ فعطبٌ واحدٌ يُذهبها جميعًا — ومع الإتلاف يكون الفقدُ نهائيًّا.</div>
+      </div>
+
+      <div class="qz" data-type="scn" data-ans="1">
+        <div class="qz-h"><span class="qz-n">٢٠</span><span class="qz-tag">سيناريو</span><span class="qz-wk">الأسبوع ٢</span></div>
+        <p class="qz-q">ما الحكم على هذا القول؟</p>
+        <div class="qz-scn">مديرٌ يقول: «سنُرقمِن كلَّ أرشيف الدائرة، وبعدها نرى ما ينفعنا فيه».</div>
+        <div class="qz-opts">
+          <button type="button" class="qz-opt" data-i="0"><span class="ok-k">أ)</span><span>صحيح — المهمُّ أن نبدأ، والفائدةُ تظهر بعد ذلك</span></button>
+          <button type="button" class="qz-opt" data-i="1"><span class="ok-k">ب)</span><span>خطأ — فالغايةُ لم تُحدَّد، ومنها تُشتقّ الدرجةُ والأولويّةُ والمعايير</span></button>
+        </div>
+        <div class="qz-bar"><button type="button" class="qz-check">تحقّق</button><button type="button" class="qz-again">حاول مرّة أخرى</button><span class="qz-hint">الاختيارُ يُغيَّر ما دام التحقّقُ لم يقع.</span></div>
+        <div class="qz-fb"><span class="fb-v"></span>مَن بدأ بلا غايةٍ رقمن بإتقانٍ ما لا ينفع. <b>والسؤالُ الصحيح قبل المشروع:</b> ما الأسئلة التي أريد أن تجيبني عنها هذه البيانات؟ — ومَن لا يستطيع ذكرَ ثلاثةٍ منها فمشروعُه يُؤجَّل لا يُموَّل.</div>
+      </div>
+
+      <div class="qz" data-type="scn" data-ans="1">
+        <div class="qz-h"><span class="qz-n">٢١</span><span class="qz-tag">سيناريو</span><span class="qz-wk">الأسبوع ٣</span></div>
+        <p class="qz-q">إلى أيّ آليّةٍ تنتمي هذه الخطوة؟</p>
+        <div class="qz-scn">في إجراءٍ جرى رقمنةُ أعماله، كانت هناك خطوةُ «نقلِ المعاملة إلى شعبة الحسابات» فلم تَعُد موجودة.</div>
+        <div class="qz-opts">
+          <button type="button" class="qz-opt" data-i="0"><span class="ok-k">أ)</span><span>الأتمتة — لأنّ الحاسوب صار ينقلها بدل الموظّف</span></button>
+          <button type="button" class="qz-opt" data-i="1"><span class="ok-k">ب)</span><span>الحذف — لأنّها وُجدت أصلًا لأنّ المعاملة جسمٌ ينتقل</span></button>
+        </div>
+        <div class="qz-bar"><button type="button" class="qz-check">تحقّق</button><button type="button" class="qz-again">حاول مرّة أخرى</button><span class="qz-hint">الاختيارُ يُغيَّر ما دام التحقّقُ لم يقع.</span></div>
+        <div class="qz-fb"><span class="fb-v"></span><b>الفيصل:</b> أما زالت الخطوةُ تُنفَّذ بيدِ الحاسوب بدل الإنسان؟ فأتمتة. أم لم تَعُد تُنفَّذ إطلاقًا؟ فحذف. ولا شيءَ هنا يُنقَل — المعلومةُ ظهرت للشعبتين في اللحظة نفسِها.</div>
+      </div>
+
+      <div class="qz" data-type="scn" data-ans="1">
+        <div class="qz-h"><span class="qz-n">٢٢</span><span class="qz-tag">سيناريو</span><span class="qz-wk">الأسبوع ٣</span></div>
+        <p class="qz-q">ما رأيك في النتيجة؟</p>
+        <div class="qz-scn">دائرةٌ نقلت إجراءها الورقيَّ ذا الثماني خطوات إلى ثماني شاشاتٍ إلكترونيّة، فصار الزمنُ أقلَّ بيومٍ واحد.</div>
+        <div class="qz-opts">
+          <button type="button" class="qz-opt" data-i="0"><span class="ok-k">أ)</span><span>رقمنةُ أعمالٍ صحيحة — فالإجراءُ صار إلكترونيًّا وأسرع</span></button>
+          <button type="button" class="qz-opt" data-i="1"><span class="ok-k">ب)</span><span>الإجراءُ لم يُفحَص، فبقيت خطواتٌ وُجدت لأنّ الورقة ورقة — وأتمتةُ الفوضى تُنتج فوضى أسرع</span></button>
+        </div>
+        <div class="qz-bar"><button type="button" class="qz-check">تحقّق</button><button type="button" class="qz-again">حاول مرّة أخرى</button><span class="qz-hint">الاختيارُ يُغيَّر ما دام التحقّقُ لم يقع.</span></div>
+        <div class="qz-fb"><span class="fb-v"></span>الفرقُ ليس في الأداة بل في أنّ أحدًا جلس وفحص الخطوات. <b>ويُرسَم الإجراءُ خطوةً خطوة قبل فتح أيّ أداة</b>، ويُسأل عن كلّ خطوة: أتوجد لسببٍ إداريّ أم لأنّ المعلومة كانت على ورق؟</div>
+      </div>
+
+      <div class="qz" data-type="scn" data-ans="0">
+        <div class="qz-h"><span class="qz-n">٢٣</span><span class="qz-tag">سيناريو</span><span class="qz-wk">الأسبوع ٢</span></div>
+        <p class="qz-q">في أيّ درجةٍ هذا الملفّ؟</p>
+        <div class="qz-scn">ملفٌّ مُسِح ضوئيًّا بجودةٍ عالية، وحين بُحِث داخله عن اسمٍ ظاهرٍ للعين كانت النتيجةُ صفرًا.</div>
+        <div class="qz-opts">
+          <button type="button" class="qz-opt" data-i="0"><span class="ok-k">أ)</span><span>الأولى — الحاسوبُ يرى صورةً لا يرى كلمات</span></button>
+          <button type="button" class="qz-opt" data-i="1"><span class="ok-k">ب)</span><span>الثانية — النصُّ موجودٌ غير أنّ البحث لم يُضبَط</span></button>
+        </div>
+        <div class="qz-bar"><button type="button" class="qz-check">تحقّق</button><button type="button" class="qz-again">حاول مرّة أخرى</button><span class="qz-hint">الاختيارُ يُغيَّر ما دام التحقّقُ لم يقع.</span></div>
+        <div class="qz-fb"><span class="fb-v"></span>جودةُ المسح لا علاقة لها بالدرجة. والبحثُ الفاشلُ هو <b>الاختبارُ الحاسم</b>: ما في الملفّ صورةٌ لا حروف — كما نرى نحن لوحةً مكتوبةً بلغةٍ لا نعرف حروفَها.</div>
+      </div>
+
+      <div class="qz" data-type="scn" data-ans="1">
+        <div class="qz-h"><span class="qz-n">٢٤</span><span class="qz-tag">سيناريو</span><span class="qz-wk">الأسبوع ١</span></div>
+        <p class="qz-q">ما الخطأ وما الصواب؟</p>
+        <div class="qz-scn">مديرٌ أرسل رسالةً فيها معلومةٌ حسّاسةٌ إلى عشرة موظّفين، ووضع عناوينهم كلَّها في خانة «إلى»، فظهرت أسماؤهم بعضِها لبعض.</div>
+        <div class="qz-opts">
+          <button type="button" class="qz-opt" data-i="0"><span class="ok-k">أ)</span><span>لا خطأ — ما دام المستلمون كلُّهم من الدائرة نفسِها</span></button>
+          <button type="button" class="qz-opt" data-i="1"><span class="ok-k">ب)</span><span>الخطأُ إفشاءُ العناوين، والصوابُ خانةُ «نسخة مخفيّة» ليستلم كلٌّ منهم بلا أن يرى البقيّة</span></button>
+        </div>
+        <div class="qz-bar"><button type="button" class="qz-check">تحقّق</button><button type="button" class="qz-again">حاول مرّة أخرى</button><span class="qz-hint">الاختيارُ يُغيَّر ما دام التحقّقُ لم يقع.</span></div>
+        <div class="qz-fb"><span class="fb-v"></span>كونُهم من دائرةٍ واحدةٍ لا يجعل عناوينَهم مباحة، والرسالةُ قد تُحوَّل خارجَها فتنتقل العناوينُ معها. <b>وخانةُ «نسخة مخفيّة» وُجدت لهذا بعينه.</b></div>
+      </div>
+
+        <div class="qz-kind"><span>ترتيب</span><span class="kk-line"></span></div>
+
+      <div class="qz" data-type="order" data-ans="0,1,2,3">
+        <div class="qz-h"><span class="qz-n">٢٥</span><span class="qz-tag">ترتيب</span><span class="qz-wk">الأسبوع ١</span></div>
+        <p class="qz-q">مراحلُ التحوّل الأربع — من الأقدم إلى الأحدث:</p>
+        <div class="qz-order">
+          <div class="qz-row" data-i="2"><span class="qz-pos"></span><span class="qz-txt">رقمنةُ الأعمال — الإجراءُ نفسُه يتغيّر</span><span class="qz-mv"><button type="button" data-d="-1">▲</button><button type="button" data-d="1">▼</button></span></div>
+          <div class="qz-row" data-i="0"><span class="qz-pos"></span><span class="qz-txt">تناظريّ — المعلومةُ على ورقٍ أو شريط</span><span class="qz-mv"><button type="button" data-d="-1">▲</button><button type="button" data-d="1">▼</button></span></div>
+          <div class="qz-row" data-i="3"><span class="qz-pos"></span><span class="qz-txt">التحوّلُ الرقميّ — المؤسّسةُ ونموذجُ عملها يتغيّران</span><span class="qz-mv"><button type="button" data-d="-1">▲</button><button type="button" data-d="1">▼</button></span></div>
+          <div class="qz-row" data-i="1"><span class="qz-pos"></span><span class="qz-txt">الرقمنة — الورقةُ تصير ملفًّا والإجراءُ كما هو</span><span class="qz-mv"><button type="button" data-d="-1">▲</button><button type="button" data-d="1">▼</button></span></div>
+        </div>
+        <div class="qz-bar"><button type="button" class="qz-check">تحقّق</button><button type="button" class="qz-again">حاول مرّة أخرى</button><span class="qz-hint">السهمان يرفعان البندَ ويخفضانه.</span></div>
+        <div class="qz-fb"><span class="fb-v"></span>كلُّ مرحلةٍ تقوم على ما قبلها ولا تُقفَز: فلا رقمنةَ أعمالٍ على ورقٍ لم يُرقمَن، ولا تحوّلَ في مؤسّسةٍ إجراءاتُها ورقيّة.</div>
+      </div>
+
+      <div class="qz" data-type="order" data-ans="0,1,2,3">
+        <div class="qz-h"><span class="qz-n">٢٦</span><span class="qz-tag">ترتيب</span><span class="qz-wk">الأسبوع ٢</span></div>
+        <p class="qz-q">درجاتُ الرقمنة الثلاث لورقةٍ واحدة — من الأدنى إلى الأعلى:</p>
+        <div class="qz-order">
+          <div class="qz-row" data-i="2"><span class="qz-pos"></span><span class="qz-txt">نصٌّ قابلٌ للبحث بعد تمييز الحروف</span><span class="qz-mv"><button type="button" data-d="-1">▲</button><button type="button" data-d="1">▼</button></span></div>
+          <div class="qz-row" data-i="0"><span class="qz-pos"></span><span class="qz-txt">الورقةُ على الطاولة — لا شيءَ رقميّ</span><span class="qz-mv"><button type="button" data-d="-1">▲</button><button type="button" data-d="1">▼</button></span></div>
+          <div class="qz-row" data-i="3"><span class="qz-pos"></span><span class="qz-txt">جدولٌ بأعمدةٍ يُعَدُّ ويُفرَز ويُحسَب</span><span class="qz-mv"><button type="button" data-d="-1">▲</button><button type="button" data-d="1">▼</button></span></div>
+          <div class="qz-row" data-i="1"><span class="qz-pos"></span><span class="qz-txt">صورةٌ ممسوحةٌ لا يُبحَث فيها</span><span class="qz-mv"><button type="button" data-d="-1">▲</button><button type="button" data-d="1">▼</button></span></div>
+        </div>
+        <div class="qz-bar"><button type="button" class="qz-check">تحقّق</button><button type="button" class="qz-again">حاول مرّة أخرى</button><span class="qz-hint">السهمان يرفعان البندَ ويخفضانه.</span></div>
+        <div class="qz-fb"><span class="fb-v"></span>بين الثانية والثالثة تقع الفهرسةُ، وهي الخطوةُ التي يُغفَل عنها فيقف المشروعُ عند نصٍّ يُقرأ ولا يُحسَب عليه.</div>
+      </div>
+
+      <div class="qz" data-type="order" data-ans="0,1,2,3">
+        <div class="qz-h"><span class="qz-n">٢٧</span><span class="qz-tag">ترتيب</span><span class="qz-wk">الأسبوع ٢</span></div>
+        <p class="qz-q">مسارُ الرقمنة بعد المسح — بالترتيب:</p>
+        <div class="qz-order">
+          <div class="qz-row" data-i="2"><span class="qz-pos"></span><span class="qz-txt">نقلُ الملفّات عبر الشبكة أو الذاكرة</span><span class="qz-mv"><button type="button" data-d="-1">▲</button><button type="button" data-d="1">▼</button></span></div>
+          <div class="qz-row" data-i="0"><span class="qz-pos"></span><span class="qz-txt">تسميةُ الملفّات تسميةً تدلّ على محتواها</span><span class="qz-mv"><button type="button" data-d="-1">▲</button><button type="button" data-d="1">▼</button></span></div>
+          <div class="qz-row" data-i="3"><span class="qz-pos"></span><span class="qz-txt">خزنُ الملفّات داخليًّا وخارجيًّا وسحابيًّا</span><span class="qz-mv"><button type="button" data-d="-1">▲</button><button type="button" data-d="1">▼</button></span></div>
+          <div class="qz-row" data-i="1"><span class="qz-pos"></span><span class="qz-txt">تعديلُ الملفّات وضبطُ جودتها</span><span class="qz-mv"><button type="button" data-d="-1">▲</button><button type="button" data-d="1">▼</button></span></div>
+        </div>
+        <div class="qz-bar"><button type="button" class="qz-check">تحقّق</button><button type="button" class="qz-again">حاول مرّة أخرى</button><span class="qz-hint">السهمان يرفعان البندَ ويخفضانه.</span></div>
+        <div class="qz-fb"><span class="fb-v"></span>والحمايةُ ليست خطوةً خامسةً بعدها — <b>ترافق الأربعَ كلَّها</b>، لأنّ الملفّ معرَّضٌ في كلّ واحدةٍ منها.</div>
+      </div>
+
+      <div class="qz" data-type="order" data-ans="0,1,2,3,4">
+        <div class="qz-h"><span class="qz-n">٢٨</span><span class="qz-tag">ترتيب</span><span class="qz-wk">الأسبوع ٢</span></div>
+        <p class="qz-q">قراراتُ مشروع رقمنة الأضابير — بالترتيب الصحيح:</p>
+        <div class="qz-order">
+          <div class="qz-row" data-i="3"><span class="qz-pos"></span><span class="qz-txt">المسحُ وتمييزُ النصّ</span><span class="qz-mv"><button type="button" data-d="-1">▲</button><button type="button" data-d="1">▼</button></span></div>
+          <div class="qz-row" data-i="0"><span class="qz-pos"></span><span class="qz-txt">الجردُ — ما الموجود وكم حجمُه</span><span class="qz-mv"><button type="button" data-d="-1">▲</button><button type="button" data-d="1">▼</button></span></div>
+          <div class="qz-row" data-i="4"><span class="qz-pos"></span><span class="qz-txt">الفهرسةُ — الجدولُ بأعمدته</span><span class="qz-mv"><button type="button" data-d="-1">▲</button><button type="button" data-d="1">▼</button></span></div>
+          <div class="qz-row" data-i="1"><span class="qz-pos"></span><span class="qz-txt">الأولويّةُ — ما الذي يُرقمَن أوّلًا</span><span class="qz-mv"><button type="button" data-d="-1">▲</button><button type="button" data-d="1">▼</button></span></div>
+          <div class="qz-row" data-i="2"><span class="qz-pos"></span><span class="qz-txt">المعاييرُ — التسميةُ والدقّةُ والصيغة</span><span class="qz-mv"><button type="button" data-d="-1">▲</button><button type="button" data-d="1">▼</button></span></div>
+        </div>
+        <div class="qz-bar"><button type="button" class="qz-check">تحقّق</button><button type="button" class="qz-again">حاول مرّة أخرى</button><span class="qz-hint">السهمان يرفعان البندَ ويخفضانه.</span></div>
+        <div class="qz-fb"><span class="fb-v"></span>الثلاثةُ الأولى قراراتٌ لا تنفيذ، ومَن بدأ بالمسح قبلها أعاد العملَ لأجل معيارٍ لم يُكتَب. <b>والفهرسةُ آخرُها وأوّلُ ما يُحذَف عند ضيق الوقت.</b></div>
+      </div>
+
+      <div class="qz" data-type="order" data-ans="0,1,2,3">
+        <div class="qz-h"><span class="qz-n">٢٩</span><span class="qz-tag">ترتيب</span><span class="qz-wk">الأسبوع ٣</span></div>
+        <p class="qz-q">خطواتُ بناء إجراءٍ إلكترونيٍّ بدل الاستمارة الورقيّة — بالترتيب:</p>
+        <div class="qz-order">
+          <div class="qz-row" data-i="2"><span class="qz-pos"></span><span class="qz-txt">ربطُ النموذج بجدول البيانات</span><span class="qz-mv"><button type="button" data-d="-1">▲</button><button type="button" data-d="1">▼</button></span></div>
+          <div class="qz-row" data-i="0"><span class="qz-pos"></span><span class="qz-txt">إنشاءُ النموذج وتسميتُه</span><span class="qz-mv"><button type="button" data-d="-1">▲</button><button type="button" data-d="1">▼</button></span></div>
+          <div class="qz-row" data-i="3"><span class="qz-pos"></span><span class="qz-txt">كتابةُ الصيغة التي تحسب وتقرّر آليًّا</span><span class="qz-mv"><button type="button" data-d="-1">▲</button><button type="button" data-d="1">▼</button></span></div>
+          <div class="qz-row" data-i="1"><span class="qz-pos"></span><span class="qz-txt">ضبطُ الحقول قوائمَ منسدلةً لا كتابةً حرّة</span><span class="qz-mv"><button type="button" data-d="-1">▲</button><button type="button" data-d="1">▼</button></span></div>
+        </div>
+        <div class="qz-bar"><button type="button" class="qz-check">تحقّق</button><button type="button" class="qz-again">حاول مرّة أخرى</button><span class="qz-hint">السهمان يرفعان البندَ ويخفضانه.</span></div>
+        <div class="qz-fb"><span class="fb-v"></span>ضبطُ الحقول قبل الربط مقصود: فمَن يكتب «ثلاثة أيّام» يُخرِج نصًّا لا رقمًا، فتفشل الصيغةُ في الخطوة الأخيرة. <b>والقيدُ في المُدخَل أرخصُ من التصحيح في المخرَج.</b></div>
+      </div>
+
+        <div class="mini-note">أسئلة الأسابيع الرابع والخامس تُضاف بعد كتابة محتواهما ★</div>
+
+        <div class="page-nav">
+          <button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button>
+          <button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button>
+        </div>
+        <div class="footer-note">؟</div>
+      </div>
+      <!-- ============ END SLIDE QZ ============ -->
 
       <!-- ============ SLIDE SOL : الحلول والتعليل ============ -->
       <div id="slide-sol" class="slide content-slide rich-slide">
@@ -6683,6 +7251,134 @@
     });
   });
 })();
+
+/* ══════════════════════════════════════════════════════════════
+   محرّك تبويب الأسئلة المرشّحة — اختيار · صح وخطأ · سيناريو · ترتيب
+   يُصحَّح كلُّ سؤالٍ على حدة، والطالبُ يغيّر اختيارَه ما لم يُصحَّح بعد.
+   ══════════════════════════════════════════════════════════════ */
+(function(){
+  var AR = '٠١٢٣٤٥٦٧٨٩';
+  function ar(n){ return String(n).split('').map(function(d){ return AR[+d]; }).join(''); }
+
+  var root = document.getElementById('slide-qz');
+  if (!root) return;
+
+  var cards = Array.prototype.slice.call(root.querySelectorAll('.qz'));
+
+  /* ── العدّاد ── */
+  function refreshScore(){
+    var right = 0, wrong = 0;
+    cards.forEach(function(c){
+      if (!c.classList.contains('done')) return;
+      if (c.dataset.result === 'right') right++; else wrong++;
+    });
+    var el = root.querySelector('.qz-score');
+    if (!el) return;
+    el.querySelector('.sc-n').textContent = ar(right);
+    el.querySelector('.sc-w').textContent = ar(wrong);
+    el.querySelector('.sc-t').textContent = ar(cards.length);
+  }
+
+  /* ── ترقيم صفوف سؤال الترتيب ── */
+  function renumber(card){
+    var rows = card.querySelectorAll('.qz-row');
+    rows.forEach(function(r, i){
+      r.querySelector('.qz-pos').textContent = ar(i + 1);
+      var btns = r.querySelectorAll('.qz-mv button');
+      btns[0].disabled = (i === 0);
+      btns[1].disabled = (i === rows.length - 1);
+    });
+  }
+
+  /* ── التحقّق ── */
+  function check(card){
+    if (card.classList.contains('done')) return;
+    var type = card.dataset.type, ok;
+
+    if (type === 'order') {
+      var rows = Array.prototype.slice.call(card.querySelectorAll('.qz-row'));
+      var want = card.dataset.ans.split(',');
+      ok = true;
+      rows.forEach(function(r, i){
+        var good = (r.dataset.i === want[i]);
+        r.classList.add(good ? 'good' : 'bad');
+        if (!good) ok = false;
+      });
+    } else {
+      var opts = Array.prototype.slice.call(card.querySelectorAll('.qz-opt'));
+      var chosen = opts.filter(function(o){ return o.classList.contains('sel'); })[0];
+      if (!chosen) return;                       /* لا تحقّق قبل الاختيار */
+      var want2 = card.dataset.ans;
+      ok = (chosen.dataset.i === want2);
+      opts.forEach(function(o){
+        if (o.dataset.i === want2) o.classList.add('good');
+        else if (o.classList.contains('sel')) o.classList.add('bad');
+      });
+    }
+
+    card.dataset.result = ok ? 'right' : 'wrong';
+    var fb = card.querySelector('.qz-fb');
+    fb.classList.add(ok ? 'right' : 'wrong');
+    fb.querySelector('.fb-v').textContent = ok ? '✔ إجابةٌ صحيحة' : '✘ إجابةٌ غير صحيحة';
+    card.classList.add('done');
+    card.querySelector('.qz-check').disabled = true;
+    refreshScore();
+  }
+
+  /* ── إعادة المحاولة ── */
+  function again(card){
+    card.classList.remove('done');
+    delete card.dataset.result;
+    card.querySelectorAll('.qz-opt').forEach(function(o){
+      o.classList.remove('sel', 'good', 'bad');
+    });
+    card.querySelectorAll('.qz-row').forEach(function(r){
+      r.classList.remove('good', 'bad');
+    });
+    var fb = card.querySelector('.qz-fb');
+    fb.classList.remove('right', 'wrong');
+    card.querySelector('.qz-check').disabled = false;
+    if (card.dataset.type === 'order') renumber(card);
+    refreshScore();
+  }
+
+  /* ── الربط ── */
+  cards.forEach(function(card){
+    if (card.dataset.type === 'order') renumber(card);
+
+    card.addEventListener('click', function(e){
+      var opt = e.target.closest ? e.target.closest('.qz-opt') : null;
+      if (opt && !card.classList.contains('done')) {
+        card.querySelectorAll('.qz-opt').forEach(function(o){ o.classList.remove('sel'); });
+        opt.classList.add('sel');
+        return;
+      }
+      var mv = e.target.closest ? e.target.closest('.qz-mv button') : null;
+      if (mv && !card.classList.contains('done')) {
+        var row = mv.closest('.qz-row');
+        var dir = +mv.dataset.d;
+        var sib = dir < 0 ? row.previousElementSibling : row.nextElementSibling;
+        if (sib) {
+          if (dir < 0) row.parentNode.insertBefore(row, sib);
+          else row.parentNode.insertBefore(sib, row);
+          renumber(card);
+        }
+        return;
+      }
+      if (e.target.classList.contains('qz-check')) { check(card); return; }
+      if (e.target.classList.contains('qz-again')) { again(card); return; }
+    });
+  });
+
+  var rst = root.querySelector('.qz-reset');
+  if (rst) rst.addEventListener('click', function(){
+    cards.forEach(again);
+    root.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  refreshScore();
+})();
+
 </script>
 
 </body>
