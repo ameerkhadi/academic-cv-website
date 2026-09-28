@@ -2737,6 +2737,27 @@
   .dgm-c{ margin-top:8px; text-align:center; color:#6b7280;
           font-size:calc(12px * var(--fs,1)); line-height:1.85; }
 
+  /* ─── مخطّطُ محاورِ أسبوعٍ لم يُكتَب محتواه بعد ─── */
+  .outline{ margin:20px 0 6px; }
+  .ol-item{
+    display:flex; align-items:center; gap:12px;
+    padding:13px 17px; margin-bottom:9px; background:#fff;
+    border:1.5px solid rgba(26,61,140,0.18); border-radius:12px;
+    box-shadow:0 1px 6px rgba(26,61,140,0.05);
+  }
+  .ol-n{
+    flex:0 0 auto; width:30px; height:30px; border-radius:50%;
+    background:var(--blue); color:#fff; font-weight:800;
+    display:flex; align-items:center; justify-content:center;
+    font-size:calc(14px * var(--fs,1));
+  }
+  .ol-t{ font-weight:700; color:var(--ink);
+         font-size:calc(15.5px * var(--fs,1)); line-height:1.7; }
+  .ol-note{
+    margin-top:14px; text-align:center; color:#8a7a63;
+    font-size:calc(12.5px * var(--fs,1)); line-height:1.8;
+  }
+
   /* ─── سؤالٌ قصيرُ الإجابة ─── */
   .sa-item{
     margin:12px 0; padding:11px 15px; background:#fff;
@@ -2923,8 +2944,8 @@
     <button class="tab" data-target="slide-2">٢<br>الأسبوع الثاني</button>
     <button class="tab" data-target="slide-3">٣<br>الأسبوع الثالث</button>
     <button class="tab" data-target="slide-4">٤<br>الذكاء التوليدي</button>
-    <button class="tab" data-target="slide-5">٥<br>الأسبوع الخامس</button>
-    <button class="tab" data-target="slide-6">٦<br>الأسبوع السادس</button>
+    <button class="tab" data-target="slide-5">٥<br>تطبيقات الذكاء</button>
+    <button class="tab" data-target="slide-6">٦<br>بعد التخرّج</button>
     <button class="tab" data-target="slide-sol">🔑<br>الحلول والتعليل</button>
   </div>
 
@@ -4209,240 +4230,16 @@
       <!-- ============ SLIDE 4 : الأسبوع الرابع ============ -->
       <div id="slide-4" class="slide content-slide rich-slide">
         <span class="chip chip-ch1">الأسبوع الرابع</span>
-        <h2 class="page-title">الذكاءُ الاصطناعيُّ التوليديُّ في العمل الإداريّ</h2>
+        <h2 class="page-title">الذكاء الاصطناعي التوليدي في العمل الإداري</h2>
         <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
 
-        <p class="lead-paragraph">مرّ ذكرُ المساعد الذكيّ في الأسبوعين الماضيين أداةً بين أدوات. وهذا الأسبوع يقف عنده وحده، لأنّه <span class="hl hl-yellow">الأداةُ الوحيدةُ التي تُنتِج نصًّا وقرارًا لا تنقل معلومةً فحسب</span> — ولذلك هو أنفعُها وأخطرُها معًا. وينتهي الأسبوعُ بالخطر: ماذا تغيّر في الأمن السيبرانيّ حين صار الذكاءُ في يد المهاجم كما هو في يدك.</p>
-
-        <div class="ba-prompt">
-          <b>نقطة البداية:</b> اجتماعٌ استغرق ساعتين، حضره أحدَ عشرَ موظّفًا، وخرج بأربعة عشرَ قرارًا. والمحضرُ كتبه مقرّرُ الجلسة في ستّ صفحاتٍ متّصلة.<br>
-          وبعد أسبوعين يُسأل: <b>مَن كان مسؤولًا عن البند السابع؟ وما موعدُه؟</b> — فتُقلَّب الصفحاتُ الستّ، ويُختلَف في القراءة، ويُؤجَّل الجواب.<br>
-          <b>والسؤال الذي يُبنى عليه الأسبوع:</b> الاجتماعُ أنتج <span class="hl hl-pink">نصًّا</span> والمطلوبُ منه <span class="hl hl-green">جدول</span> — فمَن يحوّله؟
+        <div class="outline">
+          <div class="ol-item"><span class="ol-n">١</span><span class="ol-t">التطبيق الأوّل</span></div>
+          <div class="ol-item"><span class="ol-n">٢</span><span class="ol-t">التطبيق الثاني</span></div>
+          <div class="ol-item"><span class="ol-n">٣</span><span class="ol-t">الأمن السيبرانيّ والذكاء الاصطناعيّ</span></div>
         </div>
 
-        <!-- ══════════ ١ ══════════ -->
-        <div class="section-heading" style="margin-top:28px;">
-          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
-          <span>١ · ما الذكاءُ التوليديّ — وما ليس هو</span>
-        </div>
-
-        <p><b>الذكاءُ الاصطناعيُّ التوليديّ</b> <span class="ltr-inline">(Generative AI)</span> نظامٌ دُرِّب على كمٍّ هائلٍ من النصوص، فصار يُنتِج نصًّا جديدًا بناءً على ما يُعطى له. والفرقُ بينه وبين كلّ ما مرّ في الأسابيع الماضية: <b>الأدواتُ السابقةُ تنقل المعلومة أو ترتّبها، وهذا يُنشئ معلومةً لم تكن موجودة</b>.</p>
-
-        <div class="takeaway">
-          <b>والجملةُ التي تفسّر سلوكَه كلَّه:</b> هو يُنتِج <span class="hl hl-yellow">أرجحَ ما يُقال</span> لا <span class="hl hl-pink">أصحَّ ما يُقال</span>. ومن هنا تأتي قوّتُه في الصياغة، ومن هنا بعينه يأتي خطرُه في الوقائع والأرقام والأسماء.
-        </div>
-
-        <p>ومعرفةُ حدّه أنفعُ من معرفة قدرته، فالجدولُ الآتي يفصل بينهما:</p>
-
-        <div class="dt-wrap">
-          <table class="dt">
-            <thead><tr><th style="width:44%;">يُحسِنه إحسانًا يُعتمَد عليه</th><th>لا يُوثَق به فيه</th></tr></thead>
-            <tbody>
-              <tr><td><b>التلخيصُ والاستخلاص</b> من نصٍّ أعطيتَه إيّاه</td><td><b>الوقائعُ من عنده</b> — أسماءٌ وأرقامٌ ومراجعُ يخترعها بثقةٍ تامّة</td></tr>
-              <tr><td><b>إعادةُ الصياغة</b> وتغييرُ الأسلوب والطول</td><td><b>الحسابُ الدقيق</b> — والجدولُ أصدقُ منه في الجمع والفرز</td></tr>
-              <tr><td><b>التحويلُ إلى بنية</b> — نصٌّ متّصلٌ يصير جدولًا أو قائمة</td><td><b>القرارُ النهائيّ</b> — يقترح ولا يُوقّع</td></tr>
-              <tr><td><b>التصنيفُ والترتيب</b> — خمسون شكوى إلى فئاتٍ في دقيقة</td><td><b>التعليماتُ والقوانين</b> ما لم تُعطَ له نصًّا</td></tr>
-              <tr><td><b>الترجمةُ والتدقيقُ اللغويّ</b></td><td><b>ما هو سرّيّ</b> — وهذا حدٌّ مهنيٌّ لا تقنيّ</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="takeaway">
-          <b>والقاعدةُ التي تُغني عن الجدول:</b> <span class="hl hl-green">ما أعطيتَه إيّاه يُحسِن التصرّفَ فيه، وما طلبتَه من عنده يُحسِن اختلاقَه.</span> فكلَّما ضاق مصدرُ المعلومة وصار من عندك، ارتفعت الثقة.
-        </div>
-
-        <!-- ══════════ ٢ ══════════ -->
-        <div class="section-heading" style="margin-top:28px;">
-          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
-          <span>٢ · التطبيق الأوّل — من محضر اجتماعٍ إلى جدول قرارات</span>
-        </div>
-
-        <p>هذا أوضحُ ما يُظهِر قيمةَ الذكاء التوليديّ في العمل الإداريّ، لأنّ المُدخَل والمخرَج كلاهما من عندك: <b>نصٌّ تملكه</b> يصير <b>جدولًا تحتاجه</b> — ولا شيءَ فيه من عند النظام.</p>
-
-        <div class="walk">
-
-          <div class="wk">
-            <div class="wk-h"><span class="wk-n">١</span><span class="wk-t">الحصولُ على النصّ</span><span class="wk-where">هاتف أو محرّر</span></div>
-            <div class="wk-b">طريقان: محضرٌ مكتوبٌ سلفًا يُنسَخ نصُّه، أو <b>تسجيلٌ صوتيٌّ للاجتماع يُفرَّغ آليًّا</b>. والتفريغُ الآليُّ متاحٌ مجّانًا في تطبيقات التسجيل الحديثة وفي محرّر المستندات بخاصّية الكتابة الصوتيّة.</div>
-            <div class="wk-warn"><b>قبل التسجيل:</b> عِلمُ الحاضرين بالتسجيل وموافقتُهم شرطٌ مهنيٌّ لا خيار. <b>واجتماعٌ يُسجَّل بلا علمٍ يفسد الثقةَ أكثرَ ممّا يوفّر من وقت.</b></div>
-          </div>
-
-          <div class="wk">
-            <div class="wk-h"><span class="wk-n">٢</span><span class="wk-t">صياغةُ الطلب — وهي العمل كلُّه</span><span class="wk-where">مساعد ذكيّ</span></div>
-            <div class="wk-b">يُلصَق النصُّ، ويُكتَب فوقه طلبٌ يحدّد <b>الأعمدة</b> و<b>ما يُفعَل عند الغموض</b>. وهذا نصُّه:</div>
-            <div class="pbox">
-              <div class="pbox-h"><span>📋</span><span>نصُّ الطلب — يُنسَخ كما هو</span></div>
-              <div class="pbox-b">هذا محضرُ اجتماعٍ إداريّ. المطلوب استخراجُ القرارات منه في جدولٍ بهذه الأعمدة بالضبط:
-ت | القرار | الجهة أو الشخص المسؤول | الموعد | الحالة
-
-شروط:
-— القرارُ جملةٌ واحدةٌ فيها فعلٌ واضح.
-— ما لم يُذكَر له مسؤولٌ صريحٌ يُكتَب في خانته: غير محدَّد.
-— ما لم يُذكَر له موعدٌ يُكتَب في خانته: غير محدَّد.
-— «الحالة» تُترَك فارغةً للمتابعة.
-— لا يُضاف قرارٌ غيرُ مذكورٍ في النصّ، ولا يُخمَّن مسؤولٌ من السياق.
-— ما كان نقاشًا ولم ينتهِ إلى قرارٍ لا يُدرَج.</div>
-            </div>
-            <div class="wk-res"><b>لماذا هذه الشروط بالذات:</b> شرطُ «لا يُخمَّن» هو صمّامُ الأمان — فالنظامُ إن تُرِك يُخمّن أسند القرارَ إلى أكثرِ الأسماء ورودًا في النصّ، وهو ترجيحٌ لا معرفة. <b>وخانةٌ مكتوبٌ فيها «غير محدَّد» تُراجَع، وخانةٌ مخمَّنةٌ تمرّ وهي خطأ.</b></div>
-          </div>
-
-          <div class="wk">
-            <div class="wk-h"><span class="wk-n">٣</span><span class="wk-t">المراجعةُ — ولا تُختصَر</span><span class="wk-where">العين والنصّ</span></div>
-            <div class="wk-b">يُقابَل كلُّ سطرٍ من الجدول بموضعه في النصّ الأصليّ. والنظرُ يتركّز في ثلاثة: <b>القراراتُ الناقصة</b> — قرارٌ قيل ولم يُدرَج، و<b>القراراتُ الزائدة</b> — نقاشٌ صار قرارًا، و<b>المسؤولون</b> — وهم أكثرُ ما يُخطَأ فيه.</div>
-            <div class="wk-warn"><b>الخطأُ الذي يمرّ ولا يُرى:</b> جدولٌ صحيحٌ في اثنَي عشرَ سطرًا وخاطئٌ في سطرين — <b>ويبدو صحيحًا كلُّه</b> لأنّ شكلَه واحد. ولذلك لا تُقبَل المراجعةُ بالنظر العامّ، بل سطرًا سطرًا.</div>
-          </div>
-
-          <div class="wk">
-            <div class="wk-h"><span class="wk-n">٤</span><span class="wk-t">النقلُ إلى جدولٍ للمتابعة</span><span class="wk-where">Google Sheets</span></div>
-            <div class="wk-b">يُلصَق الجدولُ في ورقةٍ جديدة، ويُضاف عمودُ «الحالة» بقائمةٍ منسدلة: <b>لم يبدأ · جارٍ · أُنجِز · متعثّر</b>، ثمّ تلوينٌ شرطيٌّ يجعل المتعثّر أحمر.</div>
-            <div class="wk-res"><b>النتيجة:</b> محضرُ ستّ صفحاتٍ صار <b>لوحةَ متابعةٍ</b> يُعرَف منها في ثانيةٍ مَن تأخّر وعلى أيّ بند. <span class="hl hl-green">والاجتماعُ القادم يبدأ من الجدول لا من أوّل الصفحة.</span></div>
-          </div>
-
-        </div>
-
-        <!-- ══════════ ٣ ══════════ -->
-        <div class="section-heading" style="margin-top:28px;">
-          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
-          <span>٣ · التطبيق الثاني — الكتابُ الرسميّ: صياغةً ومراجعة</span>
-        </div>
-
-        <p>والتطبيقُ الثاني أقلُّ إبهارًا وأكثرُ تكرارًا في اليوم الواحد. وله وجهان متقابلان: <b>كتابٌ صادرٌ</b> يُصاغ، و<b>كتابٌ واردٌ</b> يُقرَأ.</p>
-
-        <div class="exs">
-          <div class="ex-c"><b>الصادر — من نقاطٍ إلى كتاب</b>ثلاثُ نقاطٍ بالعامّيّة تصير كتابًا رسميًّا مصوغًا. والطلبُ يحدّد <b>الجهةَ المرسَل إليها</b> و<b>درجةَ الرسميّة</b> و<b>الطولَ</b> — فكتابٌ إلى وزارةٍ غيرُ كتابٍ إلى شعبةٍ في الدائرة نفسِها.</div>
-
-          <div class="ex-c"><b>الوارد — من كتابٍ إلى مطلوب</b>كتابٌ من ثلاث صفحاتٍ يُلخَّص في ثلاثة أسطر: <b>ما المطلوب منّا؟ وما الموعد؟ ومَن الجهة؟</b> — وهذا يوفّر أكثرَ ممّا يوفّره الصادر، لأنّ الوارد أكثرُ عددًا.</div>
-
-          <div class="ex-c"><b>التدقيق قبل التوقيع</b>كتابٌ صيغ يدويًّا يُعرَض للتدقيق اللغويّ ولكشف الغموض: <b>«أيُّ جملةٍ هنا تحتمل معنيين؟»</b> — وهذا أنفعُ سؤالٍ يُسأل قبل توقيع كتابٍ رسميّ.</div>
-        </div>
-
-        <div class="oops">
-          <span class="o-i">⚠</span>
-          <div><b>القاعدةُ التي لا يُستغنى عنها في هذا التطبيق:</b> الكتابُ الصادرُ يحمل <b>توقيعَك أنت</b> لا توقيعَ النظام. <b>فهو مسوّدةٌ تُقرأ وتُعدَّل وتُملَك، لا نصٌّ يُنسَخ ويُوقَّع.</b>
-          <br><br><b>وأشيعُ ثلاثة أخطاءٍ تمرّ:</b> رقمٌ أو تاريخٌ لم يُذكَر في طلبك فاختُلِق · إشارةٌ إلى «القانون رقم كذا» لم تُعطِه إيّاها · وأسلوبٌ مصوغٌ صياغةً حسنةً غير أنّه <b>ليس أسلوبَ دائرتك</b> — فتُعرَف الكتبُ المكتوبةُ بالنظام من بعيد.
-          <br><b>وعلاجُ الثالث:</b> إرفاقُ كتابين سابقين من دائرتك مع الطلب ليُحتذى أسلوبُهما.</div>
-        </div>
-
-        <!-- ══════════ ٤ ══════════ -->
-        <div class="section-heading" style="margin-top:28px;">
-          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
-          <span>٤ · الأمنُ السيبرانيُّ والذكاءُ الاصطناعيّ</span>
-        </div>
-
-        <p>كلُّ ما مضى في هذا الأسبوع كان الذكاءَ في يدك. وهذا المحورُ عن الذكاء <b>في يد غيرك</b> — وعن خطرٍ ثالثٍ يصنعه الموظّفُ بنفسه بلا مهاجمٍ أصلًا.</p>
-
-        <div class="exs">
-          <div class="ex-c"><b>١ · التصيّدُ الذي لا يُعرَف</b>كانت رسائلُ الاحتيال تُعرَف من ركاكة لغتها وأخطائها. <b>والآن تُكتَب بعربيّةٍ سليمةٍ بأسلوب دائرتك</b>، وتذكر اسمَ مديرك ومشروعًا قائمًا — لأنّ ما يُنشَر عن الدائرة علنًا يكفي لصياغتها. <b>فعلامةُ الخطأ اللغويّ لم تَعُد تصلح دليلًا.</b></div>
-
-          <div class="ex-c"><b>٢ · التزييفُ الصوتيّ</b>ثوانٍ من صوتٍ مسجَّلٍ تكفي لتوليد مكالمةٍ بصوت المدير يطلب فيها تحويلًا عاجلًا أو كلمةَ مرور. <b>والصوتُ المألوفُ لم يَعُد إثباتَ هويّة.</b></div>
-
-          <div class="ex-c"><b>٣ · التسريبُ من الداخل — وهو الأكثرُ وقوعًا</b>لا مهاجمَ فيه: موظّفٌ يلصق كشفَ رواتبَ أو عقدًا أو بياناتِ مواطنين في مساعدٍ ذكيٍّ ليُلخّصه له. <b>وما خرج من الدائرة لا يُسترجَع</b> — ولا يُعرَف أين حُفِظ ولا مَن يبلغه.</div>
-
-          <div class="ex-c"><b>٤ · والذكاءُ في الدفاع أيضًا</b>الوجهُ الآخر: أنظمةُ الحماية صارت تكشف <b>الشذوذ في السلوك</b> — دخولٌ في الثالثة فجرًا، أو تنزيلُ ألف ملفٍّ في دقيقة — وتُنبّه قبل وقوع الضرر.</div>
-        </div>
-
-        <div class="takeaway">
-          <b>وثلاثُ قواعدَ تكفي الموظّف — وهي ما يُطلَب حفظُه من هذا المحور:</b><br>
-          <b>١ · قاعدةُ القناة الثانية:</b> كلُّ طلبٍ عاجلٍ يمسّ مالًا أو صلاحيّةً أو كلمةَ مرور <span class="hl hl-yellow">يُتحقَّق منه بقناةٍ أخرى</span> — اتّصالٌ على رقمٍ معروفٍ سلفًا لا على الرقم الوارد في الرسالة. <b>والعَجَلةُ نفسُها علامةُ اشتباه.</b><br>
-          <b>٢ · قاعدةُ ما لا يُسترجَع:</b> ما يُرفَع إلى مساعدٍ ذكيٍّ يخرج من الدائرة. <span class="hl hl-pink">فلا أسماءَ حقيقيّةً، ولا أرقامَ وظيفيّة، ولا رواتبَ، ولا بياناتِ مواطنين</span> — والتجربةُ تكون على بياناتٍ مستبدَلة.<br>
-          <b>٣ · قاعدةُ الحساب المؤسّسيّ:</b> عملُ الدائرة يجري على حسابٍ يخصّ الدائرة لا على بريدٍ شخصيّ — فالشخصيُّ يذهب بذهاب صاحبه، ولا صلاحيّةَ عليه ولا مساءلة.
-        </div>
-
-        <div class="takeaway">
-          <b>الجسرُ إلى الأسبوع القادم:</b> استعملنا الذكاءَ هنا في <span class="hl hl-yellow">نصٍّ نملكه</span> — محضرٍ وكتاب. والأسبوعُ القادم يستعمله في <span class="hl hl-green">البيانات التي بنيناها</span>: جدولُ الطلبات يصير لوحةَ مؤشّرات، وتعليماتُ الدائرة تصير مساعدًا يجيب عنها. <b>ومعهما أهمُّ سؤالٍ في الباب: متى يكذب النظام، وكيف يُمنَع؟</b>
-        </div>
-
-        <!-- ══════════ التمارين ══════════ -->
-        <div class="section-heading" style="margin-top:30px;">
-          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
-          <span>أسئلة المراجعة</span>
-        </div>
-        <p class="quiz-note">الحلول والتعليل في تبويب «الحلول والتعليل» 🔑</p>
-
-        <div class="mcq-item">
-          <span class="q-num">١.</span> ما الجملةُ التي تفسّر سلوكَ الذكاء التوليديّ كلَّه؟
-          <ul class="mcq-options">
-            <li><span class="opt-letter">أ)</span> يبحث في الإنترنت عن الجواب ثمّ ينقله</li>
-            <li><span class="opt-letter">ب)</span> يُنتِج أرجحَ ما يُقال لا أصحَّ ما يُقال</li>
-            <li><span class="opt-letter">ج)</span> يحفظ كلَّ ما دُرِّب عليه ويسترجعه حرفيًّا</li>
-            <li><span class="opt-letter">د)</span> يتحقّق من صحّة كلّ معلومةٍ قبل ذكرها</li>
-          </ul>
-        </div>
-
-        <div class="mcq-item">
-          <span class="q-num">٢.</span> أيُّ هذه المهامّ <b>لا</b> يُوثَق بالذكاء التوليديّ فيها؟
-          <ul class="mcq-options">
-            <li><span class="opt-letter">أ)</span> تلخيصُ محضرٍ أعطيتَه إيّاه</li>
-            <li><span class="opt-letter">ب)</span> تحويلُ نصٍّ متّصلٍ إلى جدول</li>
-            <li><span class="opt-letter">ج)</span> ذكرُ رقم القانون الذي يستند إليه الكتاب</li>
-            <li><span class="opt-letter">د)</span> إعادةُ صياغة فقرةٍ بأسلوبٍ أقصر</li>
-          </ul>
-        </div>
-
-        <div class="mcq-item">
-          <span class="q-num">٣.</span> لماذا يُشترَط في طلب استخراج القرارات «ما لم يُذكَر له مسؤولٌ صريحٌ يُكتَب: غير محدَّد»؟
-          <ul class="mcq-options">
-            <li><span class="opt-letter">أ)</span> ليكون الجدولُ أجملَ شكلًا</li>
-            <li><span class="opt-letter">ب)</span> لتقصير زمن المعالجة</li>
-            <li><span class="opt-letter">ج)</span> لأنّ النظام إن تُرِك يُخمّن أسند القرارَ إلى أكثر الأسماء ورودًا، وهو ترجيحٌ لا معرفة</li>
-            <li><span class="opt-letter">د)</span> لأنّ الأنظمة لا تفهم الأسماء العربيّة</li>
-          </ul>
-        </div>
-
-        <div class="mcq-item">
-          <span class="q-num">٤.</span> وصلت رسالةٌ بعربيّةٍ سليمةٍ باسم مديرك تذكر مشروعًا قائمًا وتطلب تحويلًا عاجلًا. ما أوّلُ ما يُفعَل؟
-          <ul class="mcq-options">
-            <li><span class="opt-letter">أ)</span> تُفحَص لغتُها بحثًا عن أخطاءٍ إملائيّة</li>
-            <li><span class="opt-letter">ب)</span> يُتحقَّق منها باتّصالٍ على رقمٍ معروفٍ سلفًا لا على الرقم الوارد فيها</li>
-            <li><span class="opt-letter">ج)</span> يُردُّ عليها طلبًا للتوضيح</li>
-            <li><span class="opt-letter">د)</span> تُنفَّذ لأنّ المشروع المذكور فيها حقيقيّ</li>
-          </ul>
-        </div>
-
-        <div class="mcq-item">
-          <span class="q-num">٥.</span> أيُّ المخاطر الثلاثة أكثرُها وقوعًا في الدوائر؟
-          <ul class="mcq-options">
-            <li><span class="opt-letter">أ)</span> التزييفُ الصوتيّ لصوت المدير</li>
-            <li><span class="opt-letter">ب)</span> اختراقُ الخوادم من الخارج</li>
-            <li><span class="opt-letter">ج)</span> التسريبُ من الداخل حين يلصق موظّفٌ بياناتٍ سرّيّةً في مساعدٍ ذكيّ</li>
-            <li><span class="opt-letter">د)</span> تعطيلُ الموقع الإلكترونيّ</li>
-          </ul>
-        </div>
-
-        <div class="section-heading" style="margin-top:22px;">
-          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
-          <span>صح أو خطأ</span>
-        </div>
-        <div class="tf-item"><span>١. خلوّ رسالة الاحتيال من الأخطاء اللغوية دليل على أنّها سليمة.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
-        <div class="tf-item"><span>٢. ما أعطيته للنظام يُحسن التصرّف فيه، وما طلبته من عنده يُحسن اختلاقه.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
-        <div class="tf-item"><span>٣. الكتاب الذي يصوغه النظام يُوقَّع كما هو ما دامت صياغته سليمة.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
-        <div class="tf-item"><span>٤. تسجيل الاجتماع بلا علم الحاضرين جائز ما دام الغرض إداريًّا.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
-        <div class="tf-item"><span>٥. الذكاء الاصطناعي يُستعمل في الدفاع أيضًا، كأن يكشف الشذوذ في سلوك الدخول والتنزيل.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
-
-        <div class="section-heading" style="margin-top:22px;">
-          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
-          <span>أسئلة قصيرة الإجابة</span>
-        </div>
-
-        <div class="sa-item">
-          <span class="q-num">١.</span> جدولُ قراراتٍ خرج من محضرٍ في أربعة عشرَ سطرًا، وكلُّه متّسقُ الشكل. لماذا لا تكفي المراجعةُ بالنظر العامّ؟ وكيف تكون المراجعةُ الصحيحة؟
-          <span class="sa-hint">في سطرين، مع ذكر الأمور الثلاثة التي يتركّز فيها النظر.</span>
-          <div class="sa-lines"><span></span><span></span><span></span></div>
-        </div>
-
-        <div class="sa-item">
-          <span class="q-num">٢.</span> موظّفٌ يريد تلخيصَ كشفِ رواتبِ شعبته بمساعدٍ ذكيّ ليعرف مَن تجاوز حدًّا معيّنًا. ما الحكم؟ وما البديلُ الذي يبلغ الغايةَ نفسَها؟
-          <span class="sa-hint">في سطرين.</span>
-          <div class="sa-lines"><span></span><span></span><span></span></div>
-        </div>
-
-        <div class="sa-item">
-          <span class="q-num">٣.</span> كتابٌ صاغه النظامُ وجاء مصوغًا صياغةً حسنة، غير أنّ قارئَه من الدائرة عرف من أوّل سطرٍ أنّه ليس منها. ما سببُ ذلك؟ وما علاجُه؟
-          <span class="sa-hint">في سطرين.</span>
-          <div class="sa-lines"><span></span><span></span><span></span></div>
-        </div>
-
-        <div class="mini-note">نهاية الأسبوع الرابع — إعداد: د. أمير هادي ★</div>
+        <p class="ol-note">المحتوى التفصيليّ يُضاف لاحقًا.</p>
 
         <div class="page-nav">
           <button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button>
@@ -4453,15 +4250,18 @@
       <!-- ============ END SLIDE 4 ============ -->
 
       <!-- ============ SLIDE 5 : الأسبوع الخامس ============ -->
-      <div id="slide-5" class="slide content-slide">
+      <div id="slide-5" class="slide content-slide rich-slide">
         <span class="chip chip-ch1">الأسبوع الخامس</span>
-        <h2 class="page-title">الأسبوع الخامس</h2>
+        <h2 class="page-title">تطبيقات الذكاء الاصطناعي في التحوّل الرقميّ</h2>
         <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
-        <div class="coming-soon">
-          <svg class="big-icon" viewBox="0 0 40 40"><g filter="url(#sketchy)"><circle cx="20" cy="20" r="15" fill="#fde3c4" stroke="var(--orange)" stroke-width="2.5"/><path d="M20 12 v9 l6 4" fill="none" stroke="var(--orange)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></g></svg>
-          <p class="cs-title">تنزل لاحقاً</p>
-          <p class="cs-sub">محتوى هذا الأسبوع سيُضاف قريباً.</p>
+
+        <div class="outline">
+          <div class="ol-item"><span class="ol-n">١</span><span class="ol-t">التطبيق الأوّل</span></div>
+          <div class="ol-item"><span class="ol-n">٢</span><span class="ol-t">التطبيق الثاني</span></div>
         </div>
+
+        <p class="ol-note">المحتوى التفصيليّ يُضاف لاحقًا.</p>
+
         <div class="page-nav">
           <button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button>
           <button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button>
@@ -4471,15 +4271,18 @@
       <!-- ============ END SLIDE 5 ============ -->
 
       <!-- ============ SLIDE 6 : الأسبوع السادس ============ -->
-      <div id="slide-6" class="slide content-slide">
+      <div id="slide-6" class="slide content-slide rich-slide">
         <span class="chip chip-ch1">الأسبوع السادس</span>
-        <h2 class="page-title">الأسبوع السادس</h2>
+        <h2 class="page-title">ما بعد التخرّج — زادٌ يبقى معك</h2>
         <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
-        <div class="coming-soon">
-          <svg class="big-icon" viewBox="0 0 40 40"><g filter="url(#sketchy)"><circle cx="20" cy="20" r="15" fill="#fde3c4" stroke="var(--orange)" stroke-width="2.5"/><path d="M20 12 v9 l6 4" fill="none" stroke="var(--orange)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></g></svg>
-          <p class="cs-title">تنزل لاحقاً</p>
-          <p class="cs-sub">محتوى هذا الأسبوع سيُضاف قريباً.</p>
+
+        <div class="outline">
+          <div class="ol-item"><span class="ol-n">١</span><span class="ol-t">مراجع ومصادر</span></div>
+          <div class="ol-item"><span class="ol-n">٢</span><span class="ol-t">أدوات ومواد تُؤخَذ إلى العمل</span></div>
         </div>
+
+        <p class="ol-note">المحتوى التفصيليّ يُضاف لاحقًا.</p>
+
         <div class="page-nav">
           <button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button>
           <button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button>
@@ -4828,112 +4631,6 @@
           <p class="sol-q"><span class="sq-n">٣.</span> إجراءٌ اختُصر من ستّ خطواتٍ إلى ثلاث. ما التعليماتُ التي يلزم تغييرُها؟ ولماذا لا يكفي أن تعمل الأداة؟</p>
           <div class="sol-model"><b>الإجابة النموذجيّة:</b> يلزم تغييرُ ما يشترط الخطواتِ الساقطة: <b>إلغاءُ التوقيعات التي دُمِجت أو حُذفت</b> بقرارٍ رسميّ، و<b>اعتمادُ التوقيع الإلكترونيّ</b> بدل الخطّيّ، و<b>اعتمادُ السجلّ الرقميّ سجلًّا رسميًّا</b> يُحتجّ به، و<b>إعادةُ توزيع الصلاحيّات</b> على مَن صار يوافق.<br><b>ولا تكفي الأداةُ لأنّ</b> الإجراء المنجَز بها يبقى <b>غيرَ معتمَدٍ رسميًّا</b>: فعند أوّل مساءلةٍ أو تدقيقٍ يُطلَب الأصلُ الورقيُّ والتوقيعُ الخطّيّ، فيعود الموظّفون إلى الورق ويصير النظامُ الرقميُّ عملًا مزدوجًا فوق القديم لا بديلًا عنه.</div>
           <p class="sol-why"><b>معيار التصحيح:</b> الدرجةُ الكاملةُ تشترط ذكرَ <b>نوعين على الأقلّ</b> من التغيير الرسميّ، وسببًا يتعلّق بالاعتماد أو المساءلة لا بالتقنية. <b>وإجابةٌ لا تذكر إلّا التدريب أو الميزانيّة لم تُدرك جوهر السؤال</b> — فهذه عقباتُ تنفيذٍ لا عقباتُ اعتماد.</p>
-        </div>
-
-        <div class="sol-week"><span class="sw-n">٤</span><span class="sw-t">حلول الأسبوع الرابع — الذكاء التوليديّ والأمن السيبرانيّ</span></div>
-
-        <div class="sol-kind"><span>الاختيار من متعدّد</span><span class="sk-line"></span></div>
-
-        <div class="sol-item">
-          <p class="sol-q"><span class="sq-n">١.</span> ما الجملةُ التي تفسّر سلوكَ الذكاء التوليديّ كلَّه؟</p>
-          <div class="sol-opts">
-            <div class="sol-opt bad"><span class="so-k">أ)</span><span>يبحث في الإنترنت عن الجواب ثمّ ينقله</span></div>
-            <div class="sol-opt ok"><span class="so-k">ب)</span><span>يُنتِج أرجحَ ما يُقال لا أصحَّ ما يُقال</span></div>
-            <div class="sol-opt bad"><span class="so-k">ج)</span><span>يحفظ كلَّ ما دُرِّب عليه ويسترجعه حرفيًّا</span></div>
-            <div class="sol-opt bad"><span class="so-k">د)</span><span>يتحقّق من صحّة كلّ معلومةٍ قبل ذكرها</span></div>
-          </div>
-          <p class="sol-why"><b>التعليل:</b> «أ» أقربُ الخيارات إلى التصديق — وبعضُ الأدوات تبحث فعلًا، غير أنّ ذلك خاصّيّةٌ مضافةٌ لا جوهرُ عمله. و«ج» تصوّره أرشيفًا، ولو كان أرشيفًا لما اختلق شيئًا أصلًا. و«د» عكسُ الحقيقة تمامًا. <b>ومن «ب» وحدها تُفهَم قوّتُه وخطرُه معًا:</b> الترجيحُ يُتقِن الصياغةَ لأنّها أنماط، ويَخذُل في الوقائع لأنّها ليست أنماطًا.</p>
-        </div>
-
-        <div class="sol-item">
-          <p class="sol-q"><span class="sq-n">٢.</span> أيُّ هذه المهامّ لا يُوثَق بالذكاء التوليديّ فيها؟</p>
-          <div class="sol-opts">
-            <div class="sol-opt bad"><span class="so-k">أ)</span><span>تلخيصُ محضرٍ أعطيتَه إيّاه</span></div>
-            <div class="sol-opt bad"><span class="so-k">ب)</span><span>تحويلُ نصٍّ متّصلٍ إلى جدول</span></div>
-            <div class="sol-opt ok"><span class="so-k">ج)</span><span>ذكرُ رقم القانون الذي يستند إليه الكتاب</span></div>
-            <div class="sol-opt bad"><span class="so-k">د)</span><span>إعادةُ صياغة فقرةٍ بأسلوبٍ أقصر</span></div>
-          </div>
-          <p class="sol-why"><b>التعليل:</b> الثلاثةُ الأخرى مصدرُها <b>نصٌّ أعطيتَه إيّاه</b> — فهو يتصرّف فيه ولا يخترعه. ورقمُ القانون معلومةٌ يُطلَب منه إخراجُها <b>من عنده</b>، وهناك بالضبط يختلق، ويختلق بثقةٍ تامّةٍ وبصيغةٍ تبدو صحيحة. <b>والقاعدةُ الجامعة:</b> ما أعطيتَه إيّاه يُحسِن التصرّفَ فيه، وما طلبتَه من عنده يُحسِن اختلاقَه.</p>
-        </div>
-
-        <div class="sol-item">
-          <p class="sol-q"><span class="sq-n">٣.</span> لماذا يُشترَط «ما لم يُذكَر له مسؤولٌ صريحٌ يُكتَب: غير محدَّد»؟</p>
-          <div class="sol-opts">
-            <div class="sol-opt bad"><span class="so-k">أ)</span><span>ليكون الجدولُ أجملَ شكلًا</span></div>
-            <div class="sol-opt bad"><span class="so-k">ب)</span><span>لتقصير زمن المعالجة</span></div>
-            <div class="sol-opt ok"><span class="so-k">ج)</span><span>لأنّ النظام إن تُرِك يُخمّن أسند القرارَ إلى أكثر الأسماء ورودًا، وهو ترجيحٌ لا معرفة</span></div>
-            <div class="sol-opt bad"><span class="so-k">د)</span><span>لأنّ الأنظمة لا تفهم الأسماء العربيّة</span></div>
-          </div>
-          <p class="sol-why"><b>التعليل:</b> «د» وهمٌ شائع — والعربيّةُ ليست مشكلةً هنا. والخطرُ في أنّ الخانة المخمَّنةَ <b>تبدو كالمعروفة تمامًا</b>، فتمرّ في المراجعة ويُطالَب بها موظّفٌ لم يُكلَّف بشيء. <b>وخانةٌ مكتوبٌ فيها «غير محدَّد» تُراجَع، وخانةٌ مخمَّنةٌ تمرّ وهي خطأ</b> — وهذا هو الفرق كلُّه.</p>
-        </div>
-
-        <div class="sol-item">
-          <p class="sol-q"><span class="sq-n">٤.</span> رسالةٌ بعربيّةٍ سليمةٍ باسم مديرك تذكر مشروعًا قائمًا وتطلب تحويلًا عاجلًا. ما أوّلُ ما يُفعَل؟</p>
-          <div class="sol-opts">
-            <div class="sol-opt bad"><span class="so-k">أ)</span><span>تُفحَص لغتُها بحثًا عن أخطاءٍ إملائيّة</span></div>
-            <div class="sol-opt ok"><span class="so-k">ب)</span><span>يُتحقَّق منها باتّصالٍ على رقمٍ معروفٍ سلفًا لا على الرقم الوارد فيها</span></div>
-            <div class="sol-opt bad"><span class="so-k">ج)</span><span>يُردُّ عليها طلبًا للتوضيح</span></div>
-            <div class="sol-opt bad"><span class="so-k">د)</span><span>تُنفَّذ لأنّ المشروع المذكور فيها حقيقيّ</span></div>
-          </div>
-          <p class="sol-why"><b>التعليل:</b> «أ» هي العادةُ القديمةُ التي بطلت — فاللغةُ السليمةُ لم تَعُد دليلَ سلامة. و«ج» الرَّدُّ على الرسالة نفسِها يبقيك في قناة المهاجم. و«د» أخطرُها، لأنّ <b>ذكرَ مشروعٍ حقيقيٍّ ليس إثباتًا</b> — فما يُنشَر عن الدائرة علنًا يكفي لصياغة الرسالة. <b>وقاعدةُ القناة الثانية</b> هي الجوابُ: التحقّقُ بوسيلةٍ أخرى على عنوانٍ معروفٍ سلفًا. <b>والعَجَلةُ نفسُها علامةُ اشتباهٍ لا سببًا للاستعجال.</b></p>
-        </div>
-
-        <div class="sol-item">
-          <p class="sol-q"><span class="sq-n">٥.</span> أيُّ المخاطر أكثرُها وقوعًا في الدوائر؟</p>
-          <div class="sol-opts">
-            <div class="sol-opt bad"><span class="so-k">أ)</span><span>التزييفُ الصوتيّ لصوت المدير</span></div>
-            <div class="sol-opt bad"><span class="so-k">ب)</span><span>اختراقُ الخوادم من الخارج</span></div>
-            <div class="sol-opt ok"><span class="so-k">ج)</span><span>التسريبُ من الداخل حين يلصق موظّفٌ بياناتٍ سرّيّةً في مساعدٍ ذكيّ</span></div>
-            <div class="sol-opt bad"><span class="so-k">د)</span><span>تعطيلُ الموقع الإلكترونيّ</span></div>
-          </div>
-          <p class="sol-why"><b>التعليل:</b> «أ» و«ب» و«د» تحتاج مهاجمًا يقصد الدائرةَ بعينها — وهي لذلك أندر. أمّا التسريبُ من الداخل <b>فلا مهاجمَ فيه أصلًا</b>: موظّفٌ حسنُ النيّة يريد تلخيصَ ملفٍّ فيلصقه. <b>وهو الأكثرُ وقوعًا لأنّه لا يبدو خطرًا</b> — ولا يُكتشَف غالبًا، إذ لا أثرَ له في سجلّات الدائرة.</p>
-        </div>
-
-        <div class="sol-kind"><span>صح أو خطأ</span><span class="sk-line"></span></div>
-
-        <div class="sol-item">
-          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">١.</span> خلوّ رسالة الاحتيال من الأخطاء اللغوية دليل على أنّها سليمة.</p><span class="sol-badge f">خطأ</span></div>
-          <p class="sol-why">كانت الرِّكّةُ اللغويّةُ علامةً معتمَدةً حين كانت الرسائلُ تُترجَم آليًّا ترجمةً رديئة. <b>واليوم تُكتَب بعربيّةٍ سليمةٍ بأسلوب دائرتك</b> — فسقطت العلامةُ ولم يَعُد يُغني عنها إلّا التحقّقُ بقناةٍ ثانية.</p>
-        </div>
-
-        <div class="sol-item">
-          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٢.</span> ما أعطيته للنظام يُحسن التصرّف فيه، وما طلبته من عنده يُحسن اختلاقه.</p><span class="sol-badge t">صح</span></div>
-          <p class="sol-why">هذه القاعدةُ تُغني عن حفظ جدول «يُحسِنه / لا يُوثَق به». <b>وكلَّما ضاق مصدرُ المعلومة وصار من عندك ارتفعت الثقة</b> — ولذلك كان التطبيقان في هذا الأسبوع على نصٍّ تملكه: محضرٍ وكتاب.</p>
-        </div>
-
-        <div class="sol-item">
-          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٣.</span> الكتاب الذي يصوغه النظام يُوقَّع كما هو ما دامت صياغته سليمة.</p><span class="sol-badge f">خطأ</span></div>
-          <p class="sol-why">الكتابُ يحمل <b>توقيعَك أنت</b> لا توقيعَ النظام — فهو مسوّدةٌ تُقرأ وتُعدَّل وتُملَك. <b>وسلامةُ الصياغة هي بعينها ما يجعل الخطأ يمرّ</b>: رقمٌ اختُلِق أو قانونٌ أُشير إليه بلا أصل، في جملةٍ محكمةِ البناء.</p>
-        </div>
-
-        <div class="sol-item">
-          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٤.</span> تسجيل الاجتماع بلا علم الحاضرين جائز ما دام الغرض إداريًّا.</p><span class="sol-badge f">خطأ</span></div>
-          <p class="sol-why">عِلمُ الحاضرين وموافقتُهم شرطٌ مهنيٌّ لا خيار. <b>واجتماعٌ يُسجَّل بلا علمٍ يفسد الثقةَ أكثرَ ممّا يوفّر من وقت</b> — ويتغيّر به كلامُ الناس في الاجتماعات القادمة حين يُكتشَف.</p>
-        </div>
-
-        <div class="sol-item">
-          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٥.</span> الذكاء الاصطناعي يُستعمل في الدفاع أيضًا، كأن يكشف الشذوذ في سلوك الدخول والتنزيل.</p><span class="sol-badge t">صح</span></div>
-          <p class="sol-why">هذا وجهُه الآخر: دخولٌ في الثالثة فجرًا، أو تنزيلُ ألف ملفٍّ في دقيقة — أنماطٌ تُكشَف آليًّا ويُنبَّه إليها <b>قبل وقوع الضرر</b> لا بعده.</p>
-        </div>
-
-        <div class="sol-kind"><span>الأسئلة القصيرة</span><span class="sk-line"></span></div>
-
-        <div class="sol-item">
-          <p class="sol-q"><span class="sq-n">١.</span> جدولُ قراراتٍ متّسقُ الشكل في أربعة عشرَ سطرًا — لماذا لا تكفي المراجعةُ بالنظر العامّ؟</p>
-          <div class="sol-model"><b>الإجابة النموذجيّة:</b> لأنّ الخطأ لا يظهر في الشكل: جدولٌ صحيحٌ في اثنَي عشرَ سطرًا وخاطئٌ في سطرين <b>يبدو صحيحًا كلُّه</b>، إذ شكلُ السطور واحد. والمراجعةُ الصحيحةُ تكون <b>سطرًا سطرًا بمقابلة كلِّ سطرٍ بموضعه في النصّ الأصليّ</b>، ويتركّز النظرُ في ثلاثة: <b>القرارات الناقصة</b> — قرارٌ قيل ولم يُدرَج، و<b>القرارات الزائدة</b> — نقاشٌ صار قرارًا، و<b>المسؤولون</b> وهم أكثرُ ما يُخطَأ فيه.</div>
-          <p class="sol-why"><b>معيار التصحيح:</b> يُشترَط ذكرُ سببِ عدم ظهور الخطأ (اتّساقُ الشكل) <b>وذكرُ الثلاثة</b>. ومَن قال «تُراجَع جيّدًا» دون تحديدِ ما يُراجَع لم يُجِب.</p>
-        </div>
-
-        <div class="sol-item">
-          <p class="sol-q"><span class="sq-n">٢.</span> موظّفٌ يريد تلخيصَ كشفِ رواتبِ شعبته بمساعدٍ ذكيّ. ما الحكم؟ وما البديل؟</p>
-          <div class="sol-model"><b>الإجابة النموذجيّة:</b> <b>لا يجوز</b> — الرواتبُ والأسماءُ والأرقامُ الوظيفيّةُ بياناتٌ شخصيّة، وما يُرفَع يخرج من الدائرة ولا يُسترجَع، ولا يُعرَف أين حُفِظ ولا مَن يبلغه.<br><b>والبديلُ يبلغ الغايةَ نفسَها بلا رفعٍ أصلًا:</b> مرشِّحٌ في جدول البيانات على عمود الراتب — وهو أدقُّ من التلخيص وأسرع، ولا تخرج به بياناتٌ من الدائرة. <b>وإن لزم المساعدُ فبأسماءٍ مستبدَلةٍ وأرقامٍ مُقنَّعة.</b></div>
-          <p class="sol-why"><b>معيار التصحيح:</b> «لا يجوز» وحدها نصفُ الجواب — <b>الدرجةُ الكاملةُ تشترط بديلًا عمليًّا</b>. فالمنعُ بلا بديلٍ يُنتِج موظّفًا يفعلها سرًّا، والدرسُ المقصود أنّ الأداة الصحيحةَ للمهمّة كانت الجدولَ من البداية لا المساعد.</p>
-        </div>
-
-        <div class="sol-item">
-          <p class="sol-q"><span class="sq-n">٣.</span> كتابٌ صيغ صياغةً حسنةً وعُرِف من أوّل سطرٍ أنّه ليس من الدائرة. ما السبب؟ وما العلاج؟</p>
-          <div class="sol-model"><b>الإجابة النموذجيّة:</b> <b>السبب:</b> النظامُ صاغه بأسلوبٍ عامٍّ محايد، و<b>لكلّ دائرةٍ أسلوبٌ متوارَث</b> في الافتتاح والخاتمة والمصطلحات والصيغ المعتادة — فالنصُّ سليمٌ وغريبٌ في آنٍ واحد.<br><b>والعلاج:</b> إرفاقُ <b>كتابين أو ثلاثةٍ سابقةٍ من الدائرة نفسِها</b> مع الطلب ليُحتذى أسلوبُهما، فيخرج الكتابُ بلغة الجهة لا بلغةٍ عامّة.</div>
-          <p class="sol-why"><b>معيار التصحيح:</b> يُشترَط ذكرُ أنّ السبب <b>أسلوبيٌّ لا لغويّ</b> — فمَن قال «فيه أخطاء» لم يفهم السؤال، إذ الفرضُ أنّ الصياغة حسنة. والعلاجُ يُقبَل بأيّ صيغةٍ تعني تزويدَ النظام بنماذجَ من الدائرة.</p>
         </div>
 
         <div class="mini-note">نهاية دليل الحلول — إعداد: د. أمير هادي ★</div>
