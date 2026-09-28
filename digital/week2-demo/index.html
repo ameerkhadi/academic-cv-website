@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>تطبيق الرقمنة الحي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#faf8f3;--card:#fff;--ink:#1d1d1f;--muted:#5f6368;--line:#e2ded4;--accent:#1f4e78;--l1:#b45309;--l2:#1d4ed8;--l3:#15803d;--warn:#fff4e5}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--card:#1f2226;--ink:#eceae6;--muted:#a3a7ad;--line:#33373d;--accent:#8ab4f8;--l1:#f59e0b;--l2:#60a5fa;--l3:#4ade80;--warn:#3a2e1a}}
+:root[data-theme="dark"]{--bg:#15171a;--card:#1f2226;--ink:#eceae6;--muted:#a3a7ad;--line:#33373d;--accent:#8ab4f8;--l1:#f59e0b;--l2:#60a5fa;--l3:#4ade80;--warn:#3a2e1a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Naskh Arabic",serif;font-size:18px;line-height:1.9}
+main{max-width:860px;margin:0 auto;padding:28px 16px 60px}
+h1{font-size:30px;margin:0 0 4px;color:var(--accent)}
+.lead{color:var(--muted);margin:0 0 24px}
+h2{font-size:22px;margin:32px 0 10px}
+.files{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
+.files a{display:block;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px;color:var(--ink);text-decoration:none}
+.files a b{color:var(--accent)}
+.files a small{display:block;color:var(--muted);line-height:1.6}
+.step{background:var(--card);border:1px solid var(--line);border-right:6px solid var(--c);border-radius:10px;padding:14px 18px;margin:12px 0}
+.step h3{margin:0 0 6px;color:var(--c);font-size:20px}
+.step .t{float:left;color:var(--muted);font-size:15px}
+.l1{--c:var(--l1)}.l2{--c:var(--l2)}.l3{--c:var(--l3)}.l0{--c:var(--accent)}
+ol{margin:6px 0;padding-right:22px}
+.say{background:var(--bg);border-radius:8px;padding:8px 12px;margin-top:8px}
+.say::before{content:"قل لهم: ";font-weight:700}
+.prompt{background:var(--bg);border:1px dashed var(--line);border-radius:8px;padding:10px 12px;margin:8px 0;font-weight:700;position:relative}
+.prompt button{position:absolute;left:8px;top:8px;font:inherit;font-size:13px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:6px;padding:0 10px;cursor:pointer}
+table{border-collapse:collapse;width:100%;background:var(--card)}
+td,th{border:1px solid var(--line);padding:6px 10px;text-align:right}
+th{background:var(--bg)}
+.warn{background:var(--warn);border-radius:10px;padding:12px 16px;margin:14px 0}
+@media print{.prompt button{display:none}body{font-size:14px}.step{break-inside:avoid}}
+</style>
+</head>
+<body>
+<main>
+<h1>تطبيق الرقمنة الحي: ورقة واحدة وثلاث درجات</h1>
+<p class="lead">الأسبوع الثاني من مادة التحول الرقمي وتكنولوجيا المعلومات. التطبيق كله يستغرق نحو ١٥ دقيقة على حاسوب المحاضر، وكل البيانات افتراضية لأغراض التدريب.</p>
+
+<h2>الملفات</h2>
+<div class="files">
+  <a href="1-register-print.pdf" download><b>١. السجل الورقي للطباعة</b><small>٥ صفحات. اطبعه وضعه على الطاولة، ثم صوّره بالهاتف أمام الطلبة. وهو أيضاً نسخة احتياطية قابلة للبحث.</small></a>
+  <a href="2-register-scanned.pdf" download><b>٢. السجل الممسوح (صورة فقط)</b><small>ملف الدرجة الأولى. البحث فيه لا يجد أي نتيجة.</small></a>
+  <a href="scan-pages/page1.jpg" download><b>٣. صور الصفحات (JPG)</b><small>page1 إلى page5 في مجلد scan-pages. ترفعها إلى Claude في الدرجة الثالثة.</small></a>
+  <a href="3-register-data.xlsx" download><b>٤. الجدول النهائي (Excel)</b><small>نتيجة الدرجة الثالثة، مع ورقة «أسئلة المدير» ومعادلاتها جاهزة. هو أيضاً النسخة الاحتياطية.</small></a>
+</div>
+
+<h2>السؤال الذي يربط كل شيء</h2>
+<div class="step l0">
+  <h3>المدير العام يسأل: «كم موظفاً تجاوز ٢٠ يوم إجازة هذه السنة؟»</h3>
+  اكتب السؤال على السبورة واتركه ظاهراً طوال التطبيق. عند كل درجة ارجع إليه واسأل: هل نستطيع الإجابة الآن؟
+</div>
+
+<div class="step l1">
+  <span class="t">٣ دقائق</span>
+  <h3>الدرجة ١: صورة فقط</h3>
+  <ol>
+    <li>امسك الورقة المطبوعة وصوّرها بالهاتف من Google Drive: زر <b>+</b> ثم <b>مسح ضوئي</b>. أو افتح مباشرة الملف <b>٢-السجل الممسوح</b>.</li>
+    <li>افتح الملف في المتصفح واضغط <b>Ctrl + F</b> ثم ابحث عن: <b>عباس رضا</b>.</li>
+    <li>النتيجة <b>٠ من ٠</b>.</li>
+  </ol>
+  <div class="say">الورقة صارت على الحاسوب، لكن الحاسوب يرى صورة ولا يرى كلمات. هذه رقمنة شكلية.</div>
+</div>
+
+<div class="step l2">
+  <span class="t">٤ دقائق</span>
+  <h3>الدرجة ٢: نص قابل للبحث</h3>
+  <ol>
+    <li>ارفع <b>٢-السجل الممسوح</b> إلى Google Drive.</li>
+    <li>انقر عليه بالزر الأيمن ثم <b>فتح باستخدام</b> ثم <b>مستندات Google</b>. انتظر ثواني.</li>
+    <li>يظهر مستند فيه الصورة وتحتها النص العربي المستخرج. ابحث عن <b>عباس رضا</b> فتجده.</li>
+    <li>ثم اسأل القاعة: «الآن اجمعوا لي من تجاوز ٢٠ يوماً». لا يستطيعون، لأن الرقم ٢٧ هنا كلمة وليس رقماً في خانة.</li>
+  </ol>
+  <div class="say">وجدنا المعلومة بسرعة، لكن ما زلنا لا نستطيع أن نحسب أو نقارن.</div>
+</div>
+
+<div class="step l3">
+  <span class="t">٥ دقائق</span>
+  <h3>الدرجة ٣: بيانات منظمة</h3>
+  <ol>
+    <li>افتح Claude وارفع صور الصفحات الخمس (page1 إلى page5)، والصق هذا الطلب:</li>
+  </ol>
+  <div class="prompt" id="p1">هذه ٥ صفحات ممسوحة من سجل إجازات. استخرج كل الصفوف في جدول واحد بالأعمدة: ت، الاسم، الرقم الوظيفي، الشعبة، أيام الإجازة، شهر أطول إجازة. اكتب الأرقام بالأرقام الإنجليزية ليتعامل معها Excel كأرقام، وأعطني ملف Excel.<button onclick="cp('p1',this)">نسخ</button></div>
+  <ol start="2">
+    <li>افتح الملف في Excel، ثم <b>البيانات</b> ثم <b>تصفية</b>. من عمود «أيام الإجازة» اختر <b>عوامل تصفية الأرقام</b> ثم <b>أكبر من</b> واكتب ٢٠.</li>
+    <li>الجواب يظهر أسفل الشاشة: <b>١٧ موظفاً</b>.</li>
+    <li>بعدها اسأل Claude في المحادثة نفسها:</li>
+  </ol>
+  <div class="prompt" id="p2">من الجدول نفسه: أي شعبة فيها أكثر موظفين تجاوزوا ٢٠ يوماً؟ من لم يأخذ أي إجازة؟ وفي أي أشهر تتركز الإجازات؟ ما الذي تقترحه على المدير العام؟<button onclick="cp('p2',this)">نسخ</button></div>
+  <div class="say">صارت الورقة معلومة تساعد في القرار. وأجابتنا عن أسئلة لم يطرحها المدير أصلاً.</div>
+</div>
+
+<h2>الأجوبة الصحيحة (للتحقق أمام الطلبة)</h2>
+<table>
+  <tr><th>السؤال</th><th>الجواب</th></tr>
+  <tr><td>من تجاوز ٢٠ يوم إجازة</td><td><b>١٧ موظفاً</b></td></tr>
+  <tr><td>الشعبة الأعلى</td><td><b>الخدمات: ١١ من ١٧</b>. سؤال للقادة: هل هو ضغط عمل؟ أم ظروف؟ أم ضعف متابعة؟</td></tr>
+  <tr><td>لم يأخذوا أي إجازة</td><td><b>٤ موظفين</b> (ت ١٥، ٣٨، ٤٠، ٤٢). مؤشر إرهاق وظيفي محتمل</td></tr>
+  <tr><td>أشهر التركّز</td><td><b>حزيران وآب</b> (١١ لكل منهما) ثم تموز. أي أن الصيف يحتاج خطة لتوزيع العمل</td></tr>
+  <tr><td>متوسط الإجازة</td><td>١٤٫٧ يوماً</td></tr>
+</table>
+
+<div class="warn"><b>فخ تعليمي مقصود:</b> في السجل ٤ موظفين عندهم <b>٢٠ يوماً بالضبط</b> (ت ٢٤، ٤٩، ٥١، ٥٧). إذا خرج الجواب ٢١ بدل ١٧، فقد تم اختيار «أكبر من أو يساوي». الدرس للقائد: <b>صياغة السؤال بدقة تغيّر الرقم الذي يُتخذ عليه القرار.</b></div>
+
+<h2>إذا انقطع الإنترنت</h2>
+<p>افتح <b>٣-الجدول النهائي</b> مباشرة واعرض ورقة «أسئلة المدير»، ففيها كل الأجوبة محسوبة بالمعادلات. للدرجة الثانية افتح <b>١-السجل الورقي</b> وابحث فيه، فهو ملف نصي قابل للبحث.</p>
+</main>
+<script>
+function cp(id,b){const t=document.getElementById(id).firstChild.textContent.trim();
+try{navigator.clipboard.writeText(t).then(()=>{b.textContent='تم';setTimeout(()=>b.textContent='نسخ',1500)})}catch(e){}}
+</script>
+</body>
+</html>
