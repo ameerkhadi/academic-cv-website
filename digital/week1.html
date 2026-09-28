@@ -2737,6 +2737,33 @@
   .dgm-c{ margin-top:8px; text-align:center; color:#6b7280;
           font-size:calc(12px * var(--fs,1)); line-height:1.85; }
 
+  /* ─── سؤالٌ قصيرُ الإجابة ─── */
+  .sa-item{
+    margin:12px 0; padding:11px 15px; background:#fff;
+    border:1.5px solid rgba(15,122,114,0.28); border-radius:11px;
+    font-size:calc(13.6px * var(--fs,1)); line-height:1.95;
+    text-align:justify; break-inside:avoid;
+  }
+  .sa-item .q-num{ color:var(--teal); }
+  .sa-lines{ margin-top:10px; }
+  .sa-lines span{
+    display:block; height:0; border-top:1px dashed rgba(26,61,140,0.22);
+    margin:19px 0;
+  }
+  .sa-hint{
+    display:block; margin-top:7px; color:#6b7280;
+    font-size:calc(11.8px * var(--fs,1)); line-height:1.75;
+  }
+
+  /* ─── إجابةٌ نموذجيّةٌ في دليل الحلول ─── */
+  .sol-model{
+    margin:7px 0 0; padding:9px 13px; border-radius:9px;
+    background:rgba(15,122,114,0.06);
+    border-inline-start:3px solid var(--teal);
+    font-size:calc(13px * var(--fs,1)); line-height:1.92; text-align:justify;
+  }
+  .sol-model > b:first-child{ color:var(--teal); }
+
   /* ─── نصُّ طلبٍ يُنسَخ كما هو ─── */
   .pbox{
     margin:10px 0; border-radius:10px; overflow:hidden;
@@ -3691,16 +3718,94 @@
           فلو حُذفت الاستمارةُ الورقيّةُ من أوّلها، وصار الموظّفُ يقدّم طلبَه في نموذجٍ إلكترونيٍّ تصل إجابتُه إلى الجدول في لحظة تقديمها — لسقط المسارُ كلُّه من أوّله: لا مسحَ ولا تسميةَ ملفّاتٍ ولا نقل. <span class="hl hl-pink">وهذا لم يَعُد رقمنة — هذه رقمنةُ أعمال</span>، وهي موضوع الأسبوع القادم.
         </div>
 
-        <!-- ══════════ الواجب ══════════ -->
+        <!-- ══════════ التمارين ══════════ -->
         <div class="section-heading" style="margin-top:30px;">
           <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
-          <span>الواجب</span>
+          <span>أسئلة المراجعة</span>
+        </div>
+        <p class="quiz-note">الحلول والتعليل في تبويب «الحلول والتعليل» 🔑</p>
+
+        <div class="mcq-item">
+          <span class="q-num">١.</span> دائرةٌ مسحت أرشيفها كلَّه ضوئيًّا وحفظته ملفّاتٍ مرتّبةً بأسماءٍ واضحة. في أيّ درجةٍ هي؟
+          <ul class="mcq-options">
+            <li><span class="opt-letter">أ)</span> الثالثة — البياناتُ صارت جاهزة</li>
+            <li><span class="opt-letter">ب)</span> الأولى — صورةٌ فقط لا يُبحَث في داخلها</li>
+            <li><span class="opt-letter">ج)</span> الثانية — النصُّ صار قابلًا للبحث</li>
+            <li><span class="opt-letter">د)</span> خارج الدرجات الثلاث لأنّ التسمية منظّمة</li>
+          </ul>
         </div>
 
-        <div class="hw">
-          <div class="hw-head"><span class="hw-num">١</span><span class="hw-title">ورقةٌ من دائرتك إلى الدرجة الثالثة</span><span class="scn-badge lv-mid">متوسّط</span></div>
-          <p>ورقةٌ حقيقيّةٌ من دائرة الدارس — <b>غيرُ سرّيّةٍ ولا تحمل بياناتٍ شخصيّة</b> — تمرّ على الدرجات الثلاث حتّى تصير جدولًا.</p>
-          <div class="hw-deliver"><span class="hw-tag">المُسلَّم</span><span>ملفُّ الجدول · وجملةٌ واحدة: <b>«ماذا ستتيح لي هذه البيانات الآن؟»</b> — وجوابٌ لا يذكر سؤالًا جديدًا صار ممكنًا يدلّ على أنّ الورقة لم تكن تستحقّ الدرجة الثالثة.</span></div>
+        <div class="mcq-item">
+          <span class="q-num">٢.</span> ما الذي يميّز الدرجة الثالثة عن الثانية تحديدًا؟
+          <ul class="mcq-options">
+            <li><span class="opt-letter">أ)</span> جودةُ الصورة أعلى ودقّةُ المسح أكبر</li>
+            <li><span class="opt-letter">ب)</span> إمكانُ البحث عن الكلمات داخل الملفّ</li>
+            <li><span class="opt-letter">ج)</span> إمكانُ العدّ والفرز والحساب، لأنّ الرقم صار في خانةٍ لا كلمةً في نصّ</li>
+            <li><span class="opt-letter">د)</span> حجمُ الملفّ أصغر فيسهل إرسالُه</li>
+          </ul>
+        </div>
+
+        <div class="mcq-item">
+          <span class="q-num">٣.</span> سجلُّ الإجازات صار جدولًا يُحسَب عليه، والموظّفُ ما زال يملأ الاستمارة بخطّ يده. في أيّ <b>مستوى</b> نحن؟
+          <ul class="mcq-options">
+            <li><span class="opt-letter">أ)</span> المستوى الأوّل — مستوى الوثيقة، لأنّ الإجراء لم يتغيّر</li>
+            <li><span class="opt-letter">ب)</span> المستوى الثاني — لأنّ العمل صار على الحاسوب</li>
+            <li><span class="opt-letter">ج)</span> المستوى الثالث — لأنّ البيانات صارت جاهزةً للتحليل</li>
+            <li><span class="opt-letter">د)</span> لا يُصنَّف لأنّه خليطٌ بين مستويين</li>
+          </ul>
+        </div>
+
+        <div class="mcq-item">
+          <span class="q-num">٤.</span> أيُّ خطوةٍ في سيناريو الأضابير هي التي تنقل المشروع إلى الدرجة الثالثة؟
+          <ul class="mcq-options">
+            <li><span class="opt-letter">أ)</span> المسحُ وتمييزُ النصّ</li>
+            <li><span class="opt-letter">ب)</span> الفهرسة</li>
+            <li><span class="opt-letter">ج)</span> ضبطُ الجودة</li>
+            <li><span class="opt-letter">د)</span> إتلافُ الورق الأصليّ</li>
+          </ul>
+        </div>
+
+        <div class="mcq-item">
+          <span class="q-num">٥.</span> دائرةٌ تحفظ أرشيفَها الرقميَّ في ثلاث نسخ: اثنتان على قرصين في غرفة الأرشيف، وواحدةٌ على حاسوب المدير في الغرفة المجاورة. أتنطبق عليها قاعدةُ «٣ – ٢ – ١»؟
+          <ul class="mcq-options">
+            <li><span class="opt-letter">أ)</span> نعم — النسخُ ثلاثٌ كما تشترط القاعدة</li>
+            <li><span class="opt-letter">ب)</span> نعم إن كانت الأقراصُ من نوعين مختلفين</li>
+            <li><span class="opt-letter">ج)</span> لا — إذ لا نسخةَ خارج موقع العمل</li>
+            <li><span class="opt-letter">د)</span> لا — إذ يلزم خمسُ نسخٍ لا ثلاث</li>
+          </ul>
+        </div>
+
+        <div class="section-heading" style="margin-top:22px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>صح أو خطأ</span>
+        </div>
+        <div class="tf-item"><span>١. الرقمنة تغيّر الإجراء نفسه لا وعاء المعلومة فقط.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+        <div class="tf-item"><span>٢. كل ورقة في الدائرة يجب أن تبلغ الدرجة الثالثة.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+        <div class="tf-item"><span>٣. في الدرجة الثانية يمكن البحث عن اسم، ولا يمكن جمع الأرقام.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+        <div class="tf-item"><span>٤. المسح بدقّة ٦٠٠ نقطة لكل إنش أفضل دائمًا من ٣٠٠ للنصّ المكتوب.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+        <div class="tf-item"><span>٥. الحماية ترافق خطوات المسار كلّها ولا تأتي في آخرها.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+
+        <div class="section-heading" style="margin-top:22px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>أسئلة قصيرة الإجابة</span>
+        </div>
+
+        <div class="sa-item">
+          <span class="q-num">١.</span> ملفٌّ مُرَّ على تمييز النصّ فصار البحثُ فيه ممكنًا، والمطلوبُ معرفةُ عدد الموظّفين الذين تجاوزوا حدًّا معيّنًا. ما الخطوةُ الناقصة؟ وما الذي تضيفه بالضبط؟
+          <span class="sa-hint">في ثلاثة أسطر، مع ذكر الدرجة التي يبلغها الملفّ قبل الخطوة وبعدها.</span>
+          <div class="sa-lines"><span></span><span></span><span></span></div>
+        </div>
+
+        <div class="sa-item">
+          <span class="q-num">٢.</span> ما الفرقُ بين «مستوى» الرقمنة و«درجتها»؟ ومثالٌ واحدٌ يكون فيه الشيءُ نفسُه في درجةٍ عالية ومستوًى منخفض.
+          <span class="sa-hint">في ثلاثة أسطر.</span>
+          <div class="sa-lines"><span></span><span></span><span></span></div>
+        </div>
+
+        <div class="sa-item">
+          <span class="q-num">٣.</span> سجلُّ إجازاتٍ من قسم الموارد البشريّة بتاريخ ٣١ / ١٢ / ٢٠٢٥، خمسُ صفحات. ما اسمُ الملفّ الصالح له؟ ولماذا لا تُستعمَل الحروفُ العربيّةُ ولا المسافاتُ في اسم الملفّ؟
+          <span class="sa-hint">الاسمُ في سطر، والسببُ في سطرين.</span>
+          <div class="sa-lines"><span></span><span></span><span></span></div>
         </div>
 
         <div class="mini-note">نهاية الأسبوع الثاني — إعداد: د. أمير هادي ★</div>
@@ -4001,16 +4106,94 @@
           <b>الجسرُ إلى الأسبوع القادم:</b> بلغنا هنا إجراءً واحدًا سريعًا ونظيفًا. والدائرةُ فيها عشراتُ الإجراءات — فأيُّها يُبدَأ به؟ وكيف يُقاس أثرُ ما أُنجِز؟ <span class="hl hl-green">ومن هنا تبدأ الأولويّاتُ والمؤشّرات</span>، وهي موضوع الأسبوع القادم.
         </div>
 
-        <!-- ══════════ الواجب ══════════ -->
+        <!-- ══════════ التمارين ══════════ -->
         <div class="section-heading" style="margin-top:30px;">
           <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
-          <span>الواجب</span>
+          <span>أسئلة المراجعة</span>
+        </div>
+        <p class="quiz-note">الحلول والتعليل في تبويب «الحلول والتعليل» 🔑</p>
+
+        <div class="mcq-item">
+          <span class="q-num">١.</span> دائرةٌ حوّلت استمارة الإجازة الورقيّة إلى نموذجٍ إلكترونيّ، فصار الموظّف يملؤه من هاتفه وتصل إجابتُه إلى جدولٍ فورًا. ما هذا؟
+          <ul class="mcq-options">
+            <li><span class="opt-letter">أ)</span> رقمنة — لأنّ الورقة صارت ملفًّا</li>
+            <li><span class="opt-letter">ب)</span> رقمنةُ أعمال — لأنّ خطواتٍ من الإجراء سقطت</li>
+            <li><span class="opt-letter">ج)</span> تحوّلٌ رقميّ — لأنّه لم يَعُد فيه ورق</li>
+            <li><span class="opt-letter">د)</span> لا شيءَ ممّا سبق</li>
+          </ul>
         </div>
 
-        <div class="hw">
-          <div class="hw-head"><span class="hw-num">١</span><span class="hw-title">إجراءٌ من دائرتك — ما الذي يسقط منه؟</span><span class="scn-badge lv-mid">متوسّط</span></div>
-          <p>إجراءٌ حقيقيٌّ من دائرة الدارس فيه <b>خمسُ خطواتٍ على الأقلّ</b> — طلبُ صيانة، أو إجازة، أو تأييدُ استمرار، أو تسجيلُ مراجع.</p>
-          <div class="hw-deliver"><span class="hw-tag">المُسلَّم</span><span>جدولٌ فيه خطواتُ الإجراء الحاليّ مرقّمة، وأمام كلّ خطوةٍ واحدةٌ من أربع: <b>تُحذَف · تُؤتمَت · تُدمَج · تبقى</b> — مع سببٍ بسطرٍ واحد. ثمّ عددُ الخطوات قبل وبعد.<br><br>وسؤالٌ أخيرٌ يُجاب بسطرين: <b>«ما التعليماتُ أو الصلاحيّاتُ التي يلزم تغييرُها حتّى ينجح هذا؟»</b> — <span class="hl hl-yellow">وإجابةٌ خاليةٌ من أيّ تغييرٍ في التعليمات تدلّ غالبًا على أنّ الخطوات لم تُفحَص فحصًا حقيقيًّا.</span></span></div>
+        <div class="mcq-item">
+          <span class="q-num">٢.</span> ما آليّاتُ رقمنة الأعمال الثلاث؟
+          <ul class="mcq-options">
+            <li><span class="opt-letter">أ)</span> المسحُ وتمييزُ النصّ والفهرسة</li>
+            <li><span class="opt-letter">ب)</span> التخزينُ والمشاركةُ والحماية</li>
+            <li><span class="opt-letter">ج)</span> الحذفُ والأتمتةُ والدمج</li>
+            <li><span class="opt-letter">د)</span> التحليلُ والتخطيطُ والتنفيذ</li>
+          </ul>
+        </div>
+
+        <div class="mcq-item">
+          <span class="q-num">٣.</span> خطوةُ «نقلِ الاستمارة من مكتبٍ إلى مكتب» — إلى أيّ آليّةٍ تنتمي عند رقمنة الإجراء؟
+          <ul class="mcq-options">
+            <li><span class="opt-letter">أ)</span> الحذف — لأنّها وُجدت أصلًا لأنّ الورقة جسمٌ ينتقل</li>
+            <li><span class="opt-letter">ب)</span> الأتمتة — لأنّ الحاسوب ينقلها بدل الموظّف</li>
+            <li><span class="opt-letter">ج)</span> الدمج — لأنّها تندمج مع خطوة التوقيع</li>
+            <li><span class="opt-letter">د)</span> تبقى كما هي لأنّها خطوةٌ إداريّة</li>
+          </ul>
+        </div>
+
+        <div class="mcq-item">
+          <span class="q-num">٤.</span> إجراءٌ صار بلا ورقةٍ واحدة، والموظّفُ يطلب والمديرُ يوافق والشعبةُ تسجّل كما كانوا. أهذا تحوّلٌ رقميّ؟
+          <ul class="mcq-options">
+            <li><span class="opt-letter">أ)</span> نعم — فلا ورقَ فيه إطلاقًا</li>
+            <li><span class="opt-letter">ب)</span> لا — فالخدمةُ والأدوارُ والهيكلُ والتعليماتُ لم تتغيّر</li>
+            <li><span class="opt-letter">ج)</span> نعم — لأنّ الزمن قصُر من أيّامٍ إلى دقائق</li>
+            <li><span class="opt-letter">د)</span> لا يمكن الحكمُ إلّا بمعرفة عدد الموظّفين</li>
+          </ul>
+        </div>
+
+        <div class="mcq-item">
+          <span class="q-num">٥.</span> أيُّ هذه أصعبُ متطلّبات التحوّل الرقميّ وأكثرُها إغفالًا؟
+          <ul class="mcq-options">
+            <li><span class="opt-letter">أ)</span> شراءُ الأجهزة والخوادم</li>
+            <li><span class="opt-letter">ب)</span> تدريبُ الموظّفين على الأداة</li>
+            <li><span class="opt-letter">ج)</span> اختيارُ البرنامج المناسب</li>
+            <li><span class="opt-letter">د)</span> تغييرُ التعليمات والصلاحيّات رسميًّا</li>
+          </ul>
+        </div>
+
+        <div class="section-heading" style="margin-top:22px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>صح أو خطأ</span>
+        </div>
+        <div class="tf-item"><span>١. خلوّ الإجراء من الورق دليلٌ كافٍ على أنّه بلغ التحوّل الرقميّ.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+        <div class="tf-item"><span>٢. خطوة ملء الطلب تبقى بشريّة لأنّ لها سببًا حقيقيًّا لا علاقة له بالورق.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+        <div class="tf-item"><span>٣. أتمتة إجراءٍ لم تُفحَص خطواتُه تُنتج إجراءً أفضل بالضرورة.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+        <div class="tf-item"><span>٤. صيغة ARRAYFORMULA تُكتَب مرّة واحدة وتنسحب على كل سطر جديد من نفسها.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+        <div class="tf-item"><span>٥. لو رُفعت التقنية عن مؤسّسة بلغت التحوّل الرقميّ، لسقطت خدماتٌ لم تكن ممكنة بالورق أصلًا.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+
+        <div class="section-heading" style="margin-top:22px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>أسئلة قصيرة الإجابة</span>
+        </div>
+
+        <div class="sa-item">
+          <span class="q-num">١.</span> إجراءٌ فيه خطوةُ «نقلِ المعاملة إلى شعبة الحسابات». إلى أيّ آليّةٍ من الثلاث تنتمي عند رقمنة الإجراء؟ ولماذا ليست أتمتةً؟
+          <span class="sa-hint">في سطرين، مع ذكر الفيصل بين الحذف والأتمتة.</span>
+          <div class="sa-lines"><span></span><span></span><span></span></div>
+        </div>
+
+        <div class="sa-item">
+          <span class="q-num">٢.</span> في التطبيق، أخرجت الصيغةُ حكمَ «مرفوض» لطلبٍ من خمسةٍ وعشرين يومًا. مَن اتّخذ هذا القرار؟ ومَن يتحمّل مسؤوليّتَه إن كان خطأً؟
+          <span class="sa-hint">في سطرين.</span>
+          <div class="sa-lines"><span></span><span></span><span></span></div>
+        </div>
+
+        <div class="sa-item">
+          <span class="q-num">٣.</span> إجراءٌ في دائرةٍ اختُصر من ستّ خطواتٍ إلى ثلاث بعد رقمنة أعماله. ما التعليماتُ أو الصلاحيّاتُ التي يلزم تغييرُها حتّى يُعتمَد رسميًّا؟ ولماذا لا يكفي أن تعمل الأداةُ عملًا صحيحًا؟
+          <span class="sa-hint">في ثلاثة أسطر.</span>
+          <div class="sa-lines"><span></span><span></span><span></span></div>
         </div>
 
         <div class="mini-note">نهاية الأسبوع الثالث — إعداد: د. أمير هادي ★</div>
@@ -4207,6 +4390,218 @@
           <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٥.</span> عملية "الدمج" (Merge) بأداة iLovePDF تُقسّم ملفًا واحدًا إلى عدّة ملفات.</p><span class="sol-badge f">خطأ</span></div>
           <p class="sol-why">هذا وصف عملية الفصل (Split) عكسًا تمامًا. الدمج يوحّد عدّة ملفات في ملف واحد.</p>
         </div>
+        <div class="sol-week"><span class="sw-n">٢</span><span class="sw-t">حلول الأسبوع الثاني — الرقمنة</span></div>
+
+        <div class="sol-kind"><span>الاختيار من متعدّد</span><span class="sk-line"></span></div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">١.</span> دائرةٌ مسحت أرشيفها كلَّه ضوئيًّا وحفظته ملفّاتٍ مرتّبةً بأسماءٍ واضحة. في أيّ درجةٍ هي؟</p>
+          <div class="sol-opts">
+            <div class="sol-opt bad"><span class="so-k">أ)</span><span>الثالثة — البياناتُ صارت جاهزة</span></div>
+            <div class="sol-opt ok"><span class="so-k">ب)</span><span>الأولى — صورةٌ فقط لا يُبحَث في داخلها</span></div>
+            <div class="sol-opt bad"><span class="so-k">ج)</span><span>الثانية — النصُّ صار قابلًا للبحث</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>خارج الدرجات الثلاث لأنّ التسمية منظّمة</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> «د» أقربُ الخيارات إلى الخداع، لأنّ التسمية المرتّبة تُوهم بالتنظيم — وهي تسهّل الوصول إلى الملفّ ولا تجعل ما في داخله مقروءًا للحاسوب. و«أ» وهمُ المدير العامّ في السيناريو، و«ج» تقفز درجةً لم تُبلَغ لأنّ تمييز النصّ خطوةٌ مستقلّةٌ لم تُنفَّذ. <b>واختبارُ التمييز في ثانية:</b> بحثٌ عن اسمٍ داخل الملفّ — فإن كانت النتيجةُ صفرًا فهي الأولى.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٢.</span> ما الذي يميّز الدرجة الثالثة عن الثانية تحديدًا؟</p>
+          <div class="sol-opts">
+            <div class="sol-opt bad"><span class="so-k">أ)</span><span>جودةُ الصورة أعلى ودقّةُ المسح أكبر</span></div>
+            <div class="sol-opt bad"><span class="so-k">ب)</span><span>إمكانُ البحث عن الكلمات داخل الملفّ</span></div>
+            <div class="sol-opt ok"><span class="so-k">ج)</span><span>إمكانُ العدّ والفرز والحساب، لأنّ الرقم صار في خانةٍ لا كلمةً في نصّ</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>حجمُ الملفّ أصغر فيسهل إرسالُه</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> «ب» أدقُّ الخيارات خطأً، لأنّها <b>الدرجةُ الثانيةُ نفسُها</b> لا ما يميّز الثالثةَ عنها. و«أ» و«د» تشتغلان بخصائص الملفّ لا بما يمكن عملُه بالمعلومة. <b>والفاصلُ في جملة:</b> في الثانية نجد «٢٣ يومًا»، وفي الثالثة نجمعها مع غيرها ونفرز عليها — والسؤال «كم موظّفًا تجاوز ٢٠؟» لا يُجاب إلّا في الثالثة.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٣.</span> سجلُّ الإجازات صار جدولًا يُحسَب عليه، والموظّفُ ما زال يملأ الاستمارة بخطّ يده. في أيّ مستوى نحن؟</p>
+          <div class="sol-opts">
+            <div class="sol-opt ok"><span class="so-k">أ)</span><span>المستوى الأوّل — مستوى الوثيقة، لأنّ الإجراء لم يتغيّر</span></div>
+            <div class="sol-opt bad"><span class="so-k">ب)</span><span>المستوى الثاني — لأنّ العمل صار على الحاسوب</span></div>
+            <div class="sol-opt bad"><span class="so-k">ج)</span><span>المستوى الثالث — لأنّ البيانات صارت جاهزةً للتحليل</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>لا يُصنَّف لأنّه خليطٌ بين مستويين</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> هذا أشيعُ خلطٍ في الأسبوع: بين <b>المستوى</b> و<b>الدرجة</b>. فالورقةُ بلغت <b>الدرجةَ الثالثة</b> — وهي عمقُ التحويل — وهي في <b>المستوى الأوّل</b> — وهو اتّساعُ الأثر — لأنّ الإجراء لم يُمَسّ: الموظّفُ ما زال يملأ بخطّ يده. و«ج» تخلط الدرجةَ بالمستوى وهي أقوى الخيارات إغراءً. <b>وهذا هو حالُ أكثر مشاريع الرقمنة الناجحة، ولا عيبَ فيه ما دامت الغايةُ محدَّدة.</b></p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٤.</span> أيُّ خطوةٍ في سيناريو الأضابير هي التي تنقل المشروع إلى الدرجة الثالثة؟</p>
+          <div class="sol-opts">
+            <div class="sol-opt bad"><span class="so-k">أ)</span><span>المسحُ وتمييزُ النصّ</span></div>
+            <div class="sol-opt ok"><span class="so-k">ب)</span><span>الفهرسة</span></div>
+            <div class="sol-opt bad"><span class="so-k">ج)</span><span>ضبطُ الجودة</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>إتلافُ الورق الأصليّ</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> المسحُ يبلغ الأولى وتمييزُ النصّ يبلغ الثانية — و«أ» تقف عند هذا الحدّ. أمّا الفهرسةُ فهي التي تُنشئ الجدولَ بأعمدته، وبها وحدها يصير العدُّ والفرزُ ممكنَين. و«ج» تفحص الجودة ولا ترفع الدرجة، و«د» تخصّ الورق لا البيانات. <b>وهذا موضعُ الخطر العمليّ:</b> الفهرسةُ أوّلُ ما يُحذَف عند ضيق الوقت، فيخرج المشروعُ من الدرجة الثالثة وهو يظنّ أنّه فيها.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٥.</span> ثلاثُ نسخ: اثنتان في غرفة الأرشيف وواحدةٌ في الغرفة المجاورة. أتنطبق قاعدةُ «٣ – ٢ – ١»؟</p>
+          <div class="sol-opts">
+            <div class="sol-opt bad"><span class="so-k">أ)</span><span>نعم — النسخُ ثلاثٌ كما تشترط القاعدة</span></div>
+            <div class="sol-opt bad"><span class="so-k">ب)</span><span>نعم إن كانت الأقراصُ من نوعين مختلفين</span></div>
+            <div class="sol-opt ok"><span class="so-k">ج)</span><span>لا — إذ لا نسخةَ خارج موقع العمل</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>لا — إذ يلزم خمسُ نسخٍ لا ثلاث</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> «أ» تعدّ ولا تنظر أين، و«ب» تستوفي شرطَ الوسيطين وتُغفل شرطَ الموقع — وهي أدقُّ الخيارات خطأً. والغرفةُ المجاورةُ في البناية نفسِها ليست «خارج الموقع»: <b>فحريقٌ أو سرقةٌ أو انقطاعُ تيّارٍ مدمِّرٌ يصيب الثلاثَ معًا</b>. و«د» تخترع عددًا لا أصلَ له. <b>والشرطُ في القاعدة ليس العددَ وحده بل تفرّقُ المواضع.</b></p>
+        </div>
+
+        <div class="sol-kind"><span>صح أو خطأ</span><span class="sk-line"></span></div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">١.</span> الرقمنة تغيّر الإجراء نفسه لا وعاء المعلومة فقط.</p><span class="sol-badge f">خطأ</span></div>
+          <p class="sol-why">الرقمنةُ تغيّر <b>وعاءَ المعلومة</b> مع بقاء الإجراء كما هو. أمّا تغييرُ الإجراء نفسِه فهو رقمنةُ الأعمال — المستوى الثاني — وهو موضوع الأسبوع الثالث. <b>والخلطُ بينهما أشيعُ ما يقع في مشاريع الجهات.</b></p>
+        </div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٢.</span> كل ورقة في الدائرة يجب أن تبلغ الدرجة الثالثة.</p><span class="sol-badge f">خطأ</span></div>
+          <p class="sol-why">الدرجةُ تُحدَّد بحسب الغاية: الأرشيفُ القديم النادرُ الاستعمال قد تكفيه الأولى، وما تُتَّخذ عليه القرارات لا بدّ أن يبلغ الثالثة. <b>وتعميمُ الثالثة على كلّ ورقةٍ إسرافٌ</b> يستهلك الميزانيّة على ما لا يُسأل عنه أحد.</p>
+        </div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٣.</span> في الدرجة الثانية يمكن البحث عن اسم، ولا يمكن جمع الأرقام.</p><span class="sol-badge t">صح</span></div>
+          <p class="sol-why">النصُّ صار مقروءًا للحاسوب فالبحثُ يعمل، غير أنّ «٢٣ يومًا» ما زالت كلمةً داخل نصٍّ لا رقمًا في خانة — <b>ولا يُجمَع ما ليس في خانة</b>.</p>
+        </div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٤.</span> المسح بدقّة ٦٠٠ نقطة لكل إنش أفضل دائمًا من ٣٠٠ للنصّ المكتوب.</p><span class="sol-badge f">خطأ</span></div>
+          <p class="sol-why">٣٠٠ نقطةٍ هي المعيارُ المعتمَد للنصّ المكتوب، وما فوقها <b>يضاعف حجمَ الملفّ بلا فائدةٍ تُذكَر</b> في دقّة تمييز النصّ. و٦٠٠ موضعُها المخطوطاتُ والصورُ التاريخيّةُ حيث تُطلَب التفاصيلُ الدقيقة. <b>و«الأفضلُ دائمًا» عبارةٌ تكاد لا تصحّ في الرقمنة</b> — فكلُّ إعدادٍ يُختار بحسب الغاية.</p>
+        </div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٥.</span> الحماية ترافق خطوات المسار كلّها ولا تأتي في آخرها.</p><span class="sol-badge t">صح</span></div>
+          <p class="sol-why">رُسمت في أسفل المخطّط شريطًا <b>يمتدّ تحت الخطوات الأربع كلِّها</b> لا صندوقًا خامسًا بعدها، لأنّ الملفّ معرَّضٌ في كلّ خطوة: يُفقَد في النقل، ويُكشَف في الخزن، ويُمحى قبل النسخ الاحتياطيّ. <b>والحمايةُ المؤجَّلةُ إلى الآخر حمايةٌ لما بقي لا لما ضاع.</b></p>
+        </div>
+
+        <div class="sol-kind"><span>الأسئلة القصيرة</span><span class="sk-line"></span></div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">١.</span> ملفٌّ مُرَّ على تمييز النصّ، والمطلوب معرفةُ عدد مَن تجاوزوا حدًّا معيّنًا. ما الخطوةُ الناقصة؟</p>
+          <div class="sol-model"><b>الإجابة النموذجيّة:</b> الخطوةُ الناقصةُ هي <b>الفهرسة</b> — تحويلُ النصّ المتتابع إلى جدولٍ بأعمدةٍ لها أسماء: الاسم · الرقم الوظيفيّ · الشعبة · أيّام الإجازة · الشهر. وما تضيفه أنّ كلَّ معلومةٍ تصير في <b>خانةٍ مستقلّة</b> ضمن عمود، فيصير العدُّ والفرزُ والتصفيةُ ممكنةً عليها. والملفُّ قبل الخطوة في <b>الدرجة الثانية</b> — يُبحَث فيه ولا يُحسَب عليه — وبعدها في <b>الدرجة الثالثة</b>.</div>
+          <p class="sol-why"><b>معيار التصحيح:</b> درجةٌ كاملةٌ لمن ذكر الفهرسةَ وذكر أنّ المعلومة تصير في خانةٍ ضمن عمود، وحدّد الدرجتين قبلُ وبعدُ. <b>ونصفُ درجةٍ لمن قال «تحويله إلى إكسل» دون ذكر الأعمدة</b> — فنقلُ النصّ إلى جدولٍ بلا أعمدةٍ منظّمةٍ لا يبلغ الدرجة الثالثة.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٢.</span> ما الفرق بين «مستوى» الرقمنة و«درجتها»؟ ومثالٌ يكون فيه الشيءُ نفسُه في درجةٍ عالية ومستوًى منخفض.</p>
+          <div class="sol-model"><b>الإجابة النموذجيّة:</b> <b>المستوى</b> يقيس اتّساعَ الأثر: أوثيقةٌ تغيّرت، أم إجراءٌ، أم مؤسّسةٌ كاملة. و<b>الدرجة</b> تقيس عمقَ التحويل لورقةٍ واحدةٍ بعينها: صورةٌ، أم نصٌّ، أم بيانات.<br><b>والمثال:</b> سجلُّ الإجازات صار جدولًا يُحسَب عليه — فهو في <b>الدرجة الثالثة</b> وفي <b>المستوى الأوّل</b>، لأنّ الموظّف ما زال يملأ الاستمارة بخطّ يده ولم يتغيّر الإجراء.</div>
+          <p class="sol-why"><b>معيار التصحيح:</b> يُشترَط ذكرُ الكلمتين المفتاحيّتين: <b>اتّساع</b> للمستوى و<b>عمق</b> للدرجة، ومثالٌ يفصل بينهما فعلًا. <b>ومَن ضرب مثالًا يرتفع فيه الاثنان معًا لم يُظهِر أنّه فهم الفرق.</b></p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٣.</span> اسمُ الملفّ الصالح لسجلّ إجازاتٍ من الموارد البشريّة بتاريخ ٣١/١٢/٢٠٢٥ في خمس صفحات — ولماذا لا عربيّةَ ولا مسافات؟</p>
+          <div class="sol-model"><b>الإجابة النموذجيّة:</b> <span class="ltr-inline">2025-12-31_HR_leave-register_p1-5.pdf</span><br>التاريخُ أوّلًا بصيغة <b>سنة-شهر-يوم</b> ليرتّب الحاسوبُ الملفّاتِ زمنيًّا من نفسه، ثمّ رمزُ الجهة، ثمّ الموضوع، ثمّ نطاقُ الصفحات — وما بينها شرطةٌ سفليّةٌ لا مسافة.<br><b>والسبب:</b> المسافةُ تكسر الروابطَ وأوامرَ النسخ، والحروفُ العربيّةُ تتحوّل رموزًا غريبةً عند النقل بين نظامٍ وآخر أو عند الرفع إلى موقع. <b>والعنوانُ العربيُّ يوضَع داخل الملفّ لا في اسمه.</b></div>
+          <p class="sol-why"><b>معيار التصحيح:</b> تُقبَل أيُّ صيغةٍ تحقّق الشروط الأربعة — تاريخٌ أوّلًا بصيغةٍ تُرتَّب، وجهةٌ، وموضوعٌ، وبلا مسافاتٍ ولا عربيّة. <b>وأشيعُ خطأٍ هنا كتابةُ التاريخ ٣١-١٢-٢٠٢٥</b> — فالترتيبُ الأبجديُّ عليه يجمع كلَّ ملفّات يوم ٣١ من كلّ الشهور معًا.</p>
+        </div>
+
+        <div class="sol-week"><span class="sw-n">٣</span><span class="sw-t">حلول الأسبوع الثالث — رقمنة الأعمال والتحوّل الرقميّ</span></div>
+
+        <div class="sol-kind"><span>الاختيار من متعدّد</span><span class="sk-line"></span></div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">١.</span> استمارةُ الإجازة صارت نموذجًا إلكترونيًّا تصل إجابتُه إلى جدولٍ فورًا. ما هذا؟</p>
+          <div class="sol-opts">
+            <div class="sol-opt bad"><span class="so-k">أ)</span><span>رقمنة — لأنّ الورقة صارت ملفًّا</span></div>
+            <div class="sol-opt ok"><span class="so-k">ب)</span><span>رقمنةُ أعمال — لأنّ خطواتٍ من الإجراء سقطت</span></div>
+            <div class="sol-opt bad"><span class="so-k">ج)</span><span>تحوّلٌ رقميّ — لأنّه لم يَعُد فيه ورق</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>لا شيءَ ممّا سبق</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> «أ» تصف الأسبوع الماضي: وعاءٌ تغيّر وإجراءٌ ثابت — وهنا سقطت خطواتُ الاستلام والنقل والتسجيل، فالإجراءُ نفسُه تغيّر. و«ج» هي الخطأُ الأخطر في الأسبوع: <b>«لا ورق» نتيجةٌ لا تعريف</b>. <b>والفيصلُ عمليّ:</b> عُدَّ الخطوات قبلُ وبعدُ — فإن بقي العددُ نفسَه فهي رقمنة، وإن نقص فهي رقمنةُ أعمال.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٢.</span> ما آليّاتُ رقمنة الأعمال الثلاث؟</p>
+          <div class="sol-opts">
+            <div class="sol-opt bad"><span class="so-k">أ)</span><span>المسحُ وتمييزُ النصّ والفهرسة</span></div>
+            <div class="sol-opt bad"><span class="so-k">ب)</span><span>التخزينُ والمشاركةُ والحماية</span></div>
+            <div class="sol-opt ok"><span class="so-k">ج)</span><span>الحذفُ والأتمتةُ والدمج</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>التحليلُ والتخطيطُ والتنفيذ</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> «أ» آليّاتُ <b>الرقمنة</b> في الأسبوع الماضي لا رقمنة الأعمال، و«ب» خطواتُ ما بعد المسح، و«د» عباراتٌ إداريّةٌ عامّةٌ تصلح لأيّ مشروع. <b>وحصرُها في ثلاثٍ هو ما يجعلها أداةَ تفكير:</b> فأمام أيّ خطوةٍ لا يوجد إلّا أربعةُ أحكام — تُحذَف، أو تُؤتمَت، أو تُدمَج، أو تبقى.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٣.</span> «نقلُ الاستمارة من مكتبٍ إلى مكتب» — إلى أيّ آليّةٍ تنتمي؟</p>
+          <div class="sol-opts">
+            <div class="sol-opt ok"><span class="so-k">أ)</span><span>الحذف — لأنّها وُجدت أصلًا لأنّ الورقة جسمٌ ينتقل</span></div>
+            <div class="sol-opt bad"><span class="so-k">ب)</span><span>الأتمتة — لأنّ الحاسوب ينقلها بدل الموظّف</span></div>
+            <div class="sol-opt bad"><span class="so-k">ج)</span><span>الدمج — لأنّها تندمج مع خطوة التوقيع</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>تبقى كما هي لأنّها خطوةٌ إداريّة</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> «ب» أشيعُ خطأٍ في هذا المحور. <b>والفيصلُ بين الحذف والأتمتة سؤالٌ واحد:</b> أما زالت الخطوةُ تُنفَّذ — بيدِ الحاسوب بدل الإنسان؟ فأتمتة. أم أنّها لم تَعُد تُنفَّذ إطلاقًا؟ فحذف. ولا شيءَ هنا يُنقَل: المعلومةُ ظهرت للاثنين في اللحظة نفسِها. <b>وما لا يُنفَّذ أصلًا لا يُقال إنّه أُتمِت.</b></p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٤.</span> إجراءٌ بلا ورق، والأدوارُ كما هي. أهذا تحوّلٌ رقميّ؟</p>
+          <div class="sol-opts">
+            <div class="sol-opt bad"><span class="so-k">أ)</span><span>نعم — فلا ورقَ فيه إطلاقًا</span></div>
+            <div class="sol-opt ok"><span class="so-k">ب)</span><span>لا — فالخدمةُ والأدوارُ والهيكلُ والتعليماتُ لم تتغيّر</span></div>
+            <div class="sol-opt bad"><span class="so-k">ج)</span><span>نعم — لأنّ الزمن قصُر من أيّامٍ إلى دقائق</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>لا يمكن الحكمُ إلّا بمعرفة عدد الموظّفين</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> «أ» و«ج» يقيسان بالنتيجة الظاهرة — لا ورقٍ، وزمنٍ أقصر — وكلاهما أثرٌ لا تعريف. <b>والاختبارُ الفاصل:</b> لو رُفعت التقنيةُ وعاد كلُّ شيءٍ ورقًا، أتعمل الدائرةُ عملَها نفسَه؟ نعم — أبطأ بثلاثة أيّام، لكنّها تعمل. <b>وما يعود إلى الورق ويعمل ليس تحوّلًا.</b> وفي التحوّل الرقميّ تسقط خدماتٌ لم تكن ممكنةً بالورق أصلًا، لا خدماتٌ كانت أبطأ.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٥.</span> أصعبُ متطلّبات التحوّل الرقميّ وأكثرُها إغفالًا؟</p>
+          <div class="sol-opts">
+            <div class="sol-opt bad"><span class="so-k">أ)</span><span>شراءُ الأجهزة والخوادم</span></div>
+            <div class="sol-opt bad"><span class="so-k">ب)</span><span>تدريبُ الموظّفين على الأداة</span></div>
+            <div class="sol-opt bad"><span class="so-k">ج)</span><span>اختيارُ البرنامج المناسب</span></div>
+            <div class="sol-opt ok"><span class="so-k">د)</span><span>تغييرُ التعليمات والصلاحيّات رسميًّا</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> الثلاثةُ الأولى عقباتٌ حقيقيّةٌ <b>تُحَلّ بالمال والوقت</b> — وهي لذلك أسهلُها. وتغييرُ التعليمات يحتاج قرارًا وجهةً تملك صلاحيّةَ إصداره وموافقةَ مَن تمسّهم صلاحيّاتُهم. <b>وما دامت التعليماتُ تشترط توقيعين، فأنت تُسرّع إجراءً قديمًا لا تغيّره</b> — ولهذا قيل إنّ التحوّل الرقميّ قرارٌ إداريٌّ تسانده التقنية لا مشروعٌ تقنيٌّ تتبعه الإدارة.</p>
+        </div>
+
+        <div class="sol-kind"><span>صح أو خطأ</span><span class="sk-line"></span></div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">١.</span> خلوّ الإجراء من الورق دليلٌ كافٍ على أنّه بلغ التحوّل الرقميّ.</p><span class="sol-badge f">خطأ</span></div>
+          <p class="sol-why">الورقُ نتيجةٌ لا تعريف. <b>وإجراءٌ بلا ورقةٍ واحدةٍ يبقى رقمنةَ أعمالٍ ما دامت الخدمةُ والأدوارُ والتعليماتُ كما هي</b> — والاختبارُ هو الرجوعُ إلى الورق لا عدُّ الأوراق.</p>
+        </div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٢.</span> خطوة ملء الطلب تبقى بشريّة لأنّ لها سببًا حقيقيًّا لا علاقة له بالورق.</p><span class="sol-badge t">صح</span></div>
+          <p class="sol-why">هي الخطوةُ الوحيدةُ في المثال التي بقيت كما كانت، لأنّ جوهرَها <b>إنسانٌ يريد شيئًا فيُعلِن عنه</b> — ولا يعرف النظامُ أنّك تريد إجازةً قبل أن تخبره. <b>وليست كلُّ خطوةٍ قابلةً للحذف، والقائدُ يعرف أيَّها ثابت.</b></p>
+        </div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٣.</span> أتمتة إجراءٍ لم تُفحَص خطواتُه تُنتج إجراءً أفضل بالضرورة.</p><span class="sol-badge f">خطأ</span></div>
+          <p class="sol-why">تُنتج <b>ثماني شاشاتٍ بدل ثماني أوراق</b>، والزمنُ لا يتغيّر إلّا قليلًا. <b>وأتمتةُ الفوضى تُنتج فوضى أسرع</b> — ولذلك يُرسَم الإجراءُ خطوةً خطوةً قبل فتح أيّ أداة.</p>
+        </div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٤.</span> صيغة ARRAYFORMULA تُكتَب مرّة واحدة وتنسحب على كل سطر جديد من نفسها.</p><span class="sol-badge t">صح</span></div>
+          <p class="sol-why">هذا سببُ اختيارها في التطبيق: النموذجُ يضيف أسطرًا باستمرار، <b>ولو كانت الصيغةُ عاديّةً لوجب سحبُها يدويًّا على كلّ سطرٍ جديد</b> — وهي خطوةٌ بشريّةٌ تعيد ما حذفناه.</p>
+        </div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٥.</span> لو رُفعت التقنية عن مؤسّسة بلغت التحوّل الرقميّ، لسقطت خدماتٌ لم تكن ممكنة بالورق أصلًا.</p><span class="sol-badge t">صح</span></div>
+          <p class="sol-why">هذا هو <b>الاختبارُ الفاصلُ</b> بعينه. فخدمةُ أن يرى الموظّفُ رصيدَه بنفسه في أيّ ساعةٍ لم تكن «أبطأ» بالورق — كانت <b>مستحيلة</b>، إذ تعني موظّفًا يفتح السجلَّ لكلّ سائلٍ في كلّ وقت.</p>
+        </div>
+
+        <div class="sol-kind"><span>الأسئلة القصيرة</span><span class="sk-line"></span></div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">١.</span> «نقلُ المعاملة إلى شعبة الحسابات» — أيُّ آليّة؟ ولماذا ليست أتمتةً؟</p>
+          <div class="sol-model"><b>الإجابة النموذجيّة:</b> <b>الحذف</b>. فالخطوةُ وُجدت لأنّ المعاملة جسمٌ ماديٌّ ينتقل بين مكانين — فإذا صارت المعلومةُ ظاهرةً للشعبتين في اللحظة نفسِها، لم يَعُد ثمّة شيءٌ يُنقَل.<br><b>والفيصلُ بين الحذف والأتمتة:</b> أما زالت الخطوةُ تُنفَّذ بيدِ الحاسوب بدل الإنسان؟ فأتمتة. أم لم تَعُد تُنفَّذ إطلاقًا؟ فحذف. <b>وهنا لا شيءَ يُنفَّذ.</b></div>
+          <p class="sol-why"><b>معيار التصحيح:</b> لا تكفي كلمةُ «حذف» وحدها — <b>يُشترَط ذكرُ الفيصل</b>. ومَن أجاب «أتمتة» لم يفرّق بين نقلِ شيءٍ وبين زوالِ الحاجة إلى نقله.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٢.</span> الصيغةُ أخرجت «مرفوض» لطلبٍ من ٢٥ يومًا. مَن اتّخذ القرار؟ ومَن يتحمّل مسؤوليّتَه؟</p>
+          <div class="sol-model"><b>الإجابة النموذجيّة:</b> اتّخذه <b>الإجراءُ نفسُه</b> — فالقرارُ صار جزءًا من الإجراء بدل أن يكون شخصًا فيه. أمّا المسؤوليّةُ فعلى <b>مَن وضع القاعدة</b>، أي الإدارةُ التي قرّرت أنّ الحدّ عشرون يومًا وصاغت الشرط. <b>والحاسوبُ نفّذ ولم يقرّر.</b></div>
+          <p class="sol-why"><b>معيار التصحيح:</b> إجابةُ «الحاسوب» أو «الصيغة» <b>ناقصةٌ لا خاطئة</b> — تُعطى نصفَ درجة، إذ تنسب القرارَ إلى الأداة وتُسقِط المسؤوليّة. <b>والدرجةُ الكاملةُ لمن فرّق بين مَن نفّذ ومَن قرّر</b> — وهذه هي المسألةُ التي ستُسأل عنها في أيّ نظامٍ آليٍّ يتّخذ قرارات.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٣.</span> إجراءٌ اختُصر من ستّ خطواتٍ إلى ثلاث. ما التعليماتُ التي يلزم تغييرُها؟ ولماذا لا يكفي أن تعمل الأداة؟</p>
+          <div class="sol-model"><b>الإجابة النموذجيّة:</b> يلزم تغييرُ ما يشترط الخطواتِ الساقطة: <b>إلغاءُ التوقيعات التي دُمِجت أو حُذفت</b> بقرارٍ رسميّ، و<b>اعتمادُ التوقيع الإلكترونيّ</b> بدل الخطّيّ، و<b>اعتمادُ السجلّ الرقميّ سجلًّا رسميًّا</b> يُحتجّ به، و<b>إعادةُ توزيع الصلاحيّات</b> على مَن صار يوافق.<br><b>ولا تكفي الأداةُ لأنّ</b> الإجراء المنجَز بها يبقى <b>غيرَ معتمَدٍ رسميًّا</b>: فعند أوّل مساءلةٍ أو تدقيقٍ يُطلَب الأصلُ الورقيُّ والتوقيعُ الخطّيّ، فيعود الموظّفون إلى الورق ويصير النظامُ الرقميُّ عملًا مزدوجًا فوق القديم لا بديلًا عنه.</div>
+          <p class="sol-why"><b>معيار التصحيح:</b> الدرجةُ الكاملةُ تشترط ذكرَ <b>نوعين على الأقلّ</b> من التغيير الرسميّ، وسببًا يتعلّق بالاعتماد أو المساءلة لا بالتقنية. <b>وإجابةٌ لا تذكر إلّا التدريب أو الميزانيّة لم تُدرك جوهر السؤال</b> — فهذه عقباتُ تنفيذٍ لا عقباتُ اعتماد.</p>
+        </div>
+
         <div class="mini-note">نهاية دليل الحلول — إعداد: د. أمير هادي ★</div>
 
         <div class="page-nav">
