@@ -2749,6 +2749,8 @@
     border-bottom:1px solid rgba(122,46,166,0.20);
     font-size:calc(11.5px * var(--fs,1)); font-weight:800; color:var(--purple);
   }
+  /* صيغةٌ أو شفرةٌ لاتينيّة: تُعرَض من اليسار حتّى لا تقفز الأقواسُ الختاميّة */
+  .pbox-b.ltr{ direction:ltr; text-align:left; unicode-bidi:isolate; }
   .pbox-b{
     padding:11px 14px; unicode-bidi:plaintext;
     font-size:calc(12.8px * var(--fs,1)); line-height:2.05;
@@ -3712,15 +3714,307 @@
       <!-- ============ END SLIDE 2 ============ -->
 
       <!-- ============ SLIDE 3 : الأسبوع الثالث ============ -->
-      <div id="slide-3" class="slide content-slide">
+      <div id="slide-3" class="slide content-slide rich-slide">
         <span class="chip chip-ch1">الأسبوع الثالث</span>
-        <h2 class="page-title">الأسبوع الثالث</h2>
+        <h2 class="page-title">رقمنةُ الأعمال — والتحوّلُ الرقميّ</h2>
         <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
-        <div class="coming-soon">
-          <svg class="big-icon" viewBox="0 0 40 40"><g filter="url(#sketchy)"><circle cx="20" cy="20" r="15" fill="#fde3c4" stroke="var(--orange)" stroke-width="2.5"/><path d="M20 12 v9 l6 4" fill="none" stroke="var(--orange)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></g></svg>
-          <p class="cs-title">تنزل لاحقاً</p>
-          <p class="cs-sub">محتوى هذا الأسبوع سيُضاف قريباً.</p>
+
+        <p class="lead-paragraph">انتهى الأسبوع الماضي عند حدٍّ واضح: حسّنّا <b>وعاءَ المعلومة</b> بعد أن كُتِبت، والإجراءُ بقي كما هو. وهذا الأسبوع يتجاوز الوعاءَ إلى <span class="hl hl-yellow">الإجراء نفسِه</span> — ثمّ يقف عند سؤالٍ يخطئ فيه أكثرُ الناس: متى يصير هذا <b>تحوّلًا رقميًّا</b>، ومتى يبقى دونه؟</p>
+
+        <div class="ba-prompt">
+          <b>نقطة البداية:</b> موظّفٌ يريد إجازةً ثلاثة أيّام. يذهب إلى الشعبة فيأخذ استمارة، ويملؤها بخطّ يده، ويوقّعها مديرُ شعبته، ثمّ تُحمَل إلى الموارد البشريّة، فيفتح موظّفٌ السجلَّ ليتحقّق من رصيده، ثمّ تُرفَع إلى المدير العامّ، ثمّ تُسجَّل، ثمّ تُحفَظ في الإضبارة.<br>
+          <b>ثماني خطوات، وثلاثةُ أيّامٍ إلى خمسة</b> — ولا أحدَ يعرف أين وصلت المعاملةُ في أثنائها.<br>
+          <b>والسؤال الذي يُبنى عليه الأسبوع:</b> كم خطوةً من الثماني <span class="hl hl-pink">لها سببٌ حقيقيّ</span>، وكم خطوةً موجودةٌ لأنّ الورقة كانت ورقة؟
         </div>
+
+        <!-- ══════════ ١ ══════════ -->
+        <div class="section-heading" style="margin-top:28px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>١ · ما رقمنةُ الأعمال</span>
+        </div>
+
+        <p><b>رقمنةُ الأعمال</b> <span class="ltr-inline">(Digitalization)</span> استعمالُ الأدوات الرقميّة <b>لتغيير الإجراء نفسِه</b> لا وعاءِ المعلومة: فتُحذَف خطواتٌ، وتُؤتمَت أخرى، وتُدمَج ثالثة. فيتغيّر زمنُ الإنجاز، وعددُ الأيدي التي تمرّ عليها المعاملة، ومَن يقرّر ومتى.</p>
+
+        <div class="takeaway">
+          <b>الفرقُ عن الأسبوع الماضي في سطر:</b> الرقمنةُ تسأل <span class="hl hl-yellow">كيف نحفظ هذه الورقة؟</span> — ورقمنةُ الأعمال تسأل <span class="hl hl-pink">لماذا هذه الورقة أصلًا؟</span>
+        </div>
+
+        <p>وليست رقمنةُ الأعمال بابًا مفتوحًا على كلّ شيء — لها <b>ثلاثُ آليّاتٍ لا رابعَ لها</b>، وكلُّ مشروعٍ ناجحٍ فيها يرجع إلى واحدةٍ منها أو أكثر:</p>
+
+        <div class="exs">
+          <div class="ex-c"><b>✕ الحذف</b>خطوةٌ لم يَعُد لها سبب. ونقلُ استمارةٍ من مكتبٍ إلى مكتبٍ خطوةٌ وُجدت لأنّ الورقة جسمٌ ينتقل — فإذا لم تَعُد جسمًا، سقطت الخطوة معها. <b>وهذه أنظفُ الآليّات وأكثرُها تُغفَل.</b></div>
+
+          <div class="ex-c"><b>⚙ الأتمتة</b>خطوةٌ بشريّةٌ صارت آليّة. والتحقّقُ من رصيد الإجازات قرارٌ يُتَّخذ بقاعدةٍ ثابتة — وما يُتَّخذ بقاعدةٍ ثابتةٍ يستطيع الحاسوبُ أن يتّخذه. <b>وهنا تظهر أكبرُ الفوارق في الزمن.</b></div>
+
+          <div class="ex-c"><b>⇄ الدمج</b>خطوتان صارتا واحدة. وتوقيعان متتاليان على ورقةٍ واحدةٍ إنّما تعدّدا لأنّ الورقة تنتقل بينهما — فإذا صار الطلبُ ظاهرًا للاثنين في لحظةٍ واحدة، أمكن أن يكفي توقيعٌ واحد. <b>وهذه أصعبُها لأنّها تمسّ الصلاحيّات.</b></div>
+        </div>
+
+        <div class="oops">
+          <span class="o-i">⚠</span>
+          <div><b>خطأٌ شائعٌ عند البدء:</b> يُؤخَذ الإجراءُ الورقيُّ كما هو ويُنقَل إلى الشاشة بخطواته الثماني كلِّها — فيصير عندنا <b>ثماني شاشاتٍ بدل ثماني أوراق</b>، والزمنُ لا يتغيّر إلّا قليلًا.
+          <br><br><b>والقاعدة:</b> يُرسَم الإجراءُ الحاليُّ خطوةً خطوة <b>قبل</b> فتح أيّ أداة، ثمّ يُسأل عن كلّ خطوةٍ سؤالٌ واحد: <span class="hl hl-green">هل توجد هذه الخطوةُ لسببٍ إداريّ، أم لأنّ المعلومة كانت على ورق؟</span> — وما وُجد للسبب الثاني يسقط.</div>
+        </div>
+
+        <!-- ══════════ ٢ ══════════ -->
+        <div class="section-heading" style="margin-top:28px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>٢ · المثال — طلبُ الإجازة</span>
+        </div>
+
+        <p>الإجراءُ الذي في أوّل الصفحة يُعرَض هنا مرّتين: كما هو على الورق، وبعد تطبيق الآليّات الثلاث عليه. والمخطّطُ يبيّن لكلّ خطوةٍ ورقيّةٍ ماذا حلّ بها.</p>
+
+        <div class="dgm">
+          <div class="dgm-t">طلبُ الإجازة — إجراءٌ واحدٌ قبل رقمنة الأعمال وبعدها</div>
+          <svg viewBox="0 0 900 822" role="img" aria-label="مقارنة إجراء طلب الإجازة قبل رقمنة الأعمال وبعدها">
+            <defs>
+              <marker id="arw3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M0 0 L10 5 L0 10 z" fill="#1f7a3d"/>
+              </marker>
+            </defs>
+
+            <rect x="560" y="18" width="310" height="52" rx="11" fill="rgba(138,90,43,.10)" stroke="#8a5a2b" stroke-width="2.2"/>
+            <text x="715" y="42" text-anchor="middle" font-size="17" font-weight="700" fill="#8a5a2b">قبل — الإجراء الورقيّ</text>
+            <text x="715" y="62" text-anchor="middle" font-size="13" fill="#6b7280">٨ خطوات — من ٣ إلى ٥ أيّام</text>
+
+            <rect x="30" y="18" width="310" height="52" rx="11" fill="rgba(31,122,61,.10)" stroke="#1f7a3d" stroke-width="2.2"/>
+            <text x="185" y="42" text-anchor="middle" font-size="17" font-weight="700" fill="#1f7a3d">بعد — رقمنةُ الأعمال</text>
+            <text x="185" y="62" text-anchor="middle" font-size="13" fill="#6b7280">٤ خطوات — دقائق معدودة</text>
+
+            <rect x="560" y="100" width="310" height="54" rx="10" fill="#fdfbf4" stroke="#8a5a2b" stroke-width="2" opacity=".55"/>
+            <circle cx="845" cy="127" r="15" fill="#8a5a2b" opacity=".55"/>
+            <text x="845" y="133" text-anchor="middle" font-size="13.5" font-weight="700" fill="#fff">١</text>
+            <text x="806" y="133" text-anchor="start" font-size="14" fill="#6b7280">استلامُ الاستمارة من الشعبة</text>
+            <line x1="584" y1="127" x2="806" y2="127" stroke="#d1342b" stroke-width="2" opacity=".65"/>
+
+            <rect x="560" y="161" width="310" height="54" rx="10" fill="#fdfbf4" stroke="#8a5a2b" stroke-width="2.2"/>
+            <circle cx="845" cy="188" r="15" fill="#8a5a2b"/>
+            <text x="845" y="194" text-anchor="middle" font-size="13.5" font-weight="700" fill="#fff">٢</text>
+            <text x="806" y="194" text-anchor="start" font-size="14" fill="#25303f">ملؤها بخطّ اليد</text>
+
+            <rect x="560" y="222" width="310" height="54" rx="10" fill="#fdfbf4" stroke="#8a5a2b" stroke-width="2.2"/>
+            <circle cx="845" cy="249" r="15" fill="#8a5a2b"/>
+            <text x="845" y="255" text-anchor="middle" font-size="13.5" font-weight="700" fill="#fff">٣</text>
+            <text x="806" y="255" text-anchor="start" font-size="14" fill="#25303f">توقيعُ مدير الشعبة</text>
+
+            <rect x="560" y="283" width="310" height="54" rx="10" fill="#fdfbf4" stroke="#8a5a2b" stroke-width="2" opacity=".55"/>
+            <circle cx="845" cy="310" r="15" fill="#8a5a2b" opacity=".55"/>
+            <text x="845" y="316" text-anchor="middle" font-size="13.5" font-weight="700" fill="#fff">٤</text>
+            <text x="806" y="316" text-anchor="start" font-size="14" fill="#6b7280">نقلُها إلى الموارد البشريّة</text>
+            <line x1="584" y1="310" x2="806" y2="310" stroke="#d1342b" stroke-width="2" opacity=".65"/>
+
+            <rect x="560" y="344" width="310" height="54" rx="10" fill="#fdfbf4" stroke="#8a5a2b" stroke-width="2.2"/>
+            <circle cx="845" cy="371" r="15" fill="#8a5a2b"/>
+            <text x="845" y="377" text-anchor="middle" font-size="13.5" font-weight="700" fill="#fff">٥</text>
+            <text x="806" y="364" text-anchor="start" font-size="14" fill="#25303f">فتحُ السجلّ والتحقّقُ</text>
+            <text x="806" y="383" text-anchor="start" font-size="14" fill="#25303f">من الرصيد يدويًّا</text>
+
+            <rect x="560" y="405" width="310" height="54" rx="10" fill="#fdfbf4" stroke="#8a5a2b" stroke-width="2.2"/>
+            <circle cx="845" cy="432" r="15" fill="#8a5a2b"/>
+            <text x="845" y="438" text-anchor="middle" font-size="13.5" font-weight="700" fill="#fff">٦</text>
+            <text x="806" y="438" text-anchor="start" font-size="14" fill="#25303f">توقيعُ المدير العامّ</text>
+
+            <rect x="560" y="466" width="310" height="54" rx="10" fill="#fdfbf4" stroke="#8a5a2b" stroke-width="2.2"/>
+            <circle cx="845" cy="493" r="15" fill="#8a5a2b"/>
+            <text x="845" y="499" text-anchor="middle" font-size="13.5" font-weight="700" fill="#fff">٧</text>
+            <text x="806" y="499" text-anchor="start" font-size="14" fill="#25303f">التسجيلُ في السجلّ الورقيّ</text>
+
+            <rect x="560" y="527" width="310" height="54" rx="10" fill="#fdfbf4" stroke="#8a5a2b" stroke-width="2.2"/>
+            <circle cx="845" cy="554" r="15" fill="#8a5a2b"/>
+            <text x="845" y="560" text-anchor="middle" font-size="13.5" font-weight="700" fill="#fff">٨</text>
+            <text x="806" y="560" text-anchor="start" font-size="14" fill="#25303f">الحفظُ في الإضبارة</text>
+
+            <circle cx="455" cy="127" r="17" fill="rgba(209,52,43,.10)" stroke="#d1342b" stroke-width="2"/>
+            <path d="M448 120 L462 134 M462 120 L448 134" stroke="#d1342b" stroke-width="2.6" stroke-linecap="round"/>
+            <text x="455" y="160" text-anchor="middle" font-size="12" font-weight="700" fill="#d1342b">حُذفت</text>
+
+            <circle cx="455" cy="310" r="17" fill="rgba(209,52,43,.10)" stroke="#d1342b" stroke-width="2"/>
+            <path d="M448 303 L462 317 M462 303 L448 317" stroke="#d1342b" stroke-width="2.6" stroke-linecap="round"/>
+            <text x="455" y="347" text-anchor="middle" font-size="12" font-weight="700" fill="#d1342b">حُذفت</text>
+
+            <path d="M556 188 C 480 188, 420 175, 344 175" fill="none" stroke="#1f7a3d" stroke-width="2.4" marker-end="url(#arw3)"/>
+            <path d="M556 371 C 480 371, 420 320, 344 320" fill="none" stroke="#e07a1f" stroke-width="2.4" marker-end="url(#arw3)"/>
+            <path d="M556 249 C 490 249, 420 465, 344 465" fill="none" stroke="#7a2ea6" stroke-width="2.2" marker-end="url(#arw3)" opacity=".85"/>
+            <path d="M556 432 C 500 432, 420 465, 344 465" fill="none" stroke="#7a2ea6" stroke-width="2.2" marker-end="url(#arw3)" opacity=".85"/>
+            <path d="M556 493 C 500 493, 420 610, 344 610" fill="none" stroke="#e07a1f" stroke-width="2.2" marker-end="url(#arw3)" opacity=".85"/>
+            <path d="M556 554 C 500 554, 420 610, 344 610" fill="none" stroke="#e07a1f" stroke-width="2.2" marker-end="url(#arw3)" opacity=".85"/>
+
+            <rect x="30" y="145" width="310" height="60" rx="11" fill="rgba(31,122,61,.06)" stroke="#1f7a3d" stroke-width="2.4"/>
+            <circle cx="315" cy="175" r="15" fill="#1f7a3d"/>
+            <text x="315" y="181" text-anchor="middle" font-size="13.5" font-weight="700" fill="#fff">١</text>
+            <text x="282" y="172" text-anchor="start" font-size="14" font-weight="700" fill="#25303f">النموذجُ يُملأ من الهاتف</text>
+            <text x="282" y="191" text-anchor="start" font-size="12" fill="#6b7280">الخطوةُ الوحيدةُ التي بقيت بشريّةً كما كانت</text>
+
+            <rect x="30" y="290" width="310" height="60" rx="11" fill="rgba(224,122,31,.07)" stroke="#e07a1f" stroke-width="2.4"/>
+            <circle cx="315" cy="320" r="15" fill="#e07a1f"/>
+            <text x="315" y="326" text-anchor="middle" font-size="13.5" font-weight="700" fill="#fff">٢</text>
+            <text x="282" y="317" text-anchor="start" font-size="14" font-weight="700" fill="#25303f">الجدولُ يحسب الرصيد ويقرّر</text>
+            <text x="282" y="336" text-anchor="start" font-size="12" fill="#6b7280">قرارٌ كان يأخذ موظّفًا ونصفَ ساعة — صار صفرَ ثانية</text>
+
+            <rect x="30" y="435" width="310" height="60" rx="11" fill="rgba(122,46,166,.06)" stroke="#7a2ea6" stroke-width="2.4"/>
+            <circle cx="315" cy="465" r="15" fill="#7a2ea6"/>
+            <text x="315" y="471" text-anchor="middle" font-size="13.5" font-weight="700" fill="#fff">٣</text>
+            <text x="282" y="462" text-anchor="start" font-size="14" font-weight="700" fill="#25303f">ضغطةُ موافقةٍ واحدة</text>
+            <text x="282" y="481" text-anchor="start" font-size="12" fill="#6b7280">توقيعان صارا توقيعًا واحدًا</text>
+
+            <rect x="30" y="580" width="310" height="60" rx="11" fill="rgba(224,122,31,.07)" stroke="#e07a1f" stroke-width="2.4"/>
+            <circle cx="315" cy="610" r="15" fill="#e07a1f"/>
+            <text x="315" y="616" text-anchor="middle" font-size="13.5" font-weight="700" fill="#fff">٤</text>
+            <text x="282" y="607" text-anchor="start" font-size="14" font-weight="700" fill="#25303f">تسجيلٌ وحفظٌ وإشعار</text>
+            <text x="282" y="626" text-anchor="start" font-size="12" fill="#6b7280">ثلاثُ خطواتٍ ورقيّةٍ في سطرٍ واحدٍ آليّ</text>
+
+            <line x1="30" y1="668" x2="870" y2="668" stroke="#1a3d8c" stroke-width="1.5" stroke-dasharray="7 6" opacity=".3"/>
+            <text x="450" y="694" text-anchor="middle" font-size="14.5" font-weight="700" fill="#1a3d8c">آليّاتُ رقمنة الأعمال الثلاث</text>
+
+            <circle cx="700" cy="725" r="10" fill="rgba(209,52,43,.12)" stroke="#d1342b" stroke-width="1.8"/>
+            <path d="M695 720 L705 730 M705 720 L695 730" stroke="#d1342b" stroke-width="2" stroke-linecap="round"/>
+            <text x="680" y="730" text-anchor="start" font-size="13.5" fill="#25303f">الحذف — خطوتان</text>
+
+            <circle cx="520" cy="725" r="10" fill="rgba(224,122,31,.16)" stroke="#e07a1f" stroke-width="1.8"/>
+            <text x="500" y="730" text-anchor="start" font-size="13.5" fill="#25303f">الأتمتة — ثلاث خطوات</text>
+
+            <circle cx="300" cy="725" r="10" fill="rgba(122,46,166,.16)" stroke="#7a2ea6" stroke-width="1.8"/>
+            <text x="280" y="730" text-anchor="start" font-size="13.5" fill="#25303f">الدمج — خطوتان في واحدة</text>
+
+            <rect x="30" y="752" width="840" height="54" rx="12" fill="rgba(26,61,140,.05)" stroke="#1857a4" stroke-width="2"/>
+            <text x="760" y="774" text-anchor="middle" font-size="14" font-weight="700" fill="#1857a4">٨ خطوات ← ٤</text>
+            <text x="760" y="794" text-anchor="middle" font-size="12" fill="#6b7280">النصف</text>
+            <text x="558" y="774" text-anchor="middle" font-size="14" font-weight="700" fill="#1857a4">٣–٥ أيّام ← دقائق</text>
+            <text x="558" y="794" text-anchor="middle" font-size="12" fill="#6b7280">زمنُ الإنجاز</text>
+            <text x="352" y="774" text-anchor="middle" font-size="14" font-weight="700" fill="#1857a4">٧ انتقالاتٍ ورقيّة ← صفر</text>
+            <text x="352" y="794" text-anchor="middle" font-size="12" fill="#6b7280">لا ورقةَ تُنقَل</text>
+            <text x="150" y="774" text-anchor="middle" font-size="14" font-weight="700" fill="#1857a4">الحالةُ مجهولة ← ظاهرة</text>
+            <text x="150" y="794" text-anchor="middle" font-size="12" fill="#6b7280">«وين وصلت؟» لحظيًّا</text>
+          </svg>
+          <div class="dgm-c">الخطُّ الأحمرُ المشطوب خطوةٌ لم يَعُد لها موضع. والسهمُ البرتقاليُّ خطوةٌ بشريّةٌ صارت آليّة، والبنفسجيُّ خطوتان اندمجتا في واحدة.</div>
+        </div>
+
+        <div class="takeaway">
+          <b>ما الذي يستحقّ الانتباه في المخطّط:</b> الخطوةُ الوحيدةُ التي بقيت كما كانت هي <span class="hl hl-green">ملءُ الطلب</span> — لأنّها الخطوةُ الوحيدةُ التي لها سببٌ حقيقيّ: إنسانٌ يريد شيئًا فيُعلِن عنه. <b>وما عداها وُجد لأنّ المعلومة كانت على ورق.</b>
+        </div>
+
+        <!-- ══════════ ٣ ══════════ -->
+        <div class="section-heading" style="margin-top:28px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>٣ · التطبيق خطوةً بخطوة</span>
+        </div>
+
+        <p>سبعُ خطواتٍ تبني الإجراءَ الجديد كاملًا. والأدواتُ اثنتان فقط — <b>نماذج Google</b> و<b>جداول Google</b> — وكلتاهما مجّانيّةٌ وتعمل بحسابٍ واحد، وقد مرّ ذكرُهما في الأسبوع الماضي.</p>
+
+        <div class="takeaway">
+          <b>الوقتُ المتوقَّع:</b> نحو اثنتَي عشرةَ دقيقةً في المرّة الأولى. <span class="hl hl-green">ولا يلزم شيءٌ غيرُ متصفّحٍ وحسابِ بريد.</span>
+        </div>
+
+        <div class="walk">
+
+          <div class="wk">
+            <div class="wk-h"><span class="wk-n">١</span><span class="wk-t">إنشاءُ النموذج</span><span class="wk-where">Google Forms</span></div>
+            <div class="wk-b">من <a href="https://forms.google.com" target="_blank" rel="noopener">forms.google.com</a> يُفتَح نموذجٌ فارغ، ويُسمّى <b>«طلبُ إجازةٍ اعتياديّة»</b>. ويُكتَب تحت العنوان سطرُ تعريفٍ قصير، لأنّ مَن يفتح النموذج لا يجد أحدًا يشرح له.</div>
+            <div class="wk-res"><b>النتيجة:</b> نموذجٌ له رابطٌ دائم، يُفتَح من أيّ هاتفٍ بلا تنصيبِ تطبيق.</div>
+          </div>
+
+          <div class="wk">
+            <div class="wk-h"><span class="wk-n">٢</span><span class="wk-t">الحقولُ الثلاثة</span><span class="wk-where">Google Forms</span></div>
+            <div class="wk-b"><b>الاسمُ الثلاثيّ</b> — إجابةٌ قصيرة. و<b>عددُ الأيّام</b> — <span class="hl hl-yellow">قائمةٌ منسدلة</span> من ١ إلى ٣٠ لا كتابةً حرّة. و<b>الشهر</b> — قائمةٌ منسدلة. وكلُّها تُضبَط <b>مطلوبة</b>.</div>
+            <div class="wk-warn"><b>ولماذا القائمةُ المنسدلة لا الكتابةُ الحرّة:</b> لأنّ مَن يكتب «ثلاثة أيّام» بدل «٣» يُخرِج نصًّا لا رقمًا — فلا يُجمَع ولا يُقارَن، وتسقط الخطوةُ الرابعةُ كلُّها. <b>والقيدُ في المُدخَل أرخصُ من التصحيح في المخرَج.</b></div>
+          </div>
+
+          <div class="wk">
+            <div class="wk-h"><span class="wk-n">٣</span><span class="wk-t">ربطُ النموذج بجدول</span><span class="wk-where">Forms ← Sheets</span></div>
+            <div class="wk-b">من تبويب <b>«الردود»</b> يُختار <b>«الربطُ بجداول البيانات»</b>، فيُنشَأ جدولٌ جديدٌ تلقائيًّا بأعمدةٍ مطابقةٍ لحقول النموذج، وعمودٍ أوّلَ للتوقيت الزمنيّ.</div>
+            <div class="wk-res"><b>النتيجة:</b> كلُّ إجابةٍ تصل تنزل سطرًا جديدًا <b>في لحظة إرسالها</b> — بلا إدخالٍ يدويٍّ ولا تفريغٍ في آخر الشهر. <span class="hl hl-green">وهنا سقطت خطوتان من الإجراء الورقيّ: النقلُ والتسجيل.</span></div>
+          </div>
+
+          <div class="wk">
+            <div class="wk-h"><span class="wk-n">٤</span><span class="wk-t">الصيغةُ التي تحذف موظّفًا</span><span class="wk-where">Google Sheets</span></div>
+            <div class="wk-b">هذه أهمُّ خطوةٍ في الأسبوع. في أوّل عمودٍ فارغ يُكتَب العنوان <b>«الحالة»</b>، وفي الخانة التي تحته مباشرةً تُكتَب هذه الصيغة — على فرض أنّ عمود الأيّام هو <span class="ltr-inline">C</span>:</div>
+            <div class="pbox">
+              <div class="pbox-h"><span>📋</span><span>الصيغة — تُنسَخ كما هي</span></div>
+              <div class="pbox-b ltr">=ARRAYFORMULA(IF(C2:C="","",IF(C2:C&gt;20,"<bdi>مرفوض — تجاوز الرصيد</bdi>","<bdi>ضمن الرصيد</bdi>")))</div>
+            </div>
+            <div class="wk-res"><b>ما الذي تفعله:</b> تقرأ عمودَ الأيّام كلَّه، وتضع أمام كلّ طلبٍ حكمَه. و<span class="ltr-inline">ARRAYFORMULA</span> تعني أنّها <b>تنسحب على كلّ سطرٍ جديدٍ من نفسها</b> — فلا تُكتَب مرّةً ثانية أبدًا.<br><b>وهذا هو موضعُ الدرس:</b> هذه الخانةُ كانت موظّفًا يفتح السجلَّ ويقلّب ويحسب. <span class="hl hl-pink">الآن هي صفرُ ثانية.</span></div>
+            <div class="wk-warn"><b>عقبةٌ متوقَّعة:</b> إن رفضت الجداولُ الصيغة، فالسببُ في الغالب <b>فاصلُ الوسائط</b>: بعضُ الإعدادات تقبل الفاصلة <span class="ltr-inline">,</span> وبعضُها تشترط الفاصلةَ المنقوطة <span class="ltr-inline">;</span> — فتُستبدَل الفواصلُ كلُّها وتُعاد المحاولة.</div>
+          </div>
+
+          <div class="wk">
+            <div class="wk-h"><span class="wk-n">٥</span><span class="wk-t">التلوينُ الشرطيّ</span><span class="wk-where">Google Sheets</span></div>
+            <div class="wk-b">من <b>تنسيق ← تنسيقٌ شرطيّ</b>، ويُختار النطاقُ ثمّ الشرط <b>«النصُّ يحتوي على»</b> والكلمة <b>مرفوض</b>، ويُختار لونٌ أحمر.</div>
+            <div class="wk-res"><b>النتيجة:</b> الطلباتُ المتجاوزةُ للرصيد تظهر حمراء من نفسها. <b>والمدير لا يقرأ الجدول كلَّه — عينُه تقع على الأحمر وحده.</b></div>
+          </div>
+
+          <div class="wk">
+            <div class="wk-h"><span class="wk-n">٦</span><span class="wk-t">إرسالُ النموذج</span><span class="wk-where">Google Forms</span></div>
+            <div class="wk-b">من زرّ <b>«إرسال»</b> يُنسَخ الرابط، ويُختصر أو يُحوَّل إلى <b>رمزٍ مربّع</b> ليُفتَح من الكاميرا مباشرةً. ويُضبَط النموذجُ بحيث <b>لا يشترط تسجيلَ دخول</b>، وإلّا تعذّر على مَن لا حسابَ له.</div>
+            <div class="wk-res"><b>النتيجة:</b> الطلبُ يصل من هاتف الموظّف وهو في مكانه — <span class="hl hl-green">وهنا سقطت الخطوةُ الأولى: استلامُ الاستمارة من الشعبة.</span></div>
+          </div>
+
+          <div class="wk">
+            <div class="wk-h"><span class="wk-n">٧</span><span class="wk-t">قراءةُ النتيجة — والسؤالُ الأخير</span><span class="wk-where">Google Sheets</span></div>
+            <div class="wk-b">يُفتَح الجدولُ بعد وصول الطلبات، فتظهر الأسطرُ وأمام كلٍّ منها حكمُه، وبعضُها أحمر.</div>
+            <div class="wk-res"><b>والسؤالُ الذي يُختَم به:</b> هذه الطلباتُ التي ظهر أمامها «مرفوض» — <b>مَن قرّر رفضَها؟</b> لا موظّفٌ ولا مدير. <span class="hl hl-pink">الإجراءُ نفسُه قرّر.</span> وهذه هي رقمنةُ الأعمال في جملةٍ واحدة.</div>
+          </div>
+
+        </div>
+
+        <!-- ══════════ ٤ ══════════ -->
+        <div class="section-heading" style="margin-top:28px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>٤ · متى يصير هذا تحوّلًا رقميًّا؟</span>
+        </div>
+
+        <p>الإجراءُ صار بلا ورقةٍ واحدة. والسؤالُ الذي يَرِد هنا طبيعيٌّ جدًّا: <b>أليس هذا تحوّلًا رقميًّا ما دام كلُّ شيءٍ رقميًّا؟</b> — والجوابُ لا. وفهمُ سببِ «لا» هو أنفعُ ما في هذا الأسبوع.</p>
+
+        <div class="oops">
+          <span class="o-i">⚠</span>
+          <div><b>«لا ورق» ليس معيارًا.</b> الورقُ نتيجةٌ لا تعريف. وانظر ما الذي تغيّر فعلًا في مثالنا: الموظّفُ يطلب، والمديرُ يوافق، والشعبةُ تسجّل — <b>نفسُ الخدمة، ونفسُ الأدوار، ونفسُ الهيكل، ونفسُ التعليمات</b>. الإجراءُ صار أسرعَ وأنظف، ولم تتغيّر المؤسّسة.</div>
+        </div>
+
+        <div class="takeaway">
+          <b>الاختبارُ الفاصلُ في سؤالٍ واحد:</b> <span class="hl hl-yellow">لو رُفعت التقنيةُ كلُّها وعاد كلُّ شيءٍ إلى الورق — هل تعمل الدائرةُ عملَها نفسَه؟</span><br>
+          في <b>الرقمنة</b>: نعم، أبطأ. وفي <b>رقمنة الأعمال</b>: نعم، أبطأ بكثير. وفي <b>التحوّل الرقميّ</b>: <b>لا</b> — لأنّ خدماتٍ كاملةً تسقط، وهي خدماتٌ <span class="hl hl-pink">لم تكن ممكنةً بالورق أصلًا</span>، لا خدماتٌ كانت أبطأ.<br>
+          <b>ومثالُنا يعود إلى الورق ويعمل</b> — أبطأ بثلاثة أيّام، لكنّه يعمل. فهو إذًا رقمنةُ أعمال.
+        </div>
+
+        <p>وهذه خمسةٌ لو تحقّقت في مثالنا نفسِه لصار تحوّلًا رقميًّا — ولاحظ أنّ <b>ولا واحدًا منها عن الورق</b>:</p>
+
+        <div class="exs">
+          <div class="ex-c"><b>١ · دورُ المدير يتغيّر</b>النظامُ يوافق تلقائيًّا على كلّ طلبٍ تنطبق عليه الشروط، ولا يُعرَض على المدير إلّا <b>الاستثناء</b>. فيتحوّل من موقِّعٍ على كلّ شيءٍ إلى معالجِ حالاتٍ خاصّة.</div>
+
+          <div class="ex-c"><b>٢ · شغلُ الموارد البشريّة يتغيّر</b>لم يَعُد إدخالَ بياناتٍ ومتابعةَ أوراق، بل تحليلًا: لماذا إجازاتُ هذه الشعبة ضِعفُ غيرها؟ ومَن لم يأخذ إجازةً منذ سنة؟ <b>وظيفةٌ تغيّر توصيفُها.</b></div>
+
+          <div class="ex-c"><b>٣ · خدمةٌ لم تكن موجودة</b>الموظّفُ يرى رصيدَه وحالةَ طلبه بنفسه في أيّ وقت. <b>وهذه لم تكن «أبطأ» بالورق — كانت مستحيلة</b>، لأنّها تعني موظّفًا يفتح السجلَّ لكلّ سائلٍ في كلّ ساعة.</div>
+
+          <div class="ex-c"><b>٤ · الدائرةُ تقيس نفسها</b>متوسّطُ زمن الإنجاز يظهر في لوحةٍ حيّة، ويصير جزءًا من تقييم الأداء لا تقريرًا يُكتَب آخرَ السنة. <b>والمقياسُ حين يصير حيًّا يغيّر السلوك.</b></div>
+
+          <div class="ex-c"><b>٥ · التعليماتُ نفسُها تتغيّر</b>يُلغى التوقيعُ الثاني <b>رسميًّا</b> بقرار. وهذه أصعبُها وأهمُّها — وما دامت التعليماتُ تشترط توقيعين، فأنت تُسرّع إجراءً قديمًا لا تغيّره.</div>
+
+          <div class="ex-c"><b>والخلاصة</b>التحوّلُ الرقميُّ <b>قرارٌ إداريٌّ وتنظيميٌّ تسانده التقنية</b> — لا مشروعٌ تقنيٌّ تتبعه الإدارة. <b>والأداةُ أسهلُ ما فيه، والتعليماتُ أصعبُه.</b></div>
+        </div>
+
+        <div class="takeaway">
+          <b>المستوياتُ الثلاثةُ في ثلاثة أسئلة:</b><br>
+          <b>الرقمنة</b> تسأل: كيف نحفظ هذه الورقة؟<br>
+          <b>رقمنةُ الأعمال</b> تسأل: لماذا هذه الورقة أصلًا؟<br>
+          <b>التحوّلُ الرقميّ</b> يسأل: <span class="hl hl-pink">لماذا تعمل هذه الدائرةُ بهذه الطريقة أصلًا؟</span>
+        </div>
+
+        <div class="takeaway">
+          <b>الجسرُ إلى الأسبوع القادم:</b> بلغنا هنا إجراءً واحدًا سريعًا ونظيفًا. والدائرةُ فيها عشراتُ الإجراءات — فأيُّها يُبدَأ به؟ وكيف يُقاس أثرُ ما أُنجِز؟ <span class="hl hl-green">ومن هنا تبدأ الأولويّاتُ والمؤشّرات</span>، وهي موضوع الأسبوع القادم.
+        </div>
+
+        <!-- ══════════ الواجب ══════════ -->
+        <div class="section-heading" style="margin-top:30px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>الواجب</span>
+        </div>
+
+        <div class="hw">
+          <div class="hw-head"><span class="hw-num">١</span><span class="hw-title">إجراءٌ من دائرتك — ما الذي يسقط منه؟</span><span class="scn-badge lv-mid">متوسّط</span></div>
+          <p>إجراءٌ حقيقيٌّ من دائرة الدارس فيه <b>خمسُ خطواتٍ على الأقلّ</b> — طلبُ صيانة، أو إجازة، أو تأييدُ استمرار، أو تسجيلُ مراجع.</p>
+          <div class="hw-deliver"><span class="hw-tag">المُسلَّم</span><span>جدولٌ فيه خطواتُ الإجراء الحاليّ مرقّمة، وأمام كلّ خطوةٍ واحدةٌ من أربع: <b>تُحذَف · تُؤتمَت · تُدمَج · تبقى</b> — مع سببٍ بسطرٍ واحد. ثمّ عددُ الخطوات قبل وبعد.<br><br>وسؤالٌ أخيرٌ يُجاب بسطرين: <b>«ما التعليماتُ أو الصلاحيّاتُ التي يلزم تغييرُها حتّى ينجح هذا؟»</b> — <span class="hl hl-yellow">وإجابةٌ خاليةٌ من أيّ تغييرٍ في التعليمات تدلّ غالبًا على أنّ الخطوات لم تُفحَص فحصًا حقيقيًّا.</span></span></div>
+        </div>
+
+        <div class="mini-note">نهاية الأسبوع الثالث — إعداد: د. أمير هادي ★</div>
+
         <div class="page-nav">
           <button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button>
           <button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button>
