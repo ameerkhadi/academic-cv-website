@@ -1,14 +1,19 @@
-import json, os, subprocess, imageio_ffmpeg
-SC=os.environ.get('LV_WORK', '/tmp/lecture-video')
-FF=imageio_ffmpeg.get_ffmpeg_exe()
-times={t['id']:t['start'] for t in json.load(open(SC+'/times.json'))}
-MARKS={'s01':[(6000,'mark1'),(11000,'mark2'),(16000,'note')],
-       's02':[(3000,'u'),(9000,'box1'),(16000,'box2'),(22000,'note')],
-       's03':[(4000,'u'),(13000,'circ'),(20000,'hl')]}
-for sc,ms in MARKS.items():
-    for at,name in ms:
-        t=(times[sc]+at+3800)/1000.0
-        out='%s/g_%s_%s.png'%(SC,sc,name)
-        subprocess.run([FF,'-y','-ss','%.2f'%t,'-i',SC+'/lecture.mp4','-frames:v','1',out],
-                       check=True,capture_output=True)
-        print(name,sc,'%.1fs'%t,os.path.getsize(out))
+# -*- coding: utf-8 -*-
+"""لقطاتُ تحقّقٍ: إطارٌ بعد اكتمال كلّ علامةٍ لفحص موضعها.
+    python3 frames.py <اسم mp4> [معرّفات مشاهد مفصولة بفواصل]"""
+import json, os, subprocess, sys, imageio_ffmpeg
+SC   = os.environ.get('LV_WORK', '/tmp/lecture-video')
+MP4  = os.path.join(SC, sys.argv[1] if len(sys.argv) > 1 else 'lecture.mp4')
+ONLY = set(sys.argv[2].split(',')) if len(sys.argv) > 2 else None
+LAG  = float(os.environ.get('LV_LAG', '3.6'))   # مقدّمةُ الفيديو + زمنُ رسم العلامة
+FF   = imageio_ffmpeg.get_ffmpeg_exe()
+times = {t['id']: t['start'] for t in json.load(open(os.path.join(SC, 'times.json')))}
+seen = {}
+for a in json.load(open(os.path.join(SC, 'audit.json'))):
+    if ONLY and a['scene'] not in ONLY: continue
+    k = seen[a['scene']] = seen.get(a['scene'], 0) + 1
+    t = (times[a['scene']] + a['sched']) / 1000.0 + LAG
+    out = '%s/f_%s_%d_%s.png' % (SC, a['scene'], k, a['type'])
+    subprocess.run([FF, '-y', '-ss', '%.2f' % t, '-i', MP4, '-frames:v', '1', out],
+                   check=True, capture_output=True)
+    print('%-4s %-9s %-14s %6.1fs  %s' % (a['scene'], a['type'], a['target'], t, os.path.basename(out)))
