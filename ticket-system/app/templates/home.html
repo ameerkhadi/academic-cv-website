@@ -1,0 +1,28 @@
+{% extends "base.html" %}{% block title %}الرئيسة{% endblock %}
+{% block body %}
+<div class="card">
+  <h1>نظامُ التذاكر الإلكترونيّة</h1>
+  <p class="sub">كلُّ طلبٍ أو شكوى يتحوّل إلى تذكرةٍ برقمٍ مرجعيٍّ تُتابَع حتّى الإغلاق — بدل أن تضيع بين المكالمات والرسائل المتفرّقة.</p>
+  <div class="grid g4" style="margin:18px 0">
+    <div class="kpi"><div class="n">١</div><div class="l">استلامُ الطلب</div></div>
+    <div class="kpi"><div class="n">٢</div><div class="l">تذكرةٌ برقمٍ مرجعيّ</div></div>
+    <div class="kpi"><div class="n">٣</div><div class="l">توزيعٌ على الشعبة</div></div>
+    <div class="kpi green"><div class="n">٤</div><div class="l">إغلاقٌ وتقييم</div></div>
+  </div>
+  <div class="row">
+    <a class="btn" href="/new">تقديمُ شكوى جديدة</a>
+    <a class="btn ghost" href="/track">متابعةُ تذكرةٍ برقمها</a>
+  </div>
+</div>
+
+<div class="grid g2">
+  <div class="card">
+    <h2>للمواطن</h2>
+    <p>لا يلزم إنشاءُ حساب. تُقدَّم الشكوى في دقيقة، ويصدر لها رقمٌ مرجعيٌّ ورمزُ متابعة، فتُعرَف حالتُها في أيّ وقتٍ من غير مراجعةٍ ولا اتّصالٍ متكرّر.</p>
+  </div>
+  <div class="card">
+    <h2>للدائرة</h2>
+    <p>تُصنَّف الشكوى وتُحال إلى الشعبة المختصّة بحسب قواعد الدائرة المكتوبة، ولكلّ درجةِ إلحاحٍ مدّةُ استجابةٍ معلومة. وما تجاوز مدّته يُصعَّد من تلقاء نفسه ويظهر في لوحة المدير.</p>
+  </div>
+</div>
+{% endblock %}

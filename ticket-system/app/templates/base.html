@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>{% block title %}{{ APP }}{% endblock %} — {{ APP }}</title>
+<link rel="stylesheet" href="/static/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='13' font-size='13'>🎫</text></svg>">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <div class="brand">{{ APP }}<small>{{ ORG }}</small></div>
+    <nav class="row">
+      <a href="/">الرئيسة</a>
+      <a href="/new">شكوى جديدة</a>
+      <a href="/track">متابعة تذكرة</a>
+      {% if user %}
+        <a href="/inbox">صندوق العمل</a>
+        {% if user.role == 'manager' %}<a href="/dash">لوحة المدير</a>{% endif %}
+        <a href="/logout">خروج ({{ user.fullname }})</a>
+      {% else %}
+        <a href="/login">دخول الموظّفين</a>
+      {% endif %}
+    </nav>
+  </div>
+</header>
+<main><div class="wrap">{% block body %}{% endblock %}</div></main>
+<footer class="bot"><div class="wrap">{{ ORG }} — {{ APP }}</div></footer>
+</body>
+</html>

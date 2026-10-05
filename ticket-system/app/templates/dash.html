@@ -1,0 +1,61 @@
+{% extends "base.html" %}{% from "_macros.html" import status_badge, prio_badge, esc_badge, late_badge %}
+{% block title %}لوحة المدير{% endblock %}
+{% block body %}
+<div class="card">
+  <div class="row">
+    <h1 style="margin-inline-end:auto">لوحةُ المدير</h1>
+    <form method="post" action="/escalate/run">
+      <input type="hidden" name="csrf" value="{{ csrf }}">
+      <button class="btn sm ghost" type="submit">فحصُ التصعيد الآن</button>
+    </form>
+  </div>
+  <p class="sub">المؤشّراتُ محسوبةٌ لحظةَ فتح الصفحة، وفحصُ التصعيد يجري معها تلقائيًّا.</p>
+  <div class="grid g4">
+    <div class="kpi"><div class="n">{{ m.total|ar_num }}</div><div class="l">التذاكرُ كلُّها</div></div>
+    <div class="kpi amber"><div class="n">{{ m.open|ar_num }}</div><div class="l">مفتوحة</div></div>
+    <div class="kpi red"><div class="n">{{ m.overdue|ar_num }}</div><div class="l">متأخّرةٌ عن مدّتها</div></div>
+    <div class="kpi red"><div class="n">{{ m.escalated|ar_num }}</div><div class="l">مُصعَّدة</div></div>
+    <div class="kpi green"><div class="n">{{ m.closed|ar_num }}</div><div class="l">مغلقة</div></div>
+    <div class="kpi"><div class="n">{{ (m.avg_close|round(1))|ar_num if m.avg_close else "—" }}</div><div class="l">متوسّطُ زمن الإغلاق (ساعة)</div></div>
+    <div class="kpi"><div class="n">{{ (m.rating|round(1))|ar_num if m.rating else "—" }}</div><div class="l">متوسّطُ التقييم من ٥</div></div>
+  </div>
+</div>
+
+<div class="grid g2">
+  <div class="card">
+    <h2>التوزيعُ على الشُّعَب</h2>
+    <table><thead><tr><th>الشعبة</th><th>الكلّ</th><th>مفتوحة</th><th>متأخّرة</th></tr></thead><tbody>
+      {% for r in m.by_dept %}
+      <tr><td>{{ r.dept }}</td><td>{{ r.n|ar_num }}</td><td>{{ (r.open_n or 0)|ar_num }}</td>
+        <td>{% if r.late_n %}<span class="badge b-late">{{ r.late_n|ar_num }}</span>{% else %}{{ 0|ar_num }}{% endif %}</td></tr>
+      {% endfor %}
+    </tbody></table>
+  </div>
+  <div class="card">
+    <h2>التوزيعُ على الفئات</h2>
+    <table><thead><tr><th>الفئة</th><th>العدد</th></tr></thead><tbody>
+      {% for r in m.by_cat %}<tr><td>{{ r.category }}</td><td>{{ r.n|ar_num }}</td></tr>{% endfor %}
+    </tbody></table>
+  </div>
+</div>
+
+<h2>التذاكرُ المُصعَّدة</h2>
+<div class="tbl-wrap">
+<table><thead><tr><th>الرقم</th><th>الموضوع</th><th>الشعبة</th><th>الإلحاح</th><th>المستوى</th><th>التأخّر</th></tr></thead><tbody>
+  {% for t in esc %}
+  <tr><td><a class="ltr" href="/t/{{ t.id }}">{{ t.ref }}</a></td><td>{{ t.subject }}</td><td>{{ t.dept }}</td>
+      <td>{{ prio_badge(t.priority) }}</td><td>{{ esc_badge(t) }}</td><td>{{ t.due_at|ar_ago }}</td></tr>
+  {% else %}<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:22px">لا توجد تذاكرُ مُصعَّدة.</td></tr>{% endfor %}
+</tbody></table>
+</div>
+
+<h2>التذاكرُ المتأخّرة</h2>
+<div class="tbl-wrap">
+<table><thead><tr><th>الرقم</th><th>الموضوع</th><th>الشعبة</th><th>الحالة</th><th>انقضت منذ</th></tr></thead><tbody>
+  {% for t in late %}
+  <tr><td><a class="ltr" href="/t/{{ t.id }}">{{ t.ref }}</a></td><td>{{ t.subject }}</td><td>{{ t.dept }}</td>
+      <td>{{ status_badge(t.status) }} {{ esc_badge(t) }}</td><td>{{ t.due_at|ar_ago }}</td></tr>
+  {% else %}<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:22px">لا توجد تذاكرُ متأخّرة.</td></tr>{% endfor %}
+</tbody></table>
+</div>
+{% endblock %}

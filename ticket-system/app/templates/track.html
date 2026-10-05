@@ -1,0 +1,17 @@
+{% extends "base.html" %}{% block title %}متابعة تذكرة{% endblock %}
+{% block body %}
+<div class="card">
+  <h1>متابعةُ تذكرة</h1>
+  <p class="sub">يُدخَل الرقمُ المرجعيُّ ورمزُ المتابعة الصادران عند تقديم الشكوى.</p>
+  {% if error %}<div class="note bad err">{{ error }}</div>{% endif %}
+  <form method="post" action="/track">
+    <div class="grid g2">
+      <div><label for="r">الرقمُ المرجعيّ</label>
+        <input id="r" class="ltr" type="text" name="ref" required placeholder="TK-2026-00001" value="{{ form.ref if form }}"></div>
+      <div><label for="k">رمزُ المتابعة</label>
+        <input id="k" class="ltr" type="text" name="token" required maxlength="6" placeholder="ABC123" value="{{ form.token if form }}"></div>
+    </div>
+    <div class="row" style="margin-top:18px"><button class="btn" type="submit">عرضُ الحالة</button></div>
+  </form>
+</div>
+{% endblock %}

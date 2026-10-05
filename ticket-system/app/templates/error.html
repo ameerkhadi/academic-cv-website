@@ -1,0 +1,9 @@
+{% extends "base.html" %}{% block title %}خطأ{% endblock %}
+{% block body %}
+<div class="card">
+  <h1>تعذّر إتمامُ الطلب</h1>
+  <p class="sub">رمزُ الحالة: <span class="ltr">{{ code }}</span></p>
+  <div class="note bad">{{ detail }}</div>
+  <a class="btn ghost" href="/">العودة إلى الرئيسة</a>
+</div>
+{% endblock %}

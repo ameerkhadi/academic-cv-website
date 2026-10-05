@@ -1,0 +1,48 @@
+{% extends "base.html" %}{% from "_macros.html" import status_badge, prio_badge, late_badge %}
+{% block title %}التذكرة {{ t.ref }}{% endblock %}
+{% block body %}
+<div class="card">
+  <div class="row"><h1 style="margin-inline-end:auto">التذكرة <span class="ref ltr">{{ t.ref }}</span></h1>
+    {{ status_badge(t.status) }} {{ prio_badge(t.priority) }} {{ late_badge(t) }}</div>
+  <p class="sub">{{ t.subject }}</p>
+  <table><tbody>
+    <tr><th style="width:180px">الفئة</th><td>{{ t.category }}</td></tr>
+    <tr><th>الجهةُ المختصّة</th><td>{{ t.dept }}</td></tr>
+    <tr><th>تاريخُ التقديم</th><td>{{ t.created_at|ar_dt }} — {{ t.created_at|ar_ago }}</td></tr>
+    <tr><th>مدّةُ الاستجابة</th><td>{{ t.due_at|ar_dt }}{% if is_late(t) %} <span class="badge b-late">انقضت</span>{% endif %}</td></tr>
+    {% if t.closed_at %}<tr><th>تاريخُ الإغلاق</th><td>{{ t.closed_at|ar_dt }}</td></tr>{% endif %}
+  </tbody></table>
+</div>
+
+<div class="card">
+  <h2>سجلُّ التذكرة</h2>
+  <ul class="tl">
+    {% for e in ev %}
+    <li><span class="k">{{ e.kind }}</span> — {{ e.note }}<div class="w">{{ e.at|ar_dt }} · {{ e.actor }}</div></li>
+    {% else %}<li class="w">لا توجد مستجدّاتٌ بعد.</li>{% endfor %}
+  </ul>
+</div>
+
+{% if t.status == cfg.STATUS_CLOSED %}
+<div class="card">
+  <h2>تقييمُ الخدمة</h2>
+  {% if rated or t.rating %}
+    <div class="note">شُكر التقييم. الدرجةُ المسجَّلة: <b>{{ (t.rating or 0)|ar_num }} من ٥</b>.</div>
+  {% else %}
+    {% if rate_error %}<div class="note bad err">{{ rate_error }}</div>{% endif %}
+    <form method="post" action="/rate">
+      <input type="hidden" name="ref" value="{{ t.ref }}"><input type="hidden" name="token" value="{{ token }}">
+      <div class="stars">
+        {% for i in [5,4,3,2,1] %}
+        <input type="radio" id="s{{ i }}" name="stars" value="{{ i }}" {% if i==5 %}checked{% endif %}>
+        <label for="s{{ i }}" title="{{ i }}">★</label>
+        {% endfor %}
+      </div>
+      <label for="rn">ملاحظة <span style="font-weight:400;color:var(--muted)">(اختياريّة)</span></label>
+      <input id="rn" type="text" name="note" maxlength="300">
+      <div class="row" style="margin-top:14px"><button class="btn" type="submit">إرسالُ التقييم</button></div>
+    </form>
+  {% endif %}
+</div>
+{% endif %}
+{% endblock %}

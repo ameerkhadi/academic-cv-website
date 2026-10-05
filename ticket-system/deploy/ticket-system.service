@@ -1,0 +1,25 @@
+[Unit]
+Description=نظام التذاكر الإلكترونية
+After=network.target
+
+[Service]
+Type=simple
+User=ticket
+Group=ticket
+WorkingDirectory=/opt/ticket-system
+Environment="TK_DB=/opt/ticket-system/data/tickets.db"
+Environment="TK_HTTPS=1"
+EnvironmentFile=-/opt/ticket-system/.env
+ExecStart=/opt/ticket-system/.venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8000 --proxy-headers --forwarded-allow-ips='*'
+Restart=on-failure
+RestartSec=3
+
+# تضييقُ الصلاحيّات: لا يكتب الخادمُ خارج مجلّد بياناته
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/ticket-system/data
+
+[Install]
+WantedBy=multi-user.target

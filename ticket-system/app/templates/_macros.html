@@ -1,0 +1,20 @@
+{% macro status_badge(s) -%}
+{% if s == cfg.STATUS_NEW %}<span class="badge b-new">{{ s }}</span>
+{%- elif s == cfg.STATUS_PROGRESS %}<span class="badge b-prog">{{ s }}</span>
+{%- elif s == cfg.STATUS_WAITING %}<span class="badge b-wait">{{ s }}</span>
+{%- else %}<span class="badge b-closed">{{ s }}</span>{% endif %}
+{%- endmacro %}
+
+{% macro prio_badge(p) -%}
+{% if p == "عالية" %}<span class="badge b-hi">{{ p }}</span>
+{%- elif p == "متوسطة" %}<span class="badge b-md">{{ p }}</span>
+{%- else %}<span class="badge b-lo">{{ p }}</span>{% endif %}
+{%- endmacro %}
+
+{% macro esc_badge(t) -%}
+{% if t.esc_level and t.status != cfg.STATUS_CLOSED %}<span class="badge b-esc">مُصعَّدة · مستوى {{ t.esc_level|ar_num }}</span>{% endif %}
+{%- endmacro %}
+
+{% macro late_badge(t) -%}
+{% if is_late(t) %}<span class="badge b-late">متأخّرة</span>{% endif %}
+{%- endmacro %}

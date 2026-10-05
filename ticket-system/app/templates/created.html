@@ -1,0 +1,24 @@
+{% extends "base.html" %}{% from "_macros.html" import status_badge, prio_badge %}
+{% block title %}تذكرتُك{% endblock %}
+{% block body %}
+<div class="card">
+  <h1>استُلمت الشكوى</h1>
+  <p class="sub">هذان الرقمُ والرمزُ هما طريقُ المتابعة. تُحفَظ نسختُهما، فلا سبيلَ إلى استرجاع الرمز بعد مغادرة الصفحة.</p>
+  <div class="grid g2">
+    <div><label>الرقمُ المرجعيّ</label><div class="tok ltr">{{ t.ref }}</div></div>
+    <div><label>رمزُ المتابعة</label><div class="tok ltr">{{ token }}</div></div>
+  </div>
+  <h2>ما قرّره النظام</h2>
+  <table><tbody>
+    <tr><th style="width:170px">الفئة</th><td>{{ t.category }}</td></tr>
+    <tr><th>درجةُ الإلحاح</th><td>{{ prio_badge(t.priority) }}</td></tr>
+    <tr><th>الجهةُ المختصّة</th><td>{{ t.dept }}</td></tr>
+    <tr><th>مدّةُ الاستجابة</th><td>حتّى {{ t.due_at|ar_dt }} — {{ t.due_at|ar_ago }}</td></tr>
+    <tr><th>الحالة</th><td>{{ status_badge(t.status) }}</td></tr>
+  </tbody></table>
+  <div class="row" style="margin-top:18px">
+    <a class="btn" href="/track?ref={{ t.ref }}&token={{ token }}">متابعةُ التذكرة الآن</a>
+    <a class="btn ghost" href="/">الرئيسة</a>
+  </div>
+</div>
+{% endblock %}

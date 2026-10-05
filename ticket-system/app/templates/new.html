@@ -1,0 +1,27 @@
+{% extends "base.html" %}{% block title %}شكوى جديدة{% endblock %}
+{% block body %}
+<div class="card">
+  <h1>تقديمُ شكوى</h1>
+  <p class="sub">تُملأ الحقولُ الأربعة، فيصدر رقمٌ مرجعيٌّ ورمزُ متابعةٍ تُحفَظ نسختُهما. ولا يلزم حسابٌ ولا تسجيل.</p>
+  {% if errors %}<div class="note bad err">تعذّر قبولُ الطلب:<ul>{% for e in errors %}<li>{{ e }}</li>{% endfor %}</ul></div>{% endif %}
+  <form method="post" action="/new">
+    <div class="grid g2">
+      <div>
+        <label for="n">الاسمُ الثلاثيّ</label>
+        <input id="n" type="text" name="citizen_name" required minlength="3" value="{{ form.citizen_name if form }}">
+      </div>
+      <div>
+        <label for="p">رقمُ الهاتف <span style="font-weight:400;color:var(--muted)">(اختياريّ)</span></label>
+        <input id="p" type="text" name="citizen_phone" inputmode="tel" value="{{ form.citizen_phone if form }}">
+      </div>
+    </div>
+    <label for="s">موضوعُ الشكوى</label>
+    <input id="s" type="text" name="subject" required minlength="5" value="{{ form.subject if form }}">
+    <label for="b">نصُّ الشكوى</label>
+    <textarea id="b" name="body" required minlength="20">{{ form.body if form }}</textarea>
+    <div class="hint">كلّما كان النصُّ أوضحَ كان التصنيفُ والإحالةُ أدقَّ. وتُذكَر الوقائعُ وتواريخُها، ولا تُذكَر بياناتٌ حسّاسةٌ لا يقتضيها الموضوع.</div>
+    <div class="row" style="margin-top:18px"><button class="btn" type="submit">إرسالُ الشكوى</button>
+      <a class="btn ghost" href="/">إلغاء</a></div>
+  </form>
+</div>
+{% endblock %}

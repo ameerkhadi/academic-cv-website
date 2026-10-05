@@ -1,0 +1,15 @@
+{% extends "base.html" %}{% block title %}دخول الموظّفين{% endblock %}
+{% block body %}
+<div class="card" style="max-width:460px;margin-inline:auto">
+  <h1>دخولُ الموظّفين</h1>
+  <p class="sub">هذه الصفحةُ لمنتسبي الدائرة. ومتابعةُ الشكوى للمواطن تكون من <a href="/track">صفحة المتابعة</a> بلا حساب.</p>
+  {% if error %}<div class="note bad err">{{ error }}</div>{% endif %}
+  <form method="post" action="/login">
+    <label for="u">اسمُ المستخدم</label>
+    <input id="u" class="ltr" type="text" name="username" required autocomplete="username">
+    <label for="p">كلمةُ المرور</label>
+    <input id="p" type="password" name="password" required autocomplete="current-password">
+    <div class="row" style="margin-top:18px"><button class="btn" type="submit">دخول</button></div>
+  </form>
+</div>
+{% endblock %}

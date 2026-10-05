@@ -1,0 +1,41 @@
+{% extends "base.html" %}{% from "_macros.html" import status_badge, prio_badge, esc_badge, late_badge %}
+{% block title %}صندوق العمل{% endblock %}
+{% block body %}
+<div class="card">
+  <h1>صندوقُ العمل</h1>
+  <p class="sub">{% if dept %}تذاكرُ «{{ dept }}».{% else %}تذاكرُ الشُّعَب كلِّها.{% endif %} والترتيبُ بالمُصعَّد أوّلًا ثمّ بأقربِ مدّةِ استجابة.</p>
+  <form method="get" action="/inbox" class="row">
+    <select name="status" style="width:auto">
+      <option value="">الحالات كلُّها</option>
+      {% for s in cfg.STATUSES %}<option value="{{ s }}" {% if f.status==s %}selected{% endif %}>{{ s }}</option>{% endfor %}
+    </select>
+    <select name="overdue" style="width:auto">
+      <option value="0">المتأخّرةُ وغيرُها</option>
+      <option value="1" {% if f.overdue %}selected{% endif %}>المتأخّرةُ فقط</option>
+    </select>
+    <input type="text" name="q" placeholder="بحثٌ برقمٍ أو موضوعٍ أو اسم" value="{{ f.q }}" style="width:auto;flex:1;min-width:200px">
+    <button class="btn sm" type="submit">تصفية</button>
+  </form>
+</div>
+
+<div class="tbl-wrap">
+<table>
+  <thead><tr><th>الرقم</th><th>الموضوع</th><th>الفئة</th><th>الإلحاح</th><th>الشعبة</th><th>الحالة</th><th>مدّةُ الاستجابة</th></tr></thead>
+  <tbody>
+  {% for t in rows %}
+    <tr>
+      <td><a class="ltr" href="/t/{{ t.id }}">{{ t.ref }}</a></td>
+      <td>{{ t.subject }}<div class="w" style="color:var(--muted);font-size:.85em">{{ t.citizen_name }}</div></td>
+      <td>{{ t.category }}</td>
+      <td>{{ prio_badge(t.priority) }}</td>
+      <td>{{ t.dept }}</td>
+      <td>{{ status_badge(t.status) }} {{ late_badge(t) }} {{ esc_badge(t) }}</td>
+      <td>{{ t.due_at|ar_ago }}</td>
+    </tr>
+  {% else %}
+    <tr><td colspan="7" style="text-align:center;color:var(--muted);padding:26px">لا توجد تذاكرُ مطابِقة.</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+{% endblock %}
