@@ -4322,7 +4322,7 @@
         </div>
 
         <div class="takeaway">
-          <b>الجسرُ إلى الأسبوع القادم:</b> بلغنا هنا إجراءً واحدًا سريعًا ونظيفًا. والدائرةُ فيها عشراتُ الإجراءات — فأيُّها يُبدَأ به؟ وكيف يُقاس أثرُ ما أُنجِز؟ <span class="hl hl-green">ومن هنا تبدأ الأولويّاتُ والمؤشّرات</span>، وهي موضوع الأسبوع القادم.
+          <b>الجسرُ إلى الأسبوع القادم:</b> بلغنا هنا إجراءً واحدًا سريعًا ونظيفًا. وكلُّ ما مضى كان في إجراءٍ تعرف الدائرةُ خطواتِه. فماذا عن العمل الذي لا يُرسَم خطواتٍ — صياغةُ كتابٍ، وتلخيصُ تقرير، وفرزُ شكاوى؟ <span class="hl hl-green">ومن هنا يدخل الذكاءُ الاصطناعيُّ التوليديّ</span>، وهو موضوع الأسبوع القادم.
         </div>
 
         <!-- ══════════ التمارين ══════════ -->
@@ -4431,13 +4431,313 @@
         <h2 class="page-title">الذكاء الاصطناعي التوليدي في العمل الإداري</h2>
         <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
 
-        <div class="outline">
-          <div class="ol-item"><span class="ol-n">١</span><span class="ol-t">التطبيق الأوّل</span><span class="ol-tag">مهمّ وحديث</span></div>
-          <div class="ol-item"><span class="ol-n">٢</span><span class="ol-t">التطبيق الثاني</span><span class="ol-tag">مهمّ وحديث</span></div>
-          <div class="ol-item"><span class="ol-n">٣</span><span class="ol-t">الأمن السيبرانيّ والذكاء الاصطناعيّ</span></div>
+        <p class="lead-paragraph">
+          محاضرة تعريفية تأخذك خطوة بخطوة من فهم <span class="hl hl-blue">الذكاء الاصطناعي التوليدي</span>،
+          وصولًا إلى احتراف التعامل مع <span class="hl hl-yellow">كلود Claude</span> عبر المشاريع والمهارات.
+        </p>
+
+        <div class="chapter-num" style="color:var(--blue);"><span class="cn-num">١</span><span class="cn-title">الأساسيات</span></div>
+        <ul class="bullet-list">
+          <li><span class="bullet-mark">✔</span>كلود نموذج لغوي كبير (LLM) <span class="hl hl-blue">يتوقّع الكلمة التالية</span> بناءً على أنماط تعلّمها من نصوص هائلة — وهذا ليس «تفكيرًا» بالمعنى البشري.</li>
+          <li><span class="bullet-mark">✔</span>يمرّ نصّك بأربع مراحل: <strong>الأمر ← التقطيع ← التمثيل الرقمي ← التوليد</strong>.</li>
+          <li><span class="bullet-mark">✔</span>في المحادثات الطويلة يفقد النموذج تدريجيًا تفاصيل بداية الحديث — لخّص النقاط المهمة بين حين وآخر.</li>
+        </ul>
+        <div class="tip-box">
+          <div class="tip-title">
+            <svg class="tip-icon" viewBox="0 0 24 24"><circle cx="12" cy="9" r="6.5" fill="#fff3c4" stroke="var(--green)" stroke-width="2"/><rect x="9" y="16" width="6" height="4" rx="1.5" fill="none" stroke="var(--green)" stroke-width="2"/><line x1="9" y1="21" x2="15" y2="21" stroke="var(--green)" stroke-width="2" stroke-linecap="round"/></svg>
+            الهلوسة (Hallucination)
+          </div>
+          افترض دائمًا أنّ إجابة الذكاء الاصطناعي قد تكون خاطئة حتى يثبت العكس — وتحقّق من المعلومات الحسّاسة.
         </div>
 
-        <p class="ol-note">المحتوى التفصيليّ يُضاف لاحقًا.</p>
+        <div class="chapter-num" style="color:var(--green);"><span class="cn-num">٢</span><span class="cn-title">تعرّف على كلود</span></div>
+        <ul class="bullet-list">
+          <li><span class="bullet-mark">✔</span><span class="hl hl-green">ذكاء اصطناعي دستوري</span>: مبادئ ثابتة تجعله مفيدًا وصادقًا وآمنًا، ويراجع عمله ذاتيًا قبل تسليمه لك.</li>
+          <li><span class="bullet-mark">✔</span>نافذة سياق ضخمة تصل إلى <strong>٢٠٠ ألف توكِن</strong> (نحو ٥٠٠ صفحة نص) في المحادثة الواحدة.</li>
+          <li><span class="bullet-mark">✔</span>أبرز استخداماته: كتابة المحتوى، البحث وتحليل البيانات، البرمجة (كلود كود)، والتعلّم والتدريس.</li>
+        </ul>
+
+        <div class="chapter-num" style="color:var(--orange);"><span class="cn-num">٣</span><span class="cn-title">البداية العملية</span></div>
+        <div class="components-grid">
+          <div class="component-card">
+            <svg class="c-icon" viewBox="0 0 40 40"><rect x="11" y="4" width="18" height="32" rx="3" fill="#eaf4ff" stroke="var(--blue)" stroke-width="2.5"/><circle cx="20" cy="31" r="1.6" fill="var(--blue)"/></svg>
+            <span class="c-name">تطبيق الجوال</span>
+            <span class="c-ex">iOS وAndroid</span>
+          </div>
+          <div class="component-card">
+            <svg class="c-icon" viewBox="0 0 40 40"><rect x="4" y="8" width="32" height="20" rx="2" fill="#e6f6ea" stroke="var(--green)" stroke-width="2.5"/><rect x="14" y="32" width="12" height="3" fill="var(--green)"/></svg>
+            <span class="c-name">المتصفح</span>
+            <span class="c-ex">claude.ai</span>
+          </div>
+          <div class="component-card">
+            <svg class="c-icon" viewBox="0 0 40 40"><rect x="4" y="6" width="32" height="22" rx="2" fill="#fde3c4" stroke="var(--orange)" stroke-width="2.5"/><path d="M12 34 h16 M14 28 l-2 6 M26 28 l2 6" stroke="var(--orange)" stroke-width="2" stroke-linecap="round"/></svg>
+            <span class="c-name">تطبيق سطح المكتب</span>
+            <span class="c-ex">Mac وWindows</span>
+          </div>
+          <div class="component-card">
+            <svg class="c-icon" viewBox="0 0 40 40"><rect x="5" y="8" width="30" height="24" rx="3" fill="#f6e8fb" stroke="var(--purple)" stroke-width="2.5"/><path d="M11 16 l6 4 -6 4 M21 24 h8" stroke="var(--purple)" stroke-width="2" stroke-linecap="round"/></svg>
+            <span class="c-name">الطرفية</span>
+            <span class="c-ex">كلود كود</span>
+          </div>
+        </div>
+        <ul class="bullet-list">
+          <li><span class="bullet-mark">✔</span>خطط الاشتراك: <strong>مجانية</strong>، <strong>برو</strong> (٢٠$/شهريًا)، <strong>ماكس</strong> (١٠٠$/شهريًا).</li>
+        </ul>
+
+        <div class="section-heading">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>شات، كوورك، وكود: شنو الفرق؟</span>
+        </div>
+        <div class="components-grid">
+          <div class="component-card">
+            <svg class="c-icon" viewBox="0 0 40 40"><circle cx="20" cy="20" r="15" fill="#eaf4ff" stroke="var(--blue)" stroke-width="2.5"/><circle cx="14" cy="20" r="1.8" fill="var(--blue)"/><circle cx="20" cy="20" r="1.8" fill="var(--blue)"/><circle cx="26" cy="20" r="1.8" fill="var(--blue)"/></svg>
+            <span class="c-name">كلود شات</span>
+            <span class="c-ex">مهام سريعة: سؤال مباشر أو محادثة صوتية فورية</span>
+          </div>
+          <div class="component-card">
+            <svg class="c-icon" viewBox="0 0 40 40"><rect x="6" y="10" width="28" height="20" rx="3" fill="#e6f6ea" stroke="var(--green)" stroke-width="2.5"/><path d="M13 30 v4 M27 30 v4" stroke="var(--green)" stroke-width="2" stroke-linecap="round"/></svg>
+            <span class="c-name">كلود كوورك</span>
+            <span class="c-ex">مهام أكبر: وصول حقيقي لملفاتك وجدولة مهام تلقائية متكررة</span>
+          </div>
+          <div class="component-card">
+            <svg class="c-icon" viewBox="0 0 40 40"><path d="M14 12 L6 20 L14 28 M26 12 L34 20 L26 28" stroke="var(--purple)" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="c-name">كلود كود</span>
+            <span class="c-ex">بيئة تطوير كاملة: قراءة الأكواد وتحسينها ومعالجة مشكلاتها</span>
+          </div>
+        </div>
+        <ul class="bullet-list">
+          <li><span class="bullet-mark">✔</span><strong>الإرسال إلى وكلاء فرعيين (Dispatch / Subagents)</strong>: يقدر كلود كود يُرسل مهمة فرعية محدّدة إلى «وكيل» مستقل يشتغل بالتوازي أو بالخلفية، ويرجع لك بالنتيجة النهائية فقط — فتبقى المحادثة الأساسية مركّزة دون أن تمتلئ بتفاصيل البحث والاستكشاف الجانبية.</li>
+        </ul>
+
+        <div class="chapter-num" style="color:var(--purple);"><span class="cn-num">٤</span><span class="cn-title">هندسة الأوامر</span></div>
+        <ul class="bullet-list">
+          <li><span class="bullet-mark">✔</span>الخطوات الأربع لصياغة أمر: <strong>١) تحديد الموقف والسياق ← ٢) تحديد المهمة بوضوح ← ٣) تحديد القواعد والشكل ← ٤) تقديم مثال</strong>.</li>
+          <li><span class="bullet-mark">✔</span>اختيار النموذج: <strong>هايكو</strong> للسرعة، <strong>سونيت</strong> للتوازن (الافتراضي)، <strong>أوبس</strong> للدقّة العالية.</li>
+          <li><span class="bullet-mark">✔</span>أخطاء شائعة: غموض السياق، عدم تحديد طول الإجابة، إغفال النبرة والتنسيق.</li>
+          <li><span class="bullet-mark">✔</span><span class="hl hl-green">عقلية التكرار</span> أفضل من «اللقطة الواحدة»: ابنِ السياق تدريجيًا وقدّم ملاحظات واضحة بعد كل نتيجة.</li>
+        </ul>
+
+        <p class="ex-lead" style="margin:10px 0 0;"><strong>القواعد الأربع بالتفصيل:</strong> كل قاعدة تُجيب عن سؤال يجهله كلود عنك، وحذفها يجعله يخمّن — والتخمين هو مصدر كل نتيجة «عامة».</p>
+
+        <div class="pe-rules">
+          <div class="pe-card">
+            <div class="pe-head"><span class="pe-n">١</span><span class="pe-t">الموقف والسياق</span></div>
+            <div class="pe-m">من أنت؟ ولمن تكتب؟ وما خلفية الموضوع؟</div>
+            <div class="pe-line bad"><span class="pe-mk">✗</span><span>«اكتب كتابًا رسميًا.»</span></div>
+            <div class="pe-line good"><span class="pe-mk">✓</span><span>«أنا مدير شعبة الأرشفة في المعهد، أكتب إلى دائرة الموارد البشرية بخصوص تأخير معاملة تقاعد.»</span></div>
+            <div class="pe-why">بلا سياق يخترع جهةً ونبرةً لا تشبهان دائرتك.</div>
+          </div>
+
+          <div class="pe-card g">
+            <div class="pe-head"><span class="pe-n">٢</span><span class="pe-t">المهمة بوضوح</span></div>
+            <div class="pe-m">فعل واحد محدّد، وما المطلوب بالضبط.</div>
+            <div class="pe-line bad"><span class="pe-mk">✗</span><span>«شوف هذا التقرير.»</span></div>
+            <div class="pe-line good"><span class="pe-mk">✓</span><span>«استخرج من التقرير ثلاث مشكلات متكرّرة، ورتّبها من الأكثر تكرارًا.»</span></div>
+            <div class="pe-why">«شوف» ليست مهمة — قد يلخّص أو ينتقد أو يعيد الكتابة، وكلها «تنفيذ» لأمرك.</div>
+          </div>
+
+          <div class="pe-card o">
+            <div class="pe-head"><span class="pe-n">٣</span><span class="pe-t">القواعد والشكل</span></div>
+            <div class="pe-m">الطول · النبرة · التنسيق · والممنوعات.</div>
+            <div class="pe-line bad"><span class="pe-mk">✗</span><span>لا شيء — تترك الشكل له.</span></div>
+            <div class="pe-line good"><span class="pe-mk">✓</span><span>«ثلاث فقرات، صيغة رسمية، بلا عبارات مجاملة، وأنهِ بجملة طلب واحدة.»</span></div>
+            <div class="pe-why">بلا شكل تحصل على نصّ تُعيد تحريره — فيضيع الوقت الذي وفّرته.</div>
+          </div>
+
+          <div class="pe-card p">
+            <div class="pe-head"><span class="pe-n">٤</span><span class="pe-t">المثال</span></div>
+            <div class="pe-m">نموذج واحد يريه ما تقصده بدل أن تصفه.</div>
+            <div class="pe-line bad"><span class="pe-mk">✗</span><span>«بالأسلوب المعتمد عندنا.»</span></div>
+            <div class="pe-line good"><span class="pe-mk">✓</span><span>«هذا نموذج من كتبنا السابقة: [ألصق كتابًا]. احتذِ نبرته وترتيبه.»</span></div>
+            <div class="pe-why">مثال واحد أقوى من عشر صفات — فـ«رسمي» تعني عند كل دائرة شيئًا مختلفًا.</div>
+          </div>
+        </div>
+
+        <div class="pe-full">
+          <p class="ex-lead" style="margin:4px 0 8px;"><strong>والأمر نفسه مبنيًّا بالقواعد الأربع:</strong></p>
+
+          <div class="pe-weak"><strong style="color:var(--red);">✗ الأمر الضعيف:</strong> «اكتب لي كتاب اعتذار عن تأخير معاملة.»</div>
+
+          <div class="pe-built">
+            <div class="pe-seg"><span class="pe-tag">١ الموقف</span>أنا مدير شعبة الأرشفة في المعهد العالي لإعداد وتأهيل القادة. الكتاب موجّه إلى دائرة الموارد البشرية، وسبب التأخير تعطّل منظومة الأرشفة أسبوعًا كاملًا.</div>
+            <div class="pe-seg g"><span class="pe-tag">٢ المهمة</span>اكتب كتاب اعتذار رسميًّا عن تأخير المعاملة رقم ٤٥٧، يوضّح السبب ويحدّد موعدًا جديدًا للإنجاز هو العشرون من الشهر الحالي.</div>
+            <div class="pe-seg o"><span class="pe-tag">٣ الشكل</span>ثلاث فقرات لا أكثر · صيغة رسمية بضمير الغائب · بلا عبارات مجاملة أو مبالغة · وأنهِ بجملة طلب واحدة.</div>
+            <div class="pe-seg p"><span class="pe-tag">٤ المثال</span>هذا نموذج من كتبنا السابقة، احتذِ نبرته وترتيبه: [ألصق هنا كتابًا سابقًا من دائرتك].</div>
+            <div class="pe-out"><strong>النتيجة:</strong> كتاب جاهز للتوقيع من المحاولة الأولى غالبًا — وما يبقى تعديله يُصلَح بجولة أو جولتين، لا بإعادة الكتابة من الصفر.</div>
+          </div>
+
+          <p class="ex-lead" style="margin:14px 0 0;">لاحظ أن الأمر <span class="hl hl-yellow">أطول</span> — وهذا هو الثمن الوحيد. تكتبه مرة، وتحفظه في <strong>مشروع</strong> أو <strong>التعليمات الدائمة</strong>، فلا تكتبه ثانيةً أبدًا.</p>
+
+          <p class="ex-lead" style="margin:12px 0 0;"><strong>وأخطاء المحاضرة الثلاثة</strong> ليست إلا القواعد نفسها مقلوبة: غموض السياق = سقوط القاعدة ١ · عدم تحديد طول الإجابة = سقوط ٣ · إغفال النبرة والتنسيق = سقوط ٣ أيضًا. فمن ضبط القواعد الأربع نجا من الأخطاء الثلاثة.</p>
+        </div>
+
+        <div class="ex-iter">
+          <p class="ex-lead"><strong>مثال عملي:</strong> تريد تقريرًا شهريًا عن أداء شعبة الأرشفة الإلكترونية.</p>
+
+          <div class="ex-pair">
+            <div class="ex-card bad">
+              <span class="ex-chip">✗ اللقطة الواحدة</span>
+              <div class="ex-prompt">«اكتب لي تقريرًا شهريًا عن أداء شعبة الأرشفة الإلكترونية لشهر آب، يتضمّن الإنجازات والمعوّقات والتوصيات، بأسلوب رسمي.»</div>
+              <div class="ex-note">كلام عام، وأرقام غير موجودة في بياناتك، وأسلوب لا يشبه مراسلاتك. فتقرأه ولا يعجبك، فتفتح محادثة جديدة وتعيد الصياغة — <span class="hl hl-pink">وتبدأ من الصفر كل مرة</span>.</div>
+            </div>
+
+            <div class="ex-card good">
+              <span class="ex-chip">✓ عقلية التكرار</span>
+              <ol class="ex-rounds">
+                <li><span class="ex-rn">١</span><span><span class="ex-said">«هذه بيانات آب: [الجدول]. لخّصها بخمس نقاط، بلا مقدمة.»</span> <span class="ex-got">← تقرأ النتيجة.</span></span></li>
+                <li><span class="ex-rn">٢</span><span><span class="ex-said">«النقطة الثالثة عامة. اربطها بالرقم: المتأخرات نزلت من ٤٠ إلى ١٢.»</span> <span class="ex-got">← تُصلَح نقطة واحدة.</span></span></li>
+                <li><span class="ex-rn">٣</span><span><span class="ex-said">«الأسلوب رسمي أكثر من اللازم. اكتبها بلغة مذكّرة داخلية.»</span> <span class="ex-got">← تُضبَط النبرة.</span></span></li>
+                <li><span class="ex-rn">٤</span><span><span class="ex-said">«أضف ثلاث توصيات قابلة للتنفيذ خلال شهر.»</span> <span class="ex-got">← يُبنى فوق ما سبق.</span></span></li>
+                <li><span class="ex-rn">٥</span><span><span class="ex-said">«صِغ العنوان.»</span> <span class="ex-got">← ينتهي التقرير.</span></span></li>
+              </ol>
+            </div>
+          </div>
+
+          <p class="ex-lead" style="margin:14px 0 0;">لاحظ الجولة الرابعة: <span class="hl hl-yellow">لم تُعِد شرح البيانات ولا الأسلوب</span> — هو يتذكّرهما مما سبق. أنت <strong>تراكم السياق</strong> لا تعيد بناءه، وهذا هو المكسب كلّه.</p>
+
+          <p class="ex-lead" style="margin:14px 0 0;">وشرط نجاحها ملاحظة <strong>محدّدة</strong>: قُل أي جزء فيه خلل وما الصواب، لا حكمًا عامًا على النصّ كله.</p>
+
+          <div class="fb-grid">
+            <div class="fb-h bad">ملاحظة عقيمة</div>
+            <div class="fb-h good">ملاحظة تعمل</div>
+            <div class="fb-b">«ما عجبني»</div>
+            <div class="fb-g">«الفقرة الثانية طويلة — اختصرها لسطرين»</div>
+            <div class="fb-b">«خليه أحسن»</div>
+            <div class="fb-g">«احذف عبارات المجاملة وابدأ بالنتيجة»</div>
+            <div class="fb-b">«غلط»</div>
+            <div class="fb-g">«الرقم خطأ، الصحيح ١٢ لا ٢٠»</div>
+            <div class="fb-b">«مو رسمي»</div>
+            <div class="fb-g">«استعمل صيغة الغائب، وابدأ بـ: تشير المؤشرات إلى…»</div>
+          </div>
+
+          <p class="ex-lead" style="margin:14px 0 0;"><strong>ومتى تنفع اللقطة الواحدة؟</strong> في المهام القصيرة المعروفة مثل «صحّح إملاء هذه الفقرة». أما ما فيه أسلوب أو حكم أو بيانات — تقرير، كتاب رسمي، تحليل — فالتكرار أسرع وأدقّ <span class="hl hl-blue">حتى لو بدا أطول</span>، لأن اللقطة الواحدة تنتهي عادةً بخمس محاولات من الصفر، والتكرار بخمس جولات تبني كلٌّ منها على التي قبلها.</p>
+        </div>
+
+        <div class="chapter-num" style="color:var(--red);"><span class="cn-num">٥</span><span class="cn-title">المشاريع والمهارات</span></div>
+        <ul class="bullet-list">
+          <li><span class="bullet-mark">✔</span><strong>المشاريع (Projects)</strong>: بيئة معزولة بذاكرة وتعليمات وملفات ثابتة لكل موضوع تتعامل معه بانتظام.</li>
+          <li><span class="bullet-mark">✔</span><strong>الأرتيفاكتس (Artifacts)</strong>: نافذة تفاعلية مستقلّة لمعاينة الكود أو المواقع أو المستندات الطويلة، ومشاركتها برابط.</li>
+          <li><span class="bullet-mark">✔</span><strong>المهارات (Skills)</strong>: أسلوب تنفيذ قابل لإعادة الاستخدام — جاهزة من Anthropic أو مصمّمة خصيصًا لك عبر «صانع المهارات».</li>
+        </ul>
+
+        <div class="section-heading">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>مصطلحات هذا الأسبوع بالعربي</span>
+        </div>
+        <ul class="glossary-list">
+          <li><span class="gloss-ar">نموذج لغوي كبير</span> <span class="gloss-term">(LLM)</span>: برنامج "قرأ" كمية هائلة من النصوص فصار يتوقّع الكلمة المناسبة الجاية، من دون أن "يفهم" متل الإنسان.</li>
+          <li><span class="gloss-ar">الأمر/الطلب</span> <span class="gloss-term">(Prompt)</span>: الجملة اللي تكتبها للبرنامج توضّح فيها شنو تريد بالضبط.</li>
+          <li><span class="gloss-ar">التقطيع</span> <span class="gloss-term">(Tokenization)</span>: تقسيم جملتك إلى قطع صغيرة يتعامل معها البرنامج.</li>
+          <li><span class="gloss-ar">التمثيل الرقمي</span> <span class="gloss-term">(Embeddings)</span>: تحويل كل قطعة نص إلى أرقام تعكس معناها.</li>
+          <li><span class="gloss-ar">نافذة السياق</span> <span class="gloss-term">(Context Window)</span>: كمية النص اللي يقدر يتذكرها البرنامج بنفس المحادثة.</li>
+          <li><span class="gloss-ar">الهلوسة/الاختلاق</span> <span class="gloss-term">(Hallucination)</span>: إعطاء معلومة غلط بثقة تامة وكأنها صحيحة.</li>
+          <li><span class="gloss-ar">شات/كوورك/كود</span> <span class="gloss-term">(Chat / Cowork / Code)</span>: محادثة سريعة، أو تنفيذ مهام أكبر بالملفات، أو أداة برمجة متخصّصة.</li>
+          <li><span class="gloss-ar">الإرسال إلى وكلاء فرعيين</span> <span class="gloss-term">(Dispatch / Subagents)</span>: تفويض جزء من المهمة لمساعد مستقل يشتغل بالخلفية.</li>
+          <li><span class="gloss-ar">المشاريع</span> <span class="gloss-term">(Projects)</span>: مساحة تحتفظ بمعلومات وملفات ثابتة لموضوع معيّن.</li>
+          <li><span class="gloss-ar">الأرتيفاكتس/النواتج التفاعلية</span> <span class="gloss-term">(Artifacts)</span>: نافذة منفصلة تعرض نتيجة شغلك.</li>
+          <li><span class="gloss-ar">المهارات</span> <span class="gloss-term">(Skills)</span>: طريقة عمل جاهزة يستخدمها البرنامج تلقائيًا لتنفيذ مهمة معيّنة.</li>
+        </ul>
+
+        <div class="section-heading">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>أسئلة للمراجعة</span>
+        </div>
+        <p class="quiz-note">بدون حلول — فكّر بنفسك واكتب إجابتك بالمساحة الفارغة، والحل يُناقش بالمحاضرة الجاية.</p>
+
+        <div class="mcq-item">
+          <span class="q-num">١.</span> النموذج اللغوي الكبير (LLM) يعمل بشكل أساسي عن طريق:
+          <ul class="mcq-options">
+            <li><span class="opt-letter">أ)</span> فهم النص فهمًا بشريًا حقيقيًا</li>
+            <li><span class="opt-letter">ب)</span> توقّع الكلمة التالية بناءً على أنماط تعلّمها من نصوص سابقة</li>
+            <li><span class="opt-letter">ج)</span> البحث في الإنترنت لحظيًا عن كل إجابة</li>
+            <li><span class="opt-letter">د)</span> حفظ كل إجابة سبق أن أعطاها لأي مستخدم</li>
+          </ul>
+        </div>
+        <div class="mcq-item">
+          <span class="q-num">٢.</span> "الهلوسة" (Hallucination) في الذكاء الاصطناعي تعني:
+          <ul class="mcq-options">
+            <li><span class="opt-letter">أ)</span> توقّف البرنامج عن العمل فجأة</li>
+            <li><span class="opt-letter">ب)</span> إعطاء إجابة خاطئة بثقة تامة وكأنها صحيحة</li>
+            <li><span class="opt-letter">ج)</span> طلب البرنامج توضيحًا إضافيًا من المستخدم</li>
+            <li><span class="opt-letter">د)</span> رفض البرنامج الإجابة على سؤال معيّن</li>
+          </ul>
+        </div>
+        <div class="mcq-item">
+          <span class="q-num">٣.</span> أي أداة من أدوات كلود الأنسب لتنظيم ملفاتك وجدولة مهام تتكرر يوميًا تلقائيًا؟
+          <ul class="mcq-options">
+            <li><span class="opt-letter">أ)</span> كلود شات (Chat)</li>
+            <li><span class="opt-letter">ب)</span> كلود كوورك (Cowork)</li>
+            <li><span class="opt-letter">ج)</span> كلود كود (Claude Code)</li>
+            <li><span class="opt-letter">د)</span> كلها بنفس القدرة</li>
+          </ul>
+        </div>
+        <div class="mcq-item">
+          <span class="q-num">٤.</span> حسب "القواعد الذهبية الأربع" لكتابة أمر ناجح، أول خطوة هي:
+          <ul class="mcq-options">
+            <li><span class="opt-letter">أ)</span> تقديم مثال</li>
+            <li><span class="opt-letter">ب)</span> تحديد شكل الإجابة المطلوبة</li>
+            <li><span class="opt-letter">ج)</span> تحديد الموقف والسياق</li>
+            <li><span class="opt-letter">د)</span> تحديد طول الإجابة فقط</li>
+          </ul>
+        </div>
+        <div class="mcq-item">
+          <span class="q-num">٥.</span> أي نموذج من نماذج كلود هو "الافتراضي" المتوازن لمعظم المهام اليومية؟
+          <ul class="mcq-options">
+            <li><span class="opt-letter">أ)</span> هايكو (Haiku)</li>
+            <li><span class="opt-letter">ب)</span> سونيت (Sonnet)</li>
+            <li><span class="opt-letter">ج)</span> أوبس (Opus)</li>
+            <li><span class="opt-letter">د)</span> لا فرق بين النماذج</li>
+          </ul>
+        </div>
+
+        <div class="section-heading" style="margin-top:22px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>أسئلة سيناريو (إجابة قصيرة)</span>
+        </div>
+        <div class="mcq-item">
+          <span class="q-num">١.</span> موظف بدائرتك كتب لكلود: «اكتب لي كتاب رسمي» بدون أي تفاصيل أخرى، وحصل على نتيجة عامة جدًا ما تناسب طبيعة عمله. ما الخطأ بهذا الأمر، وكيف يصححه؟
+          <span class="blank-line"></span>
+          <span class="blank-line"></span>
+        </div>
+        <div class="mcq-item">
+          <span class="q-num">٢.</span> مدير يستخدم كلود لتلخيص تقرير طويل، وبعد ٤٠ دقيقة لاحظ أن الإجابات بدأت تفقد دقتها وتتجاهل تفاصيل ذكرها بالبداية. ما تفسير هذا، وما الإجراء المناسب؟
+          <span class="blank-line"></span>
+          <span class="blank-line"></span>
+        </div>
+        <div class="mcq-item">
+          <span class="q-num">٣.</span> موظف اعتمد على رقم مالي أعطاه كلود دون التحقق منه، وتبيّن لاحقًا أنه غير دقيق. أي مبدأ من مبادئ المحاضرة كان يجب اتّباعه؟
+          <span class="blank-line"></span>
+          <span class="blank-line"></span>
+        </div>
+
+        <div class="section-heading" style="margin-top:22px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>أسئلة مقالية</span>
+        </div>
+        <div class="mcq-item">
+          <span class="q-num">١.</span> اشرح بأسلوبك الخاص الفرق بين "عقلية اللقطة الواحدة" و"عقلية التكرار"، ومثّل لكل منهما بموقف من عملك اليومي.
+          <span class="blank-line"></span>
+          <span class="blank-line"></span>
+          <span class="blank-line"></span>
+        </div>
+        <div class="mcq-item">
+          <span class="q-num">٢.</span> ناقش كيف يمكن الاستفادة من أداة "المشاريع" (Projects) بتنظيم عمل دائرة حكومية تتعامل مع نفس نوع المعاملات بشكل متكرر.
+          <span class="blank-line"></span>
+          <span class="blank-line"></span>
+          <span class="blank-line"></span>
+        </div>
+
+        <div class="section-heading" style="margin-top:22px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>صح أو خطأ</span>
+        </div>
+        <div class="tf-item"><span>١. النموذج اللغوي الكبير "يفكّر" بنفس طريقة تفكير الإنسان.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+        <div class="tf-item"><span>٢. يجب دائمًا التحقق من المعلومات الحسّاسة اللي يقدّمها الذكاء الاصطناعي من مصدر موثوق.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+        <div class="tf-item"><span>٣. "التفكير الممتد" يُفضَّل تفعيله بكل سؤال لأنه لا يكلّف شيئًا إضافيًا.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+        <div class="tf-item"><span>٤. نافذة السياق الكبيرة تعني أن كلود يتذكر كل شيء للأبد حتى بعد إغلاق المحادثة.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+        <div class="tf-item"><span>٥. الإرسال إلى وكلاء فرعيين يساعد على إبقاء المحادثة الأساسية مركّزة.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+
+        <div class="mini-note">نهاية المحاضرة الرابعة — إعداد: أ.م.د أمير هادي ★</div>
 
         <div class="page-nav">
           <button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button>
@@ -5241,6 +5541,137 @@
           <div class="sol-model"><b>الإجابة النموذجيّة:</b> يلزم تغييرُ ما يشترط الخطواتِ الساقطة: <b>إلغاءُ التوقيعات التي دُمِجت أو حُذفت</b> بقرارٍ رسميّ، و<b>اعتمادُ التوقيع الإلكترونيّ</b> بدل الخطّيّ، و<b>اعتمادُ السجلّ الرقميّ سجلًّا رسميًّا</b> يُحتجّ به، و<b>إعادةُ توزيع الصلاحيّات</b> على مَن صار يوافق.<br><b>ولا تكفي الأداةُ لأنّ</b> الإجراء المنجَز بها يبقى <b>غيرَ معتمَدٍ رسميًّا</b>: فعند أوّل مساءلةٍ أو تدقيقٍ يُطلَب الأصلُ الورقيُّ والتوقيعُ الخطّيّ، فيعود الموظّفون إلى الورق ويصير النظامُ الرقميُّ عملًا مزدوجًا فوق القديم لا بديلًا عنه.</div>
           <p class="sol-why"><b>معيار التصحيح:</b> الدرجةُ الكاملةُ تشترط ذكرَ <b>نوعين على الأقلّ</b> من التغيير الرسميّ، وسببًا يتعلّق بالاعتماد أو المساءلة لا بالتقنية. <b>وإجابةٌ لا تذكر إلّا التدريب أو الميزانيّة لم تُدرك جوهر السؤال</b> — فهذه عقباتُ تنفيذٍ لا عقباتُ اعتماد.</p>
         </div>
+
+
+        <div class="sol-week"><span class="sw-n">٤</span><span class="sw-t">حلول الأسبوع الرابع — مدخل إلى الذكاء الاصطناعيّ</span></div>
+
+        <div class="sol-kind"><span>الاختيار من متعدّد</span><span class="sk-line"></span></div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">١.</span> النموذج اللغوي الكبير (LLM) يعمل بشكل أساسي عن طريق:</p>
+          <div class="sol-opts">
+            <div class="sol-opt bad"><span class="so-k">أ)</span><span>فهم النص فهمًا بشريًا حقيقيًا</span></div>
+            <div class="sol-opt ok"><span class="so-k">ب)</span><span>توقّع الكلمة التالية بناءً على أنماط تعلّمها من نصوص سابقة</span></div>
+            <div class="sol-opt bad"><span class="so-k">ج)</span><span>البحث في الإنترنت لحظيًا عن كل إجابة</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>حفظ كل إجابة سبق أن أعطاها لأي مستخدم</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> هذا تعريفه حرفيًّا. «أ» خطأ لأنه لا يفهم فهمًا بشريًّا. «ج» خطأ لأنه لا يبحث لحظيًّا — البحث أداة منفصلة تُضاف عند الحاجة. «د» خطأ لأنه لا يحفظ إجابات المستخدمين ولا يستدعيها لاحقًا.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٢.</span> "الهلوسة" (Hallucination) في الذكاء الاصطناعي تعني:</p>
+          <div class="sol-opts">
+            <div class="sol-opt bad"><span class="so-k">أ)</span><span>توقّف البرنامج عن العمل فجأة</span></div>
+            <div class="sol-opt ok"><span class="so-k">ب)</span><span>إعطاء إجابة خاطئة بثقة تامة وكأنها صحيحة</span></div>
+            <div class="sol-opt bad"><span class="so-k">ج)</span><span>طلب البرنامج توضيحًا إضافيًا من المستخدم</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>رفض البرنامج الإجابة على سؤال معيّن</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> الخطورة في <b>الثقة</b> لا في الخطأ وحده — لو قال «لست متأكّدًا» لما سُمّيت هلوسة. «د» (رفض الإجابة) سلوكٌ مختلف تمامًا ولا ضرر فيه.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٣.</span> أي أداة من أدوات كلود الأنسب لتنظيم ملفاتك وجدولة مهام تتكرر يوميًا تلقائيًا؟</p>
+          <div class="sol-opts">
+            <div class="sol-opt bad"><span class="so-k">أ)</span><span>كلود شات (Chat)</span></div>
+            <div class="sol-opt ok"><span class="so-k">ب)</span><span>كلود كوورك (Cowork)</span></div>
+            <div class="sol-opt bad"><span class="so-k">ج)</span><span>كلود كود (Claude Code)</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>كلها بنفس القدرة</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> كوورك وحده يجمع ثلاثًا: يصل إلى ملفاتك، ويشتغل بالخلفية، وتُبنى عليه الجدولة. «أ» الشات محادثة لا تصل للملفات. «ج» الكود أداة مبرمجين.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٤.</span> حسب "القواعد الذهبية الأربع" لكتابة أمر ناجح، أول خطوة هي:</p>
+          <div class="sol-opts">
+            <div class="sol-opt bad"><span class="so-k">أ)</span><span>تقديم مثال</span></div>
+            <div class="sol-opt bad"><span class="so-k">ب)</span><span>تحديد شكل الإجابة المطلوبة</span></div>
+            <div class="sol-opt ok"><span class="so-k">ج)</span><span>تحديد الموقف والسياق</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>تحديد طول الإجابة فقط</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> الترتيب مقصود — من أنت ولمن تكتب أوّلًا، ثم المهمة، ثم الشكل والطول. لو بدأت بـ«ب» أو «د» أعطاك نصًّا مضبوط الطول لكن خاطئ المضمون.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٥.</span> أي نموذج من نماذج كلود هو "الافتراضي" المتوازن لمعظم المهام اليومية؟</p>
+          <div class="sol-opts">
+            <div class="sol-opt bad"><span class="so-k">أ)</span><span>هايكو (Haiku)</span></div>
+            <div class="sol-opt ok"><span class="so-k">ب)</span><span>سونيت (Sonnet)</span></div>
+            <div class="sol-opt bad"><span class="so-k">ج)</span><span>أوبس (Opus)</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>لا فرق بين النماذج</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> هايكو للسرعة، وأوبس للدقّة في المسائل المعقّدة، وسونيت التوازن الافتراضي بينهما.</p>
+        </div>
+
+        <div class="sol-kind"><span>صح أو خطأ</span><span class="sk-line"></span></div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">١.</span> النموذج اللغوي الكبير "يفكّر" بنفس طريقة تفكير الإنسان.</p><span class="sol-badge f">خطأ</span></div>
+          <p class="sol-why">يتوقّع الكلمة التالية إحصائيًّا، ولا وعي عنده ولا فهم بالمعنى البشري.</p>
+        </div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٢.</span> يجب دائمًا التحقق من المعلومات الحسّاسة اللي يقدّمها الذكاء الاصطناعي من مصدر موثوق.</p><span class="sol-badge t">صح</span></div>
+          <p class="sol-why">هو مساعد لا مصدر — كل رقم واسم وتاريخ يخرج منه يُتحقَّق منه بنفسك قبل البناء عليه.</p>
+        </div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٣.</span> "التفكير الممتد" يُفضَّل تفعيله بكل سؤال لأنه لا يكلّف شيئًا إضافيًا.</p><span class="sol-badge f">خطأ</span></div>
+          <p class="sol-why">أبطأ ويستهلك أكثر. يُفعَّل للمسائل المركّبة لا لسؤالٍ عابر، وعبارة «لا يكلّف شيئًا» غلطٌ صريح في العبارة نفسها.</p>
+        </div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٤.</span> نافذة السياق الكبيرة تعني أن كلود يتذكر كل شيء للأبد حتى بعد إغلاق المحادثة.</p><span class="sol-badge f">خطأ</span></div>
+          <p class="sol-why">النافذة ذاكرة <b>المحادثة الواحدة</b> فقط: تمتلئ فيفقد أوّلها، وتنتهي بإغلاقها — لا تبقى للأبد.</p>
+        </div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٥.</span> الإرسال إلى وكلاء فرعيين يساعد على إبقاء المحادثة الأساسية مركّزة.</p><span class="sol-badge t">صح</span></div>
+          <p class="sol-why">العمل الثقيل يخرج من المحادثة الأساسية إلى وكيلٍ فرعي، فلا تمتلئ نافذة سياقها بتفاصيل جانبية.</p>
+        </div>
+
+        <div class="sol-kind"><span>أسئلة السيناريو</span><span class="sk-line"></span></div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">١.</span> موظف بدائرتك كتب لكلود: «اكتب لي كتاب رسمي» بدون أي تفاصيل أخرى، وحصل على نتيجة عامة جدًا ما تناسب طبيعة عمله. ما الخطأ بهذا الأمر، وكيف يصححه؟</p>
+          <p class="sol-why"><b>الخطأ:</b> الأمر خالٍ من القواعد الأربع — لا دور ولا جمهور ولا مهمة محدّدة ولا حدود. <b>التصحيح:</b> «اكتب كتابًا رسميًّا من مدير قسم التدريب إلى مدير الدائرة بشأن كذا. المعطيات: … الشروط: ثلاث فقرات، رسمي موجز، بلا مبالغة، ولا يزيد على ١٥٠ كلمة.» ثم يحسّنه بالتكرار ولا يقبل أوّل جواب.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٢.</span> مدير يستخدم كلود لتلخيص تقرير طويل، وبعد ٤٠ دقيقة لاحظ أن الإجابات بدأت تفقد دقتها وتتجاهل تفاصيل ذكرها بالبداية. ما تفسير هذا، وما الإجراء المناسب؟</p>
+          <p class="sol-why"><b>التفسير:</b> امتلأت نافذة السياق، فبدأ يفقد أوّل الكلام — ليس عطلًا ولا تراجعًا في جودته. <b>الإجراء:</b> محادثة جديدة للموضوع الجديد، وتلخيص النقاط المهمّة ولصقها في المحادثة الجديدة، وتقسيم التقرير الطويل أجزاءً بدل دفعة واحدة.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٣.</span> موظف اعتمد على رقم مالي أعطاه كلود دون التحقق منه، وتبيّن لاحقًا أنه غير دقيق. أي مبدأ من مبادئ المحاضرة كان يجب اتّباعه؟</p>
+          <p class="sol-why"><b>المبدأ:</b> الإشراف البشري والتحقّق قبل الاعتماد. الرقم يخرج بثقة تامّة ولا يُنبّهك أنه قد يكون خاطئًا، والتوقيع توقيعه والمسؤولية مسؤوليته. الواجب أن يعدّ الرقم بنفسه من المصدر قبل البناء عليه.</p>
+        </div>
+
+        <div class="sol-kind"><span>الأسئلة المقالية — نقاط التصحيح</span><span class="sk-line"></span></div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">١.</span> اشرح بأسلوبك الخاص الفرق بين "عقلية اللقطة الواحدة" و"عقلية التكرار"، ومثّل لكل منهما بموقف من عملك اليومي.</p>
+          <ul class="sol-grading">
+            <li><b>تعريف كلٍّ منهما:</b> اللقطة الواحدة تتوقّع النتيجة الكاملة من أول أمر، والتكرار يعامل الأمر محادثةً لا طلبًا نهائيًّا.</li>
+            <li><b>مثالان من عمله هو</b> — لا مثال معمَّم من المحاضرة.</li>
+            <li>ربط بالقواعد الذهبية: كتاب رسمي يُحسَّن بثلاث جُمل («أقصر» ← «أرسمي» ← «احذف الفقرة الثانية»).</li>
+            <li>استنتاج أنّ التكرار <b>أسرع فعليًّا</b> رغم أنه يبدو أطول خطوةً بخطوة.</li>
+          </ul>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٢.</span> ناقش كيف يمكن الاستفادة من أداة "المشاريع" (Projects) بتنظيم عمل دائرة حكومية تتعامل مع نفس نوع المعاملات بشكل متكرر.</p>
+          <ul class="sol-grading">
+            <li>المشروع بيئة عمل لموضوع واحد، لا محادثة عابرة.</li>
+            <li><b>التعليمات الثابتة</b> تُكتب مرّة فتنطبق على كل محادثة داخله.</li>
+            <li><b>الملفات المرجعية</b> تصير قاعدة معرفة يرجع إليها كل طلب.</li>
+            <li>تطبيقٌ على معاملة متكرّرة بعينها من عمل الطالب، لا وصفٌ نظري.</li>
+            <li>ذكر مكسب التوحيد: الصياغة تصير واحدة مهما تغيّر الموظّف الذي يكتب.</li>
+          </ul>
+        </div>
+
+        <!-- ============================================================
+             الأسبوع الثاني
+             ============================================================ -->
 
         <div class="mini-note">نهاية دليل الحلول — إعداد: د. أمير هادي ★</div>
 
