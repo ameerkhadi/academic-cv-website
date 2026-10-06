@@ -53,7 +53,7 @@ if errorlevel 1 (
 rem ---- demo data ----
 if not exist "data\tickets.db" (
   echo  [4/4] Creating demo data ...
-  ".venv\Scripts\python.exe" -m app.seed --demo --password=Demo!2026
+  ".venv\Scripts\python.exe" -m app.seed --demo --password=Qadat2026
 ) else (
   echo  [4/4] Database found.
 )
@@ -64,7 +64,7 @@ echo     URL:       http://127.0.0.1:8000
 echo.
 echo     Manager:   manager
 echo     Employee:  tasjeel
-echo     Password:  Demo!2026
+echo     Password:  Qadat2026
 echo.
 echo     Stop:      press Ctrl+C
 echo  ==========================================
