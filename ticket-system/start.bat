@@ -1,67 +1,78 @@
 @echo off
 setlocal enabledelayedexpansion
-chcp 65001 >nul
 cd /d "%~dp0"
-title نظام التذاكر الالكترونية
+title E-Ticket System - Local
 
 echo.
-echo  ===========================================
-echo    نظام التذاكر الالكترونية - تشغيل محلي
-echo  ===========================================
+echo  ==========================================
+echo    E-TICKET SYSTEM  --  Local Run
+echo  ==========================================
 echo.
 
-rem ── ايجاد بايثون ──
+rem ---- find python ----
 set "PY="
 where py >nul 2>nul && set "PY=py"
-if not defined PY where python >nul 2>nul && set "PY=python"
 if not defined PY (
-  echo  [خطأ] بايثون غير مثبت على الجهاز.
+  where python >nul 2>nul && set "PY=python"
+)
+if not defined PY (
+  echo  [ERROR] Python is not installed.
   echo.
-  echo  نزله من:  https://www.python.org/downloads/
-  echo  ومهم جدا: فعل الخيار  "Add Python to PATH"  اثناء التثبيت.
+  echo   1. Download:  https://www.python.org/downloads/
+  echo   2. IMPORTANT: tick  "Add python.exe to PATH"  while installing
+  echo   3. Close this window, then run start.bat again
   echo.
   pause
   exit /b 1
 )
-echo  [1/4] بايثون: !PY!
+echo  [1/4] Python found: !PY!
 
-rem ── البيئة الافتراضية ──
+rem ---- virtual environment ----
 if not exist ".venv\Scripts\python.exe" (
-  echo  [2/4] تهيئة البيئة ... ^(اول مرة فقط، تاخذ دقيقة^)
+  echo  [2/4] Creating environment ... ^(first run only, ~1 min^)
   !PY! -m venv .venv
-  if errorlevel 1 ( echo  [خطأ] فشل انشاء البيئة. & pause & exit /b 1 )
+  if errorlevel 1 (
+    echo  [ERROR] Could not create the environment.
+    pause
+    exit /b 1
+  )
 ) else (
-  echo  [2/4] البيئة جاهزة.
+  echo  [2/4] Environment ready.
 )
 
-rem ── المتطلبات ──
-echo  [3/4] تثبيت المتطلبات ...
+rem ---- dependencies ----
+echo  [3/4] Installing requirements ...
 ".venv\Scripts\python.exe" -m pip install --quiet --disable-pip-version-check --upgrade pip
 ".venv\Scripts\python.exe" -m pip install --quiet --disable-pip-version-check -r requirements.txt
-if errorlevel 1 ( echo  [خطأ] فشل تثبيت المتطلبات - تأكد من الاتصال بالانترنت. & pause & exit /b 1 )
+if errorlevel 1 (
+  echo  [ERROR] Install failed - check your internet connection.
+  pause
+  exit /b 1
+)
 
-rem ── بيانات العرض ──
+rem ---- demo data ----
 if not exist "data\tickets.db" (
-  echo  [4/4] انشاء بيانات العرض ...
+  echo  [4/4] Creating demo data ...
   ".venv\Scripts\python.exe" -m app.seed --demo --password=Demo!2026
 ) else (
-  echo  [4/4] قاعدة البيانات موجودة.
+  echo  [4/4] Database found.
 )
 
 echo.
-echo  ===========================================
-echo    العنوان:   http://127.0.0.1:8000
+echo  ==========================================
+echo     URL:       http://127.0.0.1:8000
 echo.
-echo    مدير الدائرة:  manager
-echo    موظف شعبة:     tasjeel
-echo    كلمة المرور:   Demo!2026
+echo     Manager:   manager
+echo     Employee:  tasjeel
+echo     Password:  Demo!2026
 echo.
-echo    للايقاف: اضغط Ctrl+C
-echo  ===========================================
+echo     Stop:      press Ctrl+C
+echo  ==========================================
 echo.
 
-start "" cmd /c "timeout /t 4 >nul && start http://127.0.0.1:8000"
+start "" cmd /c "timeout /t 5 >nul & start http://127.0.0.1:8000"
 ".venv\Scripts\python.exe" run.py
+
 echo.
-echo  توقف الخادم.
+echo  Server stopped.
 pause
