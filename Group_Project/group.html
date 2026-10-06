@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>مشروع المجموعة ٢ — دفتر المحاضرات</title>
+<style>
+:root{
+  --paper:#fbf7ee; --ink:#26303b; --muted:#5d6975; --line:#d9d0bd;
+  --red:#d8553f; --blue:#2f6fb0; --green:#3b8f5f; --orange:#e59a2f; --teal:#1f8a8a; --violet:#7a5ab5;
+  --card:#ffffff; --fs:1;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#1d2128; --ink:#e8e6df; --muted:#a3adb8; --line:#3a424d; --card:#262c35;
+  }
+}
+:root[data-theme="dark"]{--paper:#1d2128; --ink:#e8e6df; --muted:#a3adb8; --line:#3a424d; --card:#262c35;}
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px)}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--paper); color:var(--ink);
+  font-family:'Segoe UI','Noto Naskh Arabic','Traditional Arabic',Tahoma,Arial,sans-serif;
+  font-size:calc(17px * var(--fs)); line-height:2;
+}
+.wrap{max-width:880px;margin:0 auto;padding:12px 16px 60px}
+.ltr-inline{unicode-bidi:isolate;direction:ltr;font-family:'Courier New',monospace;font-size:.94em}
+.course-bar{text-align:center;color:var(--muted);font-size:calc(13px * var(--fs));padding:10px 0 2px}
+
+/* tabs */
+.tabs{display:flex;gap:8px;overflow-x:auto;padding:10px 4px 14px;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;position:sticky;top:env(safe-area-inset-top,0px);background:var(--paper);z-index:5;border-bottom:1px dashed var(--line)}
+.tab{flex:0 0 auto;font:inherit;font-size:calc(13px * var(--fs));line-height:1.5;border:2px solid var(--ink);background:var(--card);color:var(--ink);padding:6px 12px;border-radius:12px 14px 10px 13px;cursor:pointer;text-align:center;min-width:78px}
+.tab.active{background:var(--orange);color:#1b1b1b}
+.tab.sol{background:var(--teal);color:#fff;border-color:var(--teal)}
+.tab.sol.active{outline:3px solid var(--ink)}
+.slide{display:none;padding-top:18px}
+.slide.active{display:block}
+
+/* banner */
+.chip{display:inline-block;background:var(--blue);color:#fff;font-size:calc(13px * var(--fs));padding:2px 14px;border-radius:14px 10px 15px 9px;transform:rotate(-1.5deg)}
+.page-title{font-size:calc(30px * var(--fs));line-height:1.5;margin:10px 0 0}
+.page-underline{width:min(320px,70%);height:22px;display:block}
+.lead-paragraph{font-size:calc(18px * var(--fs));color:var(--ink)}
+p{margin:.55em 0}
+
+/* sections */
+.section-heading{display:flex;align-items:center;gap:10px;margin:34px 0 8px;font-size:calc(22px * var(--fs));font-weight:700;border-bottom:2px solid var(--ink);padding-bottom:4px}
+.section-heading .arrow-icon{width:30px;height:30px;flex:0 0 30px}
+.ref{font-size:.7em;vertical-align:super;line-height:0}
+.ref a{color:var(--blue);text-decoration:none;font-weight:700}
+.hl{padding:0 4px;border-radius:4px}
+.hl-yellow{background:#fff1a8;color:#222}.hl-green{background:#cfeedb;color:#12331f}.hl-pink{background:#fbd3dc;color:#4a1220}.hl-blue{background:#cfe3f8;color:#10304f}
+
+.takeaway{background:#fff6dc;color:#2b2514;border:2px solid var(--orange);border-radius:12px 16px 12px 18px;padding:10px 16px;margin:16px 0}
+.oops{display:flex;gap:10px;align-items:flex-start;background:#fde8e4;color:#4a1b13;border:2px solid var(--red);border-radius:14px 10px 16px 10px;padding:10px 14px;margin:16px 0}
+.oops .o-i{font-size:1.3em;line-height:1.7}
+.mini-note{text-align:center;color:var(--muted);font-size:calc(13px * var(--fs));margin-top:34px}
+
+/* tables */
+.dt-cap{font-weight:700;margin:20px 0 4px;font-size:calc(15px * var(--fs))}
+.dt-wrap{overflow-x:auto;border:2px solid var(--ink);border-radius:12px;background:var(--card)}
+.dt{border-collapse:collapse;width:100%;min-width:0;font-size:calc(15px * var(--fs));line-height:1.8}
+.dt th{background:var(--ink);color:var(--paper);padding:8px 10px;text-align:right}
+.dt td{padding:8px 10px;border-top:1px solid var(--line);vertical-align:top}
+.dt td:first-child{font-weight:700;min-width:96px;overflow-wrap:normal}
+.dt td:first-child .ltr-inline{font-family:Arial,'Segoe UI',sans-serif;font-size:.92em}
+.dt td,.dt th{overflow-wrap:break-word}
+
+/* pipeline diagram */
+.pipe{display:flex;flex-direction:column;align-items:stretch;gap:0;margin:16px 0}
+.pipe-row{display:flex;gap:12px;align-items:flex-start;background:var(--card);border:2px solid var(--ink);border-radius:14px 10px 15px 10px;padding:8px 12px}
+.pipe-row.hi{border-color:var(--red);background:#fff2ee;color:#2b1712}
+.pipe-n{flex:0 0 34px;height:34px;border-radius:50%;background:var(--ink);color:var(--paper);display:flex;align-items:center;justify-content:center;font-weight:700;margin-top:4px}
+.pipe-row.hi .pipe-n{background:var(--red);color:#fff}
+.pipe-b{flex:1;line-height:1.8;font-size:calc(15.5px * var(--fs))}
+.pipe-b small{display:block;color:var(--muted);font-size:.88em}
+.pipe-row.hi .pipe-b small{color:#6b3d33}
+.pipe-a{text-align:center;color:var(--muted);line-height:1.1;font-size:1.3em;padding:2px 0}
+
+/* stage ladder (Tuckman) */
+.ladder{display:flex;flex-direction:column;gap:8px;margin:14px 0}
+.rung{border:2px solid var(--ink);border-radius:12px 16px 12px 14px;padding:8px 14px;background:var(--card)}
+.rung b.rn{display:inline-block;min-width:92px}
+.rung:nth-child(1){margin-inline-start:0}.rung:nth-child(2){margin-inline-start:2.5%}.rung:nth-child(3){margin-inline-start:5%}.rung:nth-child(4){margin-inline-start:7.5%}.rung:nth-child(5){margin-inline-start:10%}
+.rung .eng{color:var(--blue);font-weight:700}
+
+/* role clusters */
+.clusters{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px;margin:14px 0}
+.cl{border:2px solid var(--ink);border-radius:14px;padding:10px 14px;background:var(--card)}
+.cl h4{margin:0 0 4px;font-size:calc(16px * var(--fs))}
+.cl.a{border-color:var(--red)}.cl.p{border-color:var(--green)}.cl.t{border-color:var(--blue)}
+.cl ul{margin:4px 0 0;padding-inline-start:20px;font-size:calc(15px * var(--fs));line-height:1.8}
+
+/* exercises */
+.quiz-note{color:var(--muted);font-size:calc(14px * var(--fs))}
+.mcq-item,.tf-item{background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:8px 14px;margin:10px 0}
+.q-num{font-weight:700;color:var(--blue)}
+.mcq-options{list-style:none;margin:6px 0 2px;padding:0}
+.mcq-options li{padding:2px 0}
+.opt-letter{font-weight:700;margin-inline-end:6px}
+.tf-boxes{display:inline-flex;gap:18px;margin-inline-start:12px}
+.box{display:inline-block;width:15px;height:15px;border:2px solid var(--ink);border-radius:3px;vertical-align:middle;margin-inline-end:4px}
+.blank-line{display:block;border-bottom:1px dotted var(--muted);height:26px}
+
+/* homework */
+.hw{background:var(--card);border:2px solid var(--ink);border-radius:16px 12px 18px 12px;padding:10px 16px;margin:14px 0}
+.hw-head{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.hw-num{width:30px;height:30px;border-radius:50%;background:var(--orange);color:#1b1b1b;display:flex;align-items:center;justify-content:center;font-weight:700}
+.hw-title{font-weight:700;font-size:calc(17px * var(--fs))}
+.scn-badge{font-size:calc(12px * var(--fs));border-radius:10px;padding:0 10px}
+.lv-easy{background:#cfeedb;color:#12331f}.lv-mid{background:#ffe3b0;color:#4a3000}.lv-hard{background:#fbd3dc;color:#4a1220}
+.hw-cond{background:#eef4fb;color:#10304f;border-radius:8px;padding:6px 12px;margin:8px 0}
+.hw-deliver{display:flex;gap:8px;align-items:baseline}
+.hw-tag{background:var(--teal);color:#fff;border-radius:8px;padding:0 10px;font-size:calc(13px * var(--fs))}
+.proj{border:2.5px dashed var(--violet);border-radius:18px;padding:12px 18px;margin:20px 0;background:var(--card)}
+.proj-head{display:flex;gap:12px;align-items:center}
+.proj-i{font-size:1.8em}.proj-t{font-weight:700;font-size:calc(19px * var(--fs))}.proj-s{color:var(--muted);font-size:calc(13.5px * var(--fs))}
+.deliv{margin:8px 0;padding-inline-start:24px}
+.proj-next{background:#efe8fa;color:#2c1c4a;border-radius:10px;padding:6px 12px;margin-top:8px}
+
+/* solutions */
+.sol-week{display:flex;align-items:center;gap:10px;margin:10px 0 4px;font-size:calc(22px * var(--fs));font-weight:700}
+.sw-n{width:38px;height:38px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center}
+.sol-kind{display:flex;align-items:center;gap:10px;margin:20px 0 6px;color:var(--teal);font-weight:700}
+.sol-kind .sk-line{flex:1;border-bottom:2px solid var(--teal);height:1px}
+.sol-item{background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:8px 14px;margin:10px 0}
+.sol-q{margin:2px 0;font-weight:600}.sq-n{color:var(--blue);font-weight:700}
+.sol-opt{display:flex;gap:8px;padding:2px 8px;border-radius:8px;font-size:calc(15.5px * var(--fs));line-height:1.8}
+.sol-opt.ok{background:#d9f2e3;color:#10331d}
+.sol-opt.bad{opacity:.78}.sol-opt.bad .so-k{text-decoration:line-through}
+.so-k{font-weight:700;flex:0 0 auto}
+.sol-why{background:#fff6dc;color:#2b2514;border-radius:8px;padding:6px 12px;margin:6px 0 2px;font-size:calc(15px * var(--fs))}
+.sol-tf-line{display:flex;gap:10px;align-items:flex-start}
+.sol-badge{flex:0 0 auto;border-radius:8px;padding:0 12px;font-weight:700;color:#fff}
+.sol-badge.t{background:var(--green)}.sol-badge.f{background:var(--red)}
+.sol-grading{margin:6px 0;padding-inline-start:22px;font-size:calc(15px * var(--fs))}
+
+/* sources */
+.src{list-style:none;margin:8px 0;padding:0;font-size:calc(14px * var(--fs));line-height:1.75}
+.src li{display:flex;gap:10px;padding:6px 0;border-bottom:1px dotted var(--line)}
+.src li .sb{flex:1;unicode-bidi:plaintext;text-align:start}
+.src .sn{flex:0 0 34px;color:var(--blue);font-weight:700}
+.src a{color:var(--blue);word-break:break-all;unicode-bidi:isolate;direction:ltr;display:block;text-align:left;font-size:.88em}
+.src .ltr-inline{font-size:.9em;font-family:Arial,'Segoe UI',sans-serif}
+.src-note{color:var(--muted);font-size:calc(13.5px * var(--fs))}
+
+/* coming soon */
+.coming-soon{text-align:center;padding:60px 10px;color:var(--muted)}
+.coming-soon .big-icon{width:64px;height:64px}
+.cs-title{font-size:calc(22px * var(--fs));font-weight:700;color:var(--ink);margin:10px 0 0}
+
+/* nav */
+.page-nav{display:flex;justify-content:space-between;gap:10px;margin-top:28px}
+.nav-btn{font:inherit;font-size:calc(15px * var(--fs));border:2px solid var(--ink);background:var(--card);color:var(--ink);border-radius:12px;padding:6px 18px;cursor:pointer}
+.footer-note{text-align:center;color:var(--muted);margin-top:10px;font-size:calc(13px * var(--fs))}
+@media (max-width:520px){.rung:nth-child(n){margin-inline-start:0}.page-title{font-size:calc(25px * var(--fs))}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <filter id="sketchy"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="3"/></filter>
+</defs></svg>
+<div class="wrap">
+<div class="course-bar">مشروع المجموعة ٢ · قسم شبكات المعلومات · جامعة بابل</div>
+<div class="tabs" id="tabs">
+  <button class="tab active" data-target="slide-1">١<br>الأسبوع الأول</button>
+  <button class="tab" data-target="slide-2">٢<br>الأسبوع الثاني</button>
+  <button class="tab" data-target="slide-3">٣<br>الأسبوع الثالث</button>
+  <button class="tab" data-target="slide-4">٤<br>الأسبوع الرابع</button>
+  <button class="tab" data-target="slide-5">٥<br>الأسبوع الخامس</button>
+  <button class="tab" data-target="slide-6">٦<br>الأسبوع السادس</button>
+  <button class="tab" data-target="slide-7">٧<br>الأسبوع السابع</button>
+  <button class="tab" data-target="slide-8">٨<br>الأسبوع الثامن</button>
+  <button class="tab" data-target="slide-9">٩<br>الأسبوع التاسع</button>
+  <button class="tab" data-target="slide-10">١٠<br>الأسبوع العاشر</button>
+  <button class="tab" data-target="slide-11">١١<br>الأسبوع ١١</button>
+  <button class="tab" data-target="slide-12">١٢<br>الأسبوع ١٢</button>
+  <button class="tab" data-target="slide-13">١٣<br>الأسبوع ١٣</button>
+  <button class="tab" data-target="slide-14">١٤<br>الأسبوع ١٤</button>
+  <button class="tab" data-target="slide-15">١٥<br>الأسبوع ١٥</button>
+  <button class="tab sol" data-target="slide-sol">🔑<br>الحلول والتعليل</button>
+</div>
+<!-- ============ SLIDE 1 : الأسبوع الأول ============ -->
+<div id="slide-1" class="slide content-slide rich-slide active">
+  <span class="chip">الأسبوع الأول</span>
+  <h2 class="page-title">مقدمة في مشروع المجموعة: تشكيل الفرق وتوزيع الأدوار</h2>
+  <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
+
+  <p class="lead-paragraph">تفتتح هذه المحاضرة المقرر بالأساس الذي يقوم عليه كل ما يليه من أسابيع: كيف يتشكّل الفريق، وكيف تُوزَّع الأدوار بين أعضائه، وكيف يُتّفق على قواعد العمل المشتركة قبل كتابة أول سطر من المشروع. وتُبنى المادة على مصادر منشورة، تُسرد أرقامها في خاتمة المحاضرة.</p>
+
+  <!-- ══════════ ١ ══════════ -->
+  <div class="section-heading"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M4 15 H24 M17 7 L25 15 L17 23" fill="none" stroke="var(--red)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketchy)"/></svg><span>١ · ما مشروع المجموعة، ولماذا يُدرَّس؟</span></div>
+  <p>يُراد بمشروع المجموعة عملٌ تعليمي ينجزه فريق صغير ليُسلّم مخرجًا مشتركًا واحدًا ضمن مدة الفصل. وتُظهر مراجعة منهجية لمقررات المشاريع الختامية في هندسة البرمجيات أنّ هذه المقررات تُدار في الغالب بوصفها مشاريع جماعية<sup class="ref"><a href="#src-1">[١]</a></sup>، وأنّ نحو ٥٨٪ من الدراسات المراجَعة أفادت بوجود عملاء من خارج المقرر، وأنّ المشاريع قامت على احتياجات حقيقية لأطراف خارجية في ٦٢٪ من المقررات<sup class="ref"><a href="#src-1">[١]</a></sup>.</p>
+  <p>غير أنّ القيمة التعليمية لا تقف عند الجانب التقني؛ فالمشاريع الجماعية تنمّي حلّ المشكلات والتعاون والتواصل<sup class="ref"><a href="#src-2">[٢]</a></sup>. وفي المقابل يبرز فيها تحدٍّ متكرر، هو أن يبذل بعض الأعضاء جهدًا أقل مما كانوا سيبذلونه منفردين<sup class="ref"><a href="#src-2">[٢]</a></sup>، وهو ما يعود إليه المحور السابع بالتفصيل.</p>
+  <div class="takeaway"><b>الخلاصة:</b> المشروع الجماعي يختبر مهارتين معًا: إنجاز عمل تقني، وإدارة الأشخاص الذين ينجزونه.</div>
+
+  <!-- ══════════ ٢ ══════════ -->
+  <div class="section-heading"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M4 15 H24 M17 7 L25 15 L17 23" fill="none" stroke="var(--red)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketchy)"/></svg><span>٢ · دورة حياة المشروع</span></div>
+  <p>ولمّا كان العمل الجماعي يجري داخل مشروع له بداية ونهاية، يلزم أولًا تحديد موضع الأسبوع الأول من مسار المشروع كله. يصف معهد إدارة المشاريع (<span class="ltr-inline">PMI</span>) دورة الحياة بخمس مجموعات عمليات: البدء، والتخطيط، والتنفيذ، والمراقبة والضبط، والإغلاق<sup class="ref"><a href="#src-3">[٣]</a></sup><sup class="ref"><a href="#src-4">[٤]</a></sup>.</p>
+  <div class="pipe">
+    <div class="pipe-row hi"><span class="pipe-n">١</span><div class="pipe-b"><b>البدء</b><small>يتضمن إعداد ميثاق المشروع وسجل أصحاب المصلحة<sup class="ref"><a href="#src-4">[٤]</a></sup>، كما تُحدَّد فيه أدوار أعضاء الفريق<sup class="ref"><a href="#src-5">[٥]</a></sup>. وهنا موضع هذه المحاضرة.</small></div></div>
+    <div class="pipe-a">↓</div>
+    <div class="pipe-row"><span class="pipe-n">٢</span><div class="pipe-b"><b>التخطيط</b><small>تُعرَّف فيه حدود العمل والتكلفة والجدول، مع خطوط أساس تتيح التتبع لاحقًا<sup class="ref"><a href="#src-5">[٥]</a></sup>.</small></div></div>
+    <div class="pipe-a">↓</div>
+    <div class="pipe-row"><span class="pipe-n">٣</span><div class="pipe-b"><b>التنفيذ</b><small>يبدأ الفريق إنتاج المخرجات وفق ما رُسم في الخطة<sup class="ref"><a href="#src-5">[٥]</a></sup>.</small></div></div>
+    <div class="pipe-a">↓</div>
+    <div class="pipe-row"><span class="pipe-n">٤</span><div class="pipe-b"><b>المراقبة والضبط</b><small>تجري بالتوازي مع التنفيذ للإبقاء على المشروع في مساره<sup class="ref"><a href="#src-5">[٥]</a></sup>.</small></div></div>
+    <div class="pipe-a">↓</div>
+    <div class="pipe-row"><span class="pipe-n">٥</span><div class="pipe-b"><b>الإغلاق</b><small>إنهاء المشروع رسميًا بعد تسليم المخرجات وقبولها<sup class="ref"><a href="#src-5">[٥]</a></sup>.</small></div></div>
+  </div>
+  <p>وهذا التسلسل الخطي يصدق على دورات الحياة التنبؤية؛ أما في الأساليب التكرارية والرشيقة فتتكرر عمليات التخطيط والتنفيذ والمراقبة داخل كل دورة، ويبقى البدء والإغلاق على مستوى المشروع بأكمله<sup class="ref"><a href="#src-3">[٣]</a></sup>. ومن ثمّ فإنّ ما يُنجَز في الأسبوع الأول يظل مرجعًا للفريق طوال الفصل.</p>
+
+  <!-- ══════════ ٣ ══════════ -->
+  <div class="section-heading"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M4 15 H24 M17 7 L25 15 L17 23" fill="none" stroke="var(--red)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketchy)"/></svg><span>٣ · تشكيل الفريق: كيف ينشأ وكم يبلغ حجمه</span></div>
+  <p>يتناول هذا المحور سؤالين متصلين: كيف ينضج الفريق مع الوقت، وما الحجم والتركيب اللذان يهيّئان له فرصة أفضل.</p>
+  <p><b>أولًا، مراحل نمو الفريق.</b> اقترح عالم النفس <span class="ltr-inline">Bruce Tuckman</span> عام ١٩٦٥ نموذجًا من أربع مراحل لتطور المجموعات الصغيرة، ثم أضاف مع <span class="ltr-inline">Mary Ann Jensen</span> عام ١٩٧٧ مرحلة خامسة هي الإنهاء<sup class="ref"><a href="#src-6">[٦]</a></sup>. وتُعرض المراحل عادةً على هيئة سلّم:</p>
+  <div class="ladder">
+    <div class="rung"><b class="rn">١ · التكوين</b> <span class="eng ltr-inline">Forming</span> — يتعرّف الأعضاء بعضهم إلى بعض ويتبيّنون المتوقَّع منهم، ويتطلعون إلى القائد طلبًا للتوجيه<sup class="ref"><a href="#src-7">[٧]</a></sup><sup class="ref"><a href="#src-8">[٨]</a></sup>.</div>
+    <div class="rung"><b class="rn">٢ · الاصطدام</b> <span class="eng ltr-inline">Storming</span> — تظهر خلافات شخصية وتباين في الرأي حول المجموعة وأهدافها<sup class="ref"><a href="#src-7">[٧]</a></sup>.</div>
+    <div class="rung"><b class="rn">٣ · الاستقرار</b> <span class="eng ltr-inline">Norming</span> — بعد تجاوز الخلافات تتشكل أنماط واضحة لإنجاز العمل<sup class="ref"><a href="#src-7">[٧]</a></sup>.</div>
+    <div class="rung"><b class="rn">٤ · الأداء</b> <span class="eng ltr-inline">Performing</span> — تتراجع أهمية الانشغال بالأدوار والتوقعات والقواعد<sup class="ref"><a href="#src-7">[٧]</a></sup>، ويغدو الاعتماد المتبادل هو السائد<sup class="ref"><a href="#src-8">[٨]</a></sup>.</div>
+    <div class="rung"><b class="rn">٥ · الإنهاء</b> <span class="eng ltr-inline">Adjourning</span> — يرافق إغلاق المجموعة شيء من القلق<sup class="ref"><a href="#src-8">[٨]</a></sup>.</div>
+  </div>
+  <p>ولا يبلغ كل فريق مرحلة الأداء<sup class="ref"><a href="#src-8">[٨]</a></sup>. ثم إنّ الفريق الذي بلغها لا يضمن البقاء فيها؛ فانضمام عضو جديد، أو تكرر غياب بعض الأعضاء عن الاجتماعات، قد يعيد الفريق إلى مرحلة الاصطدام<sup class="ref"><a href="#src-8">[٨]</a></sup>. وتؤكد مصادر أخرى أنّ دخول أعضاء جدد أو خروج آخرين يستدعي دورة جديدة من التكوين والاصطدام والاستقرار<sup class="ref"><a href="#src-7">[٧]</a></sup>.</p>
+  <div class="oops"><span class="o-i">⚠</span><div>يقع كثير من الطلبة في افتراض أنّ ظهور الخلاف في الأسابيع الأولى علامةٌ على فشل الفريق. والنموذج يعدّ الاصطدام مرحلة معتادة من مراحل النمو<sup class="ref"><a href="#src-7">[٧]</a></sup>، ويُقصد بميثاق الفريق (المحور ٥) أن يعين الفريق على عبور هذه المراحل<sup class="ref"><a href="#src-9">[٩]</a></sup>.</div></div>
+
+  <p><b>ثانيًا، الحجم والتركيب.</b> تتفاوت أحجام الفرق في مقررات المشاريع الختامية تفاوتًا كبيرًا، من طالب واحد إلى خمسة وثلاثين في فريق واحد، غير أنّ عدة دراسات خلصت إلى أنّ الحجم الأمثل يتراوح بين أربعة وستة طلاب<sup class="ref"><a href="#src-1">[١]</a></sup>. والعلة أنّ فريقًا من اثنين أو ثلاثة لا يواجه مشكلة تواصل تُذكر، لكنه كثيرًا ما يعجز عن إنجاز مشروع كبير<sup class="ref"><a href="#src-1">[١]</a></sup>. ويتوافق ذلك مع القاعدة التقريبية التي تقترح أربعة إلى ستة أعضاء لفرق المشاريع الطلابية<sup class="ref"><a href="#src-10">[١٠]</a></sup>، ومع بيانات صناعية عن مشاريع البرمجيات رجّحت أن يكون الحجم الأمثل بين ثلاثة وسبعة أشخاص<sup class="ref"><a href="#src-11">[١١]</a></sup>.</p>
+  <p>وللحجم الزائد ثمن واضح: فقد وصف أحد مساعدي التدريس في مقرر كبير متعدد الفرق مشهدًا فيه «ركّاب» أكثر من «سائقين»، أي أعضاء متفرجون، واستنتج الباحثون أنّ نطاق المشروع ينبغي ألا يكون قابلًا للإنجاز دون إسهام كل عضو<sup class="ref"><a href="#src-12">[١٢]</a></sup>. أما التنوع داخل الفريق فيرفع الإنتاجية لكنه يطيل زمن إنجاز العمل<sup class="ref"><a href="#src-10">[١٠]</a></sup>.</p>
+  <p>وأخيرًا تتعدد طرق تكوين الفرق: التوزيع العشوائي، أو الاختيار الذاتي، أو الاستعانة ببيانات يملؤها الطلبة وأدوات تحسين مثل <span class="ltr-inline">gruepr</span><sup class="ref"><a href="#src-13">[١٣]</a></sup>. وفي دراسة على مشاريع جماعية في تقنية المعلومات لدى طلبة سريلانكيين لم يؤيّد الطلبة كثيرًا تكوين الفرق بالاختيار الذاتي، مع تنبيه الباحثين إلى أنّ ذلك قد يختلف باختلاف الثقافة<sup class="ref"><a href="#src-2">[٢]</a></sup>؛ ولذلك يظل الحكم مرتبطًا بسياق كل مقرر.</p>
+  <div class="takeaway"><b>الخلاصة:</b> يبدأ الفريق بالتكوين لا بالأداء، والنطاق الذي يناسبه في المشاريع الطلابية هو أربعة إلى ستة أعضاء في أغلب ما وُثّق، مع إبقاء الحجم متناسبًا مع حجم المشروع.</div>
+
+  <!-- ══════════ ٤ ══════════ -->
+  <div class="section-heading"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M4 15 H24 M17 7 L25 15 L17 23" fill="none" stroke="var(--red)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketchy)"/></svg><span>٤ · الأدوار داخل الفريق</span></div>
+  <p>متى استقرّ حجم الفريق وتركيبه، انتقل السؤال إلى من يتولى ماذا. وتُقارَب الأدوار في الأدبيات من زاويتين متكاملتين: زاوية <b>السلوك</b> التي تصف كيف يميل كل شخص إلى الإسهام، وزاوية <b>المسؤولية الوظيفية</b> التي تصف ما يُساءَل عنه كل عضو في إطار عمل محدد.</p>
+
+  <p><b>الزاوية الأولى: أدوار بيلبن.</b> طوّر <span class="ltr-inline">Meredith Belbin</span> أدواره التسعة عام ١٩٨١ بعد تسع سنوات من الدراسة<sup class="ref"><a href="#src-14">[١٤]</a></sup>. ويُعرَّف الدور هنا بأنه نمط ميل في السلوك والإسهام والتفاعل مع الآخرين<sup class="ref"><a href="#src-14">[١٤]</a></sup>، وتتوزع الأدوار على ثلاثة عناقيد: عملية، واجتماعية، وفكرية<sup class="ref"><a href="#src-14">[١٤]</a></sup>.</p>
+  <div class="clusters">
+    <div class="cl a"><h4>الأدوار العملية</h4><ul><li><span class="ltr-inline">Shaper</span></li><li><span class="ltr-inline">Implementer</span></li><li><span class="ltr-inline">Completer Finisher</span></li></ul></div>
+    <div class="cl p"><h4>الأدوار الاجتماعية</h4><ul><li><span class="ltr-inline">Co-ordinator</span></li><li><span class="ltr-inline">Teamworker</span></li><li><span class="ltr-inline">Resource Investigator</span></li></ul></div>
+    <div class="cl t"><h4>الأدوار الفكرية</h4><ul><li><span class="ltr-inline">Plant</span></li><li><span class="ltr-inline">Monitor Evaluator</span></li><li><span class="ltr-inline">Specialist</span></li></ul></div>
+  </div>
+  <p class="dt-cap">جدول ١ · أدوار بيلبن التسعة: الإسهام والضعف المقبول<sup class="ref"><a href="#src-15">[١٥]</a></sup><sup class="ref"><a href="#src-16">[١٦]</a></sup></p>
+  <div class="dt-wrap"><table class="dt">
+    <thead><tr><th>الدور</th><th>الإسهام</th><th>الضعف المقبول</th></tr></thead>
+    <tbody>
+      <tr><td><span class="ltr-inline">Shaper</span></td><td>طاقة عالية تدفع الآخرين إلى التقدم.</td><td>قد يفتقر إلى الحساسية.</td></tr>
+      <tr><td><span class="ltr-inline">Implementer</span></td><td>منظَّم يحوّل الأفكار إلى عمل عملي.</td><td>بطيء أمام الفرص الجديدة وقليل المرونة.</td></tr>
+      <tr><td><span class="ltr-inline">Completer Finisher</span></td><td>دقيق يبحث عن الأخطاء ويصقل المخرج حتى يكتمل.</td><td>يقلق أكثر من اللازم ويتردد في التفويض.</td></tr>
+      <tr><td><span class="ltr-inline">Co-ordinator</span></td><td>قائد محترم يساعد الجميع على التركيز في مهامهم.</td><td>قد يُرى متحكّمًا أكثر من اللازم.</td></tr>
+      <tr><td><span class="ltr-inline">Teamworker</span></td><td>متعاون ودبلوماسي، يُصغي ويخفف الاحتكاك.</td><td>متردد في القرارات الحاسمة ويتجنب المواجهة.</td></tr>
+      <tr><td><span class="ltr-inline">Resource Investigator</span></td><td>متحمس يستكشف الفرص ويبني العلاقات.</td><td>مفرط في التفاؤل ويفقد اهتمامه بعد الحماس الأول.</td></tr>
+      <tr><td><span class="ltr-inline">Plant</span></td><td>يقدّم أفكارًا أصيلة لمشكلات صعبة.</td><td>ضعيف التواصل وقد يهمل التفاصيل.</td></tr>
+      <tr><td><span class="ltr-inline">Monitor Evaluator</span></td><td>يرى الخيارات كلها ويحكم عليها بدقة.</td><td>يفتقر إلى الحماس والقدرة على الإلهام، وقد يبالغ في النقد.</td></tr>
+      <tr><td><span class="ltr-inline">Specialist</span></td><td>يمتلك معرفة عميقة في مجال محدد ويحلّ فيه مشكلات كثيرة.</td><td>قليل الاهتمام بما يقع خارج تخصصه.</td></tr>
+    </tbody>
+  </table></div>
+  <p>ويستفاد من النموذج على وجه الخصوص في ثلاث نقاط. فالفريق المثالي يضم توازنًا صحيًّا بين الأدوار التسعة، لكنّ هذا نادر في الواقع، ويفيد الفريق أن يعرف أي الأدوار زائد التمثيل وأيها غائب<sup class="ref"><a href="#src-14">[١٤]</a></sup>. والأدوار ليست قدَرًا ثابتًا، فهي تنضج وقد تتغير مع الخبرة والانتباه الواعي<sup class="ref"><a href="#src-14">[١٤]</a></sup>. وفي المجموعات الأصغر من ثمانية أشخاص يضطر بعض الأعضاء إلى أداء أكثر من دور، فيتنقلون بينها بحسب حاجة الفريق والمهمة<sup class="ref"><a href="#src-17">[١٧]</a></sup>. ولذلك فإنّ مقارنة التسعة بفريق من أربعة إلى ستة أعضاء لا تعني البحث عن تسعة أشخاص، بل عن تغطية الأدوار المهمة للمهمة الحالية.</p>
+  <div class="takeaway"><b>الخلاصة:</b> أدوار بيلبن تصف ميولًا لا ألقابًا، والغاية منها كشف الفجوات في الفريق لا تصنيف الأشخاص.</div>
+
+  <p><b>الزاوية الثانية: مسؤوليات سكرم.</b> تنتقل المقاربة هنا من الميل السلوكي إلى ما يُسأل عنه كل عضو. فقد استبدل دليل سكرم في إصدار ٢٠٢٠ مصطلح «الأدوار» بمصطلح «المسؤوليات»، تأكيدًا على عقلية الملكية والنتائج<sup class="ref"><a href="#src-18">[١٨]</a></sup>. ويتألف فريق سكرم من مسؤول واحد عن المنتج، ومسؤول واحد عن سكرم، ومطوّرين<sup class="ref"><a href="#src-19">[١٩]</a></sup>.</p>
+  <p class="dt-cap">جدول ٢ · المسؤوليات الثلاث في سكرم<sup class="ref"><a href="#src-18">[١٨]</a></sup><sup class="ref"><a href="#src-19">[١٩]</a></sup></p>
+  <div class="dt-wrap"><table class="dt">
+    <thead><tr><th>المسؤولية</th><th>عمّا يُساءَل؟</th></tr></thead>
+    <tbody>
+      <tr><td><span class="ltr-inline">Product Owner</span></td><td>تعظيم قيمة المنتج الناتج عن عمل الفريق.</td></tr>
+      <tr><td><span class="ltr-inline">Developers</span></td><td>إنشاء المنتج؛ وتشمل الكلمة كل من يتولى تطوير إضافة ذات قيمة، لا مبرمجي البرمجيات وحدهم.</td></tr>
+      <tr><td><span class="ltr-inline">Scrum Master</span></td><td>فاعلية فريق سكرم وإرساء سكرم كما يصفه الدليل.</td></tr>
+    </tbody>
+  </table></div>
+  <p>ولا يمنع الإطار أن يجمع شخص واحد أكثر من مسؤولية، غير أنّ المهارات اللازمة لذلك يصعب أن تجتمع في شخص واحد<sup class="ref"><a href="#src-18">[١٨]</a></sup>؛ وهذه ملاحظة تهمّ فرق المقرر الصغيرة التي لا تستطيع تخصيص شخص لكل مسؤولية.</p>
+  <p>وللتمثيل على صورة عملية، يعرض نموذج فريق طلابي في دليل منشور خمسة أعضاء بأدوار مثل المنسق الذي يرتب الاجتماعات، ومدير المشروع والمحرر الذي يتابع انشغال كل عضو بمهمته، ومدير الموارد الذي يدوّن محاضر الاجتماعات، والمسؤول التقني الذي يختبر ويوفر المصادر<sup class="ref"><a href="#src-20">[٢٠]</a></sup>. وهذه أمثلة توضيحية لا نموذج ملزم؛ فالفريق يصوغ أدواره من احتياجات مشروعه.</p>
+  <div class="oops"><span class="o-i">⚠</span><div>الخلط بين «الدور» و«المنصب» فخ شائع: فالتسمية لا تغني عن تحديد ما يُساءَل عنه صاحب الدور وما يملك قراره. وينص دليل سكرم على أنّ مسؤول المنتج قد يفوّض بعض العمل لكنه يبقى مسؤولًا<sup class="ref"><a href="#src-18">[١٨]</a></sup>.</div></div>
+
+  <!-- ══════════ ٥ ══════════ -->
+  <div class="section-heading"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M4 15 H24 M17 7 L25 15 L17 23" fill="none" stroke="var(--red)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketchy)"/></svg><span>٥ · ميثاق الفريق</span></div>
+  <p>وبعد أن تتحدد الأدوار يبقى أن تُدوَّن قواعد العمل المشتركة، وهذا ما يؤديه ميثاق الفريق. وهو وثيقة موجَّهة إلى الداخل، تختلف عن وثيقة نطاق العمل الموجَّهة إلى الخارج، ولا ينبغي أن تكرر ما فيها؛ كما أنه يعين الفريق على عبور مراحل التكوين والاصطدام والاستقرار<sup class="ref"><a href="#src-9">[٩]</a></sup>.</p>
+  <p>وتتفق نماذج المواثيق في الجامعات على عناصر متقاربة. فالنموذج المتداول المقتبس من مركز إيبرلي بجامعة كارنيغي ميلون يقوم على أربعة أسئلة: الأهداف، والتوقعات، والسياسات والإجراءات، والعواقب، ثم يوقّع الأعضاء جميعًا<sup class="ref"><a href="#src-21">[٢١]</a></sup>. أما إرشادات مقرر مشاريع في الجامعة الوطنية الأسترالية فتضيف أن يُحدَّد هدف للفريق يختلف عن هدف المشروع، وأن تُوثَّق السلوكيات المقبولة وقواعد التواصل ومواعيد الاجتماعات وأماكنها<sup class="ref"><a href="#src-9">[٩]</a></sup>. وتطلب بعض المقررات كذلك أهدافًا شخصية لكل عضو ومستوى التزامه، وآلية لاتخاذ القرار عند الاختلاف، وشروطًا للفصل عند تكرار الإخلال<sup class="ref"><a href="#src-22">[٢٢]</a></sup>. ومن المحاور التي يُقترح أن تتناولها قواعد الفريق: الحضور والالتزام بالمواعيد والمساهمة واتخاذ القرار وإدارة الخلاف وتوزيع المهام<sup class="ref"><a href="#src-10">[١٠]</a></sup>.</p>
+  <p class="dt-cap">جدول ٣ · عناصر ميثاق الفريق ومصادرها</p>
+  <div class="dt-wrap"><table class="dt">
+    <thead><tr><th>العنصر</th><th>ما يتضمنه</th><th>المصدر</th></tr></thead>
+    <tbody>
+      <tr><td>الأهداف</td><td>ما يريده الفريق من المشروع، مع التمييز بين هدف الفريق وهدف المشروع.</td><td><sup class="ref"><a href="#src-21">[٢١]</a></sup><sup class="ref"><a href="#src-9">[٩]</a></sup></td></tr>
+      <tr><td>التوقعات</td><td>الحضور، والمشاركة، وتواتر التواصل، وجودة العمل.</td><td><sup class="ref"><a href="#src-21">[٢١]</a></sup></td></tr>
+      <tr><td>السياسات والإجراءات</td><td>مواعيد الاجتماعات وقنواتها، وآلية اتخاذ القرار.</td><td><sup class="ref"><a href="#src-21">[٢١]</a></sup><sup class="ref"><a href="#src-9">[٩]</a></sup><sup class="ref"><a href="#src-22">[٢٢]</a></sup></td></tr>
+      <tr><td>العواقب</td><td>كيفية التعامل مع التقصير، وشروط الفصل إن وُجدت.</td><td><sup class="ref"><a href="#src-21">[٢١]</a></sup><sup class="ref"><a href="#src-22">[٢٢]</a></sup></td></tr>
+      <tr><td>التوقيع والمراجعة</td><td>يوقّعه جميع الأعضاء، ويُراجَع ويُعدَّل باتفاق الفريق كله.</td><td><sup class="ref"><a href="#src-9">[٩]</a></sup></td></tr>
+    </tbody>
+  </table></div>
+  <div class="takeaway"><b>دلالة عملية:</b> تنبّه إرشادات المقرر الأسترالي إلى أنّ <span class="hl hl-yellow">عملية إعداد الميثاق</span> أهم من الوثيقة نفسها، وأنّ الميثاق يُقصَد أن يُعاد إليه أثناء المشروع ويُعدَّل عند الحاجة<sup class="ref"><a href="#src-9">[٩]</a></sup>.</div>
+
+  <!-- ══════════ ٦ ══════════ -->
+  <div class="section-heading"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M4 15 H24 M17 7 L25 15 L17 23" fill="none" stroke="var(--red)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketchy)"/></svg><span>٦ · أدوات التعاون</span></div>
+  <p>ولكي تنعكس الأدوار والقواعد على العمل اليومي، يحتاج الفريق إلى أدوات تجعل المسؤوليات مرئية. وفي مشاريع البرمجيات يتصدر <span class="ltr-inline">GitHub</span> هذه الأدوات، ويُعرَّف سير العمل فيه بأنه خفيف يقوم على الفروع<sup class="ref"><a href="#src-23">[٢٣]</a></sup>. وفي هذا السير تُستعمل طلبات الدمج لطلب الملاحظات على التغييرات، وقد تشترط بعض المستودعات مراجعة معتمدة قبل الدمج<sup class="ref"><a href="#src-23">[٢٣]</a></sup>. وإذا عالج طلب الدمج مسألة مسجَّلة جاز ربطه بها، فتُغلق المسألة تلقائيًا عند الدمج إن استُعملت كلمة ربط مخصصة<sup class="ref"><a href="#src-23">[٢٣]</a></sup>.</p>
+  <div class="pipe">
+    <div class="pipe-row"><span class="pipe-n">١</span><div class="pipe-b"><b>مسألة (<span class="ltr-inline">Issue</span>)</b><small>تتبّع العمل والقرارات والتقدم، وتُقسَّم المهام الكبيرة إلى مسائل عدة<sup class="ref"><a href="#src-24">[٢٤]</a></sup>.</small></div></div>
+    <div class="pipe-a">↓</div>
+    <div class="pipe-row"><span class="pipe-n">٢</span><div class="pipe-b"><b>فرع وتغييرات</b><small>يُجري العضو عمله في فرع مستقل ثم يُرسل التغييرات<sup class="ref"><a href="#src-23">[٢٣]</a></sup>.</small></div></div>
+    <div class="pipe-a">↓</div>
+    <div class="pipe-row hi"><span class="pipe-n">٣</span><div class="pipe-b"><b>طلب دمج (<span class="ltr-inline">Pull Request</span>)</b><small>أداة تواصل لكل الفريق وليس إجراءً تقنيًا فحسب<sup class="ref"><a href="#src-24">[٢٤]</a></sup>.</small></div></div>
+    <div class="pipe-a">↓</div>
+    <div class="pipe-row"><span class="pipe-n">٤</span><div class="pipe-b"><b>مراجعة ثم دمج</b><small>يُدمج الطلب بعد الموافقة، ثم يُحذف الفرع<sup class="ref"><a href="#src-23">[٢٣]</a></sup>.</small></div></div>
+  </div>
+  <p>ويتصل بذلك اصطلاح كتابة رسائل الإيداع، ومنه بادئات مثل <span class="ltr-inline">feat</span> و<span class="ltr-inline">fix</span> و<span class="ltr-inline">docs</span>؛ ويشدد الدليل المنشور على أنّ اتباع اصطلاح الفريق أهم من التفضيل الشخصي<sup class="ref"><a href="#src-24">[٢٤]</a></sup>.</p>
+
+  <!-- ══════════ ٧ ══════════ -->
+  <div class="section-heading"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M4 15 H24 M17 7 L25 15 L17 23" fill="none" stroke="var(--red)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketchy)"/></svg><span>٧ · أخطاء شائعة: التكاسل الاجتماعي وأخواته</span></div>
+  <p>ومهما أُحسن تكوين الفريق وتوزيع أدواره، يظل أخطر ما يهدده أن يبذل بعض أعضائه جهدًا أقل مما يبذلونه منفردين. ويسمى هذا <b>التكاسل الاجتماعي</b>؛ فإذا بلغ حدّ أن ينال العضو الدرجة عن عمل غيره وهو لا يعمل شيئًا يُذكر سُمّي <b>الركوب المجاني</b><sup class="ref"><a href="#src-25">[٢٥]</a></sup>. وللتكاسل أثر مزدوج، إذ يُضعف دافعية الأعضاء المجتهدين ويفجّر الخلافات ويُنزل بأداء المجموعة<sup class="ref"><a href="#src-2">[٢]</a></sup>.</p>
+  <p>وقد استعرضت دراسة منشورة عام ١٩٩٠ في تعليم التسويق أسباب الركوب المجاني وقدّمت خمس عشرة توصية للحد منه، ورصدت آراء الطلبة في فاعلية ستة أساليب، هي: تماسك المجموعة، وحجمها، وإمكان الفصل أو الانسحاب، ومناقشة المدرّس للمشكلة، وتقييم الزملاء بعضهم بعضًا<sup class="ref"><a href="#src-26">[٢٦]</a></sup>. ومن الاقتراحات الواردة في ورقة بحثية أخرى أن تبدأ المشاريع بجلسة تأمل فردي حول العمل الجماعي، والغرض منها ليس كشف المتكاسلين بقدر اكتشاف تقسيم العمل غير العادل مبكرًا<sup class="ref"><a href="#src-27">[٢٧]</a></sup>. أما دراسة سريلانكا فوجدت أنّ أغلب الآليات المقترحة إيجابية وناجحة في الحد من المشكلة<sup class="ref"><a href="#src-2">[٢]</a></sup>.</p>
+  <div class="oops"><span class="o-i">⚠</span><div><b>خطأ ١:</b> الاعتقاد أنّ حجم الفريق الكبير يضمن إنجازًا أكبر؛ بينما رُصد في فرق كبيرة أنّ بعض الأعضاء يتفرجون<sup class="ref"><a href="#src-12">[١٢]</a></sup>.</div></div>
+  <div class="oops"><span class="o-i">⚠</span><div><b>خطأ ٢:</b> ترك الأدوار ضمنية؛ فالمصادر تشدد على أن يكون لكل عضو دور مصرَّح به، لأن ذلك يُبقي الأعضاء ملتزمين بعمل الفريق<sup class="ref"><a href="#src-10">[١٠]</a></sup>.</div></div>
+  <div class="oops"><span class="o-i">⚠</span><div><b>خطأ ٣:</b> معالجة الخلاف حين يتفاقم بدل الاتفاق عليه سلفًا في الميثاق؛ وقد بيّن المحور الثالث أنّ الفريق قد يعود إلى الاصطدام كلما تغيّر تكوينه<sup class="ref"><a href="#src-8">[٨]</a></sup>.</div></div>
+
+  <!-- ══════════ ٨ ══════════ -->
+  <div class="section-heading"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M4 15 H24 M17 7 L25 15 L17 23" fill="none" stroke="var(--red)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketchy)"/></svg><span>٨ · أسئلة المراجعة والواجب</span></div>
+  <p class="quiz-note">الحلول والتعليل في تبويب «الحلول والتعليل» 🔑</p>
+
+  <p class="dt-cap">أولًا · الاختيار من متعدد</p>
+  <div class="mcq-item"><span class="q-num">١.</span> في نموذج تاكمان، أي مرحلة تتسم عادةً بظهور خلافات شخصية وتباين في الرأي حول أهداف المجموعة؟
+    <ul class="mcq-options">
+      <li><span class="opt-letter">أ)</span> التكوين</li>
+      <li><span class="opt-letter">ب)</span> الاصطدام</li>
+      <li><span class="opt-letter">ج)</span> الاستقرار</li>
+      <li><span class="opt-letter">د)</span> الأداء</li>
+    </ul></div>
+  <div class="mcq-item"><span class="q-num">٢.</span> أي الأدوار الآتية يقع ضمن العنقود الاجتماعي في تصنيف بيلبن؟
+    <ul class="mcq-options">
+      <li><span class="opt-letter">أ)</span> <span class="ltr-inline">Plant</span></li>
+      <li><span class="opt-letter">ب)</span> <span class="ltr-inline">Co-ordinator</span></li>
+      <li><span class="opt-letter">ج)</span> <span class="ltr-inline">Implementer</span></li>
+      <li><span class="opt-letter">د)</span> <span class="ltr-inline">Specialist</span></li>
+    </ul></div>
+  <div class="mcq-item"><span class="q-num">٣.</span> وفق دليل سكرم ٢٠٢٠، من المسؤول عن تعظيم قيمة المنتج الناتج عن عمل الفريق؟
+    <ul class="mcq-options">
+      <li><span class="opt-letter">أ)</span> <span class="ltr-inline">Developers</span></li>
+      <li><span class="opt-letter">ب)</span> <span class="ltr-inline">Scrum Master</span></li>
+      <li><span class="opt-letter">ج)</span> <span class="ltr-inline">Product Owner</span></li>
+      <li><span class="opt-letter">د)</span> أعضاء الفريق جميعًا بالتساوي دون تمييز</li>
+    </ul></div>
+  <div class="mcq-item"><span class="q-num">٤.</span> أي العبارات الآتية أقرب إلى ما تعرضه المصادر عن حجم فريق المشروع الطلابي؟
+    <ul class="mcq-options">
+      <li><span class="opt-letter">أ)</span> الفريق المكوَّن من اثنين أو ثلاثة هو الأمثل دائمًا لأنه لا يحتاج إلى تنسيق.</li>
+      <li><span class="opt-letter">ب)</span> رجّحت دراسات عدة نطاق أربعة إلى ستة طلاب، مع أنّ الفرق الصغيرة جدًّا قد تعجز عن إنجاز مشروع كبير.</li>
+      <li><span class="opt-letter">ج)</span> كلما زاد عدد الأعضاء زاد الإنجاز بصورة مطّردة.</li>
+      <li><span class="opt-letter">د)</span> لا أثر لحجم الفريق في طريقة تواصل أعضائه.</li>
+    </ul></div>
+  <div class="mcq-item"><span class="q-num">٥.</span> أي العبارات الآتية أقرب إلى إرشادات ميثاق الفريق في المقرر الأسترالي المذكور؟
+    <ul class="mcq-options">
+      <li><span class="opt-letter">أ)</span> يُكتب مرة واحدة ويُحفظ دون تعديل حتى نهاية المشروع.</li>
+      <li><span class="opt-letter">ب)</span> عملية إعداده المشتركة أهم من الوثيقة، ويُعدَّل باتفاق الفريق كله عند الحاجة.</li>
+      <li><span class="opt-letter">ج)</span> يكرر نطاق العمل المتفق عليه مع الجهة الخارجية.</li>
+      <li><span class="opt-letter">د)</span> يوقّعه قائد الفريق وحده نيابة عن الجميع.</li>
+    </ul></div>
+
+  <p class="dt-cap">ثانيًا · صح أم خطأ</p>
+  <div class="tf-item"><span>١. تضمّن نموذج تاكمان الأصلي لعام ١٩٦٥ خمس مراحل بينها مرحلة الإنهاء.</span> <span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+  <div class="tf-item"><span>٢. الفريق الذي بلغ مرحلة الأداء لا يعود بعدها إلى المراحل السابقة.</span> <span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+  <div class="tf-item"><span>٣. يُفيد الفريق أن يعرف الأدوار زائدة التمثيل أو الغائبة فيه وفق نموذج بيلبن، حتى لو لم يكن التوازن التام بين الأدوار التسعة متحققًا.</span> <span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+  <div class="tf-item"><span>٤. يجوز في سير عمل <span class="ltr-inline">GitHub</span> ربط طلب الدمج بمسألة مسجَّلة بحيث تُغلق المسألة تلقائيًا عند الدمج إذا استُعملت كلمة ربط مخصصة.</span> <span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+
+  <p class="dt-cap">ثالثًا · أسئلة قصيرة</p>
+  <div class="mcq-item"><span class="q-num">١.</span> يُفرَّق بين التكاسل الاجتماعي والركوب المجاني. تُبيَّن الفروق بينهما، ويُذكر أسلوبان للحد من الظاهرة مع بيان وجه فاعلية كل منهما.<span class="blank-line"></span><span class="blank-line"></span></div>
+  <div class="mcq-item"><span class="q-num">٢.</span> لماذا استبدل دليل سكرم ٢٠٢٠ مصطلح «المسؤوليات» بمصطلح «الأدوار»؟ وهل يجوز أن يجمع شخص واحد أكثر من مسؤولية؟ مع التعليل.<span class="blank-line"></span><span class="blank-line"></span></div>
+
+  <p class="dt-cap">رابعًا · الواجب</p>
+  <div class="hw">
+    <div class="hw-head"><span class="hw-num">١</span><span class="hw-title">خريطة الأدوار في الفريق</span><span class="scn-badge lv-easy">بسيط</span></div>
+    <p>يحدد كل عضو في الفريق دورين مفضّلين من أدوار بيلبن التسعة وضعفًا مقبولًا واحدًا لأحدهما، ثم تُجمَع إجابات الأعضاء في جدول واحد يبيّن الأدوار المغطاة والأدوار شحيحة التمثيل.</p>
+    <p class="hw-cond"><b>شروط تُفحَص:</b> تُعدّ المهمة ناقصة إذا خلت من دور واحد على الأقل ضعيف التمثيل في الفريق، ومن اقتراح عملي لتغطيته. وإذا تطابقت تفضيلات الأعضاء تمامًا، يُذكر ذلك صراحة مع التفسير؛ فالنتيجة السلبية نتيجة.</p>
+    <div class="hw-deliver"><span class="hw-tag">المُسلَّم</span><span>جدول من صفحة واحدة بأسماء الأعضاء وأدوارهم، مع فقرة قصيرة عن الفجوات.</span></div>
+  </div>
+  <div class="hw">
+    <div class="hw-head"><span class="hw-num">٢</span><span class="hw-title">ميثاق الفريق</span><span class="scn-badge lv-mid">متوسط</span></div>
+    <p>يُعدّ كل فريق ميثاقًا مختصرًا يتضمن العناصر الخمسة الواردة في الجدول ٣: الأهداف، والتوقعات، والسياسات والإجراءات، والعواقب، والتوقيع والمراجعة.</p>
+    <p class="hw-cond"><b>شروط تُفحَص:</b> هدف واحد على الأقل يخص الفريق ويختلف عن هدف المشروع؛ وموعد اجتماع أسبوعي وقناة تواصل محددان؛ وآلية مكتوبة لاتخاذ القرار عند الخلاف؛ وفقرة تبيّن كيف يُعدَّل الميثاق.</p>
+    <div class="hw-deliver"><span class="hw-tag">المُسلَّم</span><span>ملف واحد موقّع بأسماء جميع الأعضاء.</span></div>
+  </div>
+  <div class="proj">
+    <div class="proj-head"><span class="proj-i">📌</span><div><div class="proj-t">ملف الفريق</div><div class="proj-s">مشروع ممتد: يبدأ هذا الأسبوع ويُستعمل طوال الفصل</div></div></div>
+    <ol class="deliv">
+      <li>الميثاق الموقَّع (الواجب ٢).</li>
+      <li>جدول الأدوار المحدَّث (الواجب ١).</li>
+      <li>مستودع للمشروع على <span class="ltr-inline">GitHub</span> يضم الوثيقتين، مع إضافة جميع الأعضاء إليه.</li>
+    </ol>
+    <div class="proj-next">يُبنى على هذا الملف في الأسابيع اللاحقة: يُراجَع الميثاق عند أول خلاف، وتُحدَّث الأدوار كلما تغيّر تكوين الفريق.</div>
+  </div>
+
+  <!-- ══════════ المصادر ══════════ -->
+  <div class="section-heading"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M4 15 H24 M17 7 L25 15 L17 23" fill="none" stroke="var(--red)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketchy)"/></svg><span>المصادر</span></div>
+  <p class="src-note">رُتّبت المصادر بحسب أول ورود في المحاضرة. جُمعت المادة عبر الإنترنت وصيغت بأسلوب موحَّد؛ ولم يُنقل نص حرفي من أي مصدر. وقد عُرضت مراحل تاكمان وأدوار بيلبن نقلًا عن صفحات تعليمية ومراجع ثانوية استندت إلى الأعمال الأصلية، ويحسن الرجوع إلى الأصول عند الاستشهاد الأكاديمي.</p>
+  <ul class="src"><li id="src-1"><span class="sn">[١]</span><span class="sb">مراجعة منهجية لمقررات المشاريع الختامية في هندسة البرمجيات (<span class="ltr-inline">A systematic literature review of capstone courses in software engineering</span>)، <span class="ltr-inline">arXiv:2301.03554</span>.<a href="https://arxiv.org/pdf/2301.03554" target="_blank" rel="noopener">https://arxiv.org/pdf/2301.03554</a></span></li><li id="src-2"><span class="sn">[٢]</span><span class="sb"><span class="ltr-inline">Say No to Free Riding: Student Perspective on Mechanisms to Reduce Social Loafing in Group Projects</span>، <span class="ltr-inline">SCITEPRESS</span>، ٢٠٢١.<a href="https://www.scitepress.org/Papers/2021/104497/104497.pdf" target="_blank" rel="noopener">https://www.scitepress.org/Papers/2021/104497/104497.pdf</a></span></li><li id="src-3"><span class="sn">[٣]</span><span class="sb"><span class="ltr-inline">Project Life Cycle: The 5 Phases Explained</span>، <span class="ltr-inline">actiTIME</span>.<a href="https://www.actitime.com/project-management/project-life-cycle/" target="_blank" rel="noopener">https://www.actitime.com/project-management/project-life-cycle/</a></span></li><li id="src-4"><span class="sn">[٤]</span><span class="sb"><span class="ltr-inline">Project life cycle</span>، <span class="ltr-inline">Adobe Business</span>.<a href="https://business.adobe.com/blog/basics/life-cycle" target="_blank" rel="noopener">https://business.adobe.com/blog/basics/life-cycle</a></span></li><li id="src-5"><span class="sn">[٥]</span><span class="sb"><span class="ltr-inline">The five phases of the PMI project life cycle</span>، <span class="ltr-inline">Sciforma</span>.<a href="https://www.sciforma.com/?p=37133" target="_blank" rel="noopener">https://www.sciforma.com/?p=37133</a></span></li><li id="src-6"><span class="sn">[٦]</span><span class="sb"><span class="ltr-inline">Tuckman's stages of group development</span>، <span class="ltr-inline">Wikipedia</span>.<a href="https://en.wikipedia.org/wiki/Tuckman%27s_stages_of_group_development" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Tuckman%27s_stages_of_group_development</a></span></li><li id="src-7"><span class="sn">[٧]</span><span class="sb"><span class="ltr-inline">Group Stages</span>، جامعة ولاية جورجيا (<span class="ltr-inline">Project ARRIVE</span>).<a href="https://sites.gsu.edu/project-arrive/?p=165" target="_blank" rel="noopener">https://sites.gsu.edu/project-arrive/?p=165</a></span></li><li id="src-8"><span class="sn">[٨]</span><span class="sb"><span class="ltr-inline">Tuckman's Stages of Group Development</span>، جامعة ويست تشستر (<span class="ltr-inline">CORAL</span>).<a href="https://www.wcupa.edu/coral/tuckmanstagesgroupdelvelopment.aspx" target="_blank" rel="noopener">https://www.wcupa.edu/coral/tuckmanstagesgroupdelvelopment.aspx</a></span></li><li id="src-9"><span class="sn">[٩]</span><span class="sb"><span class="ltr-inline">Team Charter Components</span>، <span class="ltr-inline">TechLauncher</span>، الجامعة الوطنية الأسترالية.<a href="https://comp.anu.edu.au/TechLauncher/files/Jan22%20-%20Team%20Charter%20Components.pdf" target="_blank" rel="noopener">https://comp.anu.edu.au/TechLauncher/files/Jan22%20-%20Team%20Charter%20Components.pdf</a></span></li><li id="src-10"><span class="sn">[١٠]</span><span class="sb"><span class="ltr-inline">Team Effectiveness: Structural Factors Impacting Team Effectiveness</span>، مكتبة هيمل فارب، جامعة جورج واشنطن.<a href="https://guides.himmelfarb.gwu.edu/teameffectiveness/structural-factors" target="_blank" rel="noopener">https://guides.himmelfarb.gwu.edu/teameffectiveness/structural-factors</a></span></li><li id="src-11"><span class="sn">[١١]</span><span class="sb">مقال عن حجم الفريق في مشاريع البرمجيات (<span class="ltr-inline">Selecting the right team size</span>)، <span class="ltr-inline">QSM</span>.<a href="https://qsm.com/httpdocs/pdf.php?nid=1141" target="_blank" rel="noopener">https://qsm.com/httpdocs/pdf.php?nid=1141</a></span></li><li id="src-12"><span class="sn">[١٢]</span><span class="sb"><span class="ltr-inline">"Software is the easy part of Software Engineering" — Lessons and Experiences from A Large-Scale, Multi-Team Capstone Course</span>، <span class="ltr-inline">arXiv:2302.05536</span>.<a href="https://arxiv.org/pdf/2302.05536" target="_blank" rel="noopener">https://arxiv.org/pdf/2302.05536</a></span></li><li id="src-13"><span class="sn">[١٣]</span><span class="sb"><span class="ltr-inline">gruepr, an Open Source Tool for Creating Optimal Student Teams</span>، <span class="ltr-inline">ASEE</span>، ٢٠٢٠.<a href="https://peer.asee.org/gruepr-an-open-source-tool-for-creating-optimal-student-teams" target="_blank" rel="noopener">https://peer.asee.org/gruepr-an-open-source-tool-for-creating-optimal-student-teams</a></span></li><li id="src-14"><span class="sn">[١٤]</span><span class="sb"><span class="ltr-inline">Belbin's team roles</span>، معهد التصنيع، جامعة كامبريدج.<a href="https://www.ifm.eng.cam.ac.uk/research/dmg/tools-and-techniques/belbins-team-roles/" target="_blank" rel="noopener">https://www.ifm.eng.cam.ac.uk/research/dmg/tools-and-techniques/belbins-team-roles/</a></span></li><li id="src-15"><span class="sn">[١٥]</span><span class="sb"><span class="ltr-inline">Belbin Team Role Descriptions</span> (٢٠٢٢)، <span class="ltr-inline">Belbin Associates</span>.<a href="https://belbin.com/media/3470/belbin-team-role-descriptions-2022.pdf" target="_blank" rel="noopener">https://belbin.com/media/3470/belbin-team-role-descriptions-2022.pdf</a></span></li><li id="src-16"><span class="sn">[١٦]</span><span class="sb"><span class="ltr-inline">Team roles Belbin</span> (جدول وصف الأدوار)، <span class="ltr-inline">YEEnet</span>.<a href="https://yeenet.eu/archives/images/stories/Team_roles_Belbin.pdf" target="_blank" rel="noopener">https://yeenet.eu/archives/images/stories/Team_roles_Belbin.pdf</a></span></li><li id="src-17"><span class="sn">[١٧]</span><span class="sb"><span class="ltr-inline">The importance of interpersonal skills</span>، <span class="ltr-inline">OpenLearn</span>، الجامعة المفتوحة (المملكة المتحدة).<a href="https://www.open.edu/openlearn/money-business/leadership-management/the-importance-interpersonal-skills/content-section-3" target="_blank" rel="noopener">https://www.open.edu/openlearn/money-business/leadership-management/the-importance-interpersonal-skills/content-section-3</a></span></li><li id="src-18"><span class="sn">[١٨]</span><span class="sb"><span class="ltr-inline">Accountability, Responsibility and Roles</span>، <span class="ltr-inline">Scrum.org</span>.<a href="https://www.scrum.org/node/77033" target="_blank" rel="noopener">https://www.scrum.org/node/77033</a></span></li><li id="src-19"><span class="sn">[١٩]</span><span class="sb"><span class="ltr-inline">Scrum Guide for Leaders — Supporting the Scrum Accountabilities/Roles</span>، <span class="ltr-inline">Scrum.org</span>.<a href="https://www.scrum.org/resources/blog/scrum-guide-leaders-supporting-scrum-accountabilitiesroles" target="_blank" rel="noopener">https://www.scrum.org/resources/blog/scrum-guide-leaders-supporting-scrum-accountabilitiesroles</a></span></li><li id="src-20"><span class="sn">[٢٠]</span><span class="sb"><span class="ltr-inline">Faculty Quick Start Guide</span> (آب ٢٠٢٢)، كلية باروخ، جامعة مدينة نيويورك.<a href="https://blogs.baruch.cuny.edu/teaming/files/2022/08/Faculty-Quick-Start-Guide-August-2022-1.pdf" target="_blank" rel="noopener">https://blogs.baruch.cuny.edu/teaming/files/2022/08/Faculty-Quick-Start-Guide-August-2022-1.pdf</a></span></li><li id="src-21"><span class="sn">[٢١]</span><span class="sb"><span class="ltr-inline">Team Charter template</span> (مقتبس من مركز إيبرلي، جامعة كارنيغي ميلون)، جامعة تكساس في سان أنطونيو.<a href="https://innovationtest.utsa.edu/tldt/faculty-resources/academic-technologies/digital-tools/padlet/team-charter-template.pdf" target="_blank" rel="noopener">https://innovationtest.utsa.edu/tldt/faculty-resources/academic-technologies/digital-tools/padlet/team-charter-template.pdf</a></span></li><li id="src-22"><span class="sn">[٢٢]</span><span class="sb"><span class="ltr-inline">CS4760 Team Charter</span>، جامعة ميشيغان التقنية.<a href="https://cs4760.csl.mtu.edu/2025/resources/TeamCharter.docx" target="_blank" rel="noopener">https://cs4760.csl.mtu.edu/2025/resources/TeamCharter.docx</a></span></li><li id="src-23"><span class="sn">[٢٣]</span><span class="sb"><span class="ltr-inline">GitHub flow</span>، <span class="ltr-inline">GitHub Docs</span>.<a href="https://github.com/github/docs/blob/main/content/get-started/using-github/github-flow.md" target="_blank" rel="noopener">https://github.com/github/docs/blob/main/content/get-started/using-github/github-flow.md</a></span></li><li id="src-24"><span class="sn">[٢٤]</span><span class="sb"><span class="ltr-inline">Using GitHub for Project Management and Collaboration</span>، جامعة تورونتو (<span class="ltr-inline">ECE1724</span>).<a href="https://www.eecg.utoronto.ca/~cying/courses/ece1724-web/resources/github-usage/" target="_blank" rel="noopener">https://www.eecg.utoronto.ca/~cying/courses/ece1724-web/resources/github-usage/</a></span></li><li id="src-25"><span class="sn">[٢٥]</span><span class="sb"><span class="ltr-inline">Sonntag</span> (٢٠٢٦)، <span class="ltr-inline">Mitigating social loafing in collaborative learning</span>، جامعة لوند.<a href="https://journals.lub.lu.se/pige/article/view/29213" target="_blank" rel="noopener">https://journals.lub.lu.se/pige/article/view/29213</a></span></li><li id="src-26"><span class="sn">[٢٦]</span><span class="sb"><span class="ltr-inline">Strong &amp; Anderson</span> (١٩٩٠)، <span class="ltr-inline">Free-Riding in Group Projects: Control Mechanisms and Preliminary Data</span>، <span class="ltr-inline">Journal of Marketing Education</span> ١٢(٢).<a href="https://researchdiscovery.drexel.edu/esploro/outputs/journalArticle/Free-Riding-in-Group-Projects-Control-Mechanisms/991019173809604721" target="_blank" rel="noopener">https://researchdiscovery.drexel.edu/esploro/outputs/journalArticle/Free-Riding-in-Group-Projects-Control-Mechanisms/991019173809604721</a></span></li><li id="src-27"><span class="sn">[٢٧]</span><span class="sb">ورقة عن الركوب المجاني في العمل الجماعي (<span class="ltr-inline">Free-riding in Group Work</span>)، مؤتمر <span class="ltr-inline">PIGE</span>، جامعة لوند.<a href="https://journals.lub.lu.se/pige/article/download/20902/18809/50362" target="_blank" rel="noopener">https://journals.lub.lu.se/pige/article/download/20902/18809/50362</a></span></li></ul>
+
+  <div class="mini-note">نهاية المحاضرة الأولى — مشروع المجموعة ٢ — جامعة بابل</div>
+  <div class="page-nav">
+    <button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button>
+    <button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button>
+  </div>
+  <div class="footer-note">١</div>
+</div>
+<!-- ============ END SLIDE 1 ============ -->
+
+<!-- ============ SLIDE 2 : الأسبوع الثاني ============ -->
+<div id="slide-2" class="slide content-slide">
+  <span class="chip">الأسبوع الثاني</span>
+  <div class="coming-soon">
+    <svg class="big-icon" viewBox="0 0 40 40"><circle cx="20" cy="20" r="15" fill="none" stroke="currentColor" stroke-width="3" filter="url(#sketchy)"/><path d="M20 11 V21 L27 25" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+    <p class="cs-title">تنزل لاحقاً</p>
+    <p class="cs-sub">محتوى هذا الأسبوع سيُضاف قريباً.</p>
+  </div>
+  <div class="page-nav"><button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button><button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button></div>
+  <div class="footer-note">٢</div>
+</div>
+<!-- ============ END SLIDE 2 ============ -->
+
+<!-- ============ SLIDE 3 : الأسبوع الثالث ============ -->
+<div id="slide-3" class="slide content-slide">
+  <span class="chip">الأسبوع الثالث</span>
+  <div class="coming-soon">
+    <svg class="big-icon" viewBox="0 0 40 40"><circle cx="20" cy="20" r="15" fill="none" stroke="currentColor" stroke-width="3" filter="url(#sketchy)"/><path d="M20 11 V21 L27 25" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+    <p class="cs-title">تنزل لاحقاً</p>
+    <p class="cs-sub">محتوى هذا الأسبوع سيُضاف قريباً.</p>
+  </div>
+  <div class="page-nav"><button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button><button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button></div>
+  <div class="footer-note">٣</div>
+</div>
+<!-- ============ END SLIDE 3 ============ -->
+
+<!-- ============ SLIDE 4 : الأسبوع الرابع ============ -->
+<div id="slide-4" class="slide content-slide">
+  <span class="chip">الأسبوع الرابع</span>
+  <div class="coming-soon">
+    <svg class="big-icon" viewBox="0 0 40 40"><circle cx="20" cy="20" r="15" fill="none" stroke="currentColor" stroke-width="3" filter="url(#sketchy)"/><path d="M20 11 V21 L27 25" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+    <p class="cs-title">تنزل لاحقاً</p>
+    <p class="cs-sub">محتوى هذا الأسبوع سيُضاف قريباً.</p>
+  </div>
+  <div class="page-nav"><button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button><button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button></div>
+  <div class="footer-note">٤</div>
+</div>
+<!-- ============ END SLIDE 4 ============ -->
+
+<!-- ============ SLIDE 5 : الأسبوع الخامس ============ -->
+<div id="slide-5" class="slide content-slide">
+  <span class="chip">الأسبوع الخامس</span>
+  <div class="coming-soon">
+    <svg class="big-icon" viewBox="0 0 40 40"><circle cx="20" cy="20" r="15" fill="none" stroke="currentColor" stroke-width="3" filter="url(#sketchy)"/><path d="M20 11 V21 L27 25" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+    <p class="cs-title">تنزل لاحقاً</p>
+    <p class="cs-sub">محتوى هذا الأسبوع سيُضاف قريباً.</p>
+  </div>
+  <div class="page-nav"><button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button><button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button></div>
+  <div class="footer-note">٥</div>
+</div>
+<!-- ============ END SLIDE 5 ============ -->
+
+<!-- ============ SLIDE 6 : الأسبوع السادس ============ -->
+<div id="slide-6" class="slide content-slide">
+  <span class="chip">الأسبوع السادس</span>
+  <div class="coming-soon">
+    <svg class="big-icon" viewBox="0 0 40 40"><circle cx="20" cy="20" r="15" fill="none" stroke="currentColor" stroke-width="3" filter="url(#sketchy)"/><path d="M20 11 V21 L27 25" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+    <p class="cs-title">تنزل لاحقاً</p>
+    <p class="cs-sub">محتوى هذا الأسبوع سيُضاف قريباً.</p>
+  </div>
+  <div class="page-nav"><button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button><button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button></div>
+  <div class="footer-note">٦</div>
+</div>
+<!-- ============ END SLIDE 6 ============ -->
+
+<!-- ============ SLIDE 7 : الأسبوع السابع ============ -->
+<div id="slide-7" class="slide content-slide">
+  <span class="chip">الأسبوع السابع</span>
+  <div class="coming-soon">
+    <svg class="big-icon" viewBox="0 0 40 40"><circle cx="20" cy="20" r="15" fill="none" stroke="currentColor" stroke-width="3" filter="url(#sketchy)"/><path d="M20 11 V21 L27 25" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+    <p class="cs-title">تنزل لاحقاً</p>
+    <p class="cs-sub">محتوى هذا الأسبوع سيُضاف قريباً.</p>
+  </div>
+  <div class="page-nav"><button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button><button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button></div>
+  <div class="footer-note">٧</div>
+</div>
+<!-- ============ END SLIDE 7 ============ -->
+
+<!-- ============ SLIDE 8 : الأسبوع الثامن ============ -->
+<div id="slide-8" class="slide content-slide">
+  <span class="chip">الأسبوع الثامن</span>
+  <div class="coming-soon">
+    <svg class="big-icon" viewBox="0 0 40 40"><circle cx="20" cy="20" r="15" fill="none" stroke="currentColor" stroke-width="3" filter="url(#sketchy)"/><path d="M20 11 V21 L27 25" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+    <p class="cs-title">تنزل لاحقاً</p>
+    <p class="cs-sub">محتوى هذا الأسبوع سيُضاف قريباً.</p>
+  </div>
+  <div class="page-nav"><button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button><button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button></div>
+  <div class="footer-note">٨</div>
+</div>
+<!-- ============ END SLIDE 8 ============ -->
+
+<!-- ============ SLIDE 9 : الأسبوع التاسع ============ -->
+<div id="slide-9" class="slide content-slide">
+  <span class="chip">الأسبوع التاسع</span>
+  <div class="coming-soon">
+    <svg class="big-icon" viewBox="0 0 40 40"><circle cx="20" cy="20" r="15" fill="none" stroke="currentColor" stroke-width="3" filter="url(#sketchy)"/><path d="M20 11 V21 L27 25" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+    <p class="cs-title">تنزل لاحقاً</p>
+    <p class="cs-sub">محتوى هذا الأسبوع سيُضاف قريباً.</p>
+  </div>
+  <div class="page-nav"><button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button><button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button></div>
+  <div class="footer-note">٩</div>
+</div>
+<!-- ============ END SLIDE 9 ============ -->
+
+<!-- ============ SLIDE 10 : الأسبوع العاشر ============ -->
+<div id="slide-10" class="slide content-slide">
+  <span class="chip">الأسبوع العاشر</span>
+  <div class="coming-soon">
+    <svg class="big-icon" viewBox="0 0 40 40"><circle cx="20" cy="20" r="15" fill="none" stroke="currentColor" stroke-width="3" filter="url(#sketchy)"/><path d="M20 11 V21 L27 25" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+    <p class="cs-title">تنزل لاحقاً</p>
+    <p class="cs-sub">محتوى هذا الأسبوع سيُضاف قريباً.</p>
+  </div>
+  <div class="page-nav"><button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button><button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button></div>
+  <div class="footer-note">١٠</div>
+</div>
+<!-- ============ END SLIDE 10 ============ -->
+
+<!-- ============ SLIDE 11 : الأسبوع الحادي عشر ============ -->
+<div id="slide-11" class="slide content-slide">
+  <span class="chip">الأسبوع الحادي عشر</span>
+  <div class="coming-soon">
+    <svg class="big-icon" viewBox="0 0 40 40"><circle cx="20" cy="20" r="15" fill="none" stroke="currentColor" stroke-width="3" filter="url(#sketchy)"/><path d="M20 11 V21 L27 25" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+    <p class="cs-title">تنزل لاحقاً</p>
+    <p class="cs-sub">محتوى هذا الأسبوع سيُضاف قريباً.</p>
+  </div>
+  <div class="page-nav"><button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button><button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button></div>
+  <div class="footer-note">١١</div>
+</div>
+<!-- ============ END SLIDE 11 ============ -->
+
+<!-- ============ SLIDE 12 : الأسبوع الثاني عشر ============ -->
+<div id="slide-12" class="slide content-slide">
+  <span class="chip">الأسبوع الثاني عشر</span>
+  <div class="coming-soon">
+    <svg class="big-icon" viewBox="0 0 40 40"><circle cx="20" cy="20" r="15" fill="none" stroke="currentColor" stroke-width="3" filter="url(#sketchy)"/><path d="M20 11 V21 L27 25" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+    <p class="cs-title">تنزل لاحقاً</p>
+    <p class="cs-sub">محتوى هذا الأسبوع سيُضاف قريباً.</p>
+  </div>
+  <div class="page-nav"><button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button><button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button></div>
+  <div class="footer-note">١٢</div>
+</div>
+<!-- ============ END SLIDE 12 ============ -->
+
+<!-- ============ SLIDE 13 : الأسبوع الثالث عشر ============ -->
+<div id="slide-13" class="slide content-slide">
+  <span class="chip">الأسبوع الثالث عشر</span>
+  <div class="coming-soon">
+    <svg class="big-icon" viewBox="0 0 40 40"><circle cx="20" cy="20" r="15" fill="none" stroke="currentColor" stroke-width="3" filter="url(#sketchy)"/><path d="M20 11 V21 L27 25" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+    <p class="cs-title">تنزل لاحقاً</p>
+    <p class="cs-sub">محتوى هذا الأسبوع سيُضاف قريباً.</p>
+  </div>
+  <div class="page-nav"><button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button><button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button></div>
+  <div class="footer-note">١٣</div>
+</div>
+<!-- ============ END SLIDE 13 ============ -->
+
+<!-- ============ SLIDE 14 : الأسبوع الرابع عشر ============ -->
+<div id="slide-14" class="slide content-slide">
+  <span class="chip">الأسبوع الرابع عشر</span>
+  <div class="coming-soon">
+    <svg class="big-icon" viewBox="0 0 40 40"><circle cx="20" cy="20" r="15" fill="none" stroke="currentColor" stroke-width="3" filter="url(#sketchy)"/><path d="M20 11 V21 L27 25" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+    <p class="cs-title">تنزل لاحقاً</p>
+    <p class="cs-sub">محتوى هذا الأسبوع سيُضاف قريباً.</p>
+  </div>
+  <div class="page-nav"><button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button><button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button></div>
+  <div class="footer-note">١٤</div>
+</div>
+<!-- ============ END SLIDE 14 ============ -->
+
+<!-- ============ SLIDE 15 : الأسبوع الخامس عشر ============ -->
+<div id="slide-15" class="slide content-slide">
+  <span class="chip">الأسبوع الخامس عشر</span>
+  <div class="coming-soon">
+    <svg class="big-icon" viewBox="0 0 40 40"><circle cx="20" cy="20" r="15" fill="none" stroke="currentColor" stroke-width="3" filter="url(#sketchy)"/><path d="M20 11 V21 L27 25" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+    <p class="cs-title">تنزل لاحقاً</p>
+    <p class="cs-sub">محتوى هذا الأسبوع سيُضاف قريباً.</p>
+  </div>
+  <div class="page-nav"><button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button><button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button></div>
+  <div class="footer-note">١٥</div>
+</div>
+<!-- ============ END SLIDE 15 ============ -->
+
+<!-- ============ SLIDE SOL : الحلول والتعليل ============ -->
+<div id="slide-sol" class="slide content-slide">
+  <span class="chip" style="background:var(--teal)">الحلول والتعليل</span>
+  <h2 class="page-title">حلول أسئلة المراجعة</h2>
+  <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--teal)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
+
+  <div class="sol-week"><span class="sw-n">١</span><span class="sw-t">حلول الأسبوع الأول</span></div>
+  <div class="sol-kind"><span>الاختيار من متعدد</span><span class="sk-line"></span></div>
+  <div class="sol-item"><p class="sol-q"><span class="sq-n">١.</span> المرحلة التي تتسم بخلافات وتباين في الرأي حول الأهداف:</p><div class="sol-opts"><div class="sol-opt bad"><span class="so-k">أ)</span><span>التكوين</span></div><div class="sol-opt ok"><span class="so-k">ب)</span><span>الاصطدام</span></div><div class="sol-opt bad"><span class="so-k">ج)</span><span>الاستقرار</span></div><div class="sol-opt bad"><span class="so-k">د)</span><span>الأداء</span></div></div><p class="sol-why"><b>التعليل:</b> «أ» تصف مرحلة التعارف وتبيّن التوقعات وانتظار توجيه القائد، لا مرحلة الخلاف؛ و«ج» تأتي بعد تجاوز الخلافات حين تتشكل أنماط العمل؛ و«د» مرحلة تتراجع فيها أهمية الأدوار والقواعد. فالخلاف المعتاد على الأهداف سمة الاصطدام.</p></div>
+  <div class="sol-item"><p class="sol-q"><span class="sq-n">٢.</span> الدور الذي يقع ضمن العنقود الاجتماعي:</p><div class="sol-opts"><div class="sol-opt bad"><span class="so-k">أ)</span><span><span class="ltr-inline">Plant</span></span></div><div class="sol-opt ok"><span class="so-k">ب)</span><span><span class="ltr-inline">Co-ordinator</span></span></div><div class="sol-opt bad"><span class="so-k">ج)</span><span><span class="ltr-inline">Implementer</span></span></div><div class="sol-opt bad"><span class="so-k">د)</span><span><span class="ltr-inline">Specialist</span></span></div></div><p class="sol-why"><b>التعليل:</b> «أ» و«د» من العنقود الفكري، و«ج» من العنقود العملي. أما المنسّق فيجمع الأعضاء حول المهام، فهو من الأدوار الاجتماعية إلى جانب الباحث عن الموارد وعامل الفريق.</p></div>
+  <div class="sol-item"><p class="sol-q"><span class="sq-n">٣.</span> المسؤول عن تعظيم قيمة المنتج في سكرم ٢٠٢٠:</p><div class="sol-opts"><div class="sol-opt bad"><span class="so-k">أ)</span><span><span class="ltr-inline">Developers</span></span></div><div class="sol-opt bad"><span class="so-k">ب)</span><span><span class="ltr-inline">Scrum Master</span></span></div><div class="sol-opt ok"><span class="so-k">ج)</span><span><span class="ltr-inline">Product Owner</span></span></div><div class="sol-opt bad"><span class="so-k">د)</span><span>أعضاء الفريق جميعًا بالتساوي دون تمييز</span></div></div><p class="sol-why"><b>التعليل:</b> «أ» مسؤولون عن إنشاء المنتج، و«ب» عن فاعلية فريق سكرم، و«د» يتجاهل أن الدليل يحدد ثلاث مسؤوليات متمايزة. فتعظيم القيمة مسؤولية مسؤول المنتج.</p></div>
+  <div class="sol-item"><p class="sol-q"><span class="sq-n">٤.</span> حجم فريق المشروع الطلابي:</p><div class="sol-opts"><div class="sol-opt bad"><span class="so-k">أ)</span><span>الاثنان أو الثلاثة هو الأمثل دائمًا</span></div><div class="sol-opt ok"><span class="so-k">ب)</span><span>رجّحت دراسات عدة أربعة إلى ستة، وقد تعجز الفرق الصغيرة جدًّا عن مشروع كبير</span></div><div class="sol-opt bad"><span class="so-k">ج)</span><span>كلما زاد العدد زاد الإنجاز مطّردًا</span></div><div class="sol-opt bad"><span class="so-k">د)</span><span>لا أثر للحجم في التواصل</span></div></div><p class="sol-why"><b>التعليل:</b> «أ» تُهمل أنّ الفرق الصغيرة جدًّا قد لا تنجز مشاريع كبيرة، و«ج» يناقضه رصد أعضاء متفرجين في فرق كبيرة، و«د» يتجاهل أنّ التواصل يزداد تعقيدًا مع الحجم.</p></div>
+  <div class="sol-item"><p class="sol-q"><span class="sq-n">٥.</span> إرشادات ميثاق الفريق:</p><div class="sol-opts"><div class="sol-opt bad"><span class="so-k">أ)</span><span>يُكتب مرة ولا يُعدَّل</span></div><div class="sol-opt ok"><span class="so-k">ب)</span><span>عملية الإعداد المشتركة أهم من الوثيقة ويُعدَّل باتفاق الفريق</span></div><div class="sol-opt bad"><span class="so-k">ج)</span><span>يكرر نطاق العمل المتفق عليه مع الجهة الخارجية</span></div><div class="sol-opt bad"><span class="so-k">د)</span><span>يوقّعه القائد وحده</span></div></div><p class="sol-why"><b>التعليل:</b> «أ» يخالف الدعوة إلى مراجعته وتعديله، و«ج» يخلط بين ميثاق الفريق الموجَّه إلى الداخل ووثيقة النطاق الموجَّهة إلى الخارج، و«د» يخالف توقيع جميع الأعضاء التزامًا بالعمل الجيد.</p></div>
+
+  <div class="sol-kind"><span>صح أم خطأ</span><span class="sk-line"></span></div>
+  <div class="sol-item"><div class="sol-tf-line"><span class="sol-badge f">خطأ</span><p class="sol-q"><span class="sq-n">١.</span> نموذج تاكمان الأصلي (١٩٦٥) من خمس مراحل.</p></div><p class="sol-why"><b>التعليل:</b> الأصل أربع مراحل: التكوين والاصطدام والاستقرار والأداء؛ وأضيفت مرحلة الإنهاء عام ١٩٧٧ بالاشتراك مع جنسن.</p></div>
+  <div class="sol-item"><div class="sol-tf-line"><span class="sol-badge f">خطأ</span><p class="sol-q"><span class="sq-n">٢.</span> الفريق الذي بلغ الأداء لا يعود إلى مراحل سابقة.</p></div><p class="sol-why"><b>التعليل:</b> قد يعيده انضمام عضو جديد أو تكرر الغياب إلى الاصطدام.</p></div>
+  <div class="sol-item"><div class="sol-tf-line"><span class="sol-badge t">صح</span><p class="sol-q"><span class="sq-n">٣.</span> معرفة الأدوار زائدة التمثيل أو الغائبة مفيدة حتى مع غياب التوازن التام.</p></div><p class="sol-why"><b>التعليل:</b> التوازن بين الأدوار التسعة مثالي ونادر، والفائدة العملية في كشف الفجوات.</p></div>
+  <div class="sol-item"><div class="sol-tf-line"><span class="sol-badge t">صح</span><p class="sol-q"><span class="sq-n">٤.</span> ربط طلب الدمج بمسألة وإغلاقها تلقائيًا عند الدمج.</p></div><p class="sol-why"><b>التعليل:</b> يتحقق ذلك إذا استُعملت كلمة ربط مخصصة، وتبقى المسألة مرتبطة بطلب الدمج.</p></div>
+
+  <div class="sol-kind"><span>الأسئلة القصيرة</span><span class="sk-line"></span></div>
+  <div class="sol-item"><p class="sol-q"><span class="sq-n">١.</span> التكاسل الاجتماعي والركوب المجاني وأسلوبا الحد منهما.</p>
+    <ul class="sol-grading"><li>التكاسل الاجتماعي: بذل جهد أقل مما يُبذل منفردًا (درجة).</li><li>الركوب المجاني: حالة أشد، ينال فيها العضو الدرجة عن عمل الآخرين وهو لا يعمل شيئًا يُذكر (درجة).</li><li>أسلوب أول مع بيان وجه فاعليته، مثل جلسة التأمل الفردي لاكتشاف تقسيم العمل غير العادل مبكرًا (درجة).</li><li>أسلوب ثانٍ مع بيان وجه فاعليته، مثل مناقشة المدرّس للمشكلة أو تقييم الزملاء (درجة).</li></ul></div>
+  <div class="sol-item"><p class="sol-q"><span class="sq-n">٢.</span> المسؤوليات في سكرم ٢٠٢٠.</p>
+    <ul class="sol-grading"><li>الاستبدال لتأكيد عقلية الملكية والنتائج (درجة).</li><li>الإطار لا يمنع جمع أكثر من مسؤولية (درجة).</li><li>التنبيه إلى صعوبة اجتماع المهارات اللازمة في شخص واحد (درجة).</li></ul></div>
+
+  <div class="page-nav"><button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button><button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button></div>
+</div>
+<!-- ============ END SLIDE SOL ============ -->
+
+<script>
+(function(){
+  var tabs=[].slice.call(document.querySelectorAll('.tab'));
+  var strip=document.getElementById('tabs');
+  function activate(id){
+    tabs.forEach(function(t){t.classList.toggle('active',t.dataset.target===id)});
+    [].forEach.call(document.querySelectorAll('.slide'),function(s){s.classList.toggle('active',s.id===id)});
+    var a=tabs.filter(function(t){return t.dataset.target===id})[0];
+    if(a){strip.scrollTo({left:a.offsetLeft-strip.clientWidth/2+a.clientWidth/2,behavior:'smooth'})}
+    window.scrollTo({top:0});
+  }
+  window.navigateSlide=function(d){
+    var i=tabs.findIndex(function(t){return t.classList.contains('active')});
+    var n=Math.min(tabs.length-1,Math.max(0,i+d));
+    activate(tabs[n].dataset.target);
+  };
+  tabs.forEach(function(t){t.addEventListener('click',function(){activate(t.dataset.target)})});
+})();
+</script>
+</div>
+</body>
+</html>
