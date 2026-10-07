@@ -6294,13 +6294,331 @@
       <!-- ============ SLIDE 5 : الأسبوع الخامس ============ -->
       <div id="slide-5" class="slide content-slide">
         <span class="chip chip-ch1">الأسبوع الخامس</span>
-        <h2 class="page-title">الأسبوع الخامس</h2>
+        <h2 class="page-title">تحليل البيانات — المفاهيم الأساسيّة</h2>
         <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
-        <div class="coming-soon">
-          <svg class="big-icon" viewBox="0 0 40 40"><g filter="url(#sketchy)"><circle cx="20" cy="20" r="15" fill="#fde3c4" stroke="var(--orange)" stroke-width="2.5"/><path d="M20 12 v9 l6 4" fill="none" stroke="var(--orange)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></g></svg>
-          <p class="cs-title">تنزل لاحقاً</p>
-          <p class="cs-sub">محتوى هذا الأسبوع سيُضاف قريباً.</p>
+
+        <p class="lead-paragraph">انشغلت الأسابيع الأربعة الماضية بسؤال <strong>كيف يُطلَب العمل من الذكاء الاصطناعيّ</strong>: أمرٌ جيّد، ثمّ قالب، ثمّ مهارة. غير أنّ أغلب ما يُطلب منه في الدوائر الحكوميّة يدور حول <strong>البيانات</strong>: سجلّات حضور، ومعاملات، ورواتب، وشكاوى. ويأتي هذا الأسبوع ليضع الأساس الذي يسبق أيّ أداة: <span class="hl hl-yellow">كيف تتحوّل البيانات إلى قرار، وما الذي يُفسد هذا التحوّل قبل أن يبدأ</span>.</p>
+
+        <!-- ══════════ ١ ══════════ -->
+        <div class="section-heading" style="margin-top:26px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>١ · من البيانات إلى القرار</span>
         </div>
+
+        <p>يصل إلى مدير الدائرة كلَّ يوم ملفُّ حضور الموظّفين: آلافُ الأسطر من الأسماء وأوقات الدخول والخروج. وهذا الملفّ — على ضخامته — لا يُعين على اتّخاذ قرارٍ بحاله، لأنّه <span class="hl hl-blue">بيانات</span> لم تُعالَج بعد. والطريق من الملفّ إلى القرار يمرّ بأربعة مستويات، يُعرف مجموعها بـ<b>هرم المعرفة</b> <span class="ltr-inline">(DIKW)</span>.</p>
+
+        <div class="pipe">
+          <div class="pipe-row">
+            <span class="pipe-n">١</span>
+            <div class="pipe-b">
+              <b>البيانات — حقائق خام</b>
+              <small>«أحمد دخل الساعة ٨:٤٠ يوم الأحد» — لا يُعرف بعدُ أهي جيّدة أم سيّئة</small>
+            </div>
+          </div>
+          <div class="pipe-a">▼</div>
+          <div class="pipe-row">
+            <span class="pipe-n">٢</span>
+            <div class="pipe-b">
+              <b>المعلومات — بيانات مُجمَّعة ذات معنى</b>
+              <small>«نسبة الغياب في قسم المالية ١٨٪ أيّام الأحد»</small>
+            </div>
+          </div>
+          <div class="pipe-a">▼</div>
+          <div class="pipe-row">
+            <span class="pipe-n">٣</span>
+            <div class="pipe-b hi">
+              <b>الرؤية — فهمُ السبب</b>
+              <small>«الغياب يرتفع بعد العطل، وأغلب الغائبين يسكنون بعيدًا ويعانون من النقل»</small>
+            </div>
+          </div>
+          <div class="pipe-a">▼</div>
+          <div class="pipe-row">
+            <span class="pipe-n">٤</span>
+            <div class="pipe-b">
+              <b>القرار — فعلٌ مبنيّ على دليل</b>
+              <small>«توفير خطّ نقل، أو تجربة دوامٍ مرن يوم الأحد»</small>
+            </div>
+          </div>
+        </div>
+
+        <p>وكلّما صُعِد في الهرم <b>قلّ حجم البيانات وزادت قيمتها</b>: ألف سطرٍ في القاعدة، وقرارٌ واحد في القمّة. والمستوى الثالث هو موضع العمل الحقيقيّ للمحلّل، إذ ينتقل فيه السؤال من «ماذا حدث؟» إلى «لماذا حدث؟».</p>
+
+        <div class="takeaway">
+          <b>نقطة البداية:</b> كلُّ تحليلٍ يبدأ بسؤال. فمن غير سؤالٍ واضح يتحوّل الهرم إلى كومة بيانات لا يُعرف من أين يُصعَد فيها.
+        </div>
+
+        <div class="oops">
+          <span class="o-i">⚠</span>
+          <div>الخلطُ الشائع هو عدُّ <b>المعلومة</b> رؤيةً. فنسبة الغياب ١٨٪ رقمٌ دقيق، لكنّها لا تقول شيئًا عن السبب، والقرار المبنيّ عليها وحدها — كعقوبةٍ جماعيّة مثلًا — يعالج العَرَض ويترك العلّة.</div>
+        </div>
+
+        <!-- ══════════ ٢ ══════════ -->
+        <div class="section-heading" style="margin-top:28px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>٢ · أنواع البيانات</span>
+        </div>
+
+        <p>قبل أيّ حساب، يُسأل: <b>ما نوع البيانات التي بين الأيدي؟</b> فالنوع هو الذي يحدّد ما يصحّ حسابه، وأيّ رسمٍ بيانيّ يلائمه. وتنقسم البيانات في أغلبها إلى نوعين كبيرين، لكلٍّ منهما فرعان.</p>
+
+        <p class="dt-cap">النوعان الكبيران وفروعهما</p>
+        <div class="dt-wrap">
+          <table class="dt">
+            <thead><tr><th>النوع</th><th>الفرع</th><th>تعريفه</th><th>مثال من الدائرة</th></tr></thead>
+            <tbody>
+              <tr><td rowspan="2"><b>كمّيّة</b> <span class="ltr-inline">Quantitative</span><br><small>أرقامٌ يصحّ جمعها وحساب متوسّطها</small></td><td>منفصلة <span class="ltr-inline">Discrete</span></td><td>أعدادٌ صحيحة تُعَدّ عدًّا</td><td>عدد أيّام الغياب: ٣</td></tr>
+              <tr><td>متّصلة <span class="ltr-inline">Continuous</span></td><td>قيمٌ تُقاس قياسًا وقد تحمل كسورًا</td><td>الراتب، وقت الوصول</td></tr>
+              <tr><td rowspan="2"><b>فئويّة</b> <span class="ltr-inline">Categorical</span><br><small>أصنافٌ أو مجموعات</small></td><td>اسميّة <span class="ltr-inline">Nominal</span></td><td>أصنافٌ لا ترتيب بينها</td><td>القسم، المحافظة</td></tr>
+              <tr><td>ترتيبيّة <span class="ltr-inline">Ordinal</span></td><td>أصنافٌ لها ترتيبٌ طبيعيّ</td><td>تقييم الأداء: ممتاز، جيّد، مقبول</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>ويُضاف إلى هذا التقسيم تقسيمٌ آخر بحسب الشكل: <b>بياناتٌ منظَّمة</b> في صفوفٍ وأعمدة كجداول الرواتب، و<b>بياناتٌ غير منظَّمة</b> كنصوص شكاوى المواطنين والصور والتسجيلات. والنوع الثاني هو الأكثر في العالم اليوم، وهو الميدان الذي يتقدّم فيه الذكاء الاصطناعيّ على الأدوات التقليديّة.</p>
+
+        <div class="oops">
+          <span class="o-i">⚠</span>
+          <div><b>ليس كلُّ رقمٍ كمّيًّا.</b> رقم الهاتف والرقم الوظيفيّ والرمز البريديّ تُكتب بأرقام، لكنّها <b>معرِّفات</b> لا كمّيّات. والاختبار البسيط: إذا كان الجمع أو المتوسّط بلا معنى — «متوسّط أرقام الهواتف» — فالعمود ليس كمّيًّا مهما بدا.</div>
+        </div>
+
+        <div class="takeaway">
+          <b>لماذا يهمّ النوع:</b> متوسّطُ الرواتب له معنى، ومتوسّطُ الأقسام لا معنى له. ومعرفةُ النوع أوّلًا تمنع حساباتٍ تبدو صحيحة وهي فارغة.
+        </div>
+
+        <!-- ══════════ ٣ ══════════ -->
+        <div class="section-heading" style="margin-top:28px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>٣ · دورة التحليل — ستّ محطّات</span>
+        </div>
+
+        <p>التحليل ليس خطوةً واحدة، بل مسارٌ من ستّ محطّات. ويتّضح المسار بمثالٍ متّصل: <b>دائرةٌ حكوميّة تشتكي من تأخّر معاملات المواطنين</b>.</p>
+
+        <div class="pipe">
+          <div class="pipe-row">
+            <span class="pipe-n">١</span>
+            <div class="pipe-b">
+              <b>السؤال</b>
+              <small>محدَّدٌ وقابلٌ للقياس: «لماذا تتأخّر المعاملات، وأيُّ أنواعها يتأخّر أكثر؟» — لا «الدائرة بطيئة»</small>
+            </div>
+          </div>
+          <div class="pipe-a">▼</div>
+          <div class="pipe-row">
+            <span class="pipe-n">٢</span>
+            <div class="pipe-b">
+              <b>جمع البيانات</b>
+              <small>سجلّ كلّ معاملة: تاريخ الاستلام، تاريخ الإنجاز، النوع، الموظّف المسؤول — ما يخدم السؤال لا كلّ شيء</small>
+            </div>
+          </div>
+          <div class="pipe-a">▼</div>
+          <div class="pipe-row">
+            <span class="pipe-n">٣</span>
+            <div class="pipe-b hi">
+              <b>التنظيف</b>
+              <small>معاملاتٌ مسجّلة مرّتين، تواريخ ناقصة، أخطاء كتابة — وهي أطول المحطّات زمنًا</small>
+            </div>
+          </div>
+          <div class="pipe-a">▼</div>
+          <div class="pipe-row">
+            <span class="pipe-n">٤</span>
+            <div class="pipe-b">
+              <b>التحليل</b>
+              <small>متوسّط مدّة الإنجاز لكلّ نوع معاملة، ولكلّ موظّف، ولكلّ يوم في الأسبوع</small>
+            </div>
+          </div>
+          <div class="pipe-a">▼</div>
+          <div class="pipe-row">
+            <span class="pipe-n">٥</span>
+            <div class="pipe-b">
+              <b>العرض</b>
+              <small>رسمٌ واحد واضح: معاملات نقل الملكيّة تستغرق ١٤ يومًا، والبقيّة ٣ أيّام</small>
+            </div>
+          </div>
+          <div class="pipe-a">▼</div>
+          <div class="pipe-row">
+            <span class="pipe-n">٦</span>
+            <div class="pipe-b">
+              <b>القرار</b>
+              <small>نافذةٌ خاصّة لمعاملات نقل الملكيّة، وتوقيعٌ إلكترونيّ يقلّل التنقّل بين الغرف</small>
+            </div>
+          </div>
+        </div>
+
+        <p>ثمّ تعود الدورة إلى أوّلها: بعد القرار يُطرح سؤالٌ جديد — <b>هل نجح القرار؟ هل قلّ التأخير فعلًا؟</b> — فتبدأ دورةٌ ثانية بالبيانات الجديدة.</p>
+
+        <div class="takeaway">
+          <b>التحليل دورةٌ لا خطٌّ مستقيم:</b> القرار الذي لا يُقاس أثرُه بعد تطبيقه قرارٌ بلا دليل، مهما كان التحليل الذي سبقه دقيقًا.
+        </div>
+
+        <div class="oops">
+          <span class="o-i">⚠</span>
+          <div>البدءُ بجمع «كلّ البيانات المتاحة» قبل تحديد السؤال يُنتج جداول ضخمة لا يُعرف ما يُستخرج منها. فالسؤال يحدّد البيانات المطلوبة، لا العكس.</div>
+        </div>
+
+        <!-- ══════════ ٤ ══════════ -->
+        <div class="section-heading" style="margin-top:28px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>٤ · تنظيف البيانات</span>
+        </div>
+
+        <p>البيانات الحقيقيّة نادرًا ما تصل نظيفة. والجدول الآتي — خمسة أسطرٍ فقط من جدول موظّفين — يحمل خمسة أنواعٍ من الأخطاء:</p>
+
+        <p class="dt-cap">جدولٌ قبل التنظيف</p>
+        <div class="dt-wrap">
+          <table class="dt">
+            <thead><tr><th>الاسم</th><th>المحافظة</th><th>الراتب</th><th>تاريخ التعيين</th></tr></thead>
+            <tbody>
+              <tr><td>أحمد علي</td><td>بغداد</td><td><span class="ltr-inline">850000</span></td><td><span class="ltr-inline">2019-03-01</span></td></tr>
+              <tr><td>أحمد علي</td><td>بغداد</td><td><span class="ltr-inline">850000</span></td><td><span class="ltr-inline">2019-03-01</span></td></tr>
+              <tr><td>سارة حسن</td><td><span class="ltr-inline">Baghdad</span></td><td>— فارغ —</td><td><span class="ltr-inline">01/07/2020</span></td></tr>
+              <tr><td>علي كريم</td><td>بغدد</td><td><span class="ltr-inline">85000000</span></td><td><span class="ltr-inline">2021-13-05</span></td></tr>
+              <tr><td>زينب محمد</td><td>بابل</td><td><span class="ltr-inline">920000</span></td><td><span class="ltr-inline">2018-11-20</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="dt-cap">الأخطاء الخمسة ومعالجتها</p>
+        <div class="dt-wrap">
+          <table class="dt">
+            <thead><tr><th>الخطأ</th><th>موضعه في الجدول</th><th>أثره إن تُرك</th><th>المعالجة</th></tr></thead>
+            <tbody>
+              <tr><td><b>التكرار</b></td><td>أحمد علي مرّتين</td><td>راتبه يُحسب مرّتين في المجموع</td><td>حذف المكرَّر</td></tr>
+              <tr><td><b>كتابةٌ غير موحَّدة</b></td><td>بغداد · <span class="ltr-inline">Baghdad</span> · بغدد</td><td>الحاسوب يراها ثلاث محافظات</td><td>توحيد الكتابة</td></tr>
+              <tr><td><b>خانةٌ فارغة</b></td><td>راتب سارة</td><td>متوسّطٌ محسوبٌ على عددٍ خاطئ</td><td>استكمالها من المصدر، أو استبعادها بإفصاح</td></tr>
+              <tr><td><b>قيمةٌ شاذّة</b></td><td>راتب علي: ٨٥ مليونًا</td><td>ترفع متوسّط رواتب الدائرة كلّها</td><td>التحقّق منها قبل أيّ حذف</td></tr>
+              <tr><td><b>تواريخ مضطربة</b></td><td>صيغتان مختلفتان، وشهرٌ رقمه ١٣</td><td>ترتيبٌ زمنيّ خاطئ أو تواريخ مستحيلة</td><td>صيغةٌ واحدة وفحصُ المعقوليّة</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="ba-pair">
+          <div class="bubble b-before"><span class="ba-tag">قبل التنظيف</span>السؤال: «كم موظّفًا يعمل في بغداد؟»<br>الجواب: <b>٢</b> — لأنّ «بغداد» وحدها تُعَدّ، ومنها سطرٌ مكرَّر.</div>
+          <div class="bubble b-after"><span class="ba-tag">بعد التنظيف</span>السؤال نفسه.<br>الجواب: <b>٣</b> — بعد حذف المكرَّر وتوحيد الكتابات الثلاث.</div>
+        </div>
+
+        <div class="takeaway">
+          <b>القاعدة الذهبيّة:</b> بياناتٌ سيّئة تدخل، قرارٌ سيّئ يخرج <span class="ltr-inline">(Garbage In, Garbage Out)</span>. ولهذا يُقدَّر أنّ نحو <span class="hl hl-pink">٨٠٪ من وقت المحلّل</span> يذهب إلى التنظيف لا إلى التحليل.
+        </div>
+
+        <div class="oops">
+          <span class="o-i">⚠</span>
+          <div>الحذف السريع للقيمة الشاذّة خطأٌ مثل تركها. فقد يكون الراتب المرتفع خطأَ إدخالٍ أضاف صفرين، وقد يكون راتبَ مديرٍ عامّ حقيقيًّا. والقرار بينهما يُتّخذ بالرجوع إلى المصدر لا بالتخمين.</div>
+        </div>
+
+        <!-- ══════════ أسئلة المراجعة ══════════ -->
+        <div class="section-heading" style="margin-top:28px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>أسئلة المراجعة</span>
+        </div>
+        <p class="quiz-note">الحلول والتعليل في تبويب «الحلول والتعليل» 🔑</p>
+
+        <div class="mcq-item">
+          <span class="q-num">١.</span> أيُّ العبارات الآتية «معلومة» لا «بيانات» بحسب هرم المعرفة؟
+          <ul class="mcq-options">
+            <li><span class="opt-letter">أ)</span> «أحمد دخل الساعة ٨:٤٠ يوم الأحد»</li>
+            <li><span class="opt-letter">ب)</span> «نسبة الغياب في قسم المالية ١٨٪ أيّام الأحد»</li>
+            <li><span class="opt-letter">ج)</span> قائمة بأسماء موظّفي الدائرة</li>
+            <li><span class="opt-letter">د)</span> رقم هاتف أحد الموظّفين</li>
+          </ul>
+        </div>
+        <div class="mcq-item">
+          <span class="q-num">٢.</span> عن أيّ سؤالٍ يجيب مستوى «الرؤية» في الهرم؟
+          <ul class="mcq-options">
+            <li><span class="opt-letter">أ)</span> ماذا حدث؟</li>
+            <li><span class="opt-letter">ب)</span> لماذا حدث؟</li>
+            <li><span class="opt-letter">ج)</span> كم عدد السجلّات؟</li>
+            <li><span class="opt-letter">د)</span> من أدخل البيانات؟</li>
+          </ul>
+        </div>
+        <div class="mcq-item">
+          <span class="q-num">٣.</span> عمود «الدرجة الوظيفيّة» (الأولى، الثانية، الثالثة…) من أيّ نوع؟
+          <ul class="mcq-options">
+            <li><span class="opt-letter">أ)</span> كمّيّة متّصلة</li>
+            <li><span class="opt-letter">ب)</span> فئويّة اسميّة</li>
+            <li><span class="opt-letter">ج)</span> فئويّة ترتيبيّة</li>
+            <li><span class="opt-letter">د)</span> كمّيّة منفصلة</li>
+          </ul>
+        </div>
+        <div class="mcq-item">
+          <span class="q-num">٤.</span> أيُّ الأعمدة الآتية لا يصحّ حساب متوسّطه، مع أنّ قيمه أرقام؟
+          <ul class="mcq-options">
+            <li><span class="opt-letter">أ)</span> الراتب الشهريّ</li>
+            <li><span class="opt-letter">ب)</span> عدد أيّام الإجازة</li>
+            <li><span class="opt-letter">ج)</span> الرقم الوظيفيّ</li>
+            <li><span class="opt-letter">د)</span> سنوات الخدمة</li>
+          </ul>
+        </div>
+        <div class="mcq-item">
+          <span class="q-num">٥.</span> أيُّ محطّات دورة التحليل تستغرق في العادة أطول وقت؟
+          <ul class="mcq-options">
+            <li><span class="opt-letter">أ)</span> صياغة السؤال</li>
+            <li><span class="opt-letter">ب)</span> جمع البيانات</li>
+            <li><span class="opt-letter">ج)</span> التنظيف</li>
+            <li><span class="opt-letter">د)</span> العرض</li>
+          </ul>
+        </div>
+        <div class="mcq-item">
+          <span class="q-num">٦.</span> في جدول رواتب تتقارب قيمه حول ٩٠٠ ألف دينار، ظهر راتبٌ قدره ٨٥ مليونًا. ما الإجراء الأصوب؟
+          <ul class="mcq-options">
+            <li><span class="opt-letter">أ)</span> حذفه فورًا لأنّه خطأٌ واضح</li>
+            <li><span class="opt-letter">ب)</span> إبقاؤه كما هو لأنّ البيانات لا تُمَسّ</li>
+            <li><span class="opt-letter">ج)</span> التحقّق منه من المصدر قبل أيّ قرار</li>
+            <li><span class="opt-letter">د)</span> استبداله بمتوسّط الرواتب تلقائيًّا</li>
+          </ul>
+        </div>
+
+        <!-- ══════════ أسئلة قصيرة ══════════ -->
+        <div class="section-heading" style="margin-top:28px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>أسئلة قصيرة</span>
+        </div>
+
+        <div class="mcq-item">
+          <span class="q-num">١.</span> مثالٌ من عمل الدائرة يصعد هرم المعرفة بمستوياته الأربعة: بيانات، ثمّ معلومة، ثمّ رؤية، ثمّ قرار.
+          <span class="blank-line"></span><span class="blank-line"></span><span class="blank-line"></span>
+        </div>
+        <div class="mcq-item">
+          <span class="q-num">٢.</span> جدولٌ فيه الأعمدة: الاسم، القسم، تقييم الأداء، الراتب، عدد الغيابات، رقم الهاتف. ما نوع كلّ عمود؟ وأيُّ الأعمدة الكمّيّة في ظاهرها ليست كمّيّة في حقيقتها، ولماذا؟
+          <span class="blank-line"></span><span class="blank-line"></span><span class="blank-line"></span>
+        </div>
+        <div class="mcq-item">
+          <span class="q-num">٣.</span> مشكلةٌ حقيقيّة في الدائرة تُصاغ سؤالًا محدّدًا قابلًا للقياس، ثمّ تُذكر البيانات التي يحتاجها هذا السؤال، وخطأٌ واحد يُتوقَّع ظهوره فيها عند التنظيف.
+          <span class="blank-line"></span><span class="blank-line"></span><span class="blank-line"></span>
+        </div>
+
+        <!-- ══════════ صح أو خطأ ══════════ -->
+        <div class="section-heading" style="margin-top:28px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>صح أو خطأ</span>
+        </div>
+
+        <div class="tf-item"><span>١. كلّما ازداد حجم البيانات ازدادت قيمتها في اتّخاذ القرار.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+        <div class="tf-item"><span>٢. يعدّ الحاسوب «بغداد» و«<span class="ltr-inline">Baghdad</span>» قيمةً واحدة تلقائيًّا.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+        <div class="tf-item"><span>٣. عدد أيّام الغياب بياناتٌ كمّيّة منفصلة.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+        <div class="tf-item"><span>٤. ينتهي التحليل عند اتّخاذ القرار.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+        <div class="tf-item"><span>٥. الخانة الفارغة تُترك دائمًا كما هي، لأنّ ملأها تزويرٌ للبيانات.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+        <div class="tf-item"><span>٦. التحليل الجيّد يبدأ بسؤالٍ محدّد قابلٍ للقياس.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+
+        <!-- ══════════ الواجبات ══════════ -->
+        <div class="section-heading" style="margin-top:28px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>الواجبات</span>
+        </div>
+
+        <div class="hw">
+          <div class="hw-head"><span class="hw-num">١</span><span class="hw-title">جدولٌ من الدائرة تحت المجهر</span><span class="scn-badge lv-mid">متوسط</span></div>
+          <p>يُختار جدولٌ حقيقيّ من عمل القسم لا يقلّ عن عشرين صفًّا، وتُخفى هويّته قبل أيّ شيء (الأسماء والأرقام الوظيفيّة والهواتف). ثمّ يُفحص بحثًا عن الأخطاء الخمسة: التكرار، والكتابة غير الموحّدة، والخانات الفارغة، والقيم الشاذّة، والتواريخ المضطربة.</p>
+          <p class="hw-cond"><b>شروطٌ تُفحَص:</b> لكلّ خطأ يُذكر موضعُه وأثرُه لو تُرك ومعالجتُه المقترحة. وإن خلا الجدول من نوعٍ ما، يُذكر ذلك صراحةً مع طريقة الفحص — فالنتيجة السلبيّة نتيجة.</p>
+          <div class="hw-deliver"><span class="hw-tag">المُسلَّم</span><span>الجدول بعد إخفاء الهويّة (لا الأصل)، وجدولُ الأخطاء: الخطأ · موضعه · أثره · معالجته.</span></div>
+        </div>
+
+        <div class="hw">
+          <div class="hw-head"><span class="hw-num">٢</span><span class="hw-title">سؤالٌ واحد بدورةٍ كاملة</span><span class="scn-badge lv-hard">معقّد</span></div>
+          <p>تُختار مشكلةٌ حقيقيّة في الدائرة، وتُكتب لها المحطّات الستّ: السؤال، والبيانات المطلوبة، وما يُتوقّع تنظيفه، وما يُحسب، وكيف تُعرض النتيجة، وما القرار المحتمل — ثمّ كيف يُقاس أثر القرار بعد تطبيقه.</p>
+          <p class="hw-cond"><b>شرطٌ حاسم:</b> الواجب ناقصٌ إذا كان السؤال عامًّا من قبيل «تحسين الأداء» أو «رفع الكفاءة». السؤال المقبول يحمل رقمًا يمكن قياسه قبل القرار وبعده.</p>
+          <div class="hw-deliver"><span class="hw-tag">المُسلَّم</span><span>صفحةٌ واحدة بالمحطّات الستّ، وسطرٌ أخير: ما الرقم الذي سيُقاس بعد ثلاثة أشهر لمعرفة نجاح القرار؟</span></div>
+        </div>
+
+        <div class="mini-note">نهاية المحاضرة الخامسة — إعداد: د. أمير هادي ★</div>
+
         <div class="page-nav">
           <button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button>
           <button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button>
@@ -6734,6 +7052,144 @@
             <li><b>مثالُ المهارة:</b> فئاتُ الشكاوى الخمس وقواعدُ الإحالة — إجراءٌ لا يلزم إلّا عند الشكاوى.</li>
             <li>الأثرُ الذي يُبيّن فساد الخلط: إجراءٌ يخصّ الشكاوى موضوعٌ في البروفايل يُحمَّل في كلّ محادثةٍ ولو لم تكن فيها شكوى.</li>
             <li>درجةٌ إضافيّةٌ لمن بيّن أنّ تراكم الإجراءات في البروفايل يضيّق المحادثة على الجميع، بخلاف المهارة القائمة بذاتها.</li>
+          </ul>
+        </div>
+
+        <!-- ============================================================
+             الأسبوع الخامس
+             ============================================================ -->
+        <div class="sol-week"><span class="sw-n">٥</span><span class="sw-t">حلول الأسبوع الخامس — تحليل البيانات: المفاهيم الأساسيّة</span></div>
+
+        <div class="sol-kind"><span>الاختيار من متعدّد</span><span class="sk-line"></span></div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">١.</span> أيُّ العبارات الآتية «معلومة» لا «بيانات» بحسب هرم المعرفة؟</p>
+          <div class="sol-opts">
+            <div class="sol-opt bad"><span class="so-k">أ)</span><span>«أحمد دخل الساعة ٨:٤٠ يوم الأحد»</span></div>
+            <div class="sol-opt ok"><span class="so-k">ب)</span><span>«نسبة الغياب في قسم المالية ١٨٪ أيّام الأحد»</span></div>
+            <div class="sol-opt bad"><span class="so-k">ج)</span><span>قائمة بأسماء موظّفي الدائرة</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>رقم هاتف أحد الموظّفين</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> المعلومة بياناتٌ جُمِعت وحُسِبت فصار لها معنى، والنسبة ١٨٪ ناتجُ تجميع مئات السجلّات. أمّا «أ» فسجلٌّ واحد خام لا يُعرف منه شيء، و«ج» و«د» حقائق مفردة لم تُعالَج. <b>والفارق الحاسم:</b> البيانات تُسجَّل، والمعلومة تُحسَب.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٢.</span> عن أيّ سؤالٍ يجيب مستوى «الرؤية» في الهرم؟</p>
+          <div class="sol-opts">
+            <div class="sol-opt bad"><span class="so-k">أ)</span><span>ماذا حدث؟</span></div>
+            <div class="sol-opt ok"><span class="so-k">ب)</span><span>لماذا حدث؟</span></div>
+            <div class="sol-opt bad"><span class="so-k">ج)</span><span>كم عدد السجلّات؟</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>من أدخل البيانات؟</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> «ماذا حدث؟» سؤال المعلومة — والنسبة ١٨٪ تجيب عنه دون أن تفسّره. والرؤية تنتقل إلى السبب: الغياب يرتفع بعد العطل بسبب النقل. أمّا «ج» و«د» فأسئلةٌ عن البيانات نفسها لا عن معناها. <b>ولهذا</b> تُعدّ الرؤية موضع العمل الحقيقيّ للمحلّل، إذ عليها يُبنى القرار الذي يعالج العلّة لا العَرَض.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٣.</span> عمود «الدرجة الوظيفيّة» (الأولى، الثانية، الثالثة…) من أيّ نوع؟</p>
+          <div class="sol-opts">
+            <div class="sol-opt bad"><span class="so-k">أ)</span><span>كمّيّة متّصلة</span></div>
+            <div class="sol-opt bad"><span class="so-k">ب)</span><span>فئويّة اسميّة</span></div>
+            <div class="sol-opt ok"><span class="so-k">ج)</span><span>فئويّة ترتيبيّة</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>كمّيّة منفصلة</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> الدرجات أصنافٌ لها ترتيبٌ طبيعيّ، فالأولى أعلى من الثانية. و«ب» خطأ لأنّ الاسميّة لا ترتيب فيها كالأقسام. و«أ» و«د» يغريان لأنّ الدرجة تُكتب برقم، لكنّ المسافة بين الدرجات ليست مقدارًا يُجمع: «متوسّط الدرجة ٢٫٤» لا يدلّ على درجةٍ موجودة.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٤.</span> أيُّ الأعمدة الآتية لا يصحّ حساب متوسّطه، مع أنّ قيمه أرقام؟</p>
+          <div class="sol-opts">
+            <div class="sol-opt bad"><span class="so-k">أ)</span><span>الراتب الشهريّ</span></div>
+            <div class="sol-opt bad"><span class="so-k">ب)</span><span>عدد أيّام الإجازة</span></div>
+            <div class="sol-opt ok"><span class="so-k">ج)</span><span>الرقم الوظيفيّ</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>سنوات الخدمة</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> الرقم الوظيفيّ <b>معرِّف</b> كالاسم، وجمعه أو متوسّطه بلا معنى. أمّا الراتب فكمّيّ متّصل، وأيّام الإجازة وسنوات الخدمة كمّيّةٌ يصحّ متوسّطها ويفيد. <b>والاختبار العمليّ:</b> لو حُسب المتوسّط، هل يعني الناتج شيئًا؟</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٥.</span> أيُّ محطّات دورة التحليل تستغرق في العادة أطول وقت؟</p>
+          <div class="sol-opts">
+            <div class="sol-opt bad"><span class="so-k">أ)</span><span>صياغة السؤال</span></div>
+            <div class="sol-opt bad"><span class="so-k">ب)</span><span>جمع البيانات</span></div>
+            <div class="sol-opt ok"><span class="so-k">ج)</span><span>التنظيف</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>العرض</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> يُقدَّر أنّ نحو ٨٠٪ من وقت المحلّل يذهب إلى التنظيف، لأنّ كلّ خطأٍ فيه يتطلّب فحصًا ورجوعًا إلى المصدر. والجمع قد يطول، لكنّه في الدوائر غالبًا تصديرٌ من نظامٍ قائم. و«أ» أقصر المحطّات زمنًا وإن كانت أخطرها أثرًا.</p>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٦.</span> في جدول رواتب تتقارب قيمه حول ٩٠٠ ألف دينار، ظهر راتبٌ قدره ٨٥ مليونًا. ما الإجراء الأصوب؟</p>
+          <div class="sol-opts">
+            <div class="sol-opt bad"><span class="so-k">أ)</span><span>حذفه فورًا لأنّه خطأٌ واضح</span></div>
+            <div class="sol-opt bad"><span class="so-k">ب)</span><span>إبقاؤه كما هو لأنّ البيانات لا تُمَسّ</span></div>
+            <div class="sol-opt ok"><span class="so-k">ج)</span><span>التحقّق منه من المصدر قبل أيّ قرار</span></div>
+            <div class="sol-opt bad"><span class="so-k">د)</span><span>استبداله بمتوسّط الرواتب تلقائيًّا</span></div>
+          </div>
+          <p class="sol-why"><b>التعليل:</b> القيمة الشاذّة تحتمل وجهين: خطأ إدخالٍ أضاف صفرين، أو راتبًا حقيقيًّا لمنصبٍ رفيع. و«أ» تحذف حقيقةً محتملة، و«ب» تترك رقمًا يرفع متوسّط الدائرة كلّها، و«د» تخترع قيمةً لم تقع. <b>والقاعدة:</b> الشاذُّ يُفحَص قبل أن يُحذف أو يُبقى.</p>
+        </div>
+
+        <div class="sol-kind"><span>صح أو خطأ</span><span class="sk-line"></span></div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">١.</span> كلّما ازداد حجم البيانات ازدادت قيمتها في اتّخاذ القرار.</p><span class="sol-badge f">خطأ</span></div>
+          <p class="sol-why">الهرم يقول العكس: كلّما صُعِد <b>قلّ الحجم وزادت القيمة</b>. ألف سطرٍ غير معالَج أقلّ نفعًا من نسبةٍ واحدة محسوبة أو سببٍ واحد مفهوم.</p>
+        </div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٢.</span> يعدّ الحاسوب «بغداد» و«<span class="ltr-inline">Baghdad</span>» قيمةً واحدة تلقائيًّا.</p><span class="sol-badge f">خطأ</span></div>
+          <p class="sol-why">الحاسوب يقارن الحروف لا المعاني، فيرى قيمتين مختلفتين، وكذلك «بغدد». ولهذا <b>توحيد الكتابة</b> خطوةٌ مستقلّة في التنظيف.</p>
+        </div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٣.</span> عدد أيّام الغياب بياناتٌ كمّيّة منفصلة.</p><span class="sol-badge t">صح</span></div>
+          <p class="sol-why">الأيّام تُعَدّ عدًّا صحيحًا — ثلاثة أيّام لا ثلاثة ونصف — فهي كمّيّة منفصلة، بخلاف الراتب أو وقت الوصول الذي يُقاس فهو متّصل.</p>
+        </div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٤.</span> ينتهي التحليل عند اتّخاذ القرار.</p><span class="sol-badge f">خطأ</span></div>
+          <p class="sol-why">التحليل <b>دورة</b>: بعد القرار يُسأل «هل نجح؟»، ويُقاس أثره ببيانات جديدة. والقرار الذي لا يُقاس أثره يبقى بلا دليل.</p>
+        </div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٥.</span> الخانة الفارغة تُترك دائمًا كما هي، لأنّ ملأها تزويرٌ للبيانات.</p><span class="sol-badge f">خطأ</span></div>
+          <p class="sol-why">للخانة الفارغة معالجاتٌ مشروعة: استكمالها من المصدر، أو استبعاد السطر من الحساب، أو وضع قيمةٍ تقديريّة <b>مع الإفصاح عنها</b>. والتزوير هو الملء دون إفصاح، لا الملء نفسه. وتركُها بلا معالجة يُفسد الحسابات بصمت.</p>
+        </div>
+
+        <div class="sol-item">
+          <div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٦.</span> التحليل الجيّد يبدأ بسؤالٍ محدّد قابلٍ للقياس.</p><span class="sol-badge t">صح</span></div>
+          <p class="sol-why">السؤال هو المحطّة الأولى، وهو الذي يحدّد البيانات المطلوبة. و«الدائرة بطيئة» شكوى لا سؤال، أمّا «أيُّ أنواع المعاملات يتأخّر أكثر؟» فسؤالٌ له جواب يُحسب.</p>
+        </div>
+
+        <div class="sol-kind"><span>أسئلة قصيرة — نقاط التصحيح</span><span class="sk-line"></span></div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">١.</span> مثالٌ من عمل الدائرة يصعد هرم المعرفة بمستوياته الأربعة.</p>
+          <ul class="sol-grading">
+            <li><b>بيانات:</b> سجلٌّ خام مفرد من عمل الطالب نفسه، لا مثال المحاضرة.</li>
+            <li><b>معلومة:</b> رقمٌ ناتج عن تجميع تلك السجلّات (نسبة، عدد، متوسّط).</li>
+            <li><b>رؤية:</b> تفسيرٌ للسبب، لا إعادةُ صياغة للرقم.</li>
+            <li><b>قرار:</b> فعلٌ يعالج السبب المذكور في الرؤية تحديدًا.</li>
+            <li>درجةٌ إضافيّة لمن بيّن كيف يُقاس أثر القرار بعد تطبيقه.</li>
+          </ul>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٢.</span> أنواع الأعمدة: الاسم، القسم، تقييم الأداء، الراتب، عدد الغيابات، رقم الهاتف.</p>
+          <ul class="sol-grading">
+            <li><b>الاسم:</b> معرِّف · <b>القسم:</b> فئويّة اسميّة · <b>تقييم الأداء:</b> فئويّة ترتيبيّة.</li>
+            <li><b>الراتب:</b> كمّيّة متّصلة · <b>عدد الغيابات:</b> كمّيّة منفصلة.</li>
+            <li><b>رقم الهاتف:</b> معرِّف لا كمّيّ — وهو جوهر السؤال.</li>
+            <li>التعليل المطلوب: متوسّط أرقام الهواتف بلا معنى، فالرقم هنا رمزٌ لا مقدار.</li>
+          </ul>
+        </div>
+
+        <div class="sol-item">
+          <p class="sol-q"><span class="sq-n">٣.</span> مشكلةٌ حقيقيّة بسؤالٍ قابل للقياس، وبياناتها، وخطأ متوقَّع.</p>
+          <ul class="sol-grading">
+            <li>السؤال يحمل <b>مقياسًا</b> (مدّة، نسبة، عدد) لا وصفًا عامًّا.</li>
+            <li>البيانات المذكورة تخدم السؤال مباشرةً، لا «كلّ ما في النظام».</li>
+            <li>الخطأ المتوقَّع واحدٌ من الخمسة، مربوطٌ بطبيعة هذه البيانات تحديدًا (مثل: تواريخ تُدخَل يدويًّا بصيغٍ مختلفة).</li>
+            <li>يُخصم إذا كان السؤال من قبيل «تحسين الأداء» دون رقمٍ يُقاس.</li>
           </ul>
         </div>
 
