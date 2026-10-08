@@ -6667,6 +6667,110 @@
           <b>القاعدة الذهبيّة:</b> أقلّ بياناتٍ ممكنة، بأقلّ تفاصيل ممكنة، لأقلّ مدّةٍ ممكنة. وملفّ المفتاح أخطر ملفّ: لا يُرفع إلى أيّ محادثة، ولا يُرسل بالبريد.
         </div>
 
+        <!-- ══════════ ٦ ══════════ -->
+        <div class="section-heading" style="margin-top:28px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>٦ · سيناريو تطبيقي: من الملفّ إلى Claude والعودة</span>
+        </div>
+
+        <p class="lead-paragraph"><b>الموقف:</b> مسؤول وحدة الإحصاء في مركزٍ صحّيّ بالحلّة. يطلب المدير أمرين: <span class="hl hl-yellow">أكثر الأمراض شيوعًا في كلّ فئةٍ عمريّة</span>، و<span class="hl hl-pink">قائمة المرضى الذين لم يلتزموا بالعلاج أو الحمية</span> للاتّصال بهم. والملفّ فيه أسماء وهويّات وهواتف — فلا يُرفع كما هو.</p>
+
+        <!-- ===== للمحاضر فقط (?pen) ===== -->
+        <div class="teach">
+          <div class="oops">
+            <span class="o-i">🎙️</span>
+            <div><b>للمحاضر — ترتيب العرض أمام الطلبة:</b><br>
+            ١) افتح ملفّ الإكسل أوّلًا واسألهم: «هل نرفع هذا لـ Claude؟» واقرأ لهم ملاحظة «راجع مع زوجته فاطمة… هاتف المرافق».<br>
+            ٢) في الأداة: أرِهم الاقتراحات ثمّ اضغط التطبيق — وتوقّف عند الرقم الأحمر <b>٤٠ من ٤٠</b>: «حذفنا الأسماء… وما زال كلّ مريض معروفًا!»<br>
+            ٣) اسألهم: «ماذا نعمّم؟» ثمّ غيّر العمر إلى ٢٠ سنة (<b>٢٨</b>) ثمّ احذف الحيّ (<b>١</b>). اكتب الأرقام على السبّورة.<br>
+            ٤) في Claude ارفع <b>النسخة الآمنة فقط</b> — وقلها بصوتٍ عالٍ: «المفتاح يبقى عندي».<br>
+            ٥) بعد إعادة الأسماء: افصل الواي فاي وأعد تحميل الملفّ في الأداة — تعمل كما هي.<br>
+            <span style="color:#5b6472">المدّة الكاملة ≈ ١٥ دقيقة. إن تعطّل الإنترنت أثناء الحصّة، يعمل الإخفاء والإعادة بلا إنترنت، ويُؤجَّل Claude فقط.</span></div>
+          </div>
+        </div>
+
+        <p class="dt-cap">المرحلة الأولى — التحضير</p>
+        <div class="try-box">
+          <div class="try-title">١ · الحصول على الملفّ</div>
+          <div class="try-line"><span class="try-tag try-do">افعل</span><span>افتح <a href="https://ameer.itbabylon.org/mask/" target="_blank" rel="noopener"><span class="ltr-inline">ameer.itbabylon.org/mask</span></a> واضغط «تنزيل ملفّ مرضى وهميّ».</span></div>
+          <div class="try-line"><span class="try-tag try-see">سترى</span><span>ملفّ <span class="ltr-inline">patients_fictional.csv</span> فيه ٤٠ مريضًا: الاسم، رقم الهويّة، الهاتف، تاريخ الميلاد، الحيّ، التشخيص، وملاحظات الطبيب.</span></div>
+        </div>
+        <div class="try-box">
+          <div class="try-title">٢ · قراءة الملفّ قبل أيّ شيء</div>
+          <div class="try-line"><span class="try-tag try-do">افعل</span><span>افتحه في Excel وانظر إلى عمود الملاحظات.</span></div>
+          <div class="try-line"><span class="try-tag try-see">سترى</span><span>أسماء وأرقام <b>داخل النصّ</b>: «راجع مع زوجته فاطمة الخفاجي، هاتف المرافق…» — وهذه لا يكفي فيها حذف عمود.</span></div>
+        </div>
+
+        <p class="dt-cap">المرحلة الثانية — الإخفاء</p>
+        <div class="try-box">
+          <div class="try-title">٣ · اختيار الملفّ في الأداة</div>
+          <div class="try-line"><span class="try-tag try-do">افعل</span><span>في صفحة الماسك اختر الملفّ.</span></div>
+          <div class="try-line"><span class="try-tag try-see">سترى</span><span>جدول الأعمدة باقتراحاتٍ تلقائيّة: <b>حذف</b> الهويّة والهاتف، <b>رمز</b> للاسم ورقم الملفّ، <b>فئة عمريّة</b> للميلاد، <b>الشهر فقط</b> للمراجعة، <b>تنظيف</b> للملاحظات.</span></div>
+        </div>
+        <div class="try-box">
+          <div class="try-title">٤ · التطبيق الأوّل</div>
+          <div class="try-line"><span class="try-tag try-do">افعل</span><span>اضغط «تطبيق الإخفاء» واقرأ «فحص المخاطر».</span></div>
+          <div class="try-line"><span class="try-tag try-see">سترى</span><span>تنبيهًا أحمر: <b>٤٠ صفًّا</b> يمكن معرفة أصحابها رغم حذف الأسماء — لأنّ الجنس والعمر والحيّ معًا تدلّ على الشخص.</span></div>
+        </div>
+        <div class="try-box">
+          <div class="try-title">٥ · التعميم خطوةً خطوة</div>
+          <div class="try-line"><span class="try-tag try-do">افعل</span><span>غيّر «تاريخ الميلاد» إلى <b>فئة عمريّة (٢٠ سنة)</b> واضغط التطبيق، ثمّ غيّر «الحيّ» إلى <b>حذف</b> واضغط مرّة أخرى — فسؤال المدير لا يحتاج الحيّ.</span></div>
+          <div class="try-line"><span class="try-tag try-see">سترى</span><span>العدد ينزل من ٤٠ إلى <b>٢٨</b> ثمّ إلى <b>١</b>: مريضٌ مسنّ بمرضٍ نادر. هذا الصفّ يُحذف يدويًّا من النسخة الآمنة بعد تنزيلها، أو يُعمَّم تشخيصه.</span></div>
+        </div>
+        <div class="try-box">
+          <div class="try-title">٦ · مراجعة الملاحظات بالعين</div>
+          <div class="try-line"><span class="try-tag try-do">افعل</span><span>اقرأ عمود الملاحظات في «معاينة النسخة الآمنة».</span></div>
+          <div class="try-line"><span class="try-tag try-see">سترى</span><span>«راجع مع زوجته [اسم]، هاتف المرافق [هاتف]» — لكن ملاحظتين بقيتا: «أكبر مراجعي المركز سنًّا» و«الحالة الوحيدة في القضاء». لا اسم فيهما ولا رقم، ومع ذلك تكشفان صاحبهما، فتُحذفان يدويًّا.</span></div>
+        </div>
+        <div class="try-box">
+          <div class="try-title">٧ · التنزيل</div>
+          <div class="try-line"><span class="try-tag try-do">افعل</span><span>نزّل «النسخة الآمنة» و«ملفّ المفتاح».</span></div>
+          <div class="try-line"><span class="try-tag try-see">سترى</span><span>ملفّين: <span class="ltr-inline">safe_masked.csv</span> للذكاء الاصطناعيّ، و<span class="ltr-inline">KEY_do_not_share.csv</span> الذي <b>لا يغادر جهازك</b>.</span></div>
+        </div>
+
+        <p class="dt-cap">المرحلة الثالثة — Claude</p>
+        <div class="try-box">
+          <div class="try-title">٨ · رفع النسخة الآمنة فقط</div>
+          <div class="try-line"><span class="try-tag try-do">افعل</span><span>افتح Claude، وارفع <span class="ltr-inline">safe_masked.csv</span> وحده، ثمّ الصق الطلب الأوّل.</span></div>
+          <div class="try-line"><span class="try-tag try-see">سترى</span><span>جدولًا بالأمراض لكلّ فئةٍ عمريّة — دون اسمٍ واحد، لأنّ الجواب لا يحتاج الأسماء أصلًا.</span></div>
+        </div>
+        <div class="pr">
+          <div class="pr-head"><span class="pr-n">١</span><span class="pr-t">الطلب الأوّل — الأمراض حسب العمر</span>
+            <button type="button" class="pr-copy">نسخ</button></div>
+          <div class="pr-body">هذا ملفّ مراجعي مركزٍ صحّي بعد إخفاء الهويّة (الأسماء رموز مثل P-0001).
+أعطني جدولًا: لكلّ فئةٍ عمريّة، عدد المرضى وأكثر ثلاثة تشخيصات شيوعًا مع أعدادها.
+ثمّ سطرين: ما الذي يلفت النظر في هذه الأرقام؟
+لا تحاول تخمين هويّة أيّ مريض.</div>
+        </div>
+        <div class="try-box">
+          <div class="try-title">٩ · طلبٌ يحتاج الرموز</div>
+          <div class="try-line"><span class="try-tag try-do">افعل</span><span>الصق الطلب الثاني، ثمّ انسخ جواب Claude كاملًا.</span></div>
+          <div class="try-line"><span class="try-tag try-see">سترى</span><span>قائمة بالرموز فقط (<span class="ltr-inline">P-0004</span>، <span class="ltr-inline">P-0012</span>…) — Claude يعرف <b>مَن</b> يحتاج متابعة دون أن يعرف <b>مَن هو</b>.</span></div>
+        </div>
+        <div class="pr">
+          <div class="pr-head"><span class="pr-n">٢</span><span class="pr-t">الطلب الثاني — قائمة المتابعة</span>
+            <button type="button" class="pr-copy">نسخ</button></div>
+          <div class="pr-body">من الملفّ نفسه، استخرج المرضى الذين في ملاحظاتهم «لم يلتزم بالحمية» أو «لم يلتزم بالعلاج».
+اعرضهم في جدول: الرمز، رقم الملفّ، الفئة العمريّة، التشخيص، والإجراء المقترح للمتابعة.
+اكتب الرموز كما هي تمامًا دون تغيير.</div>
+        </div>
+
+        <p class="dt-cap">المرحلة الرابعة — العودة إلى الماسك</p>
+        <div class="try-box">
+          <div class="try-title">١٠ · إعادة الأسماء</div>
+          <div class="try-line"><span class="try-tag try-do">افعل</span><span>في الأداة افتح تبويب «إعادة الأسماء إلى النتائج»، واختر <span class="ltr-inline">KEY_do_not_share.csv</span>، والصق جواب Claude، واضغط «إعادة الأسماء».</span></div>
+          <div class="try-line"><span class="try-tag try-see">سترى</span><span>الأسماء الحقيقيّة وأرقام الملفّات مكان الرموز — قائمة اتّصالٍ جاهزة للمدير، صُنعت <b>داخل جهازك فقط</b>.</span></div>
+        </div>
+        <div class="try-box">
+          <div class="try-title">١١ · الإغلاق الآمن</div>
+          <div class="try-line"><span class="try-tag try-do">افعل</span><span>احذف محادثة Claude إن لم تعد تحتاجها، واحذف ملفّ المفتاح بعد انتهاء العمل.</span></div>
+          <div class="try-line"><span class="try-tag try-see">سترى</span><span>لم يبقَ اسمٌ حقيقيّ في أيّ مكانٍ خارج جهازك — وهذا تطبيقٌ للقاعدة: أقلّ بيانات، بأقلّ تفاصيل، لأقلّ مدّة.</span></div>
+        </div>
+
+        <div class="takeaway">
+          <b>خلاصة السيناريو:</b> الذكاء الاصطناعيّ حلّل البيانات ورتّب قائمة المتابعة <span class="hl hl-green">دون أن يرى اسمًا واحدًا</span>؛ والأسماء عادت إلى النتائج داخل الجهاز بالمفتاح. الأداة أخفت، والإنسان راجع، وClaude حلّل.
+        </div>
+
         <!-- ══════════ أسئلة المراجعة ══════════ -->
         <div class="section-heading" style="margin-top:28px;">
           <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
