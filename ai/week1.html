@@ -6307,39 +6307,56 @@
 
         <p>يصل إلى مدير الدائرة كلَّ يوم ملفُّ حضور الموظّفين: آلافُ الأسطر من الأسماء وأوقات الدخول والخروج. وهذا الملفّ — على ضخامته — لا يُعين على اتّخاذ قرارٍ بحاله، لأنّه <span class="hl hl-blue">بيانات</span> لم تُعالَج بعد. والطريق من الملفّ إلى القرار يمرّ بأربعة مستويات، يُعرف مجموعها بـ<b>هرم المعرفة</b> <span class="ltr-inline">(DIKW)</span>.</p>
 
-        <div class="pipe">
-          <div class="pipe-row">
-            <span class="pipe-n">١</span>
-            <div class="pipe-b">
-              <b>البيانات — حقائق خام</b>
-              <small>«أحمد دخل الساعة ٨:٤٠ يوم الأحد» — لا يُعرف بعدُ أهي جيّدة أم سيّئة</small>
-            </div>
-          </div>
-          <div class="pipe-a">▼</div>
-          <div class="pipe-row">
-            <span class="pipe-n">٢</span>
-            <div class="pipe-b">
-              <b>المعلومات — بيانات مُجمَّعة ذات معنى</b>
-              <small>«نسبة الغياب في قسم المالية ١٨٪ أيّام الأحد»</small>
-            </div>
-          </div>
-          <div class="pipe-a">▼</div>
-          <div class="pipe-row">
-            <span class="pipe-n">٣</span>
-            <div class="pipe-b hi">
-              <b>الرؤية — فهمُ السبب</b>
-              <small>«الغياب يرتفع بعد العطل، وأغلب الغائبين يسكنون بعيدًا ويعانون من النقل»</small>
-            </div>
-          </div>
-          <div class="pipe-a">▼</div>
-          <div class="pipe-row">
-            <span class="pipe-n">٤</span>
-            <div class="pipe-b">
-              <b>القرار — فعلٌ مبنيّ على دليل</b>
-              <small>«توفير خطّ نقل، أو تجربة دوامٍ مرن يوم الأحد»</small>
-            </div>
-          </div>
-        </div>
+        <figure class="dikw-fig" style="margin:18px 0 10px;">
+          <svg viewBox="0 0 880 480" width="100%" role="img" aria-label="هرم المعرفة: البيانات ثم المعلومات ثم الرؤية ثم القرار" style="display:block;max-width:880px;margin:0 auto;font-family:inherit;">
+            <!-- bands (bottom to top) -->
+            <g filter="url(#sketchy)" stroke="var(--ink)" stroke-width="3" stroke-linejoin="round">
+              <polygon points="270,440 770,440 707,340 333,340" fill="#3f8fd6" fill-opacity="0.16"/>
+              <polygon points="333,340 707,340 645,240 395,240" fill="#1f7a3d" fill-opacity="0.16"/>
+              <polygon points="395,240 645,240 583,140 457,140" fill="#e07a1f" fill-opacity="0.18"/>
+              <polygon points="457,140 583,140 520,40" fill="#d1342b" fill-opacity="0.18"/>
+            </g>
+            <!-- level names -->
+            <g text-anchor="middle" font-weight="700">
+              <text x="520" y="106" font-size="22" fill="var(--red)" direction="rtl">القرار</text>
+              <text x="520" y="196" font-size="27" fill="var(--orange)" direction="rtl">الرؤية</text>
+              <text x="520" y="296" font-size="28" fill="var(--green)" direction="rtl">المعلومات</text>
+              <text x="520" y="396" font-size="29" fill="var(--blue)" direction="rtl">البيانات</text>
+            </g>
+            <g text-anchor="middle" fill="#5b6472" style="font-family:'Caveat',cursive" font-size="18">
+              <text x="520" y="129">Decision</text>
+              <text x="520" y="218">Insight</text>
+              <text x="520" y="318">Information</text>
+              <text x="520" y="420">Data</text>
+            </g>
+            <!-- leader lines to the examples -->
+            <g stroke="#8a93a3" stroke-width="2" stroke-dasharray="6 6" fill="none">
+              <line x1="468" y1="105" x2="262" y2="105"/>
+              <line x1="412" y1="195" x2="262" y2="195"/>
+              <line x1="352" y1="292" x2="262" y2="292"/>
+              <line x1="290" y1="392" x2="262" y2="392"/>
+            </g>
+            <!-- examples -->
+            <g text-anchor="middle" font-size="18" fill="#2b3340" direction="rtl">
+              <text x="135" y="99">توفير خطّ نقل</text>
+              <text x="135" y="122" font-size="16" fill="#5b6472">أو دوامٌ مرن يوم الأحد</text>
+              <text x="135" y="189">الغياب يرتفع بعد العطل</text>
+              <text x="135" y="212" font-size="16" fill="#5b6472">والسبب: النقل</text>
+              <text x="135" y="286">غياب المالية ١٨٪</text>
+              <text x="135" y="309" font-size="16" fill="#5b6472">أيّام الأحد</text>
+              <text x="135" y="386">أحمد دخل الساعة ٨:٤٠</text>
+              <text x="135" y="409" font-size="16" fill="#5b6472">يوم الأحد</text>
+            </g>
+            <text x="135" y="40" text-anchor="middle" font-size="17" font-weight="700" fill="#5b6472" direction="rtl">مثال: ملف الحضور</text>
+            <!-- value arrow -->
+            <g filter="url(#sketchy)" stroke="var(--red)" stroke-width="3.5" fill="none" stroke-linecap="round">
+              <path d="M835 440 L835 50"/>
+              <path d="M820 72 L835 48 L850 72"/>
+            </g>
+            <text x="805" y="250" text-anchor="middle" font-size="19" font-weight="700" fill="var(--red)" direction="rtl" transform="rotate(-90 805 250)">القيمة تزداد</text>
+            <text x="520" y="470" text-anchor="middle" font-size="16" fill="#5b6472" direction="rtl">كلّما صُعِد في الهرم: يقلّ الحجم… وتزيد القيمة</text>
+          </svg>
+        </figure>
 
         <p>وكلّما صُعِد في الهرم <b>قلّ حجم البيانات وزادت قيمتها</b>: ألف سطرٍ في القاعدة، وقرارٌ واحد في القمّة. والمستوى الثالث هو موضع العمل الحقيقيّ للمحلّل، إذ ينتقل فيه السؤال من «ماذا حدث؟» إلى «لماذا حدث؟».</p>
 
