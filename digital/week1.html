@@ -8308,5 +8308,52 @@
 <!-- «جهينة» — مساعدة المادّة (المستوى ٥) + «جرّب المستويات ١–٥» داخل الأسبوع الخامس (خادم جامعة بابل) -->
 <script src="https://ameer.itbabylon.org/juhayna/widget.js" defer></script>
 <script src="https://ameer.itbabylon.org/juhayna/levels.js" defer></script>
+
+<!-- ===== «أدوات»: زرّ واحد قابل للطيّ يجمع الطباعة والخطّ والقلم (بدل أربعة أزرار عائمة) ===== -->
+<style>
+  .tools-fab{position:fixed;bottom:18px;left:18px;z-index:310;display:flex;align-items:center;gap:7px;
+    background:#2f2823;color:#f2e9dc;border:1.5px solid rgba(255,255,255,0.18);border-radius:24px;
+    padding:10px 17px;cursor:pointer;font-family:'Aref Ruqaa',serif;font-weight:700;font-size:15px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.35)}
+  .tools-fab .chev{display:inline-block;transition:transform .2s;font-size:11px;opacity:.8}
+  body.tools-open .tools-fab .chev{transform:rotate(180deg)}
+  .tools-tray{position:fixed;bottom:70px;left:18px;z-index:309;display:none;flex-direction:column;align-items:flex-start;gap:8px}
+  body.tools-open .tools-tray{display:flex}
+  /* الأزرار الأصليّة تنتقل إلى الدرج كما هي — تُلغى مواضعها العائمة فقط */
+  .tools-tray .print-btn,.tools-tray .reader-btn,.tools-tray .tools-pen{position:static !important;bottom:auto !important;left:auto !important;margin:0}
+  .tools-pen{display:flex;align-items:center;gap:7px;background:#2f2823;color:#f2e9dc;border:1.5px solid rgba(255,255,255,0.18);
+    border-radius:24px;padding:9px 15px;cursor:pointer;font-family:'Aref Ruqaa',serif;font-weight:700;font-size:14px;box-shadow:0 4px 12px rgba(0,0,0,0.35)}
+  body.pen-shown .tools-pen{background:#b52a22;border-color:#b52a22}
+  /* شريط القلم يظهر عند طلبه من «أدوات» — ويبقى ظاهرًا ما دام القلم يعمل */
+  body:not(.pen-shown):not(.ann-on) .ann-bar{display:none !important}
+  @media (max-width:560px){ .tools-fab{bottom:14px;left:14px;padding:8px 13px;font-size:13.5px} .tools-tray{bottom:62px;left:14px} }
+  @media print{ .tools-fab,.tools-tray{display:none !important} }
+</style>
+<button type="button" class="tools-fab" id="toolsFab" aria-expanded="false" aria-controls="toolsTray" title="الطباعة، والخطّ، والقلم">🧰 <span>أدوات</span> <span class="chev">▲</span></button>
+<div class="tools-tray" id="toolsTray" role="menu" aria-label="أدوات الصفحة"></div>
+<script>
+(function(){
+  var fab = document.getElementById('toolsFab'), tray = document.getElementById('toolsTray');
+  function set(open){ document.body.classList.toggle('tools-open', open); fab.setAttribute('aria-expanded', open ? 'true' : 'false'); }
+  // القلم: زرّ في الدرج يُظهر شريط القلم أو يخفيه (الشريط نفسه يبقى كما هو: يُسحب، وله ألوانه ومساعدته)
+  var pen = document.createElement('button'); pen.type = 'button'; pen.className = 'tools-pen';
+  pen.innerHTML = '<span>✏️</span><span>القلم</span>';
+  try{ if(localStorage.getItem('toolsPen') === '1') document.body.classList.add('pen-shown'); }catch(e){}
+  pen.onclick = function(){
+    var on = !document.body.classList.contains('pen-shown');
+    document.body.classList.toggle('pen-shown', on);
+    try{ localStorage.setItem('toolsPen', on ? '1' : '0'); }catch(e){}
+    set(false);
+  };
+  // نقل الأزرار الأصليّة إلى الدرج بترتيب: القلم، الخطّ، طباعة التبويب، طباعة الكلّ
+  tray.appendChild(pen);
+  var rb = document.getElementById('readerBtn'); if(rb){ tray.appendChild(rb); rb.addEventListener('click', function(){ set(false); }); }
+  document.querySelectorAll('.print-btn-tab').forEach(function(b){ tray.appendChild(b); });
+  document.querySelectorAll('.print-btn:not(.print-btn-tab)').forEach(function(b){ tray.appendChild(b); });
+  fab.onclick = function(e){ e.stopPropagation(); set(!document.body.classList.contains('tools-open')); };
+  document.addEventListener('click', function(e){ if(!tray.contains(e.target) && e.target !== fab) set(false); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') set(false); });
+})();
+</script>
 </body>
 </html>
