@@ -5448,5 +5448,43 @@
   document.addEventListener('keydown', function(e){ if(e.key === 'Escape') set(false); });
 })();
 </script>
+<script>
+// games
+function game(id,items,label){
+  let i=0,ok=0,n=0;const q=document.getElementById(id+'q'),f=document.getElementById(id+'f'),s=document.getElementById(id+'s'),nx=document.getElementById(id+'n'),c=document.getElementById(id+'c');
+  const btns=[...document.querySelectorAll('#'+id+' button[data-a]')];
+  function load(){const it=items[i];q.innerHTML=it.q;if(c)c.textContent=it.ctx||'';f.className='fb';nx.style.display='none';btns.forEach(b=>b.disabled=false);}
+  btns.forEach(b=>b.onclick=()=>{const it=items[i],good=b.dataset.a===it.a;n++;if(good)ok++;s.textContent=ok+' / '+n;
+    f.className='fb '+(good?'ok':'no');f.innerHTML=(good?'✅ Correct — ':'❌ Answer: <b>'+label(it.a)+'</b> — ')+it.why;btns.forEach(x=>x.disabled=true);
+    nx.style.display='inline-block';nx.textContent=i<items.length-1?'Next ▶':'Start again ↺';});
+  nx.onclick=()=>{if(i<items.length-1)i++;else{i=0;ok=0;n=0;s.textContent='0 / 0';}load();};
+  load();
+}
+game('g1',[
+ {ctx:'IaaS · DigitalOcean droplet',q:'A hard disk fails in the provider’s Frankfurt data centre.',a:'P',why:'physical hardware is always the provider’s layer.'},
+ {ctx:'IaaS · AWS EC2',q:'The Ubuntu server you created has not received security updates for 8 months.',a:'C',why:'in IaaS the guest operating system is yours to patch.'},
+ {ctx:'IaaS · AWS S3',q:'A storage bucket holding student ID scans is set to “public” and gets indexed by search engines.',a:'C',why:'access configuration of your data is always yours.'},
+ {ctx:'SaaS · Gmail',q:'A lecturer reuses the same password everywhere; it leaks from another site and the mailbox is taken over.',a:'C',why:'identities and passwords (and enabling 2-step verification) stay with the customer even in SaaS.'},
+ {ctx:'Any model',q:'Intruders break into the data-centre building and steal servers.',a:'P',why:'physical security (guards, cameras, access cards) belongs to the provider.'},
+ {ctx:'IaaS · Azure VMs',q:'A bug in the provider’s hypervisor lets one customer’s VM read another customer’s memory.',a:'P',why:'the virtualization layer is run by the provider.'},
+ {ctx:'SaaS · Google Sheets',q:'A teacher shares the grades sheet with “Anyone with the link can view” and posts it in a public group.',a:'C',why:'who can see your data is your configuration, even in SaaS.'},
+ {ctx:'PaaS · Google App Engine',q:'The Python runtime that runs your code has a known vulnerability.',a:'P',why:'in PaaS the runtime and OS are managed and patched by the provider (your own code and libraries are still yours).'},
+ {ctx:'IaaS · any provider',q:'Port 22 (SSH) is open to the whole Internet with password login and attackers brute-force it.',a:'C',why:'firewall rules / security groups on your VM are your configuration.'},
+ {ctx:'Any model',q:'A power outage takes down a whole availability zone.',a:'P',why:'power and cooling are the provider’s; designing your app to survive one zone failing is yours.'}
+],a=>a==='P'?'Provider':'Customer');
+game('g2',[
+ {q:'Gmail',a:'SaaS',why:'a finished application you just use.'},
+ {q:'AWS EC2',a:'IaaS',why:'virtual machines; you manage the OS.'},
+ {q:'Google App Engine',a:'PaaS',why:'you deploy code; Google runs the platform.'},
+ {q:'DigitalOcean Droplet',a:'IaaS',why:'a virtual server you administer yourself.'},
+ {q:'Microsoft 365 (Word, Teams)',a:'SaaS',why:'ready-made applications in the browser.'},
+ {q:'Google Apps Script (code that runs on Google Sheets)',a:'PaaS',why:'you write code; Google provides and runs the runtime.'},
+ {q:'Azure Virtual Machines',a:'IaaS',why:'rented VMs.'},
+ {q:'Zoom',a:'SaaS',why:'finished application.'},
+ {q:'Heroku',a:'PaaS',why:'push your app; the platform handles servers.'},
+ {q:'Google Classroom',a:'SaaS',why:'finished application for teachers and students.'}
+],a=>a);
+
+</script>
 </body>
 </html>
