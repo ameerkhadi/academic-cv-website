@@ -2864,13 +2864,22 @@
 .cs h3{margin:18px 0 4px;font-size:calc(17px * var(--fs,1))}
 .cs .ar{direction:rtl;text-align:right;font-family:var(--reader-font,'Noto Naskh Arabic'),serif}
 .cs .tw{border-color:var(--ink)}
-.cs .chapter-num{direction:ltr}
-.cs .mcq-item,.cs .tf-item{direction:ltr;text-align:left}
-.cs .sol-item{direction:ltr;text-align:left}
 .cs .sol-opt .so-k{margin-right:6px}
 .cs .game .q{min-height:2.6em}
-.cs .page-nav{direction:ltr}
 .cs .quote{font-style:italic}
+.cs .oops,.cs .takeaway,.cs .real{display:block}
+.cs .lang-ar{display:none;direction:rtl;text-align:right;font-family:var(--reader-font,'Noto Naskh Arabic'),'Segoe UI',serif}
+html[data-lang="ar"] .cs .lang-ar{display:block} html[data-lang="ar"] .cs .lang-en{display:none}
+.cs .lang-ar .page-title{text-align:right}
+.cs .lang-ar .quote{border-left:0;border-right:5px solid var(--blue);border-radius:12px 0 0 12px;font-style:normal}
+.cs .lang-ar ul,.cs .lang-ar ol{padding-right:22px;padding-left:0}
+.cs .lang-ar .srm td.l{text-align:right}
+.cs .lang-ar .score{float:left}
+.cs .lang-ar .cs-gloss{padding-right:20px;padding-left:0}
+#langSw{position:fixed;bottom:14px;right:14px;z-index:60;display:flex;border:2px solid #26303b;border-radius:14px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+#langSw button{font:700 15px 'Segoe UI',Tahoma,sans-serif;border:0;padding:6px 14px;cursor:pointer;background:#fffdf7;color:#26303b}
+#langSw button.on{background:#e59a2f;color:#1b1b1b}
+@media print{#langSw{display:none}}
 .cs-gloss{columns:2;column-gap:28px;padding-left:20px;line-height:1.9}@media(max-width:640px){.cs-gloss{columns:1}}</style>
 </head>
 <body>
@@ -2936,6 +2945,7 @@
         <div class="paper">
 
       <div id="slide-1" class="slide content-slide rich-slide cs active" dir="ltr">
+       <div class="lang-en">
         <span class="chip chip-ch1">Week 1</span>
         <h2 class="page-title">Introduction to Cloud Computing and Shared Responsibility</h2>
         <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
@@ -3208,10 +3218,256 @@
 
         <div class="mini-note">End of Lecture 1 — prepared by Asst. Prof. Dr. Ameer Hadi ★</div>
         <div class="page-nav"><button class="nav-btn nav-prev" onclick="navigateSlide(-1)">← Previous</button><button class="nav-btn nav-next" onclick="navigateSlide(1)">Next →</button></div>
+       </div>
+       <div class="lang-ar" dir="rtl">
+        <span class="chip chip-ch1">الأسبوع الأوّل</span>
+        <h2 class="page-title">مدخل إلى الحوسبة السحابيّة والمسؤوليّة المشتركة</h2>
+        <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
+        <p class="lead-paragraph">قبل أن <b>نحمي</b> السحابة، يجب أن نتّفق على ما <b>هي</b> السحابة، ومَن يدير كلّ جزءٍ منها، وبالتالي <b>مَن المسؤول حين يحدث خطأ</b>.</p>
+        
+
+
+<div class="box b"><b class="t">🎯 في نهاية هذه المحاضرة ستستطيع أن:</b>
+<ol style="margin:4px 0 0">
+<li>تذكر تعريف NIST وخصائصه الأساسيّة الخمس.</li>
+<li>تصنّف أيّ خدمة إلى IaaS أو PaaS أو SaaS — وتشرح السبب.</li>
+<li>تقارن بين السحابة العامّة والخاصّة والمجتمعيّة والهجينة.</li>
+<li>تسمّي المزوّدين الكبار وتطابق خدماتهم المتكافئة.</li>
+<li>ترسم نموذج المسؤوليّة المشتركة وتستخدمه لتحديد المسؤول عن حادثةٍ حقيقيّة.</li>
+</ol></div>
+
+<div class="chapter-num" style="color:var(--blue);"><span class="cn-num">١</span><span class="cn-title">تعريف NIST</span></div>
+<p>أكثر تعريفٍ استخدامًا هو تعريف المعهد الوطنيّ الأمريكيّ للمعايير والتقنية في الوثيقة <b>NIST SP 800-145</b> (٢٠١١):</p>
+<div class="quote">«الحوسبة السحابيّة نموذجٌ يتيح الوصول عبر الشبكة، في كلّ مكانٍ وبسهولةٍ وعند الطلب، إلى مجمّعٍ مشترك من الموارد الحاسوبيّة القابلة للتهيئة (مثل الشبكات والخوادم والتخزين والتطبيقات والخدمات)، يمكن حجزها وتحريرها بسرعة، وبأقلّ جهدٍ إداريّ أو تفاعلٍ مع مزوّد الخدمة.» <span dir="ltr" style="font-size:.85em">(ترجمة)</span></div>
+<p>ثمّ يصف NIST السحابة بقاعدة <b>٥ – ٣ – ٤</b>:</p>
+
+<svg viewBox="0 0 900 330" role="img" aria-label="نموذج NIST ٥-٣-٤" style="direction:ltr">
+  <rect x="330" y="10" width="240" height="56" rx="14" fill="none" stroke="var(--ink)" stroke-width="2.5"/>
+  <text x="450" y="45" text-anchor="middle" font-size="22" font-weight="700" fill="var(--ink)">السحابة حسب NIST</text>
+  <path d="M450 66 L750 112 M450 66 L450 112 M450 66 L150 112" stroke="var(--muted)" stroke-width="2" fill="none" stroke-dasharray="6 5"/>
+  <rect x="620" y="112" width="260" height="206" rx="14" fill="none" stroke="var(--blue)" stroke-width="2.5"/>
+  <text x="750" y="142" text-anchor="middle" font-size="18" font-weight="700" fill="var(--blue)">٥ خصائص أساسيّة</text>
+  <g font-size="15" fill="var(--ink)" text-anchor="end"><text x="860" y="176">① خدمة ذاتيّة عند الطلب</text><text x="860" y="204">② وصول واسع عبر الشبكة</text><text x="860" y="232">③ تجميع الموارد</text><text x="860" y="260">④ مرونة سريعة</text><text x="860" y="288">⑤ خدمة مَقيسة</text></g>
+  <rect x="320" y="112" width="260" height="206" rx="14" fill="none" stroke="var(--green)" stroke-width="2.5"/>
+  <text x="450" y="142" text-anchor="middle" font-size="18" font-weight="700" fill="var(--green)">٣ نماذج خدمة</text>
+  <g font-size="16" fill="var(--ink)" text-anchor="middle"><text x="450" y="190">IaaS — البنية التحتيّة</text><text x="450" y="230">PaaS — المنصّة</text><text x="450" y="270">SaaS — البرمجيّات</text></g>
+  <rect x="20" y="112" width="260" height="206" rx="14" fill="none" stroke="var(--orange)" stroke-width="2.5"/>
+  <text x="150" y="142" text-anchor="middle" font-size="18" font-weight="700" fill="var(--orange)">٤ نماذج نشر</text>
+  <g font-size="16" fill="var(--ink)" text-anchor="middle"><text x="150" y="182">عامّة</text><text x="150" y="216">خاصّة</text><text x="150" y="250">مجتمعيّة</text><text x="150" y="284">هجينة</text></g>
+</svg>
+
+<div class="chapter-num" style="color:var(--blue);"><span class="cn-num">٢</span><span class="cn-title">الخصائص الأساسيّة الخمس</span></div>
+<p>إذا غابت خاصيّةٌ منها، فلن يسمّي NIST الخدمة «سحابة» — بل مجرّد خادمٍ بعيد.</p>
+<div class="grid g5">
+  <div class="box b"><div class="ic">🖱️</div><b class="t">خدمة ذاتيّة عند الطلب</b><small>تنشئ الخادم بنفسك من لوحة الويب أو الواجهة البرمجيّة — بلا رسالةٍ إلى مسؤولٍ وبلا انتظار.</small></div>
+  <div class="box b"><div class="ic">🌐</div><b class="t">وصول واسع عبر الشبكة</b><small>تصل إليها عبر الشبكة بأدواتٍ عاديّة: المتصفّح، الهاتف، الحاسوب، سطر الأوامر.</small></div>
+  <div class="box b"><div class="ic">🧩</div><b class="t">تجميع الموارد</b><small>الجهاز الفعليّ الواحد يخدم زبائن كثيرين (<b>تعدّد المستأجرين</b>)، ولا تعرف ولا تتحكّم بالعتاد بالضبط.</small></div>
+  <div class="box b"><div class="ic">📈</div><b class="t">مرونة سريعة</b><small>تكبّر الموارد يوم الامتحان وتصغّرها بعده — تبدو السعة «بلا حدود».</small></div>
+  <div class="box b"><div class="ic">🧾</div><b class="t">خدمة مَقيسة</b><small>الاستهلاك يُقاس ويُحاسَب: ساعات المعالج، الغيغابايتات المخزّنة، البيانات المنقولة.</small></div>
+</div>
+
+<div class="real"><b>🔎 مثالٌ حقيقيّ من مدرّس المادّة:</b> منصّة الحسّاسات تعمل على خادمٍ في DigitalOcean. أنشأته في دقيقةٍ واحدة من لوحة الويب (<i>خدمة ذاتيّة</i>)، ويُفتح من أيّ هاتف (<i>وصول واسع</i>)، ويتشارك جهازًا فعليًّا في فرانكفورت مع زبائن آخرين (<i>تجميع</i>)، ويمكن تكبيره بنقرةٍ واحدة (<i>مرونة</i>)، والفاتورة تُظهر الساعات بالضبط (<i>مَقيسة</i>). أمّا خادمٌ في غرفة خوادم الجامعة لا تحصل عليه إلّا بطلبٍ إلى قسم تقنية المعلومات فليس <b>خدمةً ذاتيّة</b>.</div>
+
+<div class="oops"><b>⚠️ الزاوية الأمنيّة — لماذا يهمّنا هذا:</b> كلّ خاصيّةٍ تفتح خطرًا. الخدمة الذاتيّة ← من يسرق كلمة المرور يستطيع إنشاء الموارد أو حذفها. الوصول الواسع ← لوحة الإدارة موجودة على الإنترنت. التجميع ← ثغرةٌ في المشرف الافتراضيّ قد تسرّب بياناتٍ بين الزبائن. المرونة ← المهاجم قد يرفع فاتورتك (تعدين العملات). القياس ← بيانات الفوترة تكشف ما تشغّله.</div>
+
+<div class="chapter-num" style="color:var(--green);"><span class="cn-num">٣</span><span class="cn-title">نماذج الخدمة — ماذا تستأجر بالضبط؟</span></div>
+<p>تخيّل الحاسوب <b>طبقاتٍ فوق بعضها</b>. نموذج الخدمة يحدّد <b>أين يتوقّف المزوّد وأين تبدأ أنت</b>.</p>
+
+<div class="grid g3">
+  <div class="box o"><div class="ic">🏗️</div><b class="t">IaaS — البنية التحتيّة كخدمة</b><small>تستأجر أجهزةً افتراضيّة وأقراصًا وشبكات. <b>أنت</b> تثبّت نظام التشغيل وتحدّثه وكلّ ما فوقه.<br>أمثلة: <b>AWS EC2</b>، Azure Virtual Machines، Google Compute Engine، DigitalOcean Droplets.</small></div>
+  <div class="box g"><div class="ic">🛠️</div><b class="t">PaaS — المنصّة كخدمة</b><small>ترفع <b>الكود</b> فقط؛ والمزوّد يدير نظام التشغيل وبيئة التشغيل والتوسّع.<br>أمثلة: Google App Engine، Azure App Service، AWS Elastic Beanstalk، Heroku، Google Apps Script.</small></div>
+  <div class="box b"><div class="ic">📦</div><b class="t">SaaS — البرمجيّات كخدمة</b><small>أنت <b>تستخدم</b> تطبيقًا جاهزًا في المتصفّح فقط.<br>أمثلة: Gmail، Microsoft 365، Google Classroom، Zoom، Salesforce.</small></div>
+</div>
+
+<h3>عرض الطبقات</h3>
+<div class="legend"><span><i style="background:var(--cust)"></i>تديرها أنت</span><span><i style="background:var(--prov)"></i>يديرها المزوّد</span></div>
+<div class="tw"><table class="srm">
+<thead><tr><th style="text-align:right">الطبقة</th><th>داخل المؤسّسة</th><th>IaaS</th><th>PaaS</th><th>SaaS</th></tr></thead>
+<tbody>
+<tr><td class="l">التطبيقات</td><td class="C">أنت</td><td class="C">أنت</td><td class="C">أنت</td><td class="P">المزوّد</td></tr>
+<tr><td class="l">البيانات</td><td class="C">أنت</td><td class="C">أنت</td><td class="C">أنت</td><td class="C">أنت</td></tr>
+<tr><td class="l">بيئة التشغيل / البرمجيّات الوسيطة</td><td class="C">أنت</td><td class="C">أنت</td><td class="P">المزوّد</td><td class="P">المزوّد</td></tr>
+<tr><td class="l">نظام التشغيل</td><td class="C">أنت</td><td class="C">أنت</td><td class="P">المزوّد</td><td class="P">المزوّد</td></tr>
+<tr><td class="l">الطبقة الافتراضيّة</td><td class="C">أنت</td><td class="P">المزوّد</td><td class="P">المزوّد</td><td class="P">المزوّد</td></tr>
+<tr><td class="l">الخوادم والتخزين</td><td class="C">أنت</td><td class="P">المزوّد</td><td class="P">المزوّد</td><td class="P">المزوّد</td></tr>
+<tr><td class="l">الشبكات</td><td class="C">أنت</td><td class="P">المزوّد</td><td class="P">المزوّد</td><td class="P">المزوّد</td></tr>
+<tr><td class="l">مركز البيانات الفعليّ</td><td class="C">أنت</td><td class="P">المزوّد</td><td class="P">المزوّد</td><td class="P">المزوّد</td></tr>
+</tbody></table></div>
+<p style="font-size:.92em;color:var(--muted)">لاحظ سطر <b>البيانات</b>: يبقى عليك في كلّ النماذج. سنعود إليه في نموذج المسؤوليّة المشتركة.</p>
+
+<h3>تشبيه البيتزا 🍕</h3>
+<div class="tw"><table class="dt pizza">
+<thead><tr><th></th><th>تصنعها في البيت</th><th>تشتريها جاهزة وتخبزها</th><th>توصيل</th><th>تأكلها في المطعم</th></tr></thead>
+<tbody>
+<tr><td>المصطلح السحابيّ</td><td>داخل المؤسّسة</td><td>IaaS</td><td>PaaS</td><td>SaaS</td></tr>
+<tr><td>ما تجهّزه أنت</td><td>المطبخ والفرن والغاز والعجين والمكوّنات والطاولة</td><td>الفرن والغاز والطاولة</td><td>الطاولة والمشروبات</td><td>لا شيء — كُلْ فقط</td></tr>
+<tr><td>السيطرة مقابل الجهد</td><td>أعلى سيطرة وأعلى جهد</td><td colspan="2">↔</td><td>أقلّ سيطرة وأقلّ جهد</td></tr>
+</tbody></table></div>
+
+<div class="takeaway"><b>💡 القاعدة:</b> كلّما صعدنا (IaaS ← PaaS ← SaaS) <b>قلّ ما تديره</b> — لكن <b>قلّت سيطرتك</b> أيضًا وزادت حاجتك إلى <b>الثقة بالمزوّد</b>. العمل الأمنيّ لا يختفي؛ بل ينتقل إلى الإعدادات والهويّات والبيانات.</div>
+
+<div class="real"><b>🔎 صنّف تطبيقات مدرّس المادّة:</b> منصّة الحسّاسات على خادم DigitalOcean = <b>IaaS</b> (أنا أحدّث Ubuntu وnginx وجدار الحماية). منصّة مادّة الذكاء الاصطناعيّ المبنيّة على Google Sheets وApps Script = <b>PaaS</b> (أكتب الكود وGoogle تشغّله). البريد الجامعيّ في Gmail = <b>SaaS</b> (أدير فقط كلمة المرور والتحقّق بخطوتين ومع مَن أشارك).</div>
+
+<h3>أسماءٌ أخرى «كخدمة» ستصادفها</h3>
+<p><b>FaaS / الحوسبة بلا خادم</b> (AWS Lambda، Azure Functions، Google Cloud Run functions) — ترفع دالّةً واحدة وتدفع لكلّ استدعاء؛ تُعدّ عادةً ضمن PaaS. <b>CaaS</b> — الحاويات كخدمة (خدمات Kubernetes مثل EKS وAKS وGKE). <b>DBaaS</b> — قواعد بيانات مُدارة (Amazon RDS، Azure SQL Database، Cloud SQL). <b>SECaaS</b> — الأمن كخدمة (جدران حماية سحابيّة، تصفية البريد).</p>
+
+<div class="chapter-num" style="color:var(--orange);"><span class="cn-num">٤</span><span class="cn-title">نماذج النشر — مع مَن تشترك في السحابة؟</span></div>
+<p>نموذج الخدمة يقول <b>ماذا</b> تستأجر؛ ونموذج النشر يقول <b>مَن غيرك يستخدم البنية نفسها</b> و<b>مَن يملكها</b>.</p>
+
+<div class="grid g4">
+  <div class="box b"><div class="ic">☁️</div><b class="t">عامّة (Public)</b><small>يسجّل فيها أيّ زبون. أمثلة: AWS، Azure، Google Cloud.</small></div>
+  <div class="box g"><div class="ic">🔒</div><b class="t">خاصّة (Private)</b><small>لمؤسّسةٍ واحدةٍ فقط — مركز بياناتها أو استضافة مخصّصة لها.</small></div>
+  <div class="box v"><div class="ic">🏫🏫</div><b class="t">مجتمعيّة (Community)</b><small>مجموعة مؤسّسات لها متطلّباتٌ مشتركة — جامعات، وزارات، مصارف.</small></div>
+  <div class="box o"><div class="ic">🔗</div><b class="t">هجينة (Hybrid)</b><small>خاصّة + عامّة متّصلتان: البيانات الحسّاسة في الداخل، والحمل الإضافيّ في الخارج.</small></div>
+</div>
+
+<div class="tw"><table class="dt">
+<thead><tr><th>النموذج</th><th>مَن يستخدمه</th><th>نقاط القوّة</th><th>المخاوف الأمنيّة</th></tr></thead>
+<tbody>
+<tr><td>عامّة</td><td>أيّ زبون (تعدّد المستأجرين)</td><td>رخيصة للبدء، سعة ضخمة، مناطق حول العالم، أدوات أمنيّة ناضجة</td><td>عتاد مشترك، بياناتٌ خارج بلدك، والإعداد الخاطئ مكشوفٌ على الإنترنت</td></tr>
+<tr><td>خاصّة</td><td>مؤسّسة واحدة</td><td>سيطرة كاملة، البيانات تبقى في الموقع، سياسات مخصّصة</td><td>تتحمّل <i>كلّ</i> العمل الأمنيّ؛ مكلفة؛ وكثيرًا ما يضعف التحديث والمراقبة</td></tr>
+<tr><td>مجتمعيّة</td><td>عدّة مؤسّسات بمتطلّبات مشتركة</td><td>كلفة مشتركة، قواعد امتثال موحّدة</td><td>الثقة بين الأعضاء؛ مَن يحكم؛ وعضوٌ ضعيف يؤثّر في الجميع</td></tr>
+<tr><td>هجينة</td><td>مزيجٌ ممّا سبق</td><td>تُبقي الحسّاس خاصًّا وتستخدم العامّة للتوسّع</td><td><b>نقطة الربط</b> (VPN، توحيد الهويّات) تصبح هدفًا؛ ومجموعتا سياساتٍ يجب أن تبقيا متّسقتين</td></tr>
+</tbody></table></div>
+
+<div class="real"><b>🔎 مثالٌ عراقيّ:</b> غرفة خوادم الجامعة التي لا يُوصَل إليها إلّا عبر VPN الجامعة تتصرّف كـ<b>سحابةٍ خاصّة</b> (إذا وفّرت خدمةً ذاتيّة). والمدرّس نفسه يستأجر خادمًا في فرانكفورت من DigitalOcean — <b>سحابة عامّة</b>. وحين يحفظ تطبيقٌ سجلّات الطلبة على خادم الجامعة ويرسل الحمل غير الحسّاس إلى الخادم العامّ، فهذا إعدادٌ <b>هجين</b> صغير. ومركز بياناتٍ مشترك تديره وزارة التعليم العالي لكلّ الجامعات سيكون <b>سحابةً مجتمعيّة</b>.</div>
+
+<div class="oops"><b>⚠️ سيادة البيانات:</b> في السحابة العامّة تعيش بياناتك فعليًّا في <b>منطقةٍ جغرافيّة</b> (مثل فرانكفورت أو البحرين أو الإمارات)، وقوانين ذلك البلد تنطبق عليها. للبيانات الحكوميّة أو الصحّيّة، تحقّق من موقع المنطقة <b>قبل</b> الرفع.</div>
+
+<div class="chapter-num" style="color:var(--purple);"><span class="cn-num">٥</span><span class="cn-title">المزوّدون الكبار للسحابة</span></div>
+<p>ثلاث شركاتٍ عملاقة تسيطر على السوق: <b>Amazon Web Services (AWS)</b> وهي الأكبر، ثمّ <b>Microsoft Azure</b>، ثمّ <b>Google Cloud</b>؛ ومعًا تملك تقريبًا ثلثي السوق العالميّ. وهناك لاعبون مهمّون آخرون: <b>Alibaba Cloud</b> و<b>Oracle Cloud</b> و<b>IBM Cloud</b>، ومزوّدون أصغر مناسبون للمطوّرين مثل <b>DigitalOcean</b> وLinode/Akamai وHetzner.</p>
+
+<div class="grid g4">
+  <div class="box o"><b class="t">☁️ AWS</b><small>انطلقت ٢٠٠٦ (S3 وEC2). أكبر عددٍ من الخدمات. مناطق في الشرق الأوسط: البحرين، الإمارات.</small></div>
+  <div class="box b"><b class="t">☁️ Microsoft Azure</b><small>قويّة عند المؤسّسات التي تستخدم أصلًا Windows وActive Directory وMicrosoft 365. مناطق في الإمارات وقطر.</small></div>
+  <div class="box g"><b class="t">☁️ Google Cloud</b><small>قويّة في تحليل البيانات والذكاء الاصطناعيّ وKubernetes (الذي أنشأته Google). مناطق في الدوحة والدمّام.</small></div>
+  <div class="box v"><b class="t">☁️ آخرون</b><small>Alibaba (آسيا)، Oracle (قواعد البيانات)، IBM (المؤسّسات والهجين)، DigitalOcean (خوادم بسيطة ورخيصة).</small></div>
+</div>
+
+<h3>الفكرة نفسها بأسماءٍ مختلفة</h3>
+<div class="tw"><table class="dt" dir="ltr" style="text-align:left">
+<thead><tr><th>الخدمة</th><th>AWS</th><th>Azure</th><th>Google Cloud</th></tr></thead>
+<tbody>
+<tr><td>أجهزة افتراضيّة (IaaS)</td><td>EC2</td><td>Virtual Machines</td><td>Compute Engine</td></tr>
+<tr><td>تخزين الكائنات</td><td>S3</td><td>Blob Storage</td><td>Cloud Storage</td></tr>
+<tr><td>الهويّة والصلاحيّات</td><td>IAM</td><td>Microsoft Entra ID (+ Azure RBAC)</td><td>Cloud IAM</td></tr>
+<tr><td>قاعدة SQL مُدارة</td><td>RDS</td><td>Azure SQL Database</td><td>Cloud SQL</td></tr>
+<tr><td>دوالّ بلا خادم</td><td>Lambda</td><td>Azure Functions</td><td>Cloud Run functions</td></tr>
+<tr><td>Kubernetes</td><td>EKS</td><td>AKS</td><td>GKE</td></tr>
+<tr><td>إدارة المفاتيح</td><td>KMS</td><td>Key Vault</td><td>Cloud KMS</td></tr>
+<tr><td>سجلّات التدقيق</td><td>CloudTrail</td><td>Activity Log</td><td>Cloud Audit Logs</td></tr>
+</tbody></table></div>
+
+<div class="takeaway"><b>💡 لهذه المادّة:</b> تعلّم <b>المفهوم</b> مرّةً واحدة (الهويّة، التخزين، السجلّات، المفاتيح، الشبكة)، ثمّ طبّقه على أيّ مزوّد. مبادئ الأمن واحدة؛ والذي يتغيّر هو الأسماء والأزرار فقط.</div>
+
+<h3>كيف تختار (من زاويةٍ أمنيّة)</h3>
+<ul>
+<li><b>المنطقة / موقع البيانات</b> — أين ستعيش البيانات فعليًّا؟</li>
+<li><b>الشهادات</b> — ISO/IEC 27001 وSOC 2 وCSA STAR: دليلٌ مستقلّ أنّ المزوّد يحمي جزءه.</li>
+<li><b>ميزات الهويّة</b> — التحقّق متعدّد العوامل، أدوارٌ دقيقة، الدخول الموحّد.</li>
+<li><b>السجلّات والمراقبة</b> — هل ترى مَن فعل ماذا ومتى؟</li>
+<li><b>التشفير والمفاتيح</b> — أثناء التخزين وأثناء النقل، ومَن يحمل المفاتيح.</li>
+<li><b>خطّة الخروج</b> — هل تستطيع نقل بياناتك (لتجنّب الارتهان للمزوّد)؟</li>
+</ul>
+
+<div class="chapter-num" style="color:var(--red);"><span class="cn-num">٦</span><span class="cn-title">نموذج المسؤوليّة المشتركة</span></div>
+<p>في السحابة، الأمن <b>شراكة</b>. المزوّد يحمي بعض الطبقات، والزبون يحمي الباقي — والخطّ الفاصل يتحرّك مع نموذج الخدمة.</p>
+<div class="quote" style="font-style:normal">تلخّصه AWS هكذا: المزوّد مسؤولٌ عن أمن السحابة <b>نفسها</b> (security <b>of</b> the cloud)، والزبون مسؤولٌ عن الأمن <b>داخلها</b> (security <b>in</b> the cloud).</div>
+
+<div class="legend"><span><i style="background:var(--prov)"></i>المزوّد</span><span><i style="background:var(--cust)"></i>الزبون</span><span><i style="background:var(--both)"></i>مشتركة</span></div>
+<div class="tw"><table class="srm">
+<thead><tr><th style="text-align:right">المسؤوليّة</th><th>داخل المؤسّسة</th><th>IaaS</th><th>PaaS</th><th>SaaS</th></tr></thead>
+<tbody>
+<tr><td class="l">تصنيف البيانات وحمايتها</td><td class="C">ز</td><td class="C">ز</td><td class="C">ز</td><td class="C">ز</td></tr>
+<tr><td class="l">الحسابات والهويّات وكلمات المرور والتحقّق المتعدّد</td><td class="C">ز</td><td class="C">ز</td><td class="C">ز</td><td class="C">ز</td></tr>
+<tr><td class="l">أجهزة المستخدمين</td><td class="C">ز</td><td class="C">ز</td><td class="C">ز</td><td class="C">ز</td></tr>
+<tr><td class="l">ضبط الصلاحيّات (مَن يرى ماذا)</td><td class="C">ز</td><td class="C">ز</td><td class="C">ز</td><td class="S">مشتركة</td></tr>
+<tr><td class="l">أمن التطبيق</td><td class="C">ز</td><td class="C">ز</td><td class="S">مشتركة</td><td class="P">م</td></tr>
+<tr><td class="l">ضوابط الشبكة (قواعد جدار الحماية)</td><td class="C">ز</td><td class="C">ز</td><td class="S">مشتركة</td><td class="P">م</td></tr>
+<tr><td class="l">تحديث نظام التشغيل</td><td class="C">ز</td><td class="C">ز</td><td class="P">م</td><td class="P">م</td></tr>
+<tr><td class="l">الطبقة الافتراضيّة / المشرف الافتراضيّ</td><td class="C">ز</td><td class="P">م</td><td class="P">م</td><td class="P">م</td></tr>
+<tr><td class="l">الأجهزة الفعليّة والشبكة</td><td class="C">ز</td><td class="P">م</td><td class="P">م</td><td class="P">م</td></tr>
+<tr><td class="l">مركز البيانات (حرّاس، كهرباء، حريق)</td><td class="C">ز</td><td class="P">م</td><td class="P">م</td><td class="P">م</td></tr>
+</tbody></table></div>
+<p style="font-size:.9em;color:var(--muted)">ز = الزبون · م = المزوّد</p>
+
+<div class="takeaway"><b>💡 الأسطر الثلاثة التي لا تتحرّك أبدًا:</b> <b>بياناتك</b> و<b>هويّاتك</b> و<b>أجهزتك</b> مسؤوليّة الزبون دائمًا — حتى في SaaS. وقد حذّر المحلّلون (Gartner) منذ سنوات أنّ الغالبيّة العظمى من إخفاقات أمن السحابة سببها <b>الزبون</b>، وأغلبها إعداداتٌ خاطئة وضعفٌ في ضبط الهويّات.</div>
+
+<h3>حوادث حقيقيّة — مَن المخطئ؟</h3>
+<div class="grid g3">
+  <div class="box r"><b class="t">Capital One، ٢٠١٩</b><small>استغلّ مهاجمٌ جدار حماية تطبيقات ويب مضبوطًا خطأً على خوادم المصرف في AWS، وسرق بيانات نحو ١٠٠ مليون زبون. لم تُخترق بنية AWS — بل <b>الإعدادات</b> التي هي مسؤوليّة الزبون. ← <b>جهة الزبون.</b></small></div>
+  <div class="box r"><b class="t">حاويات التخزين المكشوفة</b><small>مرّةً بعد مرّة تترك شركاتٌ حاويات S3 أو Blob «عامّة» فتكشف ملايين السجلّات. المزوّد يوفّر إعداداتٍ خاصّة افتراضيًّا وتحذيرات. ← <b>جهة الزبون.</b></small></div>
+  <div class="box b"><b class="t">ثغرات العتاد (Spectre/Meltdown، ٢٠١٨)</b><small>ثغراتٌ في المعالجات قد تسرّب الذاكرة بين الأجهزة الافتراضيّة على الجهاز نفسه. حدّث المزوّدون المشرفات الافتراضيّة والأجهزة؛ وكان على زبائن IaaS تحديث أنظمتهم أيضًا. ← <b>مشتركة.</b></small></div>
+</div>
+
+<h3>الحادثة نفسها في نماذج مختلفة</h3>
+<p><i>«أُعلنت ثغرةٌ خطيرة في نواة Linux.»</i> مَن يجب أن يحدّث؟</p>
+<ul>
+<li><b>IaaS</b> (خادمك في EC2 أو Droplet): <b>أنت</b> — تدخل وتحدّث نظام التشغيل.</li>
+<li><b>PaaS</b> (App Engine، Apps Script): <b>المزوّد</b> يحدّث المنصّة؛ وأنت تراجع كودك ومكتباتك.</li>
+<li><b>SaaS</b> (Gmail): <b>المزوّد</b> — وأنت لا تفعل شيئًا سوى حماية حسابك.</li>
+</ul>
+
+<div class="chapter-num" style="color:var(--teal);"><span class="cn-num">🎮</span><span class="cn-title">النشاط أ — المزوّد أم الزبون؟</span></div>
+<p>اقرأ كلّ حادثة وقرّر مَن المسؤول عن منعها. اعملوا بأزواج، وتناقشوا قبل النقر.</p>
+<div class="game" id="g3">
+  <span class="score" id="g3s">0 / 0</span>
+  <div class="ctx" id="g3c"></div>
+  <div class="q" id="g3q"></div>
+  <div class="btns"><button class="p" data-a="P">🏢 المزوّد</button><button class="c" data-a="C">🙋 الزبون</button></div>
+  <div class="fb" id="g3f"></div>
+  <div class="btns"><button id="g3n" style="display:none">التالي ◀</button></div>
+</div>
+
+<div class="chapter-num" style="color:var(--teal);"><span class="cn-num">🎮</span><span class="cn-title">النشاط ب — IaaS أم PaaS أم SaaS؟</span></div>
+<div class="game" id="g4">
+  <span class="score" id="g4s">0 / 0</span>
+  <div class="q" id="g4q"></div>
+  <div class="btns"><button data-a="IaaS">🏗️ IaaS</button><button data-a="PaaS">🛠️ PaaS</button><button data-a="SaaS">📦 SaaS</button></div>
+  <div class="fb" id="g4f"></div>
+  <div class="btns"><button id="g4n" style="display:none">التالي ◀</button></div>
+</div>
+
+<div class="chapter-num" style="color:var(--teal);"><span class="cn-num">✍️</span><span class="cn-title">النشاط ج — ارسمها (٥ دقائق)</span></div>
+<p>على الورق، ارسم مكدّس الطبقات (من البيانات حتى مركز البيانات) لـ<b>تطبيقٍ تستخدمه كلّ يوم</b> (Instagram، Telegram، Google Classroom، موقع الجامعة…). لوّن طبقات المزوّد بالأزرق وطبقاتك بالبرتقاليّ. ثمّ اكتب <b>شيئًا واحدًا</b> يجب أن تفعله أنت شخصيًّا لحماية جزئك.</p>
+
+        <div class="section-heading"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg><span>مصطلحات أساسيّة · Key terms</span></div>
+        <ul class="cs-gloss"><li><b>الحوسبة السحابيّة</b> <span dir="ltr">(Cloud computing)</span></li><li><b>تعدّد المستأجرين</b> <span dir="ltr">(Multi-tenancy)</span> — زبائن كثيرون على العتاد نفسه</li><li><b>المرونة</b> <span dir="ltr">(Elasticity)</span> — التوسّع والتقلّص حسب الحاجة</li><li><b>البنية / المنصّة / البرمجيّات كخدمة</b> <span dir="ltr">(IaaS / PaaS / SaaS)</span></li><li><b>نموذج النشر</b> <span dir="ltr">(Deployment model)</span></li><li><b>المنطقة الجغرافيّة لمركز البيانات</b> <span dir="ltr">(Region)</span></li><li><b>المشرف الافتراضيّ</b> <span dir="ltr">(Hypervisor)</span> — يشغّل الأجهزة الافتراضيّة</li><li><b>المسؤوليّة المشتركة</b> <span dir="ltr">(Shared responsibility)</span></li><li><b>خطأ في الإعدادات</b> <span dir="ltr">(Misconfiguration)</span></li><li><b>سيادة البيانات</b> <span dir="ltr">(Data sovereignty)</span> — قانون البلد الذي تُخزَّن فيه</li></ul>
+        <div class="section-heading"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg><span>أسئلة المراجعة</span></div>
+        <p class="quiz-note">أجب بنفسك أوّلًا في المساحة الفارغة، ثمّ راجع تبويب <b>🔑 الحلول والتعليل</b> — يشرح لماذا كلّ إجابةٍ صحيحة ولماذا الخيارات الأخرى خاطئة.</p>
+        <div class="section-heading" style="margin-top:14px;"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg><span>أ. الاختيار من متعدّد</span></div>
+        <div class="mcq-item"><span class="q-num">١.</span> أيٌّ ممّا يلي <b>ليس</b> من الخصائص الأساسيّة الخمس للحوسبة السحابيّة حسب NIST؟<ul class="mcq-options"><li><span class="opt-letter">أ)</span> المرونة السريعة</li><li><span class="opt-letter">ب)</span> الخدمة المَقيسة</li><li><span class="opt-letter">ج)</span> تشفير البيانات</li><li><span class="opt-letter">د)</span> تجميع الموارد</li></ul></div>
+<div class="mcq-item"><span class="q-num">٢.</span> شركةٌ تستأجر أجهزةً افتراضيّة من مزوّد، وتثبّت عليها نظام التشغيل وخادم الويب وقاعدة البيانات بنفسها. نموذج الخدمة هو:<ul class="mcq-options"><li><span class="opt-letter">أ)</span> SaaS</li><li><span class="opt-letter">ب)</span> PaaS</li><li><span class="opt-letter">ج)</span> IaaS</li><li><span class="opt-letter">د)</span> سحابة مجتمعيّة</li></ul></div>
+<div class="mcq-item"><span class="q-num">٣.</span> في أيّ نموذجٍ يدير الزبون <b>أقلّ</b> عددٍ من الطبقات؟<ul class="mcq-options"><li><span class="opt-letter">أ)</span> داخل المؤسّسة</li><li><span class="opt-letter">ب)</span> IaaS</li><li><span class="opt-letter">ج)</span> PaaS</li><li><span class="opt-letter">د)</span> SaaS</li></ul></div>
+<div class="mcq-item"><span class="q-num">٤.</span> عدّة جامعاتٍ تتشارك بنيةً سحابيّة واحدة بُنيت لمتطلّباتها الأكاديميّة والقانونيّة المشتركة. هذه:<ul class="mcq-options"><li><span class="opt-letter">أ)</span> سحابة عامّة</li><li><span class="opt-letter">ب)</span> سحابة خاصّة</li><li><span class="opt-letter">ج)</span> سحابة مجتمعيّة</li><li><span class="opt-letter">د)</span> سحابة هجينة</li></ul></div>
+<div class="mcq-item"><span class="q-num">٥.</span> الخدمة المكافئة في Microsoft Azure لخدمة Amazon S3 (تخزين الكائنات) هي:<ul class="mcq-options"><li><span class="opt-letter">أ)</span> Azure Functions</li><li><span class="opt-letter">ب)</span> Blob Storage</li><li><span class="opt-letter">ج)</span> Microsoft Entra ID</li><li><span class="opt-letter">د)</span> AKS</li></ul></div>
+<div class="mcq-item"><span class="q-num">٦.</span> حسب نموذج المسؤوليّة المشتركة، أيّ بندٍ هو مسؤوليّة الزبون <b>دائمًا</b> في كلّ نماذج الخدمة؟<ul class="mcq-options"><li><span class="opt-letter">أ)</span> تحديث المشرف الافتراضيّ</li><li><span class="opt-letter">ب)</span> الأمن الفعليّ لمركز البيانات</li><li><span class="opt-letter">ج)</span> تصنيف بياناته وحمايتها</li><li><span class="opt-letter">د)</span> استبدال الأقراص التالفة</li></ul></div>
+<div class="mcq-item"><span class="q-num">٧.</span> «جهازٌ فعليّ واحد يستضيف أجهزةً افتراضيّة لزبائن كثيرين مختلفين.» أيّ خاصيّةٍ هذه؟<ul class="mcq-options"><li><span class="opt-letter">أ)</span> الوصول الواسع عبر الشبكة</li><li><span class="opt-letter">ب)</span> تجميع الموارد (تعدّد المستأجرين)</li><li><span class="opt-letter">ج)</span> الخدمة الذاتيّة عند الطلب</li><li><span class="opt-letter">د)</span> الخدمة المَقيسة</li></ul></div>
+<div class="mcq-item"><span class="q-num">٨.</span> في اختراق Capital One (٢٠١٩) سُرق نحو ١٠٠ مليون سجلّ زبونٍ من بياناتٍ محفوظة في AWS. السبب الجذريّ كان:<ul class="mcq-options"><li><span class="opt-letter">أ)</span> خللٌ في أمن مراكز بيانات AWS</li><li><span class="opt-letter">ب)</span> إعدادٌ خاطئ على موارد يشغّلها المصرف نفسه في AWS</li><li><span class="opt-letter">ج)</span> كارثةٌ طبيعيّة في مركز البيانات</li><li><span class="opt-letter">د)</span> ثغرةٌ في كود خدمة S3</li></ul></div>
+<div class="mcq-item"><span class="q-num">٩.</span> جامعةٌ تحتفظ بسجلّات الطلبة على خوادمها، وتنقل موقعها العامّ إلى سحابةٍ عامّة، وتربطهما بـ VPN. هذه:<ul class="mcq-options"><li><span class="opt-letter">أ)</span> سحابة خاصّة</li><li><span class="opt-letter">ب)</span> سحابة هجينة</li><li><span class="opt-letter">ج)</span> سحابة مجتمعيّة</li><li><span class="opt-letter">د)</span> سحابة عامّة</li></ul></div>
+<div class="mcq-item"><span class="q-num">١٠.</span> أُعلنت ثغرةٌ خطيرة في نواة Linux. مَن يجب أن يحدّثها لتطبيقٍ يعمل على <b>Google App Engine</b> (PaaS)؟<ul class="mcq-options"><li><span class="opt-letter">أ)</span> الزبون، بالدخول إلى الخادم</li><li><span class="opt-letter">ب)</span> المزوّد (Google)</li><li><span class="opt-letter">ج)</span> لا أحد — لا نظام تشغيل في PaaS</li><li><span class="opt-letter">د)</span> مستخدمو التطبيق</li></ul></div>
+
+        <div class="section-heading" style="margin-top:22px;"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg><span>ب. صح أو خطأ</span></div>
+        <div class="tf-item"><span>١. في SaaS، الزبون مسؤولٌ عن تحديث نظام التشغيل.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+<div class="tf-item"><span>٢. الانتقال إلى السحابة ينقل <i>كلّ</i> المسؤوليّة الأمنيّة إلى المزوّد.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+<div class="tf-item"><span>٣. السحابة الهجينة تربط بيئةً خاصّة بسحابةٍ عامّة لتعملا معًا.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+<div class="tf-item"><span>٤. المرونة السريعة تعني إمكان تكبير السعة وتصغيرها بسرعة، وغالبًا تلقائيًّا.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+<div class="tf-item"><span>٥. خادمٌ في غرفة خوادم الجامعة لا تحصل عليه إلّا بطلبٍ مكتوب إلى قسم تقنية المعلومات هو خدمةٌ سحابيّة حسب NIST.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+<div class="tf-item"><span>٦. تصف AWS التقسيم هكذا: المزوّد مسؤولٌ عن أمن السحابة «نفسها»، والزبون عن الأمن «داخلها».</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+
+        <div class="section-heading" style="margin-top:22px;"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg><span>ج. أسئلة قصيرة</span></div>
+        <div class="mcq-item"><span class="q-num">١.</span> اكتب تعريف NIST للحوسبة السحابيّة بأسلوبك (٢–٣ أسطر)، واذكر الخصائص الأساسيّة الخمس.<span class="blank-line"></span><span class="blank-line"></span><span class="blank-line"></span></div>
+<div class="mcq-item"><span class="q-num">٢.</span> أعطِ مثالًا واحدًا لكلٍّ من IaaS وPaaS وSaaS، واذكر لكلٍّ منها مهمّةً أمنيّة تبقى على الزبون.<span class="blank-line"></span><span class="blank-line"></span><span class="blank-line"></span></div>
+<div class="mcq-item"><span class="q-num">٣.</span> مستشفى في بغداد يريد حفظ سجلّات المرضى وتشغيل موقعٍ عامّ لحجز المواعيد. اقترح نموذج نشرٍ وعلّل اختيارك من الناحية الأمنيّة.<span class="blank-line"></span><span class="blank-line"></span><span class="blank-line"></span></div>
+
+        <div class="mini-note">نهاية المحاضرة الأولى — إعداد: أ.م.د أمير هادي ★</div>
+        <div class="page-nav"><button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button><button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button></div>
+       </div>
         <div class="footer-note">1</div>
       </div>
 
       <div id="slide-sol" class="slide content-slide rich-slide cs" dir="ltr">
+       <div class="lang-en">
         <span class="chip" style="background:var(--teal);">Review guide</span>
         <h2 class="page-title" style="color:var(--teal);">Solutions &amp; reasoning</h2>
         <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--teal)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
@@ -3241,6 +3497,38 @@
 <div class="sol-item"><p class="sol-q"><span class="sq-n">3.</span> A hospital in Baghdad wants to store patient records and also run a public appointment-booking website. Recommend a deployment model and justify it from a security point of view.</p><p class="sol-why"><b>Model answer:</b> <b>Hybrid cloud.</b> Patient records (highly sensitive health data, legal requirements, data should stay in Iraq) stay in a private cloud the hospital controls. The public booking site runs on a public cloud for availability and scaling, holding only minimal data (name, time). Security focus: a protected link between the two (VPN, strong identity, least privilege), encryption of data in transit and at rest, and logging/monitoring on both sides.</p><p class="sol-why"><b>Marking guide:</b> A pure-public answer can earn partial marks if it addresses region/data location, encryption and access control; a pure-private answer if it addresses availability of the public site.</p></div>
 
         <div class="page-nav"><button class="nav-btn nav-prev" onclick="navigateSlide(-1)">← Previous</button><button class="nav-btn nav-next" onclick="navigateSlide(1)">Next →</button></div>
+       </div>
+       <div class="lang-ar" dir="rtl">
+        <span class="chip" style="background:var(--teal);">دليل مراجعة</span>
+        <h2 class="page-title" style="color:var(--teal);">الحلول والتعليل</h2>
+        <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--teal)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
+        <p class="lead-paragraph">حلول أسئلة المراجعة، <span class="hl hl-yellow">مع تعليل كلّ إجابة</span> — لماذا الصحيح صحيح، ولماذا كلّ خيارٍ آخر خاطئ.</p>
+        <div class="sol-week"><span class="sw-n">١</span><span class="sw-t">حلول الأسبوع الأوّل</span></div>
+        <div class="sol-kind"><span>الاختيار من متعدّد</span><span class="sk-line"></span></div>
+<div class="sol-item"><p class="sol-q"><span class="sq-n">١.</span> أيٌّ ممّا يلي <b>ليس</b> من الخصائص الأساسيّة الخمس للحوسبة السحابيّة حسب NIST؟</p><div class="sol-opts"><div class="sol-opt bad"><span class="so-k">أ)</span><span>المرونة السريعة</span></div><div class="sol-opt bad"><span class="so-k">ب)</span><span>الخدمة المَقيسة</span></div><div class="sol-opt ok"><span class="so-k">ج)</span><span>تشفير البيانات</span></div><div class="sol-opt bad"><span class="so-k">د)</span><span>تجميع الموارد</span></div></div><p class="sol-why"><b>التعليل:</b> تذكر الوثيقة NIST SP 800-145 خمس خصائص بالضبط: الخدمة الذاتيّة عند الطلب، والوصول الواسع عبر الشبكة، وتجميع الموارد، والمرونة السريعة، والخدمة المَقيسة. التشفير <i>ضابطٌ أمنيّ</i> نضيفه، وليس صفةً تعرّف السحابة.<br><b>لماذا ليست الخيارات الأخرى:</b> «أ» هي الخاصيّة ④. «ب» هي الخاصيّة ⑤ — الاستهلاك يُقاس ويُحاسَب. «د» هي الخاصيّة ③ — تعدّد المستأجرين.</p></div>
+<div class="sol-item"><p class="sol-q"><span class="sq-n">٢.</span> شركةٌ تستأجر أجهزةً افتراضيّة من مزوّد، وتثبّت عليها نظام التشغيل وخادم الويب وقاعدة البيانات بنفسها. نموذج الخدمة هو:</p><div class="sol-opts"><div class="sol-opt bad"><span class="so-k">أ)</span><span>SaaS</span></div><div class="sol-opt bad"><span class="so-k">ب)</span><span>PaaS</span></div><div class="sol-opt ok"><span class="so-k">ج)</span><span>IaaS</span></div><div class="sol-opt bad"><span class="so-k">د)</span><span>سحابة مجتمعيّة</span></div></div><p class="sol-why"><b>التعليل:</b> استئجار أجهزةٍ افتراضيّة وإدارة نظام التشغيل وكلّ ما فوقه هو تعريف البنية التحتيّة كخدمة (مثل AWS EC2 وDigitalOcean Droplets).<br><b>لماذا ليست الخيارات الأخرى:</b> «أ» في SaaS تستخدم تطبيقًا جاهزًا فقط — لا نظام تشغيل تثبّته. «ب» في PaaS المزوّد يدير نظام التشغيل وبيئة التشغيل؛ وأنت ترفع الكود فقط. «د» هي نموذج <i>نشر</i> (مع مَن تشترك)، وليست نموذج خدمة.</p></div>
+<div class="sol-item"><p class="sol-q"><span class="sq-n">٣.</span> في أيّ نموذجٍ يدير الزبون <b>أقلّ</b> عددٍ من الطبقات؟</p><div class="sol-opts"><div class="sol-opt bad"><span class="so-k">أ)</span><span>داخل المؤسّسة</span></div><div class="sol-opt bad"><span class="so-k">ب)</span><span>IaaS</span></div><div class="sol-opt bad"><span class="so-k">ج)</span><span>PaaS</span></div><div class="sol-opt ok"><span class="so-k">د)</span><span>SaaS</span></div></div><p class="sol-why"><b>التعليل:</b> في SaaS يدير المزوّد كلّ شيءٍ حتى التطبيق؛ ولا يبقى للزبون إلّا بياناته وحساباته وأجهزته.<br><b>لماذا ليست الخيارات الأخرى:</b> «أ» الزبون يدير <i>كلّ</i> الطبقات، حتى المبنى. «ب» الزبون ما زال يدير نظام التشغيل وبيئة التشغيل والتطبيقات والبيانات. «ج» الزبون ما زال يدير التطبيق والبيانات.</p></div>
+<div class="sol-item"><p class="sol-q"><span class="sq-n">٤.</span> عدّة جامعاتٍ تتشارك بنيةً سحابيّة واحدة بُنيت لمتطلّباتها الأكاديميّة والقانونيّة المشتركة. هذه:</p><div class="sol-opts"><div class="sol-opt bad"><span class="so-k">أ)</span><span>سحابة عامّة</span></div><div class="sol-opt bad"><span class="so-k">ب)</span><span>سحابة خاصّة</span></div><div class="sol-opt ok"><span class="so-k">ج)</span><span>سحابة مجتمعيّة</span></div><div class="sol-opt bad"><span class="so-k">د)</span><span>سحابة هجينة</span></div></div><p class="sol-why"><b>التعليل:</b> السحابة المجتمعيّة تتشاركها مجموعةٌ محدّدة من المؤسّسات لها اهتماماتٌ مشتركة (الرسالة، الامتثال، المتطلّبات الأمنيّة).<br><b>لماذا ليست الخيارات الأخرى:</b> «أ» مفتوحةٌ لـ<i>أيّ</i> زبون، لا لمجموعةٍ محدّدة. «ب» تخدم مؤسّسةً <i>واحدة</i> فقط. «د» تعني ربط نموذجين مختلفين، مثل خاصّة + عامّة.</p></div>
+<div class="sol-item"><p class="sol-q"><span class="sq-n">٥.</span> الخدمة المكافئة في Microsoft Azure لخدمة Amazon S3 (تخزين الكائنات) هي:</p><div class="sol-opts"><div class="sol-opt bad"><span class="so-k">أ)</span><span>Azure Functions</span></div><div class="sol-opt ok"><span class="so-k">ب)</span><span>Blob Storage</span></div><div class="sol-opt bad"><span class="so-k">ج)</span><span>Microsoft Entra ID</span></div><div class="sol-opt bad"><span class="so-k">د)</span><span>AKS</span></div></div><p class="sol-why"><b>التعليل:</b> Amazon S3 ⇄ Azure Blob Storage ⇄ Google Cloud Storage — الثلاثة تخزين كائنات.<br><b>لماذا ليست الخيارات الأخرى:</b> «أ» دوالّ بلا خادم (≈ AWS Lambda). «ج» إدارة الهويّة والصلاحيّات (≈ AWS IAM). «د» Kubernetes مُدار (≈ AWS EKS).</p></div>
+<div class="sol-item"><p class="sol-q"><span class="sq-n">٦.</span> حسب نموذج المسؤوليّة المشتركة، أيّ بندٍ هو مسؤوليّة الزبون <b>دائمًا</b> في كلّ نماذج الخدمة؟</p><div class="sol-opts"><div class="sol-opt bad"><span class="so-k">أ)</span><span>تحديث المشرف الافتراضيّ</span></div><div class="sol-opt bad"><span class="so-k">ب)</span><span>الأمن الفعليّ لمركز البيانات</span></div><div class="sol-opt ok"><span class="so-k">ج)</span><span>تصنيف بياناته وحمايتها</span></div><div class="sol-opt bad"><span class="so-k">د)</span><span>استبدال الأقراص التالفة</span></div></div><p class="sol-why"><b>التعليل:</b> البيانات والهويّات (الحسابات وكلمات المرور والتحقّق المتعدّد) وأجهزة المستخدمين تبقى على الزبون في IaaS وPaaS <i>وSaaS</i>.<br><b>لماذا ليست الخيارات الأخرى:</b> «أ» الطبقة الافتراضيّة للمزوّد في النماذج الثلاثة. «ب» الحرّاس والكاميرات والدخول إلى المبنى على المزوّد. «د» العتاد الفعليّ دائمًا على المزوّد.</p></div>
+<div class="sol-item"><p class="sol-q"><span class="sq-n">٧.</span> «جهازٌ فعليّ واحد يستضيف أجهزةً افتراضيّة لزبائن كثيرين مختلفين.» أيّ خاصيّةٍ هذه؟</p><div class="sol-opts"><div class="sol-opt bad"><span class="so-k">أ)</span><span>الوصول الواسع عبر الشبكة</span></div><div class="sol-opt ok"><span class="so-k">ب)</span><span>تجميع الموارد (تعدّد المستأجرين)</span></div><div class="sol-opt bad"><span class="so-k">ج)</span><span>الخدمة الذاتيّة عند الطلب</span></div><div class="sol-opt bad"><span class="so-k">د)</span><span>الخدمة المَقيسة</span></div></div><p class="sol-why"><b>التعليل:</b> تجميع الموارد يعني أنّ موارد المزوّد تخدم عدّة مستهلكين (نموذج تعدّد المستأجرين) وتُوزَّع ديناميكيًّا.<br><b>لماذا ليست الخيارات الأخرى:</b> «أ» تتعلّق بالوصول إلى الخدمة عبر الشبكة من أنواع أجهزةٍ كثيرة. «ج» تتعلّق بإنشاء الموارد بنفسك دون طلبٍ من مسؤول. «د» تتعلّق بقياس الاستهلاك ومحاسبته.</p></div>
+<div class="sol-item"><p class="sol-q"><span class="sq-n">٨.</span> في اختراق Capital One (٢٠١٩) سُرق نحو ١٠٠ مليون سجلّ زبونٍ من بياناتٍ محفوظة في AWS. السبب الجذريّ كان:</p><div class="sol-opts"><div class="sol-opt bad"><span class="so-k">أ)</span><span>خللٌ في أمن مراكز بيانات AWS</span></div><div class="sol-opt ok"><span class="so-k">ب)</span><span>إعدادٌ خاطئ على موارد يشغّلها المصرف نفسه في AWS</span></div><div class="sol-opt bad"><span class="so-k">ج)</span><span>كارثةٌ طبيعيّة في مركز البيانات</span></div><div class="sol-opt bad"><span class="so-k">د)</span><span>ثغرةٌ في كود خدمة S3</span></div></div><p class="sol-why"><b>التعليل:</b> استغلّ المهاجم جدار حماية تطبيقات ويب مضبوطًا خطأً على خوادم المصرف نفسه وصلاحيّاتٍ أوسع من اللازم. لم تُخترق بنية AWS — إخفاقٌ نموذجيّ في «الأمن <i>داخل</i> السحابة».<br><b>لماذا ليست الخيارات الأخرى:</b> «أ» لم تُخترق أيّ منشأةٍ أو عتادٍ لـ AWS. «ج» لم يكن هناك أيّ حدثٍ فعليّ. «د» خدمة S3 نفسها عملت كما صُمّمت؛ والصلاحيّات كانت من إعداد الزبون.</p></div>
+<div class="sol-item"><p class="sol-q"><span class="sq-n">٩.</span> جامعةٌ تحتفظ بسجلّات الطلبة على خوادمها، وتنقل موقعها العامّ إلى سحابةٍ عامّة، وتربطهما بـ VPN. هذه:</p><div class="sol-opts"><div class="sol-opt bad"><span class="so-k">أ)</span><span>سحابة خاصّة</span></div><div class="sol-opt ok"><span class="so-k">ب)</span><span>سحابة هجينة</span></div><div class="sol-opt bad"><span class="so-k">ج)</span><span>سحابة مجتمعيّة</span></div><div class="sol-opt bad"><span class="so-k">د)</span><span>سحابة عامّة</span></div></div><p class="sol-why"><b>التعليل:</b> نموذجا نشرٍ مختلفان (خاصّ + عامّ) مرتبطان ويُستخدمان معًا = هجينة. ووصلة VPN تصبح سطح هجومٍ مهمًّا.<br><b>لماذا ليست الخيارات الأخرى:</b> «أ» ستُبقي <i>كلّ شيء</i> على بنية الجامعة نفسها. «ج» تحتاج عدّة مؤسّساتٍ تتشارك بنيةً واحدة. «د» ستضع <i>كلّ شيء</i> على البنية المشتركة للمزوّد.</p></div>
+<div class="sol-item"><p class="sol-q"><span class="sq-n">١٠.</span> أُعلنت ثغرةٌ خطيرة في نواة Linux. مَن يجب أن يحدّثها لتطبيقٍ يعمل على <b>Google App Engine</b> (PaaS)؟</p><div class="sol-opts"><div class="sol-opt bad"><span class="so-k">أ)</span><span>الزبون، بالدخول إلى الخادم</span></div><div class="sol-opt ok"><span class="so-k">ب)</span><span>المزوّد (Google)</span></div><div class="sol-opt bad"><span class="so-k">ج)</span><span>لا أحد — لا نظام تشغيل في PaaS</span></div><div class="sol-opt bad"><span class="so-k">د)</span><span>مستخدمو التطبيق</span></div></div><p class="sol-why"><b>التعليل:</b> في PaaS يدير المزوّد نظام التشغيل وبيئة التشغيل، فـ Google تحدّث النواة. ويبقى على الزبون تأمين كوده ومكتباته الخارجيّة.<br><b>لماذا ليست الخيارات الأخرى:</b> «أ» صحيحٌ في IaaS (مثل EC2)، لا في PaaS. «ج» كلّ منصّةٍ تعمل على نظام تشغيل؛ لكنّك لا تديره. «د» المستخدمون لا يصلون إلى المنصّة أصلًا.</p></div>
+<div class="sol-kind"><span>صح أو خطأ</span><span class="sk-line"></span></div>
+<div class="sol-item"><div class="sol-tf-line"><p class="sol-q"><span class="sq-n">١.</span> في SaaS، الزبون مسؤولٌ عن تحديث نظام التشغيل.</p><span class="sol-badge f">خطأ</span></div><p class="sol-why"><b>التعليل:</b> مزوّد SaaS يدير ويحدّث كلّ شيءٍ حتى التطبيق. والزبون يدير البيانات والحسابات والأجهزة.</p></div>
+<div class="sol-item"><div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٢.</span> الانتقال إلى السحابة ينقل <i>كلّ</i> المسؤوليّة الأمنيّة إلى المزوّد.</p><span class="sol-badge f">خطأ</span></div><p class="sol-why"><b>التعليل:</b> المسؤوليّة <b>مشتركة</b>. البيانات والهويّات والإعدادات تبقى على الزبون دائمًا — وهناك تحدث أغلب الاختراقات الحقيقيّة.</p></div>
+<div class="sol-item"><div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٣.</span> السحابة الهجينة تربط بيئةً خاصّة بسحابةٍ عامّة لتعملا معًا.</p><span class="sol-badge t">صح</span></div><p class="sol-why"><b>التعليل:</b> هذا معنى الهجينة عند NIST: بنيتان مختلفتان أو أكثر مرتبطتان معًا.</p></div>
+<div class="sol-item"><div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٤.</span> المرونة السريعة تعني إمكان تكبير السعة وتصغيرها بسرعة، وغالبًا تلقائيًّا.</p><span class="sol-badge t">صح</span></div><p class="sol-why"><b>التعليل:</b> تبدو السعة للمستهلك غالبًا بلا حدود، ويمكن إضافتها أو تحريرها في أيّ وقت.</p></div>
+<div class="sol-item"><div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٥.</span> خادمٌ في غرفة خوادم الجامعة لا تحصل عليه إلّا بطلبٍ مكتوب إلى قسم تقنية المعلومات هو خدمةٌ سحابيّة حسب NIST.</p><span class="sol-badge f">خطأ</span></div><p class="sol-why"><b>التعليل:</b> ينقصه <b>الخدمة الذاتيّة عند الطلب</b> (وعادةً الخدمة المَقيسة)، فهو خادمٌ مستضاف لا سحابة بمعنى NIST.</p></div>
+<div class="sol-item"><div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٦.</span> تصف AWS التقسيم هكذا: المزوّد مسؤولٌ عن أمن السحابة «نفسها»، والزبون عن الأمن «داخلها».</p><span class="sol-badge t">صح</span></div><p class="sol-why"><b>التعليل:</b> هذه صياغة نموذج المسؤوليّة المشتركة عند AWS (security of / in the cloud).</p></div>
+<div class="sol-kind"><span>أسئلة قصيرة — إجابات نموذجيّة</span><span class="sk-line"></span></div>
+<div class="sol-item"><p class="sol-q"><span class="sq-n">١.</span> اكتب تعريف NIST للحوسبة السحابيّة بأسلوبك (٢–٣ أسطر)، واذكر الخصائص الأساسيّة الخمس.</p><p class="sol-why"><b>الإجابة النموذجيّة:</b> الحوسبة السحابيّة تتيح الوصول عند الطلب، عبر الشبكة، إلى مجمّعٍ مشترك من الموارد الحاسوبيّة القابلة للتهيئة، تُحجز وتُحرَّر بسرعة وبأقلّ جهدٍ إداريّ. الخصائص: ① خدمة ذاتيّة عند الطلب ② وصول واسع عبر الشبكة ③ تجميع الموارد ④ مرونة سريعة ⑤ خدمة مَقيسة.</p><p class="sol-why"><b>دليل التصحيح:</b> درجاتٌ على: «عند الطلب»، «عبر الشبكة»، «مجمّع مشترك»، «حجز/تحرير سريع» في التعريف؛ ودرجةٌ لكلّ خاصيّة.</p></div>
+<div class="sol-item"><p class="sol-q"><span class="sq-n">٢.</span> أعطِ مثالًا واحدًا لكلٍّ من IaaS وPaaS وSaaS، واذكر لكلٍّ منها مهمّةً أمنيّة تبقى على الزبون.</p><p class="sol-why"><b>الإجابة النموذجيّة:</b> IaaS — AWS EC2: تحديث نظام التشغيل الضيف وتقييد مجموعة الأمان (مثلًا لا SSH مفتوح لـ 0.0.0.0/0). PaaS — Google App Engine: تأمين كودك وتحديث المكتبات الخارجيّة، وضبط مَن يستطيع النشر. SaaS — Gmail أو Microsoft 365: كلمة مرورٍ قويّة + التحقّق بخطوتين، وضبط مشاركة المستندات.</p><p class="sol-why"><b>دليل التصحيح:</b> يُقبل أيّ مثالٍ صحيح إذا طابقت مهمّة الزبون النموذج: عمل نظام التشغيل في IaaS فقط؛ الكود والمكتبات في PaaS؛ الحسابات والبيانات والمشاركة في الثلاثة.</p></div>
+<div class="sol-item"><p class="sol-q"><span class="sq-n">٣.</span> مستشفى في بغداد يريد حفظ سجلّات المرضى وتشغيل موقعٍ عامّ لحجز المواعيد. اقترح نموذج نشرٍ وعلّل اختيارك من الناحية الأمنيّة.</p><p class="sol-why"><b>الإجابة النموذجيّة:</b> <b>سحابة هجينة.</b> سجلّات المرضى (بياناتٌ صحّيّة شديدة الحساسيّة، متطلّباتٌ قانونيّة، ويُفضَّل بقاؤها في العراق) تبقى في سحابةٍ خاصّة يتحكّم بها المستشفى. وموقع الحجز العامّ يعمل على سحابةٍ عامّة للتوفّر والتوسّع، ولا يحفظ إلّا بياناتٍ قليلة (الاسم، الموعد). التركيز الأمنيّ: وصلةٌ محميّة بين الاثنين (VPN، هويّة قويّة، أقلّ صلاحيّة)، وتشفير البيانات أثناء النقل والتخزين، والسجلّات والمراقبة في الجهتين.</p><p class="sol-why"><b>دليل التصحيح:</b> إجابة «عامّة فقط» تنال درجةً جزئيّة إذا عالجت موقع البيانات والتشفير والصلاحيّات؛ وإجابة «خاصّة فقط» إذا عالجت توفّر الموقع العامّ.</p></div>
+
+        <div class="page-nav"><button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button><button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button></div>
+       </div>
         <div class="footer-note">🔑</div>
       </div>
 
@@ -5448,6 +5736,18 @@
   document.addEventListener('keydown', function(e){ if(e.key === 'Escape') set(false); });
 })();
 </script>
+<div id="langSw" role="group" aria-label="Language / اللغة"><button data-l="en">English</button><button data-l="ar">عربي</button></div>
+<script>
+(function(){
+  var KEY = 'cloudsec:lang', r = document.documentElement, bs = document.querySelectorAll('#langSw button');
+  function set(l){ r.dataset.lang = l; bs.forEach(function(b){ b.classList.toggle('on', b.dataset.l === l); });
+    try{ localStorage.setItem(KEY, l); }catch(e){} }
+  var q = (location.search.match(/[?&]lang=(en|ar)/) || [])[1], saved = null;
+  try{ saved = localStorage.getItem(KEY); }catch(e){}
+  set(q || saved || 'en');
+  bs.forEach(function(b){ b.onclick = function(){ set(b.dataset.l); }; });
+})();
+</script>
 <script>
 // games
 function game(id,items,label){
@@ -5455,8 +5755,8 @@ function game(id,items,label){
   const btns=[...document.querySelectorAll('#'+id+' button[data-a]')];
   function load(){const it=items[i];q.innerHTML=it.q;if(c)c.textContent=it.ctx||'';f.className='fb';nx.style.display='none';btns.forEach(b=>b.disabled=false);}
   btns.forEach(b=>b.onclick=()=>{const it=items[i],good=b.dataset.a===it.a;n++;if(good)ok++;s.textContent=ok+' / '+n;
-    f.className='fb '+(good?'ok':'no');f.innerHTML=(good?'✅ Correct — ':'❌ Answer: <b>'+label(it.a)+'</b> — ')+it.why;btns.forEach(x=>x.disabled=true);
-    nx.style.display='inline-block';nx.textContent=i<items.length-1?'Next ▶':'Start again ↺';});
+    const AR=!!document.getElementById(id).closest('.lang-ar');f.className='fb '+(good?'ok':'no');f.innerHTML=(good?(AR?'✅ صحيح — ':'✅ Correct — '):(AR?'❌ الجواب: <b>':'❌ Answer: <b>')+label(it.a)+'</b> — ')+it.why;btns.forEach(x=>x.disabled=true);
+    nx.style.display='inline-block';nx.textContent=document.getElementById(id).closest('.lang-ar')?(i<items.length-1?'التالي ◀':'من جديد ↺'):(i<items.length-1?'Next ▶':'Start again ↺');});
   nx.onclick=()=>{if(i<items.length-1)i++;else{i=0;ok=0;n=0;s.textContent='0 / 0';}load();};
   load();
 }
@@ -5483,6 +5783,32 @@ game('g2',[
  {q:'Zoom',a:'SaaS',why:'finished application.'},
  {q:'Heroku',a:'PaaS',why:'push your app; the platform handles servers.'},
  {q:'Google Classroom',a:'SaaS',why:'finished application for teachers and students.'}
+],a=>a);
+
+
+game('g3',[
+ {ctx:'IaaS · خادم DigitalOcean',q:'تعطّل قرصٌ صلب في مركز بيانات المزوّد في فرانكفورت.',a:'P',why:'العتاد الفعليّ دائمًا من طبقة المزوّد.'},
+ {ctx:'IaaS · AWS EC2',q:'خادم Ubuntu الذي أنشأته لم يتلقَّ تحديثاتٍ أمنيّة منذ ٨ أشهر.',a:'C',why:'في IaaS نظام التشغيل الضيف مسؤوليّتك أنت.'},
+ {ctx:'IaaS · AWS S3',q:'حاوية تخزين فيها صور هويّات الطلبة مضبوطةٌ على «عامّة» فتظهر في محرّكات البحث.',a:'C',why:'ضبط صلاحيّات الوصول إلى بياناتك مسؤوليّتك دائمًا.'},
+ {ctx:'SaaS · Gmail',q:'مدرّسٌ يستخدم كلمة المرور نفسها في كلّ المواقع؛ تسرّبت من موقعٍ آخر فسُرق بريده.',a:'C',why:'الهويّات وكلمات المرور (وتفعيل التحقّق بخطوتين) تبقى على الزبون حتى في SaaS.'},
+ {ctx:'أيّ نموذج',q:'مقتحمون يدخلون مبنى مركز البيانات ويسرقون خوادم.',a:'P',why:'الأمن الفعليّ (حرّاس، كاميرات، بطاقات دخول) مسؤوليّة المزوّد.'},
+ {ctx:'IaaS · Azure VMs',q:'ثغرةٌ في المشرف الافتراضيّ للمزوّد تسمح لجهاز زبونٍ بقراءة ذاكرة زبونٍ آخر.',a:'P',why:'الطبقة الافتراضيّة يديرها المزوّد.'},
+ {ctx:'SaaS · Google Sheets',q:'مدرّسٌ يشارك جدول الدرجات بخيار «أيّ شخصٍ لديه الرابط» وينشره في مجموعةٍ عامّة.',a:'C',why:'مَن يرى بياناتك هو إعدادك أنت، حتى في SaaS.'},
+ {ctx:'PaaS · Google App Engine',q:'بيئة Python التي تشغّل كودك فيها ثغرةٌ معروفة.',a:'P',why:'في PaaS بيئة التشغيل ونظام التشغيل يديرهما المزوّد ويحدّثهما (أمّا كودك ومكتباتك فعليك).'},
+ {ctx:'IaaS · أيّ مزوّد',q:'المنفذ 22 (SSH) مفتوحٌ لكلّ الإنترنت بكلمة مرور، والمهاجمون يجرّبون كلمات المرور.',a:'C',why:'قواعد جدار الحماية على جهازك من إعداداتك أنت.'},
+ {ctx:'أيّ نموذج',q:'انقطاع الكهرباء يوقف منطقة توفّرٍ كاملة.',a:'P',why:'الكهرباء والتبريد على المزوّد؛ أمّا تصميم تطبيقك ليصمد عند سقوط منطقة فعليك.'}
+],a=>a==='P'?'المزوّد':'الزبون');
+game('g4',[
+ {q:'Gmail',a:'SaaS',why:'تطبيقٌ جاهز تستخدمه فقط.'},
+ {q:'AWS EC2',a:'IaaS',why:'أجهزة افتراضيّة؛ أنت تدير نظام التشغيل.'},
+ {q:'Google App Engine',a:'PaaS',why:'ترفع الكود؛ وGoogle تشغّل المنصّة.'},
+ {q:'DigitalOcean Droplet',a:'IaaS',why:'خادمٌ افتراضيّ تديره بنفسك.'},
+ {q:'Microsoft 365 (Word، Teams)',a:'SaaS',why:'تطبيقاتٌ جاهزة في المتصفّح.'},
+ {q:'Google Apps Script (كودٌ يعمل على Google Sheets)',a:'PaaS',why:'تكتب الكود؛ وGoogle توفّر بيئة التشغيل وتشغّلها.'},
+ {q:'Azure Virtual Machines',a:'IaaS',why:'أجهزة افتراضيّة مستأجرة.'},
+ {q:'Zoom',a:'SaaS',why:'تطبيقٌ جاهز.'},
+ {q:'Heroku',a:'PaaS',why:'ترفع تطبيقك؛ والمنصّة تتولّى الخوادم.'},
+ {q:'Google Classroom',a:'SaaS',why:'تطبيقٌ جاهز للمدرّسين والطلبة.'}
 ],a=>a);
 
 </script>
