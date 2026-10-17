@@ -2869,13 +2869,23 @@
 .cs .quote{font-style:italic}
 .cs .oops,.cs .takeaway,.cs .real{display:block}
 .cs .lang-ar{display:none;direction:rtl;text-align:right;font-family:var(--reader-font,'Noto Naskh Arabic'),'Segoe UI',serif}
+.cs .lang-ku{display:none;direction:rtl;text-align:right;font-family:var(--reader-font,'Noto Naskh Arabic'),'Segoe UI',serif}
 html[data-lang="ar"] .cs .lang-ar{display:block} html[data-lang="ar"] .cs .lang-en{display:none}
+html[data-lang="ku"] .cs .lang-ku{display:block} html[data-lang="ku"] .cs .lang-en{display:none}
+/* the handwriting fonts lack Kurdish letters (ێ ڕ ۆ ڵ ە) — use a font that has them */
+.cs .lang-ku .page-title,.cs .lang-ku .chip,.cs .lang-ku .cn-title,.cs .lang-ku .sw-t,.cs .lang-ku .sol-kind span,.cs .lang-ku .section-heading span{font-family:'Noto Naskh Arabic','Segoe UI',Tahoma,serif!important;letter-spacing:0}
 .cs .lang-ar .page-title{text-align:right}
+.cs .lang-ku .page-title{text-align:right}
 .cs .lang-ar .quote{border-left:0;border-right:5px solid var(--blue);border-radius:12px 0 0 12px;font-style:normal}
+.cs .lang-ku .quote{border-left:0;border-right:5px solid var(--blue);border-radius:12px 0 0 12px;font-style:normal}
 .cs .lang-ar ul,.cs .lang-ar ol{padding-right:22px;padding-left:0}
+.cs .lang-ku ul,.cs .lang-ku ol{padding-right:22px;padding-left:0}
 .cs .lang-ar .srm td.l{text-align:right}
+.cs .lang-ku .srm td.l{text-align:right}
 .cs .lang-ar .score{float:left}
+.cs .lang-ku .score{float:left}
 .cs .lang-ar .cs-gloss{padding-right:20px;padding-left:0}
+.cs .lang-ku .cs-gloss{padding-right:20px;padding-left:0}
 #langSw{position:fixed;bottom:14px;right:14px;z-index:60;display:flex;border:2px solid #26303b;border-radius:14px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.25)}
 #langSw button{font:700 15px 'Segoe UI',Tahoma,sans-serif;border:0;padding:6px 14px;cursor:pointer;background:#fffdf7;color:#26303b}
 #langSw button.on{background:#e59a2f;color:#1b1b1b}
@@ -3463,6 +3473,250 @@ html[data-lang="ar"] .cs .lang-ar{display:block} html[data-lang="ar"] .cs .lang-
         <div class="mini-note">نهاية المحاضرة الأولى — إعداد: أ.م.د أمير هادي ★</div>
         <div class="page-nav"><button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button><button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button></div>
        </div>
+       <div class="lang-ku" dir="rtl">
+        <span class="chip chip-ch1">هەفتەی یەکەم</span>
+        <h2 class="page-title">پێشەکییەک بۆ هەژمارکردنی هەوری و بەرپرسیارێتی هاوبەش</h2>
+        <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
+        <p class="lead-paragraph">پێش ئەوەی <b>هەور بپارێزین</b>، دەبێت ڕێک بکەوین کە هەور <b>چییە</b>، کێ هەر بەشێکی بەڕێوە دەبات، و بەم شێوەیە <b>کاتێک هەڵەیەک ڕوودەدات کێ بەرپرسیارە</b>.</p>
+        
+
+
+<div class="box b"><b class="t">🎯 لە کۆتایی ئەم وانەیەدا دەتوانیت:</b>
+<ol style="margin:4px 0 0">
+<li>پێناسەی NIST و پێنج تایبەتمەندییە سەرەکییەکەی بڵێیت.</li>
+<li>هەر خزمەتگوزارییەک وەک IaaS یان PaaS یان SaaS پۆلێن بکەیت — و هۆکارەکەی ڕوون بکەیتەوە.</li>
+<li>هەوری گشتی، تایبەت، کۆمەڵگەیی و تێکەڵ بەراورد بکەیت.</li>
+<li>دابینکەرە گەورەکان ناو بهێنیت و خزمەتگوزارییە هاوتاکانیان بەیەکەوە ببەستیت.</li>
+<li>مۆدێلی بەرپرسیارێتی هاوبەش بکێشیت و بەکاری بهێنیت بۆ دیاریکردنی بەرپرسیار لە ڕووداوێکی ڕاستەقینەدا.</li>
+</ol></div>
+
+<div class="chapter-num" style="color:var(--blue);"><span class="cn-num">١</span><span class="cn-title">پێناسەی NIST</span></div>
+<p>بەکارهاتووترین پێناسە لە پەیمانگای نیشتمانیی ستاندارد و تەکنەلۆجیای ئەمریکاوە هاتووە، لە بەڵگەنامەی <b>NIST SP 800-145</b> (٢٠١١):</p>
+<div class="quote">«هەژمارکردنی هەوری مۆدێلێکە کە ڕێگە دەدات لە هەموو شوێنێک، بە ئاسانی و بە داواکاری، لە ڕێگەی تۆڕەوە دەستت بگات بە کۆگایەکی هاوبەشی سەرچاوە هەژمارکارییە ڕێکخراوەکان (وەک تۆڕ، سێرڤەر، کۆگا، ئەپڵیکەیشن و خزمەتگوزاری)، کە دەتوانرێت بە خێرایی دابین بکرێن و ئازاد بکرێنەوە، بە کەمترین هەوڵی بەڕێوەبردن یان پەیوەندی لەگەڵ دابینکەری خزمەتگوزاری.» <span style="font-size:.85em">(وەرگێڕان)</span></div>
+<p>دواتر NIST هەور بە یاسای <b>٥ – ٣ – ٤</b> وەسف دەکات:</p>
+
+<svg viewBox="0 0 900 330" role="img" aria-label="NIST ٥-٣-٤" style="direction:ltr">
+  <rect x="330" y="10" width="240" height="56" rx="14" fill="none" stroke="var(--ink)" stroke-width="2.5"/>
+  <text x="450" y="45" text-anchor="middle" font-size="22" font-weight="700" fill="var(--ink)">هەور بەپێی NIST</text>
+  <path d="M450 66 L750 112 M450 66 L450 112 M450 66 L150 112" stroke="var(--muted)" stroke-width="2" fill="none" stroke-dasharray="6 5"/>
+  <rect x="620" y="112" width="260" height="206" rx="14" fill="none" stroke="var(--blue)" stroke-width="2.5"/>
+  <text x="750" y="142" text-anchor="middle" font-size="18" font-weight="700" fill="var(--blue)">٥ تایبەتمەندیی سەرەکی</text>
+  <g font-size="15" fill="var(--ink)" text-anchor="end"><text x="860" y="176">① خزمەتگوزاریی خۆیی بە داواکاری</text><text x="860" y="204">② دەستگەیشتنی فراوان بە تۆڕ</text><text x="860" y="232">③ کۆکردنەوەی سەرچاوەکان</text><text x="860" y="260">④ نەرمیی خێرا</text><text x="860" y="288">⑤ خزمەتگوزاریی پێوراو</text></g>
+  <rect x="320" y="112" width="260" height="206" rx="14" fill="none" stroke="var(--green)" stroke-width="2.5"/>
+  <text x="450" y="142" text-anchor="middle" font-size="18" font-weight="700" fill="var(--green)">٣ مۆدێلی خزمەتگوزاری</text>
+  <g font-size="16" fill="var(--ink)" text-anchor="middle"><text x="450" y="190">IaaS — ژێرخان</text><text x="450" y="230">PaaS — پلاتفۆرم</text><text x="450" y="270">SaaS — نەرمەکاڵا</text></g>
+  <rect x="20" y="112" width="260" height="206" rx="14" fill="none" stroke="var(--orange)" stroke-width="2.5"/>
+  <text x="150" y="142" text-anchor="middle" font-size="18" font-weight="700" fill="var(--orange)">٤ مۆدێلی بڵاوکردنەوە</text>
+  <g font-size="16" fill="var(--ink)" text-anchor="middle"><text x="150" y="182">گشتی</text><text x="150" y="216">تایبەت</text><text x="150" y="250">کۆمەڵگەیی</text><text x="150" y="284">تێکەڵ</text></g>
+</svg>
+
+<div class="chapter-num" style="color:var(--blue);"><span class="cn-num">٢</span><span class="cn-title">پێنج تایبەتمەندییە سەرەکییەکە</span></div>
+<p>ئەگەر یەکێک لەمانە نەبێت، NIST ئەو خزمەتگوزارییە بە «هەور» ناو نابات — تەنها سێرڤەرێکی دوورە.</p>
+<div class="grid g5">
+  <div class="box b"><div class="ic">🖱️</div><b class="t">خزمەتگوزاریی خۆیی بە داواکاری</b><small>خۆت سێرڤەر دروست دەکەیت لە پانێڵی وێب یان API — بێ نامە بۆ بەڕێوەبەر و بێ چاوەڕوانی.</small></div>
+  <div class="box b"><div class="ic">🌐</div><b class="t">دەستگەیشتنی فراوان بە تۆڕ</b><small>لە ڕێگەی تۆڕەوە بە ئامرازی ئاسایی دەستت پێی دەگات: وێبگەڕ، مۆبایل، لاپتۆپ، هێڵی فەرمان.</small></div>
+  <div class="box b"><div class="ic">🧩</div><b class="t">کۆکردنەوەی سەرچاوەکان</b><small>یەک ئامێری فیزیکی خزمەتی زۆر کڕیار دەکات (<b>فرە-بەکرێگر</b>)، و تۆ ڕێک نازانیت و کۆنتڕۆڵی ڕەقەکاڵاکە ناکەیت.</small></div>
+  <div class="box b"><div class="ic">📈</div><b class="t">نەرمیی خێرا</b><small>ڕۆژی تاقیکردنەوە سەرچاوە زیاد دەکەیت و دواتر کەمی دەکەیتەوە — توانا وەک «بێسنوور» دەردەکەوێت.</small></div>
+  <div class="box b"><div class="ic">🧾</div><b class="t">خزمەتگوزاریی پێوراو</b><small>بەکارهێنان دەپێورێت و پارەی لێ وەردەگیرێت: کاتژمێری پرۆسێسەر، گیگابایتی هەڵگیراو، داتای گواستراوە.</small></div>
+</div>
+
+<div class="real"><b>🔎 نموونەیەکی ڕاستەقینە لە مامۆستای وانەکە:</b> پلاتفۆرمی هەستەوەرەکان لەسەر سێرڤەرێکی DigitalOcean کار دەکات. لە یەک خولەکدا لە پانێڵی وێبەوە دروستم کرد (<i>خزمەتگوزاریی خۆیی</i>)، لە هەر مۆبایلێکەوە دەکرێتەوە (<i>دەستگەیشتنی فراوان</i>)، ئامێرێکی فیزیکی لە فرانکفۆرت لەگەڵ کڕیارانی تر بەش دەکات (<i>کۆکردنەوە</i>)، بە یەک کرتە گەورە دەکرێت (<i>نەرمی</i>)، و پسوولەکە ڕێک کاتژمێرەکان پیشان دەدات (<i>پێوراو</i>). بەڵام سێرڤەرێک لە ژووری سێرڤەری زانکۆ کە تەنها بە داواکاری لە بەشی تەکنەلۆجیای زانیاری دەستت دەکەوێت، <b>خزمەتگوزاریی خۆیی</b> نییە.</div>
+
+<div class="oops"><b>⚠️ لایەنی ئاسایش — بۆچی ئەمە گرنگە بۆ ئێمە:</b> هەر تایبەتمەندییەک مەترسییەک دەکاتەوە. خزمەتگوزاریی خۆیی ← هەرکەس وشەی نهێنی بدزێت دەتوانێت سەرچاوە دروست بکات یان بیسڕێتەوە. دەستگەیشتنی فراوان ← پانێڵی بەڕێوەبردن لەسەر ئینتەرنێتە. کۆکردنەوە ← هەڵەیەک لە hypervisor دەکرێت داتا لە نێوان کڕیاراندا بگوازێتەوە. نەرمی ← هێرشبەر دەتوانێت پسوولەکەت بەرز بکاتەوە (کانکردنی دراو). پێوانە ← داتای پسوولە ئاشکرا دەکات چی کار پێ دەکەیت.</div>
+
+<div class="chapter-num" style="color:var(--green);"><span class="cn-num">٣</span><span class="cn-title">مۆدێلەکانی خزمەتگوزاری — ڕێک چی بەکرێ دەگریت؟</span></div>
+<p>کۆمپیوتەر وەک <b>چەند چینێک لەسەر یەک</b> وێنا بکە. مۆدێلی خزمەتگوزاری دیاری دەکات <b>دابینکەر لە کوێ دەوەستێت و تۆ لە کوێ دەست پێ دەکەیت</b>.</p>
+
+<div class="grid g3">
+  <div class="box o"><div class="ic">🏗️</div><b class="t">IaaS — ژێرخان وەک خزمەتگوزاری</b><small>ئامێری مەجازی، دیسک و تۆڕ بەکرێ دەگریت. <b>خۆت</b> سیستەمی کارپێکردن دادەمەزرێنیت و نوێی دەکەیتەوە و هەموو ئەوەی لەسەرییەتی.<br>نموونە: <b>AWS EC2</b>، Azure Virtual Machines، Google Compute Engine، DigitalOcean Droplets.</small></div>
+  <div class="box g"><div class="ic">🛠️</div><b class="t">PaaS — پلاتفۆرم وەک خزمەتگوزاری</b><small>تەنها <b>کۆد</b> بار دەکەیت؛ دابینکەر سیستەمی کارپێکردن، ژینگەی کارپێکردن و فراوانبوون بەڕێوە دەبات.<br>نموونە: Google App Engine، Azure App Service، AWS Elastic Beanstalk، Heroku، Google Apps Script.</small></div>
+  <div class="box b"><div class="ic">📦</div><b class="t">SaaS — نەرمەکاڵا وەک خزمەتگوزاری</b><small>تەنها ئەپڵیکەیشنێکی ئامادە لە وێبگەڕدا <b>بەکار دەهێنیت</b>.<br>نموونە: Gmail، Microsoft 365، Google Classroom، Zoom، Salesforce.</small></div>
+</div>
+
+<h3>بینینی چینەکان</h3>
+<div class="legend"><span><i style="background:var(--cust)"></i>خۆت بەڕێوەی دەبەیت</span><span><i style="background:var(--prov)"></i>دابینکەر بەڕێوەی دەبات</span></div>
+<div class="tw"><table class="srm">
+<thead><tr><th style="text-align:right">چین</th><th>لەناو دامەزراوە</th><th>IaaS</th><th>PaaS</th><th>SaaS</th></tr></thead>
+<tbody>
+<tr><td class="l">ئەپڵیکەیشنەکان</td><td class="C">تۆ</td><td class="C">تۆ</td><td class="C">تۆ</td><td class="P">دابینکەر</td></tr>
+<tr><td class="l">داتا</td><td class="C">تۆ</td><td class="C">تۆ</td><td class="C">تۆ</td><td class="C">تۆ</td></tr>
+<tr><td class="l">ژینگەی کارپێکردن / نێوەندکار</td><td class="C">تۆ</td><td class="C">تۆ</td><td class="P">دابینکەر</td><td class="P">دابینکەر</td></tr>
+<tr><td class="l">سیستەمی کارپێکردن</td><td class="C">تۆ</td><td class="C">تۆ</td><td class="P">دابینکەر</td><td class="P">دابینکەر</td></tr>
+<tr><td class="l">چینی مەجازی</td><td class="C">تۆ</td><td class="P">دابینکەر</td><td class="P">دابینکەر</td><td class="P">دابینکەر</td></tr>
+<tr><td class="l">سێرڤەر و کۆگا</td><td class="C">تۆ</td><td class="P">دابینکەر</td><td class="P">دابینکەر</td><td class="P">دابینکەر</td></tr>
+<tr><td class="l">تۆڕ</td><td class="C">تۆ</td><td class="P">دابینکەر</td><td class="P">دابینکەر</td><td class="P">دابینکەر</td></tr>
+<tr><td class="l">سەنتەری داتای فیزیکی</td><td class="C">تۆ</td><td class="P">دابینکەر</td><td class="P">دابینکەر</td><td class="P">دابینکەر</td></tr>
+</tbody></table></div>
+<p style="font-size:.92em;color:var(--muted)">سەرنج بدە هێڵی <b>داتا</b>: لە هەموو مۆدێلەکاندا لەسەر تۆیە. لە مۆدێلی بەرپرسیارێتی هاوبەشدا دەگەڕێینەوە سەری.</p>
+
+<h3>نموونەی پیتزا 🍕</h3>
+<div class="tw"><table class="dt pizza">
+<thead><tr><th></th><th>لە ماڵەوە دروستی دەکەیت</th><th>ئامادە دەیکڕیت و دەیبرژێنیت</th><th>گەیاندن</th><th>لە چێشتخانە دەیخۆیت</th></tr></thead>
+<tbody>
+<tr><td>زاراوەی هەوری</td><td>لەناو دامەزراوە</td><td>IaaS</td><td>PaaS</td><td>SaaS</td></tr>
+<tr><td>ئەوەی تۆ ئامادەی دەکەیت</td><td>چێشتخانە، فڕن، گاز، هەویر، پێکهاتە و مێز</td><td>فڕن، گاز و مێز</td><td>مێز و خواردنەوە</td><td>هیچ — تەنها بیخۆ</td></tr>
+<tr><td>کۆنتڕۆڵ بەرامبەر هەوڵ</td><td>زۆرترین کۆنتڕۆڵ و زۆرترین هەوڵ</td><td colspan="2">↔</td><td>کەمترین کۆنتڕۆڵ و کەمترین هەوڵ</td></tr>
+</tbody></table></div>
+
+<div class="takeaway"><b>💡 یاسا:</b> هەتا بەرزتر بڕۆیت (IaaS ← PaaS ← SaaS) <b>کەمتر بەڕێوە دەبەیت</b> — بەڵام <b>کۆنتڕۆڵیشت کەمتر دەبێت</b> و زیاتر پێویستت بە <b>متمانە بە دابینکەر</b> دەبێت. کاری ئاسایش نامێنێت؛ دەگوازرێتەوە بۆ ڕێکخستنەکان، ناسنامەکان و داتا.</div>
+
+<div class="real"><b>🔎 ئەپڵیکەیشنەکانی مامۆستای وانەکە پۆلێن بکە:</b> پلاتفۆرمی هەستەوەرەکان لەسەر سێرڤەری DigitalOcean = <b>IaaS</b> (من Ubuntu و nginx و دیواری ئاگر نوێ دەکەمەوە). پلاتفۆرمی وانەی زیرەکیی دەستکرد لەسەر Google Sheets و Apps Script = <b>PaaS</b> (کۆد دەنووسم و Google کاری پێ دەکات). ئیمەیڵی زانکۆ لە Gmail = <b>SaaS</b> (تەنها وشەی نهێنی، پشتڕاستکردنەوەی دوو هەنگاوی و لەگەڵ کێ هاوبەشی دەکەم بەڕێوە دەبەم).</div>
+
+<h3>ناوی تری «وەک خزمەتگوزاری» کە دەیانبینیت</h3>
+<p><b>FaaS / بێ سێرڤەر</b> (AWS Lambda، Azure Functions، Google Cloud Run functions) — تەنها یەک فەنکشن بار دەکەیت و بۆ هەر بانگکردنێک پارە دەدەیت؛ زۆرجار لەگەڵ PaaS دادەنرێت. <b>CaaS</b> — کۆنتەینەر وەک خزمەتگوزاری (خزمەتگوزارییەکانی Kubernetes وەک EKS و AKS و GKE). <b>DBaaS</b> — بنکەدراوەی بەڕێوەبراو (Amazon RDS، Azure SQL Database، Cloud SQL). <b>SECaaS</b> — ئاسایش وەک خزمەتگوزاری (دیواری ئاگری هەوری، پاڵاوتنی ئیمەیڵ).</p>
+
+<div class="chapter-num" style="color:var(--orange);"><span class="cn-num">٤</span><span class="cn-title">مۆدێلەکانی بڵاوکردنەوە — لەگەڵ کێ هەورەکە بەش دەکەیت؟</span></div>
+<p>مۆدێلی خزمەتگوزاری دەڵێت <b>چی</b> بەکرێ دەگریت؛ مۆدێلی بڵاوکردنەوە دەڵێت <b>کێی تر هەمان ژێرخان بەکار دەهێنێت</b> و <b>کێ خاوەنییەتی</b>.</p>
+
+<div class="grid g4">
+  <div class="box b"><div class="ic">☁️</div><b class="t">گشتی (Public)</b><small>هەر کڕیارێک دەتوانێت تۆمار بکات. نموونە: AWS، Azure، Google Cloud.</small></div>
+  <div class="box g"><div class="ic">🔒</div><b class="t">تایبەت (Private)</b><small>تەنها بۆ یەک دامەزراوە — سەنتەری داتای خۆی یان میوانداریی تایبەت.</small></div>
+  <div class="box v"><div class="ic">🏫🏫</div><b class="t">کۆمەڵگەیی (Community)</b><small>کۆمەڵێک دامەزراوە کە پێداویستیی هاوبەشیان هەیە — زانکۆ، وەزارەت، بانک.</small></div>
+  <div class="box o"><div class="ic">🔗</div><b class="t">تێکەڵ (Hybrid)</b><small>تایبەت + گشتی پێکەوە بەستراون: داتای هەستیار لە ناوەوە، بارکردنی زیادە لە دەرەوە.</small></div>
+</div>
+
+<div class="tw"><table class="dt">
+<thead><tr><th>مۆدێل</th><th>کێ بەکاری دەهێنێت</th><th>خاڵە بەهێزەکان</th><th>نیگەرانییە ئاسایشییەکان</th></tr></thead>
+<tbody>
+<tr><td>گشتی</td><td>هەر کڕیارێک (فرە-بەکرێگر)</td><td>دەستپێکردنی هەرزان، توانای زۆر، ناوچە لە سەرانسەری جیهان، ئامرازی ئاسایشی پێگەیشتوو</td><td>ڕەقەکاڵای هاوبەش، داتا لە دەرەوەی وڵاتەکەت، ڕێکخستنی هەڵە لەسەر ئینتەرنێت ئاشکرا دەبێت</td></tr>
+<tr><td>تایبەت</td><td>یەک دامەزراوە</td><td>کۆنتڕۆڵی تەواو، داتا لە شوێنی خۆی دەمێنێتەوە، سیاسەتی تایبەت</td><td><i>هەموو</i> کاری ئاسایش لەسەر تۆیە؛ گرانە؛ زۆرجار نوێکردنەوە و چاودێری لاوازە</td></tr>
+<tr><td>کۆمەڵگەیی</td><td>چەند دامەزراوەیەک بە پێداویستیی هاوبەش</td><td>تێچووی هاوبەش، یاسای پابەندبوونی یەکگرتوو</td><td>متمانە لە نێوان ئەندامان؛ کێ حوکم دەکات؛ ئەندامێکی لاواز کار لە هەمووان دەکات</td></tr>
+<tr><td>تێکەڵ</td><td>تێکەڵەیەک لەوانەی سەرەوە</td><td>هەستیار بە تایبەتی دەهێڵێتەوە و گشتی بۆ فراوانبوون بەکار دەهێنێت</td><td><b>خاڵی بەستنەوە</b> (VPN، یەکخستنی ناسنامە) دەبێتە ئامانج؛ دوو کۆمەڵە سیاسەت دەبێت یەکگرتوو بمێننەوە</td></tr>
+</tbody></table></div>
+
+<div class="real"><b>🔎 نموونەیەکی عێراقی:</b> ژووری سێرڤەری زانکۆ کە تەنها لە ڕێگەی VPNی زانکۆوە دەستت پێی دەگات، وەک <b>هەورێکی تایبەت</b> ڕەفتار دەکات (ئەگەر خزمەتگوزاریی خۆیی دابین بکات). هەمان مامۆستا سێرڤەرێک لە فرانکفۆرت لە DigitalOcean بەکرێ دەگرێت — <b>هەوری گشتی</b>. کاتێک ئەپڵیکەیشنێک تۆماری خوێندکاران لەسەر سێرڤەری زانکۆ دەهێڵێتەوە و بارکردنی ناهەستیار دەنێرێت بۆ سێرڤەری گشتی، ئەوە ڕێکخستنێکی <b>تێکەڵ</b>ی بچووکە. سەنتەرێکی داتای هاوبەش کە وەزارەتی خوێندنی باڵا بۆ هەموو زانکۆکان بەڕێوەی ببات، <b>هەورێکی کۆمەڵگەیی</b> دەبێت.</div>
+
+<div class="oops"><b>⚠️ سەروەریی داتا:</b> لە هەوری گشتیدا داتاکەت بە شێوەی فیزیکی لە <b>ناوچەیەکی جوگرافی</b>دا دەژی (وەک فرانکفۆرت، بەحرەین یان ئیمارات)، و یاساکانی ئەو وڵاتە بەسەریدا جێبەجێ دەبن. بۆ داتای حکومی یان تەندروستی، <b>پێش</b> بارکردن شوێنی ناوچەکە بپشکنە.</div>
+
+<div class="chapter-num" style="color:var(--purple);"><span class="cn-num">٥</span><span class="cn-title">دابینکەرە گەورەکانی هەور</span></div>
+<p>سێ کۆمپانیای زەبەلاح بازاڕەکەیان لە دەستدایە: <b>Amazon Web Services (AWS)</b> کە گەورەترینە، پاشان <b>Microsoft Azure</b>، پاشان <b>Google Cloud</b>؛ پێکەوە نزیکەی دوو لەسەر سێی بازاڕی جیهانییان هەیە. یاریزانی گرنگی تریش هەن: <b>Alibaba Cloud</b>، <b>Oracle Cloud</b>، <b>IBM Cloud</b>، و دابینکەری بچووکتری گونجاو بۆ گەشەپێدەران وەک <b>DigitalOcean</b>، Linode/Akamai و Hetzner.</p>
+
+<div class="grid g4">
+  <div class="box o"><b class="t">☁️ AWS</b><small>لە ٢٠٠٦ دەستی پێکرد (S3 و EC2). زۆرترین ژمارەی خزمەتگوزاری. ناوچە لە ڕۆژهەڵاتی ناوەڕاست: بەحرەین، ئیمارات.</small></div>
+  <div class="box b"><b class="t">☁️ Microsoft Azure</b><small>بەهێزە لای ئەو دامەزراوانەی پێشتر Windows و Active Directory و Microsoft 365 بەکار دەهێنن. ناوچە لە ئیمارات و قەتەر.</small></div>
+  <div class="box g"><b class="t">☁️ Google Cloud</b><small>بەهێزە لە شیکاریی داتا، زیرەکیی دەستکرد و Kubernetes (کە Google دروستی کرد). ناوچە لە دۆحە و دەمام.</small></div>
+  <div class="box v"><b class="t">☁️ ئەوانی تر</b><small>Alibaba (ئاسیا)، Oracle (بنکەدراوە)، IBM (دامەزراوە و تێکەڵ)، DigitalOcean (سێرڤەری سادە و هەرزان).</small></div>
+</div>
+
+<h3>هەمان بیرۆکە بە ناوی جیاواز</h3>
+<div class="tw"><table class="dt" dir="ltr" style="text-align:left">
+<thead><tr><th>خزمەتگوزاری</th><th>AWS</th><th>Azure</th><th>Google Cloud</th></tr></thead>
+<tbody>
+<tr><td>ئامێری مەجازی (IaaS)</td><td>EC2</td><td>Virtual Machines</td><td>Compute Engine</td></tr>
+<tr><td>کۆگای ئۆبجێکت</td><td>S3</td><td>Blob Storage</td><td>Cloud Storage</td></tr>
+<tr><td>ناسنامە و دەسەڵات</td><td>IAM</td><td>Microsoft Entra ID (+ Azure RBAC)</td><td>Cloud IAM</td></tr>
+<tr><td>بنکەدراوەی SQLی بەڕێوەبراو</td><td>RDS</td><td>Azure SQL Database</td><td>Cloud SQL</td></tr>
+<tr><td>فەنکشنی بێ سێرڤەر</td><td>Lambda</td><td>Azure Functions</td><td>Cloud Run functions</td></tr>
+<tr><td>Kubernetes</td><td>EKS</td><td>AKS</td><td>GKE</td></tr>
+<tr><td>بەڕێوەبردنی کلیل</td><td>KMS</td><td>Key Vault</td><td>Cloud KMS</td></tr>
+<tr><td>تۆماری وردبینی</td><td>CloudTrail</td><td>Activity Log</td><td>Cloud Audit Logs</td></tr>
+</tbody></table></div>
+
+<div class="takeaway"><b>💡 بۆ ئەم وانەیە:</b> <b>چەمکەکە</b> یەک جار فێر بە (ناسنامە، کۆگا، تۆمار، کلیل، تۆڕ)، پاشان لەسەر هەر دابینکەرێک جێبەجێی بکە. بنەماکانی ئاسایش یەکن؛ تەنها ناو و دوگمەکان دەگۆڕێن.</div>
+
+<h3>چۆن هەڵبژێریت (لە ڕووی ئاسایشەوە)</h3>
+<ul>
+<li><b>ناوچە / شوێنی داتا</b> — داتاکە بە شێوەی فیزیکی لە کوێ دەژی؟</li>
+<li><b>بڕوانامەکان</b> — ISO/IEC 27001، SOC 2، CSA STAR: بەڵگەی سەربەخۆ کە دابینکەر بەشی خۆی دەپارێزێت.</li>
+<li><b>تایبەتمەندییەکانی ناسنامە</b> — پشتڕاستکردنەوەی فرە-هۆکار، ڕۆڵی ورد، چوونەژوورەوەی یەکگرتوو.</li>
+<li><b>تۆمار و چاودێری</b> — دەتوانیت ببینیت کێ چی کرد و کەی؟</li>
+<li><b>شفرەکردن و کلیل</b> — لە کاتی هەڵگرتن و گواستنەوەدا، و کێ کلیلەکان هەڵدەگرێت.</li>
+<li><b>پلانی دەرچوون</b> — دەتوانیت داتاکەت بگوازیتەوە (بۆ خۆپاراستن لە بەستراوەیی بە دابینکەرێکەوە)؟</li>
+</ul>
+
+<div class="chapter-num" style="color:var(--red);"><span class="cn-num">٦</span><span class="cn-title">مۆدێلی بەرپرسیارێتی هاوبەش</span></div>
+<p>لە هەوردا، ئاسایش <b>هاوبەشییە</b>. دابینکەر هەندێک چین دەپارێزێت، و کڕیار ئەوانی تر — و هێڵی جیاکەرەوە لەگەڵ مۆدێلی خزمەتگوزاری دەجووڵێت.</p>
+<div class="quote" style="font-style:normal">AWS بەم شێوەیە کورتی دەکاتەوە: دابینکەر بەرپرسیارە لە ئاسایشی <b>خودی</b> هەور (security <b>of</b> the cloud)، و کڕیار بەرپرسیارە لە ئاسایش <b>لەناو</b> هەوردا (security <b>in</b> the cloud).</div>
+
+<div class="legend"><span><i style="background:var(--prov)"></i>دابینکەر</span><span><i style="background:var(--cust)"></i>کڕیار</span><span><i style="background:var(--both)"></i>هاوبەش</span></div>
+<div class="tw"><table class="srm">
+<thead><tr><th style="text-align:right">بەرپرسیارێتی</th><th>لەناو دامەزراوە</th><th>IaaS</th><th>PaaS</th><th>SaaS</th></tr></thead>
+<tbody>
+<tr><td class="l">پۆلێنکردن و پاراستنی داتا</td><td class="C">ک</td><td class="C">ک</td><td class="C">ک</td><td class="C">ک</td></tr>
+<tr><td class="l">هەژمار، ناسنامە، وشەی نهێنی و MFA</td><td class="C">ک</td><td class="C">ک</td><td class="C">ک</td><td class="C">ک</td></tr>
+<tr><td class="l">ئامێرەکانی بەکارهێنەران</td><td class="C">ک</td><td class="C">ک</td><td class="C">ک</td><td class="C">ک</td></tr>
+<tr><td class="l">ڕێکخستنی دەسەڵات (کێ چی دەبینێت)</td><td class="C">ک</td><td class="C">ک</td><td class="C">ک</td><td class="S">هاوبەش</td></tr>
+<tr><td class="l">ئاسایشی ئەپڵیکەیشن</td><td class="C">ک</td><td class="C">ک</td><td class="S">هاوبەش</td><td class="P">د</td></tr>
+<tr><td class="l">کۆنتڕۆڵی تۆڕ (یاسای دیواری ئاگر)</td><td class="C">ک</td><td class="C">ک</td><td class="S">هاوبەش</td><td class="P">د</td></tr>
+<tr><td class="l">نوێکردنەوەی سیستەمی کارپێکردن</td><td class="C">ک</td><td class="C">ک</td><td class="P">د</td><td class="P">د</td></tr>
+<tr><td class="l">چینی مەجازی / hypervisor</td><td class="C">ک</td><td class="P">د</td><td class="P">د</td><td class="P">د</td></tr>
+<tr><td class="l">ئامێری فیزیکی و تۆڕ</td><td class="C">ک</td><td class="P">د</td><td class="P">د</td><td class="P">د</td></tr>
+<tr><td class="l">سەنتەری داتا (پاسەوان، کارەبا، ئاگر)</td><td class="C">ک</td><td class="P">د</td><td class="P">د</td><td class="P">د</td></tr>
+</tbody></table></div>
+<p style="font-size:.9em;color:var(--muted)">ک = کڕیار · د = دابینکەر</p>
+
+<div class="takeaway"><b>💡 ئەو سێ هێڵەی هەرگیز ناجووڵێن:</b> <b>داتاکەت</b>، <b>ناسنامەکانت</b> و <b>ئامێرەکانت</b> هەمیشە بەرپرسیارێتیی کڕیارن — تەنانەت لە SaaSیشدا. شیکارەوان (Gartner) ماوەیەکی زۆرە ئاگاداری دەدەن کە زۆربەی هەرە زۆری شکستەکانی ئاسایشی هەور هۆکارەکەی <b>کڕیارە</b>، بەتایبەتی ڕێکخستنی هەڵە و لاوازی لە کۆنتڕۆڵی ناسنامە.</div>
+
+<h3>ڕووداوی ڕاستەقینە — کێ هەڵەی کرد؟</h3>
+<div class="grid g3">
+  <div class="box r"><b class="t">Capital One، ٢٠١٩</b><small>هێرشبەرێک دیواری ئاگری ئەپڵیکەیشنی وێبی هەڵە ڕێکخراو لەسەر سێرڤەرەکانی بانکەکە لە AWS بەکارهێنا و داتای نزیکەی ١٠٠ ملیۆن کڕیاری دزی. ژێرخانی AWS نەشکێنرا — بەڵکو <b>ڕێکخستنەکان</b> کە بەرپرسیارێتیی کڕیارن. ← <b>لایەنی کڕیار.</b></small></div>
+  <div class="box r"><b class="t">کۆگا ئاشکراکان</b><small>جار لە دوای جار کۆمپانیاکان کۆگای S3 یان Blob بە «گشتی» جێدەهێڵن و ملیۆنان تۆمار ئاشکرا دەکەن. دابینکەر ڕێکخستنی تایبەت وەک بنەڕەت و ئاگادارکردنەوە دابین دەکات. ← <b>لایەنی کڕیار.</b></small></div>
+  <div class="box b"><b class="t">کەلێنی ڕەقەکاڵا (Spectre/Meltdown، ٢٠١٨)</b><small>هەڵە لە پرۆسێسەرەکاندا دەیتوانی بیرگە لە نێوان ئامێرە مەجازییەکانی سەر یەک ئامێر بگوازێتەوە. دابینکەران hypervisor و ئامێرەکانیان نوێ کردەوە؛ و کڕیارانی IaaSیش دەبوو سیستەمەکانیان نوێ بکەنەوە. ← <b>هاوبەش.</b></small></div>
+</div>
+
+<h3>هەمان ڕووداو لە مۆدێلی جیاوازدا</h3>
+<p><i>«کەلێنێکی مەترسیدار لە ناوکی Linux ڕاگەیەنرا.»</i> کێ دەبێت نوێی بکاتەوە؟</p>
+<ul>
+<li><b>IaaS</b> (سێرڤەرەکەت لە EC2 یان Droplet): <b>خۆت</b> — دەچیتە ژوورەوە و سیستەمی کارپێکردن نوێ دەکەیتەوە.</li>
+<li><b>PaaS</b> (App Engine، Apps Script): <b>دابینکەر</b> پلاتفۆرمەکە نوێ دەکاتەوە؛ تۆ کۆد و کتێبخانەکانت دەپشکنیت.</li>
+<li><b>SaaS</b> (Gmail): <b>دابینکەر</b> — تۆ هیچ ناکەیت جگە لە پاراستنی هەژمارەکەت.</li>
+</ul>
+
+<div class="chapter-num" style="color:var(--teal);"><span class="cn-num">🎮</span><span class="cn-title">چالاکیی A — دابینکەر یان کڕیار؟</span></div>
+<p>هەر ڕووداوێک بخوێنەرەوە و بڕیار بدە کێ بەرپرسیارە لە ڕێگرتنی. دووان دووان کار بکەن، و پێش کرتەکردن گفتوگۆ بکەن.</p>
+<div class="game" id="g5">
+  <span class="score" id="g5s">0 / 0</span>
+  <div class="ctx" id="g5c"></div>
+  <div class="q" id="g5q"></div>
+  <div class="btns"><button class="p" data-a="P">🏢 دابینکەر</button><button class="c" data-a="C">🙋 کڕیار</button></div>
+  <div class="fb" id="g5f"></div>
+  <div class="btns"><button id="g5n" style="display:none">دواتر ◀</button></div>
+</div>
+
+<div class="chapter-num" style="color:var(--teal);"><span class="cn-num">🎮</span><span class="cn-title">چالاکیی B — IaaS یان PaaS یان SaaS؟</span></div>
+<div class="game" id="g6">
+  <span class="score" id="g6s">0 / 0</span>
+  <div class="q" id="g6q"></div>
+  <div class="btns"><button data-a="IaaS">🏗️ IaaS</button><button data-a="PaaS">🛠️ PaaS</button><button data-a="SaaS">📦 SaaS</button></div>
+  <div class="fb" id="g6f"></div>
+  <div class="btns"><button id="g6n" style="display:none">دواتر ◀</button></div>
+</div>
+
+<div class="chapter-num" style="color:var(--teal);"><span class="cn-num">✍️</span><span class="cn-title">چالاکیی C — بیکێشە (٥ خولەک)</span></div>
+<p>لەسەر کاغەز، چینەکان بکێشە (لە داتاوە تا سەنتەری داتا) بۆ <b>ئەپڵیکەیشنێک کە هەموو ڕۆژێک بەکاری دەهێنیت</b> (Instagram، Telegram، Google Classroom، ماڵپەڕی زانکۆ…). چینەکانی دابینکەر بە شین و چینەکانی خۆت بە پرتەقاڵی ڕەنگ بکە. پاشان <b>یەک شت</b> بنووسە کە خۆت دەبێت بیکەیت بۆ پاراستنی بەشەکەت.</p>
+
+        <div class="section-heading"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg><span>زاراوە سەرەکییەکان · Key terms</span></div>
+        <ul class="cs-gloss"><li><b>هەژمارکردنی هەوری</b> <span dir="ltr">(Cloud computing)</span></li><li><b>فرە-بەکرێگر</b> <span dir="ltr">(Multi-tenancy)</span> — زۆر کڕیار لەسەر هەمان ڕەقەکاڵا</li><li><b>نەرمی</b> <span dir="ltr">(Elasticity)</span> — فراوانبوون و بچووکبوونەوە بەپێی پێویست</li><li><b>ژێرخان / پلاتفۆرم / نەرمەکاڵا وەک خزمەتگوزاری</b> <span dir="ltr">(IaaS / PaaS / SaaS)</span></li><li><b>مۆدێلی بڵاوکردنەوە</b> <span dir="ltr">(Deployment model)</span></li><li><b>ناوچەی جوگرافیی سەنتەری داتا</b> <span dir="ltr">(Region)</span></li><li><b>بەڕێوەبەری مەجازی</b> <span dir="ltr">(Hypervisor)</span> — ئامێرە مەجازییەکان کار پێ دەکات</li><li><b>بەرپرسیارێتی هاوبەش</b> <span dir="ltr">(Shared responsibility)</span></li><li><b>هەڵە لە ڕێکخستندا</b> <span dir="ltr">(Misconfiguration)</span></li><li><b>سەروەریی داتا</b> <span dir="ltr">(Data sovereignty)</span> — یاسای ئەو وڵاتەی داتاکەی تێدا هەڵدەگیرێت</li></ul>
+        <div class="section-heading"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg><span>پرسیارەکانی پێداچوونەوە</span></div>
+        <p class="quiz-note">سەرەتا خۆت لە بۆشاییەکەدا وەڵام بدەرەوە، پاشان سەیری تابی <b>🔑 وەڵام و هۆکار</b> بکە — ڕوونی دەکاتەوە بۆچی هەر وەڵامێک ڕاستە و بۆچی بژاردەکانی تر هەڵەن.</p>
+        <div class="section-heading" style="margin-top:14px;"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg><span>A. هەڵبژاردن لە نێوان چەند وەڵامێک</span></div>
+        <div class="mcq-item"><span class="q-num">١.</span> کامیان لەمانەی خوارەوە <b>نییە</b> لە پێنج تایبەتمەندییە سەرەکییەکانی هەژمارکردنی هەوری بەپێی NIST؟<ul class="mcq-options"><li><span class="opt-letter">A)</span> نەرمیی خێرا</li><li><span class="opt-letter">B)</span> خزمەتگوزاریی پێوراو</li><li><span class="opt-letter">C)</span> شفرەکردنی داتا</li><li><span class="opt-letter">D)</span> کۆکردنەوەی سەرچاوەکان</li></ul></div>
+<div class="mcq-item"><span class="q-num">٢.</span> کۆمپانیایەک ئامێری مەجازی لە دابینکەرێک بەکرێ دەگرێت، و خۆی سیستەمی کارپێکردن، سێرڤەری وێب و بنکەدراوە دادەمەزرێنێت. مۆدێلی خزمەتگوزاری:<ul class="mcq-options"><li><span class="opt-letter">A)</span> SaaS</li><li><span class="opt-letter">B)</span> PaaS</li><li><span class="opt-letter">C)</span> IaaS</li><li><span class="opt-letter">D)</span> هەوری کۆمەڵگەیی</li></ul></div>
+<div class="mcq-item"><span class="q-num">٣.</span> لە کام مۆدێلدا کڕیار <b>کەمترین</b> ژمارەی چین بەڕێوە دەبات؟<ul class="mcq-options"><li><span class="opt-letter">A)</span> لەناو دامەزراوە</li><li><span class="opt-letter">B)</span> IaaS</li><li><span class="opt-letter">C)</span> PaaS</li><li><span class="opt-letter">D)</span> SaaS</li></ul></div>
+<div class="mcq-item"><span class="q-num">٤.</span> چەند زانکۆیەک یەک ژێرخانی هەوری بەش دەکەن کە بۆ پێداویستییە ئەکادیمی و یاساییە هاوبەشەکانیان دروستکراوە. ئەمە:<ul class="mcq-options"><li><span class="opt-letter">A)</span> هەوری گشتی</li><li><span class="opt-letter">B)</span> هەوری تایبەت</li><li><span class="opt-letter">C)</span> هەوری کۆمەڵگەیی</li><li><span class="opt-letter">D)</span> هەوری تێکەڵ</li></ul></div>
+<div class="mcq-item"><span class="q-num">٥.</span> خزمەتگوزاریی هاوتای Amazon S3 (کۆگای ئۆبجێکت) لە Microsoft Azure:<ul class="mcq-options"><li><span class="opt-letter">A)</span> Azure Functions</li><li><span class="opt-letter">B)</span> Blob Storage</li><li><span class="opt-letter">C)</span> Microsoft Entra ID</li><li><span class="opt-letter">D)</span> AKS</li></ul></div>
+<div class="mcq-item"><span class="q-num">٦.</span> بەپێی مۆدێلی بەرپرسیارێتی هاوبەش، کام بڕگە <b>هەمیشە</b> لە هەموو مۆدێلەکانی خزمەتگوزاریدا بەرپرسیارێتیی کڕیارە؟<ul class="mcq-options"><li><span class="opt-letter">A)</span> نوێکردنەوەی hypervisor</li><li><span class="opt-letter">B)</span> ئاسایشی فیزیکیی سەنتەری داتا</li><li><span class="opt-letter">C)</span> پۆلێنکردن و پاراستنی داتاکەی</li><li><span class="opt-letter">D)</span> گۆڕینی دیسکە تێکچووەکان</li></ul></div>
+<div class="mcq-item"><span class="q-num">٧.</span> «یەک ئامێری فیزیکی ئامێری مەجازیی زۆر کڕیاری جیاواز میوانداری دەکات.» ئەمە کام تایبەتمەندییە؟<ul class="mcq-options"><li><span class="opt-letter">A)</span> دەستگەیشتنی فراوان بە تۆڕ</li><li><span class="opt-letter">B)</span> کۆکردنەوەی سەرچاوەکان (فرە-بەکرێگر)</li><li><span class="opt-letter">C)</span> خزمەتگوزاریی خۆیی بە داواکاری</li><li><span class="opt-letter">D)</span> خزمەتگوزاریی پێوراو</li></ul></div>
+<div class="mcq-item"><span class="q-num">٨.</span> لە شکاندنی Capital One (٢٠١٩) نزیکەی ١٠٠ ملیۆن تۆماری کڕیار لە داتای هەڵگیراو لە AWS دزرا. هۆکاری بنەڕەتی:<ul class="mcq-options"><li><span class="opt-letter">A)</span> هەڵەیەک لە ئاسایشی سەنتەرەکانی داتای AWS</li><li><span class="opt-letter">B)</span> ڕێکخستنی هەڵە لەسەر سەرچاوەیەک کە خودی بانکەکە لە AWS کاری پێ دەکرد</li><li><span class="opt-letter">C)</span> کارەساتێکی سروشتی لە سەنتەری داتا</li><li><span class="opt-letter">D)</span> هەڵەیەک لە کۆدی خزمەتگوزاریی S3</li></ul></div>
+<div class="mcq-item"><span class="q-num">٩.</span> زانکۆیەک تۆماری خوێندکاران لەسەر سێرڤەرەکانی خۆی دەهێڵێتەوە، و ماڵپەڕە گشتییەکەی دەگوازێتەوە بۆ هەورێکی گشتی، و بە VPN دەیانبەستێتەوە. ئەمە:<ul class="mcq-options"><li><span class="opt-letter">A)</span> هەوری تایبەت</li><li><span class="opt-letter">B)</span> هەوری تێکەڵ</li><li><span class="opt-letter">C)</span> هەوری کۆمەڵگەیی</li><li><span class="opt-letter">D)</span> هەوری گشتی</li></ul></div>
+<div class="mcq-item"><span class="q-num">١٠.</span> کەلێنێکی مەترسیدار لە ناوکی Linux ڕاگەیەنرا. کێ دەبێت نوێی بکاتەوە بۆ ئەپڵیکەیشنێک کە لەسەر <b>Google App Engine</b> (PaaS) کار دەکات؟<ul class="mcq-options"><li><span class="opt-letter">A)</span> کڕیار، بە چوونە ناو سێرڤەرەکە</li><li><span class="opt-letter">B)</span> دابینکەر (Google)</li><li><span class="opt-letter">C)</span> هیچ کەس — لە PaaSدا سیستەمی کارپێکردن نییە</li><li><span class="opt-letter">D)</span> بەکارهێنەرانی ئەپڵیکەیشنەکە</li></ul></div>
+
+        <div class="section-heading" style="margin-top:22px;"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg><span>B. ڕاست یان هەڵە</span></div>
+        <div class="tf-item"><span>١. لە SaaSدا کڕیار بەرپرسیارە لە نوێکردنەوەی سیستەمی کارپێکردن.</span><span class="tf-boxes"><span><span class="box"></span> ڕاست</span><span><span class="box"></span> هەڵە</span></span></div>
+<div class="tf-item"><span>٢. گواستنەوە بۆ هەور <i>هەموو</i> بەرپرسیارێتیی ئاسایش دەگوازێتەوە بۆ دابینکەر.</span><span class="tf-boxes"><span><span class="box"></span> ڕاست</span><span><span class="box"></span> هەڵە</span></span></div>
+<div class="tf-item"><span>٣. هەوری تێکەڵ ژینگەیەکی تایبەت بە هەورێکی گشتییەوە دەبەستێتەوە بۆ ئەوەی پێکەوە کار بکەن.</span><span class="tf-boxes"><span><span class="box"></span> ڕاست</span><span><span class="box"></span> هەڵە</span></span></div>
+<div class="tf-item"><span>٤. نەرمیی خێرا واتە دەتوانرێت توانا بە خێرایی زیاد و کەم بکرێت، و زۆرجار بە شێوەی خۆکار.</span><span class="tf-boxes"><span><span class="box"></span> ڕاست</span><span><span class="box"></span> هەڵە</span></span></div>
+<div class="tf-item"><span>٥. سێرڤەرێک لە ژووری سێرڤەری زانکۆ کە تەنها بە داواکارییەکی نووسراو لە بەشی تەکنەلۆجیای زانیاری دەستت دەکەوێت، بەپێی NIST خزمەتگوزارییەکی هەورییە.</span><span class="tf-boxes"><span><span class="box"></span> ڕاست</span><span><span class="box"></span> هەڵە</span></span></div>
+<div class="tf-item"><span>٦. AWS دابەشکردنەکە بەم شێوەیە وەسف دەکات: دابینکەر بەرپرسیارە لە ئاسایشی «خودی» هەور، و کڕیار لە ئاسایش «لەناو» هەوردا.</span><span class="tf-boxes"><span><span class="box"></span> ڕاست</span><span><span class="box"></span> هەڵە</span></span></div>
+
+        <div class="section-heading" style="margin-top:22px;"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg><span>C. پرسیاری کورت</span></div>
+        <div class="mcq-item"><span class="q-num">١.</span> پێناسەی NIST بۆ هەژمارکردنی هەوری بە شێوازی خۆت بنووسە (٢–٣ دێڕ)، و پێنج تایبەتمەندییە سەرەکییەکە بڵێ.<span class="blank-line"></span><span class="blank-line"></span><span class="blank-line"></span></div>
+<div class="mcq-item"><span class="q-num">٢.</span> بۆ هەر یەک لە IaaS و PaaS و SaaS نموونەیەک بهێنەرەوە، و بۆ هەریەکەیان ئەرکێکی ئاسایشی بڵێ کە لەسەر کڕیار دەمێنێتەوە.<span class="blank-line"></span><span class="blank-line"></span><span class="blank-line"></span></div>
+<div class="mcq-item"><span class="q-num">٣.</span> نەخۆشخانەیەک لە بەغدا دەیەوێت تۆماری نەخۆشەکان هەڵبگرێت و ماڵپەڕێکی گشتی بۆ گرتنی کاتی چاوپێکەوتن بەڕێوە ببات. مۆدێلێکی بڵاوکردنەوە پێشنیار بکە و لە ڕووی ئاسایشەوە پاساوی بدەرەوە.<span class="blank-line"></span><span class="blank-line"></span><span class="blank-line"></span></div>
+
+        <div class="mini-note">کۆتایی وانەی یەکەم — ئامادەکردنی: پ.ی.د. ئەمیر هادی ★</div>
+        <div class="page-nav"><button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ پێشوو</button><button class="nav-btn nav-next" onclick="navigateSlide(1)">دواتر ←</button></div>
+       </div>
         <div class="footer-note">1</div>
       </div>
 
@@ -3528,6 +3782,37 @@ html[data-lang="ar"] .cs .lang-ar{display:block} html[data-lang="ar"] .cs .lang-
 <div class="sol-item"><p class="sol-q"><span class="sq-n">٣.</span> مستشفى في بغداد يريد حفظ سجلّات المرضى وتشغيل موقعٍ عامّ لحجز المواعيد. اقترح نموذج نشرٍ وعلّل اختيارك من الناحية الأمنيّة.</p><p class="sol-why"><b>الإجابة النموذجيّة:</b> <b>سحابة هجينة.</b> سجلّات المرضى (بياناتٌ صحّيّة شديدة الحساسيّة، متطلّباتٌ قانونيّة، ويُفضَّل بقاؤها في العراق) تبقى في سحابةٍ خاصّة يتحكّم بها المستشفى. وموقع الحجز العامّ يعمل على سحابةٍ عامّة للتوفّر والتوسّع، ولا يحفظ إلّا بياناتٍ قليلة (الاسم، الموعد). التركيز الأمنيّ: وصلةٌ محميّة بين الاثنين (VPN، هويّة قويّة، أقلّ صلاحيّة)، وتشفير البيانات أثناء النقل والتخزين، والسجلّات والمراقبة في الجهتين.</p><p class="sol-why"><b>دليل التصحيح:</b> إجابة «عامّة فقط» تنال درجةً جزئيّة إذا عالجت موقع البيانات والتشفير والصلاحيّات؛ وإجابة «خاصّة فقط» إذا عالجت توفّر الموقع العامّ.</p></div>
 
         <div class="page-nav"><button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button><button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button></div>
+       </div>
+       <div class="lang-ku" dir="rtl">
+        <span class="chip" style="background:var(--teal);">ڕێبەری پێداچوونەوە</span>
+        <h2 class="page-title" style="color:var(--teal);">وەڵام و هۆکار</h2>
+        <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--teal)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
+        <p class="lead-paragraph">وەڵامی پرسیارەکانی پێداچوونەوە، <span class="hl hl-yellow">لەگەڵ هۆکاری هەر وەڵامێک</span> — بۆچی ڕاستەکە ڕاستە، و بۆچی هەر بژاردەیەکی تر هەڵەیە.</p>
+        <div class="sol-week"><span class="sw-n">١</span><span class="sw-t">وەڵامەکانی هەفتەی یەکەم</span></div>
+        <div class="sol-kind"><span>هەڵبژاردن لە نێوان چەند وەڵامێک</span><span class="sk-line"></span></div>
+<div class="sol-item"><p class="sol-q"><span class="sq-n">١.</span> کامیان لەمانەی خوارەوە <b>نییە</b> لە پێنج تایبەتمەندییە سەرەکییەکانی هەژمارکردنی هەوری بەپێی NIST؟</p><div class="sol-opts"><div class="sol-opt bad"><span class="so-k">A)</span><span>نەرمیی خێرا</span></div><div class="sol-opt bad"><span class="so-k">B)</span><span>خزمەتگوزاریی پێوراو</span></div><div class="sol-opt ok"><span class="so-k">C)</span><span>شفرەکردنی داتا</span></div><div class="sol-opt bad"><span class="so-k">D)</span><span>کۆکردنەوەی سەرچاوەکان</span></div></div><p class="sol-why"><b>هۆکار:</b> بەڵگەنامەی NIST SP 800-145 ڕێک پێنج تایبەتمەندی دەژمێرێت: خزمەتگوزاریی خۆیی بە داواکاری، دەستگەیشتنی فراوان بە تۆڕ، کۆکردنەوەی سەرچاوەکان، نەرمیی خێرا و خزمەتگوزاریی پێوراو. شفرەکردن <i>کۆنتڕۆڵێکی ئاسایشی</i>یە کە زیادی دەکەین، نەک سیفەتێک کە هەور پێناسە بکات.<br><b>بۆچی بژاردەکانی تر نا:</b> «A» تایبەتمەندیی ④ە. «B» تایبەتمەندیی ⑤ە — بەکارهێنان دەپێورێت و پارەی لێ وەردەگیرێت. «D» تایبەتمەندیی ③ە — فرە-بەکرێگر.</p></div>
+<div class="sol-item"><p class="sol-q"><span class="sq-n">٢.</span> کۆمپانیایەک ئامێری مەجازی لە دابینکەرێک بەکرێ دەگرێت، و خۆی سیستەمی کارپێکردن، سێرڤەری وێب و بنکەدراوە دادەمەزرێنێت. مۆدێلی خزمەتگوزاری:</p><div class="sol-opts"><div class="sol-opt bad"><span class="so-k">A)</span><span>SaaS</span></div><div class="sol-opt bad"><span class="so-k">B)</span><span>PaaS</span></div><div class="sol-opt ok"><span class="so-k">C)</span><span>IaaS</span></div><div class="sol-opt bad"><span class="so-k">D)</span><span>هەوری کۆمەڵگەیی</span></div></div><p class="sol-why"><b>هۆکار:</b> بەکرێگرتنی ئامێری مەجازی و بەڕێوەبردنی سیستەمی کارپێکردن و هەموو ئەوەی لەسەرییەتی، پێناسەی ژێرخان وەک خزمەتگوزارییە (وەک AWS EC2 و DigitalOcean Droplets).<br><b>بۆچی بژاردەکانی تر نا:</b> «A» لە SaaSدا تەنها ئەپڵیکەیشنێکی ئامادە بەکار دەهێنیت — هیچ سیستەمی کارپێکردنێک دانامەزرێنیت. «B» لە PaaSدا دابینکەر سیستەمی کارپێکردن و ژینگەی کارپێکردن بەڕێوە دەبات؛ تۆ تەنها کۆد بار دەکەیت. «D» مۆدێلی <i>بڵاوکردنەوە</i>یە (لەگەڵ کێ بەشی دەکەیت)، نەک مۆدێلی خزمەتگوزاری.</p></div>
+<div class="sol-item"><p class="sol-q"><span class="sq-n">٣.</span> لە کام مۆدێلدا کڕیار <b>کەمترین</b> ژمارەی چین بەڕێوە دەبات؟</p><div class="sol-opts"><div class="sol-opt bad"><span class="so-k">A)</span><span>لەناو دامەزراوە</span></div><div class="sol-opt bad"><span class="so-k">B)</span><span>IaaS</span></div><div class="sol-opt bad"><span class="so-k">C)</span><span>PaaS</span></div><div class="sol-opt ok"><span class="so-k">D)</span><span>SaaS</span></div></div><p class="sol-why"><b>هۆکار:</b> لە SaaSدا دابینکەر هەموو شتێک تا ئەپڵیکەیشنەکە بەڕێوە دەبات؛ تەنها داتا، هەژمار و ئامێرەکانی کڕیار لەسەر خۆی دەمێنێتەوە.<br><b>بۆچی بژاردەکانی تر نا:</b> «A» کڕیار <i>هەموو</i> چینەکان بەڕێوە دەبات، تەنانەت بیناکە. «B» کڕیار هێشتا سیستەمی کارپێکردن، ژینگەی کارپێکردن، ئەپڵیکەیشن و داتا بەڕێوە دەبات. «C» کڕیار هێشتا ئەپڵیکەیشن و داتا بەڕێوە دەبات.</p></div>
+<div class="sol-item"><p class="sol-q"><span class="sq-n">٤.</span> چەند زانکۆیەک یەک ژێرخانی هەوری بەش دەکەن کە بۆ پێداویستییە ئەکادیمی و یاساییە هاوبەشەکانیان دروستکراوە. ئەمە:</p><div class="sol-opts"><div class="sol-opt bad"><span class="so-k">A)</span><span>هەوری گشتی</span></div><div class="sol-opt bad"><span class="so-k">B)</span><span>هەوری تایبەت</span></div><div class="sol-opt ok"><span class="so-k">C)</span><span>هەوری کۆمەڵگەیی</span></div><div class="sol-opt bad"><span class="so-k">D)</span><span>هەوری تێکەڵ</span></div></div><p class="sol-why"><b>هۆکار:</b> هەوری کۆمەڵگەیی لە لایەن کۆمەڵێکی دیاریکراوی دامەزراوەوە بەش دەکرێت کە بەرژەوەندیی هاوبەشیان هەیە (ئەرک، پابەندبوون، پێداویستیی ئاسایشی).<br><b>بۆچی بژاردەکانی تر نا:</b> «A» بۆ <i>هەر</i> کڕیارێک کراوەیە، نەک کۆمەڵێکی دیاریکراو. «B» تەنها خزمەتی <i>یەک</i> دامەزراوە دەکات. «D» واتە بەستنەوەی دوو مۆدێلی جیاواز، وەک تایبەت + گشتی.</p></div>
+<div class="sol-item"><p class="sol-q"><span class="sq-n">٥.</span> خزمەتگوزاریی هاوتای Amazon S3 (کۆگای ئۆبجێکت) لە Microsoft Azure:</p><div class="sol-opts"><div class="sol-opt bad"><span class="so-k">A)</span><span>Azure Functions</span></div><div class="sol-opt ok"><span class="so-k">B)</span><span>Blob Storage</span></div><div class="sol-opt bad"><span class="so-k">C)</span><span>Microsoft Entra ID</span></div><div class="sol-opt bad"><span class="so-k">D)</span><span>AKS</span></div></div><p class="sol-why"><b>هۆکار:</b> Amazon S3 ⇄ Azure Blob Storage ⇄ Google Cloud Storage — هەر سێکیان کۆگای ئۆبجێکتن.<br><b>بۆچی بژاردەکانی تر نا:</b> «A» فەنکشنی بێ سێرڤەرە (≈ AWS Lambda). «C» بەڕێوەبردنی ناسنامە و دەسەڵاتە (≈ AWS IAM). «D» Kubernetesی بەڕێوەبراوە (≈ AWS EKS).</p></div>
+<div class="sol-item"><p class="sol-q"><span class="sq-n">٦.</span> بەپێی مۆدێلی بەرپرسیارێتی هاوبەش، کام بڕگە <b>هەمیشە</b> لە هەموو مۆدێلەکانی خزمەتگوزاریدا بەرپرسیارێتیی کڕیارە؟</p><div class="sol-opts"><div class="sol-opt bad"><span class="so-k">A)</span><span>نوێکردنەوەی hypervisor</span></div><div class="sol-opt bad"><span class="so-k">B)</span><span>ئاسایشی فیزیکیی سەنتەری داتا</span></div><div class="sol-opt ok"><span class="so-k">C)</span><span>پۆلێنکردن و پاراستنی داتاکەی</span></div><div class="sol-opt bad"><span class="so-k">D)</span><span>گۆڕینی دیسکە تێکچووەکان</span></div></div><p class="sol-why"><b>هۆکار:</b> داتا، ناسنامەکان (هەژمار، وشەی نهێنی و MFA) و ئامێرەکانی بەکارهێنەران لە IaaS و PaaS <i>و SaaS</i>یشدا لەسەر کڕیار دەمێننەوە.<br><b>بۆچی بژاردەکانی تر نا:</b> «A» چینی مەجازی لە هەر سێ مۆدێلەکەدا هی دابینکەرە. «B» پاسەوان، کامێرا و چوونەژوورەوەی بینا لەسەر دابینکەرە. «D» ڕەقەکاڵای فیزیکی هەمیشە لەسەر دابینکەرە.</p></div>
+<div class="sol-item"><p class="sol-q"><span class="sq-n">٧.</span> «یەک ئامێری فیزیکی ئامێری مەجازیی زۆر کڕیاری جیاواز میوانداری دەکات.» ئەمە کام تایبەتمەندییە؟</p><div class="sol-opts"><div class="sol-opt bad"><span class="so-k">A)</span><span>دەستگەیشتنی فراوان بە تۆڕ</span></div><div class="sol-opt ok"><span class="so-k">B)</span><span>کۆکردنەوەی سەرچاوەکان (فرە-بەکرێگر)</span></div><div class="sol-opt bad"><span class="so-k">C)</span><span>خزمەتگوزاریی خۆیی بە داواکاری</span></div><div class="sol-opt bad"><span class="so-k">D)</span><span>خزمەتگوزاریی پێوراو</span></div></div><p class="sol-why"><b>هۆکار:</b> کۆکردنەوەی سەرچاوەکان واتە سەرچاوەکانی دابینکەر خزمەتی چەند بەکارهێنەرێک دەکەن (مۆدێلی فرە-بەکرێگر) و بە شێوەی داینامیکی دابەش دەکرێن.<br><b>بۆچی بژاردەکانی تر نا:</b> «A» پەیوەندیی بە گەیشتن بە خزمەتگوزارییەوە هەیە لە ڕێگەی تۆڕەوە لە جۆرە ئامێری زۆرەوە. «C» پەیوەندیی بە دروستکردنی سەرچاوەوە هەیە بەبێ داواکاری لە بەڕێوەبەر. «D» پەیوەندیی بە پێوانە و پارەوەرگرتنی بەکارهێنانەوە هەیە.</p></div>
+<div class="sol-item"><p class="sol-q"><span class="sq-n">٨.</span> لە شکاندنی Capital One (٢٠١٩) نزیکەی ١٠٠ ملیۆن تۆماری کڕیار لە داتای هەڵگیراو لە AWS دزرا. هۆکاری بنەڕەتی:</p><div class="sol-opts"><div class="sol-opt bad"><span class="so-k">A)</span><span>هەڵەیەک لە ئاسایشی سەنتەرەکانی داتای AWS</span></div><div class="sol-opt ok"><span class="so-k">B)</span><span>ڕێکخستنی هەڵە لەسەر سەرچاوەیەک کە خودی بانکەکە لە AWS کاری پێ دەکرد</span></div><div class="sol-opt bad"><span class="so-k">C)</span><span>کارەساتێکی سروشتی لە سەنتەری داتا</span></div><div class="sol-opt bad"><span class="so-k">D)</span><span>هەڵەیەک لە کۆدی خزمەتگوزاریی S3</span></div></div><p class="sol-why"><b>هۆکار:</b> هێرشبەر دیواری ئاگری ئەپڵیکەیشنی وێبی هەڵە ڕێکخراو لەسەر سێرڤەرەکانی خودی بانکەکە و دەسەڵاتی زیاد لە پێویستی بەکارهێنا. ژێرخانی AWS نەشکێنرا — شکستێکی نموونەیی لە «ئاسایش <i>لەناو</i> هەوردا».<br><b>بۆچی بژاردەکانی تر نا:</b> «A» هیچ دامەزراوە یان ڕەقەکاڵایەکی AWS نەشکێنرا. «C» هیچ ڕووداوێکی فیزیکی نەبوو. «D» خزمەتگوزاریی S3 خۆی وەک دیزاینکراو کاری کرد؛ دەسەڵاتەکان ڕێکخستنی کڕیار بوون.</p></div>
+<div class="sol-item"><p class="sol-q"><span class="sq-n">٩.</span> زانکۆیەک تۆماری خوێندکاران لەسەر سێرڤەرەکانی خۆی دەهێڵێتەوە، و ماڵپەڕە گشتییەکەی دەگوازێتەوە بۆ هەورێکی گشتی، و بە VPN دەیانبەستێتەوە. ئەمە:</p><div class="sol-opts"><div class="sol-opt bad"><span class="so-k">A)</span><span>هەوری تایبەت</span></div><div class="sol-opt ok"><span class="so-k">B)</span><span>هەوری تێکەڵ</span></div><div class="sol-opt bad"><span class="so-k">C)</span><span>هەوری کۆمەڵگەیی</span></div><div class="sol-opt bad"><span class="so-k">D)</span><span>هەوری گشتی</span></div></div><p class="sol-why"><b>هۆکار:</b> دوو مۆدێلی بڵاوکردنەوەی جیاواز (تایبەت + گشتی) بەستراون و پێکەوە بەکار دەهێنرێن = تێکەڵ. و بەستەری VPN دەبێتە ڕووبەرێکی گرنگی هێرش.<br><b>بۆچی بژاردەکانی تر نا:</b> «A» <i>هەموو شتێک</i> لەسەر ژێرخانی خودی زانکۆ دەهێڵێتەوە. «C» پێویستی بە چەند دامەزراوەیەک هەیە کە یەک ژێرخان بەش بکەن. «D» <i>هەموو شتێک</i> لەسەر ژێرخانی هاوبەشی دابینکەر دادەنێت.</p></div>
+<div class="sol-item"><p class="sol-q"><span class="sq-n">١٠.</span> کەلێنێکی مەترسیدار لە ناوکی Linux ڕاگەیەنرا. کێ دەبێت نوێی بکاتەوە بۆ ئەپڵیکەیشنێک کە لەسەر <b>Google App Engine</b> (PaaS) کار دەکات؟</p><div class="sol-opts"><div class="sol-opt bad"><span class="so-k">A)</span><span>کڕیار، بە چوونە ناو سێرڤەرەکە</span></div><div class="sol-opt ok"><span class="so-k">B)</span><span>دابینکەر (Google)</span></div><div class="sol-opt bad"><span class="so-k">C)</span><span>هیچ کەس — لە PaaSدا سیستەمی کارپێکردن نییە</span></div><div class="sol-opt bad"><span class="so-k">D)</span><span>بەکارهێنەرانی ئەپڵیکەیشنەکە</span></div></div><p class="sol-why"><b>هۆکار:</b> لە PaaSدا دابینکەر سیستەمی کارپێکردن و ژینگەی کارپێکردن بەڕێوە دەبات، بۆیە Google ناوکەکە نوێ دەکاتەوە. کڕیار هێشتا دەبێت کۆد و کتێبخانە دەرەکییەکانی بپارێزێت.<br><b>بۆچی بژاردەکانی تر نا:</b> «A» لە IaaSدا ڕاستە (وەک EC2)، نەک لە PaaSدا. «C» هەموو پلاتفۆرمێک لەسەر سیستەمی کارپێکردن کار دەکات؛ بەڵام تۆ بەڕێوەی نابەیت. «D» بەکارهێنەران هەرگیز دەستیان بە پلاتفۆرمەکە ناگات.</p></div>
+<div class="sol-kind"><span>ڕاست یان هەڵە</span><span class="sk-line"></span></div>
+<div class="sol-item"><div class="sol-tf-line"><p class="sol-q"><span class="sq-n">١.</span> لە SaaSدا کڕیار بەرپرسیارە لە نوێکردنەوەی سیستەمی کارپێکردن.</p><span class="sol-badge f">هەڵە</span></div><p class="sol-why"><b>هۆکار:</b> دابینکەری SaaS هەموو شتێک تا ئەپڵیکەیشنەکە بەڕێوە دەبات و نوێی دەکاتەوە. کڕیار داتا، هەژمار و ئامێرەکان بەڕێوە دەبات.</p></div>
+<div class="sol-item"><div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٢.</span> گواستنەوە بۆ هەور <i>هەموو</i> بەرپرسیارێتیی ئاسایش دەگوازێتەوە بۆ دابینکەر.</p><span class="sol-badge f">هەڵە</span></div><p class="sol-why"><b>هۆکار:</b> بەرپرسیارێتی <b>هاوبەشە</b>. داتا، ناسنامە و ڕێکخستنەکان هەمیشە لەسەر کڕیار دەمێننەوە — و زۆربەی شکاندنە ڕاستەقینەکان لەوێ ڕوودەدەن.</p></div>
+<div class="sol-item"><div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٣.</span> هەوری تێکەڵ ژینگەیەکی تایبەت بە هەورێکی گشتییەوە دەبەستێتەوە بۆ ئەوەی پێکەوە کار بکەن.</p><span class="sol-badge t">ڕاست</span></div><p class="sol-why"><b>هۆکار:</b> ئەمە مانای تێکەڵە لای NIST: دوو یان زیاتر ژێرخانی جیاواز کە پێکەوە بەستراون.</p></div>
+<div class="sol-item"><div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٤.</span> نەرمیی خێرا واتە دەتوانرێت توانا بە خێرایی زیاد و کەم بکرێت، و زۆرجار بە شێوەی خۆکار.</p><span class="sol-badge t">ڕاست</span></div><p class="sol-why"><b>هۆکار:</b> بۆ بەکارهێنەر توانا زۆرجار وەک بێسنوور دەردەکەوێت، و لە هەر کاتێکدا زیاد یان ئازاد دەکرێت.</p></div>
+<div class="sol-item"><div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٥.</span> سێرڤەرێک لە ژووری سێرڤەری زانکۆ کە تەنها بە داواکارییەکی نووسراو لە بەشی تەکنەلۆجیای زانیاری دەستت دەکەوێت، بەپێی NIST خزمەتگوزارییەکی هەورییە.</p><span class="sol-badge f">هەڵە</span></div><p class="sol-why"><b>هۆکار:</b> <b>خزمەتگوزاریی خۆیی بە داواکاری</b>ی نییە (و زۆرجار خزمەتگوزاریی پێوراو)، بۆیە سێرڤەرێکی میوانکراوە نەک هەور بە مانای NIST.</p></div>
+<div class="sol-item"><div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٦.</span> AWS دابەشکردنەکە بەم شێوەیە وەسف دەکات: دابینکەر بەرپرسیارە لە ئاسایشی «خودی» هەور، و کڕیار لە ئاسایش «لەناو» هەوردا.</p><span class="sol-badge t">ڕاست</span></div><p class="sol-why"><b>هۆکار:</b> ئەمە دەربڕینی مۆدێلی بەرپرسیارێتی هاوبەشی AWSە (security of / in the cloud).</p></div>
+<div class="sol-kind"><span>پرسیاری کورت — وەڵامی نموونەیی</span><span class="sk-line"></span></div>
+<div class="sol-item"><p class="sol-q"><span class="sq-n">١.</span> پێناسەی NIST بۆ هەژمارکردنی هەوری بە شێوازی خۆت بنووسە (٢–٣ دێڕ)، و پێنج تایبەتمەندییە سەرەکییەکە بڵێ.</p><p class="sol-why"><b>وەڵامی نموونەیی:</b> هەژمارکردنی هەوری ڕێگە دەدات بە داواکاری، لە ڕێگەی تۆڕەوە، دەستت بگات بە کۆگایەکی هاوبەشی سەرچاوە هەژمارکارییە ڕێکخراوەکان، کە بە خێرایی و بە کەمترین هەوڵی بەڕێوەبردن دابین دەکرێن و ئازاد دەکرێنەوە. تایبەتمەندییەکان: ① خزمەتگوزاریی خۆیی بە داواکاری ② دەستگەیشتنی فراوان بە تۆڕ ③ کۆکردنەوەی سەرچاوەکان ④ نەرمیی خێرا ⑤ خزمەتگوزاریی پێوراو.</p><p class="sol-why"><b>ڕێنمایی نمرەدان:</b> نمرە بۆ: «بە داواکاری»، «لە ڕێگەی تۆڕەوە»، «کۆگای هاوبەش»، «دابینکردن/ئازادکردنی خێرا» لە پێناسەکەدا؛ و نمرەیەک بۆ هەر تایبەتمەندییەک.</p></div>
+<div class="sol-item"><p class="sol-q"><span class="sq-n">٢.</span> بۆ هەر یەک لە IaaS و PaaS و SaaS نموونەیەک بهێنەرەوە، و بۆ هەریەکەیان ئەرکێکی ئاسایشی بڵێ کە لەسەر کڕیار دەمێنێتەوە.</p><p class="sol-why"><b>وەڵامی نموونەیی:</b> IaaS — AWS EC2: نوێکردنەوەی سیستەمی کارپێکردنی میوان و سنووردارکردنی security group (بۆ نموونە SSH بۆ 0.0.0.0/0 نەکرێتەوە). PaaS — Google App Engine: پاراستنی کۆدەکەت و نوێکردنەوەی کتێبخانە دەرەکییەکان، و دیاریکردنی کێ دەتوانێت بڵاو بکاتەوە. SaaS — Gmail یان Microsoft 365: وشەی نهێنیی بەهێز + پشتڕاستکردنەوەی دوو هەنگاوی، و کۆنتڕۆڵکردنی هاوبەشکردنی بەڵگەنامەکان.</p><p class="sol-why"><b>ڕێنمایی نمرەدان:</b> هەر نموونەیەکی ڕاست وەردەگیرێت ئەگەر ئەرکی کڕیار لەگەڵ مۆدێلەکە بگونجێت: کاری سیستەمی کارپێکردن تەنها لە IaaS؛ کۆد و کتێبخانە لە PaaS؛ هەژمار، داتا و هاوبەشکردن لە هەر سێکیاندا.</p></div>
+<div class="sol-item"><p class="sol-q"><span class="sq-n">٣.</span> نەخۆشخانەیەک لە بەغدا دەیەوێت تۆماری نەخۆشەکان هەڵبگرێت و ماڵپەڕێکی گشتی بۆ گرتنی کاتی چاوپێکەوتن بەڕێوە ببات. مۆدێلێکی بڵاوکردنەوە پێشنیار بکە و لە ڕووی ئاسایشەوە پاساوی بدەرەوە.</p><p class="sol-why"><b>وەڵامی نموونەیی:</b> <b>هەوری تێکەڵ.</b> تۆماری نەخۆشەکان (داتای تەندروستیی زۆر هەستیار، پێداویستیی یاسایی، و باشترە لە عێراق بمێنێتەوە) لە هەورێکی تایبەتدا دەمێنێتەوە کە نەخۆشخانەکە کۆنتڕۆڵی دەکات. ماڵپەڕی گشتیی کاتگرتن لەسەر هەورێکی گشتی کار دەکات بۆ بەردەستبوون و فراوانبوون، و تەنها داتایەکی کەم هەڵدەگرێت (ناو، کات). سەرنجی ئاسایش: بەستەرێکی پارێزراو لە نێوانیاندا (VPN، ناسنامەی بەهێز، کەمترین دەسەڵات)، شفرەکردنی داتا لە کاتی گواستنەوە و هەڵگرتندا، و تۆمار و چاودێری لە هەردوو لادا.</p><p class="sol-why"><b>ڕێنمایی نمرەدان:</b> وەڵامی «تەنها گشتی» نمرەی بەشەکی وەردەگرێت ئەگەر باسی شوێنی داتا، شفرەکردن و دەسەڵاتەکانی کردبێت؛ و وەڵامی «تەنها تایبەت» ئەگەر باسی بەردەستبوونی ماڵپەڕە گشتییەکەی کردبێت.</p></div>
+
+        <div class="page-nav"><button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ پێشوو</button><button class="nav-btn nav-next" onclick="navigateSlide(1)">دواتر ←</button></div>
        </div>
         <div class="footer-note">🔑</div>
       </div>
@@ -5736,13 +6021,13 @@ html[data-lang="ar"] .cs .lang-ar{display:block} html[data-lang="ar"] .cs .lang-
   document.addEventListener('keydown', function(e){ if(e.key === 'Escape') set(false); });
 })();
 </script>
-<div id="langSw" role="group" aria-label="Language / اللغة"><button data-l="en">English</button><button data-l="ar">عربي</button></div>
+<div id="langSw" role="group" aria-label="Language / اللغة"><button data-l="en">English</button><button data-l="ar">عربي</button><button data-l="ku">کوردی</button></div>
 <script>
 (function(){
   var KEY = 'cloudsec:lang', r = document.documentElement, bs = document.querySelectorAll('#langSw button');
   function set(l){ r.dataset.lang = l; bs.forEach(function(b){ b.classList.toggle('on', b.dataset.l === l); });
     try{ localStorage.setItem(KEY, l); }catch(e){} }
-  var q = (location.search.match(/[?&]lang=(en|ar)/) || [])[1], saved = null;
+  var q = (location.search.match(/[?&]lang=(en|ar|ku)/) || [])[1], saved = null;
   try{ saved = localStorage.getItem(KEY); }catch(e){}
   set(q || saved || 'en');
   bs.forEach(function(b){ b.onclick = function(){ set(b.dataset.l); }; });
@@ -5755,8 +6040,8 @@ function game(id,items,label){
   const btns=[...document.querySelectorAll('#'+id+' button[data-a]')];
   function load(){const it=items[i];q.innerHTML=it.q;if(c)c.textContent=it.ctx||'';f.className='fb';nx.style.display='none';btns.forEach(b=>b.disabled=false);}
   btns.forEach(b=>b.onclick=()=>{const it=items[i],good=b.dataset.a===it.a;n++;if(good)ok++;s.textContent=ok+' / '+n;
-    const AR=!!document.getElementById(id).closest('.lang-ar');f.className='fb '+(good?'ok':'no');f.innerHTML=(good?(AR?'✅ صحيح — ':'✅ Correct — '):(AR?'❌ الجواب: <b>':'❌ Answer: <b>')+label(it.a)+'</b> — ')+it.why;btns.forEach(x=>x.disabled=true);
-    nx.style.display='inline-block';nx.textContent=document.getElementById(id).closest('.lang-ar')?(i<items.length-1?'التالي ◀':'من جديد ↺'):(i<items.length-1?'Next ▶':'Start again ↺');});
+    const G=document.getElementById(id),LG=G.closest('.lang-ku')?'ku':G.closest('.lang-ar')?'ar':'en',W={en:['✅ Correct — ','❌ Answer: <b>'],ar:['✅ صحيح — ','❌ الجواب: <b>'],ku:['✅ ڕاستە — ','❌ وەڵام: <b>']}[LG];f.className='fb '+(good?'ok':'no');f.innerHTML=(good?W[0]:W[1]+label(it.a)+'</b> — ')+it.why;btns.forEach(x=>x.disabled=true);
+    nx.style.display='inline-block';const G2=document.getElementById(id);nx.textContent=G2.closest('.lang-ku')?(i<items.length-1?'دواتر ◀':'دووبارە ↺'):G2.closest('.lang-ar')?(i<items.length-1?'التالي ◀':'من جديد ↺'):(i<items.length-1?'Next ▶':'Start again ↺');});
   nx.onclick=()=>{if(i<items.length-1)i++;else{i=0;ok=0;n=0;s.textContent='0 / 0';}load();};
   load();
 }
@@ -5809,6 +6094,32 @@ game('g4',[
  {q:'Zoom',a:'SaaS',why:'تطبيقٌ جاهز.'},
  {q:'Heroku',a:'PaaS',why:'ترفع تطبيقك؛ والمنصّة تتولّى الخوادم.'},
  {q:'Google Classroom',a:'SaaS',why:'تطبيقٌ جاهز للمدرّسين والطلبة.'}
+],a=>a);
+
+
+game('g5',[
+ {ctx:'IaaS · سێرڤەری DigitalOcean',q:'دیسکێکی ڕەق لە سەنتەری داتای دابینکەر لە فرانکفۆرت تێکچوو.',a:'P',why:'ڕەقەکاڵای فیزیکی هەمیشە چینی دابینکەرە.'},
+ {ctx:'IaaS · AWS EC2',q:'ئەو سێرڤەرە Ubuntuیەی دروستت کردووە ٨ مانگە نوێکردنەوەی ئاسایشی وەرنەگرتووە.',a:'C',why:'لە IaaSدا سیستەمی کارپێکردنی میوان بەرپرسیارێتیی خۆتە.'},
+ {ctx:'IaaS · AWS S3',q:'کۆگایەک کە وێنەی ناسنامەی خوێندکارانی تێدایە لەسەر «گشتی» دانراوە و لە بزوێنەرەکانی گەڕاندا دەردەکەوێت.',a:'C',why:'ڕێکخستنی دەستگەیشتن بە داتاکەت هەمیشە بەرپرسیارێتیی خۆتە.'},
+ {ctx:'SaaS · Gmail',q:'مامۆستایەک هەمان وشەی نهێنی لە هەموو ماڵپەڕەکاندا بەکار دەهێنێت؛ لە ماڵپەڕێکی ترەوە دزرا و ئیمەیڵەکەی دەستی بەسەردا گیرا.',a:'C',why:'ناسنامە و وشەی نهێنی (و چالاککردنی پشتڕاستکردنەوەی دوو هەنگاوی) تەنانەت لە SaaSیشدا لەسەر کڕیارە.'},
+ {ctx:'هەر مۆدێلێک',q:'دزان دەچنە ناو بینای سەنتەری داتا و سێرڤەر دەدزن.',a:'P',why:'ئاسایشی فیزیکی (پاسەوان، کامێرا، کارتی چوونەژوورەوە) بەرپرسیارێتیی دابینکەرە.'},
+ {ctx:'IaaS · Azure VMs',q:'هەڵەیەک لە hypervisorی دابینکەردا ڕێگە دەدات ئامێری کڕیارێک بیرگەی کڕیارێکی تر بخوێنێتەوە.',a:'P',why:'چینی مەجازی دابینکەر بەڕێوەی دەبات.'},
+ {ctx:'SaaS · Google Sheets',q:'مامۆستایەک خشتەی نمرەکان بە «هەرکەس بەستەری هەبێت» هاوبەش دەکات و لە گرووپێکی گشتیدا بڵاوی دەکاتەوە.',a:'C',why:'کێ داتاکەت دەبینێت ڕێکخستنی خۆتە، تەنانەت لە SaaSیشدا.'},
+ {ctx:'PaaS · Google App Engine',q:'ژینگەی Python کە کۆدەکەتی تێدا کار دەکات کەلێنێکی ناسراوی هەیە.',a:'P',why:'لە PaaSدا ژینگەی کارپێکردن و سیستەمی کارپێکردن دابینکەر بەڕێوەیان دەبات و نوێیان دەکاتەوە (کۆد و کتێبخانەکانت لەسەر خۆتە).'},
+ {ctx:'IaaS · هەر دابینکەرێک',q:'پۆرتی 22 (SSH) بۆ هەموو ئینتەرنێت کراوەیە بە وشەی نهێنی، و هێرشبەران وشەی نهێنی تاقی دەکەنەوە.',a:'C',why:'یاساکانی دیواری ئاگر لەسەر ئامێرەکەت ڕێکخستنی خۆتن.'},
+ {ctx:'هەر مۆدێلێک',q:'بڕانی کارەبا ناوچەیەکی بەردەستبوونی تەواو ڕادەگرێت.',a:'P',why:'کارەبا و فێنککردنەوە لەسەر دابینکەرە؛ بەڵام دیزاینکردنی ئەپڵیکەیشنەکەت بۆ بەرگەگرتن لە کەوتنی ناوچەیەک لەسەر خۆتە.'}
+],a=>a==='P'?'دابینکەر':'کڕیار');
+game('g6',[
+ {q:'Gmail',a:'SaaS',why:'ئەپڵیکەیشنێکی ئامادەیە، تەنها بەکاری دەهێنیت.'},
+ {q:'AWS EC2',a:'IaaS',why:'ئامێری مەجازی؛ خۆت سیستەمی کارپێکردن بەڕێوە دەبەیت.'},
+ {q:'Google App Engine',a:'PaaS',why:'کۆد بار دەکەیت؛ Google پلاتفۆرمەکە کار پێ دەکات.'},
+ {q:'DigitalOcean Droplet',a:'IaaS',why:'سێرڤەرێکی مەجازی کە خۆت بەڕێوەی دەبەیت.'},
+ {q:'Microsoft 365 (Word، Teams)',a:'SaaS',why:'ئەپڵیکەیشنی ئامادە لە وێبگەڕدا.'},
+ {q:'Google Apps Script (کۆدێک لەسەر Google Sheets کار دەکات)',a:'PaaS',why:'کۆد دەنووسیت؛ Google ژینگەی کارپێکردن دابین دەکات و کاری پێ دەکات.'},
+ {q:'Azure Virtual Machines',a:'IaaS',why:'ئامێری مەجازیی بەکرێگیراو.'},
+ {q:'Zoom',a:'SaaS',why:'ئەپڵیکەیشنی ئامادە.'},
+ {q:'Heroku',a:'PaaS',why:'ئەپڵیکەیشنەکەت بار دەکەیت؛ پلاتفۆرمەکە سێرڤەرەکان بەڕێوە دەبات.'},
+ {q:'Google Classroom',a:'SaaS',why:'ئەپڵیکەیشنی ئامادە بۆ مامۆستایان و خوێندکاران.'}
 ],a=>a);
 
 </script>
