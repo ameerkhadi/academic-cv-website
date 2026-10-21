@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>الأسبوع ٧ · القسم ٢ — السبورة</title>
+<script>if(location.hash==='#embed')document.documentElement.className+=' emb';</script>
+<style>html.emb #ov{display:none!important} html.emb body{background:#11141a} html.emb body::after{content:'جارٍ تحميل الشرح…';position:fixed;inset:0;display:grid;place-items:center;color:#9aa4b5;font:600 18px Tahoma,sans-serif;pointer-events:none;z-index:1} html.emb.ready body::after{display:none}</style>
 <meta name="board" content='{"week": 7, "section": 2, "canvas": false, "title": "البريد: فرزٌ وتسمياتٌ ومسوّدات", "heading": "الأسبوع السابع · القسم ٢ — البريد: فرزٌ وتسمياتٌ ومسوّدات", "minutes": "٣", "scenes": 7, "course": "الذكاء الاصطناعي وتحليل البيانات"}'>
 <style id="fontsEmbed">/* arabic */
 @font-face {
@@ -945,7 +947,7 @@ window.CANVAS = null;
     // no annotation: swallow pointer input on the board so the pause-pen never starts
     ['pointerdown', 'mousedown', 'touchstart'].forEach(t => svg.addEventListener(t, e => { e.stopImmediatePropagation(); }, { capture: true }));
     window.__vChoice = HAS_AUDIO ? 'rec' : 'none'; LIVE = false; RECV = HAS_AUDIO; VOICE = null;
-    watchBar(); document.fonts.ready.then(() => setTimeout(() => watchFrom(0), 400));
+    watchBar(); document.fonts.ready.then(() => setTimeout(() => { document.documentElement.classList.add('ready'); watchFrom(0); }, 400));
   } else if (WATCH) {
     guides.style.display = 'none'; document.getElementById('recbar')?.remove();
     const title = ov.children[1] ? ov.children[1].textContent : document.title;
