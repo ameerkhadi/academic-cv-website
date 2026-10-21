@@ -793,7 +793,7 @@ window.CANVAS = null;
       const a = CLIP = new Audio(src); let done = false;
       const fin = () => { if (!done) { done = true; if (CLIP === a) CLIP = null; res(); } };
       a.onended = fin; a.onerror = fin;
-      gate().then(() => a.play().catch(fin));
+      gate().then(() => a.play().catch(err => { if (err && err.name === 'NotAllowedError' && typeof wBar !== 'undefined' && wBar) { setPaused(true); } else fin(); }));
     });
   }
 
@@ -932,8 +932,16 @@ window.CANVAS = null;
 
   // #watch = the students' view (public studio / notebook button): one clean button, the recorded voice, no dashed guides,
   // no recording or classroom controls — the board looks like a clean whiteboard that the pen fills in.
-  const WATCH = location.hash === '#watch';
-  if (WATCH) {
+  const EMBED = location.hash === '#embed';
+  const WATCH = location.hash === '#watch' || EMBED;
+  if (EMBED) {
+    guides.style.display = 'none'; document.getElementById('recbar')?.remove(); ov.remove();
+    document.head.insertAdjacentHTML('beforeend', '<style>#pal,#pz{display:none!important} svg#board{cursor:default!important}</style>');
+    // no annotation: swallow pointer input on the board so the pause-pen never starts
+    ['pointerdown', 'mousedown', 'touchstart'].forEach(t => svg.addEventListener(t, e => { e.stopImmediatePropagation(); }, { capture: true }));
+    window.__vChoice = HAS_AUDIO ? 'rec' : 'none'; LIVE = false; RECV = HAS_AUDIO; VOICE = null;
+    watchBar(); document.fonts.ready.then(() => setTimeout(() => watchFrom(0), 400));
+  } else if (WATCH) {
     guides.style.display = 'none'; document.getElementById('recbar')?.remove();
     const title = ov.children[1] ? ov.children[1].textContent : document.title;
     const back = ov.querySelector('a'); if (back) { back.href = '../'; back.onclick = null; back.textContent = '← كلّ السبّورات'; if (window.top !== window) back.style.display = 'none'; }   // embedded in the notebook: stay inside
@@ -952,7 +960,7 @@ window.CANVAS = null;
     // #guides = the dashed board only, #final = everything inked (for checking the layout)
     if (location.hash === '#guides' || location.hash === '#final') ov.remove();
     // a canvas with recorded voice keeps the start screen (▶ = the whole week with its voice, ✏️ = classroom); otherwise classroom straight away
-    if (window.CANVAS) { camInit(); if (!((HAS_AUDIO && !location.hash) || location.hash === '#watch')) { ov.remove(); startTrace(); if (location.hash === '#words') setView(1); else if (location.hash === '#full') setView(2); } }
+    if (window.CANVAS) { camInit(); if (!((HAS_AUDIO && !location.hash) || location.hash === '#watch' || location.hash === '#embed')) { ov.remove(); startTrace(); if (location.hash === '#words') setView(1); else if (location.hash === '#full') setView(2); } }
     else if (location.hash === '#trace') { ov.remove(); startTrace(); }
     else if (location.hash === '#steptest') { ov.remove(); startTrace(); (async () => { for (let i = 0; i < 3; i++) { const p = stepNext(); if (stepBusy) stepBusy.skip = true; await p; } stepBack(); })(); }
     if (location.hash === '#final' || location.hash === '#rendertest') B.scenes.forEach(s => s.items.forEach(it => {

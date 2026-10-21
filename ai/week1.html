@@ -7773,12 +7773,11 @@
         <span class="chip chip-ch1">الأسبوع السابع</span>
         <h2 class="page-title">الأتمتة تطبيقًا حيًّا — مدير المكتب الذكيّ</h2>
         <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
-        <p class="yt-link" id="w7-board" style="margin:8px 0 14px"><a href="../boards/ai/week7_canvas.html#watch" target="_blank" rel="noopener" style="display:inline-block;background:#1f7a3d;color:#fff!important;border-radius:10px;padding:6px 14px;font-weight:700;text-decoration:none">▶ شاهد شرح المحاضرة السابعة على السبّورة (٦ أقسام)</a> <a href="../boards/#ai" target="_blank" rel="noopener" style="font-size:.9em;margin-inline-start:8px">كلّ السبّورات</a></p>
-        <div class="w7-player" id="w7-player">
-          <button type="button" class="w7-poster" id="w7-poster" aria-label="شاهد شرح المحاضرة السابعة على السبّورة">
+                <div class="w7-player" id="w7-player">
+          <button type="button" class="w7-poster" id="w7-poster" aria-label="انقر لرؤية الشرح">
             <span class="w7-play">▶</span>
-            <span class="w7-pt1">شرح المحاضرة السابعة على السبّورة</span>
-            <span class="w7-pt2">٦ أقسام · بالصوت · نحو ١٥ دقيقة — المسافة توقف الشرح، وأثناء الإيقاف ارسم بنفسك</span>
+            <span class="w7-pt1">انقر لرؤية الشرح</span>
+            <span class="w7-pt2">شرح المحاضرة السابعة على السبّورة بالصوت — ٦ أقسام، ومعه أزرار السابق والإيقاف والتالي</span>
           </button>
         </div>
         <style>
@@ -7793,8 +7792,8 @@
         <script>
           document.getElementById('w7-poster').addEventListener('click', function(){
             var f=document.createElement('iframe');
-            f.src='../boards/ai/week7_canvas.html#watch'; f.title='سبّورة الأسبوع السابع';
-            f.allow='fullscreen; autoplay'; f.setAttribute('allowfullscreen','');
+            f.src='../boards/ai/week7_canvas.html#embed'; f.title='سبّورة الأسبوع السابع';
+            f.allow='autoplay';
             this.replaceWith(f);
           });
         </script>
