@@ -16,7 +16,7 @@
    "course": "الذكاء الاصطناعي وتحليل البيانات",
    "file": "ai/week7_canvas.html",
    "slug": "ai",
-   "audio": false
+   "audio": true
   },
   {
    "week": 7,
@@ -29,7 +29,7 @@
    "course": "الذكاء الاصطناعي وتحليل البيانات",
    "file": "ai/week7_s1_board.html",
    "slug": "ai",
-   "audio": false
+   "audio": true
   },
   {
    "week": 7,
@@ -42,7 +42,7 @@
    "course": "الذكاء الاصطناعي وتحليل البيانات",
    "file": "ai/week7_s2_board.html",
    "slug": "ai",
-   "audio": false
+   "audio": true
   },
   {
    "week": 7,
@@ -55,7 +55,7 @@
    "course": "الذكاء الاصطناعي وتحليل البيانات",
    "file": "ai/week7_s3_board.html",
    "slug": "ai",
-   "audio": false
+   "audio": true
   },
   {
    "week": 7,
@@ -68,7 +68,7 @@
    "course": "الذكاء الاصطناعي وتحليل البيانات",
    "file": "ai/week7_s4_board.html",
    "slug": "ai",
-   "audio": false
+   "audio": true
   },
   {
    "week": 7,
@@ -81,7 +81,7 @@
    "course": "الذكاء الاصطناعي وتحليل البيانات",
    "file": "ai/week7_s5_board.html",
    "slug": "ai",
-   "audio": false
+   "audio": true
   },
   {
    "week": 7,
@@ -94,7 +94,7 @@
    "course": "الذكاء الاصطناعي وتحليل البيانات",
    "file": "ai/week7_s6_board.html",
    "slug": "ai",
-   "audio": false
+   "audio": true
   }
  ]
 }
