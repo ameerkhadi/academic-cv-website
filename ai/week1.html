@@ -7774,6 +7774,30 @@
         <h2 class="page-title">الأتمتة تطبيقًا حيًّا — مدير المكتب الذكيّ</h2>
         <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
         <p class="yt-link" id="w7-board" style="margin:8px 0 14px"><a href="../boards/ai/week7_canvas.html#watch" target="_blank" rel="noopener" style="display:inline-block;background:#1f7a3d;color:#fff!important;border-radius:10px;padding:6px 14px;font-weight:700;text-decoration:none">▶ شاهد شرح المحاضرة السابعة على السبّورة (٦ أقسام)</a> <a href="../boards/#ai" target="_blank" rel="noopener" style="font-size:.9em;margin-inline-start:8px">كلّ السبّورات</a></p>
+        <div class="w7-player" id="w7-player">
+          <button type="button" class="w7-poster" id="w7-poster" aria-label="شاهد شرح المحاضرة السابعة على السبّورة">
+            <span class="w7-play">▶</span>
+            <span class="w7-pt1">شرح المحاضرة السابعة على السبّورة</span>
+            <span class="w7-pt2">٦ أقسام · بالصوت · نحو ١٥ دقيقة — المسافة توقف الشرح، وأثناء الإيقاف ارسم بنفسك</span>
+          </button>
+        </div>
+        <style>
+          .w7-player{position:relative;width:100%;max-width:900px;margin:6px auto 18px;aspect-ratio:16/9;border-radius:14px;overflow:hidden;border:3px solid #2b2f38;box-shadow:0 4px 14px rgba(0,0,0,.18);background:#11141a}
+          .w7-player iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+          .w7-poster{position:absolute;inset:0;width:100%;border:0;background:radial-gradient(circle at 50% 42%,#1f2a3c,#11141a 70%);color:#eef1f6;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;font-family:inherit}
+          .w7-play{width:84px;height:84px;border-radius:50%;background:#16a34a;display:grid;place-items:center;font-size:38px;padding-inline-start:6px;box-shadow:0 0 0 10px rgba(22,163,74,.18)}
+          .w7-poster:hover .w7-play{transform:scale(1.06)}
+          .w7-pt1{font-weight:700;font-size:1.25em}
+          .w7-pt2{font-size:.88em;color:#9aa4b5;padding:0 14px;text-align:center}
+        </style>
+        <script>
+          document.getElementById('w7-poster').addEventListener('click', function(){
+            var f=document.createElement('iframe');
+            f.src='../boards/ai/week7_canvas.html#watch'; f.title='سبّورة الأسبوع السابع';
+            f.allow='fullscreen; autoplay'; f.setAttribute('allowfullscreen','');
+            this.replaceWith(f);
+          });
+        </script>
 
         <style>
           .w7-game{background:#fffdf7;border:2px solid var(--brand);border-radius:16px;padding:14px;margin:14px 0}
