@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>روابط القاعة — د. أمير</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Reem+Kufi:wght@600&display=swap">
+<style>
+/* Public classroom launcher: week strip (today highlighted) + one tab per class with links, QR and copy. No private data here. */
+:root{--bg:#eef1f6;--surface:#fff;--sunk:#e3e8f0;--line:#d3dae5;--fg:#16202f;--muted:#5b6678;--lapis:#1d4f91;--lapis-soft:#dbe6f5;--gold:#a8740f;--gold-soft:#f5ead2;
+  --f-d:"Reem Kufi","IBM Plex Sans Arabic",system-ui,sans-serif;--f-b:"IBM Plex Sans Arabic",system-ui,Tahoma,sans-serif;color-scheme:light}
+@media (prefers-color-scheme:dark){:root{--bg:#0d1420;--surface:#152032;--sunk:#1b2940;--line:#26374f;--fg:#e6ecf5;--muted:#97a3b6;--lapis:#7fa9e8;--lapis-soft:#1c3253;--gold:#e0b25a;--gold-soft:#3a2f17;color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--f-b);font-size:15px;line-height:1.6}
+main{max-width:1100px;margin:0 auto;padding:20px max(16px,env(safe-area-inset-right)) 48px max(16px,env(safe-area-inset-left));display:grid;gap:16px}
+h1{font-family:var(--f-d);font-size:1.7rem;margin:0;color:var(--lapis)}
+.sub{color:var(--muted);margin:0}
+.week{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+.day{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 10px;min-height:80px;display:grid;align-content:start;gap:2px}
+.day .dn{font-weight:700;font-size:.85rem;color:var(--muted)} .day .what{font-size:.82rem;line-height:1.35} .day .where{font-size:.72rem;color:var(--muted)}
+.day.free .what{color:var(--muted)} .day.now{border-color:var(--gold);box-shadow:inset 0 0 0 1px var(--gold);background:var(--gold-soft)} .day.now .dn{color:var(--gold)}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:grid;gap:12px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap}
+.tabs button{font:inherit;border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:7px 14px;font-weight:600;color:var(--muted);cursor:pointer;display:inline-flex;gap:8px;align-items:center}
+.tabs button[aria-selected=true]{background:var(--lapis);border-color:var(--lapis);color:var(--surface)}
+.tabs .nowdot{font-size:.68rem;background:var(--gold);color:var(--surface);border-radius:999px;padding:0 7px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
+.lk{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px;align-items:center;background:var(--sunk);border-radius:10px;padding:6px 6px 6px 10px}
+.lk.stu{background:var(--gold-soft)}
+.lk a{display:grid;text-decoration:none;color:var(--fg);font-weight:600;min-width:0;padding:4px 6px}
+.lk a span{font-size:.72rem;font-weight:400;color:var(--muted);overflow-wrap:anywhere;direction:ltr;text-align:right}
+.acts{display:flex;gap:4px}
+.acts button{font:inherit;border:1px solid var(--line);background:var(--surface);border-radius:7px;padding:3px 8px;font-size:.74rem;font-weight:600;color:var(--lapis);cursor:pointer}
+.legend{font-size:.78rem;color:var(--muted);margin:0}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;background:var(--gold-soft);border:1px solid var(--gold);margin-inline-end:5px;vertical-align:-1px}
+.qr{position:fixed;inset:0;z-index:50;background:#fff;color:#111;display:grid;place-items:center;align-content:center;gap:16px;padding:24px;text-align:center}
+.qr[hidden]{display:none}
+.qr h3{font-family:var(--f-d);font-size:clamp(1.6rem,4vw,3rem);margin:0}
+.qr #qrBox{width:min(70vmin,520px)} .qr #qrBox img,.qr #qrBox canvas{width:100%!important;height:auto!important}
+.qr .u{font-size:clamp(1rem,2.4vw,1.6rem);direction:ltr;overflow-wrap:anywhere}
+.qr .close{position:absolute;top:14px;left:14px;background:#111;color:#fff;border:0;border-radius:10px;padding:8px 16px;font:700 1rem var(--f-b);cursor:pointer}
+@media (max-width:720px){.week{grid-template-columns:repeat(4,minmax(0,1fr))}}
+</style></head><body>
+<main>
+  <header><h1>روابط القاعة</h1><p class="sub" id="dateLine">د. أمير هادي</p></header>
+  <section class="week" id="week" aria-label="الجدول الأسبوعي"></section>
+  <section class="panel">
+    <div class="tabs" id="tabs" role="tablist"></div>
+    <p class="legend"><i></i>رابط للطلبة: اضغط QR واعرضه على الشاشة</p>
+    <div class="grid" id="links"></div>
+  </section>
+</main>
+<div class="qr" id="qr" hidden role="dialog" aria-modal="true"><button class="close" id="qrClose" type="button">إغلاق</button><h3 id="qrTitle"></h3><div id="qrBox"></div><div class="u" id="qrUrl"></div></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+const $=s=>document.querySelector(s), esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const P="https://ameer.itbabylon.org", SITE="https://ameerkhadi.github.io/academic-cv-website";
+const WEEK=[{d:6,n:"السبت",what:"الأمن السيبراني · الرابعة",where:"جامعة الشعب"},{d:0,n:"الأحد",what:"مشروع جماعي I · صباحي",where:"جامعة بابل"},{d:1,n:"الاثنين",what:"مشروع جماعي I · مسائي",where:"جامعة بابل"},
+  {d:2,n:"الثلاثاء",what:"الأمن السيبراني · ٨:٣٠–٤:٣٠",where:"جامعة الشعب"},{d:3,n:"الأربعاء",what:"—",where:"",free:true},{d:4,n:"الخميس",what:"الذكاء الاصطناعي وتحليل البيانات",where:"معهد القادة"},{d:5,n:"الجمعة",what:"عطلة",where:"",free:true}];
+const COMMON=[["الحضور QR","https://attendence.ameer.itbabylon.org",true],["تفاعل لايف",P+"/mentilive/",true]];
+const CLASSES=[
+ {id:"shaab",n:"الشعب · الأمن السيبراني",days:[6,2],links:[...COMMON,["مركز المواد",P+"/courses/",true],["دفتر أمن الحوسبة السحابية",SITE+"/cloudsec/week1.html",true],["سبّورات المادّة",SITE+"/boards/#cloudsec",true]]},
+ {id:"bab",n:"بابل · مشروع جماعي I",days:[0,1],links:[["مركز المواد",P+"/courses/",true],["دفتر المشروع الجماعي",SITE+"/Group_Project/group.html",true],...COMMON]},
+ {id:"inst",n:"المعهد · الذكاء الاصطناعي",days:[4],links:[["دفتر المادّة",SITE+"/ai/week1.html",true],["سبّورة الأسبوع ٧",SITE+"/boards/ai/week7_canvas.html#watch",true],["كلّ السبّورات",SITE+"/boards/#ai",true],
+   ["امتحان القاعة",P+"/exam/start",true],["أداة إخفاء البيانات",P+"/mask/",true],...COMMON,["Claude","https://claude.ai/new",false],["Gmail","https://mail.google.com/",false],["Google Calendar","https://calendar.google.com/",false],["Google Drive","https://drive.google.com/",false]]},
+ {id:"tools",n:"أدوات وعروض",days:[3,5],links:[["البوابة",P,true],["مرصد Edge QoS","https://menti.ameer.itbabylon.org",true],["المستشعرات العراقية","https://menti.ameer.itbabylon.org/iot.html",true],["الموقع الأكاديمي",SITE+"/",true],["رافد",P+"/rafid/",true],["دُبسار",P+"/dubsar/",true],["Google Scholar","https://scholar.google.com/",false],["GitHub","https://github.com/ameerkhadi",false]]}
+];
+const now=new Date(), today=now.getDay();
+$('#dateLine').textContent=now.toLocaleDateString("ar-IQ-u-nu-arab",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
+$('#week').innerHTML=WEEK.map(w=>`<div class="day${w.free?' free':''}${w.d===today?' now':''}"><span class="dn">${w.n}</span><span class="what">${w.what}</span>${w.where?`<span class="where">${w.where}</span>`:''}</div>`).join('');
+let cur=location.hash.slice(1); if(!CLASSES.some(c=>c.id===cur)) cur=(CLASSES.find(c=>c.days.includes(today))||CLASSES[0]).id;
+const short=u=>u.replace(/^https?:\/\//,'').replace(/\/$/,'');
+function render(){
+  $('#tabs').innerHTML=CLASSES.map(c=>`<button type="button" role="tab" data-c="${c.id}" aria-selected="${c.id===cur}">${c.n}${c.days.includes(today)&&c.id!=='tools'?'<span class="nowdot">اليوم</span>':''}</button>`).join('');
+  $('#links').innerHTML=CLASSES.find(c=>c.id===cur).links.map(([n,u,s])=>`<div class="lk${s?' stu':''}"><a href="${esc(u)}" target="_blank" rel="noopener">${esc(n)}<span>${esc(short(u))}</span></a><div class="acts">${s?`<button type="button" data-qr="${esc(u)}" data-n="${esc(n)}">QR</button>`:''}<button type="button" data-copy="${esc(u)}">نسخ</button></div></div>`).join('');
+}
+render();
+$('#tabs').onclick=e=>{const b=e.target.closest('button'); if(!b) return; cur=b.dataset.c; history.replaceState(null,'','#'+cur); render();};
+$('#links').onclick=async e=>{const q=e.target.closest('[data-qr]'),c=e.target.closest('[data-copy]');
+  if(q){$('#qrTitle').textContent=q.dataset.n;$('#qrUrl').textContent=short(q.dataset.qr);const box=$('#qrBox');box.innerHTML='';
+    if(window.QRCode) new QRCode(box,{text:q.dataset.qr,width:520,height:520,correctLevel:QRCode.CorrectLevel.M}); else box.textContent='تعذّر تحميل QR — اعرض العنوان أدناه';$('#qr').hidden=false;}
+  if(c){try{await navigator.clipboard.writeText(c.dataset.copy);c.textContent='نُسخ';}catch{c.textContent='تعذّر';} setTimeout(()=>c.textContent='نسخ',1500);}};
+$('#qrClose').onclick=()=>$('#qr').hidden=true; $('#qr').onclick=e=>{if(e.target.id==='qr') $('#qr').hidden=true;};
+addEventListener('keydown',e=>{if(e.key==='Escape') $('#qr').hidden=true;});
+</script>
+</body></html>
