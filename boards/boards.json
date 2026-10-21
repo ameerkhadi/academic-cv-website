@@ -1,0 +1,100 @@
+{
+ "courses": {
+  "ai": "الذكاء الاصطناعي وتحليل البيانات",
+  "cloudsec": "أمن الحوسبة السحابية",
+  "gp": "المشروع الجماعي"
+ },
+ "boards": [
+  {
+   "week": 7,
+   "section": 0,
+   "canvas": true,
+   "title": "كلّ الأقسام على لوحة واحدة",
+   "heading": "الأسبوع السابع — كلّ الأقسام على لوحة واحدة",
+   "minutes": "—",
+   "scenes": 38,
+   "course": "الذكاء الاصطناعي وتحليل البيانات",
+   "file": "ai/week7_canvas.html",
+   "slug": "ai",
+   "audio": false
+  },
+  {
+   "week": 7,
+   "section": 1,
+   "canvas": false,
+   "title": "مدير المكتب الذكيّ",
+   "heading": "الأسبوع السابع · القسم ١ — مدير المكتب الذكيّ",
+   "minutes": "٢",
+   "scenes": 7,
+   "course": "الذكاء الاصطناعي وتحليل البيانات",
+   "file": "ai/week7_s1_board.html",
+   "slug": "ai",
+   "audio": false
+  },
+  {
+   "week": 7,
+   "section": 2,
+   "canvas": false,
+   "title": "البريد: فرزٌ وتسمياتٌ ومسوّدات",
+   "heading": "الأسبوع السابع · القسم ٢ — البريد: فرزٌ وتسمياتٌ ومسوّدات",
+   "minutes": "٣",
+   "scenes": 7,
+   "course": "الذكاء الاصطناعي وتحليل البيانات",
+   "file": "ai/week7_s2_board.html",
+   "slug": "ai",
+   "audio": false
+  },
+  {
+   "week": 7,
+   "section": 3,
+   "canvas": false,
+   "title": "التقويم: من الدعوة إلى الموعد",
+   "heading": "الأسبوع السابع · القسم ٣ — التقويم: من الدعوة إلى الموعد",
+   "minutes": "٢",
+   "scenes": 6,
+   "course": "الذكاء الاصطناعي وتحليل البيانات",
+   "file": "ai/week7_s3_board.html",
+   "slug": "ai",
+   "audio": false
+  },
+  {
+   "week": 7,
+   "section": 4,
+   "canvas": false,
+   "title": "Drive والموجز اليوميّ",
+   "heading": "الأسبوع السابع · القسم ٤ — Drive والموجز اليوميّ",
+   "minutes": "٢",
+   "scenes": 7,
+   "course": "الذكاء الاصطناعي وتحليل البيانات",
+   "file": "ai/week7_s4_board.html",
+   "slug": "ai",
+   "audio": false
+  },
+  {
+   "week": 7,
+   "section": 5,
+   "canvas": false,
+   "title": "حدود المساعد",
+   "heading": "الأسبوع السابع · القسم ٥ — حدود المساعد",
+   "minutes": "١",
+   "scenes": 5,
+   "course": "الذكاء الاصطناعي وتحليل البيانات",
+   "file": "ai/week7_s5_board.html",
+   "slug": "ai",
+   "audio": false
+  },
+  {
+   "week": 7,
+   "section": 6,
+   "canvas": false,
+   "title": "دليلك العمليّ خطوةً خطوة",
+   "heading": "الأسبوع السابع · القسم ٦ — دليلك العمليّ خطوةً خطوة",
+   "minutes": "٢",
+   "scenes": 6,
+   "course": "الذكاء الاصطناعي وتحليل البيانات",
+   "file": "ai/week7_s6_board.html",
+   "slug": "ai",
+   "audio": false
+  }
+ ]
+}
