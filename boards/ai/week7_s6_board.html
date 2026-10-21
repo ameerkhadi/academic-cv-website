@@ -850,7 +850,7 @@ window.CANVAS = null;
     if (!wBar) return; const n = B.scenes.length, AR = d => String(d).replace(/\d/g, c => '٠١٢٣٤٥٦٧٨٩'[c]);
     const t = window.CANVAS ? ((B.scenes[wIx].items[0] || {}).tile ?? 0) + 1 : 0;
     wBar.querySelector('.wc').textContent = wEnd ? 'انتهى الشرح' : (t ? 'القسم ' + AR(t) + ' | ' : '') + AR(wIx + 1) + ' من ' + AR(n);
-    wBar.querySelector('[data-w=pp]').textContent = wEnd ? '↺' : paused ? '▶' : '⏸';
+    const pp = wBar.querySelector('[data-w=pp]'), want = wEnd ? 'r' : paused ? 'p' : 'z'; if (pp.dataset.s !== want) { pp.dataset.s = want; pp.innerHTML = want === 'r' ? '<svg viewBox="0 0 24 24"><path d="M12 5V2L7 6l5 4V7a5 5 0 1 1-5 5H5a7 7 0 1 0 7-7z"/></svg>' : want === 'p' ? '<svg viewBox="0 0 24 24"><path d="M16 5v14L5 12z"/></svg>' : '<svg viewBox="0 0 24 24"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>'; }
     wBar.querySelector('[data-w=prev]').disabled = wIx === 0 && !wEnd;
   }
   async function watchFrom(k) {
@@ -876,18 +876,23 @@ window.CANVAS = null;
   }
   function watchBar() {
     document.head.insertAdjacentHTML('beforeend', `<style>
-      #wbar{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:40;display:flex;align-items:center;gap:8px;
-        background:rgba(17,20,26,.82);border:1px solid #2c3443;border-radius:999px;padding:6px 8px;backdrop-filter:blur(6px);direction:rtl;font:600 15px Tahoma,sans-serif;color:#eef1f6;max-width:calc(100vw - 20px)}
-      #wbar button{white-space:nowrap;display:inline-flex;align-items:center;gap:6px;font:700 17px Tahoma,sans-serif;min-width:48px;height:44px;border-radius:22px;border:0;background:#262d3a;color:#fff;cursor:pointer;padding:0 14px;touch-action:manipulation}
-      #wbar button[data-w=pp]{background:#16a34a;min-width:56px}
-      #wbar button:disabled{opacity:.35}
-      #wbar .wc{min-width:96px;text-align:center;font-variant-numeric:tabular-nums;white-space:nowrap;padding:0 4px}
+      #wbar{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(10px + env(safe-area-inset-bottom,0px));z-index:40;display:flex;align-items:center;gap:4px;
+        background:rgba(15,18,24,.72);border:1px solid rgba(255,255,255,.08);border-radius:999px;padding:4px;backdrop-filter:blur(8px);direction:rtl;
+        font:500 12px Tahoma,sans-serif;color:#cfd6e2;opacity:.55;transition:opacity .25s;box-shadow:0 4px 16px rgba(0,0,0,.35)}
+      #wbar:hover,#wbar:focus-within,body.wtouch #wbar{opacity:1}
+      #wbar button{display:inline-grid;place-items:center;width:30px;height:30px;padding:0;border-radius:50%;border:0;background:transparent;color:#e7ecf4;cursor:pointer;touch-action:manipulation;transition:background .15s}
+      #wbar button:hover{background:rgba(255,255,255,.12)}
+      #wbar button svg{width:15px;height:15px;fill:currentColor}
+      #wbar button[data-w=pp]{width:34px;height:34px;background:#16a34a;color:#fff}
+      #wbar button[data-w=pp]:hover{background:#15803d}
+      #wbar button:disabled{opacity:.3;cursor:default;background:transparent}
+      #wbar .wc{padding:0 8px;font-variant-numeric:tabular-nums;white-space:nowrap;letter-spacing:.02em}
       #pal [data-a=snext],#pal [data-a=sback],#pal [data-a=next],#pal [data-a=prev],#pal [data-a=ov],#pal [data-a=home],#pal [data-a=view],#pal [data-a=save]{display:none!important}
       #pz{display:none}
-      @media (max-width:900px){#wbar{gap:5px;font-size:13px}#wbar button{font-size:15px;min-width:44px;padding:0 10px}#wbar .wl{display:none}#wbar .wc{min-width:76px}}
     </style>`);
     wBar = document.createElement('div'); wBar.id = 'wbar';
-    wBar.innerHTML = '<button data-w="prev" aria-label="الخطوة السابقة">→<span class="wl"> السابق</span></button><button data-w="pp" aria-label="إيقاف أو تشغيل">⏸</button><span class="wc"></span><button data-w="next" aria-label="الخطوة التالية"><span class="wl">التالي </span>←</button>';
+    wBar.innerHTML = '<button data-w="prev" aria-label="السابق" title="السابق"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.6 5.4 15.2 12l-6.6 6.6 1.4 1.4 8-8-8-8z"/></svg></button><button data-w="pp" aria-label="إيقاف أو تشغيل"></button><span class="wc"></span><button data-w="next" aria-label="التالي" title="التالي"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.4 5.4 8.8 12l6.6 6.6-1.4 1.4-8-8 8-8z"/></svg></button>';
+    addEventListener('touchstart', () => { document.body.classList.add('wtouch'); clearTimeout(window.__wt); window.__wt = setTimeout(() => document.body.classList.remove('wtouch'), 3000); }, { passive: true });
     document.body.appendChild(wBar);
     wBar.addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; e.stopPropagation();
       const a = b.dataset.w;
