@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>سبّورة د. أمير</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@500;700&family=Reem+Kufi:wght@600&display=swap">
+<style>
+:root{--bg:#11141a;--card:#1a1f29;--line:#2c3443;--fg:#eef1f6;--mute:#9aa4b5;--yel:#ffd34d;--cy:#3fd0e8;--gr:#5fd38d;--rd:#ff7a85}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:"Noto Naskh Arabic",Tahoma,serif;line-height:1.8}
+main{max-width:1060px;margin:0 auto;padding:24px max(16px,env(safe-area-inset-left)) 60px}
+h1{font-family:"Reem Kufi","Noto Naskh Arabic",serif;color:var(--yel);font-size:2rem;margin:0}
+.sub{color:var(--mute);margin:2px 0 18px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.tabs button{font:inherit;font-weight:700;background:var(--card);color:var(--mute);border:1.5px solid var(--line);border-radius:12px;padding:6px 16px;cursor:pointer}
+.tabs button[aria-selected=true]{color:var(--bg);background:var(--yel);border-color:var(--yel)}
+.week{background:var(--card);border:1.5px dashed var(--line);border-radius:16px;padding:14px 16px;margin:14px 0}
+.week h2{margin:0 0 10px;font-size:1.2rem;color:var(--cy)}
+.watch{display:flex;align-items:center;gap:12px;flex-wrap:wrap;text-decoration:none;color:var(--bg);background:var(--gr);border-radius:12px;padding:10px 16px;font-weight:700;font-size:1.05rem}
+.watch small{font-weight:500;opacity:.8}
+.secs{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px;margin-top:10px}
+.secs a{display:block;text-decoration:none;color:var(--fg);border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:.95rem}
+.secs a:hover,.watch:hover{filter:brightness(1.08)}
+.secs a span{color:var(--mute);font-size:.82rem;display:block}
+.empty{color:var(--mute)}
+.help{color:var(--mute);font-size:.9rem;border-top:1px solid var(--line);margin-top:24px;padding-top:12px}
+</style></head><body><main>
+<h1>سبّورة د. أمير</h1>
+<p class="sub">شرح كلّ محاضرة على السبّورة بالصوت — شاهد، وأوقف بالمسافة، وارسم بنفسك.</p>
+<div class="tabs" id="tabs" role="tablist"></div>
+<div id="list"><p class="empty">تُحمَّل القائمة…</p></div>
+<p class="help">داخل السبّورة: <b>المسافة</b> إيقاف وتشغيل · أثناء الإيقاف ارسم بالفأرة أو بإصبعك · <b>F</b> ملء الشاشة · زرّ ✏️ لترسم السبّورة بنفسك.</p>
+</main>
+<script>
+const AR='٠١٢٣٤٥٦٧٨٩', ar=n=>String(n).replace(/\d/g,d=>AR[d]);
+const WEEKS=['','الأوّل','الثاني','الثالث','الرابع','الخامس','السادس','السابع','الثامن','التاسع','العاشر','الحادي عشر','الثاني عشر','الثالث عشر','الرابع عشر','الخامس عشر'];
+fetch('boards.json',{cache:'no-store'}).then(r=>r.json()).then(({courses,boards})=>{
+  const slugs=[...new Set(boards.map(b=>b.slug))];
+  let cur=(location.hash.slice(1)&&slugs.includes(location.hash.slice(1)))?location.hash.slice(1):slugs[0];
+  const tabs=document.getElementById('tabs'), list=document.getElementById('list');
+  function render(){
+    tabs.innerHTML=slugs.map(s=>`<button role="tab" data-s="${s}" aria-selected="${s===cur}">${courses[s]||s}</button>`).join('');
+    const mine=boards.filter(b=>b.slug===cur), weeks=[...new Set(mine.map(b=>b.week))].sort((a,b)=>b-a);
+    list.innerHTML=weeks.map(w=>{
+      const bs=mine.filter(b=>b.week===w), cv=bs.find(b=>b.canvas), secs=bs.filter(b=>!b.canvas);
+      return `<section class="week"><h2>الأسبوع ${WEEKS[w]||ar(w)}</h2>`
+        +(cv?`<a class="watch" href="${cv.file}#watch">▶ شاهد شرح الأسبوع كاملًا <small>${ar(secs.length)} أقسام${cv.audio?' · بالصوت':''}</small></a>`:'')
+        +`<div class="secs">${secs.map(b=>`<a href="${b.file}#watch">${ar(b.section)} · ${b.title}<span>${ar(b.scenes)} خطوات</span></a>`).join('')}</div></section>`;
+    }).join('')||'<p class="empty">لا توجد سبّورات لهذه المادّة بعد.</p>';
+  }
+  tabs.onclick=e=>{const b=e.target.closest('button'); if(!b) return; cur=b.dataset.s; history.replaceState(null,'','#'+cur); render();};
+  render();
+}).catch(()=>{document.getElementById('list').innerHTML='<p class="empty">تعذّر تحميل القائمة. حدّث الصفحة.</p>';});
+</script>
+</body></html>
