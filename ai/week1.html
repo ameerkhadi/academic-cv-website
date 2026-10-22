@@ -8223,6 +8223,109 @@
           .w7x-actions button.ghost{background:transparent;color:var(--brand)}
         </style>
 
+        <style>
+          /* 🏁 سباق الفرز — volunteer vs Claude, tap only */
+          .w7r-bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
+          .w7r-clock{font-size:1.6em;font-weight:800;color:var(--brand);min-width:110px;text-align:center;background:#fff;border:2px solid var(--brand);border-radius:12px;padding:2px 12px;font-variant-numeric:tabular-nums}
+          .w7r-bar label{font-weight:700}
+          .w7r-bar input{font:inherit;width:80px;border:2px solid #c9d2df;border-radius:10px;padding:3px 8px;text-align:center}
+          .w7r-list{display:grid;gap:8px}
+          .w7r-row{background:#fff;border:2px solid #c9d2df;border-radius:12px;padding:8px 10px;transition:border-color .2s,background .2s}
+          .w7r-row .s{font-weight:700;margin-bottom:6px;display:flex;gap:8px;align-items:center}
+          .w7r-row .s b{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--ink);color:#fff;font-size:.9em}
+          .w7r-cats{display:flex;flex-wrap:wrap;gap:6px}
+          .w7r-cats button{font:inherit;font-size:.9em;border:2px solid #c9d2df;background:#f7f8fa;color:var(--ink);border-radius:999px;padding:4px 11px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+          .w7r-cats button.on{border-color:var(--brand);background:var(--brand);color:#fff}
+          .w7r-row.ok{border-color:var(--green);background:#eaf6ee}
+          .w7r-row.bad{border-color:#d1342b;background:#fdecea}
+          .w7r-row .why{display:none;margin-top:6px;font-size:.9em}
+          .w7r-row.ok .why,.w7r-row.bad .why{display:block}
+          .w7r-row.ok .why{color:#173a25}.w7r-row.bad .why{color:#7a1c14}
+          .w7r-big{font-size:1.15em}
+        </style>
+
+        <div class="section-heading" style="margin-top:22px;">
+          <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <span>🏁 سباق الفرز — إنتَ ضدّ كلود</span>
+        </div>
+        <p>متطوّعٌ أمام القاعة يفرز رسائل صباح الأحد العشر <b>بالنقر</b>، وفي اللحظة نفسها يطلب الأستاذ من كلود الفرز نفسه. اضغط <b>«ابدأ السباق»</b>، ثمّ اختر لكلّ رسالة فئتها، ثمّ اضغط <b>«صحّح»</b>.</p>
+        <div class="w7x w7r-big" id="w7race">
+          <div class="w7r-bar">
+            <span class="w7r-clock" id="w7rClock">٠٠:٠٠</span>
+            <div class="w7x-actions" style="margin:0"><button type="button" id="w7rStart">ابدأ السباق ▶</button><button type="button" id="w7rCheck">صحّح ✓</button><button type="button" class="ghost" id="w7rReset">من جديد ↺</button></div>
+            <label for="w7rClaude">زمن كلود:</label><input id="w7rClaude" type="number" min="0" inputmode="numeric" placeholder="ثانية">
+            <span class="w7x-score" id="w7rScore">اختِر: ٠ من ١٠</span>
+          </div>
+          <div class="w7r-list" id="w7rList"></div>
+          <div class="w7x-msg" id="w7rMsg"></div>
+        </div>
+        <script>
+        (function(){
+          var AR = function(n){ return String(n).replace(/\d/g, function(d){ return '٠١٢٣٤٥٦٧٨٩'[d]; }); };
+          var CATS = ['📅 اجتماعات', '📢 تعاميم ومهل', '📊 تقارير', '✋ تحتاج قرار المدير', 'ℹ️ للعلم فقط', '⚠️ مشبوهة'];
+          var MAILS = [
+            ['دعوة: اجتماع لجنة الموازنة، الثلاثاء ٢٧/١٠', 0, 'دعوة لاجتماع بموعدٍ محدّد.'],
+            ['تعميم: تحديث بيانات المشاريع قبل ٥/١١', 1, 'تعميم فيه مهلة (قبل ٥/١١).'],
+            ['تقرير الإنجاز الشهري، قسم المشاريع، أيلول', 2, 'تقرير للاطّلاع والمتابعة.'],
+            ['طلب إجازة اعتياديّة، ٣ أيّام', 3, 'يحتاج موافقة المدير أو رفضه.'],
+            ['طلب موعد: شركة الرافدين للمقاولات', 3, 'قبول الموعد قرار المدير؛ المساعد يقترح وقتين فقط.'],
+            ['تذكير: ورشة التحوّل الرقميّ، الخميس ٢٩/١٠', 0, 'موعد ورشة (ويتعارض مع زيارة الوفد!).'],
+            ['زيارة وفد الوزارة، الخميس ٢٩/١٠ الساعة ٩:٣٠', 0, 'موعد زيارة (يتعارض مع الورشة).'],
+            ['Fwd: تعميم: تحديث بيانات المشاريع قبل ٥/١١', 1, 'تعميم، لكنّه نسخة مكرّرة من الثانية: يُوسم مكرّرًا ولا يُحسب مرّتين.'],
+            ['النشرة الأسبوعيّة: أخبار الدوائر', 4, 'للعلم فقط، لا تحتاج إجراءً.'],
+            ['تنبيه أمنيّ عاجل من دعم Google Drive', 5, 'مرسل خارجيّ، واستعجال، وطلب مشاركة، وتعليمات للمساعد نفسه: بيانات لا أوامر.']
+          ];
+          var pick = {}, t0 = null, tick = null, done = false;
+          var list = document.getElementById('w7rList'), clock = document.getElementById('w7rClock');
+          function secs(){ return t0 ? Math.round((Date.now() - t0) / 100) / 10 : 0; }
+          function showClock(){ var s = secs(), m = Math.floor(s / 60), r = Math.floor(s % 60); clock.textContent = AR(String(m).padStart(2, '0') + ':' + String(r).padStart(2, '0')); }
+          function start(){ if (t0 || done) return; t0 = Date.now(); tick = setInterval(showClock, 250); }
+          function score(){ document.getElementById('w7rScore').textContent = 'اختِر: ' + AR(Object.keys(pick).length) + ' من ١٠'; }
+          function build(){
+            pick = {}; t0 = null; done = false; warned = false; clearInterval(tick); showClock(); list.innerHTML = '';
+            document.getElementById('w7rMsg').className = 'w7x-msg';
+            MAILS.forEach(function(m, i){
+              var row = document.createElement('div'); row.className = 'w7r-row'; row.dataset.i = i;
+              row.innerHTML = '<div class="s"><b>' + AR(i + 1) + '</b><span>' + m[0] + '</span></div><div class="w7r-cats">' +
+                CATS.map(function(c, k){ return '<button type="button" data-k="' + k + '">' + c + '</button>'; }).join('') + '</div><div class="why"></div>';
+              list.appendChild(row);
+            });
+            score();
+          }
+          list.addEventListener('click', function(e){
+            var b = e.target.closest('button[data-k]'); if (!b || done) return;
+            start();
+            var row = b.closest('.w7r-row'), i = +row.dataset.i;
+            pick[i] = +b.dataset.k;
+            row.querySelectorAll('button').forEach(function(x){ x.classList.toggle('on', x === b); });
+            score();
+          });
+          document.getElementById('w7rStart').addEventListener('click', start);
+          document.getElementById('w7rReset').addEventListener('click', build);
+          document.getElementById('w7rCheck').addEventListener('click', function(){
+            if (done) return;
+            if (Object.keys(pick).length < 10 && !confirmLeft()) return;
+            done = true; clearInterval(tick); showClock();
+            var right = 0;
+            list.querySelectorAll('.w7r-row').forEach(function(row){
+              var i = +row.dataset.i, m = MAILS[i], ok = pick[i] === m[1];
+              if (ok) right++;
+              row.classList.add(ok ? 'ok' : 'bad');
+              row.querySelector('.why').innerHTML = (ok ? '✅ ' : '❌ الصحيح: <b>' + CATS[m[1]] + '</b>. ') + m[2];
+            });
+            var t = secs(), cl = parseFloat(document.getElementById('w7rClaude').value);
+            var html = '<b>النتيجة: ' + AR(right) + ' من ١٠ خلال ' + AR(t.toFixed(1)) + ' ثانية.</b> ';
+            if (!isNaN(cl) && cl > 0) html += t < cl ? 'أسرع من كلود! 🏆 ' : 'كلود أسرع بـ ' + AR((t - cl).toFixed(1)) + ' ثانية. ';
+            html += right === 10 ? 'دقّة كاملة، تصفيق للبطل 👏' : 'السرعة مو كلّشي: المهمّ الدقّة، والقرار يبقى للإنسان.';
+            msg(right >= 8, html);
+          });
+          function msg(ok, html){ var m = document.getElementById('w7rMsg'); m.className = 'w7x-msg ' + (ok ? 'ok' : 'no'); m.innerHTML = html; }
+          var warned = false;
+          function confirmLeft(){ if (warned) return true; warned = true; msg(false, 'باقي رسائل بلا فئة. اضغط «صحّح» مرّة ثانية للتصحيح الآن.'); return false; }
+          build();
+        })();
+        </script>
+
         <div class="section-heading" style="margin-top:22px;">
           <svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
           <span>🎮 نشاط ج — اصطد الخطر في الرسالة</span>
