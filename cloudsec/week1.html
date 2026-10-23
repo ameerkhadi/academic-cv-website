@@ -3773,7 +3773,7 @@ html[data-lang="ku"] .cs .lang-ku{display:block} html[data-lang="ku"] .cs .lang-
 <div class="sol-item"><div class="sol-tf-line"><p class="sol-q"><span class="sq-n">5.</span> In the Snowflake customer incidents (2024), attackers broke the Snowflake platform itself with a zero-day exploit.</p><span class="sol-badge f">False</span></div><p class="sol-why"><b>Reason:</b> Investigations found the attackers logged in to <b>customer accounts</b> with credentials stolen by infostealer malware, on accounts without MFA.</p></div>
 <div class="sol-item"><div class="sol-tf-line"><p class="sol-q"><span class="sq-n">6.</span> Residual risk is the risk that remains after controls are applied.</p><span class="sol-badge t">True</span></div><p class="sol-why"><b>Reason:</b> Controls lower likelihood or impact, rarely to zero; the remainder must be accepted by the risk owner.</p></div>
 <div class="sol-item"><div class="sol-tf-line"><p class="sol-q"><span class="sq-n">7.</span> Storing an access key in source code is safe as long as the repository is private.</p><span class="sol-badge f">False</span></div><p class="sol-why"><b>Reason:</b> Private repositories get cloned, shared, forked or made public by mistake; keys belong in a secrets manager, and short-lived role credentials are better still.</p></div>
-<div class="sol-item"><div class="sol-tf-line"><p class="sol-q"><span class="sq-n">8.</span> Every risk in a risk register should have a named owner.</p><span class="sol-badge t">True</span></div><p class="sol-why"><b>Reason:</b> A risk without an owner is a risk nobody treats or reviews.</p></div>
+<div class="sol-item"><div class="sol-tf-line"><p class="sol-q"><span class="sq-n">8.</span> Turning on Block Public Access for the whole account is an example of a secure default.</p><span class="sol-badge t">True</span></div><p class="sol-why"><b>Reason:</b> It makes “private” the starting point for every bucket, so one wrong click cannot expose data.</p></div>
 <div class="sol-kind"><span>Short answer — marking points</span><span class="sk-line"></span></div>
 <div class="sol-item"><p class="sol-q"><span class="sq-n">1.</span> Define <b>asset</b>, <b>threat</b>, <b>vulnerability</b> and <b>risk</b>, using one cloud example for all four.</p><p class="sol-why"><b>Marking guide:</b></p><ul class="sol-grading"><li>Asset: something of value (e.g. the bucket of lab results).</li><li>Threat: a possible cause of harm (e.g. an automated scanner or a criminal looking for open buckets).</li><li>Vulnerability: the weakness the threat uses (e.g. the bucket is set to public-read).</li><li>Risk: the chance and the size of the harm — likelihood × impact (e.g. 4 × 5 = 20, critical).</li><li>One mark for each correct definition; the example must link all four.</li></ul></div>
 <div class="sol-item"><p class="sol-q"><span class="sq-n">2.</span> Name <b>three</b> threats from the CSA Top Threats list and give one <b>preventive</b> control for each.</p><p class="sol-why"><b>Marking guide:</b></p><ul class="sol-grading"><li>Misconfiguration → account-wide block of public access / policy-as-code review.</li><li>IAM weaknesses → MFA for all humans, no long-lived keys, least privilege.</li><li>Insecure APIs → per-object authorisation checks, API gateway with authentication and rate limits.</li><li>Also accepted: third-party resources → pin and verify; system vulnerabilities → patching SLA; accidental disclosure → data classification + DLP.</li></ul></div>
@@ -3830,7 +3830,7 @@ html[data-lang="ku"] .cs .lang-ku{display:block} html[data-lang="ku"] .cs .lang-
 <div class="sol-item"><div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٥.</span> في حوادث زبائن Snowflake (٢٠٢٤) كسر المهاجمون منصّة Snowflake نفسها بثغرة يوم الصفر.</p><span class="sol-badge f">خطأ</span></div><p class="sol-why"><b>التعليل:</b> وجدت التحقيقات أنّ المهاجمين دخلوا <b>حسابات الزبائن</b> ببيانات اعتمادٍ سرقتها برمجيّات سرقة المعلومات، في حساباتٍ بلا MFA.</p></div>
 <div class="sol-item"><div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٦.</span> الخطر المتبقّي هو الخطر الذي يبقى بعد تطبيق الضوابط.</p><span class="sol-badge t">صح</span></div><p class="sol-why"><b>التعليل:</b> الضوابط تخفض الاحتماليّة أو الأثر ونادرًا ما تبلغ الصفر، والباقي يقبله مالك الخطر.</p></div>
 <div class="sol-item"><div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٧.</span> حفظ مفتاح الوصول داخل الكود آمنٌ ما دام المستودع خاصًّا.</p><span class="sol-badge f">خطأ</span></div><p class="sol-why"><b>التعليل:</b> المستودعات الخاصّة تُستنسخ وتُشارك وقد تُجعل عامّة خطأً؛ مكان المفاتيح مدير الأسرار، والأفضل منه بيانات اعتمادٍ مؤقّتة عبر الأدوار.</p></div>
-<div class="sol-item"><div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٨.</span> كلّ خطرٍ في سجلّ المخاطر يجب أن يكون له مالكٌ مسمّى.</p><span class="sol-badge t">صح</span></div><p class="sol-why"><b>التعليل:</b> الخطر بلا مالك خطرٌ لا يعالجه أحد ولا يراجعه أحد.</p></div>
+<div class="sol-item"><div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٨.</span> تفعيل «منع الوصول العامّ» على الحساب كلّه مثالٌ على الإعدادات الآمنة افتراضيًّا.</p><span class="sol-badge t">صح</span></div><p class="sol-why"><b>التعليل:</b> يجعل «الخاصّ» نقطة البداية لكلّ حاوية، فلا تكشف نقرةٌ خاطئة واحدة البيانات.</p></div>
 <div class="sol-kind"><span>أسئلة قصيرة — نقاط التصحيح</span><span class="sk-line"></span></div>
 <div class="sol-item"><p class="sol-q"><span class="sq-n">١.</span> عرّف <b>الأصل</b> و<b>التهديد</b> و<b>الثغرة</b> و<b>الخطر</b>، بمثالٍ سحابيٍّ واحد يجمعها.</p><p class="sol-why"><b>دليل التصحيح:</b></p><ul class="sol-grading"><li>الأصل: شيءٌ ذو قيمة (مثل حاوية نتائج المختبر).</li><li>التهديد: مصدرٌ محتمل للضرر (مثل ماسحٍ آليّ أو مجرمٍ يبحث عن الحاويات المفتوحة).</li><li>الثغرة: الضعف الذي يستغلّه التهديد (مثل ضبط الحاوية على «قراءة عامّة»).</li><li>الخطر: احتمال الضرر وحجمه — الاحتماليّة × الأثر (مثل ٤ × ٥ = ٢٠، حرج).</li><li>درجةٌ لكلّ تعريفٍ صحيح، ويجب أن يربط المثال الأربعة معًا.</li></ul></div>
 <div class="sol-item"><p class="sol-q"><span class="sq-n">٢.</span> اذكر <b>ثلاثة</b> تهديداتٍ من قائمة CSA، ولكلٍّ منها ضابطًا <b>مانعًا</b>.</p><p class="sol-why"><b>دليل التصحيح:</b></p><ul class="sol-grading"><li>الإعدادات الخاطئة ← منع الوصول العامّ على مستوى الحساب / مراجعة السياسات ككود.</li><li>ضعف الهويّات ← MFA لكلّ البشر، لا مفاتيح طويلة العمر، أقلّ صلاحيّة.</li><li>الواجهات غير الآمنة ← فحص التفويض لكلّ كائن، وبوّابة API بمصادقةٍ وتحديد معدّل.</li><li>يُقبل أيضًا: الموارد الخارجيّة ← التثبيت والتحقّق؛ ثغرات الأنظمة ← مهلة ترقيع؛ الكشف العرضيّ للبيانات ← التصنيف وDLP.</li></ul></div>
@@ -3887,7 +3887,7 @@ html[data-lang="ku"] .cs .lang-ku{display:block} html[data-lang="ku"] .cs .lang-
 <div class="sol-item"><div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٥.</span> لە ڕووداوەکانی کڕیارانی Snowflake (٢٠٢٤) هێرشبەران خودی پلاتفۆرمی Snowflakeیان بە کەلێنی zero-day شکاند.</p><span class="sol-badge f">هەڵە</span></div><p class="sol-why"><b>هۆکار:</b> لێکۆڵینەوەکان دۆزیانەوە کە هێرشبەران بە زانیاریی دزراو لەلایەن نەرمەکاڵای دزینی زانیاری چوونە ناو <b>هەژمارەکانی کڕیاران</b>، کە MFAیان نەبوو.</p></div>
 <div class="sol-item"><div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٦.</span> مەترسیی ماوە ئەو مەترسییەیە کە دوای جێبەجێکردنی کۆنترۆڵەکان دەمێنێتەوە.</p><span class="sol-badge t">ڕاست</span></div><p class="sol-why"><b>هۆکار:</b> کۆنترۆڵەکان ئەگەر یان کاریگەری کەم دەکەنەوە، بەڵام کەم جار بۆ سفر؛ ئەوەی دەمێنێتەوە خاوەنی مەترسی قبووڵی دەکات.</p></div>
 <div class="sol-item"><div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٧.</span> هەڵگرتنی کلیلی دەستگەیشتن لەناو کۆددا سەلامەتە ئەگەر کۆگاکە تایبەت بێت.</p><span class="sol-badge f">هەڵە</span></div><p class="sol-why"><b>هۆکار:</b> کۆگا تایبەتەکان کۆپی دەکرێن، هاوبەش دەکرێن یان بە هەڵە گشتی دەکرێن؛ شوێنی کلیل بەڕێوەبەری نهێنییەکانە، و زانیاریی کاتیی ڕۆڵەکان باشترە.</p></div>
-<div class="sol-item"><div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٨.</span> هەر مەترسییەک لە تۆماری مەترسییەکاندا دەبێت خاوەنێکی ناودار هەبێت.</p><span class="sol-badge t">ڕاست</span></div><p class="sol-why"><b>هۆکار:</b> مەترسیی بێ خاوەن، مەترسییەکە کەس چارەسەری ناکات و پێداچوونەوەی بۆ ناکات.</p></div>
+<div class="sol-item"><div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٨.</span> چالاککردنی «ڕێگرتن لە دەستگەیشتنی گشتی» بۆ هەموو هەژمارەکە نموونەیەکی ڕێکخستنی سەلامەتی بنەڕەتە.</p><span class="sol-badge t">ڕاست</span></div><p class="sol-why"><b>هۆکار:</b> «تایبەت» دەکاتە خاڵی دەستپێکی هەموو کۆگایەک، بۆیە یەک کرتەی هەڵە داتا ئاشکرا ناکات.</p></div>
 <div class="sol-kind"><span>پرسیاری کورت — خاڵەکانی نمرەدان</span><span class="sk-line"></span></div>
 <div class="sol-item"><p class="sol-q"><span class="sq-n">١.</span> <b>سەرمایە</b>، <b>هەڕەشە</b>، <b>لاوازی</b> و <b>مەترسی</b> پێناسە بکە، بە یەک نموونەی هەوری بۆ هەر چواریان.</p><p class="sol-why"><b>ڕێنمایی نمرەدان:</b></p><ul class="sol-grading"><li>سەرمایە: شتێکی بەنرخ (وەک کۆگای ئەنجامەکانی تاقیگە).</li><li>هەڕەشە: هۆکارێکی ئەگەریی زیان (وەک سکانەرێکی ئۆتۆماتیکی یان تاوانبارێک کە بەدوای کۆگای کراوەدا دەگەڕێت).</li><li>لاوازی: ئەو کەموکوڕییەی هەڕەشەکە بەکاری دەهێنێت (وەک ڕێکخستنی کۆگاکە بە «خوێندنەوەی گشتی»).</li><li>مەترسی: ئەگەر و قەبارەی زیان — ئەگەر × کاریگەری (وەک ٤ × ٥ = ٢٠، مەترسیدار).</li><li>نمرەیەک بۆ هەر پێناسەیەکی ڕاست؛ نموونەکە دەبێت هەر چواریان بەیەکەوە ببەستێتەوە.</li></ul></div>
 <div class="sol-item"><p class="sol-q"><span class="sq-n">٢.</span> <b>سێ</b> هەڕەشە لە لیستی CSA بنووسە و بۆ هەریەکەیان کۆنترۆڵێکی <b>ڕێگر</b> بڵێ.</p><p class="sol-why"><b>ڕێنمایی نمرەدان:</b></p><ul class="sol-grading"><li>ڕێکخستنی هەڵە ← ڕێگرتن لە دەستگەیشتنی گشتی بۆ هەموو هەژمار / پێداچوونەوەی policy-as-code.</li><li>لاوازیی ناسنامە ← MFA بۆ هەموو مرۆڤێک، هیچ کلیلێکی درێژخایەن، کەمترین دەسەڵات.</li><li>APIی ناسەلامەت ← پشکنینی ڕێپێدان بۆ هەر ئۆبجێکتێک، API gateway بە ناسینەوە و سنووردارکردنی ڕێژە.</li><li>هەروەها قبووڵە: سەرچاوەی لایەنی سێیەم ← جێگیرکردن و پشکنین؛ کەلێنی سیستەم ← ماوەی چاککردنەوە؛ ئاشکرابوونی ڕێکەوتی ← پۆلێنکردن و DLP.</li></ul></div>
@@ -3953,7 +3953,7 @@ html[data-lang="ku"] .cs .lang-ku{display:block} html[data-lang="ku"] .cs .lang-
         <span class="chip chip-ch1">Week 2</span>
         <h2 class="page-title">Cloud Risks and How to Defend Against Them</h2>
         <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
-        <div class="w2-player"><button type="button" class="w2-poster" aria-label="Click to watch the explanation"><span class="w2-play">▶</span><span class="w2-pt1">Click to watch the explanation</span><span class="w2-pt2">Lecture 2 on the board with voice — 6 sections, with previous / pause / next buttons</span></button></div>
+        <div class="w2-player"><button type="button" class="w2-poster" aria-label="Click to watch the explanation"><span class="w2-play">▶</span><span class="w2-pt1">Click to watch the explanation</span><span class="w2-pt2">Lecture 2 on the board with voice — 5 sections, with previous / pause / next buttons</span></button></div>
         <p class="lead-paragraph">Last week we drew the <b>shared responsibility</b> line. This week we stand on the customer’s side of that line and ask four defender’s questions: <b>what can go wrong, how likely is it, how bad would it be — and which control stops it?</b> We look at attacks only as far as a defender needs to recognise and block them.</p>
 
 <div class="box b"><b class="t">🎯 By the end of this lecture you can:</b>
@@ -3963,8 +3963,38 @@ html[data-lang="ku"] .cs .lang-ku{display:block} html[data-lang="ku"] .cs .lang-
 <li>Prevent the most common <b>misconfigurations</b> and protect <b>identities and APIs</b>.</li>
 <li>Apply basic <b>supply-chain hygiene</b> to code, images and third-party services.</li>
 <li>Read <b>MITRE ATT&amp;CK</b> as a defender’s detection map.</li>
-<li>Extract lessons from public breach summaries and build a <b>risk register</b>.</li>
+<li>Extract lessons from public breach summaries.</li>
 </ol></div>
+
+<div class="chapter-num" style="color:var(--teal);"><span class="cn-num">📖</span><span class="cn-title">Terms you need first</span></div>
+<p>These words appear throughout the lecture. Read them once before section 1.</p>
+<div class="tw"><table class="dt">
+<thead><tr><th>Term</th><th>Meaning</th><th>Example</th></tr></thead>
+<tbody>
+<tr><td>Bucket (storage bucket)</td><td>A named container in cloud object storage that holds files. It is <b>private</b> or <b>public</b> depending on its settings. Not the same as a software container (below).</td><td>Amazon S3 bucket <code>lab-results-pdf</code>; Azure Blob container; Google Cloud Storage bucket</td></tr>
+<tr><td>Object</td><td>Any file stored in a bucket, together with its name and metadata.</td><td>A patient’s result PDF inside the bucket</td></tr>
+<tr><td>Container &amp; container image</td><td>A software container packages an application with everything it needs to run. The <b>image</b> is the template it is started from.</td><td>A Docker image <code>node:20</code> used to run the results portal</td></tr>
+<tr><td>Registry</td><td>An online store of container images that builds download from.</td><td>Docker Hub, Amazon ECR</td></tr>
+<tr><td>API &amp; endpoint</td><td>An API is the door one program uses to ask another for data. An endpoint is one address of that door.</td><td><code>/api/results?id=1043</code> used by the mobile app</td></tr>
+<tr><td>Root account</td><td>The first, all-powerful account of a cloud subscription. It cannot be restricted, so it is locked away and not used daily.</td><td>The e-mail address that opened the AWS account</td></tr>
+<tr><td>MFA (multi-factor authentication)</td><td>A second proof of identity besides the password.</td><td>A code from an authenticator app, or a FIDO2 security key</td></tr>
+<tr><td>Access key</td><td>A long-lived “password for programs”: a key ID plus a secret.</td><td>A key a script uses to upload files</td></tr>
+<tr><td>Role &amp; temporary credentials</td><td>Permissions a person or server borrows for a short time, so no password has to be stored.</td><td>A server role that may only read one bucket</td></tr>
+<tr><td>Least privilege</td><td>Give each person or program only the permissions its job needs — nothing more.</td><td>The app may read results, but not delete them</td></tr>
+<tr><td>Snapshot</td><td>A copy of a disk at one moment, used for backup and restore.</td><td>The nightly copy of the database disk</td></tr>
+<tr><td>Audit log (trail)</td><td>The record of who did what, when and from where in the cloud account.</td><td>AWS CloudTrail, Azure Activity Log</td></tr>
+<tr><td>Region</td><td>The geographic place where a group of data centres runs your resources.</td><td>Frankfurt, Bahrain, UAE</td></tr>
+<tr><td>Misconfiguration</td><td>A wrong setting that leaves something open or weaker than intended.</td><td>A bucket set to public, SSH open to the whole Internet</td></tr>
+<tr><td>CSPM</td><td>Cloud Security Posture Management: a tool that keeps checking cloud settings against security rules and alerts on mistakes.</td><td>An alert: “bucket X became public”</td></tr>
+<tr><td>Infrastructure as Code (IaC)</td><td>Servers, networks and permissions written as files, so they can be reviewed and repeated instead of clicked by hand.</td><td>A Terraform file that creates the bucket</td></tr>
+<tr><td>CI/CD pipeline</td><td>The automatic chain that builds, tests and deploys the code.</td><td>Every push to the repository deploys the portal</td></tr>
+<tr><td>Library (dependency)</td><td>Ready-made code written by others that your application uses.</td><td>Log4j in Java, an npm package in JavaScript</td></tr>
+<tr><td>SBOM</td><td>Software Bill of Materials: the list of every component (library, version) inside an application.</td><td>Used to find quickly where Log4j is installed</td></tr>
+<tr><td>Phishing</td><td>A fake message that tricks a person into giving a password or a code.</td><td>A fake “IT department” e-mail asking for your login</td></tr>
+<tr><td>Infostealer</td><td>Malware that steals passwords saved on a computer and sends them to criminals.</td><td>The source of the stolen logins in the Snowflake cases</td></tr>
+<tr><td>Zero-day</td><td>A flaw that attackers use before the vendor knows about it, so no patch exists yet.</td><td>Compare: most cloud breaches use no zero-day at all</td></tr>
+<tr><td>Token</td><td>A digital pass issued after login; whoever holds it is treated as the user until it expires.</td><td>The forged tokens in the Storm-0558 case</td></tr>
+</tbody></table></div>
 
 <div class="chapter-num" style="color:var(--blue);"><span class="cn-num">1</span><span class="cn-title">Risk = likelihood × impact</span></div>
 <p>Security teams never have enough time or money to fix everything. A <b>risk score</b> tells them what to fix <b>first</b>. Five words must be clear before we score anything:</p>
@@ -4110,61 +4140,6 @@ html[data-lang="ku"] .cs .lang-ku{display:block} html[data-lang="ku"] .cs .lang-
 </div>
 <div class="takeaway"><b>💡 The common thread:</b> stolen or weak <b>identity</b> plus a <b>configuration</b> nobody reviewed — not exotic zero-days. And in almost every case, <b>logs</b> decided how fast it was found.</div>
 
-<div class="chapter-num" style="color:var(--orange);"><span class="cn-num">8</span><span class="cn-title">Risk-register exercise — Al-Furat Medical Labs</span></div>
-<div class="real"><b>🧪 Training scenario — the organisation and all data are fictional.</b> <b>Al-Furat Medical Labs</b> is a network of six laboratories in Babylon governorate. It runs on a public cloud: a patient <b>results portal</b> (web app on virtual machines), a <b>bucket</b> of result PDFs, a <b>mobile API</b>, a <b>CI/CD pipeline</b> from a code repository, <b>three administrator accounts</b>, and nightly <b>disk snapshots</b>. About 40,000 patients use the portal.</div>
-<p>A <b>risk register</b> is a living table: one row per risk, with a score, a control, an owner and a review date. Two rows are filled as examples:</p>
-<div class="tw"><table class="dt w2-reg">
-<thead><tr><th>ID</th><th>Asset</th><th>Risk statement</th><th>CSA</th><th>L</th><th>I</th><th>Score</th><th>Control (type)</th><th>ATT&amp;CK to watch</th><th>Owner</th><th>Residual</th></tr></thead>
-<tbody>
-<tr><td>R1</td><td>Results bucket</td><td>Because the bucket allows public read, Internet scanners could download patient PDFs, exposing health data of 40,000 people.</td><td>1, 7</td><td class="n">4</td><td class="n">5</td><td class="n crit">20</td><td>Account-wide Block Public Access (prevent); public-policy alert (detect)</td><td>T1530</td><td>Cloud lead</td><td class="n lo">5</td></tr>
-<tr><td>R2</td><td>Admin accounts</td><td>Because two admins have no MFA, a phished password could give full control of the cloud account.</td><td>2</td><td class="n">4</td><td class="n">5</td><td class="n crit">20</td><td>FIDO2 MFA for all admins (prevent); new-country sign-in alert (detect)</td><td>T1078.004</td><td>IT manager</td><td class="n med">5</td></tr>
-<tr><td>R3</td><td>Mobile API</td><td>…</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><td>R4</td><td>CI/CD pipeline</td><td>…</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-</tbody></table></div>
-<p style="font-size:.92em;color:var(--muted)">Colours: <b>15–25</b> critical · <b>10–14</b> high · <b>5–9</b> medium · <b>1–4</b> low.</p>
-
-<div class="chapter-num" style="color:var(--green);"><span class="cn-num">9</span><span class="cn-title">Your practical guide — build the register step by step</span></div>
-<div class="oops"><b>⚠️ Rules:</b> this is a <b>paper exercise on a fictional organisation</b>. Do <b>not</b> scan, test or log in to any real system or account you do not own. If you use an AI assistant, use it only as a reviewer of your own work, and do not paste real company or personal data into it.</div>
-<div class="pr"><div class="pr-head"><span class="pr-n">1</span><span class="pr-t">List the assets</span><button type="button" class="pr-copy">Copy</button></div><div class="pr-body">Asset | What it holds | Who uses it | Worst thing that could happen
-Results portal (VMs) | <span class="slot">…</span> | <span class="slot">…</span> | <span class="slot">…</span>
-Results bucket | <span class="slot">…</span> | <span class="slot">…</span> | <span class="slot">…</span>
-Mobile API | <span class="slot">…</span> | <span class="slot">…</span> | <span class="slot">…</span>
-CI/CD pipeline | <span class="slot">…</span> | <span class="slot">…</span> | <span class="slot">…</span>
-Admin accounts | <span class="slot">…</span> | <span class="slot">…</span> | <span class="slot">…</span>
-Nightly snapshots | <span class="slot">…</span> | <span class="slot">…</span> | <span class="slot">…</span></div></div>
-<div class="pr"><div class="pr-head"><span class="pr-n">2</span><span class="pr-t">Write each risk as one sentence</span><button type="button" class="pr-copy">Copy</button></div><div class="pr-body">Because <span class="slot">vulnerability</span>, <span class="slot">threat</span> could <span class="slot">event</span>, leading to <span class="slot">impact</span> on <span class="slot">asset</span>.
-CSA Top Threat number(s): <span class="slot">…</span></div></div>
-<div class="pr"><div class="pr-head"><span class="pr-n">3</span><span class="pr-t">Score with a reason</span><button type="button" class="pr-copy">Copy</button></div><div class="pr-body">Likelihood (1–5): <span class="slot">…</span> because <span class="slot">…</span>
-Impact (1–5): <span class="slot">…</span> because <span class="slot">…</span>
-Score = L × I = <span class="slot">…</span>  →  critical / high / medium / low</div></div>
-<div class="pr"><div class="pr-head"><span class="pr-n">4</span><span class="pr-t">Choose controls and an owner</span><button type="button" class="pr-copy">Copy</button></div><div class="pr-body">Treatment: reduce / avoid / transfer / accept
-Preventive control: <span class="slot">…</span>
-Detective control: <span class="slot">…</span>
-Owner (a role, not "IT"): <span class="slot">…</span>   Deadline: <span class="slot">…</span>
-Residual score after controls: <span class="slot">…</span></div></div>
-<div class="pr"><div class="pr-head"><span class="pr-n">5</span><span class="pr-t">Map detection with ATT&amp;CK</span><button type="button" class="pr-copy">Copy</button></div><div class="pr-body">Tactic: <span class="slot">…</span>   Technique + ID: <span class="slot">…</span>
-Evidence in the logs: <span class="slot">…</span>
-Alert we would write: <span class="slot">…</span>
-Coverage today: green / yellow / red</div></div>
-<div class="pr"><div class="pr-head"><span class="pr-n">6</span><span class="pr-t">(Optional) Ask an AI assistant to review — not to write — your register</span><button type="button" class="pr-copy">Copy</button></div><div class="pr-body">Act as a strict cloud-risk reviewer. Below is my risk register for a FICTIONAL organisation (Al-Furat Medical Labs) for a university exercise. Do not rewrite it and do not give me new rows. Instead:
-1) Ask me up to 5 questions where my likelihood or impact score is not justified.
-2) Name any CSA Top Threats 2024 category that none of my rows covers.
-3) Point out any control that is detective but I labelled preventive (or the reverse).
-My register:
-<span class="slot">paste your table here</span></div></div>
-<h3>What to check after each step</h3>
-<div class="tw"><table class="dt">
-<thead><tr><th>Step</th><th>Check</th></tr></thead>
-<tbody>
-<tr><td>1 Assets</td><td>All six assets are listed, each with the data it holds.</td></tr>
-<tr><td>2 Statements</td><td>Every sentence has a cause, a threat, an event and an impact — no “a hacker will definitely”.</td></tr>
-<tr><td>3 Scores</td><td>Every number has a reason; at least one risk is critical and one is low.</td></tr>
-<tr><td>4 Controls</td><td>Each top risk has one preventive <b>and</b> one detective control; every row has a named role as owner.</td></tr>
-<tr><td>5 ATT&amp;CK</td><td>Technique IDs are real (check on attack.mitre.org); the evidence is something a log would actually record.</td></tr>
-<tr><td>6 Review</td><td>You changed your work only where <i>you</i> agree with the reviewer — and you can explain why.</td></tr>
-</tbody></table></div>
-<div class="box o"><b class="t">📝 Homework</b><small>Complete the Al-Furat register with <b>at least 8 risks</b> (R1–R2 may be reused), covering at least <b>six</b> CSA Top Threats, using steps 1–5 above. Upload it as one PDF or Excel file to the <b>course platform</b> before next week’s lecture. Fictional data only.</small></div>
-
 <div class="chapter-num" style="color:var(--teal);"><span class="cn-num">🎮</span><span class="cn-title">Activity A — Which threat family?</span></div>
 <div class="game" id="g7"><span class="score" id="g7s">0 / 0</span><div class="ctx" id="g7c"></div><div class="q" id="g7q"></div>
 <div class="btns"><button class="c" data-a="M">🧩 Misconfiguration</button><button class="p" data-a="I">🪪 Identity / API</button><button data-a="S">📦 Supply chain</button></div>
@@ -4183,12 +4158,9 @@ My register:
 <p>Tap the cards in the right order, from the first step to the last.</p>
 <div class="w2-act" data-w2="order"></div>
 
-<div class="chapter-num" style="color:var(--teal);"><span class="cn-num">👆</span><span class="cn-title">Activity E — Build it</span></div>
-<p>Tap four pieces in the right order. Some pieces are traps. Two rounds.</p>
-<div class="w2-act" data-w2="build"></div>
 
         <div class="section-heading" style="margin-top:22px;"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg><span>Key terms · مصطلحات</span></div>
-<ul class="cs-gloss"><li><b>Risk</b> — <span dir="rtl">الخطر</span></li><li><b>Likelihood × impact</b> — <span dir="rtl">الاحتماليّة × الأثر</span></li><li><b>Asset / threat / vulnerability</b> — <span dir="rtl">الأصل / التهديد / الثغرة</span></li><li><b>Control (preventive / detective)</b> — <span dir="rtl">ضابط (مانع / كاشف)</span></li><li><b>Residual risk</b> — <span dir="rtl">الخطر المتبقّي</span></li><li><b>Risk register / owner</b> — <span dir="rtl">سجلّ المخاطر / مالك الخطر</span></li><li><b>Misconfiguration</b> — <span dir="rtl">الإعدادات الخاطئة</span></li><li><b>Account hijacking</b> — <span dir="rtl">الاستيلاء على الحساب</span></li><li><b>BOLA</b> — <span dir="rtl">كسر التفويض على مستوى الكائن</span></li><li><b>Supply chain / SBOM</b> — <span dir="rtl">سلسلة التوريد / قائمة مكوّنات البرمجيّات</span></li><li><b>Tactic / technique</b> — <span dir="rtl">التكتيك / التقنية</span></li><li><b>CSPM</b> — <span dir="rtl">إدارة الوضع الأمنيّ للسحابة</span></li></ul>
+<ul class="cs-gloss"><li><b>Risk</b> — <span dir="rtl">الخطر</span></li><li><b>Likelihood × impact</b> — <span dir="rtl">الاحتماليّة × الأثر</span></li><li><b>Asset / threat / vulnerability</b> — <span dir="rtl">الأصل / التهديد / الثغرة</span></li><li><b>Control (preventive / detective)</b> — <span dir="rtl">ضابط (مانع / كاشف)</span></li><li><b>Residual risk</b> — <span dir="rtl">الخطر المتبقّي</span></li><li><b>Risk owner</b> — <span dir="rtl">مالك الخطر</span></li><li><b>Misconfiguration</b> — <span dir="rtl">الإعدادات الخاطئة</span></li><li><b>Account hijacking</b> — <span dir="rtl">الاستيلاء على الحساب</span></li><li><b>BOLA</b> — <span dir="rtl">كسر التفويض على مستوى الكائن</span></li><li><b>Supply chain / SBOM</b> — <span dir="rtl">سلسلة التوريد / قائمة مكوّنات البرمجيّات</span></li><li><b>Tactic / technique</b> — <span dir="rtl">التكتيك / التقنية</span></li><li><b>CSPM</b> — <span dir="rtl">إدارة الوضع الأمنيّ للسحابة</span></li></ul>
         <div class="section-heading"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg><span>Review questions</span></div>
         <p class="quiz-note">Answer on your own first, in the blank space. Then check the <b>🔑 Solutions &amp; reasoning</b> tab — it explains why each answer is right and why the others are wrong.</p>
         <div class="section-heading" style="margin-top:14px;"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg><span>A. Multiple choice</span></div>
@@ -4208,7 +4180,7 @@ My register:
 <div class="tf-item"><span>5. In the Snowflake customer incidents (2024), attackers broke the Snowflake platform itself with a zero-day exploit.</span><span class="tf-boxes"><span><span class="box"></span> True</span><span><span class="box"></span> False</span></span></div>
 <div class="tf-item"><span>6. Residual risk is the risk that remains after controls are applied.</span><span class="tf-boxes"><span><span class="box"></span> True</span><span><span class="box"></span> False</span></span></div>
 <div class="tf-item"><span>7. Storing an access key in source code is safe as long as the repository is private.</span><span class="tf-boxes"><span><span class="box"></span> True</span><span><span class="box"></span> False</span></span></div>
-<div class="tf-item"><span>8. Every risk in a risk register should have a named owner.</span><span class="tf-boxes"><span><span class="box"></span> True</span><span><span class="box"></span> False</span></span></div>
+<div class="tf-item"><span>8. Turning on Block Public Access for the whole account is an example of a secure default.</span><span class="tf-boxes"><span><span class="box"></span> True</span><span><span class="box"></span> False</span></span></div>
         <div class="section-heading" style="margin-top:22px;"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg><span>C. Short answer</span></div>
 <div class="mcq-item"><span class="q-num">1.</span> Define <b>asset</b>, <b>threat</b>, <b>vulnerability</b> and <b>risk</b>, using one cloud example for all four.<span class="blank-line"></span><span class="blank-line"></span><span class="blank-line"></span></div>
 <div class="mcq-item"><span class="q-num">2.</span> Name <b>three</b> threats from the CSA Top Threats list and give one <b>preventive</b> control for each.<span class="blank-line"></span><span class="blank-line"></span><span class="blank-line"></span></div>
@@ -4224,7 +4196,7 @@ My register:
         <span class="chip chip-ch1">الأسبوع الثاني</span>
         <h2 class="page-title">مخاطر السحابة وكيف ندافع عنها</h2>
         <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
-        <div class="w2-player"><button type="button" class="w2-poster" aria-label="انقر لرؤية الشرح"><span class="w2-play">▶</span><span class="w2-pt1">انقر لرؤية الشرح</span><span class="w2-pt2">شرح المحاضرة الثانية على السبّورة بالصوت — ٦ أقسام، ومعه أزرار السابق والإيقاف والتالي</span></button></div>
+        <div class="w2-player"><button type="button" class="w2-poster" aria-label="انقر لرؤية الشرح"><span class="w2-play">▶</span><span class="w2-pt1">انقر لرؤية الشرح</span><span class="w2-pt2">شرح المحاضرة الثانية على السبّورة بالصوت — ٥ أقسام، ومعه أزرار السابق والإيقاف والتالي</span></button></div>
         <p class="lead-paragraph">في الأسبوع الماضي رسمنا خطّ <b>المسؤوليّة المشتركة</b>. هذا الأسبوع نقف في جهة الزبون من ذلك الخطّ ونسأل أسئلة المدافع الأربعة: <b>ما الذي قد يسوء؟ ما احتماله؟ ما حجم ضرره؟ وأيّ ضابطٍ يوقفه؟</b> ولا ندرس الهجمات إلّا بالقدر الذي يحتاجه المدافع ليتعرّف عليها ويمنعها.</p>
 
 <div class="box b"><b class="t">🎯 في نهاية هذه المحاضرة تستطيع أن:</b>
@@ -4234,8 +4206,38 @@ My register:
 <li>تمنع أشهر <b>الإعدادات الخاطئة</b> وتحمي <b>الهويّات والواجهات البرمجيّة</b>.</li>
 <li>تطبّق أساسيّات <b>سلامة سلسلة التوريد</b> على الكود والصور والخدمات الخارجيّة.</li>
 <li>تقرأ <b>MITRE ATT&amp;CK</b> خريطةَ كشفٍ للمدافع.</li>
-<li>تستخلص الدروس من ملخّصات الاختراقات المعلنة وتبني <b>سجلّ مخاطر</b>.</li>
+<li>تستخلص الدروس من ملخّصات الاختراقات المعلنة.</li>
 </ol></div>
+
+<div class="chapter-num" style="color:var(--teal);"><span class="cn-num">📖</span><span class="cn-title">مصطلحات تحتاجها أوّلًا</span></div>
+<p>هذه الكلمات تتكرّر في المحاضرة كلّها. اقرأها مرّةً قبل القسم الأوّل.</p>
+<div class="tw"><table class="dt">
+<thead><tr><th>المصطلح</th><th>المعنى</th><th>مثال</th></tr></thead>
+<tbody>
+<tr><td>حاوية التخزين (Bucket)</td><td>وعاءٌ له اسم في التخزين السحابيّ يحفظ الملفّات، ويكون <b>خاصًّا</b> أو <b>عامًّا</b> حسب إعداده. ليس هو «الحاوية البرمجيّة» (أدناه).</td><td>حاوية Amazon S3 باسم <code>lab-results-pdf</code>؛ حاوية Azure Blob؛ حاوية Google Cloud Storage</td></tr>
+<tr><td>الكائن (Object)</td><td>أيّ ملفٍّ محفوظ داخل الحاوية، مع اسمه وبياناته الوصفيّة.</td><td>ملفّ PDF لنتيجة مريضٍ داخل الحاوية</td></tr>
+<tr><td>الحاوية البرمجيّة وصورتها (Container / image)</td><td>الحاوية البرمجيّة تحزم التطبيق مع كلّ ما يحتاجه ليعمل، و<b>الصورة</b> هي القالب الذي تُشغَّل منه.</td><td>صورة Docker <code>node:20</code> تشغّل بوّابة النتائج</td></tr>
+<tr><td>مستودع الصور (Registry)</td><td>متجرٌ على الإنترنت لصور الحاويات، يسحب منه خطّ البناء.</td><td>Docker Hub وAmazon ECR</td></tr>
+<tr><td>الواجهة البرمجيّة ونقطة النهاية (API / endpoint)</td><td>الواجهة بابٌ يطلب منه برنامجٌ بياناتٍ من برنامجٍ آخر، ونقطة النهاية عنوانٌ واحد لهذا الباب.</td><td><code>/api/results?id=1043</code> يستخدمه تطبيق الهاتف</td></tr>
+<tr><td>حساب الجذر (Root account)</td><td>أوّل حسابٍ في اشتراك السحابة وأقواها، لا يمكن تقييده، لذلك يُحفظ جانبًا ولا يُستخدم يوميًّا.</td><td>البريد الذي فُتح به حساب AWS</td></tr>
+<tr><td>التحقّق متعدّد العوامل (MFA)</td><td>دليلٌ ثانٍ على الهويّة غير كلمة المرور.</td><td>رمزٌ من تطبيق مصادقة، أو مفتاح أمانٍ FIDO2</td></tr>
+<tr><td>مفتاح الوصول (Access key)</td><td>«كلمة مرورٍ للبرامج» طويلة العمر: معرّف مفتاح + سرّ.</td><td>مفتاحٌ يستخدمه سكربت لرفع الملفّات</td></tr>
+<tr><td>الدور وبيانات الاعتماد المؤقّتة (Role)</td><td>صلاحيّاتٌ يستعيرها شخصٌ أو خادم لوقتٍ قصير، فلا حاجة لحفظ كلمة مرور.</td><td>دور خادمٍ يسمح بقراءة حاويةٍ واحدة فقط</td></tr>
+<tr><td>أقلّ صلاحيّة (Least privilege)</td><td>أعطِ كلّ شخصٍ أو برنامج ما يحتاجه عمله فقط، ولا شيء زيادة.</td><td>التطبيق يقرأ النتائج ولا يحذفها</td></tr>
+<tr><td>اللقطة (Snapshot)</td><td>نسخةٌ من القرص في لحظةٍ معيّنة، للنسخ الاحتياطيّ والاستعادة.</td><td>النسخة الليليّة لقرص قاعدة البيانات</td></tr>
+<tr><td>سجلّ التدقيق (Audit log)</td><td>سجلٌّ بمن فعل ماذا، ومتى، ومن أين داخل حساب السحابة.</td><td>AWS CloudTrail وAzure Activity Log</td></tr>
+<tr><td>المنطقة (Region)</td><td>المكان الجغرافيّ لمجموعة مراكز البيانات التي تشغّل مواردك.</td><td>فرانكفورت، البحرين، الإمارات</td></tr>
+<tr><td>الإعدادات الخاطئة (Misconfiguration)</td><td>إعدادٌ خاطئ يترك شيئًا مفتوحًا أو أضعف ممّا يجب.</td><td>حاويةٌ عامّة، أو منفذ SSH مفتوح للإنترنت كلّه</td></tr>
+<tr><td>CSPM</td><td>إدارة الوضع الأمنيّ للسحابة: أداةٌ تفحص إعدادات السحابة باستمرار وتنبّه إلى الأخطاء.</td><td>تنبيه: «الحاوية X أصبحت عامّة»</td></tr>
+<tr><td>البنية التحتيّة ككود (IaC)</td><td>الخوادم والشبكات والصلاحيّات مكتوبةٌ في ملفّات، فتُراجَع وتُكرَّر بدل النقر اليدويّ.</td><td>ملفّ Terraform ينشئ الحاوية</td></tr>
+<tr><td>خطّ البناء والنشر (CI/CD)</td><td>السلسلة الآليّة التي تبني الكود وتختبره وتنشره.</td><td>كلّ رفعٍ للمستودع ينشر البوّابة تلقائيًّا</td></tr>
+<tr><td>المكتبة (Dependency)</td><td>كودٌ جاهز كتبه غيرك ويستخدمه تطبيقك.</td><td>Log4j في Java، وحزمة npm في JavaScript</td></tr>
+<tr><td>SBOM</td><td>قائمة مكوّنات البرمجيّات: كلّ مكتبةٍ وإصدارها داخل التطبيق.</td><td>لمعرفة أين تُستخدم Log4j بسرعة</td></tr>
+<tr><td>التصيّد (Phishing)</td><td>رسالةٌ مزيّفة تخدع الشخص ليعطي كلمة مروره أو رمزه.</td><td>بريدٌ مزيّف من «قسم الحاسبة» يطلب بيانات الدخول</td></tr>
+<tr><td>برمجيّات سرقة المعلومات (Infostealer)</td><td>برنامجٌ خبيث يسرق كلمات المرور المحفوظة في الحاسوب ويرسلها للمجرمين.</td><td>مصدر بيانات الدخول المسروقة في حوادث Snowflake</td></tr>
+<tr><td>ثغرة يوم الصفر (Zero-day)</td><td>ثغرةٌ يستغلّها المهاجمون قبل أن يعرف بها المصنّع، فلا ترقيع لها بعد.</td><td>لاحظ: أغلب اختراقات السحابة لم تحتج أيّ ثغرة يوم صفر</td></tr>
+<tr><td>الرمز (Token)</td><td>تصريحٌ رقميّ يُعطى بعد تسجيل الدخول؛ من يحمله يُعامَل كأنّه المستخدم حتى ينتهي.</td><td>الرموز المزوّرة في حادثة Storm-0558</td></tr>
+</tbody></table></div>
 
 <div class="chapter-num" style="color:var(--blue);"><span class="cn-num">١</span><span class="cn-title">الخطر = الاحتماليّة × الأثر</span></div>
 <p>فرق الأمن لا تملك وقتًا ولا مالًا لإصلاح كلّ شيء. <b>درجة الخطر</b> تخبرها ماذا تصلح <b>أوّلًا</b>. وقبل أن نقدّر أيّ شيء يجب أن تتّضح هذه الكلمات:</p>
@@ -4375,61 +4377,6 @@ My register:
 </div>
 <div class="takeaway"><b>💡 الخيط المشترك:</b> <b>هويّةٌ</b> مسروقة أو ضعيفة مع <b>إعداداتٍ</b> لم يراجعها أحد — لا ثغرات يوم الصفر الغريبة. وفي كلّ حالةٍ تقريبًا كانت <b>السجلّات</b> هي التي حدّدت سرعة الاكتشاف.</div>
 
-<div class="chapter-num" style="color:var(--orange);"><span class="cn-num">٨</span><span class="cn-title">تمرين سجلّ المخاطر — مختبرات الفرات الطبيّة</span></div>
-<div class="real"><b>🧪 سيناريو تدريبيّ — المؤسّسة وكلّ البيانات مختلَقة.</b> <b>مختبرات الفرات الطبيّة</b> شبكةٌ من ستّة مختبرات في محافظة بابل، تعمل على سحابةٍ عامّة: <b>بوّابة نتائج</b> للمرضى (تطبيق ويب على أجهزة افتراضيّة)، و<b>حاوية</b> لملفّات النتائج، و<b>واجهة API</b> لتطبيق الهاتف، و<b>خطّ CI/CD</b> من مستودع الكود، و<b>ثلاثة حسابات مدراء</b>، و<b>لقطات أقراصٍ</b> ليليّة. يستخدم البوّابة نحو ٤٠٬٠٠٠ مريض.</div>
-<p><b>سجلّ المخاطر</b> جدولٌ حيّ: صفٌّ لكلّ خطر، فيه درجةٌ وضابطٌ ومالكٌ وموعد مراجعة. صفّان مملوءان مثالًا:</p>
-<div class="tw"><table class="dt w2-reg">
-<thead><tr><th>المعرّف</th><th>الأصل</th><th>جملة الخطر</th><th>CSA</th><th>ح</th><th>أ</th><th>الدرجة</th><th>الضابط (نوعه)</th><th>تقنية ATT&amp;CK</th><th>المالك</th><th>المتبقّي</th></tr></thead>
-<tbody>
-<tr><td>R1</td><td>حاوية النتائج</td><td>لأنّ الحاوية تسمح بالقراءة العامّة، قد تنزّل ماسحات الإنترنت ملفّات المرضى، فتنكشف البيانات الصحّيّة لـ٤٠٬٠٠٠ شخص.</td><td>١، ٧</td><td class="n">٤</td><td class="n">٥</td><td class="n crit">٢٠</td><td>منع الوصول العامّ على الحساب (مانع)؛ تنبيه السياسة العامّة (كاشف)</td><td>T1530</td><td>مسؤول السحابة</td><td class="n lo">٥</td></tr>
-<tr><td>R2</td><td>حسابات المدراء</td><td>لأنّ مديرَين بلا MFA، قد تمنح كلمة مرورٍ مُصطادة سيطرةً كاملة على حساب السحابة.</td><td>٢</td><td class="n">٤</td><td class="n">٥</td><td class="n crit">٢٠</td><td>MFA بمفاتيح FIDO2 لكلّ المدراء (مانع)؛ تنبيه الدخول من بلدٍ جديد (كاشف)</td><td>T1078.004</td><td>مدير تقنية المعلومات</td><td class="n med">٥</td></tr>
-<tr><td>R3</td><td>واجهة الهاتف</td><td>…</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><td>R4</td><td>خطّ CI/CD</td><td>…</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-</tbody></table></div>
-<p style="font-size:.92em;color:var(--muted)">ح = الاحتماليّة، أ = الأثر. الألوان: <b>١٥–٢٥</b> حرج، <b>١٠–١٤</b> مرتفع، <b>٥–٩</b> متوسّط، <b>١–٤</b> منخفض.</p>
-
-<div class="chapter-num" style="color:var(--green);"><span class="cn-num">٩</span><span class="cn-title">دليلك العمليّ — ابنِ السجلّ خطوةً خطوة</span></div>
-<div class="oops"><b>⚠️ القواعد:</b> هذا <b>تمرينٌ ورقيّ على مؤسّسةٍ مختلَقة</b>. <b>لا</b> تفحص ولا تختبر ولا تدخل أيّ نظامٍ أو حسابٍ حقيقيّ لا تملكه. وإن استخدمت مساعدًا ذكيًّا فاستخدمه مراجعًا لعملك فقط، ولا تلصق فيه بيانات شركاتٍ أو أشخاصٍ حقيقيّين.</div>
-<div class="pr"><div class="pr-head"><span class="pr-n">١</span><span class="pr-t">اجرد الأصول</span><button type="button" class="pr-copy">نسخ</button></div><div class="pr-body">الأصل | ماذا يحفظ | مَن يستخدمه | أسوأ ما قد يحدث
-بوّابة النتائج (أجهزة افتراضيّة) | <span class="slot">…</span> | <span class="slot">…</span> | <span class="slot">…</span>
-حاوية النتائج | <span class="slot">…</span> | <span class="slot">…</span> | <span class="slot">…</span>
-واجهة الهاتف API | <span class="slot">…</span> | <span class="slot">…</span> | <span class="slot">…</span>
-خطّ CI/CD | <span class="slot">…</span> | <span class="slot">…</span> | <span class="slot">…</span>
-حسابات المدراء | <span class="slot">…</span> | <span class="slot">…</span> | <span class="slot">…</span>
-اللقطات الليليّة | <span class="slot">…</span> | <span class="slot">…</span> | <span class="slot">…</span></div></div>
-<div class="pr"><div class="pr-head"><span class="pr-n">٢</span><span class="pr-t">اكتب كلّ خطرٍ في جملةٍ واحدة</span><button type="button" class="pr-copy">نسخ</button></div><div class="pr-body">لأنّ <span class="slot">الثغرة</span>، قد <span class="slot">التهديد</span> <span class="slot">الحدث</span>، فيؤدّي إلى <span class="slot">الأثر</span> على <span class="slot">الأصل</span>.
-رقم تهديد CSA: <span class="slot">…</span></div></div>
-<div class="pr"><div class="pr-head"><span class="pr-n">٣</span><span class="pr-t">قدّر الدرجة مع السبب</span><button type="button" class="pr-copy">نسخ</button></div><div class="pr-body">الاحتماليّة (١–٥): <span class="slot">…</span> لأنّ <span class="slot">…</span>
-الأثر (١–٥): <span class="slot">…</span> لأنّ <span class="slot">…</span>
-الدرجة = ح × أ = <span class="slot">…</span>  ←  حرج / مرتفع / متوسّط / منخفض</div></div>
-<div class="pr"><div class="pr-head"><span class="pr-n">٤</span><span class="pr-t">اختر الضوابط والمالك</span><button type="button" class="pr-copy">نسخ</button></div><div class="pr-body">المعالجة: تخفيض / تجنّب / نقل / قبول
-ضابطٌ مانع: <span class="slot">…</span>
-ضابطٌ كاشف: <span class="slot">…</span>
-المالك (منصبٌ لا «قسم الحاسبة»): <span class="slot">…</span>   الموعد: <span class="slot">…</span>
-الدرجة المتبقّية بعد الضوابط: <span class="slot">…</span></div></div>
-<div class="pr"><div class="pr-head"><span class="pr-n">٥</span><span class="pr-t">اربط الكشف بـATT&amp;CK</span><button type="button" class="pr-copy">نسخ</button></div><div class="pr-body">التكتيك: <span class="slot">…</span>   التقنية ومعرّفها: <span class="slot">…</span>
-الأثر في السجلّات: <span class="slot">…</span>
-التنبيه الذي نكتبه: <span class="slot">…</span>
-التغطية اليوم: أخضر / أصفر / أحمر</div></div>
-<div class="pr"><div class="pr-head"><span class="pr-n">٦</span><span class="pr-t">(اختياريّ) اطلب من مساعدٍ ذكيّ أن يراجع سجلّك — لا أن يكتبه</span><button type="button" class="pr-copy">نسخ</button></div><div class="pr-body">تصرّف كمراجعٍ صارم لمخاطر السحابة. أدناه سجلّ مخاطر لمؤسّسةٍ مختلَقة (مختبرات الفرات الطبيّة) لتمرينٍ جامعيّ. لا تُعِد كتابته ولا تعطني صفوفًا جديدة، بل:
-١) اسألني حتى ٥ أسئلة حيث لم أعلّل درجة الاحتماليّة أو الأثر.
-٢) سمِّ أيّ فئةٍ من CSA Top Threats 2024 لا يغطّيها أيّ صفٍّ عندي.
-٣) نبّهني إلى أيّ ضابطٍ كاشف وصفتُه بأنّه مانع (أو العكس).
-سجلّي:
-<span class="slot">الصق جدولك هنا</span></div></div>
-<h3>ماذا تفحص بعد كلّ خطوة</h3>
-<div class="tw"><table class="dt">
-<thead><tr><th>الخطوة</th><th>افحص</th></tr></thead>
-<tbody>
-<tr><td>١ الأصول</td><td>الأصول الستّة مذكورة، ومع كلٍّ منها البيانات التي يحفظها.</td></tr>
-<tr><td>٢ الجمل</td><td>في كلّ جملةٍ سببٌ وتهديدٌ وحدثٌ وأثر — ولا عبارة «سيخترق حتمًا».</td></tr>
-<tr><td>٣ الدرجات</td><td>لكلّ رقمٍ سبب؛ وخطرٌ واحدٌ على الأقلّ حرج وآخر منخفض.</td></tr>
-<tr><td>٤ الضوابط</td><td>لكلّ خطرٍ كبير ضابطٌ مانع <b>و</b>آخر كاشف؛ ولكلّ صفٍّ مالكٌ بمنصبٍ مسمّى.</td></tr>
-<tr><td>٥ ATT&amp;CK</td><td>معرّفات التقنيات حقيقيّة (تحقّق في attack.mitre.org)، والأثر شيءٌ يسجّله السجلّ فعلًا.</td></tr>
-<tr><td>٦ المراجعة</td><td>غيّرتَ عملك فقط حيث <i>تقتنع أنت</i> برأي المراجع — وتستطيع أن تشرح السبب.</td></tr>
-</tbody></table></div>
-<div class="box o"><b class="t">📝 الواجب</b><small>أكمل سجلّ مختبرات الفرات بـ<b>ثمانية مخاطر على الأقلّ</b> (يمكن إعادة R1 وR2)، تغطّي <b>ستّة</b> تهديداتٍ من قائمة CSA على الأقلّ، باتّباع الخطوات ١–٥. ارفعه ملفًّا واحدًا (PDF أو Excel) على <b>منصّة المادّة</b> قبل محاضرة الأسبوع القادم. بياناتٌ مختلَقة فقط.</small></div>
-
 <div class="chapter-num" style="color:var(--teal);"><span class="cn-num">🎮</span><span class="cn-title">النشاط أ — أيّ عائلةٍ من التهديدات؟</span></div>
 <div class="game" id="g9"><span class="score" id="g9s">0 / 0</span><div class="ctx" id="g9c"></div><div class="q" id="g9q"></div>
 <div class="btns"><button class="c" data-a="M">🧩 إعدادات خاطئة</button><button class="p" data-a="I">🪪 هويّة / واجهة</button><button data-a="S">📦 سلسلة التوريد</button></div>
@@ -4448,12 +4395,9 @@ My register:
 <p>انقر البطاقات بالترتيب الصحيح، من الخطوة الأولى إلى الأخيرة.</p>
 <div class="w2-act" data-w2="order"></div>
 
-<div class="chapter-num" style="color:var(--teal);"><span class="cn-num">👆</span><span class="cn-title">النشاط هـ — ركّبها</span></div>
-<p>انقر أربع قطعٍ بالترتيب الصحيح. بعض القطع فخاخ. جولتان.</p>
-<div class="w2-act" data-w2="build"></div>
 
         <div class="section-heading" style="margin-top:22px;"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg><span>مصطلحات · Key terms</span></div>
-<ul class="cs-gloss"><li><b>الخطر</b> — Risk</li><li><b>الاحتماليّة × الأثر</b> — Likelihood × impact</li><li><b>الأصل / التهديد / الثغرة</b> — Asset / threat / vulnerability</li><li><b>ضابط مانع / كاشف</b> — Preventive / detective control</li><li><b>الخطر المتبقّي</b> — Residual risk</li><li><b>سجلّ المخاطر / مالك الخطر</b> — Risk register / owner</li><li><b>الإعدادات الخاطئة</b> — Misconfiguration</li><li><b>الاستيلاء على الحساب</b> — Account hijacking</li><li><b>كسر التفويض على مستوى الكائن</b> — BOLA</li><li><b>سلسلة التوريد / SBOM</b> — Supply chain / software bill of materials</li><li><b>التكتيك / التقنية</b> — Tactic / technique</li><li><b>إدارة الوضع الأمنيّ للسحابة</b> — CSPM</li></ul>
+<ul class="cs-gloss"><li><b>الخطر</b> — Risk</li><li><b>الاحتماليّة × الأثر</b> — Likelihood × impact</li><li><b>الأصل / التهديد / الثغرة</b> — Asset / threat / vulnerability</li><li><b>ضابط مانع / كاشف</b> — Preventive / detective control</li><li><b>الخطر المتبقّي</b> — Residual risk</li><li><b>مالك الخطر</b> — Risk owner</li><li><b>الإعدادات الخاطئة</b> — Misconfiguration</li><li><b>الاستيلاء على الحساب</b> — Account hijacking</li><li><b>كسر التفويض على مستوى الكائن</b> — BOLA</li><li><b>سلسلة التوريد / SBOM</b> — Supply chain / software bill of materials</li><li><b>التكتيك / التقنية</b> — Tactic / technique</li><li><b>إدارة الوضع الأمنيّ للسحابة</b> — CSPM</li></ul>
         <div class="section-heading"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg><span>أسئلة المراجعة</span></div>
         <p class="quiz-note">أجب بنفسك أوّلًا في المساحة الفارغة، ثمّ راجع تبويب <b>🔑 الحلول والتعليل</b> — يشرح لماذا كلّ إجابةٍ صحيحة ولماذا الخيارات الأخرى خاطئة.</p>
         <div class="section-heading" style="margin-top:14px;"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg><span>أ. الاختيار من متعدّد</span></div>
@@ -4473,7 +4417,7 @@ My register:
 <div class="tf-item"><span>٥. في حوادث زبائن Snowflake (٢٠٢٤) كسر المهاجمون منصّة Snowflake نفسها بثغرة يوم الصفر.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
 <div class="tf-item"><span>٦. الخطر المتبقّي هو الخطر الذي يبقى بعد تطبيق الضوابط.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
 <div class="tf-item"><span>٧. حفظ مفتاح الوصول داخل الكود آمنٌ ما دام المستودع خاصًّا.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
-<div class="tf-item"><span>٨. كلّ خطرٍ في سجلّ المخاطر يجب أن يكون له مالكٌ مسمّى.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+<div class="tf-item"><span>٨. تفعيل «منع الوصول العامّ» على الحساب كلّه مثالٌ على الإعدادات الآمنة افتراضيًّا.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
         <div class="section-heading" style="margin-top:22px;"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg><span>ج. أسئلة قصيرة</span></div>
 <div class="mcq-item"><span class="q-num">١.</span> عرّف <b>الأصل</b> و<b>التهديد</b> و<b>الثغرة</b> و<b>الخطر</b>، بمثالٍ سحابيٍّ واحد يجمعها.<span class="blank-line"></span><span class="blank-line"></span><span class="blank-line"></span></div>
 <div class="mcq-item"><span class="q-num">٢.</span> اذكر <b>ثلاثة</b> تهديداتٍ من قائمة CSA، ولكلٍّ منها ضابطًا <b>مانعًا</b>.<span class="blank-line"></span><span class="blank-line"></span><span class="blank-line"></span></div>
@@ -4489,7 +4433,7 @@ My register:
         <span class="chip chip-ch1">هەفتەی دووەم</span>
         <h2 class="page-title">مەترسییەکانی هەور و چۆنیەتیی بەرگری لێیان</h2>
         <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
-        <div class="w2-player"><button type="button" class="w2-poster" aria-label="کرتە بکە بۆ بینینی ڕوونکردنەوە"><span class="w2-play">▶</span><span class="w2-pt1">کرتە بکە بۆ بینینی ڕوونکردنەوە</span><span class="w2-pt2">ڕوونکردنەوەی وانەی دووەم لەسەر تەختە بە دەنگ (بە عەرەبی) — ٦ بەش، لەگەڵ دوگمەی پێشوو / وەستان / دواتر</span></button></div>
+        <div class="w2-player"><button type="button" class="w2-poster" aria-label="کرتە بکە بۆ بینینی ڕوونکردنەوە"><span class="w2-play">▶</span><span class="w2-pt1">کرتە بکە بۆ بینینی ڕوونکردنەوە</span><span class="w2-pt2">ڕوونکردنەوەی وانەی دووەم لەسەر تەختە بە دەنگ (بە عەرەبی) — ٥ بەش، لەگەڵ دوگمەی پێشوو / وەستان / دواتر</span></button></div>
         <p class="lead-paragraph">هەفتەی ڕابردوو هێڵی <b>بەرپرسیارێتیی هاوبەش</b>مان کێشا. ئەم هەفتەیە لە لای کڕیاری ئەو هێڵە دەوەستین و چوار پرسیاری بەرگریکار دەکەین: <b>چی لەوانەیە تێک بچێت؟ ئەگەری چەندە؟ زیانەکەی چەند گەورە دەبێت؟ و کام کۆنترۆڵ ڕایدەگرێت؟</b> هێرشەکان تەنها بەو ئەندازەیە دەخوێنین کە بەرگریکار پێویستی پێیەتی بۆ ناسینەوە و ڕێگرتن لێیان.</p>
 
 <div class="box b"><b class="t">🎯 لە کۆتایی ئەم وانەیەدا دەتوانیت:</b>
@@ -4499,8 +4443,38 @@ My register:
 <li>ڕێگری لە باوترین <b>ڕێکخستنە هەڵەکان</b> بکەیت و <b>ناسنامە و APIـیەکان</b> بپارێزیت.</li>
 <li>بنەماکانی <b>پاکوخاوێنیی زنجیرەی دابینکردن</b> لەسەر کۆد، وێنە و خزمەتگوزارییە دەرەکییەکان جێبەجێ بکەیت.</li>
 <li><b>MITRE ATT&amp;CK</b> وەک نەخشەی دۆزینەوەی بەرگریکار بخوێنیتەوە.</li>
-<li>وانە لە پوختەی تێکشکاندنە ئاشکراکان وەربگریت و <b>تۆماری مەترسی</b> دروست بکەیت.</li>
+<li>وانە لە پوختەی تێکشکاندنە ئاشکراکان وەربگریت.</li>
 </ol></div>
+
+<div class="chapter-num" style="color:var(--teal);"><span class="cn-num">📖</span><span class="cn-title">زاراوەکان کە سەرەتا پێویستتن</span></div>
+<p>ئەم وشانە لە هەموو وانەکەدا دووبارە دەبنەوە. پێش بەشی یەکەم جارێک بیانخوێنەوە.</p>
+<div class="tw"><table class="dt">
+<thead><tr><th>زاراوە</th><th>واتا</th><th>نموونە</th></tr></thead>
+<tbody>
+<tr><td>کۆگای هەڵگرتن (Bucket)</td><td>دەفرێکی ناودار لە هەڵگرتنی هەوریدا کە فایل هەڵدەگرێت، بەپێی ڕێکخستنەکەی <b>تایبەت</b> یان <b>گشتی</b>یە. هەمان «کۆنتەینەری نەرمەکاڵا» نییە (خوارەوە).</td><td>کۆگای Amazon S3 بە ناوی <code>lab-results-pdf</code>؛ Azure Blob؛ Google Cloud Storage</td></tr>
+<tr><td>ئۆبجێکت (Object)</td><td>هەر فایلێک کە لەناو کۆگادا هەڵگیراوە، لەگەڵ ناو و زانیارییە وەسفییەکانی.</td><td>فایلی PDFی ئەنجامی نەخۆشێک لەناو کۆگاکەدا</td></tr>
+<tr><td>کۆنتەینەر و وێنەکەی (Container / image)</td><td>کۆنتەینەری نەرمەکاڵا ئەپەکە لەگەڵ هەموو پێداویستییەکانی کۆ دەکاتەوە؛ <b>وێنە</b> ئەو قاڵبەیە کە لێیەوە کار دەکات.</td><td>وێنەی Docker <code>node:20</code> بۆ دەروازەی ئەنجامەکان</td></tr>
+<tr><td>کۆگای وێنە (Registry)</td><td>فرۆشگایەکی ئینتەرنێتی بۆ وێنەی کۆنتەینەر کە بیناکردن لێیەوە ڕایدەکێشێت.</td><td>Docker Hub، Amazon ECR</td></tr>
+<tr><td>API و endpoint</td><td>API دەرگایەکە کە بەرنامەیەک لە ڕێیەوە داتا لە بەرنامەیەکی تر داوا دەکات؛ endpoint یەک ناونیشانی ئەو دەرگایەیە.</td><td><code>/api/results?id=1043</code> کە ئەپی مۆبایل بەکاری دەهێنێت</td></tr>
+<tr><td>هەژماری root</td><td>یەکەم و بەهێزترین هەژماری بەشداریی هەور؛ سنووردار ناکرێت، بۆیە لادەنرێت و ڕۆژانە بەکار ناهێنرێت.</td><td>ئەو ئیمەیڵەی هەژماری AWSی پێ کرایەوە</td></tr>
+<tr><td>MFA (ناسینەوەی چەند هۆکاری)</td><td>بەڵگەیەکی دووەمی ناسنامە جگە لە وشەی نهێنی.</td><td>کۆدێک لە ئەپی ناسینەوە، یان کلیلی ئاسایشی FIDO2</td></tr>
+<tr><td>کلیلی دەستگەیشتن (Access key)</td><td>«وشەی نهێنی بۆ بەرنامەکان» کە درێژخایەنە: ناسنامەی کلیل + نهێنی.</td><td>کلیلێک کە سکریپتێک بۆ بارکردنی فایل بەکاری دەهێنێت</td></tr>
+<tr><td>ڕۆڵ و زانیاریی کاتی (Role)</td><td>دەسەڵاتێک کە کەسێک یان سێرڤەرێک بۆ ماوەیەکی کورت قەرز دەکات، بۆیە پێویست بە هەڵگرتنی وشەی نهێنی نییە.</td><td>ڕۆڵی سێرڤەرێک کە تەنها دەتوانێت یەک کۆگا بخوێنێتەوە</td></tr>
+<tr><td>کەمترین دەسەڵات (Least privilege)</td><td>بە هەر کەس یان بەرنامەیەک تەنها ئەو دەسەڵاتە بدە کە کارەکەی پێویستی پێیەتی.</td><td>ئەپەکە ئەنجامەکان دەخوێنێتەوە بەڵام نایانسڕێتەوە</td></tr>
+<tr><td>snapshot</td><td>کۆپییەکی دیسک لە ساتێکی دیاریکراودا، بۆ باکئەپ و گەڕاندنەوە.</td><td>کۆپیی شەوانەی دیسکی بنکەدراوە</td></tr>
+<tr><td>لۆگی پشکنین (Audit log)</td><td>تۆمارێک کە کێ چی کرد، کەی و لە کوێوە لەناو هەژماری هەوردا.</td><td>AWS CloudTrail، Azure Activity Log</td></tr>
+<tr><td>ناوچە (Region)</td><td>شوێنی جوگرافیی کۆمەڵەی سەنتەرەکانی داتا کە سەرچاوەکانت کار پێ دەکەن.</td><td>فرانکفۆرت، بەحرەین، ئیمارات</td></tr>
+<tr><td>ڕێکخستنی هەڵە (Misconfiguration)</td><td>ڕێکخستنێکی هەڵە کە شتێک کراوە یان لاوازتر لە پێویست جێدەهێڵێت.</td><td>کۆگای گشتی، یان SSH بۆ هەموو ئینتەرنێت کراوە</td></tr>
+<tr><td>CSPM</td><td>بەڕێوەبردنی دۆخی ئاسایشی هەور: ئامرازێک کە بەردەوام ڕێکخستنەکانی هەور دەپشکنێت و ئاگادار دەکاتەوە.</td><td>ئاگادارکردنەوە: «کۆگای X گشتی بوو»</td></tr>
+<tr><td>ژێرخان وەک کۆد (IaC)</td><td>سێرڤەر، تۆڕ و دەسەڵاتەکان لە فایلدا دەنووسرێن، بۆ پێداچوونەوە و دووبارەکردنەوە لەجیاتی کرتەی دەستی.</td><td>فایلێکی Terraform کە کۆگاکە دروست دەکات</td></tr>
+<tr><td>زنجیرەی CI/CD</td><td>زنجیرەی ئۆتۆماتیکی کە کۆد بینا دەکات، تاقی دەکاتەوە و بڵاوی دەکاتەوە.</td><td>هەر push بۆ کۆگای کۆد دەروازەکە بڵاو دەکاتەوە</td></tr>
+<tr><td>کتێبخانە (Dependency)</td><td>کۆدی ئامادە کە کەسانی تر نووسیویانە و ئەپەکەت بەکاری دەهێنێت.</td><td>Log4j لە Java، پاکێجی npm لە JavaScript</td></tr>
+<tr><td>SBOM</td><td>لیستی پێکهاتەکانی نەرمەکاڵا: هەموو کتێبخانەیەک و وەشانەکەی لەناو ئەپەکەدا.</td><td>بۆ دۆزینەوەی خێرای شوێنی Log4j</td></tr>
+<tr><td>ڕاوکردن (Phishing)</td><td>نامەیەکی ساختە کە کەسێک فریو دەدات تا وشەی نهێنی یان کۆدەکەی بدات.</td><td>ئیمەیڵێکی ساختە لە «بەشی IT» کە زانیاریی چوونەژوورەوە داوا دەکات</td></tr>
+<tr><td>دزەری زانیاری (Infostealer)</td><td>نەرمەکاڵایەکی خراپ کە وشە نهێنییە هەڵگیراوەکانی کۆمپیوتەر دەدزێت و بۆ تاوانباران دەینێرێت.</td><td>سەرچاوەی زانیارییە دزراوەکان لە ڕووداوەکانی Snowflake</td></tr>
+<tr><td>کەلێنی zero-day</td><td>کەلێنێک کە هێرشبەران پێش ئەوەی دروستکەر بیزانێت بەکاری دەهێنن، بۆیە هێشتا چاککردنەوەی نییە.</td><td>سەرنج: زۆربەی تێکشکاندنەکانی هەور هیچ zero-dayـیان پێویست نەبوو</td></tr>
+<tr><td>تۆکن (Token)</td><td>مۆڵەتێکی دیجیتاڵی کە دوای چوونەژوورەوە دەدرێت؛ هەرکەس هەیبێت وەک بەکارهێنەرەکە مامەڵەی لەگەڵ دەکرێت تا بەسەردەچێت.</td><td>تۆکنە ساختەکان لە ڕووداوی Storm-0558</td></tr>
+</tbody></table></div>
 
 <div class="chapter-num" style="color:var(--blue);"><span class="cn-num">١</span><span class="cn-title">مەترسی = ئەگەر × کاریگەری</span></div>
 <p>تیمەکانی ئاسایش هەرگیز کات و پارەی تەواویان نییە بۆ چاککردنی هەموو شتێک. <b>نمرەی مەترسی</b> پێیان دەڵێت چی <b>یەکەم</b> چاک بکەن. پێش هەر هەڵسەنگاندنێک ئەم وشانە دەبێت ڕوون بن:</p>
@@ -4640,61 +4614,6 @@ My register:
 </div>
 <div class="takeaway"><b>💡 دەزووی هاوبەش:</b> <b>ناسنامە</b>ی دزراو یان لاواز لەگەڵ <b>ڕێکخستنێک</b> کە کەس پێداچوونەوەی بۆ نەکردووە — نەک کەلێنی zero-dayـی سەیر. و لە نزیکەی هەموو حاڵەتێکدا، <b>لۆگ</b>ەکان بڕیاریان دا چەند خێرا دۆزرایەوە.</div>
 
-<div class="chapter-num" style="color:var(--orange);"><span class="cn-num">٨</span><span class="cn-title">ڕاهێنانی تۆماری مەترسی — تاقیگە پزیشکییەکانی فورات</span></div>
-<div class="real"><b>🧪 سیناریۆی ڕاهێنان — دامەزراوەکە و هەموو داتاکان خەیاڵین.</b> <b>تاقیگە پزیشکییەکانی فورات</b> تۆڕێکی شەش تاقیگەیە لە پارێزگای بابل، لەسەر هەورێکی گشتی کار دەکات: <b>دەروازەی ئەنجام</b> بۆ نەخۆشان (ئەپی وێب لەسەر ئامێری مەجازی)، <b>کۆگایەک</b> بۆ فایلی ئەنجامەکان، <b>API</b> بۆ ئەپی مۆبایل، <b>زنجیرەی CI/CD</b> لە کۆگای کۆدەوە، <b>سێ هەژماری بەڕێوەبەر</b>، و <b>snapshot</b>ـی شەوانەی دیسک. نزیکەی ٤٠٬٠٠٠ نەخۆش دەروازەکە بەکار دەهێنن.</div>
-<p><b>تۆماری مەترسی</b> خشتەیەکی زیندووە: ڕیزێک بۆ هەر مەترسییەک، لەگەڵ نمرە، کۆنترۆڵ، خاوەن و وادەی پێداچوونەوە. دوو ڕیز وەک نموونە پڕکراونەتەوە:</p>
-<div class="tw"><table class="dt w2-reg">
-<thead><tr><th>ID</th><th>سەرمایە</th><th>ڕستەی مەترسی</th><th>CSA</th><th>ئە</th><th>کا</th><th>نمرە</th><th>کۆنترۆڵ (جۆر)</th><th>ATT&amp;CK</th><th>خاوەن</th><th>ماوە</th></tr></thead>
-<tbody>
-<tr><td>R1</td><td>کۆگای ئەنجامەکان</td><td>چونکە کۆگاکە ڕێگە بە خوێندنەوەی گشتی دەدات، سکانەرەکانی ئینتەرنێت دەتوانن فایلی نەخۆشەکان دابەزێنن، و داتای تەندروستیی ٤٠٬٠٠٠ کەس ئاشکرا دەبێت.</td><td>١، ٧</td><td class="n">٤</td><td class="n">٥</td><td class="n crit">٢٠</td><td>Block Public Access بۆ هەموو هەژمار (ڕێگر)؛ ئاگادارکردنەوەی سیاسەتی گشتی (دۆزەرەوە)</td><td>T1530</td><td>بەرپرسی هەور</td><td class="n lo">٥</td></tr>
-<tr><td>R2</td><td>هەژمارەکانی بەڕێوەبەر</td><td>چونکە دوو بەڕێوەبەر MFAیان نییە، وشەی نهێنییەکی ڕاوکراو دەتوانێت کۆنترۆڵی تەواوی هەژماری هەور بدات.</td><td>٢</td><td class="n">٤</td><td class="n">٥</td><td class="n crit">٢٠</td><td>MFAی FIDO2 بۆ هەموو بەڕێوەبەران (ڕێگر)؛ ئاگادارکردنەوەی چوونەژوورەوە لە وڵاتی نوێ (دۆزەرەوە)</td><td>T1078.004</td><td>بەڕێوەبەری IT</td><td class="n med">٥</td></tr>
-<tr><td>R3</td><td>APIی مۆبایل</td><td>…</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><td>R4</td><td>زنجیرەی CI/CD</td><td>…</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-</tbody></table></div>
-<p style="font-size:.92em;color:var(--muted)">ئە = ئەگەر، کا = کاریگەری. ڕەنگەکان: <b>١٥–٢٥</b> مەترسیدار، <b>١٠–١٤</b> بەرز، <b>٥–٩</b> مامناوەند، <b>١–٤</b> نزم.</p>
-
-<div class="chapter-num" style="color:var(--green);"><span class="cn-num">٩</span><span class="cn-title">ڕێبەری کرداریی تۆ — تۆمارەکە هەنگاو بە هەنگاو دروست بکە</span></div>
-<div class="oops"><b>⚠️ یاساکان:</b> ئەمە <b>ڕاهێنانێکی سەر کاغەزە لەسەر دامەزراوەیەکی خەیاڵی</b>. هیچ سیستەم یان هەژمارێکی ڕاستەقینە کە هی تۆ نییە سکان، تاقی یان چوونە ژوورەوەی <b>مەکە</b>. ئەگەر یاریدەدەرێکی زیرەک بەکار دەهێنیت، تەنها وەک پێداچوونەوەکاری کاری خۆت بەکاری بهێنە، و داتای ڕاستەقینەی کۆمپانیا یان کەسان تێیدا دامەنێ.</div>
-<div class="pr"><div class="pr-head"><span class="pr-n">١</span><span class="pr-t">سەرمایەکان لیست بکە</span><button type="button" class="pr-copy">کۆپی</button></div><div class="pr-body">سەرمایە | چی هەڵدەگرێت | کێ بەکاری دەهێنێت | خراپترین شت کە ڕوو بدات
-دەروازەی ئەنجام (ئامێری مەجازی) | <span class="slot">…</span> | <span class="slot">…</span> | <span class="slot">…</span>
-کۆگای ئەنجامەکان | <span class="slot">…</span> | <span class="slot">…</span> | <span class="slot">…</span>
-APIی مۆبایل | <span class="slot">…</span> | <span class="slot">…</span> | <span class="slot">…</span>
-زنجیرەی CI/CD | <span class="slot">…</span> | <span class="slot">…</span> | <span class="slot">…</span>
-هەژمارەکانی بەڕێوەبەر | <span class="slot">…</span> | <span class="slot">…</span> | <span class="slot">…</span>
-snapshotـە شەوانەکان | <span class="slot">…</span> | <span class="slot">…</span> | <span class="slot">…</span></div></div>
-<div class="pr"><div class="pr-head"><span class="pr-n">٢</span><span class="pr-t">هەر مەترسییەک بە یەک ڕستە بنووسە</span><button type="button" class="pr-copy">کۆپی</button></div><div class="pr-body">چونکە <span class="slot">لاوازی</span>، <span class="slot">هەڕەشە</span> دەتوانێت <span class="slot">ڕووداو</span>، کە دەبێتە هۆی <span class="slot">کاریگەری</span> لەسەر <span class="slot">سەرمایە</span>.
-ژمارەی هەڕەشەی CSA: <span class="slot">…</span></div></div>
-<div class="pr"><div class="pr-head"><span class="pr-n">٣</span><span class="pr-t">نمرە بدە لەگەڵ هۆکار</span><button type="button" class="pr-copy">کۆپی</button></div><div class="pr-body">ئەگەر (١–٥): <span class="slot">…</span> چونکە <span class="slot">…</span>
-کاریگەری (١–٥): <span class="slot">…</span> چونکە <span class="slot">…</span>
-نمرە = ئە × کا = <span class="slot">…</span>  ←  مەترسیدار / بەرز / مامناوەند / نزم</div></div>
-<div class="pr"><div class="pr-head"><span class="pr-n">٤</span><span class="pr-t">کۆنترۆڵەکان و خاوەن هەڵبژێرە</span><button type="button" class="pr-copy">کۆپی</button></div><div class="pr-body">مامەڵەکردن: کەمکردنەوە / خۆلادان / گواستنەوە / قبووڵکردن
-کۆنترۆڵی ڕێگر: <span class="slot">…</span>
-کۆنترۆڵی دۆزەرەوە: <span class="slot">…</span>
-خاوەن (پۆستێک، نەک «بەشی IT»): <span class="slot">…</span>   وادە: <span class="slot">…</span>
-نمرەی ماوە دوای کۆنترۆڵەکان: <span class="slot">…</span></div></div>
-<div class="pr"><div class="pr-head"><span class="pr-n">٥</span><span class="pr-t">دۆزینەوە بە ATT&amp;CK ببەستەوە</span><button type="button" class="pr-copy">کۆپی</button></div><div class="pr-body">تاکتیک: <span class="slot">…</span>   تەکنیک + ID: <span class="slot">…</span>
-شوێنەوار لە لۆگەکاندا: <span class="slot">…</span>
-ئەو ئاگادارکردنەوەیەی دەینووسین: <span class="slot">…</span>
-داپۆشینی ئەمڕۆ: سەوز / زەرد / سوور</div></div>
-<div class="pr"><div class="pr-head"><span class="pr-n">٦</span><span class="pr-t">(ئارەزوومەندانە) داوا لە یاریدەدەرێکی زیرەک بکە پێداچوونەوە بۆ تۆمارەکەت بکات — نەک بینووسێت</span><button type="button" class="pr-copy">کۆپی</button></div><div class="pr-body">وەک پێداچوونەوەکارێکی توندی مەترسیی هەور ڕەفتار بکە. لە خوارەوە تۆماری مەترسیی دامەزراوەیەکی خەیاڵییە (تاقیگە پزیشکییەکانی فورات) بۆ ڕاهێنانێکی زانکۆیی. دووبارە مەینووسەرەوە و ڕیزی نوێم مەدەرێ. لەبری ئەوە:
-١) تا ٥ پرسیارم لێ بکە لەو شوێنانەی نمرەی ئەگەر یان کاریگەریم هۆکاری نییە.
-٢) هەر پۆلێکی CSA Top Threats 2024 بڵێ کە هیچ ڕیزێکم دای نەپۆشیوە.
-٣) ئاماژە بە هەر کۆنترۆڵێک بکە کە دۆزەرەوەیە بەڵام من بە ڕێگرم ناو بردووە (یان پێچەوانە).
-تۆمارەکەم:
-<span class="slot">خشتەکەت لێرە دابنێ</span></div></div>
-<h3>دوای هەر هەنگاوێک چی بپشکنیت</h3>
-<div class="tw"><table class="dt">
-<thead><tr><th>هەنگاو</th><th>پشکنین</th></tr></thead>
-<tbody>
-<tr><td>١ سەرمایەکان</td><td>هەر شەش سەرمایەکە لیستکراون، هەریەکەیان لەگەڵ ئەو داتایەی هەڵیدەگرێت.</td></tr>
-<tr><td>٢ ڕستەکان</td><td>هەر ڕستەیەک هۆکار، هەڕەشە، ڕووداو و کاریگەریی تێدایە — هیچ «هاکەرێک بە دڵنیاییەوە».</td></tr>
-<tr><td>٣ نمرەکان</td><td>هەر ژمارەیەک هۆکاری هەیە؛ لانیکەم یەک مەترسی مەترسیدارە و یەکێک نزم.</td></tr>
-<tr><td>٤ کۆنترۆڵەکان</td><td>هەر مەترسییەکی گەورە کۆنترۆڵێکی ڕێگر <b>و</b> یەکێکی دۆزەرەوەی هەیە؛ هەر ڕیزێک خاوەنێکی بە پۆستی ناودار هەیە.</td></tr>
-<tr><td>٥ ATT&amp;CK</td><td>IDـی تەکنیکەکان ڕاستەقینەن (لە attack.mitre.org بپشکنە)؛ شوێنەوارەکە شتێکە کە لۆگ بەڕاستی تۆماری دەکات.</td></tr>
-<tr><td>٦ پێداچوونەوە</td><td>کارەکەت تەنها لەو شوێنانە گۆڕیوە کە <i>خۆت</i> لەگەڵ پێداچوونەوەکارەکە هاوڕای — و دەتوانیت هۆکارەکەی ڕوون بکەیتەوە.</td></tr>
-</tbody></table></div>
-<div class="box o"><b class="t">📝 ئەرکی ماڵەوە</b><small>تۆماری تاقیگەکانی فورات تەواو بکە بە <b>لانیکەم ٨ مەترسی</b> (دەتوانیت R1 و R2 دووبارە بەکار بهێنیتەوە)، کە لانیکەم <b>شەش</b> هەڕەشەی CSA دابپۆشێت، بە پەیڕەوکردنی هەنگاوەکانی ١–٥. وەک یەک فایلی PDF یان Excel لەسەر <b>پلاتفۆرمی وانەکە</b> باری بکە پێش وانەی هەفتەی داهاتوو. تەنها داتای خەیاڵی.</small></div>
-
 <div class="chapter-num" style="color:var(--teal);"><span class="cn-num">🎮</span><span class="cn-title">چالاکیی A — کام خێزانی هەڕەشە؟</span></div>
 <div class="game" id="g11"><span class="score" id="g11s">0 / 0</span><div class="ctx" id="g11c"></div><div class="q" id="g11q"></div>
 <div class="btns"><button class="c" data-a="M">🧩 ڕێکخستنی هەڵە</button><button class="p" data-a="I">🪪 ناسنامە / API</button><button data-a="S">📦 زنجیرەی دابینکردن</button></div>
@@ -4713,12 +4632,9 @@ snapshotـە شەوانەکان | <span class="slot">…</span> | <span class="s
 <p>کرتە لە کارتەکان بکە بە ڕیزبەندیی ڕاست، لە یەکەم هەنگاوەوە تا کۆتایی.</p>
 <div class="w2-act" data-w2="order"></div>
 
-<div class="chapter-num" style="color:var(--teal);"><span class="cn-num">👆</span><span class="cn-title">چالاکیی E — دروستی بکە</span></div>
-<p>کرتە لە چوار پارچە بکە بە ڕیزبەندیی ڕاست. هەندێک پارچە تەڵەن. دوو خول.</p>
-<div class="w2-act" data-w2="build"></div>
 
         <div class="section-heading" style="margin-top:22px;"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg><span>زاراوە سەرەکییەکان · Key terms</span></div>
-<ul class="cs-gloss"><li><b>مەترسی</b> — Risk</li><li><b>ئەگەر × کاریگەری</b> — Likelihood × impact</li><li><b>سەرمایە / هەڕەشە / لاوازی</b> — Asset / threat / vulnerability</li><li><b>کۆنترۆڵی ڕێگر / دۆزەرەوە</b> — Preventive / detective control</li><li><b>مەترسیی ماوە</b> — Residual risk</li><li><b>تۆماری مەترسی / خاوەنی مەترسی</b> — Risk register / owner</li><li><b>ڕێکخستنی هەڵە</b> — Misconfiguration</li><li><b>دەستبەسەرداگرتنی هەژمار</b> — Account hijacking</li><li><b>شکاندنی ڕێپێدان لە ئاستی ئۆبجێکت</b> — BOLA</li><li><b>زنجیرەی دابینکردن / SBOM</b> — Supply chain</li><li><b>تاکتیک / تەکنیک</b> — Tactic / technique</li><li><b>بەڕێوەبردنی دۆخی ئاسایشی هەور</b> — CSPM</li></ul>
+<ul class="cs-gloss"><li><b>مەترسی</b> — Risk</li><li><b>ئەگەر × کاریگەری</b> — Likelihood × impact</li><li><b>سەرمایە / هەڕەشە / لاوازی</b> — Asset / threat / vulnerability</li><li><b>کۆنترۆڵی ڕێگر / دۆزەرەوە</b> — Preventive / detective control</li><li><b>مەترسیی ماوە</b> — Residual risk</li><li><b>خاوەنی مەترسی</b> — Risk owner</li><li><b>ڕێکخستنی هەڵە</b> — Misconfiguration</li><li><b>دەستبەسەرداگرتنی هەژمار</b> — Account hijacking</li><li><b>شکاندنی ڕێپێدان لە ئاستی ئۆبجێکت</b> — BOLA</li><li><b>زنجیرەی دابینکردن / SBOM</b> — Supply chain</li><li><b>تاکتیک / تەکنیک</b> — Tactic / technique</li><li><b>بەڕێوەبردنی دۆخی ئاسایشی هەور</b> — CSPM</li></ul>
         <div class="section-heading"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg><span>پرسیارەکانی پێداچوونەوە</span></div>
         <p class="quiz-note">سەرەتا خۆت لە بۆشاییەکەدا وەڵام بدەرەوە، پاشان سەیری تابی <b>🔑 وەڵام و هۆکار</b> بکە — ڕوونی دەکاتەوە بۆچی هەر وەڵامێک ڕاستە و بۆچی بژاردەکانی تر هەڵەن.</p>
         <div class="section-heading" style="margin-top:14px;"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg><span>A. هەڵبژاردن لە نێوان چەند وەڵامێک</span></div>
@@ -4738,7 +4654,7 @@ snapshotـە شەوانەکان | <span class="slot">…</span> | <span class="s
 <div class="tf-item"><span>٥. لە ڕووداوەکانی کڕیارانی Snowflake (٢٠٢٤) هێرشبەران خودی پلاتفۆرمی Snowflakeیان بە کەلێنی zero-day شکاند.</span><span class="tf-boxes"><span><span class="box"></span> ڕاست</span><span><span class="box"></span> هەڵە</span></span></div>
 <div class="tf-item"><span>٦. مەترسیی ماوە ئەو مەترسییەیە کە دوای جێبەجێکردنی کۆنترۆڵەکان دەمێنێتەوە.</span><span class="tf-boxes"><span><span class="box"></span> ڕاست</span><span><span class="box"></span> هەڵە</span></span></div>
 <div class="tf-item"><span>٧. هەڵگرتنی کلیلی دەستگەیشتن لەناو کۆددا سەلامەتە ئەگەر کۆگاکە تایبەت بێت.</span><span class="tf-boxes"><span><span class="box"></span> ڕاست</span><span><span class="box"></span> هەڵە</span></span></div>
-<div class="tf-item"><span>٨. هەر مەترسییەک لە تۆماری مەترسییەکاندا دەبێت خاوەنێکی ناودار هەبێت.</span><span class="tf-boxes"><span><span class="box"></span> ڕاست</span><span><span class="box"></span> هەڵە</span></span></div>
+<div class="tf-item"><span>٨. چالاککردنی «ڕێگرتن لە دەستگەیشتنی گشتی» بۆ هەموو هەژمارەکە نموونەیەکی ڕێکخستنی سەلامەتی بنەڕەتە.</span><span class="tf-boxes"><span><span class="box"></span> ڕاست</span><span><span class="box"></span> هەڵە</span></span></div>
         <div class="section-heading" style="margin-top:22px;"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg><span>C. پرسیاری کورت</span></div>
 <div class="mcq-item"><span class="q-num">١.</span> <b>سەرمایە</b>، <b>هەڕەشە</b>، <b>لاوازی</b> و <b>مەترسی</b> پێناسە بکە، بە یەک نموونەی هەوری بۆ هەر چواریان.<span class="blank-line"></span><span class="blank-line"></span><span class="blank-line"></span></div>
 <div class="mcq-item"><span class="q-num">٢.</span> <b>سێ</b> هەڕەشە لە لیستی CSA بنووسە و بۆ هەریەکەیان کۆنترۆڵێکی <b>ڕێگر</b> بڵێ.<span class="blank-line"></span><span class="blank-line"></span><span class="blank-line"></span></div>
@@ -4756,15 +4672,15 @@ snapshotـە شەوانەکان | <span class="slot">…</span> | <span class="s
    Runs after DOMContentLoaded because game() is defined in the notebook's last script. */
 (function(){
 var UI={
- en:{hits:'found',wrong:'wrong taps',again:'Start again ↺',check:'Check ✓',clear:'Clear ✕',round:'Round',next:'Next round ▶',
+ en:{hits:'found',wrong:'wrong taps',again:'Start again ↺',
      allSpot:'All 9 risks found. Now: which control fixes each one?',safe:'Not a risk — ',ordDone:'Correct order — this is the risk-management cycle.',
-     notNow:'Not yet — ',need:'Tap 4 pieces first.',okBuild:'Correct! ',distr:'This piece does not belong: ',wrongPos:'Right piece, wrong place: ',rule1:'A risk statement reads cause → threat → event → impact.',rule2:'A detection row reads tactic → technique → evidence → control.'},
- ar:{hits:'اكتُشف',wrong:'نقرات خاطئة',again:'من جديد ↺',check:'تحقّق ✓',clear:'امسح ✕',round:'الجولة',next:'الجولة التالية ◀',
+     notNow:'Not yet — '},
+ ar:{hits:'اكتُشف',wrong:'نقرات خاطئة',again:'من جديد ↺',
      allSpot:'اكتشفت المخاطر التسعة كلّها. والآن: ما الضابط الذي يعالج كلًّا منها؟',safe:'ليس خطرًا — ',ordDone:'ترتيبٌ صحيح — هذه دورة إدارة المخاطر.',
-     notNow:'ليس الآن — ',need:'انقر أربع قطعٍ أوّلًا.',okBuild:'صحيح! ',distr:'هذه القطعة لا تنتمي: ',wrongPos:'قطعةٌ صحيحة في غير مكانها: ',rule1:'جملة الخطر تُقرأ: السبب ← التهديد ← الحدث ← الأثر.',rule2:'صفّ الكشف يُقرأ: التكتيك ← التقنية ← الأثر في السجلّ ← الضابط.'},
- ku:{hits:'دۆزرایەوە',wrong:'کرتەی هەڵە',again:'دووبارە ↺',check:'پشکنین ✓',clear:'سڕینەوە ✕',round:'خول',next:'خولی دواتر ◀',
+     notNow:'ليس الآن — '},
+ ku:{hits:'دۆزرایەوە',wrong:'کرتەی هەڵە',again:'دووبارە ↺',
      allSpot:'هەر ٩ مەترسییەکەت دۆزییەوە. ئێستا: کام کۆنترۆڵ هەریەکەیان چارەسەر دەکات؟',safe:'مەترسی نییە — ',ordDone:'ڕیزبەندیی ڕاست — ئەمە خولی بەڕێوەبردنی مەترسییە.',
-     notNow:'هێشتا نا — ',need:'سەرەتا کرتە لە ٤ پارچە بکە.',okBuild:'ڕاستە! ',distr:'ئەم پارچەیە شوێنی لێرە نییە: ',wrongPos:'پارچەی ڕاست، شوێنی هەڵە: ',rule1:'ڕستەی مەترسی بەم شێوەیە دەخوێنرێتەوە: هۆکار ← هەڕەشە ← ڕووداو ← کاریگەری.',rule2:'ڕیزی دۆزینەوە: تاکتیک ← تەکنیک ← شوێنەوار لە لۆگ ← کۆنترۆڵ.'}
+     notNow:'هێشتا نا — '}
 };
 var AR='٠١٢٣٤٥٦٧٨٩';function num(n,l){return l==='en'?String(n):String(n).replace(/\d/g,function(d){return AR[d];});}
 
@@ -4824,22 +4740,6 @@ var ORD={
  ku:[['لیستکردنی سەرمایەکان (داتا، سیستەم، هەژمار)','ناتوانیت شتێک بپارێزیت کە لیستت نەکردووە.'],['دیاریکردنی هەڕەشە و لاوازییەکان بۆ هەر سەرمایەیەک','لیستی CSA وەک چێکلیست بەکار بهێنە.'],['خەمڵاندنی ئەگەر و کاریگەری (١–٥)','بە دێڕێک هۆکار بۆ هەر ژمارەیەک.'],['نمرەدان و ڕیزکردن: ئەگەر × کاریگەری','ڕیزبەندی بڕیار دەدات چی یەکەم چارەسەر بکرێت.'],['هەڵبژاردنی مامەڵەکردن و کۆنترۆڵەکان','کەمکردنەوە، خۆلادان، گواستنەوە یان قبووڵکردن.'],['دیاریکردنی خاوەن و وادە','مەترسیی بێ خاوەن هەرگیز چارەسەر ناکرێت.'],['چاودێری، پێداچوونەوە و تۆمارکردنی مەترسیی ماوە','مەترسییەکان دەگۆڕێن؛ تۆمارەکە بەڵگەنامەیەکی زیندووە.']]
 };
 
-/* ---------- Build it: rounds of {t:title, ok:[4 pieces in order], bad:[[piece, why]]} ---------- */
-var BUILD={
- en:[{t:'Build a risk statement for “admin accounts without MFA”',r:'rule1',ok:['Because MFA is off on two admin accounts,','an attacker with a phished password','could take over the cloud console,','exposing 40,000 patients’ results.'],
-      bad:[['Because the data centre is in Frankfurt,','the location is not the weakness in this risk — missing MFA is.'],['a hacker will definitely','risk is about likelihood, not certainty — never write “definitely”.'],['so we should buy more servers.','that is not an impact, and more servers would not reduce this risk.']]},
-     {t:'Build a detection row for “someone switched off the audit trail”',r:'rule2',ok:['Tactic: Defense Evasion','Technique: T1562.008 Disable or Modify Cloud Logs','Evidence: StopLogging event in the audit trail','Control: org policy denies it + instant alert'],
-      bad:[['Tactic: Impact','Impact is the attacker’s final damage (e.g. mining, deletion); hiding tracks is Defense Evasion.'],['Technique: T1496 Resource Hijacking','that is using your compute, not disabling logs.'],['Evidence: CPU usage graph','a CPU graph will not show that logging was switched off.']]}],
- ar:[{t:'ابنِ جملة خطرٍ لـ«حسابات مدراء بلا MFA»',r:'rule1',ok:['لأنّ MFA مُطفأ على حسابَي مديرين،','فإنّ مهاجمًا يملك كلمة مرورٍ مُصطادة','قد يستولي على لوحة إدارة السحابة،','فتنكشف نتائج ٤٠٬٠٠٠ مريض.'],
-      bad:[['لأنّ مركز البيانات في فرانكفورت،','الموقع ليس الثغرة في هذا الخطر — الثغرة غياب MFA.'],['فإنّ هاكرًا سوف حتمًا','الخطر احتمالٌ لا يقين — لا تكتب «حتمًا».'],['لذلك نشتري خوادم أكثر.','هذا ليس أثرًا، والخوادم الإضافيّة لا تخفض هذا الخطر.']]},
-     {t:'ابنِ صفّ كشفٍ لـ«أحدهم أطفأ سجلّ التدقيق»',r:'rule2',ok:['التكتيك: التهرّب من الدفاعات','التقنية: T1562.008 تعطيل سجلّات السحابة','الأثر: حدث StopLogging في سجلّ التدقيق','الضابط: سياسةٌ تنظيميّة تمنعه + تنبيهٌ فوريّ'],
-      bad:[['التكتيك: الأثر (Impact)','«الأثر» هو الضرر النهائيّ (تعدين، حذف)؛ أمّا إخفاء الآثار فهو التهرّب من الدفاعات.'],['التقنية: T1496 الاستيلاء على الموارد','تلك استغلال الحوسبة، لا تعطيل السجلّات.'],['الأثر: رسم استهلاك المعالج','رسم المعالج لا يُظهر أنّ السجلّات أُطفئت.']]}],
- ku:[{t:'ڕستەیەکی مەترسی دروست بکە بۆ «هەژماری بەڕێوەبەر بەبێ MFA»',r:'rule1',ok:['چونکە MFA لەسەر دوو هەژماری بەڕێوەبەر کوژاوەیە،','هێرشبەرێک بە وشەی نهێنییەکی ڕاوکراو','دەتوانێت دەست بەسەر کۆنسۆڵی هەوردا بگرێت،','و ئەنجامی ٤٠٬٠٠٠ نەخۆش ئاشکرا دەبێت.'],
-      bad:[['چونکە سەنتەری داتا لە فرانکفۆرتە،','شوێن لاوازیی ئەم مەترسییە نییە — نەبوونی MFA لاوازییەکەیە.'],['هاکەرێک بە دڵنیاییەوە','مەترسی ئەگەرە نەک دڵنیایی — هەرگیز «بە دڵنیاییەوە» مەنووسە.'],['بۆیە سێرڤەری زیاتر دەکڕین.','ئەمە کاریگەری نییە، و سێرڤەری زیاتر ئەم مەترسییە کەم ناکاتەوە.']]},
-     {t:'ڕیزێکی دۆزینەوە دروست بکە بۆ «کەسێک لۆگی پشکنینی کوژاندەوە»',r:'rule2',ok:['تاکتیک: خۆدزینەوە لە بەرگری','تەکنیک: T1562.008 کوژاندنەوەی لۆگی هەور','شوێنەوار: ڕووداوی StopLogging لە لۆگی پشکنین','کۆنترۆڵ: سیاسەتی ڕێکخراو ڕێگری دەکات + ئاگادارکردنەوەی دەستبەجێ'],
-      bad:[['تاکتیک: کاریگەری (Impact)','Impact زیانی کۆتاییە (دەرهێنانی دراو، سڕینەوە)؛ شاردنەوەی شوێنەوار خۆدزینەوەیە لە بەرگری.'],['تەکنیک: T1496 دەستبەسەرداگرتنی سەرچاوە','ئەوە بەکارهێنانی توانای ژمێرکارییە، نەک کوژاندنەوەی لۆگ.'],['شوێنەوار: هێڵکاریی بەکارهێنانی CPU','هێڵکاریی CPU پیشان نادات کە لۆگ کوژێندراوەتەوە.']]}]
-};
-
 function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}
 function el(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e;}
 function shake(e){e.classList.remove('w2-shake');void e.offsetWidth;e.classList.add('w2-shake');}
@@ -4877,26 +4777,6 @@ function order(box,l){
     grid.appendChild(c);});
   again.onclick=function(){order(box,l);};
   paint();[sc,grid,fb,again].forEach(function(x){box.appendChild(x);});
-}
-
-function build(box,l,round){
-  var U=UI[l],R=BUILD[l][round||0],picked=[];box.innerHTML='';
-  var head=el('div','w2-sc',U.round+' '+num((round||0)+1,l)+' / '+num(BUILD[l].length,l)+' — '+R.t);
-  var line=el('div','w2-line'),pool=el('div','w2-pool'),fb=el('div','w2-fb'),bar=el('div','w2-bar');
-  var chk=el('button','w2-btn w2-go',U.check),clr=el('button','w2-btn',U.clear),nxt=el('button','w2-btn',round+1<BUILD[l].length?U.next:U.again);nxt.style.display='none';
-  var pieces=shuffle(R.ok.map(function(t,i){return {t:t,i:i};}).concat(R.bad.map(function(b){return {t:b[0],why:b[1]};})));
-  function paintLine(){line.innerHTML='';picked.forEach(function(p,k){var c=el('button','w2-chip on',p.t);c.onclick=function(){picked.splice(k,1);p.btn.disabled=false;paintLine();};line.appendChild(c);});if(!picked.length)line.appendChild(el('span','w2-ph0','…'));}
-  pieces.forEach(function(p){var c=el('button','w2-chip',p.t);p.btn=c;c.onclick=function(){if(picked.length>=4)return;picked.push(p);c.disabled=true;paintLine();};pool.appendChild(c);});
-  clr.onclick=function(){picked.forEach(function(p){p.btn.disabled=false;});picked=[];fb.className='w2-fb';paintLine();};
-  chk.onclick=function(){
-    if(picked.length<4){fb.className='w2-fb no';fb.textContent=U.need;shake(line);return;}
-    for(var k=0;k<4;k++){var p=picked[k];
-      if(p.i==null){fb.className='w2-fb no';fb.textContent=U.distr+'«'+p.t+'» — '+p.why;shake(line);return;}
-      if(p.i!==k){fb.className='w2-fb no';fb.textContent=U.wrongPos+'«'+p.t+'». '+U[R.r];shake(line);return;}}
-    fb.className='w2-fb ok';fb.textContent=U.okBuild+U[R.r];nxt.style.display='inline-block';chk.disabled=true;};
-  nxt.onclick=function(){build(box,l,(round||0)+1<BUILD[l].length?(round||0)+1:0);};
-  paintLine();[chk,clr,nxt].forEach(function(x){bar.appendChild(x);});
-  [head,line,pool,bar,fb].forEach(function(x){box.appendChild(x);});
 }
 
 function games(){
@@ -4963,13 +4843,13 @@ function games(){
 function boot(){
   document.querySelectorAll('#slide-2 [data-w2]').forEach(function(b){
     var l=b.closest('.lang-ku')?'ku':b.closest('.lang-ar')?'ar':'en',k=b.getAttribute('data-w2');
-    if(k==='spot')spot(b,l);else if(k==='order')order(b,l);else if(k==='build')build(b,l,0);
+    if(k==='spot')spot(b,l);else if(k==='order')order(b,l);
   });
   if(typeof game==='function')games();
   document.querySelectorAll('#slide-2 .w2-poster').forEach(function(p){
     p.addEventListener('click',function(){
       var f=document.createElement('iframe');
-      f.src='../boards/cloudsec/week2_canvas.html?v=20261023c#embed';f.title='Week 2 board';f.allow='autoplay';
+      f.src='../boards/cloudsec/week2_canvas.html?v=20261023d#embed';f.title='Week 2 board';f.allow='autoplay';
       p.replaceWith(f);
     });
   });

@@ -103,7 +103,7 @@
    "title": "مخاطر السحابة وكيف ندافع عنها",
    "heading": "الأسبوع الثاني — مخاطر السحابة وكيف ندافع عنها",
    "minutes": "—",
-   "scenes": 42,
+   "scenes": 35,
    "course": "أمن الحوسبة السحابية",
    "file": "cloudsec/week2_canvas.html",
    "slug": "cloudsec",
@@ -171,19 +171,6 @@
    "scenes": 7,
    "course": "أمن الحوسبة السحابية",
    "file": "cloudsec/week2_s5_board.html",
-   "slug": "cloudsec",
-   "audio": true
-  },
-  {
-   "week": 2,
-   "section": 6,
-   "canvas": false,
-   "title": "دليلك العمليّ: سجلّ المخاطر",
-   "heading": "الأسبوع الثاني | القسم ٦ — دليلك العمليّ: سجلّ المخاطر",
-   "minutes": "٣",
-   "scenes": 7,
-   "course": "أمن الحوسبة السحابية",
-   "file": "cloudsec/week2_s6_board.html",
    "slug": "cloudsec",
    "audio": true
   }
