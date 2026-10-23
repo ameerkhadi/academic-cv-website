@@ -211,7 +211,7 @@ $('sort').addEventListener('change',e=>{S.sort=e.target.value;renderList()});
 document.addEventListener('input',e=>{if(e.target.id==='note'){S.notes[detail.cur]=e.target.value;sv()}});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){$('ovF').classList.remove('on');$('ovD').classList.remove('on')}});
 $('thm').textContent=document.documentElement.dataset.theme==='light'?'☾':'☀';
-$('sub').textContent=D.length+' شركة مشاركة · 28–29 أكتوبر 2026 · فندق بابل روتانا، بغداد';
+$('sub').innerHTML=D.length+' شركة مشاركة · 28–29 أكتوبر 2026 · فندق بابل روتانا، بغداد · من <a href="https://ameer.itbabylon.org/dubsar/" target="_blank" rel="noopener" style="color:var(--acc);font-weight:700;text-decoration:underline">دُبسار</a>';
 prep();renderList();
 </script>
 <script>/* visit counter: no personal data */(function(p){var n="0";try{if(!localStorage.getItem("intfv_"+p)){localStorage.setItem("intfv_"+p,"1");n="1"}}catch(e){}new Image().src="https://ameer.itbabylon.org/sensors-api/hit?p="+p+"&n="+n+"&t="+Date.now()})("intf-ar");</script>
