@@ -264,5 +264,6 @@ $("live").onclick=()=>{S.off=null;all()};
 (()=>{const d=new Date(bgNow()).getUTCDate();if(d===29&&new Date(bgNow()).getUTCMonth()===9)S.day=29})();
 all();setInterval(()=>{renderNow();renderTL();renderHalls()},30000);
 </script>
+<script>/* visit counter: no personal data */(function(p){var n="0";try{if(!localStorage.getItem("intfv_"+p)){localStorage.setItem("intfv_"+p,"1");n="1"}}catch(e){}new Image().src="https://ameer.itbabylon.org/sensors-api/hit?p="+p+"&n="+n+"&t="+Date.now()})("intf-agenda");</script>
 </body>
 </html>
