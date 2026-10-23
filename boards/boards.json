@@ -95,6 +95,97 @@
    "file": "ai/week7_s6_board.html",
    "slug": "ai",
    "audio": true
+  },
+  {
+   "week": 2,
+   "section": 0,
+   "canvas": true,
+   "title": "مخاطر السحابة وكيف ندافع عنها",
+   "heading": "الأسبوع الثاني — مخاطر السحابة وكيف ندافع عنها",
+   "minutes": "—",
+   "scenes": 42,
+   "course": "أمن الحوسبة السحابية",
+   "file": "cloudsec/week2_canvas.html",
+   "slug": "cloudsec",
+   "audio": true
+  },
+  {
+   "week": 2,
+   "section": 1,
+   "canvas": false,
+   "title": "الخطر = الاحتماليّة × الأثر",
+   "heading": "الأسبوع الثاني | القسم ١ — الخطر = الاحتماليّة × الأثر",
+   "minutes": "٣",
+   "scenes": 7,
+   "course": "أمن الحوسبة السحابية",
+   "file": "cloudsec/week2_s1_board.html",
+   "slug": "cloudsec",
+   "audio": true
+  },
+  {
+   "week": 2,
+   "section": 2,
+   "canvas": false,
+   "title": "تهديدات CSA قائمة فحص",
+   "heading": "الأسبوع الثاني | القسم ٢ — تهديدات CSA قائمة فحص",
+   "minutes": "٣",
+   "scenes": 7,
+   "course": "أمن الحوسبة السحابية",
+   "file": "cloudsec/week2_s2_board.html",
+   "slug": "cloudsec",
+   "audio": true
+  },
+  {
+   "week": 2,
+   "section": 3,
+   "canvas": false,
+   "title": "الإعدادات والهويّات والواجهات",
+   "heading": "الأسبوع الثاني | القسم ٣ — الإعدادات والهويّات والواجهات",
+   "minutes": "٣",
+   "scenes": 7,
+   "course": "أمن الحوسبة السحابية",
+   "file": "cloudsec/week2_s3_board.html",
+   "slug": "cloudsec",
+   "audio": true
+  },
+  {
+   "week": 2,
+   "section": 4,
+   "canvas": false,
+   "title": "سلسلة التوريد ودروس الاختراقات",
+   "heading": "الأسبوع الثاني | القسم ٤ — سلسلة التوريد ودروس الاختراقات",
+   "minutes": "٣",
+   "scenes": 7,
+   "course": "أمن الحوسبة السحابية",
+   "file": "cloudsec/week2_s4_board.html",
+   "slug": "cloudsec",
+   "audio": true
+  },
+  {
+   "week": 2,
+   "section": 5,
+   "canvas": false,
+   "title": "ATT&CK خريطة المدافع",
+   "heading": "الأسبوع الثاني | القسم ٥ — ATT&CK خريطة المدافع",
+   "minutes": "٣",
+   "scenes": 7,
+   "course": "أمن الحوسبة السحابية",
+   "file": "cloudsec/week2_s5_board.html",
+   "slug": "cloudsec",
+   "audio": true
+  },
+  {
+   "week": 2,
+   "section": 6,
+   "canvas": false,
+   "title": "دليلك العمليّ: سجلّ المخاطر",
+   "heading": "الأسبوع الثاني | القسم ٦ — دليلك العمليّ: سجلّ المخاطر",
+   "minutes": "٣",
+   "scenes": 7,
+   "course": "أمن الحوسبة السحابية",
+   "file": "cloudsec/week2_s6_board.html",
+   "slug": "cloudsec",
+   "audio": true
   }
  ]
 }
