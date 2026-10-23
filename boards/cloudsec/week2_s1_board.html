@@ -104,12 +104,17 @@ html,body{margin:0;height:100%;background:#0f1115;overflow:hidden;user-select:no
 #recGoBtn{margin-top:22px;font:700 24px Tahoma!important;padding:12px 34px!important;background:#7f1d1d;color:#fff;cursor:pointer;border:2px solid #ef4444!important}
 body.recording, body.recording *{cursor:none!important}
 #goBtn{margin-top:22px;font:700 24px Tahoma!important;padding:12px 34px!important;background:#d62828;color:#fff;cursor:pointer}
+#credit{position:fixed;top:10px;right:14px;z-index:35;display:flex;flex-wrap:wrap;gap:4px 12px;justify-content:flex-end;max-width:max(34vw,190px);background:rgba(10,20,35,.62);color:#cfd6e2;font:600 clamp(10px,1.25vw,15px)/1.5 Tahoma,"Segoe UI",sans-serif;padding:4px 12px;border-radius:10px;pointer-events:auto}
+#credit a{color:#93c5fd;text-decoration:none;direction:ltr;unicode-bidi:isolate} #credit a:hover{text-decoration:underline}
+body:has(#recbar) #credit{top:54px}
+body.recording #credit{top:10px}
 </style></head><body>
 <svg id="board" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid meet">
 <defs></defs><g id="guides"></g><g id="ink"></g>
 <circle id="tip" r="9" fill="#fff" stroke-width="4" style="opacity:0"/>
 </svg>
 <div id="cap" dir="rtl"></div>
+
 <div id="pz">⏸</div><div id="cnt"></div><div id="pal" dir="ltr"></div>
 <div id="ov" dir="rtl"><a href="../" onclick="if(location.protocol==='file:')this.href='https://ameer.itbabylon.org/boards/'" style="position:absolute;top:18px;left:22px;color:#9aa3b2;text-decoration:none;font:600 17px Tahoma">🏠 العودة إلى الاستوديو</a>
 <div style="font-size:30px;font-weight:700;margin-bottom:12px">الأسبوع الثاني | القسم ١ — الخطر = الاحتماليّة × الأثر</div>
@@ -827,7 +832,7 @@ window.CANVAS = null;
         continue; }
       // no on-screen captions while a voice speaks (they covered the diagram; YouTube adds its own CC) — only in «بلا صوت» mode
       cap.textContent = s.caption; cap.style.display = (s.caption && !VOICE && !RECV) ? 'block' : 'none';
-      const said = RECV ? playClip(s.audio) : speak(s.speech || s.caption || '');
+      const said = RECV ? playClip(s.audio, s.hold) : speak(s.speech || s.caption || '');
       const t0 = performance.now();
       for (const it of s.items) { const w = (it.at || 0) - (performance.now() - t0); if (w > 0) await sleep(w); await draw(it); }
       await said;
@@ -850,7 +855,8 @@ window.CANVAS = null;
   }
   function wUpdate() {
     if (!wBar) return; const n = B.scenes.length, AR = d => String(d).replace(/\d/g, c => '٠١٢٣٤٥٦٧٨٩'[c]);
-    const t = window.CANVAS ? ((B.scenes[wIx].items[0] || {}).tile ?? 0) + 1 : 0;
+    const off = B.scenes[0] && B.scenes[0].intro ? 0 : 1;   // a title slide is not counted as a section
+    const t = window.CANVAS && !B.scenes[wIx].intro ? ((B.scenes[wIx].items[0] || {}).tile ?? 0) + off : 0;
     wBar.querySelector('.wc').textContent = wEnd ? 'انتهى الشرح' : (t ? 'القسم ' + AR(t) + ' | ' : '') + AR(wIx + 1) + ' من ' + AR(n);
     const pp = wBar.querySelector('[data-w=pp]'), want = wEnd ? 'r' : paused ? 'p' : 'z'; if (pp.dataset.s !== want) { pp.dataset.s = want; pp.innerHTML = want === 'r' ? '<svg viewBox="0 0 24 24"><path d="M12 5V2L7 6l5 4V7a5 5 0 1 1-5 5H5a7 7 0 1 0 7-7z"/></svg>' : want === 'p' ? '<svg viewBox="0 0 24 24"><path d="M16 5v14L5 12z"/></svg>' : '<svg viewBox="0 0 24 24"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>'; }
     wBar.querySelector('[data-w=prev]').disabled = wIx === 0 && !wEnd;
@@ -867,7 +873,7 @@ window.CANVAS = null;
       if (window.CANVAS) { const t = (sc.items[0] || {}).tile ?? 0; if (t !== tileIx) { tileIx = t; await fly(tileVB(window.CANVAS.tiles[t]), 900); await sleep(250); } }
       if (gen !== DRAWGEN) return;
       if (!RECV) { cap.textContent = sc.caption; cap.style.display = sc.caption ? 'block' : 'none'; }
-      const said = RECV ? playClip(sc.audio) : sleep(Math.max(2500, (sc.caption || '').split(/\s+/).length * 430));
+      const said = RECV ? playClip(sc.audio, sc.hold) : sleep(sc.hold || Math.max(2500, (sc.caption || '').split(/\s+/).length * 430));
       const t0 = performance.now();
       for (const it of sc.items) { const w = (it.at || 0) - (performance.now() - t0); if (w > 0) await sleep(w); if (gen !== DRAWGEN) return; await draw(it); }
       await said; if (gen !== DRAWGEN) return; await sleep(700);
