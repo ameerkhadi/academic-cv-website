@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>INTF26 Smart Agenda</title>
+<style>
+:root{--bg:#f4f5fa;--card:#fff;--ink:#1c2155;--mut:#6b7090;--line:#d8dbea;--acc:#c0962e;--sess:#e6e9f6;--live:#1fa971;--b2b:#1c2155;--b2bt:#fff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1230;--card:#191d4a;--ink:#eceefc;--mut:#9ba0c8;--line:#2d3270;--sess:#212660;--b2b:#c0962e;--b2bt:#12153a}}
+:root[data-theme="dark"]{--bg:#0f1230;--card:#191d4a;--ink:#eceefc;--mut:#9ba0c8;--line:#2d3270;--sess:#212660;--b2b:#c0962e;--b2bt:#12153a}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.4 system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;max-width:720px;margin-inline:auto;padding:0 14px 90px}
+header{padding:18px 0 8px;display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+h1{font-size:19px;margin:0}header p{margin:2px 0 0;color:var(--mut);font-size:12.5px}
+button{font:inherit;color:inherit;cursor:pointer}
+.lang{border:1px solid var(--line);background:var(--card);border-radius:20px;padding:5px 12px;font-size:13px}
+.now{background:linear-gradient(135deg,#1c2155,#2b3380);color:#fff;border-radius:16px;padding:14px 16px;margin:8px 0 12px}
+.now small{opacity:.75;text-transform:uppercase;letter-spacing:.06em;font-size:11px}
+.now .big{font-size:18px;font-weight:700;margin:3px 0}
+.now .row{margin-top:8px;padding-top:8px;border-top:1px solid #ffffff30;font-size:13.5px}
+.cd{display:flex;gap:8px;margin-top:6px}.cd div{background:#ffffff1f;border-radius:10px;padding:6px 10px;text-align:center;min-width:54px}.cd b{display:block;font-size:20px}.cd span{font-size:10.5px;opacity:.8}
+.tabs,.chips{display:flex;gap:6px;overflow-x:auto;padding:2px 0 8px;scrollbar-width:none}
+.tab,.chip{white-space:nowrap;border:1px solid var(--line);background:var(--card);border-radius:20px;padding:7px 13px;font-size:13.5px}
+.tab[aria-pressed=true],.chip[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.warn{background:#fff3cd;color:#5c4400;border-radius:12px;padding:9px 12px;font-size:13px;margin:6px 0}
+.tl{position:relative;margin-top:6px}
+.slot{display:flex;gap:10px;position:relative;padding-bottom:12px}
+.tm{width:52px;flex:none;text-align:end;font-weight:700;font-size:14px;padding-top:9px}
+.tm small{display:block;font-weight:400;color:var(--mut);font-size:11px}
+.rail{width:18px;flex:none;position:relative}
+.rail:before{content:"";position:absolute;inset-block:0;inset-inline-start:8px;width:2px;background:var(--line)}
+.slot.done .rail:before{background:var(--ink)}
+.dot{position:absolute;top:12px;inset-inline-start:3px;width:12px;height:12px;border-radius:50%;background:var(--card);border:2px solid var(--line)}
+.slot.done .dot{background:var(--ink);border-color:var(--ink)}
+.slot.live .dot{background:var(--live);border-color:var(--live);box-shadow:0 0 0 0 #1fa97166;animation:p 1.6s infinite}
+@keyframes p{70%{box-shadow:0 0 0 9px #1fa97100}}
+.cards{flex:1;display:grid;gap:7px;min-width:0}
+.card{background:var(--sess);border-radius:12px;padding:10px 12px;position:relative;border-inline-start:4px solid transparent}
+.card.plen{background:var(--card);border-inline-start-color:var(--acc);box-shadow:0 1px 3px #0001}
+.card.b2b{background:var(--b2b);color:var(--b2bt)}
+.card.lunch,.card.social{background:transparent;border:1px dashed var(--line)}
+.card.corner{background:var(--card);border-inline-start-color:#2aa3a3}
+.card.past{opacity:.5}.card.live{border-inline-start-color:var(--live);outline:2px solid var(--live)}
+.ti{font-weight:600;padding-inline-end:34px}.meta{font-size:12px;opacity:.8;margin-top:3px}
+.sp{font-size:12px;opacity:.75}
+.badge{display:inline-block;font-size:10.5px;font-weight:700;background:var(--live);color:#fff;border-radius:6px;padding:1px 6px;margin-inline-end:6px}
+.star{position:absolute;top:6px;inset-inline-end:6px;border:0;background:none;font-size:22px;line-height:1;padding:4px;color:inherit;opacity:.5}
+.star[aria-pressed=true]{color:var(--acc);opacity:1}
+.nowline{display:flex;align-items:center;gap:6px;color:var(--live);font-weight:700;font-size:12px;margin:0 0 10px 62px}
+.nowline:after{content:"";flex:1;height:2px;background:var(--live)}
+.empty{color:var(--mut);text-align:center;padding:30px 10px}
+.sim{position:fixed;bottom:0;inset-inline:0;background:var(--card);border-top:1px solid var(--line);padding:8px 14px calc(8px + env(safe-area-inset-bottom,0px));display:flex;gap:8px;align-items:center;justify-content:center;font-size:12.5px;flex-wrap:wrap}
+.sim input{font:inherit;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:4px 6px}
+.sim button{border:1px solid var(--line);border-radius:8px;background:var(--bg);padding:4px 10px}
+.halls{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px;margin-top:6px}
+.hall{background:var(--card);border-radius:14px;padding:12px;border-top:5px solid var(--line);box-shadow:0 1px 3px #0001}
+.hall.on{border-top-color:var(--live);box-shadow:0 0 0 2px var(--live)}
+.hh{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}.hh b{font-size:15.5px}
+.hs{font-size:11px;font-weight:700;border-radius:8px;padding:2px 8px;background:var(--sess);color:var(--mut)}
+.hall.on .hs{background:var(--live);color:#fff}
+.lb{font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--mut);margin:8px 0 3px;font-weight:700}
+.hn{background:var(--sess);border-radius:10px;padding:8px 10px;font-weight:600;font-size:14px}
+.hall.on .hn{border-inline-start:4px solid var(--live)}
+.hx{font-size:12px;color:var(--mut);font-weight:400;margin-top:2px}
+.hl{display:flex;gap:8px;font-size:13px;padding:3px 0;border-bottom:1px dashed var(--line)}.hl:last-child{border:0}.hl b{flex:none;min-width:44px}
+.hdone{color:var(--mut);font-size:13px;padding:6px 0}
+.halls{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (max-width:420px){.halls{gap:8px}}
+.hall{border-top:0;border-inline-start:6px solid var(--hc);background:color-mix(in srgb,var(--hc) 12%,var(--card));cursor:pointer;transition:transform .25s,box-shadow .25s;-webkit-tap-highlight-color:transparent;min-width:0}
+.hall:active{transform:scale(.97)}
+.hall .hh b:after{content:" ▾";font-size:12px;opacity:.6;display:inline-block;transition:transform .3s}
+.hall.open .hh b:after{transform:rotate(180deg)}
+.hall .hs{background:color-mix(in srgb,var(--hc) 22%,var(--card));color:var(--ink)}
+.sum{font-size:13px;line-height:1.35}.sum span{display:block;font-size:11.5px;opacity:.7;margin-top:2px}
+.hall.open .sum{display:none}
+.det{display:grid;grid-template-rows:0fr;transition:grid-template-rows .35s ease}.det>div{overflow:hidden}
+.hall.open .det{grid-template-rows:1fr}
+.hall.open{grid-column:1/-1;box-shadow:0 6px 18px #0003;animation:pop .3s}
+@keyframes pop{from{transform:scale(.96)}to{transform:scale(1)}}
+.hall .hn{background:color-mix(in srgb,var(--hc) 18%,var(--card))}
+.hall.on{background:var(--hc);color:#fff;border-inline-start-color:#fff;box-shadow:0 0 0 3px color-mix(in srgb,var(--hc) 45%,transparent);animation:glow 2s infinite}
+.hall.on .hs{background:#fff;color:var(--hc)}
+.hall.on .hn{background:#ffffff2e;border-inline-start:0}
+.hall.on .lb,.hall.on .hx,.hall.on .hl,.hall.on .hdone{color:#ffffffd0}
+.hall.on.open{animation:none}
+@keyframes glow{50%{box-shadow:0 0 0 7px color-mix(in srgb,var(--hc) 15%,transparent)}}
+.card[style]{border-inline-start-color:var(--hc)}
+.hall .hn,.hall .hl,.hall .sum{border-inline-start:5px solid var(--ec,transparent);border-radius:8px}
+.hall .hn{background:color-mix(in srgb,var(--ec,var(--hc)) 18%,var(--card))}
+.hall .hl{padding:4px 8px;margin-top:4px;background:color-mix(in srgb,var(--ec,transparent) 14%,transparent);border-bottom:0}
+.hall .sum{padding:4px 8px;background:color-mix(in srgb,var(--ec,transparent) 14%,transparent)}
+.hall.on .hn{background:#fff;color:#1c2155;border-inline-start:6px solid var(--ec)}
+.hall.on .hn .hx{color:#5b6085}
+.lg{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--mut)}
+.lg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-inline-end:5px}
+.lang option{background:var(--card);color:var(--ink)}
+:root[data-theme="dark"]{--bg:#0b0d24;--card:#141839;--sess:#1b2054;--line:#2a2f66;--mut:#a3a8d0;--ink:#e4e7f8;color-scheme:dark}
+:root[data-theme="dark"] .now{background:linear-gradient(135deg,#1a1f5c,#232a70)}
+:root[data-theme="dark"] .warn{background:#3a2f0a;color:#ffe08a}
+:root[data-theme="dark"] .hall.on .hn{background:#0b0d24d9;color:#e4e7f8}
+:root[data-theme="dark"] .hall.on .hn .hx{color:#b9bde0}
+:root[data-theme="dark"] .card.plen{box-shadow:none}
+</style>
+</head>
+<body>
+<header><div><h1>INTF26 · <span data-t="title"></span></h1><p>28–29 Oct 2026 · Babylon Rotana, Baghdad</p></div><div style="display:flex;gap:6px"><select class="lang" id="lang" aria-label="Language" style="font:inherit;font-size:13px;color:inherit"><option value="en">English</option><option value="ar">العربية</option><option value="de">Deutsch</option><option value="it">Italiano</option><option value="nl">Nederlands</option></select><button class="lang" id="thm" aria-label="Theme">☀</button></div></header>
+<div class="now" id="now"></div>
+<div class="tabs" id="tabs"></div>
+<div class="chips" id="chips"></div>
+<div id="warn"></div>
+<div class="tl" id="tl"></div>
+<div class="halls" id="halls" style="display:none"></div>
+<div class="sim"><span data-t="sim"></span><input type="datetime-local" id="simt" value="2026-10-28T13:45"><button id="go"></button><button id="live"></button></div>
+<script>
+const T={en:{title:"Smart Agenda",all:"All",plan:"My plan",plen:"Main stage",sess:"Sessions",b2b:"B2B",corner:"Innovation corner",d28:"Wed 28 Oct",d29:"Thu 29 Oct",now:"Happening now",next:"Up next",starts:"Forum starts in",d:"days",h:"hrs",m:"min",after:"The forum has ended. Thank you!",between:"Next day starts soon",nothing:"Nothing live right now",conf:"Time clash in your plan:",empty:"Tap ★ on sessions to build your plan.",sim:"Preview time:",go:"Apply",live:"Live",livebadge:"LIVE",nowl:"NOW",halls:"🏛 Halls",free:"FREE NOW",nxt:"Next",ltr:"Later",inn:"in",done:"All sessions here are finished",more:"more",invite:"Invitation only",ar:"Arabic language",hall:{k:"Gilgamesh Hall",i:"Ishtar Hall",e:"Euphrates Hall",l:"Gilgamesh lobby",m:"Maaruf Café",c:"Near Ishtar gate, outside Gilgamesh"}},
+ar:{title:"الجدول الذكي",all:"الكل",plan:"خطتي",plen:"الجلسات العامة",sess:"الجلسات",b2b:"لقاءات B2B",corner:"ركن الابتكار",d28:"الأربعاء 28 ت1",d29:"الخميس 29 ت1",now:"يجري الآن",next:"التالي",starts:"يبدأ المنتدى بعد",d:"يوم",h:"ساعة",m:"دقيقة",after:"انتهى المنتدى. شكراً لكم!",between:"اليوم التالي يبدأ قريباً",nothing:"لا شيء مباشر الآن",conf:"تعارض في خطتك:",empty:"اضغط ★ على الجلسات لبناء خطتك.",sim:"معاينة الوقت:",go:"تطبيق",live:"مباشر",livebadge:"الآن",nowl:"الآن",halls:"🏛 القاعات",free:"فارغة الآن",nxt:"التالي",ltr:"لاحقاً",inn:"بعد",done:"انتهت جميع الفعاليات هنا",more:"أخرى",invite:"بدعوة خاصة فقط",ar:"باللغة العربية",hall:{k:"قاعة كلكامش",i:"قاعة عشتار",e:"قاعة الفرات",l:"بهو قاعة كلكامش",m:"معروف كافيه",c:"قرب بوابة عشتار، خارج قاعة كلكامش"}}};
+const h=(a,b)=>a*60+b;
+// d,s,e minutes, t type, r hall key, en, ar, sp (speaker/org), x extra note key
+const E=[
+{d:28,s:h(8,0),e:h(9,0),t:"sess",r:"l",en:"Registration & exhibition visit",ar:"التسجيل وزيارة المعرض"},
+{d:28,s:h(9,0),e:h(11,0),t:"plen",r:"k",en:"Official Opening Ceremony",ar:"حفل الافتتاح الرسمي"},
+{d:28,s:h(11,0),e:h(12,30),t:"plen",r:"k",en:"Plenary: Iraq's place in global trade & investment",ar:"جلسة عامة: مكانة العراق في التجارة والاستثمار العالميين"},
+{d:28,s:h(12,30),e:h(13,30),t:"lunch",en:"Lunch break",ar:"استراحة الغداء"},
+{d:28,s:h(13,30),e:h(15,0),t:"sess",r:"i",en:"Financing Iraqi companies: from de-risking to bankable investments",ar:"تمويل الشركات العراقية: من الحدّ من المخاطر إلى استثمارات قابلة للتمويل"},
+{d:28,s:h(13,30),e:h(15,0),t:"sess",r:"e",en:"Connecting Iraq to regional and global markets",ar:"ربط العراق بالأسواق الإقليمية والعالمية"},
+{d:28,s:h(13,30),e:h(16,30),t:"b2b",r:"k",en:"B2B meetings: one-to-one (runs alongside sessions)",ar:"لقاءات الأعمال الثنائية (B2B): اجتماعات فردية"},
+{d:28,s:h(15,0),e:h(16,30),t:"sess",r:"i",en:"Strengthening investor confidence in Iraq",ar:"تعزيز ثقة المستثمرين في العراق"},
+{d:28,s:h(15,0),e:h(16,30),t:"sess",r:"e",en:"Is Iraq ready for digital trade?",ar:"هل العراق مستعد للتجارة الرقمية؟"},
+{d:28,s:h(17,0),e:h(19,0),t:"social",r:"m",en:"Evening reception (invitation only)",ar:"حفل الاستقبال المسائي (بدعوة خاصة فقط)"},
+{d:28,s:h(10,30),e:h(11,15),t:"corner",r:"c",en:"Demand-driven innovation",ar:"الابتكار المدفوع بالطلب",sp:"Natag · نتاج"},
+{d:28,s:h(11,15),e:h(12,0),t:"corner",r:"c",en:"Digitising fresh produce trade in Iraq",ar:"رقمنة تجارة المنتجات الطازجة في العراق",sp:"Al-Rasheed Platform"},
+{d:28,s:h(12,0),e:h(12,45),t:"corner",r:"c",en:"B2B e-commerce & supply-chain digitisation",ar:"التجارة الإلكترونية بين الشركات ورقمنة سلاسل التوريد",sp:"jaamila.com"},
+{d:28,s:h(14,0),e:h(14,45),t:"corner",r:"c",en:"From local problem to scalable tech company",ar:"من مشكلة محلية إلى شركة تقنية قابلة للتوسع",sp:"Arqam"},
+{d:28,s:h(14,45),e:h(15,30),t:"corner",r:"c",en:"Employability & Iraqi talent",ar:"الجاهزية للتوظيف والكفاءات العراقية",sp:"Sunna' Baghdad"},
+{d:28,s:h(15,30),e:h(16,15),t:"corner",r:"c",en:"Entering the Iraqi market with data",ar:"دخول السوق العراقية بالاعتماد على البيانات",sp:"Capita Research"},
+{d:29,s:h(9,0),e:h(10,30),t:"sess",r:"i",en:"Driving Iraq's green transition through trade & investment",ar:"دفع التحول الأخضر في العراق عبر التجارة والاستثمار"},
+{d:29,s:h(9,0),e:h(10,30),t:"sess",r:"e",en:"Connecting Iraq to regional and global markets",ar:"ربط العراق بالأسواق الإقليمية والعالمية"},
+{d:29,s:h(9,0),e:h(12,0),t:"b2b",r:"k",en:"B2B meetings: one-to-one (runs alongside sessions)",ar:"لقاءات الأعمال الثنائية (B2B): اجتماعات فردية"},
+{d:29,s:h(10,30),e:h(12,0),t:"sess",r:"i",en:"Iraq at a crossroads: strategic public investment priorities",ar:"العراق على مفترق طرق: أولويات الاستثمار العام الاستراتيجية"},
+{d:29,s:h(10,30),e:h(12,0),t:"sess",r:"e",en:"Building competitive Iraqi sectors: agri-food as a model",ar:"بناء قطاعات عراقية تنافسية: قطاع الأغذية الزراعية نموذجاً"},
+{d:29,s:h(12,0),e:h(13,30),t:"lunch",en:"Lunch break",ar:"استراحة الغداء"},
+{d:29,s:h(13,30),e:h(15,0),t:"plen",r:"k",en:"Closing ceremony & forum awards",ar:"حفل الختام وجوائز المنتدى"},
+{d:29,s:h(10,30),e:h(11,15),t:"corner",r:"c",en:"Local innovations for energy-efficient homes",ar:"ابتكارات محلية لمنازل موفّرة للطاقة",sp:"Mosul Solar Energy Co. · Intiqal"},
+{d:29,s:h(11,15),e:h(12,0),t:"corner",r:"c",en:"AuditMyBEIT: from energy audit to green homes",ar:"AuditMyBEIT: من تدقيق الطاقة إلى منازل خضراء",sp:"Jananin Iraq"},
+{d:29,s:h(12,0),e:h(12,45),t:"corner",r:"c",en:"Digital skills for better business decisions",ar:"مهارات رقمية لقرارات أعمال أفضل",sp:"uplevel"},
+{d:29,s:h(14,0),e:h(14,45),t:"corner",r:"c",en:"Anbar: talent, incubators and investment",ar:"الأنبار: الكفاءات والحاضنات والاستثمار",sp:"UTH HUB · Anbar Innovation House"},
+{d:29,s:h(14,45),e:h(15,30),t:"corner",r:"c",en:"AI and the future of marketing in Iraq",ar:"الذكاء الاصطناعي ومستقبل التسويق في العراق",sp:"Multi Creator Agency"}
+].map((x,i)=>({...x,id:"e"+i}));
+Object.assign(T,{
+de:{title:"Smart-Agenda",all:"Alle",plan:"Mein Plan",plen:"Hauptbühne",sess:"Sessions",b2b:"B2B",corner:"Innovationsecke",d28:"Mi 28. Okt",d29:"Do 29. Okt",now:"Läuft gerade",starts:"Das Forum beginnt in",d:"Tage",h:"Std",m:"Min",after:"Das Forum ist beendet. Vielen Dank!",nothing:"Gerade läuft nichts",conf:"Zeitkonflikt in Ihrem Plan:",empty:"Tippen Sie auf ★, um Ihren Plan zu erstellen.",sim:"Zeitvorschau:",go:"Anwenden",nowl:"JETZT",ar:"auf Arabisch",halls:"🏛 Säle",free:"FREI",nxt:"Als Nächstes",ltr:"Später",inn:"in",done:"Hier ist alles beendet",more:"weitere",hall:{k:"Gilgamesch-Saal",i:"Ischtar-Saal",e:"Euphrat-Saal",l:"Foyer Gilgamesch",m:"Café Maaruf",c:"Nahe Ischtar-Tor, außerhalb Gilgamesch"}},
+it:{title:"Agenda smart",all:"Tutto",plan:"Il mio piano",plen:"Palco principale",sess:"Sessioni",b2b:"B2B",corner:"Angolo innovazione",d28:"Mer 28 ott",d29:"Gio 29 ott",now:"In corso ora",starts:"Il forum inizia tra",d:"giorni",h:"ore",m:"min",after:"Il forum è terminato. Grazie!",nothing:"Niente in corso ora",conf:"Conflitto di orari nel tuo piano:",empty:"Tocca ★ per creare il tuo piano.",sim:"Anteprima orario:",go:"Applica",nowl:"ORA",ar:"in arabo",halls:"🏛 Sale",free:"LIBERA",nxt:"Prossimo",ltr:"Più tardi",inn:"tra",done:"Tutte le sessioni qui sono terminate",more:"altri",hall:{k:"Sala Gilgamesh",i:"Sala Ishtar",e:"Sala Eufrate",l:"Foyer Gilgamesh",m:"Caffè Maaruf",c:"Vicino alla porta Ishtar, fuori da Gilgamesh"}},
+nl:{title:"Slimme agenda",all:"Alles",plan:"Mijn plan",plen:"Hoofdpodium",sess:"Sessies",b2b:"B2B",corner:"Innovatiehoek",d28:"Wo 28 okt",d29:"Do 29 okt",now:"Nu bezig",starts:"Het forum begint over",d:"dagen",h:"uur",m:"min",after:"Het forum is afgelopen. Bedankt!",nothing:"Er is nu niets bezig",conf:"Tijdsconflict in je plan:",empty:"Tik op ★ om je plan samen te stellen.",sim:"Tijdvoorbeeld:",go:"Toepassen",nowl:"NU",ar:"in het Arabisch",halls:"🏛 Zalen",free:"VRIJ",nxt:"Hierna",ltr:"Later",inn:"over",done:"Alles hier is afgelopen",more:"meer",hall:{k:"Gilgamesj-zaal",i:"Ishtar-zaal",e:"Eufraat-zaal",l:"Foyer Gilgamesj",m:"Café Maaruf",c:"Bij de Ishtar-poort, buiten Gilgamesj"}}});
+const TR={
+de:["Registrierung & Messebesuch","Offizielle Eröffnungsfeier","Plenum: Irak im globalen Handel und in den Investitionen","Mittagspause","Irakische Unternehmen finanzieren: von Risikominderung zu finanzierbaren Investitionen","Den Irak mit regionalen und globalen Märkten verbinden","B2B-Treffen: Einzelgespräche (parallel zu den Sessions)","Das Vertrauen der Investoren in den Irak stärken","Ist der Irak bereit für den digitalen Handel?","Abendempfang (nur mit Einladung)","Nachfragegetriebene Innovation","Digitalisierung des Frischwarenhandels im Irak","B2B-E-Commerce und Digitalisierung der Lieferketten","Vom lokalen Problem zum skalierbaren Tech-Unternehmen","Beschäftigungsfähigkeit und irakische Fachkräfte","Mit Daten in den irakischen Markt eintreten","Den grünen Wandel im Irak durch Handel und Investitionen vorantreiben","Der Irak am Scheideweg: strategische Prioritäten öffentlicher Investitionen","Wettbewerbsfähige irakische Sektoren aufbauen: Agrar- und Ernährungswirtschaft als Modell","Abschlusszeremonie und Forum-Preise","Lokale Innovationen für energieeffiziente Häuser","AuditMyBEIT: vom Energie-Audit zu grünen Häusern","Digitale Kompetenzen für bessere Geschäftsentscheidungen","Anbar: Talente, Inkubatoren und Investitionen","KI und die Zukunft des Marketings im Irak"],
+it:["Registrazione e visita all'esposizione","Cerimonia ufficiale di apertura","Plenaria: il ruolo dell'Iraq nel commercio e negli investimenti globali","Pausa pranzo","Finanziare le imprese irachene: dalla riduzione del rischio a investimenti finanziabili","Collegare l'Iraq ai mercati regionali e globali","Incontri B2B: colloqui individuali (in parallelo alle sessioni)","Rafforzare la fiducia degli investitori in Iraq","L'Iraq è pronto per il commercio digitale?","Ricevimento serale (solo su invito)","Innovazione guidata dalla domanda","Digitalizzare il commercio dei prodotti freschi in Iraq","E-commerce B2B e digitalizzazione delle catene di fornitura","Da un problema locale a un'azienda tech scalabile","Occupabilità e talenti iracheni","Entrare nel mercato iracheno con i dati","Guidare la transizione verde dell'Iraq attraverso commercio e investimenti","L'Iraq a un bivio: priorità strategiche degli investimenti pubblici","Costruire settori iracheni competitivi: l'agroalimentare come modello","Cerimonia di chiusura e premi del forum","Innovazioni locali per case a risparmio energetico","AuditMyBEIT: dall'audit energetico alle case verdi","Competenze digitali per decisioni aziendali migliori","Anbar: talenti, incubatori e investimenti","L'IA e il futuro del marketing in Iraq"],
+nl:["Registratie en bezoek aan de beurs","Officiële openingsceremonie","Plenaire sessie: de plaats van Irak in wereldwijde handel en investeringen","Lunchpauze","Iraakse bedrijven financieren: van risicovermindering naar financierbare investeringen","Irak verbinden met regionale en wereldwijde markten","B2B-ontmoetingen: één-op-één (parallel aan de sessies)","Het vertrouwen van investeerders in Irak versterken","Is Irak klaar voor digitale handel?","Avondreceptie (alleen op uitnodiging)","Vraaggestuurde innovatie","Digitalisering van de handel in verse producten in Irak","B2B-e-commerce en digitalisering van toeleveringsketens","Van lokaal probleem naar schaalbaar techbedrijf","Inzetbaarheid en Iraaks talent","De Iraakse markt betreden met data","De groene transitie van Irak stimuleren via handel en investeringen","Irak op een kruispunt: strategische prioriteiten voor publieke investeringen","Concurrerende Iraakse sectoren opbouwen: agrovoeding als model","Sluitingsceremonie en forumprijzen","Lokale innovaties voor energiezuinige woningen","AuditMyBEIT: van energie-audit naar groene woningen","Digitale vaardigheden voor betere zakelijke beslissingen","Anbar: talent, incubators en investeringen","AI en de toekomst van marketing in Irak"]};
+const S={lang:"en",day:28,filter:"all",view:"tl",plan:new Set(),off:null};
+try{const p=localStorage.getItem("intf26plan");if(p)S.plan=new Set(JSON.parse(p));const l=localStorage.getItem("intf26lang");if(l)S.lang=l}catch(e){}
+const TC={plen:"#d4a017",sess:"#3b82f6",b2b:"#1c2155",corner:"#14b8a6",social:"#ef6c3a",lunch:"#9aa0b5"};
+const HC={k:"#7b4fd6",i:"#e0457b",e:"#1d8fe0",c:"#14a3a3",m:"#e08a1e",l:"#6b7a8f"};
+const $=id=>document.getElementById(id);
+const L=()=>({...T.en,...T[S.lang]});
+const base=d=>Date.UTC(2026,9,d);
+const abs=(x,m)=>base(x.d)+m*6e4;
+const bgNow=()=>S.off!==null?S.off:Date.now()+3*36e5;
+const fmt=m=>String(Math.floor(m/60)).padStart(2,"0")+":"+String(m%60).padStart(2,"0");
+const st=x=>{const n=bgNow();return n>=abs(x,x.e)?"past":n>=abs(x,x.s)?"live":"up"};
+const K=[...new Set(E.map(x=>x.en))];const title=x=>S.lang==="ar"?x.ar:(TR[S.lang]?TR[S.lang][K.indexOf(x.en)]||x.en:x.en);
+function save(){try{localStorage.setItem("intf26plan",JSON.stringify([...S.plan]));localStorage.setItem("intf26lang",S.lang)}catch(e){}}
+function renderNow(){
+ const l=L(),n=bgNow(),el=$("now");
+ const live=E.filter(x=>st(x)==="live"&&x.t!=="corner");
+ const ups=E.filter(x=>abs(x,x.s)>n&&x.t!=="lunch").sort((a,b)=>abs(a,a.s)-abs(b,b.s));
+ let h="";
+ if(n<abs(E[0],E[0].s)){
+  let ms=abs(E[0],E[0].s)-n,d=Math.floor(ms/864e5),hh=Math.floor(ms%864e5/36e5),mm=Math.floor(ms%36e5/6e4);
+  h=`<small>${l.starts}</small><div class="cd"><div><b>${d}</b><span>${l.d}</span></div><div><b>${hh}</b><span>${l.h}</span></div><div><b>${mm}</b><span>${l.m}</span></div></div>`;
+ }else if(!ups.length&&!live.length){h=`<div class="big">${l.after}</div>`}
+ else{
+  h=`<small>${l.now}</small>`;
+  h+=live.length?live.map(x=>`<div class="big">${title(x)}</div><div class="sp">${x.r?l.hall[x.r]:""} · ${fmt(x.s)}–${fmt(x.e)}</div>`).join(""):`<div class="big" style="font-size:15px;opacity:.85">${l.nothing}</div>`;
+  if(ups.length){const t=ups[0].s,d=ups[0].d,g=ups.filter(x=>x.s===t&&x.d===d);
+   h+=`<div class="row"><small>${l.next} · ${fmt(t)}</small>${g.map(x=>`<div>${title(x)} <span class="sp">— ${x.r?l.hall[x.r]:""}</span></div>`).join("")}</div>`}
+ }
+ el.innerHTML=h;
+}
+function conflicts(){
+ const a=E.filter(x=>S.plan.has(x.id)&&x.t!=="lunch").sort((p,q)=>abs(p,p.s)-abs(q,q.s)),out=[];
+ for(let i=0;i<a.length;i++)for(let j=i+1;j<a.length;j++)if(a[i].d===a[j].d&&a[j].s<a[i].e)out.push([a[i],a[j]]);
+ return out;
+}
+function card(x){
+ const l=L(),s=st(x),r=x.r?l.hall[x.r]:"";
+ const star=x.t==="lunch"?"":`<button class="star" data-id="${x.id}" aria-pressed="${S.plan.has(x.id)}" aria-label="plan">${S.plan.has(x.id)?"★":"☆"}</button>`;
+ return `<div class="card ${x.t} ${s==="past"?"past":""} ${s==="live"?"live":""}" style="--hc:${HC[x.r]||"transparent"}">${star}
+ <div class="ti">${s==="live"?`<span class="badge">${l.livebadge}</span>`:""}${title(x)}</div>
+ <div class="meta">${fmt(x.s)}–${fmt(x.e)}${r?" · "+r:""}${x.t==="corner"?" · "+l.ar:""}</div>${x.sp?`<div class="sp">${x.sp}</div>`:""}</div>`;
+}
+function renderTL(){
+ const l=L();let list;
+ if(S.filter==="plan")list=E.filter(x=>S.plan.has(x.id));
+ else list=E.filter(x=>x.d===S.day&&(S.filter==="all"||x.t===S.filter||(S.filter==="plen"&&x.t==="plen")));
+ if(S.filter==="plan")list=list.filter(x=>x.d===S.day);
+ list.sort((a,b)=>a.s-b.s||"plen,sess,b2b,corner,social,lunch".indexOf(a.t)-"plen,sess,b2b,corner,social,lunch".indexOf(b.t));
+ if(!list.length){$("tl").innerHTML=`<div class="empty">${S.filter==="plan"?l.empty:"—"}</div>`;return}
+ const slots=[];list.forEach(x=>{let s=slots.find(q=>q.s===x.s);if(!s){s={s:x.s,items:[]};slots.push(s)}s.items.push(x)});
+ const n=bgNow();let h="",nl=false;
+ slots.forEach(sl=>{
+  const status=sl.items.some(x=>st(x)==="live")?"live":sl.items.every(x=>st(x)==="past")?"done":"";
+  if(!nl&&n>=base(S.day)&&n<base(S.day+1)&&n<abs({d:S.day},sl.s)&&slots.indexOf(sl)>0&&status===""){h+=`<div class="nowline">${l.nowl} ${fmt(Math.floor((n-base(S.day))/6e4))}</div>`;nl=true}
+  h+=`<div class="slot ${status}"><div class="tm">${fmt(sl.s)}</div><div class="rail"><span class="dot"></span></div><div class="cards">${sl.items.map(card).join("")}</div></div>`;
+ });
+ $("tl").innerHTML=h;
+}
+function renderWarn(){
+ const c=conflicts(),l=L();
+ $("warn").innerHTML=c.length?c.map(([a,b])=>`<div class="warn">⚠️ ${l.conf} <b>${title(a)}</b> ↔ <b>${title(b)}</b> (${fmt(b.s)})</div>`).join(""):"";
+}
+function renderCtl(){
+ const l=L();
+ $("tabs").innerHTML=`<button class="tab" data-view="halls" aria-pressed="${S.view==="halls"}">${l.halls}</button>`+[28,29].map(d=>`<button class="tab" data-day="${d}" aria-pressed="${S.view==="tl"&&S.day===d}">${l["d"+d]}</button>`).join("");
+ $("chips").style.display=S.view==="halls"?"none":"flex";
+ const f=[["all",l.all],["plan",l.plan+" ("+S.plan.size+")"],["plen",l.plen],["sess",l.sess],["b2b",l.b2b],["corner",l.corner]];
+ $("chips").innerHTML=f.map(([k,v])=>`<button class="chip" data-f="${k}" aria-pressed="${S.filter===k}">${v}</button>`).join("");
+ document.querySelectorAll("[data-t]").forEach(e=>e.textContent=l[e.dataset.t]);
+ $("go").textContent=l.go;$("live").textContent=l.live;
+ document.documentElement.lang=S.lang;document.documentElement.dir=S.lang==="ar"?"rtl":"ltr";
+ $("lang").value=S.lang;
+}
+function rel(x){const l=L(),m=Math.max(0,Math.round((abs(x,x.s)-bgNow())/6e4));if(m<60)return m+" "+l.m;if(m<1440)return Math.floor(m/60)+" "+l.h+" "+(m%60)+" "+l.m;return Math.floor(m/1440)+" "+l.d+" "+Math.floor(m%1440/60)+" "+l.h}
+function renderHalls(){
+ const l=L(),on=S.view==="halls",n=bgNow(),today=new Date(n).getUTCDate();
+ $("halls").style.display=on?"grid":"none";$("tl").style.display=on?"none":"";$("warn").style.display=on?"none":"";
+ if(!on)return;
+ const tag=x=>x.d===today?"":l["d"+x.d]+" · ";
+ $("halls").innerHTML=`<div class="lg">${["plen","sess","b2b","corner"].map(k=>`<span><i style="background:${TC[k]}"></i>${l[k]}</span>`).join("")}</div>`+["k","i","e","c","m","l"].map(k=>{
+  const it=E.filter(x=>x.r===k&&st(x)!=="past").sort((a,b)=>abs(a,a.s)-abs(b,b.s));
+  const now=it.filter(x=>st(x)==="live"),up=it.filter(x=>st(x)==="up"),nx=up[0],lt=up.slice(1);
+  let h=`<div class="hall ${now.length?"on":""} ${S.open===k?"open":""}" data-hall="${k}" style="--hc:${HC[k]}"><div class="hh"><b>${l.hall[k]}</b><span class="hs">${now.length?l.livebadge:it.length?l.free:"—"}</span></div>`;
+  if(!it.length)return h+`<div class="hdone">${l.done}</div></div>`;
+  h+=`<div class="sum" style="--ec:${TC[(now[0]||nx||{}).t]||"transparent"}">${now.length?`<b>${title(now[0])}</b><span>${fmt(now[0].s)}–${fmt(now[0].e)}</span>`:nx?`${l.nxt}: ${title(nx)}<span>${tag(nx)}${fmt(nx.s)} · ${l.inn} ${rel(nx)}</span>`:""}</div><div class="det"><div>`;
+  if(now.length)h+=`<div class="lb">${l.now}</div>`+now.map(x=>`<div class="hn" style="--ec:${TC[x.t]}">${title(x)}<div class="hx">${fmt(x.s)}–${fmt(x.e)}</div></div>`).join("");
+  if(nx)h+=`<div class="lb">${l.nxt}</div><div class="hn" style="font-weight:500;--ec:${TC[nx.t]}">${title(nx)}<div class="hx">${tag(nx)}${fmt(nx.s)} · ${l.inn} ${rel(nx)}</div></div>`;
+  if(lt.length)h+=`<div class="lb">${l.ltr}</div>`+lt.slice(0,4).map(x=>`<div class="hl" style="--ec:${TC[x.t]}"><b>${tag(x)}${fmt(x.s)}</b><span>${title(x)}</span></div>`).join("")+(lt.length>4?`<div class="hx">+${lt.length-4} ${l.more}</div>`:"");
+  return h+"</div></div></div>";
+ }).join("");
+}
+function all(){renderCtl();renderNow();renderWarn();renderTL();renderHalls()}
+document.addEventListener("click",e=>{
+ const t=e.target.closest("button");if(!t)return;
+ if(t.dataset.day){S.day=+t.dataset.day;S.view="tl";all()}
+ else if(t.dataset.view){S.view=t.dataset.view;all()}
+ else if(t.dataset.f){S.filter=t.dataset.f;all()}
+ else if(t.dataset.id){S.plan.has(t.dataset.id)?S.plan.delete(t.dataset.id):S.plan.add(t.dataset.id);save();all()}
+});
+document.addEventListener("click",e=>{const c=e.target.closest(".hall");if(!c)return;const was=c.classList.contains("open");document.querySelectorAll(".hall.open").forEach(x=>x.classList.remove("open"));if(!was){c.classList.add("open");setTimeout(()=>c.scrollIntoView({behavior:"smooth",block:"nearest"}),50)}S.open=was?null:c.dataset.hall});
+$("thm").onclick=()=>{const r=document.documentElement,d=r.dataset.theme!=="light";r.dataset.theme=d?"light":"dark";$("thm").textContent=d?"☾":"☀";try{localStorage.setItem("intf26theme",r.dataset.theme)}catch(e){}};
+try{const t=localStorage.getItem("intf26theme");if(t)document.documentElement.dataset.theme=t}catch(e){}
+$("thm").textContent=document.documentElement.dataset.theme==="light"?"☾":"☀";
+$("lang").onchange=e=>{S.lang=e.target.value;save();all()};
+$("go").onclick=()=>{const v=$("simt").value;if(v){const d=new Date(v+"Z");S.off=d.getTime();S.day=Math.min(29,Math.max(28,d.getUTCDate()));all()}};
+$("live").onclick=()=>{S.off=null;all()};
+// auto-open the right day
+(()=>{const d=new Date(bgNow()).getUTCDate();if(d===29&&new Date(bgNow()).getUTCMonth()===9)S.day=29})();
+all();setInterval(()=>{renderNow();renderTL();renderHalls()},30000);
+</script>
+</body>
+</html>
