@@ -5129,6 +5129,8 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 
   updateNavButtons();
   tabsList[0].scrollIntoView({inline:'start', block:'nearest'});
+  (function(){ var m = location.hash.match(/^#(?:week|slide-)(\d+|sol)$/); if(!m) return;
+    var t = document.querySelector('.tab[data-target="slide-' + m[1] + '"]'); if(t){ activateTab(t); t.scrollIntoView({inline:'center', block:'nearest'}); } })();
 
   document.addEventListener('keydown', function(e){
     if(e.key === 'ArrowRight'){ navigateSlide(-1); }
