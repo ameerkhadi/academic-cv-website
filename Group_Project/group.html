@@ -1152,5 +1152,11 @@ p{margin:.55em 0}
 </script>
 </div>
 <script>/* visit counter: no personal data */(function(p){var n="0";try{if(!localStorage.getItem("v_"+p)){localStorage.setItem("v_"+p,"1");n="1"}}catch(e){}new Image().src="https://ameer.itbabylon.org/sensors-api/hit?p="+p+"&n="+n+"&t="+Date.now()})("nb-gp");</script>
+<script>
+// deep link: group.html#week3 (or #sol) opens that tab directly
+(function(){function openFromHash(){var m=location.hash.match(/^#(?:week|slide-)(\d+)$/),t=m?'slide-'+m[1]:(location.hash==='#sol'?'slide-sol':null);
+ var b=t&&document.querySelector('#tabs .tab[data-target="'+t+'"]');if(b){b.click();b.scrollIntoView({block:'nearest',inline:'center'});}}
+ window.addEventListener('hashchange',openFromHash);if(document.readyState==='complete')setTimeout(openFromHash,50);else window.addEventListener('load',function(){setTimeout(openFromHash,50)});})();
+</script>
 </body>
 </html>
