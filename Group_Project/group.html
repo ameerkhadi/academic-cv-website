@@ -499,17 +499,400 @@ p{margin:.55em 0}
 <!-- ============ END SLIDE 2 ============ -->
 
 <!-- ============ SLIDE 3 : الأسبوع الثالث ============ -->
-<div id="slide-3" class="slide content-slide">
+<!-- ============ SLIDE 3 : الأسبوع الثالث ============ -->
+<div id="slide-3" class="slide content-slide rich-slide">
+<style>
+.gp3-board{position:relative;aspect-ratio:16/9;background:#11151c;border-radius:14px;overflow:hidden;margin:14px 0;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#e8e6df;font-size:calc(19px * var(--fs));box-shadow:0 6px 18px #0003}
+.gp3-board span{background:#ffffff1a;border:1px solid #ffffff40;border-radius:999px;padding:8px 22px}
+.gp3-board iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.gp3-obj{background:var(--card);border:1.5px dashed var(--line);border-radius:14px;padding:10px 16px;margin:12px 0}
+.gp3-prompt{background:var(--card);border:1.5px solid var(--line);border-inline-start:5px solid var(--violet);border-radius:12px;padding:10px 14px;margin:10px 0;font-size:calc(15.5px * var(--fs));line-height:1.9}
+.gp3-prompt b.t{display:block;color:var(--violet);margin-bottom:4px}
+.gp3-prompt q{quotes:none;display:block;white-space:pre-line}
+.gp3-weak{border-inline-start-color:var(--red)}.gp3-weak b.t{color:var(--red)}
+.gp3-shot{display:block;width:100%;border-radius:12px;border:1.5px solid var(--line);margin:8px 0;box-shadow:0 4px 14px #0002}
+.gp3-ba{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+.gp3-ba>div{background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:10px 12px}
+.gp3-ba>div b{display:block;margin-bottom:4px}
+.gp3-ba .b{border-color:var(--red)}.gp3-ba .a{border-color:var(--green)}
+@media (max-width:640px){.gp3-ba{grid-template-columns:1fr}}
+.gp3-act{background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;margin:14px 0}
+.gp3-act h4{margin:0 0 6px;color:var(--blue);font-size:calc(17px * var(--fs))}
+.gp3-q{font-weight:700;margin:6px 0}
+.gp3-btns{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0}
+.gp3-btns button,.gp3-chip,.gp3-card{font:inherit;font-size:calc(15px * var(--fs));border:1.5px solid var(--line);background:var(--paper);color:var(--ink);border-radius:12px;padding:8px 14px;cursor:pointer}
+.gp3-btns button:hover,.gp3-chip:hover,.gp3-card:hover{border-color:var(--blue)}
+.gp3-fb{min-height:1.6em;margin:6px 0;font-size:calc(15px * var(--fs))}
+.gp3-ok{color:var(--green);font-weight:700}.gp3-no{color:var(--red);font-weight:700}
+.gp3-score{color:var(--muted);font-size:calc(14px * var(--fs))}
+.gp3-again{font:inherit;font-size:calc(14px * var(--fs));background:none;border:0;color:var(--blue);text-decoration:underline;cursor:pointer}
+.gp3-spot{line-height:2.2;background:var(--paper);border-radius:10px;padding:10px 12px}
+.gp3-spot span{cursor:pointer;border-radius:6px;padding:1px 3px}
+.gp3-spot span.hit{background:color-mix(in srgb,var(--red) 22%,transparent);text-decoration:line-through}
+.gp3-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px}
+.gp3-card{text-align:start;position:relative}
+.gp3-card.done{border-color:var(--green);background:color-mix(in srgb,var(--green) 12%,var(--card))}
+.gp3-card i{font-style:normal;font-weight:800;color:var(--green);margin-inline-end:6px}
+.gp3-built{min-height:48px;background:var(--paper);border:1.5px dashed var(--line);border-radius:10px;padding:8px 10px;margin:6px 0}
+.gp3-chip.used{opacity:.35;pointer-events:none}
+.gp3-shake{animation:gp3s .35s}
+@keyframes gp3s{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.gp3-why{color:var(--muted);font-size:calc(14px * var(--fs))}
+.gp3-shot.gp3-phone{max-width:300px;margin-inline:auto}
+</style>
+
   <span class="chip">الأسبوع الثالث</span>
-  <div class="coming-soon">
-    <svg class="big-icon" viewBox="0 0 40 40"><circle cx="20" cy="20" r="15" fill="none" stroke="currentColor" stroke-width="3" filter="url(#sketchy)"/><path d="M20 11 V21 L27 25" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
-    <p class="cs-title">تنزل لاحقاً</p>
-    <p class="cs-sub">محتوى هذا الأسبوع سيُضاف قريباً.</p>
+  <h2 class="page-title">من PDF إلى تطبيق على هاتفك: مقدّمة إلى أوامر كلود</h2>
+  <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
+
+  <div class="gp3-board" id="gp3Board" role="button" tabindex="0" aria-label="انقر لرؤية الشرح"><span>▶ انقر لرؤية الشرح</span></div>
+
+  <p class="lead-paragraph">في الأسبوع الثاني تعلّمنا القواعد الأربع لطلبٍ جيّد من كلود: <b>السياق، والمهمّة، والشكل، والمثال</b>. وفي هذا الأسبوع نرى ما يحدث حين نطبّقها على طلبٍ أكبر: <b>نعطي كلود ملفّ PDF، فيبني لنا تطبيقًا</b> يعمل في المتصفّح ثمّ على الهاتف. هذه المحاضرة مدخلٌ إلى كتابة الأوامر: سأطبّق أمامكم مثالين كاملين، من الملفّ إلى أيقونة على الهاتف، باستعمال <b>ملفّات تدريبيّة آمنة</b> لا بيانات حقيقيّة.</p>
+
+  <div class="gp3-obj"><b>بعد هذه المحاضرة ستستطيع أن:</b>
+    <ul>
+      <li>تميّز بين سؤالٍ لكلود و<b>أمر بناء</b> يصنع تطبيقًا.</li>
+      <li>تكتب أمر بناءٍ من <b>ستّة أجزاء</b>.</li>
+      <li>تحوّل ملفّ PDF إلى صفحة HTML ثمّ إلى أيقونة على شاشة هاتفك.</li>
+      <li>تحسّن النتيجة بجولات تعديلٍ قصيرة ومحدّدة.</li>
+      <li>تتحقّق من التطبيق قبل أن تشاركه: الأرقام، والخصوصيّة، والهاتف.</li>
+    </ul>
   </div>
+
+  <div class="section-heading"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M4 15 H24 M17 7 L25 15 L17 23" fill="none" stroke="var(--red)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketchy)"/></svg><span>📖 مصطلحات تحتاجها أوّلًا</span></div>
+  <div class="dt-wrap"><table class="dt">
+    <tr><th>المصطلح</th><th>المعنى</th><th>مثال</th></tr>
+    <tr><td>الأمر <span class="ltr-inline">(Prompt)</span></td><td>النصّ الذي تكتبه لكلود لتطلب منه شيئًا</td><td>«لخّص هذا الملفّ في خمس نقاط»</td></tr>
+    <tr><td>أمر البناء</td><td>أمرٌ يطلب <b>منتجًا</b> (صفحة، تطبيق، جدول) لا جوابًا</td><td>«ابنِ صفحة تبحث في أسماء الشركات»</td></tr>
+    <tr><td>HTML</td><td>لغة صفحات الويب؛ ملفّ واحد يفتحه أيّ متصفّح</td><td><span class="ltr-inline">index.html</span></td></tr>
+    <tr><td>الأداة الجانبيّة <span class="ltr-inline">(Artifact)</span></td><td>نافذة في كلود يظهر فيها التطبيق الذي بناه ويعمل مباشرة</td><td>دليل الشركات يظهر بجانب المحادثة وتجرّبه فورًا</td></tr>
+    <tr><td>المصدر أو المرفق</td><td>الملفّ الذي تعطيه لكلود ليبني منه</td><td>كتيّب PDF تدريبيّ من ١٥ صفحة</td></tr>
+    <tr><td>المستخدم المستهدف</td><td>من سيستعمل التطبيق، وأين، وعلى أيّ جهاز</td><td>طالب يفتح جدوله على هاتفه صباحًا</td></tr>
+    <tr><td>الوظيفة <span class="ltr-inline">(Feature)</span></td><td>شيء محدّد يفعله التطبيق</td><td>بحث، تصفية، حفظ في «قائمتي»</td></tr>
+    <tr><td>القيد <span class="ltr-inline">(Constraint)</span></td><td>شرطٌ يجب ألّا يخالفه التطبيق</td><td>«بالعربيّة من اليمين»، «لا تخترع بيانات»</td></tr>
+    <tr><td>التكرار <span class="ltr-inline">(Iteration)</span></td><td>جولة تعديل بعد رؤية النتيجة</td><td>«كبّر الخطّ على الهاتف»</td></tr>
+    <tr><td>الهلوسة <span class="ltr-inline">(Hallucination)</span></td><td>أن يكتب كلود معلومةً غير موجودة في المصدر بثقة</td><td>قاعة لمحاضرة لم ترد في الجدول</td></tr>
+    <tr><td>البيانات الشخصيّة</td><td>معلومات تدلّ على شخص بعينه</td><td>اسم موظّف ورقم هاتفه وبريده</td></tr>
+    <tr><td>التصميم المتجاوب <span class="ltr-inline">(Responsive)</span></td><td>صفحة تتكيّف مع الهاتف والحاسوب</td><td>البطاقات تصير عمودًا واحدًا على الهاتف</td></tr>
+    <tr><td>الوضع الليليّ <span class="ltr-inline">(Dark mode)</span></td><td>ألوان داكنة مريحة للعين</td><td>زرّ ☀/☾ في أعلى الصفحة</td></tr>
+    <tr><td>التخزين المحلّيّ <span class="ltr-inline">(localStorage)</span></td><td>ذاكرة صغيرة في متصفّح المستخدم نفسه</td><td>الشركات التي ميّزتها بنجمة تبقى بعد إغلاق الصفحة</td></tr>
+    <tr><td>PDF</td><td>ملفّ ثابت للقراءة والطباعة؛ لا بحث ذكيّ فيه ولا تصفية</td><td>جدول المحاضرات الذي يصلكم في الواتساب</td></tr>
+    <tr><td>البيانات التدريبيّة (المختلَقة)</td><td>بيانات وهميّة بشكل الحقيقيّة، نتدرّب عليها بأمان</td><td>كتيّب «معرض بابل للتقنيّة» التدريبيّ</td></tr>
+    <tr><td>الرابط العامّ <span class="ltr-inline">(Publish)</span></td><td>زرّ في كلود يعطي الصفحة رابطًا يفتحه أيّ أحد</td><td>رابط ترسله لزملائك في الواتساب</td></tr>
+    <tr><td>الإضافة إلى الشاشة الرئيسيّة</td><td>وضع أيقونة لصفحة الويب على الهاتف لتُفتح كالتطبيق</td><td>⋮ ← «إضافة إلى الشاشة الرئيسيّة»</td></tr>
+    <tr><td>النشر</td><td>وضع الصفحة على رابط يفتحه الآخرون</td><td>رفعها إلى GitHub Pages</td></tr>
+  </table></div>
+
+  <div class="section-heading"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M4 15 H24 M17 7 L25 15 L17 23" fill="none" stroke="var(--red)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketchy)"/></svg><span>١ · من سؤال إلى تطبيق</span></div>
+  <p>حتّى الآن كنّا نسأل كلود فيجيب بنصّ. لكنّه يستطيع أكثر: إن أعطيته ملفّ PDF وطلبت <b>منتجًا</b>، يكتب صفحة HTML كاملة تعمل في المتصفّح، وتظهر لك في نافذة جانبيّة (<span class="ltr-inline">Artifact</span>) لتجرّبها فورًا. ثمّ تفتحها على هاتفك وتضعها على الشاشة الرئيسيّة كأيّ تطبيق.</p>
+  <div class="gp3-ba">
+    <div class="b"><b>سؤال</b>«كم شركة طاقة شمسيّة في الكتيّب؟» ← جواب بنصّ يُقرأ مرّة واحدة.</div>
+    <div class="a"><b>أمر بناء</b>«ابنِ دليلًا يبحث ويصفّي شركات الكتيّب» ← تطبيق على هاتف كلّ زائر للمعرض.</div>
+  </div>
+  <div class="takeaway"><b>الخلاصة:</b> السؤال يعطيك جوابًا، وأمر البناء يعطيك <b>أداة</b>. ومشروعكم في هذه المادّة يحتاج أدوات.</div>
+
+  <div class="section-heading"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M4 15 H24 M17 7 L25 15 L17 23" fill="none" stroke="var(--red)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketchy)"/></svg><span>٢ · الرحلة كاملة: من PDF إلى تطبيق على هاتفك</span></div>
+  <p>ستّ محطّات، وسنمشيها اليوم مرّتين أمامكم:</p>
+  <figure class="ndiag"><svg viewBox="0 0 1600 300" role="img" aria-label="من PDF إلى تطبيق على الهاتف في ست محطات">
+    <g filter="url(#sketchy)" fill="none" stroke-width="3">
+      <rect x="1360" y="70" width="200" height="130" rx="16" stroke="var(--ink)"/><rect x="1105" y="70" width="200" height="130" rx="16" stroke="var(--blue)"/>
+      <rect x="850" y="70" width="200" height="130" rx="16" stroke="var(--blue)"/><rect x="595" y="70" width="200" height="130" rx="16" stroke="var(--orange)"/>
+      <rect x="340" y="70" width="200" height="130" rx="16" stroke="var(--green)"/><rect x="85" y="70" width="200" height="130" rx="16" stroke="var(--green)"/>
+      <path d="M1352 135 H1315 M1325 125 L1313 135 L1325 145 M1097 135 H1060 M1070 125 L1058 135 L1070 145 M842 135 H805 M815 125 L803 135 L815 145 M587 135 H550 M560 125 L548 135 L560 145 M332 135 H295 M305 125 L293 135 L305 145" stroke="var(--ink)"/>
+    </g>
+    <g font-size="30" text-anchor="middle" fill="var(--ink)">
+      <text x="1460" y="125">١ ملفّ PDF</text><text x="1460" y="170" font-size="22" fill="var(--muted)">نسخة آمنة</text>
+      <text x="1205" y="125">٢ أمر البناء</text><text x="1205" y="170" font-size="22" fill="var(--muted)">ستّة أجزاء</text>
+      <text x="950" y="125">٣ كلود يبني</text><text x="950" y="170" font-size="22" fill="var(--muted)">صفحة HTML</text>
+      <text x="695" y="125">٤ جرّب وتحقّق</text><text x="695" y="170" font-size="22" fill="var(--muted)">وحسّن</text>
+      <text x="440" y="125">٥ انشر</text><text x="440" y="170" font-size="22" fill="var(--muted)">رابط عامّ</text>
+      <text x="185" y="125">٦ على هاتفك</text><text x="185" y="170" font-size="22" fill="var(--muted)">أيقونة كالتطبيق</text>
+    </g>
+    <text x="800" y="265" text-anchor="middle" font-size="24" fill="var(--red)">المحطّة الأولى أهمّها: لا نرفع ملفًّا فيه بيانات أشخاص حقيقيّين</text>
+  </svg></figure>
+  <div class="oops"><span class="o-i">⚠</span><div><b>لماذا «نسخة آمنة»؟</b> الكتيّبات والجداول الحقيقيّة فيها أسماء أشخاص وهواتفهم. في التدريب نستعمل <b>نسخة تدريبيّة مختلَقة</b> لها الشكل نفسه. نزّل الملفّين وجرّب بنفسك: <a href="files/booklet-practice.pdf" target="_blank" rel="noopener">📄 كتيّب «معرض بابل للتقنيّة» التدريبيّ</a> · <a href="files/timetable-practice.pdf" target="_blank" rel="noopener">📄 جدول المحاضرات الأسبوعيّ التدريبيّ</a></div></div>
+
+  <div class="section-heading"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M4 15 H24 M17 7 L25 15 L17 23" fill="none" stroke="var(--red)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketchy)"/></svg><span>٣ · تشريح أمر البناء: ستّة أجزاء</span></div>
+  <p>القواعد الأربع من الأسبوع الماضي ما زالت الأساس. أمر البناء يفصّلها إلى ستّة أجزاء:</p>
+  <div class="pipe">
+    <div class="pipe-row"><span class="pipe-n">١</span><div class="pipe-b"><b>المصدر</b><small>أرفق الملفّ وقل ما فيه: «أرفقت كتيّب الشركات المشاركة في المعرض، ١٥ صفحة».</small></div></div>
+    <div class="pipe-a">↓</div>
+    <div class="pipe-row"><span class="pipe-n">٢</span><div class="pipe-b"><b>المستخدم والمكان</b><small>مَن سيستعمله؟ وأين؟ «زائر للمعرض، على هاتفه، وهو يمشي بين الأجنحة».</small></div></div>
+    <div class="pipe-a">↓</div>
+    <div class="pipe-row"><span class="pipe-n">٣</span><div class="pipe-b"><b>المنتج</b><small>فعلٌ واحد واضح: «ابنِ صفحة HTML واحدة: دليلًا ذكيًّا للشركات».</small></div></div>
+    <div class="pipe-a">↓</div>
+    <div class="pipe-row"><span class="pipe-n">٤</span><div class="pipe-b"><b>الوظائف</b><small>قائمة مرقّمة: بحث بالعربيّة والإنجليزيّة، تصفية بالقطاع والدولة، «قائمتي» بنجمة.</small></div></div>
+    <div class="pipe-a">↓</div>
+    <div class="pipe-row"><span class="pipe-n">٥</span><div class="pipe-b"><b>القيود</b><small>«بالعربيّة من اليمين، تعمل على الهاتف، ملفّ واحد، <b>لا تخترع أيّ معلومة غير موجودة في الملفّ</b>».</small></div></div>
+    <div class="pipe-a">↓</div>
+    <div class="pipe-row hi"><span class="pipe-n">٦</span><div class="pipe-b"><b>الشكل والتحقّق</b><small>«ألوان هادئة ووضع ليليّ، واذكر رقم الصفحة في الملفّ». ثمّ <b>أنت</b> تجرّب وتتحقّق.</small></div></div>
+  </div>
+  <div class="oops"><span class="o-i">⚠</span><div><b>الأمر الضعيف:</b> «سوّي لي موقع للشركات». فيخمّن كلود المستخدم والوظائف والشكل، وقد يملأ الفراغ بمعلومات مخترَعة. <b>كلّ جزءٍ تحذفه يملؤه كلود بتخمين.</b></div></div>
+
+  <div class="section-heading"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M4 15 H24 M17 7 L25 15 L17 23" fill="none" stroke="var(--red)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketchy)"/></svg><span>٤ · التطبيق الأوّل: كتيّب المعرض ← دليل شركات على هاتفك</span></div>
+  <p><b>المشكلة:</b> «معرض بابل للتقنيّة» وزّع كتيّبًا PDF عن <b>١٤ شركة</b>، لكلّ شركة صفحة. البحث فيه على الهاتف متعب: تمرير طويل، ولا تصفية، ولا مكان لملاحظاتك. <span class="gp3-why">(الكتيّب تدريبيّ والبيانات مختلقة.)</span></p>
+  <div class="gp3-prompt"><b class="t">الأمر</b><q>أرفقتُ كتيّب الشركات المشاركة في «معرض بابل للتقنيّة» (١٥ صفحة، لكلّ شركة صفحة).
+المستخدم: زائر للمعرض، يحمل هاتفه ويتنقّل بين الأجنحة.
+ابنِ صفحة HTML واحدة: دليلًا ذكيًّا للشركات.
+الوظائف: ١) بحث بالعربيّة والإنجليزيّة يتحمّل الأخطاء الإملائيّة. ٢) تصفية بالقطاع والدولة. ٣) بطاقة لكلّ شركة: النبذة، والمنتجات، وما تبحث عنه. ٤) «قائمتي» بنجمة مع ملاحظة. ٥) أرقام سريعة: عدد الشركات والقطاعات والدول.
+القيود: بالعربيّة من اليمين، تعمل على الهاتف، ملفّ واحد، ولا تكتب أيّ معلومة غير موجودة في الكتيّب.
+الشكل: هادئ مع وضع ليليّ، واذكر رقم الصفحة في الكتيّب لكلّ شركة.</q></div>
+  <img class="gp3-shot gp3-phone" src="img/w3-dir.jpg" alt="دليل المعرض على الهاتف" loading="lazy">
+  <p>جرّب النتيجة على هاتفك: <a href="apps/directory.html" target="_blank" rel="noopener">📱 دليل المعرض</a>.</p>
+  <p><b>جولة التحسين الثانية — الخصوصيّة:</b> في الكتيّب اسم «مسؤول التواصل» وهاتفه. قبل النشر طلبنا: «احذف أسماء الأشخاص وهواتفهم من كلّ البطاقات، واترك موقع الشركة فقط». هذا الطلب لم يأتِ من كلود، بل من <b>قرارنا نحن</b>.</p>
+  <div class="takeaway"><b>الدرس:</b> قائمة الوظائف المرقّمة جعلت النتيجة دقيقة، وقيد «لا تخترع» حمى المعلومات، والقرار الأخلاقيّ (الخصوصيّة) بقي على الإنسان.</div>
+
+  <div class="section-heading"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M4 15 H24 M17 7 L25 15 L17 23" fill="none" stroke="var(--red)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketchy)"/></svg><span>٥ · التطبيق الثاني: جدول الطلبة الأسبوعيّ ← تطبيق «جدولي»</span></div>
+  <p><b>المشكلة:</b> جدول المحاضرات يصلكم صورةً أو PDF في مجموعة الواتساب. وكلّ صباح تفتحونه وتكبّرونه لتعرفوا: <b>ما محاضرتي الآن؟ وما التالية؟ وفي أيّ قاعة؟</b></p>
+  <div class="gp3-prompt"><b class="t">الأمر</b><q>أرفقتُ جدول المحاضرات الأسبوعيّ للمرحلة الثالثة (PDF، صفحة واحدة).
+المستخدم: طالب يفتح الصفحة على هاتفه صباحًا وبين المحاضرات.
+ابنِ صفحة HTML واحدة: تطبيق «جدولي».
+الوظائف: ١) بطاقة في الأعلى: «يجري الآن» و«التالي» بحسب الساعة الحقيقيّة بتوقيت بغداد، مع عدّاد تنازليّ. ٢) تبويب لكلّ يوم، ويُفتح اليوم الحاليّ تلقائيًّا. ٣) لكلّ محاضرة: الوقت، والمادّة، ونظريّ أو عمليّ، والقاعة، والمدرّس. ٤) المحاضرات المنتهية باهتة، والحاليّة مميّزة بلون.
+القيود: الأوقات والقاعات كما في الجدول حرفيًّا، بالعربيّة من اليمين، تعمل على الهاتف، ولا تحتاج إنترنت بعد فتحها.
+وأضِف في الأسفل حقل «معاينة الوقت» (يوم وساعة) لأجرّب الصفحة قبل الدوام.</q></div>
+  <img class="gp3-shot gp3-phone" src="img/w3-jadwali.jpg" alt="تطبيق جدولي على الهاتف" loading="lazy">
+  <p>جرّب النتيجة: <a href="apps/jadwali.html" target="_blank" rel="noopener">📱 جدولي</a>. في الأسفل اختر «الأحد» والساعة ١٠:٣٠، وشاهد «يجري الآن» يتغيّر.</p>
+  <div class="takeaway"><b>الدرس:</b> وظيفة «الآن والتالي» لم تكن في الملفّ؛ جاءت من فهمنا <b>للمستخدم ومكانه</b>. وحقل «معاينة الوقت» قيدٌ يجعل التحقّق ممكنًا قبل يوم الدوام.</div>
+
+  <div class="section-heading"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M4 15 H24 M17 7 L25 15 L17 23" fill="none" stroke="var(--red)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketchy)"/></svg><span>٦ · من رابط إلى أيقونة على هاتفك</span></div>
+  <p>الصفحة الآن تعمل داخل كلود. لتصير تطبيقًا على هاتفك:</p>
+  <div class="pipe">
+    <div class="pipe-row"><span class="pipe-n">١</span><div class="pipe-b"><b>انشر الصفحة</b><small>في نافذة الـ<span class="ltr-inline">Artifact</span> اضغط <b>Publish</b>، فتحصل على رابط عامّ. (أو ارفعها إلى GitHub Pages كما سنفعل في المشروع.)</small></div></div>
+    <div class="pipe-a">↓</div>
+    <div class="pipe-row"><span class="pipe-n">٢</span><div class="pipe-b"><b>افتح الرابط على هاتفك</b><small>أرسله لنفسك في الواتساب أو امسح رمز QR.</small></div></div>
+    <div class="pipe-a">↓</div>
+    <div class="pipe-row"><span class="pipe-n">٣</span><div class="pipe-b"><b>أندرويد (Chrome)</b><small>القائمة ⋮ ← «إضافة إلى الشاشة الرئيسيّة» ← «إضافة».</small></div></div>
+    <div class="pipe-a">↓</div>
+    <div class="pipe-row"><span class="pipe-n">٤</span><div class="pipe-b"><b>آيفون (Safari)</b><small>زرّ المشاركة ⬆ ← «إضافة إلى الشاشة الرئيسيّة» ← «إضافة».</small></div></div>
+    <div class="pipe-a">↓</div>
+    <div class="pipe-row hi"><span class="pipe-n">٥</span><div class="pipe-b"><b>جرّبه كمستخدم</b><small>افتحه من الأيقونة: هل يُقرأ؟ هل يتحرّك جانبيًّا؟ هل الأرقام صحيحة؟</small></div></div>
+  </div>
+  <div class="oops"><span class="o-i">⚠</span><div><b>الرابط العامّ يراه كلّ من يملكه.</b> لا تنشر صفحة فيها أسماء أشخاص أو هواتفهم أو درجاتهم. لهذا حذفنا مسؤولي التواصل من الدليل قبل النشر.</div></div>
+
+  <div class="section-heading"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M4 15 H24 M17 7 L25 15 L17 23" fill="none" stroke="var(--red)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketchy)"/></svg><span>٧ · التحسين والتحقّق</span></div>
+  <p>أوّل نتيجة نادرًا ما تكون الأخيرة. التحسين يكون <b>بطلبات قصيرة ومحدّدة</b>، طلبًا واحدًا في كلّ مرّة:</p>
+  <div class="dt-wrap"><table class="dt">
+    <tr><th>طلب تحسين ضعيف</th><th>طلب تحسين جيّد</th></tr>
+    <tr><td>«خلّيها أحلى»</td><td>«كبّر الخطّ إلى ١٨ على الهاتف، واجعل البطاقات عمودًا واحدًا»</td></tr>
+    <tr><td>«فيها غلط»</td><td>«محاضرة الأربعاء الأولى في قاعة ٣٠١ لا ١٠١؛ صحّحها»</td></tr>
+    <tr><td>«ضيف كلّ شيء»</td><td>«أضِف تصفية بحجم الشركة: صغيرة، متوسّطة، كبيرة»</td></tr>
+  </table></div>
+  <p><b>وقبل أن تشارك التطبيق، افحص أربعة أشياء:</b></p>
+  <ul>
+    <li><b>الأرقام:</b> قارن ٣–٥ قيم عشوائيّة بالـPDF الأصليّ.</li>
+    <li><b>الخصوصيّة:</b> هل فيه أسماء أشخاص أو هواتفهم أو بريدهم؟ احذفها إن لم يكن نشرها مسموحًا.</li>
+    <li><b>الهاتف:</b> افتحه على هاتفك فعلًا: هل يُقرأ؟ هل يتحرّك جانبيًّا؟</li>
+    <li><b>الصدق:</b> هل يوضّح أنّ البيانات تدريبيّة أو مختلقة إن كانت كذلك؟</li>
+  </ul>
+  <div class="takeaway"><b>القاعدة الذهبيّة للأسبوع:</b> كلود يبني · أنت تحدّد المستخدم والقيود · وأنت تتحقّق قبل النشر.</div>
+
+<div class="section-heading"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M4 15 H24 M17 7 L25 15 L17 23" fill="none" stroke="var(--red)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketchy)"/></svg><span>٨ · أنشطة تفاعليّة</span></div>
+
+  <div class="gp3-act" id="gp3A"><h4>🎯 النشاط أ: أمر جيّد أم ضعيف؟</h4><div class="gp3-body"></div></div>
+  <div class="gp3-act" id="gp3B"><h4>🧩 النشاط ب: أيّ جزء ناقص؟</h4><div class="gp3-body"></div></div>
+  <div class="gp3-act" id="gp3C"><h4>🔍 النشاط ج: اكتشف مواطن الضعف</h4><p class="gp3-why">اضغط على كلّ عبارة في هذا الأمر ستسبّب مشكلة. يوجد ٦ عبارات.</p><div class="gp3-body"></div></div>
+  <div class="gp3-act" id="gp3D"><h4>🔢 النشاط د: رتّب الخطوات بالضغط</h4><p class="gp3-why">من ملفّ PDF إلى أيقونة على هاتفك: اضغط البطاقات بالترتيب الصحيح.</p><div class="gp3-body"></div></div>
+  <div class="gp3-act" id="gp3E"><h4>🛠 النشاط هـ: ابنِ الأمر</h4><p class="gp3-why">اضغط القطع المناسبة بالترتيب لتصنع أمر بناءٍ كاملًا، ثمّ «تحقّق». جولتان.</p><div class="gp3-body"></div></div>
+
+  <div class="section-heading"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M4 15 H24 M17 7 L25 15 L17 23" fill="none" stroke="var(--red)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketchy)"/></svg><span>٩ · أسئلة المراجعة</span></div>
+  <p class="quiz-note">الحلول والتعليل في تبويب «الحلول والتعليل» 🔑</p>
+  <p class="dt-cap">أولًا · الاختيار من متعدد</p>
+  <div class="mcq-item"><span class="q-num">١.</span> ما الفرق بين «السؤال» و«أمر البناء» لكلود؟
+    <ul class="mcq-options">
+      <li><span class="opt-letter">أ)</span> السؤال أطول دائمًا من أمر البناء</li>
+      <li><span class="opt-letter">ب)</span> السؤال يعطي جوابًا نصّيًّا، وأمر البناء يطلب منتجًا يعمل مثل صفحة أو تطبيق</li>
+      <li><span class="opt-letter">ج)</span> أمر البناء لا يحتاج ملفًّا أبدًا</li>
+      <li><span class="opt-letter">د)</span> لا فرق؛ الكلمتان بمعنى واحد</li>
+    </ul></div>
+  <div class="mcq-item"><span class="q-num">٢.</span> أيّ جزء من أجزاء أمر البناء يمنع كلود من اختراع معلومات؟
+    <ul class="mcq-options">
+      <li><span class="opt-letter">أ)</span> الشكل والألوان</li>
+      <li><span class="opt-letter">ب)</span> المستخدم والمكان</li>
+      <li><span class="opt-letter">ج)</span> القيود، مثل «لا تكتب أيّ معلومة غير موجودة في الملفّ»</li>
+      <li><span class="opt-letter">د)</span> المنتج</li>
+    </ul></div>
+  <div class="mcq-item"><span class="q-num">٣.</span> في تطبيق «جدولي»، من أين جاءت وظيفة «يجري الآن والتالي»؟
+    <ul class="mcq-options">
+      <li><span class="opt-letter">أ)</span> من فهمنا للمستخدم: طالب يفتح الصفحة على هاتفه بين المحاضرات</li>
+      <li><span class="opt-letter">ب)</span> كانت مكتوبة في ملفّ الجدول PDF</li>
+      <li><span class="opt-letter">ج)</span> أضافها كلود من تلقاء نفسه دائمًا</li>
+      <li><span class="opt-letter">د)</span> من إعدادات المتصفّح</li>
+    </ul></div>
+  <div class="mcq-item"><span class="q-num">٤.</span> لماذا حذفنا أسماء مسؤولي التواصل وهواتفهم من دليل المعرض قبل النشر؟
+    <ul class="mcq-options">
+      <li><span class="opt-letter">أ)</span> لأنّ الصفحة صارت ثقيلة</li>
+      <li><span class="opt-letter">ب)</span> لأنّ كلود رفض كتابتها</li>
+      <li><span class="opt-letter">ج)</span> لأنّ الهواتف كانت خاطئة</li>
+      <li><span class="opt-letter">د)</span> لأنّها بيانات شخصيّة، ونشرها لعامّة الناس دون إذن غير مقبول</li>
+    </ul></div>
+  <div class="mcq-item"><span class="q-num">٥.</span> لماذا تدرّبنا على كتيّب «معرض بابل» التدريبيّ لا على كتيّب حقيقيّ؟
+    <ul class="mcq-options">
+      <li><span class="opt-letter">أ)</span> لأنّ كلود لا يقرأ الملفّات الحقيقيّة</li>
+      <li><span class="opt-letter">ب)</span> لأنّ الملفّ الحقيقيّ فيه بيانات أشخاص حقيقيّين، والنسخة المختلقة لها الشكل نفسه بلا خطر</li>
+      <li><span class="opt-letter">ج)</span> لأنّ الملفّات الحقيقيّة أكبر من أن تُرفع دائمًا</li>
+      <li><span class="opt-letter">د)</span> لأنّ النسخة التدريبيّة تعطي تطبيقًا أجمل</li>
+    </ul></div>
+  <div class="mcq-item"><span class="q-num">٦.</span> أيّ طلب تحسين هو الأفضل بعد أوّل نتيجة؟
+    <ul class="mcq-options">
+      <li><span class="opt-letter">أ)</span> «خلّيها أحلى»</li>
+      <li><span class="opt-letter">ب)</span> «فيها غلط، صلّحه»</li>
+      <li><span class="opt-letter">ج)</span> «كبّر الخطّ إلى ١٨ على الهاتف واجعل البطاقات عمودًا واحدًا»</li>
+      <li><span class="opt-letter">د)</span> «أعد كلّ شيء من البداية بطريقة أفضل»</li>
+    </ul></div>
+  <div class="mcq-item"><span class="q-num">٧.</span> قبل أن تشارك تطبيقًا بناه كلود، أيّ فحص هو الأهمّ؟
+    <ul class="mcq-options">
+      <li><span class="opt-letter">أ)</span> مقارنة بعض الأرقام بالمصدر، وفحص الخصوصيّة، وتجربته على الهاتف</li>
+      <li><span class="opt-letter">ب)</span> عدد الألوان في الصفحة</li>
+      <li><span class="opt-letter">ج)</span> حجم الملفّ بالكيلوبايت</li>
+      <li><span class="opt-letter">د)</span> اسم الملفّ</li>
+    </ul></div>
+  <div class="mcq-item"><span class="q-num">٨.</span> بنى كلود صفحتك ونشرتها برابط. كيف تجعلها أيقونة على هاتف أندرويد؟
+    <ul class="mcq-options">
+      <li><span class="opt-letter">أ)</span> تنزّلها من متجر Google Play</li>
+      <li><span class="opt-letter">ب)</span> ترسل ملفّ HTML إلى الهاتف وتثبّته</li>
+      <li><span class="opt-letter">ج)</span> تحوّلها إلى PDF أوّلًا</li>
+      <li><span class="opt-letter">د)</span> تفتح الرابط في Chrome ← القائمة ⋮ ← «إضافة إلى الشاشة الرئيسيّة»</li>
+    </ul></div>
+
+  <p class="dt-cap">ثانيًا · صح أم خطأ</p>
+  <div class="tf-item"><span>١. أمر البناء الجيّد يذكر المستخدم ومكان استعماله.</span> <span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+  <div class="tf-item"><span>٢. إذا لم يجد كلود معلومة في الملفّ، فمن الأفضل أن نطلب منه أن «يكتب شيئًا مناسبًا من عنده».</span> <span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+  <div class="tf-item"><span>٣. أوّل نتيجة يعطيها كلود هي النتيجة النهائيّة دائمًا.</span> <span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+  <div class="tf-item"><span>٤. التطبيق الذي بناه كلود يمكن أن يكون ملفّ HTML واحدًا يفتحه أيّ متصفّح.</span> <span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+  <div class="tf-item"><span>٥. وضع أرقام هواتف الطلبة ودرجاتهم في صفحة منشورة مقبول ما دام كلود هو من كتبها.</span> <span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+  <div class="tf-item"><span>٦. الرابط العامّ (Publish) يستطيع فتحه أيّ شخص يصله الرابط.</span> <span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+  <div class="tf-item"><span>٧. قائمة الوظائف المرقّمة في الأمر تجعل النتيجة أدقّ.</span> <span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+  <div class="tf-item"><span>٨. يكفي أن نجرّب التطبيق على الحاسوب قبل نشره للطلبة.</span> <span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+
+  <p class="dt-cap">ثالثًا · أسئلة قصيرة</p>
+  <div class="mcq-item"><span class="q-num">١.</span> اذكر الأجزاء الستّة لأمر البناء.
+    <span class="blank-line"></span><span class="blank-line"></span></div>
+  <div class="mcq-item"><span class="q-num">٢.</span> اذكر المحطّات الستّ من ملفّ PDF إلى تطبيق على الهاتف.
+    <span class="blank-line"></span><span class="blank-line"></span></div>
+  <div class="mcq-item"><span class="q-num">٣.</span> اكتب طلب تحسين جيّدًا لصفحة نصّها صغير على الهاتف.
+    <span class="blank-line"></span><span class="blank-line"></span></div>
+  <div class="mcq-item"><span class="q-num">٤.</span> اذكر ثلاثة فحوص قبل مشاركة تطبيق بناه كلود.
+    <span class="blank-line"></span><span class="blank-line"></span></div>
+
+  <p class="dt-cap">رابعًا · سيناريو</p>
+  <div class="mcq-item"><span class="q-num">●</span> <b>سيناريو:</b> فريقكم يريد صفحة «دليل مختبرات الكلّيّة» من ملفّ Excel فيه أسماء المختبرات وأجهزتها ومواعيد فتحها، ومعه أسماء المشرفين وأرقام هواتفهم. كتب أحدكم: «سوّي لنا موقع للمختبرات وضيف كلّ شي».
+  <br>أ) ما المشكلات في هذا الأمر؟ <br>ب) أعد كتابته بالأجزاء الستّة. <br>ج) ما الذي يجب حذفه قبل النشر، ولماذا؟ <br>د) اكتب طلبَي تحسين بعد أوّل نتيجة، وفحصين قبل المشاركة.
+  <span class="blank-line"></span><span class="blank-line"></span><span class="blank-line"></span><span class="blank-line"></span></div>
+
+
+  <p class="mini-note">نهاية محاضرة الأسبوع الثالث · إعداد: د. أمير هادي ★</p>
   <div class="page-nav"><button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button><button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button></div>
   <div class="footer-note">٣</div>
+
+<script>
+(function(){
+  const $=s=>document.querySelector(s);
+  // board player: load only when clicked
+  const bd=$('#gp3Board');
+  const play=()=>{if(bd.querySelector('iframe'))return;bd.innerHTML='<iframe src="../boards/gp/week3_canvas.html?v=20261025b#embed" allow="autoplay" title="شرح الأسبوع الثالث"></iframe>'};
+  bd.addEventListener('click',play);bd.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();play()}});
+
+  // classic game: one question at a time
+  function game(id,items,labels){
+    const box=$('#'+id+' .gp3-body');let i=0,sc=0;
+    function show(){
+      if(i>=items.length){box.innerHTML='<p class="gp3-ok">النتيجة: '+sc+' من '+items.length+'</p><button class="gp3-again">من جديد</button>';box.querySelector('button').onclick=()=>{i=0;sc=0;show()};return}
+      const it=items[i];
+      box.innerHTML='<p class="gp3-q">'+(i+1)+'/'+items.length+' · '+it.q+'</p><div class="gp3-btns">'+labels.map((l,k)=>'<button data-k="'+k+'">'+l+'</button>').join('')+'</div><p class="gp3-fb"></p><p class="gp3-score">النقاط: '+sc+'</p>';
+      box.querySelectorAll('.gp3-btns button').forEach(b=>b.onclick=()=>{
+        const ok=+b.dataset.k===it.a;if(ok)sc++;
+        box.querySelector('.gp3-fb').innerHTML=(ok?'<span class="gp3-ok">✓ صحيح.</span> ':'<span class="gp3-no">✗ ليس هذا.</span> ')+it.why;
+        box.querySelectorAll('.gp3-btns button').forEach(x=>x.disabled=true);
+        setTimeout(()=>{i++;show()},ok?1600:2600);
+      });
+    }
+    show();
+  }
+  game('gp3A',[
+    {q:'«سوّي لي موقع للمكتبة.»',a:1,why:'لا مصدر ولا مستخدم ولا وظائف ولا قيود؛ كلود سيخمّن كلّ شيء.'},
+    {q:'«أرفقتُ قائمة كتب المكتبة (Excel). ابنِ صفحة HTML للطلبة على الهاتف: بحث بالعنوان والمؤلّف، وتصفية بالقسم، وزرّ «متوفّر/مُعار». بالعربيّة، ولا تضِف كتبًا غير موجودة في الملفّ.»',a:0,why:'فيه المصدر والمستخدم والمنتج والوظائف والقيود.'},
+    {q:'«اعمل حاسبة درجات حلوة.»',a:1,why:'لا معادلة ولا أوزان ولا مستخدم؛ والحاسبة بلا معادلة تعطي أرقامًا خاطئة.'},
+    {q:'«ابنِ جدول محاضرات القسم من الملفّ المرفق، يعرض «المحاضرة الآن» بحسب الساعة، وتبويبًا لكلّ يوم، ويعمل على الهاتف.»',a:0,why:'وظيفة ذكيّة مرتبطة بالمستخدم (الآن)، ومصدر واضح، وقيد الهاتف.'},
+    {q:'«ضيف كلّ معلومات الطلبة بالصفحة: الأسماء والهواتف والدرجات.»',a:1,why:'يخالف الخصوصيّة؛ البيانات الشخصيّة لا توضع في صفحة تُشارك.'},
+    {q:'«كبّر الخطّ إلى ١٨ على الهاتف، واجعل البطاقات عمودًا واحدًا.»',a:0,why:'طلب تحسين قصير ومحدّد يمكن التحقّق منه.'}
+  ],['✓ جيّد','✗ ضعيف']);
+  game('gp3B',[
+    {q:'«ابنِ دليلًا للشركات: بحث وتصفية ونجمة. بالعربيّة وعلى الهاتف.» ما الناقص؟',a:0,why:'لم يذكر الملفّ الذي يبني منه، فقد يخترع شركات.'},
+    {q:'«أرفقتُ منهاج المؤتمر. ابنِ صفحة HTML، بالعربيّة، ولا تخترع أوقاتًا.» ما الناقص؟',a:1,why:'لم يقل ماذا تفعل الصفحة: «الآن والتالي»، التبويبات، «خطّتي»…'},
+    {q:'«أرفقتُ قائمة الأسعار. ابنِ حاسبة كلفة: كمّيّة، وخصم، ومجموع، ومشاركة.» ما الناقص؟',a:2,why:'لا قيود: اللغة، والهاتف، وعدم اختراع أسعار، وكتابة المعادلة.'},
+    {q:'«أرفقتُ دليل الطالب. ابنِ مساعدًا يجيب من الدليل فقط، بالعربيّة.» ما الناقص؟',a:1,why:'الوظائف غير محدّدة: هل يعرض المصدر؟ هل يحفظ الأسئلة؟ هل يعمل على الهاتف؟'}
+  ],['المصدر','الوظائف','القيود']);
+
+  // spot it
+  (function(){
+    const box=$('#gp3C .gp3-body');
+    const parts=[['سوّي لي ',0],['موقع حلو',1,'«حلو» ليس وظيفة: لا يمكن التحقّق منه.'],[' للمؤتمر، ',0],['وضيف أرقام هواتف كلّ المتحدّثين',1,'بيانات شخصيّة لا تُنشر دون إذن.'],[' حتّى يتواصلون. ',0],['وإذا ما لقيت معلومة اكتب شي مناسب من عندك',1,'هذا طلب صريح للهلوسة.'],['. ',0],['ما يهمّ يشتغل على الموبايل',1,'المستخدم في مؤتمر يحمل هاتفه؛ هذا أهمّ قيد.'],['، ',0],['وسوّي كلّ شي مرّة وحدة',1,'التحسين بجولات قصيرة أدقّ من أمر واحد ضخم.'],[' ',0],['وما يحتاج أشوفه قبل ما تنشره',1,'التحقّق قبل النشر مسؤوليّتك.'],['.',0]];
+    let hits=0,miss=0;
+    box.innerHTML='<div class="gp3-spot">'+parts.map((p,k)=>p[1]?'<span data-k="'+k+'">'+p[0]+'</span>':p[0]).join('')+'</div><ul class="gp3-why gp3-list"></ul><p class="gp3-score"></p><button class="gp3-again">من جديد</button>';
+    const sc=()=>box.querySelector('.gp3-score').textContent='وجدت '+hits+' من ٦ · ضغطات خاطئة: '+miss;
+    box.querySelector('.gp3-spot').addEventListener('click',e=>{
+      const t=e.target.closest('span');
+      if(!t){const s=box.querySelector('.gp3-spot');s.classList.remove('gp3-shake');void s.offsetWidth;s.classList.add('gp3-shake');miss++;sc();return}
+      if(t.classList.contains('hit'))return;t.classList.add('hit');hits++;
+      box.querySelector('.gp3-list').insertAdjacentHTML('beforeend','<li><b>'+t.textContent+'</b>: '+parts[+t.dataset.k][2]+'</li>');sc();
+      if(hits===6)box.querySelector('.gp3-score').innerHTML='<span class="gp3-ok">✓ ممتاز، وجدتها كلّها.</span> ضغطات خاطئة: '+miss;
+    });
+    box.querySelector('.gp3-again').onclick=()=>{hits=0;miss=0;box.querySelectorAll('.hit').forEach(x=>x.classList.remove('hit'));box.querySelector('.gp3-list').innerHTML='';sc()};
+    sc();
+  })();
+
+  // order by tapping
+  (function(){
+    const box=$('#gp3D .gp3-body');
+    const steps=['حدّد المشكلة ومن هو المستخدم','جهّز ملفّ PDF (نسخة آمنة بلا بيانات شخصيّة)','أرفق الملفّ واكتب أمر البناء بأجزائه الستّة','جرّب النتيجة في نافذة Artifact','اطلب تحسينًا واحدًا محدّدًا في كلّ جولة','تحقّق من الأرقام والخصوصيّة','انشر الرابط وأضِفه إلى الشاشة الرئيسيّة'];
+    let next=0;
+    function draw(){
+      const order=steps.map((s,i)=>i).sort(()=>Math.random()-.5);next=0;
+      box.innerHTML='<div class="gp3-grid">'+order.map(i=>'<button class="gp3-card" data-i="'+i+'">'+steps[i]+'</button>').join('')+'</div><p class="gp3-fb"></p><button class="gp3-again">من جديد</button>';
+      box.querySelectorAll('.gp3-card').forEach(c=>c.onclick=()=>{
+        if(c.classList.contains('done'))return;
+        if(+c.dataset.i===next){c.classList.add('done');c.insertAdjacentHTML('afterbegin','<i>'+(next+1)+'</i>');next++;if(next===steps.length)box.querySelector('.gp3-fb').innerHTML='<span class="gp3-ok">✓ الترتيب صحيح. لاحظ: التحقّق قبل النشر دائمًا.</span>'}
+        else{c.classList.remove('gp3-shake');void c.offsetWidth;c.classList.add('gp3-shake');box.querySelector('.gp3-fb').innerHTML='<span class="gp3-no">ليست الخطوة رقم '+(next+1)+'.</span>'}
+      });
+      box.querySelector('.gp3-again').onclick=draw;
+    }
+    draw();
+  })();
+
+  // build it (2 rounds)
+  (function(){
+    const box=$('#gp3E .gp3-body');
+    const rounds=[
+      {title:'الجولة ١: جدول محاضرات القسم',ok:['أرفقتُ جدول محاضرات القسم (PDF).','المستخدم: طالب على هاتفه.','ابنِ صفحة HTML واحدة: جدولًا ذكيًّا.','الوظائف: «المحاضرة الآن»، وتبويب لكلّ يوم، والقاعة والمدرّس.','القيود: بالعربيّة، ولا تخترع أوقاتًا، وتعمل على الهاتف.'],
+       bad:['سوّي شي حلو.','ضيف أرقام هواتف المدرّسين.','إذا ناقص شي ألّف من عندك.']},
+      {title:'الجولة ٢: حاسبة معدّل الطالب',ok:['أرفقتُ لائحة احتساب المعدّل في الكلّيّة.','المستخدم: طالب يريد أن يعرف معدّله.','ابنِ صفحة HTML واحدة: حاسبة معدّل.','المعادلة: مجموع (الدرجة × الوحدات) ÷ مجموع الوحدات.','القيود: اكتب المعادلة أسفل الحاسبة، ولا تحفظ درجات الطالب خارج جهازه.'],
+       bad:['احسبها بأيّ طريقة تشوفها مناسبة.','ارفع الدرجات لموقع عامّ.','خلّيها تطلع معدّل عالي.']}
+    ];
+    let r=0;
+    function draw(){
+      const R=rounds[r];let built=[];
+      const chips=R.ok.map(t=>({t,ok:1})).concat(R.bad.map(t=>({t,ok:0}))).sort(()=>Math.random()-.5);
+      box.innerHTML='<p class="gp3-q">'+R.title+'</p><div class="gp3-built"></div><div class="gp3-btns">'+chips.map((c,k)=>'<button class="gp3-chip" data-k="'+k+'">'+c.t+'</button>').join('')+'</div><div class="gp3-btns"><button class="gp3-check">تحقّق</button><button class="gp3-clear">مسح</button></div><p class="gp3-fb"></p>';
+      const out=box.querySelector('.gp3-built');
+      box.querySelectorAll('.gp3-chip').forEach(b=>b.onclick=()=>{built.push(chips[+b.dataset.k]);b.classList.add('used');out.innerHTML=built.map(c=>c.t).join(' ')});
+      box.querySelector('.gp3-clear').onclick=draw;
+      box.querySelector('.gp3-check').onclick=()=>{
+        const fb=box.querySelector('.gp3-fb');const bad=built.filter(c=>!c.ok);
+        if(bad.length){fb.innerHTML='<span class="gp3-no">✗ احذف: «'+bad[0].t+'»</span>: هذه القطعة تسبّب تخمينًا أو خطرًا.';return}
+        const miss=R.ok.filter(t=>!built.some(c=>c.t===t));
+        if(miss.length){fb.innerHTML='<span class="gp3-no">✗ ينقصك جزء:</span> «'+miss[0]+'»';return}
+        const order=built.every((c,i)=>c.t===R.ok[i]);
+        fb.innerHTML=order?'<span class="gp3-ok">✓ أمر كامل ومرتّب.</span> '+(r===0?'<button class="gp3-again" id="gp3Next">الجولة الثانية ←</button>':'<button class="gp3-again" id="gp3Next">من جديد</button>'):'<span class="gp3-ok">✓ كلّ الأجزاء موجودة.</span> وترتيبها الأفضل: المصدر، ثمّ المستخدم، ثمّ المنتج، ثمّ الوظائف أو المعادلة، ثمّ القيود.';
+        const n=document.getElementById('gp3Next');if(n)n.onclick=()=>{r=(r+1)%rounds.length;draw()};
+      };
+    }
+    draw();
+  })();
+})();
+</script>
 </div>
 <!-- ============ END SLIDE 3 ============ -->
+      <!-- ============ END SLIDE 3 ============ -->
 
 <!-- ============ SLIDE 4 : الأسبوع الرابع ============ -->
 <div id="slide-4" class="slide content-slide">
@@ -708,6 +1091,41 @@ p{margin:.55em 0}
   <div class="sol-kind"><span>السؤال القصير</span><span class="sk-line"></span></div>
   <div class="sol-item"><p class="sol-q"><span class="sq-n">١.</span> طلبٌ لكلود بالقواعد الأربع.</p>
     <ul class="sol-grading"><li>الموقف والسياق: مَن الفريق وما المشروع (درجة).</li><li>المهمّة بفعلٍ واحد محدّد، مثل «قسّم المشروع إلى مهامّ» (درجة).</li><li>الشكل والقواعد: جدول، عدد الأسابيع، الأعمدة، الطول (درجة).</li><li>مثالٌ واحد على السطر أو النتيجة المطلوبة (درجة).</li></ul></div>
+
+
+  <div class="sol-week"><span class="sw-n">٣</span><span class="sw-t">حلول الأسبوع الثالث — من PDF إلى تطبيق على هاتفك</span></div>
+  <div class="sol-kind"><span>الاختيار من متعدد</span><span class="sk-line"></span></div>
+  <div class="sol-item"><p class="sol-q"><span class="sq-n">١.</span> ما الفرق بين «السؤال» و«أمر البناء» لكلود؟</p><div class="sol-opts"><div class="sol-opt bad"><span class="so-k">أ)</span><span>السؤال أطول دائمًا من أمر البناء</span></div><div class="sol-opt ok"><span class="so-k">ب)</span><span>السؤال يعطي جوابًا نصّيًّا، وأمر البناء يطلب منتجًا يعمل مثل صفحة أو تطبيق</span></div><div class="sol-opt bad"><span class="so-k">ج)</span><span>أمر البناء لا يحتاج ملفًّا أبدًا</span></div><div class="sol-opt bad"><span class="so-k">د)</span><span>لا فرق؛ الكلمتان بمعنى واحد</span></div></div><p class="sol-why"><b>التعليل:</b> أمر البناء يطلب أداة تُستعمل مرّات كثيرة. و«أ» غير صحيح: الطول ليس المعيار، و«ج» عكس ما رأيناه (المثالان بُنيا من ملفّات PDF)، و«د» يتجاهل الفرق في الناتج.</p></div>
+  <div class="sol-item"><p class="sol-q"><span class="sq-n">٢.</span> أيّ جزء من أجزاء أمر البناء يمنع كلود من اختراع معلومات؟</p><div class="sol-opts"><div class="sol-opt bad"><span class="so-k">أ)</span><span>الشكل والألوان</span></div><div class="sol-opt bad"><span class="so-k">ب)</span><span>المستخدم والمكان</span></div><div class="sol-opt ok"><span class="so-k">ج)</span><span>القيود، مثل «لا تكتب أيّ معلومة غير موجودة في الملفّ»</span></div><div class="sol-opt bad"><span class="so-k">د)</span><span>المنتج</span></div></div><p class="sol-why"><b>التعليل:</b> القيد يرسم حدود ما يُسمح به. و«أ» يخصّ المظهر فقط، و«ب» يحدّد لمن نبني لا ماذا نكتب، و«د» يحدّد نوع المنتج لا صحّة محتواه.</p></div>
+  <div class="sol-item"><p class="sol-q"><span class="sq-n">٣.</span> في تطبيق «جدولي»، من أين جاءت وظيفة «يجري الآن والتالي»؟</p><div class="sol-opts"><div class="sol-opt ok"><span class="so-k">أ)</span><span>من فهمنا للمستخدم: طالب يفتح الصفحة على هاتفه بين المحاضرات</span></div><div class="sol-opt bad"><span class="so-k">ب)</span><span>كانت مكتوبة في ملفّ الجدول PDF</span></div><div class="sol-opt bad"><span class="so-k">ج)</span><span>أضافها كلود من تلقاء نفسه دائمًا</span></div><div class="sol-opt bad"><span class="so-k">د)</span><span>من إعدادات المتصفّح</span></div></div><p class="sol-why"><b>التعليل:</b> الوظيفة الذكيّة جاءت من جزء «المستخدم والمكان». و«ب» غير صحيح: الجدول قائمة أوقات وقاعات فقط، و«ج» لا نعتمد على تخمين كلود، و«د» لا علاقة له.</p></div>
+  <div class="sol-item"><p class="sol-q"><span class="sq-n">٤.</span> لماذا حذفنا أسماء مسؤولي التواصل وهواتفهم من دليل المعرض قبل النشر؟</p><div class="sol-opts"><div class="sol-opt bad"><span class="so-k">أ)</span><span>لأنّ الصفحة صارت ثقيلة</span></div><div class="sol-opt bad"><span class="so-k">ب)</span><span>لأنّ كلود رفض كتابتها</span></div><div class="sol-opt bad"><span class="so-k">ج)</span><span>لأنّ الهواتف كانت خاطئة</span></div><div class="sol-opt ok"><span class="so-k">د)</span><span>لأنّها بيانات شخصيّة، ونشرها لعامّة الناس دون إذن غير مقبول</span></div></div><p class="sol-why"><b>التعليل:</b> الخصوصيّة قرار إنسانيّ قبل النشر. و«أ» ليس السبب، و«ب» غير صحيح: الحذف كان قرارنا، و«ج» لا دليل عليه.</p></div>
+  <div class="sol-item"><p class="sol-q"><span class="sq-n">٥.</span> لماذا تدرّبنا على كتيّب «معرض بابل» التدريبيّ لا على كتيّب حقيقيّ؟</p><div class="sol-opts"><div class="sol-opt bad"><span class="so-k">أ)</span><span>لأنّ كلود لا يقرأ الملفّات الحقيقيّة</span></div><div class="sol-opt ok"><span class="so-k">ب)</span><span>لأنّ الملفّ الحقيقيّ فيه بيانات أشخاص حقيقيّين، والنسخة المختلقة لها الشكل نفسه بلا خطر</span></div><div class="sol-opt bad"><span class="so-k">ج)</span><span>لأنّ الملفّات الحقيقيّة أكبر من أن تُرفع دائمًا</span></div><div class="sol-opt bad"><span class="so-k">د)</span><span>لأنّ النسخة التدريبيّة تعطي تطبيقًا أجمل</span></div></div><p class="sol-why"><b>التعليل:</b> نتدرّب بأمان على بيانات وهميّة بالشكل نفسه. و«أ» غير صحيح: كلود يقرأ أيّ PDF، و«ج» ليس السبب الأساس، و«د» الشكل لا علاقة له بصدق البيانات.</p></div>
+  <div class="sol-item"><p class="sol-q"><span class="sq-n">٦.</span> أيّ طلب تحسين هو الأفضل بعد أوّل نتيجة؟</p><div class="sol-opts"><div class="sol-opt bad"><span class="so-k">أ)</span><span>«خلّيها أحلى»</span></div><div class="sol-opt bad"><span class="so-k">ب)</span><span>«فيها غلط، صلّحه»</span></div><div class="sol-opt ok"><span class="so-k">ج)</span><span>«كبّر الخطّ إلى ١٨ على الهاتف واجعل البطاقات عمودًا واحدًا»</span></div><div class="sol-opt bad"><span class="so-k">د)</span><span>«أعد كلّ شيء من البداية بطريقة أفضل»</span></div></div><p class="sol-why"><b>التعليل:</b> الطلب القصير المحدّد يمكن تنفيذه والتحقّق منه. و«أ» و«ب» غامضان، و«د» يهدم ما نجح بدل تحسين جزء.</p></div>
+  <div class="sol-item"><p class="sol-q"><span class="sq-n">٧.</span> قبل أن تشارك تطبيقًا بناه كلود، أيّ فحص هو الأهمّ؟</p><div class="sol-opts"><div class="sol-opt ok"><span class="so-k">أ)</span><span>مقارنة بعض الأرقام بالمصدر، وفحص الخصوصيّة، وتجربته على الهاتف</span></div><div class="sol-opt bad"><span class="so-k">ب)</span><span>عدد الألوان في الصفحة</span></div><div class="sol-opt bad"><span class="so-k">ج)</span><span>حجم الملفّ بالكيلوبايت</span></div><div class="sol-opt bad"><span class="so-k">د)</span><span>اسم الملفّ</span></div></div><p class="sol-why"><b>التعليل:</b> هذه الفحوص تمنع نشر معلومات خاطئة أو شخصيّة أو صفحة لا تعمل. و«ب» و«ج» و«د» لا تمسّ صحّة المحتوى ولا سلامته.</p></div>
+  <div class="sol-item"><p class="sol-q"><span class="sq-n">٨.</span> بنى كلود صفحتك ونشرتها برابط. كيف تجعلها أيقونة على هاتف أندرويد؟</p><div class="sol-opts"><div class="sol-opt bad"><span class="so-k">أ)</span><span>تنزّلها من متجر Google Play</span></div><div class="sol-opt bad"><span class="so-k">ب)</span><span>ترسل ملفّ HTML إلى الهاتف وتثبّته</span></div><div class="sol-opt bad"><span class="so-k">ج)</span><span>تحوّلها إلى PDF أوّلًا</span></div><div class="sol-opt ok"><span class="so-k">د)</span><span>تفتح الرابط في Chrome ← القائمة ⋮ ← «إضافة إلى الشاشة الرئيسيّة»</span></div></div><p class="sol-why"><b>التعليل:</b> صفحة الويب تُضاف كأيقونة من المتصفّح مباشرة. و«أ» يخصّ التطبيقات المنشورة في المتجر، و«ب» لا يثبّت شيئًا، و«ج» يعيدنا إلى ملفّ ثابت بلا وظائف.</p></div>
+
+  <div class="sol-kind"><span>صح أم خطأ</span><span class="sk-line"></span></div>
+  <div class="sol-item"><div class="sol-tf-line"><span class="sol-badge t">صح</span><p class="sol-q"><span class="sq-n">١.</span> أمر البناء الجيّد يذكر المستخدم ومكان استعماله.</p></div><p class="sol-why">المستخدم والمكان يحدّدان الوظائف المهمّة، مثل العمل على الهاتف أو «الآن والتالي».</p></div>
+  <div class="sol-item"><div class="sol-tf-line"><span class="sol-badge f">خطأ</span><p class="sol-q"><span class="sq-n">٢.</span> إذا لم يجد كلود معلومة في الملفّ، فمن الأفضل أن نطلب منه أن «يكتب شيئًا مناسبًا من عنده».</p></div><p class="sol-why">هذا طلب صريح للهلوسة؛ القيد الصحيح: «لا تكتب أيّ معلومة غير موجودة في الملفّ».</p></div>
+  <div class="sol-item"><div class="sol-tf-line"><span class="sol-badge f">خطأ</span><p class="sol-q"><span class="sq-n">٣.</span> أوّل نتيجة يعطيها كلود هي النتيجة النهائيّة دائمًا.</p></div><p class="sol-why">التحسين يكون بجولات قصيرة ومحدّدة بعد التجربة.</p></div>
+  <div class="sol-item"><div class="sol-tf-line"><span class="sol-badge t">صح</span><p class="sol-q"><span class="sq-n">٤.</span> التطبيق الذي بناه كلود يمكن أن يكون ملفّ HTML واحدًا يفتحه أيّ متصفّح.</p></div><p class="sol-why">المثالان كلاهما صفحة HTML واحدة، بلا تثبيت، وتُضاف إلى الشاشة الرئيسيّة.</p></div>
+  <div class="sol-item"><div class="sol-tf-line"><span class="sol-badge f">خطأ</span><p class="sol-q"><span class="sq-n">٥.</span> وضع أرقام هواتف الطلبة ودرجاتهم في صفحة منشورة مقبول ما دام كلود هو من كتبها.</p></div><p class="sol-why">المسؤوليّة على من ينشر، والبيانات الشخصيّة لا تُنشر دون إذن.</p></div>
+  <div class="sol-item"><div class="sol-tf-line"><span class="sol-badge t">صح</span><p class="sol-q"><span class="sq-n">٦.</span> الرابط العامّ (Publish) يستطيع فتحه أيّ شخص يصله الرابط.</p></div><p class="sol-why">لذلك لا تُنشر صفحة فيها أسماء أشخاص أو هواتفهم أو درجاتهم.</p></div>
+  <div class="sol-item"><div class="sol-tf-line"><span class="sol-badge t">صح</span><p class="sol-q"><span class="sq-n">٧.</span> قائمة الوظائف المرقّمة في الأمر تجعل النتيجة أدقّ.</p></div><p class="sol-why">كلّ وظيفة مكتوبة يبنيها كلود، وما لا يُكتب يُخمَّن.</p></div>
+  <div class="sol-item"><div class="sol-tf-line"><span class="sol-badge f">خطأ</span><p class="sol-q"><span class="sq-n">٨.</span> يكفي أن نجرّب التطبيق على الحاسوب قبل نشره للطلبة.</p></div><p class="sol-why">أغلب المستخدمين على الهاتف، فتُجرَّب الصفحة على الهاتف فعلًا.</p></div>
+
+  <div class="sol-kind"><span>الأسئلة القصيرة</span><span class="sk-line"></span></div>
+  <div class="sol-item"><p class="sol-q"><span class="sq-n">١.</span> اذكر الأجزاء الستّة لأمر البناء.</p>
+    <ul class="sol-grading"><li>المصدر (الملفّ المرفق) (درجة).</li><li>المستخدم والمكان (درجة).</li><li>المنتج بفعل واحد (درجة).</li><li>الوظائف مرقّمة (درجة).</li><li>القيود، ومنها «لا تخترع» (درجة).</li><li>الشكل والتحقّق (درجة).</li></ul></div>
+  <div class="sol-item"><p class="sol-q"><span class="sq-n">٢.</span> اذكر المحطّات الستّ من ملفّ PDF إلى تطبيق على الهاتف.</p>
+    <ul class="sol-grading"><li>ملفّ PDF بنسخة آمنة، ثمّ أمر البناء (درجة).</li><li>كلود يبني صفحة HTML، ثمّ تجرّب وتتحقّق وتحسّن (درجة).</li><li>تنشر الرابط، ثمّ تضيفه إلى الشاشة الرئيسيّة في الهاتف (درجة).</li></ul></div>
+  <div class="sol-item"><p class="sol-q"><span class="sq-n">٣.</span> اكتب طلب تحسين جيّدًا لصفحة نصّها صغير على الهاتف.</p>
+    <ul class="sol-grading"><li>طلب واحد قصير (درجة).</li><li>قابل للقياس: «كبّر الخطّ إلى ١٨» (درجة).</li><li>يحدّد المكان: «على الهاتف» (درجة).</li></ul></div>
+  <div class="sol-item"><p class="sol-q"><span class="sq-n">٤.</span> اذكر ثلاثة فحوص قبل مشاركة تطبيق بناه كلود.</p>
+    <ul class="sol-grading"><li>مقارنة أرقام عشوائيّة بالمصدر (درجة).</li><li>حذف البيانات الشخصيّة غير المسموح بنشرها (درجة).</li><li>تجربته على الهاتف، والتأكّد من وضوح ما هو افتراض أو محاكاة (درجة).</li></ul></div>
+
+  <div class="sol-kind"><span>السيناريو: إجابة نموذجيّة</span><span class="sk-line"></span></div>
+  <div class="sol-item"><p class="sol-why"><b>أ)</b> لا مصدر واضح ولا مستخدم ولا وظائف ولا قيود؛ و«ضيف كلّ شي» يدفع إلى نشر بيانات شخصيّة، وقد يخترع كلود معلومات.</p><p class="sol-why"><b>ب)</b> «أرفقتُ ملفّ Excel لمختبرات الكلّيّة. المستخدم: طالب على هاتفه. ابنِ صفحة HTML واحدة: دليل مختبرات. الوظائف: ١) بحث باسم المختبر أو الجهاز ٢) تصفية بالطابق ٣) «مفتوح الآن» بحسب الساعة ٤) بطاقة لكلّ مختبر. القيود: بالعربيّة، تعمل على الهاتف، ولا تكتب معلومة غير موجودة في الملفّ، ولا تعرض أرقام الهواتف. الشكل: هادئ، وفي الأسفل تاريخ تحديث البيانات.»</p><p class="sol-why"><b>ج)</b> أسماء المشرفين وأرقام هواتفهم الشخصيّة؛ لأنّها بيانات شخصيّة لا تُنشر للعامّة دون إذن. يمكن وضع هاتف المكتب الرسميّ بدلها.</p><p class="sol-why"><b>د)</b> تحسين: «كبّر الخطّ إلى ١٨ على الهاتف»، «أضِف تصفية بالطابق». فحص: مقارنة ٣ مختبرات بالملفّ الأصليّ، وفتح الصفحة على الهاتف والتأكّد من غياب الهواتف الشخصيّة.</p></div>
 
   <div class="page-nav"><button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button><button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button></div>
 </div>

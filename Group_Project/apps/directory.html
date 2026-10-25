@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#1d4f91"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
+<title>دليل المعرض</title>
+<style>
+:root{--bg:#f3f5f9;--card:#fff;--fg:#17212f;--mu:#5e6a7c;--line:#d6dde8;--pri:#1d4f91;--soft:#e2ebf7;--star:#c98a0c}
+body.dark{--bg:#0f1622;--card:#182233;--fg:#e8edf5;--mu:#9aa6b8;--line:#2b3b52;--pri:#8db4ee;--soft:#1e3150;--star:#f0c060}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font-family:"Segoe UI",Tahoma,sans-serif;font-size:16px;line-height:1.7}
+header{position:sticky;top:0;z-index:3;background:var(--card);border-bottom:1px solid var(--line);padding:10px 14px}
+.top{display:flex;align-items:center;gap:8px}h1{font-size:1.15rem;margin:0;color:var(--pri);flex:1}
+.tag{font-size:.72rem;background:#fde8e6;color:#a32b23;border-radius:6px;padding:1px 8px}
+button,select,input{font:inherit;color:inherit}
+.ic{border:1px solid var(--line);background:var(--bg);border-radius:9px;padding:3px 10px;cursor:pointer}
+#q{width:100%;margin-top:8px;padding:9px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg)}
+.flt{display:flex;gap:6px;margin-top:8px;overflow-x:auto}.flt select{border:1px solid var(--line);border-radius:9px;background:var(--bg);padding:4px 8px}
+.tabs{display:flex;gap:6px;margin-top:8px}.tabs button{flex:1;border:1px solid var(--line);background:var(--bg);border-radius:9px;padding:4px;cursor:pointer}.tabs .on{background:var(--pri);color:var(--card);border-color:var(--pri)}
+main{max-width:760px;margin:0 auto;padding:12px 14px 40px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}.stats div{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px;text-align:center}.stats b{display:block;font-size:1.4rem;color:var(--pri)}
+.c{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:10px 0}
+.c h3{margin:0;font-size:1.05rem;display:flex;gap:8px;align-items:center}.c h3 span{flex:1}.en{color:var(--mu);font-size:.85rem;direction:ltr;text-align:right}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0}.chips i{font-style:normal;background:var(--soft);border-radius:999px;padding:0 10px;font-size:.82rem}
+.c p{margin:4px 0}.c small{color:var(--mu)}
+.st{border:0;background:none;font-size:1.4rem;cursor:pointer;color:var(--mu)}.st.on{color:var(--star)}
+textarea{width:100%;border:1px solid var(--line);border-radius:8px;background:var(--bg);padding:6px;margin-top:6px}
+.empty{text-align:center;color:var(--mu);padding:30px}
+footer{text-align:center;color:var(--mu);font-size:.8rem;padding:10px}
+</style></head><body>
+<header><div class="top"><h1>دليل معرض بابل للتقنيّة ٢٠٢٦</h1><span class="tag">بيانات مختلقة</span><button class="ic" id="dk" aria-label="الوضع الليليّ">☾</button></div>
+<input id="q" type="search" placeholder="ابحث بالاسم أو المنتج… (عربي / English)">
+<div class="flt"><select id="fs"><option value="">كلّ القطاعات</option></select><select id="fc"><option value="">كلّ الدول</option></select></div>
+<div class="tabs"><button class="on" data-t="all">كلّ الشركات</button><button data-t="mine">⭐ قائمتي</button></div></header>
+<main><div class="stats"><div><b id="sN"></b>شركة</div><div><b id="sS"></b>قطاع</div><div><b id="sC"></b>دول</div></div><div id="list"></div></main>
+<footer>المصدر: كتيّب معرض بابل للتقنيّة ٢٠٢٦ (نسخة تدريبيّة). رقم الصفحة مذكور في كلّ بطاقة. حُذفت أسماء الأشخاص وهواتفهم قبل النشر.</footer>
+<script>
+const D=[{"id": "c0", "ar": "نخلة للبرمجيّات", "en": "Nakhla Soft", "sector": "برمجيّات", "city": "الحلّة", "country": "العراق", "size": "صغيرة", "about": "شركة ناشئة تطوّر تطبيقات الهاتف للمدارس والجامعات.", "products": "تطبيق حضور بالرمز QR، بوّابة درجات للطلبة", "seeks": "جامعات وكلّيّات أهليّة للتعاون", "site": "nakhla-soft.example", "page": 2}, {"id": "c1", "ar": "شمس الفرات للطاقة", "en": "Furat Solar", "sector": "طاقة شمسيّة", "city": "كربلاء", "country": "العراق", "size": "متوسّطة", "about": "تصميم وتركيب منظومات الطاقة الشمسيّة للمنازل والمزارع.", "products": "منظومات ٥–٥٠ كيلوواط، مضخّات ري شمسيّة", "seeks": "موزّعين في المحافظات الجنوبيّة", "site": "furat-solar.example", "page": 3}, {"id": "c2", "ar": "سنبلة للزراعة الذكيّة", "en": "Sunbula Agri", "sector": "زراعة ذكيّة", "city": "النجف", "country": "العراق", "size": "صغيرة", "about": "حسّاسات رطوبة التربة وتطبيق يخبر المزارع متى يسقي.", "products": "حسّاس رطوبة لاسلكيّ، لوحة متابعة على الهاتف", "seeks": "مستثمرين وجمعيّات فلّاحيّة", "site": "sunbula.example", "page": 4}, {"id": "c3", "ar": "جسر للاتّصالات", "en": "Jisr Telecom", "sector": "اتّصالات", "city": "بغداد", "country": "العراق", "size": "كبيرة", "about": "حلول شبكات وألياف ضوئيّة للمؤسّسات.", "products": "ربط ألياف، شبكات Wi-Fi للحرم الجامعيّ", "seeks": "مشاريع حكوميّة وجامعات", "site": "jisr-tel.example", "page": 5}, {"id": "c4", "ar": "درع الرافدين للأمن السيبرانيّ", "en": "Rafidain Shield", "sector": "أمن سيبرانيّ", "city": "بغداد", "country": "العراق", "size": "متوسّطة", "about": "فحص أمان المواقع وتدريب الموظّفين على التصيّد.", "products": "فحص اختراق، دورات توعية أمنيّة", "seeks": "مصارف وشركات اتّصالات", "site": "rafidain-shield.example", "page": 6}, {"id": "c5", "ar": "دواء نت للصحّة الرقميّة", "en": "Dawa Net", "sector": "صحّة رقميّة", "city": "البصرة", "country": "العراق", "size": "صغيرة", "about": "منصّة حجز مواعيد العيادات وتذكير المرضى بالدواء.", "products": "تطبيق حجز، تذكير بالرسائل", "seeks": "عيادات ومستشفيات أهليّة", "site": "dawanet.example", "page": 7}, {"id": "c6", "ar": "قلم للتعليم الإلكترونيّ", "en": "Qalam Learn", "sector": "تعليم إلكترونيّ", "city": "أربيل", "country": "العراق", "size": "متوسّطة", "about": "منصّة دروس مصوّرة واختبارات قصيرة باللغتين العربيّة والكرديّة.", "products": "منصّة دروس، بنك أسئلة", "seeks": "مدارس أهليّة ومعاهد", "site": "qalam-learn.example", "page": 8}, {"id": "c7", "ar": "مسار للخدمات اللوجستيّة", "en": "Masar Logistics", "sector": "لوجستيّات", "city": "البصرة", "country": "العراق", "size": "كبيرة", "about": "نقل وتخزين وتتبّع الشحنات بالـGPS.", "products": "تتبّع شحنات، مخازن مبرّدة", "seeks": "شركات تجارة إلكترونيّة", "site": "masar-log.example", "page": 9}, {"id": "c8", "ar": "بيانات الشرق", "en": "Sharq Data", "sector": "برمجيّات", "city": "عمّان", "country": "الأردن", "size": "متوسّطة", "about": "لوحات تحليل بيانات للشركات والوزارات.", "products": "لوحات متابعة، تدريب على تحليل البيانات", "seeks": "شريك محلّيّ في العراق", "site": "sharq-data.example", "page": 10}, {"id": "c9", "ar": "أناضول للطاقة", "en": "Anatolia Energy", "sector": "طاقة شمسيّة", "city": "غازي عنتاب", "country": "تركيا", "size": "كبيرة", "about": "تصنيع ألواح شمسيّة وعاكسات.", "products": "ألواح ٥٥٠ واط، عاكسات هجينة", "seeks": "وكيل حصريّ في العراق", "site": "anatolia-energy.example", "page": 11}, {"id": "c10", "ar": "روبوتك بابل", "en": "Robotek Babylon", "sector": "تعليم إلكترونيّ", "city": "الحلّة", "country": "العراق", "size": "صغيرة", "about": "حقائب روبوتات تعليميّة ودورات برمجة للأطفال.", "products": "حقيبة روبوت، دورة صيفيّة", "seeks": "مدارس ومراكز شباب", "site": "robotek.example", "page": 12}, {"id": "c11", "ar": "سحابة دجلة", "en": "Dijla Cloud", "sector": "اتّصالات", "city": "بغداد", "country": "العراق", "size": "متوسّطة", "about": "استضافة مواقع وخوادم سحابيّة داخل العراق.", "products": "استضافة، نسخ احتياطيّ", "seeks": "شركات ناشئة وجامعات", "site": "dijla-cloud.example", "page": 13}, {"id": "c12", "ar": "مزرعتي", "en": "Mazraati", "sector": "زراعة ذكيّة", "city": "الديوانيّة", "country": "العراق", "size": "صغيرة", "about": "سوق إلكترونيّ يربط الفلّاح بالمشتري مباشرة.", "products": "تطبيق سوق، توصيل", "seeks": "مموّلين وشركات نقل", "site": "mazraati.example", "page": 14}, {"id": "c13", "ar": "حارس للأنظمة الذكيّة", "en": "Haris Systems", "sector": "أمن سيبرانيّ", "city": "إسطنبول", "country": "تركيا", "size": "متوسّطة", "about": "كاميرات ذكيّة وتحليل فيديو للمباني.", "products": "كاميرات، برنامج تحليل", "seeks": "موزّع عراقيّ", "site": "haris-sys.example", "page": 15}];
+const $=s=>document.querySelector(s);
+const norm=s=>s.toLowerCase().replace(/[ًٌٍَُِّْـ]/g,'').replace(/[أإآ]/g,'ا').replace(/ة/g,'ه').replace(/ى/g,'ي').replace(/ؤ/g,'و').replace(/ئ/g,'ي');
+let st={};try{st=JSON.parse(localStorage.getItem('expoDir')||'{}')}catch(e){}
+const save=()=>{try{localStorage.setItem('expoDir',JSON.stringify(st))}catch(e){}};
+st.star=st.star||{};st.note=st.note||{};let tab='all';
+if(st.dark)document.body.classList.add('dark');
+$('#dk').onclick=()=>{st.dark=!st.dark;document.body.classList.toggle('dark',st.dark);save()};
+const uniq=k=>[...new Set(D.map(c=>c[k]))];
+uniq('sector').forEach(s=>$('#fs').insertAdjacentHTML('beforeend',`<option>${s}</option>`));
+uniq('country').forEach(s=>$('#fc').insertAdjacentHTML('beforeend',`<option>${s}</option>`));
+$('#sN').textContent=D.length.toLocaleString('ar');$('#sS').textContent=uniq('sector').length.toLocaleString('ar');$('#sC').textContent=uniq('country').length.toLocaleString('ar');
+// tolerant match: every word must appear, or be within one letter of a word in the card
+function near(a,b){if(Math.abs(a.length-b.length)>1)return false;let i=0,j=0,e=0;while(i<a.length&&j<b.length){if(a[i]===b[j]){i++;j++}else{if(++e>1)return false;if(a.length>b.length)i++;else if(b.length>a.length)j++;else{i++;j++}}}return e+(a.length-i)+(b.length-j)<=1}
+function hit(c,q){if(!q)return true;const txt=norm([c.ar,c.en,c.sector,c.city,c.country,c.about,c.products,c.seeks].join(' '));const words=txt.split(/[\s،,]+/);
+  return norm(q).split(/\s+/).filter(Boolean).every(w=>txt.includes(w)||(w.length>3&&words.some(x=>near(w,x))))}
+function draw(){
+  const q=$('#q').value.trim(),fs=$('#fs').value,fc=$('#fc').value;
+  const L=D.filter(c=>(tab==='all'||st.star[c.id])&&(!fs||c.sector===fs)&&(!fc||c.country===fc)&&hit(c,q));
+  $('#list').innerHTML=L.length?L.map(c=>`<div class="c"><h3><span>${c.ar}</span><button class="st ${st.star[c.id]?'on':''}" data-id="${c.id}" aria-label="أضف إلى قائمتي">${st.star[c.id]?'★':'☆'}</button></h3>
+<div class="en">${c.en}</div><div class="chips"><i>${c.sector}</i><i>${c.city} — ${c.country}</i><i>${c.size}</i></div>
+<p>${c.about}</p><p><b>المنتجات:</b> ${c.products}</p><p><b>تبحث عن:</b> ${c.seeks}</p><small>الموقع: <span dir="ltr">${c.site}</span> · صفحة ${c.page.toLocaleString('ar')} في الكتيّب</small>
+${st.star[c.id]?`<textarea data-id="${c.id}" rows="2" placeholder="ملاحظتي عن هذه الشركة…">${st.note[c.id]||''}</textarea>`:''}</div>`).join(''):'<div class="empty">لا نتائج. جرّب كلمة أخرى.</div>';
+}
+$('#list').addEventListener('click',e=>{const b=e.target.closest('.st');if(!b)return;const id=b.dataset.id;st.star[id]=!st.star[id];save();draw()});
+$('#list').addEventListener('input',e=>{if(e.target.matches('textarea')){st.note[e.target.dataset.id]=e.target.value;save()}});
+document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{tab=b.dataset.t;document.querySelectorAll('.tabs button').forEach(x=>x.classList.toggle('on',x===b));draw()});
+['q','fs','fc'].forEach(k=>$('#'+k).addEventListener('input',draw));
+draw();
+</script></body></html>

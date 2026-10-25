@@ -173,6 +173,97 @@
    "file": "cloudsec/week2_s5_board.html",
    "slug": "cloudsec",
    "audio": true
+  },
+  {
+   "week": 3,
+   "section": 0,
+   "canvas": true,
+   "title": "من PDF إلى تطبيق على هاتفك",
+   "heading": "الأسبوع الثالث — من PDF إلى تطبيق على هاتفك",
+   "minutes": "—",
+   "scenes": 32,
+   "course": "المشروع الجماعي",
+   "file": "gp/week3_canvas.html",
+   "slug": "gp",
+   "audio": false
+  },
+  {
+   "week": 3,
+   "section": 1,
+   "canvas": false,
+   "title": "من سؤال إلى تطبيق",
+   "heading": "الأسبوع الثالث | القسم ١ — من سؤال إلى تطبيق",
+   "minutes": "٢",
+   "scenes": 5,
+   "course": "المشروع الجماعي",
+   "file": "gp/week3_s1_board.html",
+   "slug": "gp",
+   "audio": false
+  },
+  {
+   "week": 3,
+   "section": 2,
+   "canvas": false,
+   "title": "الرحلة من PDF إلى الهاتف",
+   "heading": "الأسبوع الثالث | القسم ٢ — الرحلة من PDF إلى الهاتف",
+   "minutes": "٢",
+   "scenes": 5,
+   "course": "المشروع الجماعي",
+   "file": "gp/week3_s2_board.html",
+   "slug": "gp",
+   "audio": false
+  },
+  {
+   "week": 3,
+   "section": 3,
+   "canvas": false,
+   "title": "تشريح أمر البناء",
+   "heading": "الأسبوع الثالث | القسم ٣ — تشريح أمر البناء",
+   "minutes": "٣",
+   "scenes": 6,
+   "course": "المشروع الجماعي",
+   "file": "gp/week3_s3_board.html",
+   "slug": "gp",
+   "audio": false
+  },
+  {
+   "week": 3,
+   "section": 4,
+   "canvas": false,
+   "title": "كتيّب المعرض ← دليل على الهاتف",
+   "heading": "الأسبوع الثالث | القسم ٤ — كتيّب المعرض ← دليل على الهاتف",
+   "minutes": "٢",
+   "scenes": 5,
+   "course": "المشروع الجماعي",
+   "file": "gp/week3_s4_board.html",
+   "slug": "gp",
+   "audio": false
+  },
+  {
+   "week": 3,
+   "section": 5,
+   "canvas": false,
+   "title": "جدول الطلبة ← جدولي",
+   "heading": "الأسبوع الثالث | القسم ٥ — جدول الطلبة ← جدولي",
+   "minutes": "٢",
+   "scenes": 5,
+   "course": "المشروع الجماعي",
+   "file": "gp/week3_s5_board.html",
+   "slug": "gp",
+   "audio": false
+  },
+  {
+   "week": 3,
+   "section": 6,
+   "canvas": false,
+   "title": "من رابط إلى أيقونة، والتحقّق",
+   "heading": "الأسبوع الثالث | القسم ٦ — من رابط إلى أيقونة، والتحقّق",
+   "minutes": "٢",
+   "scenes": 5,
+   "course": "المشروع الجماعي",
+   "file": "gp/week3_s6_board.html",
+   "slug": "gp",
+   "audio": false
   }
  ]
 }

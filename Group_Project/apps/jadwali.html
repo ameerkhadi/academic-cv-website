@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#1f7a4d"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
+<title>جدولي</title>
+<style>
+:root{--bg:#f2f6f4;--card:#fff;--fg:#16231d;--mu:#5d6b64;--line:#d3e0d9;--pri:#1f7a4d;--soft:#dcefe4;--now:#fff4d6}
+body.dark{--bg:#0e1714;--card:#16231e;--fg:#e6f0eb;--mu:#98aaa1;--line:#284036;--pri:#6ccf9c;--soft:#173a2a;--now:#3a3119}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font-family:"Segoe UI",Tahoma,sans-serif;font-size:16px;line-height:1.7}
+header{background:var(--card);border-bottom:1px solid var(--line);padding:10px 14px;position:sticky;top:0;z-index:2}
+.top{display:flex;align-items:center;gap:8px}h1{margin:0;font-size:1.2rem;color:var(--pri);flex:1}
+.tag{font-size:.72rem;background:#fde8e6;color:#a32b23;border-radius:6px;padding:1px 8px}
+button,input{font:inherit;color:inherit}.ic{border:1px solid var(--line);background:var(--bg);border-radius:9px;padding:3px 10px;cursor:pointer}
+.days{display:flex;gap:5px;margin-top:8px;overflow-x:auto}.days button{flex:1;min-width:58px;border:1px solid var(--line);background:var(--bg);border-radius:9px;padding:4px 6px;cursor:pointer;white-space:nowrap}
+.days .on{background:var(--pri);color:var(--card);border-color:var(--pri)}.days .today{font-weight:800}
+main{max-width:640px;margin:0 auto;padding:12px 14px 40px}
+.hero{background:var(--card);border:2px solid var(--pri);border-radius:16px;padding:12px 14px;margin-bottom:12px}
+.hero .k{color:var(--mu);font-size:.85rem}.hero b{font-size:1.2rem}.cd{font-size:1.6rem;font-weight:800;color:var(--pri);font-variant-numeric:tabular-nums}
+.l{display:flex;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 12px;margin:8px 0}
+.l.now{background:var(--now);border-color:#d9a520}.l.past{opacity:.55}
+.tm{min-width:62px;text-align:center;color:var(--mu);font-size:.85rem;border-inline-start:3px solid var(--pri);padding-inline-start:8px}
+.l h3{margin:0;font-size:1rem}.l small{color:var(--mu)}.kind{font-size:.75rem;background:var(--soft);border-radius:999px;padding:0 8px;margin-inline-start:6px}
+.free{color:var(--mu);text-align:center;padding:18px}
+.prev{margin-top:20px;background:var(--card);border:1px dashed var(--line);border-radius:12px;padding:10px 12px;font-size:.88rem;color:var(--mu)}
+.prev input{border:1px solid var(--line);border-radius:8px;background:var(--bg);padding:2px 6px}
+footer{text-align:center;color:var(--mu);font-size:.8rem;padding:10px}
+</style></head><body>
+<header><div class="top"><h1>📅 جدولي</h1><span class="tag">جدول تدريبيّ</span><button class="ic" id="dk" aria-label="الوضع الليليّ">☾</button></div>
+<div class="days" id="days"></div></header>
+<main><div class="hero" id="hero"></div><div id="list"></div>
+<div class="prev">🧪 معاينة الوقت (للتجربة قبل الدوام): <select id="pd"></select> <input type="time" id="pt"> <button class="ic" id="pr">الوقت الحقيقيّ</button></div></main>
+<footer>المصدر: «جدول المحاضرات الأسبوعيّ — المرحلة الثالثة» (PDF تدريبيّ). الأوقات بتوقيت بغداد.</footer>
+<script>
+const DAYS=["الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس"],LEC=[{"day": 0, "from": "08:30", "to": "10:00", "subject": "المشروع الجماعي", "kind": "نظريّ", "hall": "قاعة ٢٠٤", "who": "د. عادل"}, {"day": 0, "from": "10:15", "to": "11:45", "subject": "المشروع الجماعي", "kind": "عمليّ", "hall": "مختبر ٣", "who": "د. عادل"}, {"day": 0, "from": "12:00", "to": "13:30", "subject": "قواعد البيانات", "kind": "نظريّ", "hall": "قاعة ١٠١", "who": "د. هالة"}, {"day": 1, "from": "08:30", "to": "10:00", "subject": "هندسة البرمجيّات", "kind": "نظريّ", "hall": "قاعة ٢٠٤", "who": "د. باسم"}, {"day": 1, "from": "10:15", "to": "11:45", "subject": "شبكات الحاسوب", "kind": "نظريّ", "hall": "قاعة ١٠٢", "who": "م. فرح"}, {"day": 1, "from": "13:45", "to": "15:15", "subject": "شبكات الحاسوب", "kind": "عمليّ", "hall": "مختبر الشبكات", "who": "م. فرح"}, {"day": 2, "from": "08:30", "to": "10:00", "subject": "الذكاء الاصطناعيّ", "kind": "نظريّ", "hall": "قاعة ٣٠١", "who": "د. سلام"}, {"day": 2, "from": "10:15", "to": "11:45", "subject": "قواعد البيانات", "kind": "عمليّ", "hall": "مختبر ١", "who": "د. هالة"}, {"day": 2, "from": "12:00", "to": "13:30", "subject": "تطوير الويب", "kind": "نظريّ", "hall": "قاعة ١٠١", "who": "م. يوسف"}, {"day": 3, "from": "08:30", "to": "10:00", "subject": "أمن المعلومات", "kind": "نظريّ", "hall": "قاعة ٣٠١", "who": "د. رنا"}, {"day": 3, "from": "10:15", "to": "11:45", "subject": "تطوير الويب", "kind": "عمليّ", "hall": "مختبر ٢", "who": "م. يوسف"}, {"day": 3, "from": "12:00", "to": "13:30", "subject": "الذكاء الاصطناعيّ", "kind": "عمليّ", "hall": "مختبر ٣", "who": "د. سلام"}, {"day": 4, "from": "08:30", "to": "10:00", "subject": "هندسة البرمجيّات", "kind": "عمليّ", "hall": "مختبر ٢", "who": "د. باسم"}, {"day": 4, "from": "10:15", "to": "11:45", "subject": "أمن المعلومات", "kind": "عمليّ", "hall": "مختبر الشبكات", "who": "د. رنا"}];
+const $=s=>document.querySelector(s),A=n=>String(n).replace(/\d/g,d=>'٠١٢٣٤٥٦٧٨٩'[d]);
+let st={};try{st=JSON.parse(localStorage.getItem('jadwali')||'{}')}catch(e){}
+const save=()=>{try{localStorage.setItem('jadwali',JSON.stringify(st))}catch(e){}};
+if(st.dark)document.body.classList.add('dark');$('#dk').onclick=()=>{st.dark=!st.dark;document.body.classList.toggle('dark',st.dark);save()};
+let preview=null,sel=null;
+const mins=t=>{const[h,m]=t.split(':').map(Number);return h*60+m};
+function now(){ if(preview)return preview;
+  const b=new Date(new Date().toLocaleString('en-US',{timeZone:'Asia/Baghdad'}));
+  return {day:b.getDay(),min:b.getHours()*60+b.getMinutes(),sec:b.getSeconds()} } // getDay: 0 = Sunday
+const fmt=m=>A(String(Math.floor(m/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0'));
+DAYS.forEach((d,i)=>$('#pd').insertAdjacentHTML('beforeend',`<option value="${i}">${d}</option>`));
+function draw(){
+  const n=now(); const today=n.day<=4?n.day:-1; if(sel===null)sel=today>=0?today:0;
+  $('#days').innerHTML=DAYS.map((d,i)=>`<button class="${i===sel?'on':''} ${i===today?'today':''}" data-i="${i}">${d}${i===today?' •':''}</button>`).join('');
+  const L=LEC.filter(l=>l.day===sel).sort((a,b)=>mins(a.from)-mins(b.from));
+  $('#list').innerHTML=L.length?L.map(l=>{const a=mins(l.from),b=mins(l.to),isT=sel===today;const cls=isT&&n.min>=a&&n.min<b?'now':isT&&n.min>=b?'past':'';
+    return `<div class="l ${cls}"><div class="tm">${fmt(a)}<br>${fmt(b)}</div><div><h3>${l.subject}<span class="kind">${l.kind}</span></h3><small>📍 ${l.hall} · ${l.who}</small></div></div>`}).join(''):'<div class="free">لا محاضرات في هذا اليوم.</div>';
+  // hero: now / next for today
+  let h='';
+  if(today<0)h='<div class="k">اليوم عطلة 🎉</div><b>أوّل محاضرة الأحد</b>';
+  else{const T=LEC.filter(l=>l.day===today).sort((a,b)=>mins(a.from)-mins(b.from));
+    const cur=T.find(l=>n.min>=mins(l.from)&&n.min<mins(l.to)),nx=T.find(l=>mins(l.from)>n.min);
+    if(cur)h+=`<div class="k">يجري الآن</div><b>${cur.subject}</b> — ${cur.hall}<div class="k">ينتهي بعد ${A(mins(cur.to)-n.min)} دقيقة</div>`;
+    if(nx){const left=mins(nx.from)-n.min;h+=`<div class="k" style="margin-top:6px">التالي</div><b>${nx.subject}</b> — ${nx.hall}<div class="cd">${left>=60?A(Math.floor(left/60))+' س ':''}${A(left%60)} د</div>`}
+    if(!cur&&!nx)h='<div class="k">انتهت محاضرات اليوم</div><b>أحسنت! راجع جدول الغد.</b>'}
+  $('#hero').innerHTML=h;
+}
+$('#days').onclick=e=>{const b=e.target.closest('button');if(b){sel=+b.dataset.i;draw()}};
+const setPrev=()=>{if(!$('#pt').value)return;preview={day:+$('#pd').value,min:mins($('#pt').value)};sel=preview.day;draw()};
+$('#pd').onchange=setPrev;$('#pt').oninput=setPrev;$('#pr').onclick=()=>{preview=null;sel=null;$('#pt').value='';draw()};
+draw();setInterval(()=>{if(!preview)draw()},30000);
+</script></body></html>
