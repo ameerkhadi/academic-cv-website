@@ -789,7 +789,7 @@ p{margin:.55em 0}
   const $=s=>document.querySelector(s);
   // board player: load only when clicked
   const bd=$('#gp3Board');
-  const play=()=>{if(bd.querySelector('iframe'))return;bd.innerHTML='<iframe src="../boards/gp/week3_canvas.html?v=20261025b#embed" allow="autoplay" title="شرح الأسبوع الثالث"></iframe>'};
+  const play=()=>{if(bd.querySelector('iframe'))return;bd.innerHTML='<iframe src="../boards/gp/week3_canvas.html?v=20261025c#embed" allow="autoplay" title="شرح الأسبوع الثالث"></iframe>'};
   bd.addEventListener('click',play);bd.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();play()}});
 
   // classic game: one question at a time
