@@ -861,7 +861,8 @@ window.CANVAS = null;
     wBar.querySelector('.wc').textContent = wEnd ? 'انتهى الشرح' : (t ? 'القسم ' + AR(t) + ' | ' : '') + AR(wIx + 1) + ' من ' + AR(n);
     const pp = wBar.querySelector('[data-w=pp]'), want = wEnd ? 'r' : paused ? 'p' : 'z'; if (pp.dataset.s !== want) { pp.dataset.s = want; pp.innerHTML = want === 'r' ? '<svg viewBox="0 0 24 24"><path d="M12 5V2L7 6l5 4V7a5 5 0 1 1-5 5H5a7 7 0 1 0 7-7z"/></svg>' : want === 'p' ? '<svg viewBox="0 0 24 24"><path d="M16 5v14L5 12z"/></svg>' : '<svg viewBox="0 0 24 24"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>'; }
     wBar.querySelector('[data-w=prev]').disabled = wIx === 0 && !wEnd;
-    if (paused || wEnd) wBar.classList.add('won');
+    // paused / ended: flash the bar once, then let it auto-hide like during play (his request 25 Oct: it covered the bottom of the board)
+    const st_ = wEnd ? 'e' : paused ? 'p' : 'z'; if (wBar.dataset.st !== st_) { wBar.dataset.st = st_; if (st_ !== 'z') wBar.__show && wBar.__show(); }
   }
   async function watchFrom(k) {
     k = Math.max(0, Math.min(B.scenes.length - 1, k));
@@ -886,7 +887,7 @@ window.CANVAS = null;
   }
   function watchBar() {
     document.head.insertAdjacentHTML('beforeend', `<style>
-      #wbar{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(10px + env(safe-area-inset-bottom,0px));z-index:40;display:flex;align-items:center;gap:4px;
+      #wbar{position:fixed;left:calc(8px + env(safe-area-inset-left,0px));bottom:calc(8px + env(safe-area-inset-bottom,0px));z-index:40;display:flex;align-items:center;gap:4px;
         background:rgba(15,18,24,.72);border:1px solid rgba(255,255,255,.08);border-radius:999px;padding:4px;backdrop-filter:blur(8px);direction:rtl;
         font:500 12px Tahoma,sans-serif;color:#cfd6e2;opacity:0;pointer-events:none;transition:opacity .35s;box-shadow:0 4px 16px rgba(0,0,0,.35)}
       #wbar.won{opacity:1;pointer-events:auto}
@@ -904,8 +905,10 @@ window.CANVAS = null;
     wBar = document.createElement('div'); wBar.id = 'wbar';
     wBar.innerHTML = '<button data-w="prev" aria-label="السابق" title="السابق"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.6 5.4 15.2 12l-6.6 6.6 1.4 1.4 8-8-8-8z"/></svg></button><button data-w="pp" aria-label="إيقاف أو تشغيل"></button><span class="wc"></span><button data-w="next" aria-label="التالي" title="التالي"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.4 5.4 8.8 12l6.6 6.6-1.4 1.4-8-8 8-8z"/></svg></button>';
     // hidden while the board plays (it covered the bottom of the slide); a mouse move / tap / key shows it for 2.5 s; stays while paused or ended
-    const wHide = () => { if (paused || wEnd || wBar.matches(':hover')) { window.__wt = setTimeout(wHide, 2500); return; } wBar.classList.remove('won'); };
+    // small bar in the bottom-left corner; always auto-hides 2.5 s after the last mouse move / tap / key (also when paused or ended), stays only while hovered
+    const wHide = () => { if (wBar.matches(':hover')) { window.__wt = setTimeout(wHide, 2500); return; } wBar.classList.remove('won'); };
     const wShow = () => { wBar.classList.add('won'); clearTimeout(window.__wt); window.__wt = setTimeout(wHide, 2500); };
+    wBar.__show = wShow;
     ['mousemove', 'touchstart', 'keydown'].forEach(ev => addEventListener(ev, wShow, { passive: true }));
     document.body.appendChild(wBar);
     wBar.addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; e.stopPropagation();

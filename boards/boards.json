@@ -198,7 +198,7 @@
    "course": "المشروع الجماعي",
    "file": "gp/week3_s1_board.html",
    "slug": "gp",
-   "audio": false
+   "audio": true
   },
   {
    "week": 3,
@@ -211,7 +211,7 @@
    "course": "المشروع الجماعي",
    "file": "gp/week3_s2_board.html",
    "slug": "gp",
-   "audio": false
+   "audio": true
   },
   {
    "week": 3,
@@ -237,7 +237,7 @@
    "course": "المشروع الجماعي",
    "file": "gp/week3_s4_board.html",
    "slug": "gp",
-   "audio": false
+   "audio": true
   },
   {
    "week": 3,
@@ -250,7 +250,7 @@
    "course": "المشروع الجماعي",
    "file": "gp/week3_s5_board.html",
    "slug": "gp",
-   "audio": false
+   "audio": true
   },
   {
    "week": 3,
@@ -263,7 +263,7 @@
    "course": "المشروع الجماعي",
    "file": "gp/week3_s6_board.html",
    "slug": "gp",
-   "audio": false
+   "audio": true
   }
  ]
 }
