@@ -61,4 +61,5 @@ $('#list').addEventListener('input',e=>{if(e.target.matches('textarea')){st.note
 document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{tab=b.dataset.t;document.querySelectorAll('.tabs button').forEach(x=>x.classList.toggle('on',x===b));draw()});
 ['q','fs','fc'].forEach(k=>$('#'+k).addEventListener('input',draw));
 draw();
-</script></body></html>
+</script><script>/* visit counter: no personal data */(function(p){var n="0";try{if(!localStorage.getItem("v_"+p)){localStorage.setItem("v_"+p,"1");n="1"}}catch(e){}new Image().src="https://ameer.itbabylon.org/sensors-api/hit?p="+p+"&n="+n+"&t="+Date.now()})("gp-dir");</script>
+</body></html>

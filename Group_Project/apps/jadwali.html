@@ -62,4 +62,5 @@ $('#days').onclick=e=>{const b=e.target.closest('button');if(b){sel=+b.dataset.i
 const setPrev=()=>{if(!$('#pt').value)return;preview={day:+$('#pd').value,min:mins($('#pt').value)};sel=preview.day;draw()};
 $('#pd').onchange=setPrev;$('#pt').oninput=setPrev;$('#pr').onclick=()=>{preview=null;sel=null;$('#pt').value='';draw()};
 draw();setInterval(()=>{if(!preview)draw()},30000);
-</script></body></html>
+</script><script>/* visit counter: no personal data */(function(p){var n="0";try{if(!localStorage.getItem("v_"+p)){localStorage.setItem("v_"+p,"1");n="1"}}catch(e){}new Image().src="https://ameer.itbabylon.org/sensors-api/hit?p="+p+"&n="+n+"&t="+Date.now()})("gp-jadwali");</script>
+</body></html>
