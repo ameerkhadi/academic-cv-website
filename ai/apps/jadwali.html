@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>جدولي</title>
+<meta name="theme-color" content="#1d4f91">
+<style>
+:root{--bg:#eef2f8;--card:#fff;--ink:#16202f;--mu:#5b6678;--line:#d6dde8;--acc:#1d4f91;--soft:#dde7f5;--now:#1f7a4d;--nowS:#dcf0e5;--next:#a85a00;--nextS:#fbe8cf}
+@media (prefers-color-scheme:dark){:root{--bg:#0d1420;--card:#152032;--ink:#e6ecf5;--mu:#97a3b6;--line:#26374f;--acc:#7fa9e8;--soft:#1c3253;--now:#5fc492;--nowS:#173727;--next:#f0a556;--nextS:#3b2a14}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Segoe UI",Tahoma,sans-serif;font-size:16.5px;line-height:1.7}
+header{background:var(--acc);color:#fff;padding:16px}
+@media (prefers-color-scheme:dark){header{background:#13305a}}
+header h1{margin:0;font-size:21px}header p{margin:0;opacity:.88;font-size:13.5px}
+.wrap{max-width:820px;margin:0 auto;padding:0 16px 60px}
+.hero{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+@media (max-width:520px){.hero{grid-template-columns:1fr}}
+.box{border-radius:14px;padding:12px 14px;border:1.5px solid var(--line);background:var(--card)}
+.box small{display:block;font-weight:700;font-size:13px}
+.box b{display:block;font-size:18px}
+.box.now{background:var(--nowS);border-color:var(--now)}.box.now small{color:var(--now)}
+.box.next{background:var(--nextS);border-color:var(--next)}.box.next small{color:var(--next)}
+.tabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:2px 0}.tabs::-webkit-scrollbar{display:none}
+.tab{flex:none;font:inherit;font-size:14.5px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:5px 14px;cursor:pointer}
+.tab.on{background:var(--acc);border-color:var(--acc);color:#fff}
+.tab.today{border-color:var(--now)}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:10px 0;font-size:13.5px;color:var(--mu)}
+select,input{font:inherit;font-size:14px;padding:4px 10px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink)}
+.cls{display:grid;grid-template-columns:86px 1fr;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 14px;margin:8px 0}
+.cls .t{font-weight:700;color:var(--acc);direction:ltr;text-align:right;line-height:1.4}
+.cls .t small{display:block;color:var(--mu);font-weight:400}
+.cls b{display:block}
+.cls .m{color:var(--mu);font-size:14px}
+.cls.live{border:2px solid var(--now)}.cls.done{opacity:.55}
+.pill{display:inline-block;font-size:12px;border-radius:999px;padding:0 8px;background:var(--soft);color:var(--acc)}
+.sum{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+.sum span{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:2px 12px;font-size:14px}
+.note{background:var(--soft);border-radius:12px;padding:10px 14px;font-size:13.5px;color:var(--mu);margin:16px 0}
+</style>
+</head>
+<body>
+<header><div class="wrap" style="padding-bottom:0"><h1>📅 جدولي</h1><p>د. سامر عبد الكريم (اسم مختلق) — من صورة الجدول إلى تطبيق على الهاتف</p></div></header>
+<div class="wrap">
+ <div class="hero"><div class="box now" id="nowBox"></div><div class="box next" id="nextBox"></div></div>
+ <div class="tabs" id="tabs"></div>
+ <div class="row"><span>الجهة:</span><select id="place"></select><span style="margin-inline-start:auto">جرّب وقتًا:</span><input type="time" id="simT"><select id="simD"></select></div>
+ <div id="list"></div>
+ <div class="sum" id="sum"></div>
+ <div class="note">جدولٌ <b>مختلَق</b> للتدريب. هذا الملفّ يعمل من هاتفك أو حاسوبك بلا إنترنت، ولا يرسل بياناتك إلى أيّ مكان. صُنع في محاضرة «من الوثيقة إلى تطبيق» — د. أمير هادي.</div>
+</div>
+<script>
+const WEEK=["السبت", "الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس"], L=[{"day": 0, "start": "09:00", "end": "11:00", "subject": "أمن الشبكات", "stage": "المرحلة الرابعة", "place": "جامعة الفرات (مختلقة)", "hall": "قاعة ١٢"}, {"day": 0, "start": "11:30", "end": "13:00", "subject": "أمن الشبكات — عمليّ", "stage": "المرحلة الرابعة", "place": "جامعة الفرات (مختلقة)", "hall": "مختبر ٢"}, {"day": 1, "start": "08:30", "end": "10:30", "subject": "قواعد البيانات", "stage": "المرحلة الثانية", "place": "كلّيّة بابل (مختلقة)", "hall": "قاعة ٥"}, {"day": 1, "start": "10:45", "end": "12:15", "subject": "قواعد البيانات — عمليّ", "stage": "المرحلة الثانية", "place": "كلّيّة بابل (مختلقة)", "hall": "مختبر ١"}, {"day": 2, "start": "16:00", "end": "18:00", "subject": "قواعد البيانات", "stage": "الدراسة المسائيّة", "place": "كلّيّة بابل (مختلقة)", "hall": "قاعة ٥"}, {"day": 3, "start": "08:30", "end": "10:00", "subject": "الذكاء الاصطناعيّ", "stage": "المرحلة الثالثة", "place": "جامعة الفرات (مختلقة)", "hall": "قاعة ٩"}, {"day": 3, "start": "10:15", "end": "11:45", "subject": "الذكاء الاصطناعيّ — عمليّ", "stage": "المرحلة الثالثة", "place": "جامعة الفرات (مختلقة)", "hall": "مختبر ٣"}, {"day": 3, "start": "13:00", "end": "14:30", "subject": "ساعات مكتبيّة", "stage": "لكلّ المراحل", "place": "جامعة الفرات (مختلقة)", "hall": "الغرفة ٢١٤"}, {"day": 4, "start": "10:00", "end": "12:00", "subject": "اجتماع القسم", "stage": "—", "place": "كلّيّة بابل (مختلقة)", "hall": "قاعة الاجتماعات"}, {"day": 5, "start": "09:00", "end": "12:00", "subject": "تحليل البيانات للقادة", "stage": "دورة", "place": "معهد التطوير الإداريّ (مختلق)", "hall": "القاعة الكبرى"}];
+const $=id=>document.getElementById(id);
+const AR=n=>String(n).replace(/\d/g,d=>'٠١٢٣٤٥٦٧٨٩'[d]);
+const mins=t=>{const[h,m]=t.split(':');return +h*60+ +m};
+const jsToIdx=d=>({6:0,0:1,1:2,2:3,3:4,4:5}[d]);   // JS getDay → our week (Sat first; Friday off)
+const now=new Date();
+let S={day:jsToIdx(now.getDay())??0,place:'',simD:jsToIdx(now.getDay()),simT:String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0')};
+const places=[...new Set(L.map(c=>c.place))];
+$('place').innerHTML='<option value="">كلّ الجهات</option>'+places.map(p=>`<option>${p}</option>`).join('');
+$('simD').innerHTML=WEEK.map((d,i)=>`<option value="${i}">${d}</option>`).join('')+'<option value="-1">الجمعة</option>';
+$('simD').value=S.simD===undefined?-1:S.simD;$('simT').value=S.simT;
+const dur=c=>mins(c.end)-mins(c.start);
+const fmtD=m=>m>=60?AR(Math.floor(m/60))+' س '+(m%60?AR(m%60)+' د':''):AR(m)+' د';
+function render(){
+ const d=+$('simD').value,t=mins(S.simT);
+ const live=L.find(c=>c.day===d&&mins(c.start)<=t&&t<mins(c.end));
+ const nx=L.filter(c=>c.day===d&&mins(c.start)>t).sort((a,b)=>mins(a.start)-mins(b.start))[0]||L.filter(c=>c.day>(d<0?-1:d)).sort((a,b)=>a.day-b.day||mins(a.start)-mins(b.start))[0]||L.slice().sort((a,b)=>a.day-b.day||mins(a.start)-mins(b.start))[0];
+ $('nowBox').innerHTML=live?`<small>● الآن</small><b>${live.subject}</b>${live.place.replace(/ \(مختلق[ة]?\)/,'')} | ${live.hall} — ينتهي بعد ${fmtD(mins(live.end)-t)}`:`<small>● الآن</small><b>لا محاضرة</b>${d<0?'الجمعة عطلة':'وقت فراغ'}`;
+ const inMin=nx&&nx.day===d?mins(nx.start)-t:null;
+ $('nextBox').innerHTML=nx?`<small>التالي ${inMin!==null?'بعد '+fmtD(inMin):'— '+WEEK[nx.day]}</small><b>${nx.subject}</b>${nx.place.replace(/ \(مختلق[ة]?\)/,'')} | ${nx.hall} | <span dir="ltr">${nx.start}</span>`:'';
+ $('tabs').innerHTML=WEEK.map((w,i)=>`<button class="tab ${S.day===i?'on':''} ${i===d?'today':''}" data-d="${i}">${w} ${AR(L.filter(c=>c.day===i).length)}</button>`).join('');
+ const r=L.filter(c=>c.day===S.day&&(!S.place||c.place===S.place)).sort((a,b)=>mins(a.start)-mins(b.start));
+ $('list').innerHTML=r.map(c=>{const st=c.day===d?(mins(c.end)<=t?'done':mins(c.start)<=t?'live':''):'';
+  return `<div class="cls ${st}"><div class="t">${c.start}<small>${c.end} | ${fmtD(dur(c))}</small></div><div><b>${c.subject}</b><span class="m">${c.stage} | ${c.place.replace(/ \(مختلق[ة]?\)/,'')} — ${c.hall}</span> ${st==='live'?'<span class="pill">الآن</span>':''}</div></div>`}).join('')||'<p class="m" style="text-align:center;color:var(--mu)">لا محاضرات في هذا اليوم.</p>';
+ const tot=L.filter(c=>!S.place||c.place===S.place).reduce((s,c)=>s+dur(c),0);
+ $('sum').innerHTML=`<span>مجموع الأسبوع: <b>${fmtD(tot)}</b></span>`+places.map(p=>`<span>${p.replace(/ \(مختلق[ة]?\)/,'')}: ${fmtD(L.filter(c=>c.place===p).reduce((s,c)=>s+dur(c),0))}</span>`).join('');
+}
+$('tabs').onclick=e=>{const b=e.target.closest('[data-d]');if(!b)return;S.day=+b.dataset.d;render()};
+$('place').onchange=e=>{S.place=e.target.value;render()};
+$('simT').onchange=e=>{S.simT=e.target.value||S.simT;render()};
+$('simD').onchange=e=>{const v=+e.target.value;if(v>=0)S.day=v;render()};
+if(S.day===undefined)S.day=0;
+render();
+</script>
+</body>
+</html>

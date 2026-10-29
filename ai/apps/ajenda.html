@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>أجندة الحدث</title>
+<meta name="theme-color" content="#6b3fa0">
+<style>
+:root{--bg:#f4f2f7;--card:#fff;--ink:#1d1a26;--mu:#625d70;--line:#e2deea;--acc:#6b3fa0;--soft:#efe8f8;--live:#c0392b;--liveS:#fdecea;--warn:#b7791f;--warnS:#fdf3dc}
+@media (prefers-color-scheme:dark){:root{--bg:#13111a;--card:#1d1a27;--ink:#ebe7f3;--mu:#a59fb5;--line:#2f2a3d;--acc:#b892ec;--soft:#2a2238;--live:#ff7b6e;--liveS:#3a1f1d;--warn:#f2b84b;--warnS:#3a2f15}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Segoe UI",Tahoma,sans-serif;font-size:16.5px;line-height:1.75}
+header{background:var(--acc);color:#fff;padding:16px}
+@media (prefers-color-scheme:dark){header{background:#3a2160}}
+header h1{margin:0;font-size:21px}header p{margin:0;opacity:.85;font-size:13.5px}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px 60px}
+.tabs{display:flex;gap:6px;margin:12px 0 6px}
+.tab{flex:1;font:inherit;border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:8px;cursor:pointer}
+.tab.on{background:var(--acc);border-color:var(--acc);color:#fff}
+.chips{display:flex;gap:6px;overflow-x:auto;padding:6px 0;scrollbar-width:none}.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;font:inherit;font-size:13.5px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:3px 12px;cursor:pointer}
+.chip.on{background:var(--soft);border-color:var(--acc);color:var(--acc);font-weight:700}
+.now{background:var(--liveS);border:1.5px solid var(--live);border-radius:14px;padding:10px 14px;margin:10px 0}
+.now h2{margin:0;font-size:16px;color:var(--live)}
+.sim{display:flex;gap:6px;align-items:center;flex-wrap:wrap;font-size:13.5px;color:var(--mu);margin-top:4px}
+.sim input,.sim select{font:inherit;font-size:13.5px;padding:2px 8px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink)}
+.slot{margin:14px 0 4px;color:var(--mu);font-weight:700;font-size:14px;display:flex;align-items:center;gap:8px}
+.slot .par{background:var(--warnS);color:var(--warn);border-radius:999px;padding:0 8px;font-size:12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:8px}
+.ev{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;position:relative}
+.ev.live{border:2px solid var(--live)}
+.ev .t{font-weight:700}
+.ev .m{color:var(--mu);font-size:13.5px}
+.ev .star{position:absolute;top:6px;left:8px;border:0;background:none;font-size:22px;cursor:pointer;color:var(--mu)}
+.ev .star.on{color:#d39e00}
+.badge{display:inline-block;border-radius:6px;padding:0 6px;font-size:12px;background:var(--soft);color:var(--acc);margin-inline-end:4px}
+.badge.live{background:var(--live);color:#fff}
+.clash{background:var(--warnS);color:var(--warn);border-radius:10px;padding:8px 12px;margin:8px 0;font-size:14px}
+.btn{font:inherit;border:0;border-radius:10px;padding:7px 14px;background:var(--acc);color:#fff;cursor:pointer}
+.note{background:var(--soft);border-radius:12px;padding:10px 14px;font-size:13.5px;color:var(--mu);margin:16px 0}
+</style>
+</head>
+<body>
+<header><div class="wrap" style="padding-bottom:0"><h1>🗓 أجندة الحدث</h1><p>منتدى INTF 2026 للتجارة والاستثمار — بابل روتانا، بغداد</p></div></header>
+<div class="wrap">
+ <div class="tabs" id="tabs"></div>
+ <div class="now" id="now"></div>
+ <div class="chips" id="halls"></div>
+ <div class="chips" id="types"></div>
+ <div id="clash"></div>
+ <div id="list"></div>
+ <p style="text-align:center"><button class="btn" id="share">نسخ خطّتي</button></p>
+ <div class="note">مأخوذة من البرنامج العامّ المنشور للمنتدى، للتدريب. الطريقة نفسها تصلح لأيّ مؤتمر علميّ: أيّام، قاعات، جلسات متوازية. خطّتك (★) تُحفظ على هذا الجهاز. صُنع في محاضرة «من الوثيقة إلى تطبيق» — د. أمير هادي.</div>
+</div>
+<script>
+const E=[{"day": 28, "start": "08:00", "end": "09:00", "type": "sess", "room": "l", "title": "التسجيل وزيارة المعرض", "en": "Registration & exhibition visit"}, {"day": 28, "start": "09:00", "end": "11:00", "type": "plen", "room": "k", "title": "حفل الافتتاح الرسمي", "en": "Official Opening Ceremony"}, {"day": 28, "start": "10:30", "end": "11:15", "type": "corner", "room": "c", "title": "الابتكار المدفوع بالطلب", "en": "Demand-driven innovation"}, {"day": 28, "start": "11:00", "end": "12:30", "type": "plen", "room": "k", "title": "جلسة عامة: مكانة العراق في التجارة والاستثمار العالميين", "en": "Plenary: Iraq's place in global trade & investment"}, {"day": 28, "start": "11:15", "end": "12:00", "type": "corner", "room": "c", "title": "رقمنة تجارة المنتجات الطازجة في العراق", "en": "Digitising fresh produce trade in Iraq"}, {"day": 28, "start": "12:00", "end": "12:45", "type": "corner", "room": "c", "title": "التجارة الإلكترونية بين الشركات ورقمنة سلاسل التوريد", "en": "B2B e-commerce & supply-chain digitisation"}, {"day": 28, "start": "12:30", "end": "13:30", "type": "lunch", "room": "", "title": "استراحة الغداء", "en": "Lunch break"}, {"day": 28, "start": "13:30", "end": "15:00", "type": "sess", "room": "e", "title": "ربط العراق بالأسواق الإقليمية والعالمية", "en": "Connecting Iraq to regional and global markets"}, {"day": 28, "start": "13:30", "end": "15:00", "type": "sess", "room": "i", "title": "تمويل الشركات العراقية: من الحدّ من المخاطر إلى استثمارات قابلة للتمويل", "en": "Financing Iraqi companies: from de-risking to bankable investments"}, {"day": 28, "start": "13:30", "end": "16:30", "type": "b2b", "room": "k", "title": "لقاءات الأعمال الثنائية (B2B): اجتماعات فردية", "en": "B2B meetings: one-to-one (runs alongside sessions)"}, {"day": 28, "start": "14:00", "end": "14:45", "type": "corner", "room": "c", "title": "من مشكلة محلية إلى شركة تقنية قابلة للتوسع", "en": "From local problem to scalable tech company"}, {"day": 28, "start": "14:45", "end": "15:30", "type": "corner", "room": "c", "title": "الجاهزية للتوظيف والكفاءات العراقية", "en": "Employability & Iraqi talent"}, {"day": 28, "start": "15:00", "end": "16:30", "type": "sess", "room": "e", "title": "هل العراق مستعد للتجارة الرقمية؟", "en": "Is Iraq ready for digital trade?"}, {"day": 28, "start": "15:00", "end": "16:30", "type": "sess", "room": "i", "title": "تعزيز ثقة المستثمرين في العراق", "en": "Strengthening investor confidence in Iraq"}, {"day": 28, "start": "15:30", "end": "16:15", "type": "corner", "room": "c", "title": "دخول السوق العراقية بالاعتماد على البيانات", "en": "Entering the Iraqi market with data"}, {"day": 28, "start": "17:00", "end": "19:00", "type": "social", "room": "m", "title": "حفل الاستقبال المسائي (بدعوة خاصة فقط)", "en": "Evening reception (invitation only)"}, {"day": 29, "start": "09:00", "end": "10:30", "type": "sess", "room": "e", "title": "ربط العراق بالأسواق الإقليمية والعالمية", "en": "Connecting Iraq to regional and global markets"}, {"day": 29, "start": "09:00", "end": "10:30", "type": "sess", "room": "i", "title": "دفع التحول الأخضر في العراق عبر التجارة والاستثمار", "en": "Driving Iraq's green transition through trade & investment"}, {"day": 29, "start": "09:00", "end": "12:00", "type": "b2b", "room": "k", "title": "لقاءات الأعمال الثنائية (B2B): اجتماعات فردية", "en": "B2B meetings: one-to-one (runs alongside sessions)"}, {"day": 29, "start": "10:30", "end": "11:15", "type": "corner", "room": "c", "title": "ابتكارات محلية لمنازل موفّرة للطاقة", "en": "Local innovations for energy-efficient homes"}, {"day": 29, "start": "10:30", "end": "12:00", "type": "sess", "room": "e", "title": "بناء قطاعات عراقية تنافسية: قطاع الأغذية الزراعية نموذجاً", "en": "Building competitive Iraqi sectors: agri-food as a model"}, {"day": 29, "start": "10:30", "end": "12:00", "type": "sess", "room": "i", "title": "العراق على مفترق طرق: أولويات الاستثمار العام الاستراتيجية", "en": "Iraq at a crossroads: strategic public investment priorities"}, {"day": 29, "start": "11:15", "end": "12:00", "type": "corner", "room": "c", "title": "AuditMyBEIT: من تدقيق الطاقة إلى منازل خضراء", "en": "AuditMyBEIT: from energy audit to green homes"}, {"day": 29, "start": "12:00", "end": "13:30", "type": "lunch", "room": "", "title": "استراحة الغداء", "en": "Lunch break"}, {"day": 29, "start": "12:00", "end": "12:45", "type": "corner", "room": "c", "title": "مهارات رقمية لقرارات أعمال أفضل", "en": "Digital skills for better business decisions"}, {"day": 29, "start": "13:30", "end": "15:00", "type": "plen", "room": "k", "title": "حفل الختام وجوائز المنتدى", "en": "Closing ceremony & forum awards"}, {"day": 29, "start": "14:00", "end": "14:45", "type": "corner", "room": "c", "title": "الأنبار: الكفاءات والحاضنات والاستثمار", "en": "Anbar: talent, incubators and investment"}, {"day": 29, "start": "14:45", "end": "15:30", "type": "corner", "room": "c", "title": "الذكاء الاصطناعي ومستقبل التسويق في العراق", "en": "AI and the future of marketing in Iraq"}], HALLS={"k": "قاعة كلكامش", "i": "قاعة عشتار", "e": "قاعة الفرات", "l": "بهو قاعة كلكامش", "m": "معروف كافيه", "c": "ركن الابتكار (قرب عشتار)"}, TYPES={"plen": "جلسة رئيسيّة", "sess": "جلسة نقاشيّة", "b2b": "لقاءات ثنائيّة B2B", "corner": "ركن الابتكار", "lunch": "استراحة", "social": "حفل مسائيّ"}, DAYS={"28": "الأربعاء ٢٨ تشرين الأوّل ٢٠٢٦", "29": "الخميس ٢٩ تشرين الأوّل ٢٠٢٦"};
+const $=id=>document.getElementById(id);
+const AR=s=>String(s).replace(/\d/g,d=>'٠١٢٣٤٥٦٧٨٩'[d]);
+E.forEach((e,i)=>e.id=i);
+const mins=t=>{const[h,m]=t.split(':');return +h*60+ +m};
+let plan=new Set();try{plan=new Set(JSON.parse(localStorage.getItem('ajendaPlan')||'[]'))}catch(e){}
+const dayKeys=Object.keys(DAYS).map(Number);
+let S={day:dayKeys[0],hall:'',type:'',mine:false,simDay:dayKeys[0],simT:'14:10'};
+function chipRow(el,items,key){el.innerHTML='';items.forEach(([v,l])=>{const b=document.createElement('button');b.className='chip'+(S[key]===v?' on':'');b.textContent=l;b.onclick=()=>{S[key]=S[key]===v&&v!==''?'':v;render()};el.appendChild(b)})}
+const isLive=e=>e.day===S.simDay&&mins(e.start)<=mins(S.simT)&&mins(S.simT)<mins(e.end);
+function card(e){return `<div class="ev ${isLive(e)?'live':''}"><button class="star ${plan.has(e.id)?'on':''}" data-s="${e.id}">${plan.has(e.id)?'★':'☆'}</button>
+<div class="t" style="padding-left:26px">${e.title}</div><div class="m">${isLive(e)?'<span class="badge live">الآن</span>':''}<span class="badge">${TYPES[e.type]||e.type}</span>${HALLS[e.room]||''} | <span dir="ltr">${e.start}–${e.end}</span></div></div>`}
+function render(){
+ $('tabs').innerHTML=dayKeys.map(d=>`<button class="tab ${S.day===d&&!S.mine?'on':''}" data-d="${d}">${DAYS[d].split(' ').slice(0,2).join(' ')}</button>`).join('')+`<button class="tab ${S.mine?'on':''}" data-d="mine">★ خطّتي (${AR(plan.size)})</button>`;
+ chipRow($('halls'),[['','كل القاعات'],...Object.entries(HALLS)],'hall');
+ chipRow($('types'),[['','كل الأنواع'],...Object.entries(TYPES)],'type');
+ const live=E.filter(isLive).filter(e=>e.type!=='lunch'),next=E.filter(e=>e.day===S.simDay&&mins(e.start)>mins(S.simT)).sort((a,b)=>mins(a.start)-mins(b.start)).slice(0,2);
+ $('now').innerHTML=`<h2>● يجري الآن (${AR(live.length)})</h2>${live.map(e=>`<div>${e.title} — <b>${HALLS[e.room]||''}</b></div>`).join('')||'<div class="m">لا شيء الآن.</div>'}
+ ${next.length?`<div class="m">التالي: ${next.map(e=>e.start+' '+e.title).join(' | ')}</div>`:''}
+ <div class="sim">جرّب وقتًا: <select id="sd">${dayKeys.map(d=>`<option value="${d}" ${d===S.simDay?'selected':''}>${DAYS[d].split(' ')[0]}</option>`).join('')}</select><input type="time" id="st" value="${S.simT}"></div>`;
+ $('sd').onchange=e=>{S.simDay=+e.target.value;render()};$('st').onchange=e=>{S.simT=e.target.value||S.simT;render()};
+ let r=E.filter(e=>S.mine?plan.has(e.id):e.day===S.day).filter(e=>(!S.hall||e.room===S.hall)&&(!S.type||e.type===S.type));
+ r.sort((a,b)=>a.day-b.day||mins(a.start)-mins(b.start));
+ const mp=E.filter(e=>plan.has(e.id)),cl=[];
+ mp.forEach((a,i)=>mp.slice(i+1).forEach(b=>{if(a.day===b.day&&mins(a.start)<mins(b.end)&&mins(b.start)<mins(a.end))cl.push([a,b])}));
+ $('clash').innerHTML=cl.map(([a,b])=>`<div class="clash">⚠ تعارض في خطّتك: «${a.title}» و«${b.title}» في الوقت نفسه.</div>`).join('');
+ const groups={};r.forEach(e=>{const k=(S.mine?DAYS[e.day].split(' ')[0]+' ':'')+e.start;(groups[k]=groups[k]||[]).push(e)});
+ $('list').innerHTML=Object.entries(groups).map(([k,es])=>`<div class="slot"><span dir="ltr">${k}</span>${es.length>1?`<span class="par">${AR(es.length)} متوازية</span>`:''}</div><div class="grid">${es.map(card).join('')}</div>`).join('')||'<p class="m" style="text-align:center">لا شيء هنا. اضغط ☆ على الفعاليّات لتبني خطّتك.</p>';
+}
+$('tabs').onclick=e=>{const d=e.target.dataset.d;if(!d)return;if(d==='mine'){S.mine=true}else{S.mine=false;S.day=+d}render()};
+$('list').onclick=e=>{const s=e.target.dataset.s;if(s===undefined)return;const n=+s;plan.has(n)?plan.delete(n):plan.add(n);try{localStorage.setItem('ajendaPlan',JSON.stringify([...plan]))}catch(e){}render()};
+$('share').onclick=()=>{const t='خطّتي في الحدث:\n'+E.filter(e=>plan.has(e.id)).sort((a,b)=>a.day-b.day||mins(a.start)-mins(b.start)).map(e=>`• ${DAYS[e.day].split(' ')[0]} ${e.start} — ${e.title} (${HALLS[e.room]||''})`).join('\n');navigator.clipboard&&navigator.clipboard.writeText(t);$('share').textContent='✓ نُسخت';setTimeout(()=>$('share').textContent='نسخ خطّتي',1500)};
+render();
+</script>
+</body>
+</html>

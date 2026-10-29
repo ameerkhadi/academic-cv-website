@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>دليل الشركات</title>
+<meta name="theme-color" content="#0e5a4f">
+<style>
+:root{--bg:#f0f4f2;--card:#fff;--ink:#14211d;--mu:#5a6a64;--line:#d9e3df;--acc:#0e5a4f;--soft:#e2efeb;--gold:#a8740f}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1514;--card:#17201e;--ink:#e5eeeb;--mu:#98a9a3;--line:#283633;--acc:#4cc3ad;--soft:#183230;--gold:#e0b25a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Segoe UI",Tahoma,sans-serif;font-size:16.5px;line-height:1.8}
+header{background:var(--acc);color:#fff;padding:16px}
+@media (prefers-color-scheme:dark){header{background:#0b3832}}
+header h1{margin:0;font-size:21px}header p{margin:0;opacity:.88;font-size:13.5px}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px 60px}
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:10px 0 4px}
+.row{display:flex;gap:8px}
+input,select{font:inherit;padding:9px 12px;border:1.5px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);min-width:0}
+input{flex:1}
+.chips{display:flex;gap:6px;overflow-x:auto;padding:8px 0 2px;scrollbar-width:none}.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;font:inherit;font-size:13.5px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:2px 12px;cursor:pointer}
+.chip.on{background:var(--acc);border-color:var(--acc);color:#fff}
+.chip i{font-style:normal;opacity:.7}
+.count{color:var(--mu);font-size:14px;margin:6px 2px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+.co{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:4px}
+.co h3{margin:0;font-size:17px;display:flex;justify-content:space-between;gap:6px}
+.co .en{direction:ltr;text-align:right;color:var(--mu);font-size:13px}
+.co .tags{display:flex;gap:5px;flex-wrap:wrap}
+.tag{font-size:12px;border-radius:999px;padding:0 8px;background:var(--soft);color:var(--acc)}
+.tag.c{background:transparent;border:1px solid var(--line);color:var(--mu)}
+.co .k{color:var(--mu);font-size:13px}
+.co .seek{border-inline-start:3px solid var(--gold);padding-inline-start:8px;font-size:14.5px}
+.star{border:0;background:none;font-size:20px;cursor:pointer;color:var(--mu);line-height:1}
+.star.on{color:#d39e00}
+.btn{font:inherit;border:0;border-radius:12px;padding:8px 16px;background:var(--acc);color:#fff;cursor:pointer}
+.note{background:var(--soft);border-radius:12px;padding:10px 14px;font-size:13.5px;color:var(--mu);margin:16px 0}
+</style>
+</head>
+<body>
+<header><div class="wrap" style="padding-bottom:0"><h1>🏢 دليل الشركات المشاركة</h1><p>منتدى الأعمال التدريبيّ ٢٠٢٦ — ١٦ شركة | بحث، قطاعات، دول، وقائمتي</p></div></header>
+<div class="wrap">
+ <div class="bar">
+  <div class="row"><input id="q" type="search" placeholder="ابحث: ريّ، تغليف، هولندا، تمويل…" autocomplete="off"><select id="country"></select></div>
+  <div class="chips" id="sectors"></div>
+ </div>
+ <div class="count" id="count"></div>
+ <div class="grid" id="list"></div>
+ <p style="text-align:center"><button class="btn" id="mine">★ قائمتي (<span id="mineN">٠</span>)</button> <button class="btn" id="copy" style="background:var(--soft);color:var(--acc)">نسخ قائمتي</button></p>
+ <div class="note">بيانات <b>مختلقة</b> للتدريب بشكل كتيّبات المنتديات. حذفنا عمدًا <b>أسماء مسؤولي التواصل وهواتفهم وبريدهم</b>: الدليل يعرّف بالشركات، والتواصل يكون عبر موقع الشركة أو منظّمي المنتدى. صُنع في محاضرة «من الوثيقة إلى تطبيق» — د. أمير هادي.</div>
+</div>
+<script>
+const C=[{"ar": "دجلة للحلول الزراعيّة", "en": "Dijla Agri Solutions", "sector": "الزراعة والريّ", "city": "الحلّة", "country": "العراق", "size": "متوسّطة", "about": "تصمّم أنظمة ريٍّ بالتنقيط وتدير مزارع نموذجيّة في بابل.", "products": "أنظمة ريّ ذكيّة، تدريب المزارعين", "seeks": "مستثمرين في الزراعة المحميّة", "site": "dijla-agri.example", "id": "c0", "page": 2}, {"ar": "بوابة الرافدين اللوجستيّة", "en": "Rafidain Gate Logistics", "sector": "النقل والخدمات اللوجستيّة", "city": "البصرة", "country": "العراق", "size": "كبيرة", "about": "نقل بحريّ وبرّيّ من ميناء أمّ قصر إلى المحافظات.", "products": "شحن الحاويات، التخليص الكمركيّ", "seeks": "شركاء تخزين مبرَّد", "site": "rafgate.example", "id": "c1", "page": 3}, {"ar": "نور الشمس للطاقة", "en": "Noor Solar Energy", "sector": "الطاقة المتجدّدة", "city": "كربلاء", "country": "العراق", "size": "صغيرة", "about": "تركيب منظومات طاقة شمسيّة للمدارس والمستوصفات.", "products": "ألواح شمسيّة، صيانة، تصميم منظومات", "seeks": "مموّلين لمشاريع المدارس", "site": "noorsolar.example", "id": "c2", "page": 4}, {"ar": "أكوا فلاندرز", "en": "Aqua Flanders BV", "sector": "المياه ومعالجتها", "city": "روتردام", "country": "هولندا", "size": "كبيرة", "about": "محطّات معالجة مياه صغيرة تعمل بالطاقة الشمسيّة.", "products": "وحدات تحلية، مراقبة جودة المياه", "seeks": "وكيل محلّيّ في العراق", "site": "aquaflanders.example", "id": "c3", "page": 5}, {"ar": "سلّة بغداد الرقميّة", "en": "Baghdad eBasket", "sector": "التجارة الإلكترونيّة", "city": "بغداد", "country": "العراق", "size": "ناشئة", "about": "منصّة لبيع الخضار والفواكه من المزارع إلى البيوت.", "products": "تطبيق طلبات، توصيل مبرَّد", "seeks": "تمويل للتوسّع إلى أربيل", "site": "ebasket.example", "id": "c4", "page": 6}, {"ar": "ميلانو للآلات الغذائيّة", "en": "Milano Food Machines", "sector": "الصناعات الغذائيّة", "city": "ميلانو", "country": "إيطاليا", "size": "متوسّطة", "about": "خطوط تعبئة وتغليف للتمور والألبان.", "products": "خطوط تعبئة، صيانة، قطع غيار", "seeks": "مصانع تمور عراقيّة", "site": "milanofm.example", "id": "c5", "page": 7}, {"ar": "أربيل للبرمجيّات", "en": "Erbil Soft House", "sector": "تقنية المعلومات", "city": "أربيل", "country": "العراق", "size": "متوسّطة", "about": "أنظمة محاسبة وموارد بشريّة للشركات الصغيرة.", "products": "نظام رواتب، فوترة إلكترونيّة", "seeks": "شركاء توزيع في الجنوب", "site": "erbilsoft.example", "id": "c6", "page": 8}, {"ar": "هانزا للتدريب المهنيّ", "en": "Hansa Vocational Training", "sector": "التعليم والتدريب", "city": "هامبورغ", "country": "ألمانيا", "size": "كبيرة", "about": "برامج تدريب مهنيّ مزدوج على الطريقة الألمانيّة.", "products": "مناهج تدريب، تدريب المدرّبين", "seeks": "معاهد فنّيّة عراقيّة", "site": "hansa-vt.example", "id": "c7", "page": 9}, {"ar": "الفرات للأسمدة العضويّة", "en": "Euphrates Organic Fertilizers", "sector": "الزراعة والريّ", "city": "الديوانيّة", "country": "العراق", "size": "صغيرة", "about": "تحويل مخلّفات المزارع إلى سماد عضويّ.", "products": "سماد عضويّ، تحليل التربة", "seeks": "موزّعين في المحافظات", "site": "euphrates-organic.example", "id": "c8", "page": 10}, {"ar": "بابل للتغليف", "en": "Babel Packaging Co.", "sector": "الصناعات الغذائيّة", "city": "الحلّة", "country": "العراق", "size": "متوسّطة", "about": "علب كرتون وتغليف للمنتجات الزراعيّة.", "products": "كرتون مطبوع، صناديق تصدير", "seeks": "عقود مع مصدّري التمور", "site": "babelpack.example", "id": "c9", "page": 11}, {"ar": "كابيتال للاستشارات الماليّة", "en": "Capital Finance Advisory", "sector": "الخدمات الماليّة", "city": "بغداد", "country": "العراق", "size": "صغيرة", "about": "دراسات جدوى وتمويل للمشاريع الصغيرة والمتوسّطة.", "products": "دراسات جدوى، ربط بالمصارف", "seeks": "شركات ناشئة تبحث عن تمويل", "site": "capitalfa.example", "id": "c10", "page": 12}, {"ar": "نورد كولد", "en": "Nord Cold Chain", "sector": "النقل والخدمات اللوجستيّة", "city": "آرهوس", "country": "الدنمارك", "size": "كبيرة", "about": "مخازن مبرَّدة وشاحنات لنقل الأغذية.", "products": "مخازن مبرَّدة، مراقبة الحرارة عن بُعد", "seeks": "شريك تشغيل في البصرة", "site": "nordcold.example", "id": "c11", "page": 13}, {"ar": "ريادة للتسويق الرقميّ", "en": "Riyada Digital", "sector": "التسويق والإعلام", "city": "النجف", "country": "العراق", "size": "ناشئة", "about": "إدارة صفحات وإعلانات رقميّة للشركات المحلّيّة.", "products": "إعلانات مموّلة، تصوير منتجات", "seeks": "عملاء في قطاع الأغذية", "site": "riyada.example", "id": "c12", "page": 14}, {"ar": "أنوار للأجهزة الطبّيّة", "en": "Anwar Medical Devices", "sector": "الصحّة", "city": "الموصل", "country": "العراق", "size": "متوسّطة", "about": "توريد وصيانة الأجهزة الطبّيّة للمستشفيات الأهليّة.", "products": "أجهزة تشخيص، عقود صيانة", "seeks": "مصنّعين أوروبيّين", "site": "anwarmed.example", "id": "c13", "page": 15}, {"ar": "ديلتا للمياه الذكيّة", "en": "Delta Smart Water", "sector": "المياه ومعالجتها", "city": "أوترخت", "country": "هولندا", "size": "صغيرة", "about": "عدّادات ذكيّة وكشف تسرّب شبكات المياه.", "products": "عدّادات ذكيّة، منصّة مراقبة", "seeks": "بلديّات ومديريّات ماء", "site": "deltasw.example", "id": "c14", "page": 16}, {"ar": "سومر للإسكان الأخضر", "en": "Sumer Green Housing", "sector": "البناء والإسكان", "city": "الناصريّة", "country": "العراق", "size": "متوسّطة", "about": "بيوت موفّرة للطاقة بمواد عزل محلّيّة.", "products": "تصميم، عزل حراريّ، تنفيذ", "seeks": "مستثمرين ومصارف إسكان", "site": "sumergreen.example", "id": "c15", "page": 17}];
+const $=id=>document.getElementById(id);
+const AR=n=>String(n).replace(/\d/g,d=>'٠١٢٣٤٥٦٧٨٩'[d]);
+const norm=s=>s.replace(/[ً-ْـ]/g,'').replace(/[أإآ]/g,'ا').replace(/ى/g,'ي').replace(/ة/g,'ه').toLowerCase();
+C.forEach(c=>c.k=norm([c.ar,c.en,c.sector,c.city,c.country,c.about,c.products,c.seeks].join(' ')));
+let S={sector:'',country:'',mine:false,fav:new Set()};
+try{S.fav=new Set(JSON.parse(localStorage.getItem('daleelFav')||'[]'))}catch(e){}
+const sectors=[...new Set(C.map(c=>c.sector))],countries=[...new Set(C.map(c=>c.country))];
+$('country').innerHTML='<option value="">كلّ الدول</option>'+countries.map(c=>`<option>${c}</option>`).join('');
+function render(){
+ $('sectors').innerHTML=[['','الكلّ',C.length],...sectors.map(s=>[s,s,C.filter(c=>c.sector===s).length])].map(([v,l,n])=>`<button class="chip ${S.sector===v?'on':''}" data-s="${v}">${l} <i>${AR(n)}</i></button>`).join('');
+ const q=norm($('q').value.trim());
+ const r=C.filter(c=>(!S.sector||c.sector===S.sector)&&(!S.country||c.country===S.country)&&(!S.mine||S.fav.has(c.id))&&(!q||q.split(/\s+/).every(w=>c.k.includes(w))));
+ $('count').textContent=AR(r.length)+' شركة'+(S.mine?' في قائمتي':'');
+ $('list').innerHTML=r.map(c=>`<div class="co"><h3><span>${c.ar}</span><button class="star ${S.fav.has(c.id)?'on':''}" data-f="${c.id}" aria-label="أضف إلى قائمتي">${S.fav.has(c.id)?'★':'☆'}</button></h3>
+  <div class="en">${c.en}</div><div class="tags"><span class="tag">${c.sector}</span><span class="tag c">${c.city} — ${c.country}</span><span class="tag c">${c.size}</span></div>
+  <div>${c.about}</div><div class="k">المنتجات: ${c.products}</div><div class="seek">تبحث عن: ${c.seeks}</div><div class="k" dir="ltr" style="text-align:right">${c.site}</div></div>`).join('')||'<p class="count" style="text-align:center">لا شركات بهذه الشروط.</p>';
+ $('mineN').textContent=AR(S.fav.size);$('mine').style.opacity=S.mine?1:.85;
+}
+$('sectors').onclick=e=>{const b=e.target.closest('[data-s]');if(!b)return;S.sector=b.dataset.s;render()};
+$('country').onchange=e=>{S.country=e.target.value;render()};
+$('q').oninput=render;
+$('list').onclick=e=>{const b=e.target.closest('[data-f]');if(!b)return;const id=b.dataset.f;S.fav.has(id)?S.fav.delete(id):S.fav.add(id);try{localStorage.setItem('daleelFav',JSON.stringify([...S.fav]))}catch(err){}render()};
+$('mine').onclick=()=>{S.mine=!S.mine;render()};
+$('copy').onclick=()=>{const t='شركات أريد لقاءها:\n'+C.filter(c=>S.fav.has(c.id)).map(c=>`• ${c.ar} (${c.sector}، ${c.country}) — ${c.site}`).join('\n');try{navigator.clipboard.writeText(t).then(()=>{$('copy').textContent='✓ نُسخت'},()=>{})}catch(err){}};
+render();
+</script>
+</body>
+</html>

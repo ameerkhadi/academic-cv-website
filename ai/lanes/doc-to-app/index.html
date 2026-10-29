@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>من الوثيقة إلى تطبيق — مثال المسارات</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+<script>
+// AI course week 8 (v2): how one gazette issue becomes "Pocket Law" on your phone — and where it goes wrong.
+const CHECKS = `<div class="le-list" style="margin-top:8px">
+  <div data-k="data">١ البيانات: العدد، الأوّل والأخير</div>
+  <div data-k="privacy">٢ الخصوصيّة: لا بيانات أشخاص</div>
+  <div data-k="phone">٣ الهاتف: بلا تمرير جانبيّ</div>
+  <div data-k="source">٤ المصدر ورقم الصفحة</div>
+  <div data-k="garbled" style="display:none">⛔ نصٌّ منسوخ بحروفٍ ممطوطة</div>
+  <div data-k="leak" style="display:none">⛔ هواتف أشخاص في الدليل</div>
+  <div data-k="hour" style="display:none">⛔ ساعةٌ قُرئت خطأً من الصورة</div></div>`;
+window.LANES = {
+  title: 'من الوثيقة إلى تطبيق 📄➜📱',
+  sub: 'وثيقةٌ واحدة تمرّ على أربعة: <b>أنت</b> تختار المصدر وتفحص، و<b>كلود</b> يستخرج ويبني، و<b>الملفّ</b> يحمل التطبيق كلّه، و<b>هاتفك</b> يفتحه بلا إنترنت.',
+  back: { href: '../../week1.html#week8', label: 'العودة إلى الأسبوع الثامن' },
+  lanes: [
+    { id: 'me', icon: '🧑‍⚖️', title: 'أنت', role: 'تختار المصدر وتفحص وتقرّر', html: CHECKS },
+    { id: 'claude', icon: '🤖', title: 'كلود', role: 'يقرأ المرفق، يستخرج الجدول، يبني HTML' },
+    { id: 'file', icon: '📄', title: 'الملفّ', role: '<code>qanoon.html</code> على حاسوبك' },
+    { id: 'phone', icon: '📱', title: 'هاتفك', role: 'يفتح الملفّ بالمتصفّح بلا إنترنت' }
+  ],
+  lesson: '💡 <b>الدرس:</b> الذكاء الاصطناعيّ <b>يبني</b> في دقائق، وأنت <b>تختار المصدر وتفحص النتيجة</b>. لا تعتمد على تطبيقٍ لم تفحصه بعينك.',
+  scenarios: [
+    { label: '⚖️ قانون الجيب — الطريق الصحيح', steps: [
+      { at: 'me', card: '<span class="k">📄 المصدر</span>الوقائع العراقيّة — العدد ٤٨٨٠ (PDF من موقع وزارة العدل)', text: 'تبدأ بالمصدر <b>الرسميّ</b>: عددٌ حقيقيّ من الجريدة الرسميّة، ٢١ صفحة.' },
+      { at: 'claude', card: '<span class="k">✍️ الأمر الأوّل</span>أرفقتُ العدد: استخرج الموادّ في جدول فقط', text: 'ترفق <b>الملفّ نفسه</b> لكلود، ولا تنسخ نصّه، لأنّ النسخ يمطّ الحروف.' },
+      { at: 'claude', think: { claude: '📋 ثلاثة أنظمة<br>لكلّ مادّة: رقم، فصل، نصّ، صفحة' }, card: '<span class="k">📋 الجدول</span>١١ + ٥ + ٣٧ = ٥٣ مادّة', text: 'كلود يقرأ العدد ويعيد <b>جدولًا</b> مع العدد.' },
+      { at: 'me', hit: 'data', cls: 'ok', card: '<span class="k">👁 الفحص</span>٥٣ ✓ — المادّة ١ والمادّة ٣٧ تطابقان الصفحة ✓', text: '<b>تفحص بعينك:</b> العدد، والأولى والأخيرة مقابل صفحات العدد. ثمّ توافق.' },
+      { at: 'claude', card: '<span class="k">🛠 أمر البناء</span>القيد: لا تغيّر النصّ، ورقم الصفحة لكلّ مادّة', text: 'أمر البناء بأجزائه الستّة، وأهمّ قيد: <b>النصّ القانونيّ لا يتغيّر</b>.' },
+      { at: 'file', hit: 'source', panel: { file: '<div>⚖️ <b>qanoon.html</b></div><div>٣ أنظمة | ٥٣ مادّة | ص لكلّ مادّة</div>' }, card: '<span class="k">⬇️ التنزيل</span>تسمّيه <code>qanoon.html</code> وتضعه في «تطبيقاتي»', text: 'تنزّل الملفّ من نافذة كلود؛ <b>التطبيق كلّه في ملفٍّ واحد</b>.' },
+      { at: 'phone', card: '<span class="k">✈️ إلى الهاتف</span>ترسله لنفسك في تيليغرام ← تفتحه بكروم', text: 'ترسله إلى نفسك وتفتحه بالمتصفّح. على آيفون: «الملفّات» ثمّ سفاري.' },
+      { at: 'phone', hit: 'phone', cls: 'ok', card: '<span class="k">✅ يعمل بلا إنترنت</span>تكتب «رئيس الديوان» فتظهر الموادّ ورقم صفحتها', text: '<b>قانون الجيب</b> في هاتفك، يعمل في المحكمة بلا شبكة، ويدلّك على الصفحة الأصليّة.' }
+    ] },
+    { label: '⛔ ثلاثة أخطاء شائعة', lesson: '💡 <b>الدرس:</b> كلّ خطأٍ هنا كان سيُكشف بفحصٍ واحد من الفحوص الأربعة — قبل الاعتماد على التطبيق لا بعده.', steps: [
+      { at: 'me', card: '<span class="k">📋 نسخ ولصق</span>نسختَ النصّ من الـPDF بدل إرفاق الملفّ', text: 'الخطأ الأوّل: نسختَ النصّ ولصقته، فخرجت حروفٌ ممطوطة و«٢٠١٢» صارت «٢١٠٢».' },
+      { at: 'phone', miss: 'garbled', cls: 'bad', card: '<span class="k">❌ نصّ خاطئ</span>تاريخٌ مقلوب في مادّةٍ قانونيّة', text: 'تطبيقٌ قانونيّ فيه رقمٌ مقلوب. <b>العلاج:</b> أرفق الملفّ نفسه، وقارن بالصفحة.' },
+      { at: 'claude', card: '<span class="k">🏢 الدليل</span>نُقلت أسماء مسؤولي التواصل وهواتفهم', text: 'الخطأ الثاني: في دليل الشركات نُقلت الهواتف لأنّ الأمر لم يمنعها.' },
+      { at: 'phone', miss: 'leak', cls: 'bad', card: '<span class="k">⛔ خصوصيّة</span>أرقام أشخاص تتنقّل بين الهواتف', text: 'المطبوع للمنظّمين، والتطبيق يتنقّل بلا حدود. <b>العلاج:</b> قيدٌ صريح، وبحثٌ عن «٠٧٨».' },
+      { at: 'file', miss: 'hour', cls: 'bad', card: '<span class="k">📷 جدولي</span>قُرئت «١٠:٤٥» من الصورة «١٠:١٥»', text: 'الخطأ الثالث: صورة الجدول قُرئت خطأً، ولم يُقارَن الجدول بالصورة.' },
+      { at: 'me', cls: 'ok', card: '<span class="k">🔧 الإصلاح</span>جدول أوّلًا ← فحص ← ثمّ بناء', text: 'الإصلاح لكلّها واحد: <b>الجدول أوّلًا، والفحوص الأربعة قبل الاعتماد</b>.' }
+    ] }
+  ]
+};
+</script>
+<script src="lane_engine.js"></script>
+</body>
+</html>
