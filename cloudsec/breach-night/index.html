@@ -1,0 +1,1448 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>ليلة الاختراق</title>
+<meta name="description" content="محاضرة تفاعلية في حوكمة السحابة وإدارة الهوية والصلاحيات، مبنية على محاكاة اختراق سحابي ثلاثي الأبعاد — مادة Cloud Computing Security، جامعة الشعب.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Reem+Kufi:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: an incident-room casebook. Sticky tab strip of the lecture's parts, one reading column (900px) per part,
+   the simulation tab widens to the full screen. Case-file red marks the incident; teal marks the defence. */
+:root{
+  --fs:1;
+  --bg:#eef1ef; --panel:#fbfcfb; --sunk:#e3e8e6;
+  --ink:#14202a; --ink2:#46565f; --ink3:#77878e; --rule:#c6d0cd;
+  --red:#b3322d; --red-soft:rgba(179,50,45,.10); --red-line:rgba(179,50,45,.45);
+  --teal:#0b746d; --teal-soft:rgba(11,116,109,.10); --teal-line:rgba(11,116,109,.45);
+  --amber:#9a6400; --amber-soft:rgba(154,100,0,.12);
+  --blue:#2b5c95; --blue-soft:rgba(43,92,149,.10);
+  --code-bg:#0f1a23; --code-fg:#d6e2e6; --code-k:#ff9b8f; --code-s:#8fdcc4; --code-c:#7d919a;
+  --stage:#0b1620;
+  --display:"Reem Kufi","Noto Kufi Arabic","Segoe UI",Tahoma,sans-serif;
+  --body:"IBM Plex Sans Arabic","Segoe UI",Tahoma,"Noto Sans Arabic",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Consolas,"Courier New",monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0c141a; --panel:#121d25; --sunk:#0f181f;
+  --ink:#e1e9eb; --ink2:#a2b2b7; --ink3:#6d8087; --rule:#253540;
+  --red:#f0766d; --red-soft:rgba(240,118,109,.13); --red-line:rgba(240,118,109,.5);
+  --teal:#45c4b8; --teal-soft:rgba(69,196,184,.13); --teal-line:rgba(69,196,184,.5);
+  --amber:#e2b04c; --amber-soft:rgba(226,176,76,.14);
+  --blue:#82b2ea; --blue-soft:rgba(130,178,234,.13);
+  --code-bg:#09121a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0c141a; --panel:#121d25; --sunk:#0f181f;
+  --ink:#e1e9eb; --ink2:#a2b2b7; --ink3:#6d8087; --rule:#253540;
+  --red:#f0766d; --red-soft:rgba(240,118,109,.13); --red-line:rgba(240,118,109,.5);
+  --teal:#45c4b8; --teal-soft:rgba(69,196,184,.13); --teal-line:rgba(69,196,184,.5);
+  --amber:#e2b04c; --amber-soft:rgba(226,176,76,.14);
+  --blue:#82b2ea; --blue-soft:rgba(130,178,234,.13);
+  --code-bg:#09121a; color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-padding-top:70px}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:calc(16.5px*var(--fs));line-height:1.9;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.wrap{max-width:900px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.en{unicode-bidi:isolate;direction:ltr;font-family:var(--mono);font-size:.86em;letter-spacing:-.01em}
+.enw{unicode-bidi:isolate;direction:ltr}
+b,strong{font-weight:600}
+
+/* masthead */
+.mast{border-bottom:1px solid var(--rule);background:var(--panel)}
+.mast .wrap{max-width:1280px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:14px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px;min-width:0}
+.brand-mark{width:42px;height:42px;flex:none;border:2px solid var(--red);border-radius:8px;display:grid;place-items:center;color:var(--red);font-family:var(--mono);font-weight:600;font-size:13px;transform:rotate(-4deg)}
+.brand h1{margin:0;font-family:var(--display);font-weight:700;font-size:calc(26px*var(--fs));line-height:1.1}
+.brand p{margin:2px 0 0;font-size:calc(12.5px*var(--fs));color:var(--ink3);line-height:1.5}
+.tools{display:flex;gap:6px;align-items:center}
+.tbtn{border:1px solid var(--rule);background:var(--panel);border-radius:8px;min-width:38px;height:36px;padding:0 10px;cursor:pointer;font-size:14px;color:var(--ink2)}
+.tbtn:hover{border-color:var(--ink3);color:var(--ink)}
+
+/* tab strip */
+.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--rule)}
+.tabs .wrap{max-width:1280px;display:flex;gap:4px;overflow-x:auto;padding-block:8px;scrollbar-width:thin}
+.tab{flex:none;border:1px solid transparent;background:none;border-radius:8px;padding:6px 12px;cursor:pointer;color:var(--ink2);font-size:calc(14px*var(--fs));line-height:1.4;display:flex;align-items:center;gap:7px;white-space:nowrap}
+.tab .n{font-family:var(--mono);font-size:11px;color:var(--ink3);border:1px solid var(--rule);border-radius:5px;padding:0 5px;line-height:18px}
+.tab:hover{background:var(--panel)}
+.tab.active{background:var(--panel);border-color:var(--rule);color:var(--ink);font-weight:600}
+.tab.active .n{border-color:var(--red);color:var(--red)}
+.tab.key.active .n{border-color:var(--teal);color:var(--teal)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:30}
+
+/* slides */
+.slide{display:none;padding-block:28px 60px}
+.slide.active{display:block}
+.chip{display:inline-block;font-family:var(--body);font-weight:500;font-size:calc(12.5px*var(--fs));color:var(--red);border:1px solid var(--red-line);border-radius:5px;padding:1px 8px;margin-bottom:6px}
+.chip.t{color:var(--teal);border-color:var(--teal-line)}
+.page-title{font-family:var(--display);font-weight:700;font-size:calc(34px*var(--fs));line-height:1.25;margin:4px 0 6px;text-wrap:balance}
+.underline{display:block;width:180px;height:14px;margin-bottom:14px}
+.lead{font-size:calc(18px*var(--fs));color:var(--ink2);margin:0 0 18px;max-width:68ch}
+p{margin:0 0 14px;max-width:72ch}
+h3.sec{display:flex;align-items:baseline;gap:10px;font-family:var(--display);font-weight:700;font-size:calc(23px*var(--fs));margin:40px 0 12px;line-height:1.35;text-wrap:balance}
+h3.sec .num{font-family:var(--mono);font-size:calc(13px*var(--fs));color:var(--red);border:1.5px solid var(--red);border-radius:6px;padding:0 7px;line-height:22px;flex:none;transform:translateY(-3px)}
+h4{font-size:calc(17px*var(--fs));margin:22px 0 8px;font-weight:600}
+ul.clean{margin:0 0 14px;padding-inline-start:22px}
+ul.clean li{margin:4px 0}
+
+/* callouts */
+.takeaway{border-inline-start:3px solid var(--teal);background:var(--teal-soft);padding:12px 16px;margin:16px 0;border-radius:0}
+.takeaway>b:first-child{color:var(--teal)}
+.oops{display:flex;gap:12px;border:1px dashed var(--red-line);background:var(--red-soft);padding:12px 16px;margin:16px 0;border-radius:8px}
+.oops .i{flex:none;font-family:var(--mono);font-weight:600;color:var(--red);font-size:15px;line-height:1.9}
+.oops>div{min-width:0}
+.case{border:1px solid var(--rule);background:var(--panel);border-radius:10px;padding:14px 18px;margin:16px 0}
+.case .tag{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--amber)}
+.case p:last-child{margin-bottom:0}
+
+/* tables */
+.dt-cap{font-size:calc(13px*var(--fs));color:var(--ink3);margin:18px 0 6px}
+.dt-wrap{overflow-x:auto;margin:0 0 18px;border:1px solid var(--rule);border-radius:10px;background:var(--panel)}
+table.dt{border-collapse:collapse;width:100%;font-size:calc(14.5px*var(--fs));line-height:1.7;min-width:560px}
+.dt th{text-align:start;font-weight:600;background:var(--sunk);padding:9px 12px;border-bottom:1px solid var(--rule);white-space:nowrap}
+.dt td{padding:9px 12px;border-bottom:1px solid var(--rule);vertical-align:top}
+.dt tr:last-child td{border-bottom:0}
+.dt td.k{font-weight:600;white-space:nowrap}
+
+/* code */
+.cb-cap{font-size:calc(13px*var(--fs));color:var(--ink3);margin:14px 0 4px}
+pre.code{direction:ltr;text-align:left;unicode-bidi:plaintext;background:var(--code-bg);color:var(--code-fg);font-family:var(--mono);font-size:calc(13px*var(--fs));line-height:1.65;padding:14px 16px;border-radius:10px;overflow-x:auto;margin:0 0 16px}
+pre.code .k{color:var(--code-k)} pre.code .s{color:var(--code-s);unicode-bidi:isolate} pre.code .c{color:var(--code-c)}
+.pair{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.pair>div{min-width:0}
+.badge{display:inline-block;font-size:12px;font-weight:600;padding:0 8px;border-radius:5px;line-height:22px}
+.badge.bad{background:var(--red-soft);color:var(--red)} .badge.ok{background:var(--teal-soft);color:var(--teal)}
+
+/* plan */
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin:18px 0}
+.fact{border:1px solid var(--rule);background:var(--panel);border-radius:10px;padding:12px 14px}
+.fact .l{font-size:12.5px;color:var(--ink3)} .fact .v{font-weight:600;font-size:calc(16px*var(--fs))}
+.chain{display:grid;gap:0;margin:18px 0;border:1px solid var(--rule);border-radius:12px;background:var(--panel);overflow:hidden}
+.chain-row{display:grid;grid-template-columns:56px minmax(0,1fr) minmax(0,1.1fr);gap:12px;padding:12px 14px;border-bottom:1px solid var(--rule);align-items:start}
+.chain-row:last-child{border-bottom:0}
+.chain-row .n{font-family:var(--mono);font-weight:600;color:var(--red);font-size:20px;line-height:1.4}
+.chain-row .t{font-weight:600}
+.chain-row .c{color:var(--ink2);font-size:calc(14.5px*var(--fs))}
+@media (max-width:620px){.chain-row{grid-template-columns:40px minmax(0,1fr)}.chain-row .c{grid-column:2}}
+.out{counter-reset:o;list-style:none;padding:0;margin:0 0 16px}
+.out li{counter-increment:o;position:relative;padding-inline-start:38px;margin:8px 0}
+.out li::before{content:counter(o,arabic-indic);position:absolute;inset-inline-start:0;top:2px;width:26px;height:26px;border-radius:50%;border:1.5px solid var(--teal);color:var(--teal);display:grid;place-items:center;font-size:13px;font-weight:600;line-height:1}
+
+/* glossary */
+.gsearch{display:flex;gap:8px;align-items:center;margin:8px 0 14px}
+.gsearch input{flex:1;min-width:0;height:42px;border:1px solid var(--rule);border-radius:8px;background:var(--panel);padding:0 12px}
+.gfilter{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.gfilter button{border:1px solid var(--rule);background:var(--panel);border-radius:999px;padding:3px 12px;cursor:pointer;font-size:13.5px;color:var(--ink2)}
+.gfilter button[aria-pressed="true"]{background:var(--ink);color:var(--panel);border-color:var(--ink)}
+.gl{display:grid;gap:8px}
+.term{border:1px solid var(--rule);background:var(--panel);border-radius:10px;padding:11px 14px;display:grid;grid-template-columns:minmax(150px,220px) minmax(0,1fr);gap:4px 16px}
+.term .nm{font-weight:600}
+.term .nm .en{display:block;color:var(--ink3);font-size:12.5px;margin-top:2px;font-weight:400}
+.term .df{color:var(--ink2);font-size:calc(15px*var(--fs));line-height:1.8}
+.term .gp{grid-column:1;font-size:11.5px;color:var(--ink3)}
+@media (max-width:620px){.term{grid-template-columns:minmax(0,1fr)}}
+.gempty{color:var(--ink3);padding:16px;border:1px dashed var(--rule);border-radius:10px}
+
+/* scenario blocks */
+.scn{border:1px solid var(--rule);border-radius:14px;background:var(--panel);margin:26px 0;overflow:hidden}
+.scn-h{display:flex;gap:14px;align-items:center;padding:14px 18px;border-bottom:1px solid var(--rule);background:var(--sunk)}
+.scn-h .n{font-family:var(--display);font-weight:700;font-size:34px;line-height:1;color:var(--red);flex:none;min-width:34px;text-align:center}
+.scn-h h3{margin:0;font-family:var(--display);font-size:calc(21px*var(--fs));font-weight:700;line-height:1.35}
+.scn-h .sub{font-size:12.5px;color:var(--ink3);margin-top:2px}
+.scn-b{padding:6px 18px 16px}
+.scn-b h4{display:flex;align-items:center;gap:8px}
+.scn-b h4::before{content:"";width:8px;height:8px;border-radius:2px;background:var(--ink3);flex:none}
+.scn-b h4.story::before{background:var(--red)} .scn-b h4.idea::before{background:var(--blue)} .scn-b h4.def::before{background:var(--teal)} .scn-b h4.why::before{background:var(--amber)}
+.wrongs{display:grid;gap:8px;margin:0 0 12px}
+.wrong{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;align-items:start;font-size:calc(15px*var(--fs));line-height:1.75}
+.wrong .x{font-weight:600;font-size:12px;border-radius:5px;padding:0 7px;line-height:22px;margin-top:3px}
+.wrong .x.no{background:var(--red-soft);color:var(--red)} .wrong .x.yes{background:var(--teal-soft);color:var(--teal)}
+.maps{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 4px}
+.maps span{font-size:12.5px;border:1px solid var(--rule);border-radius:6px;padding:1px 8px;background:var(--bg);color:var(--ink2)}
+
+/* diagrams */
+.iam-d{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:16px 0}
+.iam-d .box{border:1.5px solid var(--rule);border-radius:12px;padding:12px 14px;background:var(--panel)}
+.iam-d .box .h{font-weight:600;display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.iam-d .box .h .en{color:var(--ink3);font-weight:400}
+.iam-d .box p{font-size:calc(14.5px*var(--fs));color:var(--ink2);margin:6px 0 0;line-height:1.75}
+.iam-d .u{border-color:var(--blue)} .iam-d .g{border-color:var(--ink3)} .iam-d .r{border-color:var(--amber)} .iam-d .p{border-color:var(--teal)}
+.flow{display:grid;gap:0;margin:18px 0;max-width:620px}
+.fl{border:1.5px solid var(--rule);border-radius:10px;padding:10px 14px;background:var(--panel)}
+.fl .q{font-weight:600}
+.fl .a{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;font-size:13.5px}
+.fl .a span{border-radius:5px;padding:0 8px;line-height:24px}
+.fl .a .y{background:var(--red-soft);color:var(--red)} .fl .a .nx{background:var(--sunk);color:var(--ink2)} .fl .a .ok{background:var(--teal-soft);color:var(--teal)}
+.fl-arrow{height:22px;margin-inline-start:28px;border-inline-start:2px solid var(--rule)}
+.fl.end{border-color:var(--ink3);background:var(--sunk)}
+
+/* risk matrix */
+.rm-wrap{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;margin:14px 0}
+.rm-ctl{display:flex;gap:6px;flex-wrap:wrap}
+.seg{display:inline-flex;border:1px solid var(--rule);border-radius:8px;overflow:hidden;background:var(--panel)}
+.seg button{border:0;background:none;padding:6px 12px;cursor:pointer;font-size:14px;color:var(--ink2)}
+.seg button+button{border-inline-start:1px solid var(--rule)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--panel)}
+.rm{display:grid;grid-template-columns:34px repeat(5,minmax(0,1fr));grid-template-rows:repeat(5,minmax(58px,auto)) 30px;gap:4px;direction:ltr;max-width:640px;width:100%;margin-left:auto}
+.rm .ax{font-size:12px;color:var(--ink3);display:grid;place-items:center;direction:rtl}
+.rm .cell{border-radius:6px;position:relative;display:flex;flex-wrap:wrap;gap:4px;align-content:flex-start;padding:4px;direction:rtl}
+.rm .lv1{background:var(--teal-soft)} .rm .lv2{background:var(--amber-soft)} .rm .lv3{background:var(--red-soft)}
+.rk{font-family:var(--mono);font-size:12px;font-weight:600;background:var(--panel);border:1.5px solid var(--red);color:var(--red);border-radius:5px;padding:0 6px;line-height:20px;cursor:default}
+.rk.after{border-color:var(--teal);color:var(--teal)}
+.rm-legend{font-size:13.5px;color:var(--ink2)}
+.rm-legend div{display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px;margin:4px 0}
+
+/* SLA calculator */
+.calc{border:1px solid var(--rule);background:var(--panel);border-radius:12px;padding:14px 16px;margin:14px 0}
+.calc-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.calc select{height:40px;border:1px solid var(--rule);border-radius:8px;background:var(--bg);padding:0 10px}
+.calc-out{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:12px}
+.calc-out div{background:var(--sunk);border-radius:8px;padding:10px 12px}
+.calc-out .l{font-size:12.5px;color:var(--ink3)} .calc-out .v{font-weight:600;font-size:calc(19px*var(--fs));font-variant-numeric:tabular-nums}
+
+/* script */
+.beat{display:grid;grid-template-columns:96px minmax(0,1fr);gap:14px;border-bottom:1px solid var(--rule);padding:16px 0}
+.beat:last-child{border-bottom:0}
+.beat .tm{font-family:var(--mono);font-size:13px;color:var(--ink3);line-height:1.6;direction:ltr;text-align:right}
+.beat .tm b{display:block;color:var(--red);font-size:15px}
+.beat h4{margin:0 0 6px}
+.say{border-inline-start:3px solid var(--blue);background:var(--blue-soft);padding:10px 14px;margin:8px 0;font-size:calc(15.5px*var(--fs))}
+.say::before{content:"تقول";display:block;font-size:11.5px;color:var(--blue);font-weight:600;letter-spacing:.02em}
+.do{border-inline-start:3px solid var(--ink3);background:var(--sunk);padding:8px 14px;margin:8px 0;font-size:calc(14.5px*var(--fs));color:var(--ink2)}
+.do::before{content:"تفعل";display:block;font-size:11.5px;color:var(--ink3);font-weight:600}
+.ask{border-inline-start:3px solid var(--amber);background:var(--amber-soft);padding:8px 14px;margin:8px 0;font-size:calc(15px*var(--fs))}
+.ask::before{content:"تسأل الصف";display:block;font-size:11.5px;color:var(--amber);font-weight:600}
+@media (max-width:620px){.beat{grid-template-columns:minmax(0,1fr)}.beat .tm{text-align:start;direction:rtl}}
+
+/* exercises */
+.quiz-note{font-size:13.5px;color:var(--ink3)}
+.q{border:1px solid var(--rule);background:var(--panel);border-radius:10px;padding:12px 16px;margin:10px 0}
+.q .qn{font-family:var(--mono);color:var(--red);font-weight:600;margin-inline-end:6px}
+.q ol{list-style:none;padding:0;margin:8px 0 0;display:grid;gap:4px}
+.q ol li{font-size:calc(15px*var(--fs))}
+.q ol li span{display:inline-block;min-width:24px;color:var(--ink3)}
+.tf{display:flex;justify-content:space-between;gap:12px;align-items:center;border-bottom:1px solid var(--rule);padding:10px 0;font-size:calc(15.5px*var(--fs))}
+.tf .bx{flex:none;display:flex;gap:12px;font-size:13.5px;color:var(--ink3)}
+.tf .bx i{display:inline-block;width:14px;height:14px;border:1.5px solid var(--ink3);border-radius:3px;vertical-align:-2px;margin-inline-end:4px}
+.blank{display:block;border-bottom:1px dashed var(--rule);height:30px}
+.hw{border:1.5px solid var(--ink);border-radius:12px;padding:14px 18px;margin:16px 0;background:var(--panel)}
+.hw-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:6px}
+.hw-num{font-family:var(--display);font-weight:700;font-size:24px;color:var(--red)}
+.hw-title{font-weight:600;font-size:calc(17px*var(--fs))}
+.lv{font-size:12px;border-radius:5px;padding:0 8px;line-height:22px}
+.lv.mid{background:var(--amber-soft);color:var(--amber)} .lv.hard{background:var(--red-soft);color:var(--red)}
+.hw-cond{font-size:calc(14.5px*var(--fs));color:var(--ink2)}
+.hw-del{display:flex;gap:10px;align-items:baseline;font-size:calc(14.5px*var(--fs))}
+.hw-del .t{flex:none;font-size:12px;font-weight:600;color:var(--teal);border:1px solid var(--teal-line);border-radius:5px;padding:0 6px}
+
+/* solutions */
+.sol-h{display:flex;align-items:center;gap:10px;margin:30px 0 10px;font-weight:600;color:var(--ink2)}
+.sol-h::after{content:"";flex:1;height:1px;background:var(--rule)}
+.sol{border:1px solid var(--rule);background:var(--panel);border-radius:10px;padding:12px 16px;margin:10px 0}
+.sol .sq{font-weight:600;margin:0 0 6px}
+.sol .op{display:grid;grid-template-columns:28px minmax(0,1fr);gap:6px;font-size:calc(14.5px*var(--fs));line-height:1.7;padding:3px 0}
+.sol .op.ok{color:var(--teal);font-weight:600}
+.sol .op.ok>span:last-child::before{content:"✓ "}
+.sol .op.bad .k{text-decoration:line-through;color:var(--ink3)}
+.sol .op.bad span:last-child{color:var(--ink2)}
+.sol .why{font-size:calc(14.5px*var(--fs));color:var(--ink2);margin:8px 0 0;border-top:1px dashed var(--rule);padding-top:8px}
+.sol .why b{color:var(--ink)}
+.tfk{display:inline-block;font-size:12px;font-weight:600;border-radius:5px;padding:0 8px;line-height:22px;margin-inline-end:6px}
+.tfk.t{background:var(--teal-soft);color:var(--teal)} .tfk.f{background:var(--red-soft);color:var(--red)}
+.grading{margin:6px 0 0;padding-inline-start:22px;font-size:calc(14.5px*var(--fs));color:var(--ink2)}
+
+.page-nav{display:flex;justify-content:space-between;gap:10px;margin-top:40px;border-top:1px solid var(--rule);padding-top:16px}
+.nav-btn{border:1px solid var(--rule);background:var(--panel);border-radius:8px;padding:8px 16px;cursor:pointer;color:var(--ink2)}
+.nav-btn:hover{border-color:var(--ink3);color:var(--ink)}
+.sig{font-size:13px;color:var(--ink3);margin-top:28px}
+
+/* simulation */
+.sim-wrap{max-width:1280px}
+.sim-grid{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(300px,1fr);gap:16px;align-items:start}
+@media (max-width:900px){.sim-grid{grid-template-columns:minmax(0,1fr)}}
+#stage{position:relative;height:clamp(340px,64vh,680px);border-radius:14px;overflow:hidden;background:var(--stage);touch-action:none;cursor:grab}
+#stage canvas{display:block}
+.lb{position:absolute;transform:translate(-50%,-100%);font-size:12px;padding:2px 8px;border-radius:6px;background:rgba(11,22,32,.86);border:1px solid #2f4a5c;color:#b8cad6;white-space:nowrap;pointer-events:none;transition:opacity .3s;font-family:var(--body);line-height:1.6}
+.lb.hot{color:#ffb3ad;border-color:#E24B4A}.lb.ok{color:#9FE1CB;border-color:#1D9E75}
+#hud{position:absolute;top:10px;right:12px;left:12px;display:flex;justify-content:space-between;pointer-events:none;font-size:12px;color:#8fa6b5;font-family:var(--body)}
+#hud .big{font-size:calc(22px*var(--fs));color:#ffd2cc}
+.sim-meta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-bottom:10px}
+.met{background:var(--panel);border:1px solid var(--rule);border-radius:10px;padding:8px 12px}
+.met span{font-size:12.5px;color:var(--ink3)}
+.met b{display:block;font-size:calc(22px*var(--fs));font-variant-numeric:tabular-nums;line-height:1.4}
+.met.red b{color:var(--red)}
+.dots{display:flex;gap:6px;justify-content:center;margin:10px 0;flex-wrap:wrap}
+.dots button{width:34px;height:28px;padding:0;font-size:13px;border-radius:7px;border:1px solid var(--rule);background:var(--panel);cursor:pointer}
+.dots button:disabled{opacity:.4;cursor:default}
+.dots button.d{background:var(--teal-soft);color:var(--teal);border-color:var(--teal-line)}
+.dots button.x{background:var(--red-soft);color:var(--red);border-color:var(--red-line)}
+.dots button.a{border:1.5px solid var(--blue);color:var(--blue)}
+.dots button.v{outline:2px solid var(--blue);outline-offset:2px}
+.sim-tools{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.sim-tools button{border:1px solid var(--rule);background:var(--panel);border-radius:8px;padding:6px 12px;cursor:pointer;font-size:14px;color:var(--ink2)}
+.sim-tools button[aria-pressed="true"]{background:var(--ink);color:var(--panel);border-color:var(--ink)}
+.sim-card{border:1px solid var(--rule);background:var(--panel);border-radius:14px;padding:14px 16px}
+.sim-card .kick{font-size:12.5px;color:var(--ink3)}
+.sim-card h3{margin:2px 0 6px;font-family:var(--display);font-size:calc(22px*var(--fs));line-height:1.35}
+.sim-card .story{font-size:calc(15.5px*var(--fs));color:var(--ink2);margin:0 0 6px}
+.sim-card .turn{font-size:13.5px;color:var(--blue);font-weight:600}
+.opt{display:block;width:100%;text-align:start;margin:7px 0;padding:10px 12px;font-size:calc(15px*var(--fs));line-height:1.6;border:1px solid var(--rule);background:var(--bg);border-radius:9px;cursor:pointer}
+.opt:hover:not(:disabled){border-color:var(--ink3)}
+.opt:disabled{cursor:default}
+.opt.good{background:var(--teal-soft);color:var(--teal);border-color:var(--teal-line)}
+.opt.bad{background:var(--red-soft);color:var(--red);border-color:var(--red-line)}
+.fb{font-size:calc(14.5px*var(--fs));line-height:1.8;margin:8px 0 0;min-height:1em}
+.nx{margin-top:10px;border:1px solid var(--ink);background:var(--ink);color:var(--panel);border-radius:8px;padding:8px 16px;cursor:pointer}
+.tnote{margin-top:10px;border:1px dashed var(--amber);background:var(--amber-soft);border-radius:9px;padding:10px 12px;font-size:calc(14px*var(--fs));line-height:1.8}
+.tnote b{color:var(--amber)}
+.stamp{display:inline-block;border:2.5px solid currentColor;padding:4px 16px;border-radius:8px;font-family:var(--display);font-weight:700;font-size:22px;transform:rotate(-3deg)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<header class="mast">
+  <div class="wrap">
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true">IR</div>
+      <div>
+        <h1>ليلة الاختراق</h1>
+        <p>Cloud Computing Security · حوكمة السحابة وإدارة الهوية والصلاحيات · جامعة الشعب، قسم هندسة الأمن السيبراني، المرحلة الرابعة</p>
+      </div>
+    </div>
+    <div class="tools">
+      <button class="tbtn" id="fsDown" aria-label="تصغير الخط">ع−</button>
+      <button class="tbtn" id="fsUp" aria-label="تكبير الخط للعرض">ع+</button>
+      <button class="tbtn" id="themeBtn" aria-label="تبديل الوضع الداكن"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" style="vertical-align:-3px"><circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 1.5a6.5 6.5 0 0 1 0 13z" fill="currentColor"/></svg></button>
+    </div>
+  </div>
+</header>
+<nav class="tabs" aria-label="أجزاء المحاضرة">
+  <div class="wrap" id="tabstrip">
+    <button class="tab active" data-target="plan"><span class="n">١</span>خطة المحاضرة</button>
+    <button class="tab" data-target="terms"><span class="n">٢</span>المصطلحات</button>
+    <button class="tab" data-target="iam"><span class="n">٣</span>أساسيات IAM</button>
+    <button class="tab" data-target="scenarios"><span class="n">٤</span>شرح السيناريوهات</button>
+    <button class="tab" data-target="sim"><span class="n">٥</span>المحاكاة</button>
+    <button class="tab" data-target="grc"><span class="n">٦</span>الحوكمة والقانون</button>
+    <button class="tab" data-target="script"><span class="n">٧</span>سكربت الأستاذ</button>
+    <button class="tab" data-target="review"><span class="n">٨</span>المراجعة والواجب</button>
+    <button class="tab key" data-target="solutions"><span class="n">✓</span>الحلول والتعليل</button>
+  </div>
+</nav>
+
+<main>
+<!-- ============ SLIDE plan : خطة المحاضرة ============ -->
+<section id="plan" class="slide active"><div class="wrap">
+  <span class="chip">محاضرة تطبيقية · ١٢٠ دقيقة</span>
+  <h2 class="page-title">ليلة الاختراق: من مفتاح منسيّ إلى غرامة دولية</h2>
+  <svg class="underline" viewBox="0 0 180 14" preserveAspectRatio="none" aria-hidden="true"><path d="M3 9 Q45 2 90 8 T177 6" fill="none" stroke="var(--red)" stroke-width="3" stroke-linecap="round"/></svg>
+  <p class="lead">تجمع هذه المحاضرة محورين من مفردات المادة في قصة واحدة: حوكمة السحابة والمخاطر والامتثال والجوانب القانونية، والجزء الأول من إدارة الهوية والصلاحيات <span class="en">(Cloud IAM I)</span>. بدل عرض المفاهيم متتابعةً، يعيش الطلبة اختراقاً سحابياً من ستّ مراحل، ويقرّرون عند كلّ مرحلة كيف يُوقَف، ثم يواجهون ما يفرضه القانون والعقد على الشركة بعد وقوع الحادثة.</p>
+
+  <div class="facts">
+    <div class="fact"><div class="l">المدة</div><div class="v">١٢٠ دقيقة</div></div>
+    <div class="fact"><div class="l">الصيغة</div><div class="v">فريقان: أزرق وأحمر</div></div>
+    <div class="fact"><div class="l">القضية المرجعية</div><div class="v">نمط <span class="enw">Capital One</span> ٢٠١٩</div></div>
+    <div class="fact"><div class="l">المتطلبات</div><div class="v">بروجكتر ومتصفح وإنترنت</div></div>
+  </div>
+
+  <h3 class="sec"><span class="num">١</span>مخرجات التعلّم</h3>
+  <p>بنهاية المحاضرة يكون الطالب قادراً على:</p>
+  <ol class="out">
+    <li>التمييز بين المستخدمين والمجموعات والأدوار والسياسات في <span class="en">IAM</span>، وبين بيانات الاعتماد الدائمة والمؤقتة.</li>
+    <li>تطبيق مبدأ أقلّ صلاحية على سياسة <span class="en">JSON</span> حقيقية وتبرير كلّ سطر فيها.</li>
+    <li>تتبّع منطق تقييم السياسات لطلبٍ ما والوصول إلى قرار السماح أو الرفض مع ذكر السبب.</li>
+    <li>تقييم أنواع المصادقة متعددة العوامل من حيث مقاومتها للتصيّد.</li>
+    <li>إجراء تقييم مخاطر مبسّط لبيئة سحابية، وربط الضوابط بمعايير <span class="en">CSA CCM</span> و<span class="en">ISO/IEC 27001/27017/27018</span> و<span class="en">SOC 2</span>.</li>
+    <li>تحديد التزامات الإبلاغ والعقوبات في <span class="en">GDPR</span> و<span class="en">PDPA</span> الماليزي وقانون الأمن السيبراني الماليزي لسنة ٢٠٢٤، وأثر العقد واتفاقية مستوى الخدمة وموقع البيانات.</li>
+  </ol>
+
+  <h3 class="sec"><span class="num">٢</span>سلسلة الهجوم التي تبني المحاضرة</h3>
+  <p>كلّ مرحلة في المحاكاة تفتح مفهوماً من المفردات، والمراحل متّصلة: ما يسرقه المهاجم في مرحلة يستعمله في التالية.</p>
+  <div class="chain">
+    <div class="chain-row"><div class="n">١</div><div class="t">مفتاح منسيّ على <span class="enw">GitHub</span></div><div class="c">بيانات الاعتماد الدائمة مقابل المؤقتة · <span class="en">STS</span></div></div>
+    <div class="chain-row"><div class="n">٢</div><div class="t">ثغرة <span class="en">SSRF</span> في جدار <span class="en">WAF</span></div><div class="c">نموذج المسؤولية المشتركة · إدارة الإعدادات</div></div>
+    <div class="chain-row"><div class="n">٣</div><div class="t">سرقة بيانات الاعتماد من <span class="en">IMDS</span></div><div class="c">بيانات الاعتماد المؤقتة للسيرفر · <span class="en">IMDSv2</span></div></div>
+    <div class="chain-row"><div class="n">٤</div><div class="t">دور بصلاحيات منتفخة</div><div class="c">الأدوار والسياسات · أقلّ صلاحية</div></div>
+    <div class="chain-row"><div class="n">٥</div><div class="t">بوابات تقييم السياسات</div><div class="c">الرفض الصريح والسماح والرفض الضمني</div></div>
+    <div class="chain-row"><div class="n">٦</div><div class="t">إرهاق <span class="en">MFA</span> للمدير</div><div class="c">أنواع <span class="en">MFA</span> ومقاومة التصيّد</div></div>
+    <div class="chain-row"><div class="n">⚖</div><div class="t">تقرير الحادثة</div><div class="c">تقييم المخاطر · المعايير · العقد و<span class="en">SLA</span> · سيادة البيانات · القوانين</div></div>
+  </div>
+
+  <div class="oops"><span class="i">!</span><div><b>السيناريو مركّب، لا رواية حرفية.</b> المراحل ٢ إلى ٥ تتبع نمط اختراق <span class="enw">Capital One</span> سنة ٢٠١٩ كما نُشر في وثائق المحكمة والجهات الرقابية. المرحلة ١ نمط شائع لتسريب المفاتيح في المستودعات العامة، والمرحلة ٦ مأخوذة من نمط اختراق <span class="enw">Uber</span> سنة ٢٠٢٢. أرقام السجلات المسرّبة داخل المحاكاة توضيحية.</div></div>
+
+  <h3 class="sec"><span class="num">٣</span>كيف تُستعمل هذه الصفحة</h3>
+  <div class="dt-wrap"><table class="dt">
+    <thead><tr><th>التبويب</th><th>لمن</th><th>متى</th></tr></thead>
+    <tbody>
+      <tr><td class="k">المصطلحات</td><td>الطالب والأستاذ</td><td>مرجع طوال المحاضرة، وفيه بحث</td></tr>
+      <tr><td class="k">أساسيات IAM</td><td>الأستاذ على البروجكتر</td><td>قبل المحاكاة، ٢٥ دقيقة</td></tr>
+      <tr><td class="k">المحاكاة</td><td>الصف كلّه</td><td>قلب المحاضرة، ٤٥ دقيقة</td></tr>
+      <tr><td class="k">شرح السيناريوهات</td><td>الطالب بعد المحاضرة، والأستاذ للتحضير</td><td>مرجع تفصيلي لكلّ مرحلة</td></tr>
+      <tr><td class="k">الحوكمة والقانون</td><td>الأستاذ على البروجكتر</td><td>بعد تقرير الحادثة، ٢٥ دقيقة</td></tr>
+      <tr><td class="k">سكربت الأستاذ</td><td>الأستاذ وحده</td><td>للتحضير وأثناء الإلقاء</td></tr>
+      <tr><td class="k">المراجعة والواجب</td><td>الطالب</td><td>نهاية المحاضرة وبعدها</td></tr>
+    </tbody></table></div>
+  <div class="takeaway"><b>للعرض على البروجكتر:</b> زرّ «ع+» أعلى الصفحة يكبّر كلّ النصوص دفعة واحدة، وزرّ «◐» يبدّل بين الوضعين الفاتح والداكن. القاعات المضاءة تناسبها الصفحة الفاتحة، والمحاكاة تبقى داكنة دائماً.</div>
+
+  <div class="page-nav"><span></span><button class="nav-btn" data-go="1">التالي: المصطلحات ←</button></div>
+</div></section>
+<!-- ============ END SLIDE plan ============ -->
+
+<!-- ============ SLIDE terms : المصطلحات ============ -->
+<section id="terms" class="slide"><div class="wrap">
+  <span class="chip">مرجع</span>
+  <h2 class="page-title">قاموس المحاضرة</h2>
+  <svg class="underline" viewBox="0 0 180 14" preserveAspectRatio="none" aria-hidden="true"><path d="M3 9 Q45 2 90 8 T177 6" fill="none" stroke="var(--red)" stroke-width="3" stroke-linecap="round"/></svg>
+  <p class="lead">المصطلحات مرتّبة في أربع مجموعات بالترتيب الذي تظهر به في المحاضرة. المصطلح الإنجليزي مذكور تحت العربي لأنه الصيغة التي ترد في وثائق المزوّدين والمعايير.</p>
+  <div class="gsearch"><input id="gq" type="search" placeholder="ابحث: سياسة، STS، SOC 2، سيادة…" aria-label="ابحث في المصطلحات"></div>
+  <div class="gfilter" id="gf">
+    <button data-g="all" aria-pressed="true">الكلّ</button>
+    <button data-g="iam" aria-pressed="false">الهوية والصلاحيات</button>
+    <button data-g="atk" aria-pressed="false">الهجوم والدفاع</button>
+    <button data-g="grc" aria-pressed="false">الحوكمة والمعايير</button>
+    <button data-g="law" aria-pressed="false">القانون والعقود</button>
+  </div>
+  <div class="gl" id="gl">
+<div class="term" data-g="iam"><div class="nm">إدارة الهوية والصلاحيات<span class="en">IAM · Identity and Access Management</span></div><div class="df">الإطار الذي يحدّد من يستطيع تنفيذ أيّ إجراء على أيّ مورد، وبأيّ شروط. في <span class="en">AWS</span> هو خدمة عامة لا تتبع منطقة جغرافية بعينها.</div></div>
+<div class="term" data-g="iam"><div class="nm">المستخدم الجذري<span class="en">Root user</span></div><div class="df">الهوية التي تُنشأ مع الحساب وتملك كلّ الصلاحيات. لا تقيّدها سياسات <span class="en">IAM</span> العادية، لذلك تُحمى بـ<span class="en">MFA</span> ولا تُستعمل في العمل اليومي.</div></div>
+<div class="term" data-g="iam"><div class="nm">مستخدم IAM<span class="en">IAM user</span></div><div class="df">هوية دائمة تمثّل شخصاً أو تطبيقاً، ولها كلمة مرور للوحة التحكم و/أو مفاتيح وصول برمجية. لا تنتهي بياناتها حتى تُلغى.</div></div>
+<div class="term" data-g="iam"><div class="nm">مجموعة IAM<span class="en">IAM group</span></div><div class="df">تجميع للمستخدمين لإسناد السياسات إليهم دفعة واحدة. لا تحتوي أدواراً ولا مجموعات أخرى، وليست هوية يُرسَل بها طلب.</div></div>
+<div class="term" data-g="iam"><div class="nm">الدور<span class="en">IAM role</span></div><div class="df">هوية ليس لها كلمة مرور ولا مفاتيح دائمة. تتقمّصها جهة موثوقة (مستخدم، أو خدمة مثل <span class="en">EC2</span>، أو حساب آخر) فتحصل على بيانات اعتماد مؤقتة.</div></div>
+<div class="term" data-g="iam"><div class="nm">سياسة الثقة<span class="en">Trust policy</span></div><div class="df">سياسة مرتبطة بالدور تحدّد من يُسمح له بتقمّصه. هي سياسة مورد يكون فيها الدور نفسه هو المورد.</div></div>
+<div class="term" data-g="iam"><div class="nm">سياسة الهوية<span class="en">Identity-based policy</span></div><div class="df">مستند <span class="en">JSON</span> يُرفق بمستخدم أو مجموعة أو دور، ويحدّد ما يُسمح له أو يُمنع عنه. منها المُدارة <span class="en">(managed)</span> القابلة لإعادة الاستعمال، والمضمّنة <span class="en">(inline)</span> المرتبطة بهوية واحدة.</div></div>
+<div class="term" data-g="iam"><div class="nm">سياسة المورد<span class="en">Resource-based policy</span></div><div class="df">سياسة تُرفق بالمورد نفسه، مثل سياسة حاوية <span class="en">S3</span>، وتحدّد من يصل إليه وبأيّ شروط. تحتوي عنصر <span class="en">Principal</span>.</div></div>
+<div class="term" data-g="iam"><div class="nm">عناصر جملة السياسة<span class="en">Effect · Action · Resource · Condition</span></div><div class="df">السماح أو الرفض، ثم الإجراءات المقصودة، ثم الموارد التي تنطبق عليها، ثم الشروط الإضافية مثل عنوان المصدر أو وجود <span class="en">MFA</span>.</div></div>
+<div class="term" data-g="iam"><div class="nm">أقلّ صلاحية<span class="en">Least privilege</span></div><div class="df">منح الهوية الإجراءات والموارد التي تحتاجها لعملها فقط، ولأقصر مدة ممكنة. يحدّد هذا المبدأ حجم الضرر حين تُسرق الهوية.</div></div>
+<div class="term" data-g="iam"><div class="nm">الرفض الصريح<span class="en">Explicit deny</span></div><div class="df">جملة <span class="en">"Effect": "Deny"</span> في أيّ سياسة منطبقة. تتغلّب على كلّ سماح، ولا يُبطلها شيء.</div></div>
+<div class="term" data-g="iam"><div class="nm">الرفض الضمني<span class="en">Implicit deny</span></div><div class="df">الحالة الافتراضية لكلّ طلب: ما لم تسمح به سياسة صراحةً فهو مرفوض. يُبطله وجود سماح منطبق، بشرط ألّا يوجد رفض صريح.</div></div>
+<div class="term" data-g="iam"><div class="nm">حدود الصلاحيات<span class="en">Permissions boundary</span></div><div class="df">سقف أعلى يُوضَع لمستخدم أو دور. الصلاحية الفعلية هي تقاطع ما تسمح به سياسات الهوية وما تسمح به الحدود.</div></div>
+<div class="term" data-g="iam"><div class="nm">سياسة التحكم بالخدمات<span class="en">SCP · Service Control Policy</span></div><div class="df">سياسة على مستوى <span class="en">AWS Organizations</span> تضع سقفاً لكلّ الهويات في الحسابات الأعضاء. لا تمنح صلاحية بنفسها.</div></div>
+<div class="term" data-g="iam"><div class="nm">خدمة رموز الأمان<span class="en">STS · Security Token Service</span></div><div class="df">الخدمة التي تُصدر بيانات الاعتماد المؤقتة عند تقمّص دور أو عند الدخول الموحّد.</div></div>
+<div class="term" data-g="iam"><div class="nm">تقمّص الدور<span class="en">AssumeRole</span></div><div class="df">طلب إلى <span class="en">STS</span> يتحقّق من سياسة الثقة ثم يعيد بيانات اعتماد مؤقتة. مدّة الجلسة الافتراضية ساعة، وتتراوح بين ١٥ دقيقة و١٢ ساعة بحسب إعداد الدور.</div></div>
+<div class="term" data-g="iam"><div class="nm">بيانات الاعتماد المؤقتة<span class="en">Temporary credentials</span></div><div class="df">أربعة عناصر: <span class="en">AccessKeyId</span> و<span class="en">SecretAccessKey</span> و<span class="en">SessionToken</span> وتاريخ انتهاء. تتوقّف عن العمل تلقائياً عند الانتهاء.</div></div>
+<div class="term" data-g="iam"><div class="nm">مفتاح الوصول<span class="en">Access key</span></div><div class="df">زوج دائم من <span class="en">AccessKeyId</span> و<span class="en">SecretAccessKey</span> لمستخدم <span class="en">IAM</span>. معرّفه يبدأ بـ<span class="en">AKIA</span>، بينما يبدأ معرّف المؤقت بـ<span class="en">ASIA</span>.</div></div>
+<div class="term" data-g="iam"><div class="nm">ملف تعريف السيرفر<span class="en">Instance profile</span></div><div class="df">حاوية تربط دوراً بسيرفر <span class="en">EC2</span>، فيحصل التطبيق على بيانات اعتماد الدور من <span class="en">IMDS</span> دون تخزين أيّ مفتاح على القرص.</div></div>
+<div class="term" data-g="iam"><div class="nm">المصادقة متعددة العوامل<span class="en">MFA · Multi-Factor Authentication</span></div><div class="df">اشتراط عاملين أو أكثر من فئات مختلفة: شيء تعرفه (كلمة مرور)، وشيء تملكه (هاتف أو مفتاح مادي)، وشيء أنت هو (بصمة).</div></div>
+<div class="term" data-g="iam"><div class="nm">المصادقة المقاومة للتصيّد<span class="en">FIDO2 · WebAuthn · Passkeys</span></div><div class="df">مصادقة بمفتاح تشفيري مرتبط باسم الموقع الحقيقي، فلا يعمل في موقع مزيّف ولا يمكن إملاؤه عبر الهاتف.</div></div>
+<div class="term" data-g="iam"><div class="nm">مطابقة الأرقام<span class="en">Number matching</span></div><div class="df">إشعار <span class="en">MFA</span> يطلب كتابة رقم يظهر على شاشة الدخول، فلا تكفي الموافقة العمياء.</div></div>
+
+<div class="term" data-g="atk"><div class="nm">تزوير الطلب من جهة الخادم<span class="en">SSRF · Server-Side Request Forgery</span></div><div class="df">ثغرة يُستدرج فيها الخادم لإرسال طلبات إلى عناوين يختارها المهاجم، بما فيها عناوين داخلية لا تصلها الإنترنت. مدرجة ضمن <span class="en">OWASP Top 10:2021</span> بالرمز <span class="en">A10</span>.</div></div>
+<div class="term" data-g="atk"><div class="nm">خدمة البيانات الوصفية<span class="en">IMDS · Instance Metadata Service</span></div><div class="df">خدمة داخل كلّ سيرفر <span class="en">EC2</span> على العنوان <span class="en">169.254.169.254</span>، تعطي السيرفر معلومات عن نفسه وبيانات الاعتماد المؤقتة لدوره.</div></div>
+<div class="term" data-g="atk"><div class="nm">الإصدار الثاني من IMDS<span class="en">IMDSv2</span></div><div class="df">إصدار قائم على الجلسات: يحصل البرنامج أولاً على رمز بطلب <span class="en">PUT</span>، ثم يرسله في ترويسة كلّ طلب. أُطلق في تشرين الثاني ٢٠١٩ ويصعّب استغلال <span class="en">SSRF</span>.</div></div>
+<div class="term" data-g="atk"><div class="nm">جدار حماية تطبيقات الويب<span class="en">WAF · Web Application Firewall</span></div><div class="df">طبقة تفحص طلبات <span class="en">HTTP</span> وتحجب الأنماط الخبيثة قبل وصولها للتطبيق. إعدادها مسؤولية العميل.</div></div>
+<div class="term" data-g="atk"><div class="nm">إرهاق المصادقة<span class="en">MFA fatigue · Push bombing</span></div><div class="df">إغراق الضحية بإشعارات الموافقة حتى يضغط «موافقة» تعباً أو تحت إيهام انتحال الدعم الفني.</div></div>
+<div class="term" data-g="atk"><div class="nm">تبديل الشريحة<span class="en">SIM swap</span></div><div class="df">إقناع شركة الاتصالات بنقل رقم الضحية إلى شريحة المهاجم، فتصله رموز <span class="en">SMS</span>.</div></div>
+<div class="term" data-g="atk"><div class="nm">سجلّ الاستدعاءات<span class="en">AWS CloudTrail</span></div><div class="df">سجلّ لاستدعاءات واجهات <span class="en">AWS</span>: من نفّذ ماذا ومتى ومن أين. أول ما يُراجَع بعد تسريب مفتاح.</div></div>
+<div class="term" data-g="atk"><div class="nm">كشف التهديدات<span class="en">Amazon GuardDuty</span></div><div class="df">خدمة تحلّل السجلّات وتنبّه لأنماط مثل استعمال بيانات اعتماد سيرفر من خارج <span class="en">AWS</span>.</div></div>
+<div class="term" data-g="atk"><div class="nm">محلّل الوصول<span class="en">IAM Access Analyzer</span></div><div class="df">أداة تكشف الموارد المشاركة خارج الحساب، وتولّد سياسة أقلّ صلاحية من النشاط الفعلي المسجّل في <span class="en">CloudTrail</span>.</div></div>
+<div class="term" data-g="atk"><div class="nm">الشبكة الخاصة الافتراضية<span class="en">VPC · VPC endpoint</span></div><div class="df">شبكة معزولة داخل السحابة. نقطة النهاية <span class="en">(endpoint)</span> تتيح الوصول إلى <span class="en">S3</span> من داخل الـ<span class="en">VPC</span> دون المرور بالإنترنت، ويمكن اشتراطها في سياسة الحاوية.</div></div>
+<div class="term" data-g="atk"><div class="nm">تهريب البيانات<span class="en">Exfiltration</span></div><div class="df">نقل البيانات من بيئة الضحية إلى جهة يسيطر عليها المهاجم.</div></div>
+
+<div class="term" data-g="grc"><div class="nm">الحوكمة والمخاطر والامتثال<span class="en">GRC</span></div><div class="df">الحوكمة تحدّد من يقرّر وكيف يُحاسَب، وإدارة المخاطر تحدّد ما يُحمى أولاً، والامتثال يثبت للجهات الخارجية أن الضوابط موجودة وتعمل.</div></div>
+<div class="term" data-g="grc"><div class="nm">تقييم المخاطر<span class="en">Risk assessment</span></div><div class="df">تحديد الأصول والتهديدات ونقاط الضعف، ثم تقدير الاحتمال والأثر لكلّ خطر. مستوى الخطر = الاحتمال × الأثر.</div></div>
+<div class="term" data-g="grc"><div class="nm">الخطر المتبقّي<span class="en">Residual risk</span></div><div class="df">ما يبقى من الخطر بعد تطبيق الضوابط. الإدارة تقبله رسمياً أو تطلب ضوابط إضافية.</div></div>
+<div class="term" data-g="grc"><div class="nm">سجلّ المخاطر<span class="en">Risk register</span></div><div class="df">جدول حيّ لكلّ خطر: وصفه ومالكه ودرجته قبل الضوابط وبعدها وقرار المعالجة وموعد المراجعة.</div></div>
+<div class="term" data-g="grc"><div class="nm">خيارات معالجة الخطر<span class="en">Avoid · Mitigate · Transfer · Accept</span></div><div class="df">التجنّب بإيقاف النشاط، أو التخفيف بالضوابط، أو النقل بالتأمين أو العقد، أو القبول الموثّق.</div></div>
+<div class="term" data-g="grc"><div class="nm">نموذج المسؤولية المشتركة<span class="en">Shared responsibility model</span></div><div class="df">المزوّد مسؤول عن أمن السحابة نفسها (العتاد والمراكز والشبكة الأساسية)، والعميل مسؤول عن الأمن داخلها (الإعدادات والهويات والبيانات).</div></div>
+<div class="term" data-g="grc"><div class="nm">مصفوفة ضوابط السحابة<span class="en">CSA CCM · Cloud Controls Matrix</span></div><div class="df">إطار ضوابط من تحالف أمن السحابة. الإصدار الرابع فيه ١٩٧ هدف ضبط في ١٧ مجالاً، ويربط كلّ ضابط بمعايير مثل <span class="en">ISO 27001</span>.</div></div>
+<div class="term" data-g="grc"><div class="nm">استبيان التقييم<span class="en">CAIQ</span></div><div class="df">استبيان أسئلته مبنيّة على أهداف <span class="en">CCM</span>، يملؤه المزوّد ليصف ضوابطه بصيغة موحّدة قابلة للمقارنة.</div></div>
+<div class="term" data-g="grc"><div class="nm">برنامج STAR<span class="en">Security, Trust, Assurance and Risk</span></div><div class="df">سجلّ عامّ من <span class="en">CSA</span>. المستوى ١ تقييم ذاتيّ عبر <span class="en">CAIQ</span>، والمستوى ٢ تدقيق طرف ثالث (شهادة مبنيّة على <span class="en">ISO 27001</span> أو تقرير مبنيّ على <span class="en">SOC 2</span>)، والمستوى ٣ مراقبة مستمرّة.</div></div>
+<div class="term" data-g="grc"><div class="nm">ISO/IEC 27001<span class="en">ISMS</span></div><div class="df">معيار نظام إدارة أمن المعلومات القابل للشهادة. ملحقه <span class="en">A</span> في إصدار ٢٠٢٢ يضمّ ٩٣ ضابطاً في أربعة محاور: تنظيمية وبشرية ومادية وتقنية.</div></div>
+<div class="term" data-g="grc"><div class="nm">ISO/IEC 27017<span class="en">Cloud security controls</span></div><div class="df">مدوّنة ممارسات للسحابة تضيف سبعة ضوابط خاصة بها (رموزها <span class="en">CLD</span>) وإرشاداً لسبعة وثلاثين ضابطاً قائماً. تُعتمد بتوسيع نطاق شهادة <span class="en">27001</span>.</div></div>
+<div class="term" data-g="grc"><div class="nm">ISO/IEC 27018<span class="en">PII in public clouds</span></div><div class="df">مدوّنة ممارسات لحماية البيانات الشخصية حين يعالجها مزوّد سحابة عامة بصفته معالِجاً لحساب العميل.</div></div>
+<div class="term" data-g="grc"><div class="nm">تقرير SOC 2<span class="en">AICPA · Trust Services Criteria</span></div><div class="df">تقرير مدقّق مستقلّ عن ضوابط مؤسسة خدمية وفق خمسة معايير: الأمن والتوفّر وسلامة المعالجة والسرّية والخصوصية. يُشارَك عادةً بموجب اتفاقية عدم إفصاح.</div></div>
+<div class="term" data-g="grc"><div class="nm">النوع الأول والثاني<span class="en">SOC 2 Type I · Type II</span></div><div class="df">الأول يصف تصميم الضوابط في تاريخ محدّد، والثاني يختبر عملها الفعلي خلال فترة، غالباً من ثلاثة أشهر إلى اثني عشر شهراً.</div></div>
+
+<div class="term" data-g="law"><div class="nm">اتفاقية مستوى الخدمة<span class="en">SLA · Service Level Agreement</span></div><div class="df">التزام تعاقديّ بمستوى أداء قابل للقياس، أشهره نسبة التوفّر الشهرية، مع تعويض محدّد عند الإخلال.</div></div>
+<div class="term" data-g="law"><div class="nm">رصيد الخدمة<span class="en">Service credit</span></div><div class="df">التعويض المعتاد عند خرق <span class="en">SLA</span>: نسبة من فاتورة الشهر تُخصم من الفواتير القادمة، لا تعويض عن الخسارة الفعلية.</div></div>
+<div class="term" data-g="law"><div class="nm">إقامة البيانات<span class="en">Data residency</span></div><div class="df">الموقع الجغرافي الذي تُخزَّن فيه البيانات فعلياً، وهو قرار تقني يُتّخذ باختيار المنطقة.</div></div>
+<div class="term" data-g="law"><div class="nm">سيادة البيانات<span class="en">Data sovereignty</span></div><div class="df">خضوع البيانات لقوانين الدولة التي تقع فيها، ولقوانين الدولة التي تحمل الشركة المزوّدة جنسيتها أيضاً.</div></div>
+<div class="term" data-g="law"><div class="nm">توطين البيانات<span class="en">Data localisation</span></div><div class="df">اشتراط قانونيّ بأن تبقى فئة من البيانات داخل حدود الدولة، أو ألّا تُنقل خارجها إلا بشروط.</div></div>
+<div class="term" data-g="law"><div class="nm">المتحكّم والمعالِج<span class="en">Data controller · Data processor</span></div><div class="df">المتحكّم يقرّر غاية المعالجة ووسائلها، والمعالِج ينفّذها نيابة عنه. مزوّد السحابة معالِج في الغالب.</div></div>
+<div class="term" data-g="law"><div class="nm">اللائحة الأوروبية لحماية البيانات<span class="en">GDPR</span></div><div class="df">تنطبق على من يعالج بيانات أشخاص في الاتحاد الأوروبي أينما كان مقرّه. الإبلاغ عن الخرق للسلطة خلال ٧٢ ساعة، والغرامة القصوى ٢٠ مليون يورو أو ٤٪ من الإيراد العالمي السنوي، أيّهما أعلى.</div></div>
+<div class="term" data-g="law"><div class="nm">قانون حماية البيانات الشخصية الماليزي<span class="en">PDPA 2010 · Amendment 2024</span></div><div class="df">عُدّل سنة ٢٠٢٤ ودخلت تعديلاته حيّز التنفيذ على مراحل خلال ٢٠٢٥: إبلاغ إلزاميّ عن الخروقات، وتعيين مسؤول حماية بيانات، والتزامات مباشرة على المعالِج، وغرامة تصل إلى مليون رنغيت.</div></div>
+<div class="term" data-g="law"><div class="nm">قانون الأمن السيبراني الماليزي<span class="en">Cyber Security Act 2024 · Act 854</span></div><div class="df">نافذ منذ ٢٦ آب ٢٠٢٤، يُلزم جهات البنية التحتية الوطنية الحرجة <span class="en">(NCII)</span> بتقييم مخاطر وتدقيق دوريّين والإبلاغ عن الحوادث إلى الوكالة الوطنية للأمن السيبراني <span class="en">(NACSA)</span>.</div></div>
+<div class="term" data-g="law"><div class="nm">الإبلاغ عن الخرق<span class="en">Breach notification</span></div><div class="df">الالتزام القانوني بإخطار الجهة الرقابية، وأحياناً الأشخاص المتأثرين، خلال مهلة محدّدة من اكتشاف الحادثة.</div></div>
+  </div>
+  <p class="gempty" id="gempty" hidden>لا يوجد مصطلح يطابق البحث. جرّب كلمة أقصر أو المصطلح بالإنجليزية.</p>
+  <div class="page-nav"><button class="nav-btn" data-go="0">→ السابق</button><button class="nav-btn" data-go="2">التالي: أساسيات IAM ←</button></div>
+</div></section>
+<!-- ============ END SLIDE terms ============ -->
+
+<!-- ============ SLIDE iam : أساسيات IAM ============ -->
+<section id="iam" class="slide"><div class="wrap">
+  <span class="chip">Cloud IAM I</span>
+  <h2 class="page-title">من يستطيع فعل ماذا، على أيّ مورد</h2>
+  <svg class="underline" viewBox="0 0 180 14" preserveAspectRatio="none" aria-hidden="true"><path d="M3 9 Q45 2 90 8 T177 6" fill="none" stroke="var(--red)" stroke-width="3" stroke-linecap="round"/></svg>
+  <p class="lead">في مركز البيانات التقليدي كان الجدار الناري هو الحدّ الفاصل بين الداخل والخارج. في السحابة كلّ مورد يُدار عبر واجهة برمجية متاحة من أيّ مكان في العالم، فصار الحدّ الفاصل هو الهوية: من يحمل بيانات اعتماد صالحة يستطيع العمل كأنه داخل الشبكة. لهذا يبدأ أمن السحابة بإدارة الهوية والصلاحيات.</p>
+
+  <h3 class="sec"><span class="num">١</span>المكوّنات الأربعة، وخامسها الجذر</h3>
+  <div class="iam-d">
+    <div class="box u"><div class="h">المستخدم<span class="en">User</span></div><p>هوية دائمة لشخص أو تطبيق. كلمة مرور للوحة التحكم و/أو مفتاح وصول برمجيّ لا ينتهي.</p></div>
+    <div class="box g"><div class="h">المجموعة<span class="en">Group</span></div><p>تجميع للمستخدمين لإسناد السياسات مرّة واحدة: «المطوّرون»، «المحاسبون». لا تضمّ أدواراً ولا مجموعات.</p></div>
+    <div class="box r"><div class="h">الدور<span class="en">Role</span></div><p>هوية بلا بيانات دائمة. تتقمّصها جهة موثوقة فتأخذ بيانات اعتماد مؤقتة. هذا ما يستعمله السيرفر في المحاكاة.</p></div>
+    <div class="box p"><div class="h">السياسة<span class="en">Policy</span></div><p>مستند <span class="en">JSON</span> يُرفق بالهوية أو بالمورد ويحدّد ما يُسمح وما يُمنع. الهويات وحدها لا تملك أيّ صلاحية.</p></div>
+  </div>
+  <p>يُضاف إلى الأربعة <b>المستخدم الجذري</b>: هوية الحساب الأولى التي تملك كلّ شيء. القاعدة المهنية أن يُفعَّل له <span class="en">MFA</span> بمفتاح مادي، وأن لا يُنشأ له مفتاح وصول أصلاً، وأن لا يُستعمل إلا للمهام القليلة التي تتطلّبه.</p>
+  <div class="oops"><span class="i">!</span><div><b>خلط شائع:</b> المجموعة ليست هوية. لا يمكن أن «تتقمّص» مجموعة، ولا أن يُرسَل طلب باسمها، ولا أن تُذكر في عنصر <span class="en">Principal</span> في سياسة مورد. هي وسيلة لتوزيع السياسات على المستخدمين فقط.</div></div>
+
+  <h3 class="sec"><span class="num">٢</span>تشريح السياسة</h3>
+  <p>كلّ سياسة مجموعة جمل <span class="en">(Statements)</span>، وكلّ جملة تجيب عن أربعة أسئلة: هل هذا سماح أم رفض؟ لأيّ إجراء؟ على أيّ مورد؟ وبأيّ شرط؟</p>
+  <p class="cb-cap">سياسة هوية تسمح بقراءة تقارير شهرية من حاوية واحدة، بشرط أن يكون المستخدم قد دخل بـ<span class="en">MFA</span></p>
+<pre class="code">{
+  <span class="k">"Version"</span>: <span class="s">"2012-10-17"</span>,
+  <span class="k">"Statement"</span>: [{
+    <span class="k">"Sid"</span>: <span class="s">"ReadMonthlyReports"</span>,
+    <span class="k">"Effect"</span>: <span class="s">"Allow"</span>,
+    <span class="k">"Action"</span>: [<span class="s">"s3:GetObject"</span>],
+    <span class="k">"Resource"</span>: <span class="s">"arn:aws:s3:::acme-reports/monthly/*"</span>,
+    <span class="k">"Condition"</span>: {
+      <span class="k">"Bool"</span>: { <span class="s">"aws:MultiFactorAuthPresent"</span>: <span class="s">"true"</span> }
+    }
+  }]
+}</pre>
+  <div class="dt-wrap"><table class="dt">
+    <thead><tr><th>العنصر</th><th>معناه</th><th>الخطأ الشائع</th></tr></thead>
+    <tbody>
+      <tr><td class="k"><span class="en">Version</span></td><td>إصدار لغة السياسات، وقيمته الحالية ثابتة</td><td>كتابة تاريخ اليوم ظنّاً أنه تاريخ السياسة</td></tr>
+      <tr><td class="k"><span class="en">Effect</span></td><td><span class="en">Allow</span> أو <span class="en">Deny</span></td><td>الظنّ أن <span class="en">Allow</span> لاحقة تُبطل <span class="en">Deny</span> سابقة</td></tr>
+      <tr><td class="k"><span class="en">Action</span></td><td>الإجراءات بصيغة <span class="en">service:Operation</span></td><td>استعمال <span class="en">s3:*</span> لأن القائمة الدقيقة تحتاج وقتاً</td></tr>
+      <tr><td class="k"><span class="en">Resource</span></td><td>معرّفات <span class="en">ARN</span> للموارد</td><td><span class="en">"*"</span> بدل الحاوية والمسار المحدّدين</td></tr>
+      <tr><td class="k"><span class="en">Condition</span></td><td>شروط سياقية: مصدر الطلب، الوقت، <span class="en">MFA</span>، الوسوم</td><td>تركه فارغاً وهو أقوى أدوات تضييق الصلاحية</td></tr>
+    </tbody></table></div>
+
+  <h3 class="sec"><span class="num">٣</span>أقلّ صلاحية: المبدأ الذي يحدّد حجم الضرر</h3>
+  <p>أقلّ صلاحية لا تمنع الاختراق، لكنها تحدّد ما يستطيع المهاجم فعله بعده. في حادثة <span class="enw">Capital One</span> كان الدور المسروق قادراً على سرد أكثر من ٧٠٠ مجلد وحاوية ونسخ محتواها، بينما كان عمل جدار الحماية لا يحتاج شيئاً من ذلك. لو اقتصرت صلاحيته على ما يحتاجه فعلاً، لبقيت الثغرة نفسها وصغر الضرر كثيراً.</p>
+  <ul class="clean">
+    <li><b>البدء من الصفر:</b> الهوية الجديدة بلا صلاحيات، وتُضاف الإجراءات واحداً واحداً حسب الحاجة.</li>
+    <li><b>التضييق بالمورد والشرط:</b> حاوية بعينها ومسار بعينه، ومن شبكة الشركة فقط.</li>
+    <li><b>المراجعة بالبيانات:</b> معلومات «آخر استعمال» في <span class="en">IAM</span>، وتوليد سياسة من النشاط الفعليّ عبر <span class="en">IAM Access Analyzer</span>.</li>
+    <li><b>السقوف:</b> حدود الصلاحيات <span class="en">(Permissions boundaries)</span> للأدوار التي ينشئها المطوّرون، و<span class="en">SCP</span> على مستوى المنظمة.</li>
+  </ul>
+  <div class="takeaway"><b>القاعدة:</b> السؤال الصحيح عند كتابة سياسة ليس «ماذا قد يحتاج هذا التطبيق؟» بل «ماذا يحدث لو سُرقت هذه الهوية الليلة؟».</div>
+
+  <h3 class="sec"><span class="num">٤</span>منطق تقييم السياسات</h3>
+  <p>عند كلّ طلب تجمع <span class="en">AWS</span> كلّ السياسات المنطبقة عليه، ثم تقرّر بالترتيب التالي. الترتيب مهمّ لأن أيّ رفض صريح في أيّ مكان ينهي التقييم فوراً.</p>
+  <div class="flow" role="list">
+    <div class="fl end" role="listitem"><div class="q">البداية: الطلب مرفوض ضمنياً</div><div class="a"><span class="nx">كلّ طلب مرفوض ما لم يثبت العكس</span></div></div>
+    <div class="fl-arrow"></div>
+    <div class="fl" role="listitem"><div class="q">١ · هل في أيّ سياسة منطبقة رفض صريح؟</div><div class="a"><span class="y">نعم ← رفض نهائيّ</span><span class="nx">لا ← استمرّ</span></div></div>
+    <div class="fl-arrow"></div>
+    <div class="fl" role="listitem"><div class="q">٢ · هل تسمح سياسات المنظمة <span class="en">(SCP / RCP)</span>؟</div><div class="a"><span class="y">لا ← رفض ضمنيّ</span><span class="nx">نعم أو لا توجد ← استمرّ</span></div></div>
+    <div class="fl-arrow"></div>
+    <div class="fl" role="listitem"><div class="q">٣ · هل تسمح سياسة المورد أو سياسة الهوية؟</div><div class="a"><span class="y">لا هذه ولا تلك ← رفض ضمنيّ</span><span class="nx">نعم ← استمرّ</span></div></div>
+    <div class="fl-arrow"></div>
+    <div class="fl" role="listitem"><div class="q">٤ · هل تسمح حدود الصلاحيات وسياسة الجلسة، إن وُجدتا؟</div><div class="a"><span class="y">لا ← رفض ضمنيّ</span><span class="ok">نعم ← سماح</span></div></div>
+  </div>
+  <p>في المحاكاة تُختصر هذه الخطوات إلى ثلاث بوابات: رفض صريح، ثم سماح، ثم رفض ضمنيّ لكلّ ما لم يُسمح به. هذا الاختصار يكفي لفهم المبدأ، والتفاصيل أعلاه تُذكر للطلبة بعد المحاكاة.</p>
+  <div class="oops"><span class="i">!</span><div><b>تفصيل يقع فيه الطلبة:</b> داخل الحساب نفسه، السماح في سياسة المورد <i>أو</i> سياسة الهوية يكفي (اتحاد). أما حدود الصلاحيات و<span class="en">SCP</span> فيجب أن تسمح كلّها (تقاطع). السقف لا يمنح، والمنح لا يتجاوز السقف.</div></div>
+
+  <h3 class="sec"><span class="num">٥</span>بيانات الاعتماد المؤقتة</h3>
+  <p>حين يتقمّص سيرفر أو مستخدم دوراً، يرسل طلب <span class="en">AssumeRole</span> إلى خدمة <span class="en">STS</span>. تتحقّق الخدمة من أن سياسة الثقة في الدور تسمح لهذه الجهة، ثم تعيد بيانات اعتماد مؤقتة. المدّة الافتراضية ساعة، ويمكن ضبطها من ١٥ دقيقة حتى ١٢ ساعة حسب الحدّ الأقصى المسجّل في الدور، أما تقمّص دور من دور آخر فلا تتجاوز جلسته ساعة.</p>
+  <p class="cb-cap">شكل الاستجابة: المعرّف يبدأ بـ<span class="en">ASIA</span> للمؤقت، ومعه رمز الجلسة وتاريخ الانتهاء</p>
+<pre class="code">{
+  <span class="k">"Credentials"</span>: {
+    <span class="k">"AccessKeyId"</span>: <span class="s">"ASIA****EXAMPLE"</span>,
+    <span class="k">"SecretAccessKey"</span>: <span class="s">"wJal****EXAMPLEKEY"</span>,
+    <span class="k">"SessionToken"</span>: <span class="s">"IQoJb3JpZ2lu…"</span>,
+    <span class="k">"Expiration"</span>: <span class="s">"2026-10-31T03:14:00Z"</span>
+  },
+  <span class="k">"AssumedRoleUser"</span>: {
+    <span class="k">"Arn"</span>: <span class="s">"arn:aws:sts::111122223333:assumed-role/web-app-role/i-0abc123"</span>
+  }
+}</pre>
+  <div class="dt-wrap"><table class="dt">
+    <thead><tr><th></th><th>مفتاح دائم <span class="en">(AKIA…)</span></th><th>بيانات مؤقتة <span class="en">(ASIA…)</span></th></tr></thead>
+    <tbody>
+      <tr><td class="k">العمر</td><td>حتى يُلغى يدوياً، قد يبقى سنوات</td><td>من ١٥ دقيقة إلى ١٢ ساعة، ثم يموت تلقائياً</td></tr>
+      <tr><td class="k">مكان التخزين</td><td>ملفّات إعداد، متغيّرات بيئة، مستودعات</td><td>في الذاكرة، يجلبها البرنامج عند الحاجة</td></tr>
+      <tr><td class="k">إذا سُرق</td><td>يعمل حتى يُكتشف ويُلغى</td><td>يعمل حتى الانتهاء فقط، ويمكن إبطال الجلسات القائمة</td></tr>
+      <tr><td class="k">الاستعمال الصحيح</td><td>حالات استثنائية موثّقة</td><td>السيرفرات والحاويات والبشر عبر الدخول الموحّد</td></tr>
+    </tbody></table></div>
+  <div class="takeaway"><b>ما الذي يعلّمه الواقع؟</b> البيانات المؤقتة ليست حلاً سحرياً. في <span class="enw">Capital One</span> كانت بيانات الدور مؤقتة فعلاً، لكن المهاجم كان يجدّدها كلّما أراد عبر الثغرة نفسها. المؤقت يقلّص نافذة السرقة، وأقلّ صلاحية تقلّص حجمها، ولا يغني أحدهما عن الآخر.</div>
+
+  <h3 class="sec"><span class="num">٦</span>المصادقة متعددة العوامل</h3>
+  <p>كلمة المرور وحدها عامل واحد يمكن سرقته بالتصيّد أو شراؤه من تسريبات سابقة. <span class="en">MFA</span> تشترط عاملاً ثانياً من فئة مختلفة، لكن الأنواع ليست متساوية في قوّتها.</p>
+  <div class="dt-wrap"><table class="dt">
+    <thead><tr><th>النوع</th><th>كيف يعمل</th><th>نقطة ضعفه</th><th>مقاوم للتصيّد؟</th></tr></thead>
+    <tbody>
+      <tr><td class="k">رمز <span class="en">SMS</span></td><td>رمز يصل برسالة نصّية</td><td>تبديل الشريحة، واعتراض الرسائل، والإملاء عبر الهاتف</td><td><span class="badge bad">لا</span></td></tr>
+      <tr><td class="k">تطبيق <span class="en">TOTP</span></td><td>رمز يتغيّر كلّ ٣٠ ثانية في تطبيق</td><td>يمكن إدخاله في موقع مزيّف خلال صلاحيته</td><td><span class="badge bad">لا</span></td></tr>
+      <tr><td class="k">إشعار موافقة</td><td>زرّ «موافقة» على الهاتف</td><td>الإرهاق: الضغط تعباً أو تحت الضغط</td><td><span class="badge bad">لا</span></td></tr>
+      <tr><td class="k">إشعار بمطابقة أرقام</td><td>كتابة رقم يظهر على شاشة الدخول</td><td>يقلّل الإرهاق، ويبقى ممكن الإملاء عبر الهاتف</td><td><span class="badge bad">جزئياً</span></td></tr>
+      <tr><td class="k"><span class="en">FIDO2</span> ومفاتيح المرور</td><td>توقيع تشفيريّ مرتبط باسم الموقع الحقيقي</td><td>فقدان المفتاح يتطلّب مسار استعادة آمناً</td><td><span class="badge ok">نعم</span></td></tr>
+    </tbody></table></div>
+  <p>في <span class="en">IAM</span> يمكن جعل <span class="en">MFA</span> شرطاً داخل السياسة نفسها بالمفتاح <span class="en">aws:MultiFactorAuthPresent</span>، كما في مثال القسم الثاني، فلا يكفي أن يكون <span class="en">MFA</span> مفعّلاً على الحساب.</p>
+
+  <div class="sig">إعداد: د. أمير هادي · مادة Cloud Computing Security</div>
+  <div class="page-nav"><button class="nav-btn" data-go="1">→ السابق</button><button class="nav-btn" data-go="3">التالي: شرح السيناريوهات ←</button></div>
+</div></section>
+<!-- ============ END SLIDE iam ============ -->
+
+<!-- ============ SLIDE scenarios : شرح السيناريوهات ============ -->
+<section id="scenarios" class="slide"><div class="wrap">
+  <span class="chip">مرجع تفصيليّ</span>
+  <h2 class="page-title">المراحل الستّ: ماذا حدث، ولماذا، وكيف يُمنع</h2>
+  <svg class="underline" viewBox="0 0 180 14" preserveAspectRatio="none" aria-hidden="true"><path d="M3 9 Q45 2 90 8 T177 6" fill="none" stroke="var(--red)" stroke-width="3" stroke-linecap="round"/></svg>
+  <p class="lead">لكلّ مرحلة خمسة أجزاء: القصة كما تظهر في المحاكاة، ثم المفهوم الذي تختبره، ثم سبب خطأ الخيارات الأخرى، ثم الضوابط الدفاعية الكاملة، ثم ربطها بالمعايير. هذا التبويب يُقرأ بعد المحاضرة، أو يُعرض على البروجكتر عند الحاجة إلى شرح أعمق لمرحلة.</p>
+
+  <!-- ══════════ ١ ══════════ -->
+  <article class="scn" id="s1">
+    <div class="scn-h"><div class="n">١</div><div><h3>مفتاح منسيّ على <span class="enw">GitHub</span></h3><div class="sub">المفهوم: بيانات الاعتماد الدائمة مقابل المؤقتة</div></div></div>
+    <div class="scn-b">
+      <h4 class="story">القصة</h4>
+      <p>الساعة ٠٢:١٤ فجراً. مطوّر يرفع ملف إعدادات إلى مستودع عام، وفي الملف مفتاح وصول دائم لمستخدم <span class="en">IAM</span>. خلال دقائق تلتقطه روبوتات تفحص المستودعات العامة باستمرار بحثاً عن نمط المفاتيح الذي يبدأ بـ<span class="en">AKIA</span>.</p>
+      <h4 class="idea">المفهوم</h4>
+      <p>مفتاح الوصول الدائم لا تاريخ انتهاء له. من يحمله يستطيع استدعاء كلّ ما تسمح به سياسات صاحبه، من أيّ مكان في العالم، حتى يُلغى. المشكلة ليست أن المطوّر أخطأ مرّة، فالأخطاء تقع دائماً. المشكلة أن التصميم سمح بوجود مفتاح دائم في ملف أصلاً.</p>
+      <h4 class="why">لماذا الخيارات الأخرى خاطئة</h4>
+      <div class="wrongs">
+        <div class="wrong"><span class="x no">حذف الـcommit</span><span>تاريخ <span class="en">git</span> يحتفظ بالنسخ السابقة، ومن نسخ المستودع أو فرّعه يملك نسخة، والروبوت التقط المفتاح قبل الحذف. الحذف يخفي الدليل ولا يُبطل المفتاح.</span></div>
+        <div class="wrong"><span class="x no">جعله خاصاً</span><span>نفس المنطق: المفتاح خرج بالفعل. تغيير ظهور المستودع لا يغيّر صلاحية المفتاح في <span class="en">AWS</span>.</span></div>
+        <div class="wrong"><span class="x yes">الإلغاء والتدوير</span><span>الإجراء الوحيد الذي يجعل النسخة المسروقة عديمة القيمة، ثم استبدال الاعتماد على المفاتيح بأدوار تصدر بيانات مؤقتة.</span></div>
+      </div>
+      <h4 class="def">الضوابط الدفاعية</h4>
+      <ul class="clean">
+        <li><b>الاستجابة الفورية:</b> تعطيل المفتاح ثم حذفه، ثم مراجعة <span class="en">CloudTrail</span> لمعرفة كلّ ما نُفّذ به منذ لحظة التسريب.</li>
+        <li><b>الوقاية:</b> فحص الأسرار في المستودعات مع منع الدفع عند اكتشاف مفتاح <span class="en">(push protection)</span>، وملف <span class="en">.gitignore</span> لملفّات الإعداد.</li>
+        <li><b>التصميم:</b> أدوار <span class="en">IAM</span> للسيرفرات والحاويات، والدخول الموحّد للبشر عبر <span class="en">IAM Identity Center</span>، فلا يبقى مفتاح دائم يمكن نسيانه.</li>
+        <li><b>المراقبة:</b> <span class="en">AWS</span> ترصد المفاتيح المكشوفة في المستودعات العامة وقد ترفق بالمستخدم سياسة حجر تقيّد بعض الإجراءات. هذا يقلّل الضرر ولا يغني عن الإلغاء.</li>
+      </ul>
+      <div class="maps"><span><span class="enw">ISO 27001:2022</span> ‏A.5.17 معلومات المصادقة</span><span><span class="enw">CSA CCM</span> مجال IAM</span><span><span class="enw">SOC 2</span> ‏CC6.1</span></div>
+    </div>
+  </article>
+
+  <!-- ══════════ ٢ ══════════ -->
+  <article class="scn" id="s2">
+    <div class="scn-h"><div class="n">٢</div><div><h3>ثغرة <span class="en">SSRF</span> في جدار <span class="en">WAF</span></h3><div class="sub">المفهوم: نموذج المسؤولية المشتركة وإدارة الإعدادات</div></div></div>
+    <div class="scn-b">
+      <h4 class="story">القصة</h4>
+      <p>المهاجم يرسل طلباً عبر جدار حماية تطبيقات الويب. خطأ في إعداد الجدار يجعل السيرفر الذي يشغّله يرسل طلبات نيابة عن المهاجم إلى عناوين داخلية لا يصلها أحد من الإنترنت.</p>
+      <h4 class="idea">المفهوم</h4>
+      <p>في <span class="en">SSRF</span> لا يدخل المهاجم إلى الشبكة، بل يستعمل الخادم وسيطاً. الخادم موثوق داخلياً، فما يطلبه يمرّ. هذا ما حدث في <span class="enw">Capital One</span>: جدار حماية مُعدّ بشكل خاطئ سمح بتمرير طلبات إلى خدمة داخلية حسّاسة.</p>
+      <p>والأهمّ إدارياً: الخلل لم يكن في <span class="en">AWS</span>. نموذج المسؤولية المشتركة يضع على المزوّد أمن السحابة نفسها، ويضع على العميل أمن ما يبنيه داخلها: إعداد الجدار، وصلاحيات الأدوار، وحماية البيانات. لذلك تحمّل البنك الغرامة.</p>
+      <h4 class="why">لماذا الخيارات الأخرى خاطئة</h4>
+      <div class="wrongs">
+        <div class="wrong"><span class="x no">إغلاق ٤٤٣</span><span>يوقف الموقع كلّه. الأمن ثلاثة أبعاد: السرّية والسلامة والتوفّر. التضحية بالتوفّر كاملاً خرق لاتفاقية مستوى الخدمة مع عملاء الشركة، وليس حلاً للثغرة.</span></div>
+        <div class="wrong"><span class="x no">الاعتماد على الجدار الناري</span><span>الجدار الناري يفحص الحركة الداخلة من الإنترنت. الطلب الخبيث هنا يخرج من السيرفر نفسه إلى عنوان داخلي، فلا يمرّ بالجدار أصلاً.</span></div>
+        <div class="wrong"><span class="x yes">تصحيح القاعدة والتحقّق</span><span>يعالج أصل المشكلة: سوء الإعداد، ويضيف قائمة سماح للعناوين التي يحقّ للتطبيق طلبها.</span></div>
+      </div>
+      <h4 class="def">الضوابط الدفاعية</h4>
+      <ul class="clean">
+        <li>قائمة سماح لعناوين الطلبات الصادرة من التطبيق، ومنع النطاق <span class="en">169.254.0.0/16</span> من مسار الطلبات التي يتحكّم المستخدم بعنوانها.</li>
+        <li>إدارة الإعدادات: خطّ أساس موثّق للجدار، ومراجعة كلّ تغيير قبل تطبيقه، وفحص دوريّ للانحراف عنه.</li>
+        <li>اختبار اختراق يشمل <span class="en">SSRF</span> صراحةً، فهي ضمن قائمة <span class="en">OWASP Top 10:2021</span>.</li>
+      </ul>
+      <div class="maps"><span><span class="enw">ISO 27001:2022</span> ‏A.8.9 إدارة الإعدادات</span><span><span class="enw">ISO 27017</span> ‏CLD.6.3.1 الأدوار المشتركة</span><span><span class="enw">OWASP</span> ‏A10:2021</span></div>
+    </div>
+  </article>
+
+  <!-- ══════════ ٣ ══════════ -->
+  <article class="scn" id="s3">
+    <div class="scn-h"><div class="n">٣</div><div><h3>سرقة بيانات الاعتماد من <span class="en">IMDS</span></h3><div class="sub">المفهوم: كيف يحصل السيرفر على صلاحياته، ولماذا جاء IMDSv2</div></div></div>
+    <div class="scn-b">
+      <h4 class="story">القصة</h4>
+      <p>عبر ثغرة المرحلة السابقة، يجعل المهاجم السيرفر يطلب العنوان <span class="en">169.254.169.254</span>. هذه خدمة البيانات الوصفية داخل السيرفر، وهي تعيد بسهولة بيانات الاعتماد المؤقتة للدور المرتبط به.</p>
+      <h4 class="idea">المفهوم</h4>
+      <p>كلّ سيرفر <span class="en">EC2</span> مرتبط بدور يجلب بيانات اعتماده من <span class="en">IMDS</span>، وهذا تصميم جيّد لأنه يُغني عن تخزين المفاتيح. لكن الإصدار الأول كان يجيب أيّ طلب <span class="en">GET</span> بسيط، وهذا بالضبط ما يستطيع <span class="en">SSRF</span> إرساله. بعد حادثة <span class="enw">Capital One</span> بأشهر، في تشرين الثاني ٢٠١٩، أطلقت <span class="en">AWS</span> الإصدار الثاني.</p>
+      <p><span class="en">IMDSv2</span> يطلب أولاً رمز جلسة بطلب <span class="en">PUT</span> خاصّ، ثم يرسل الرمز في ترويسة كلّ طلب لاحق. أغلب ثغرات <span class="en">SSRF</span> لا تستطيع إرسال <span class="en">PUT</span> بترويسة مخصّصة. وحدّ القفزات <span class="en">(hop limit)</span> الافتراضي يمنع وصول الرمز إلى أبعد من السيرفر نفسه.</p>
+      <h4 class="why">لماذا الخيارات الأخرى خاطئة</h4>
+      <div class="wrongs">
+        <div class="wrong"><span class="x no">تمديد العمر</span><span>عكس المطلوب: كلّ دقيقة إضافية في عمر البيانات المسروقة دقيقة إضافية للمهاجم.</span></div>
+        <div class="wrong"><span class="x no">MFA على الدور</span><span>الأدوار التي تتقمّصها الخدمات لا يجلس خلفها إنسان يكتب رمزاً. <span class="en">MFA</span> ضابط للبشر.</span></div>
+        <div class="wrong"><span class="x yes">فرض IMDSv2</span><span>يغلق الطريق الذي استعمله المهاجم دون أن يكسر ما يحتاجه التطبيق من الخدمة.</span></div>
+      </div>
+      <h4 class="def">الضوابط الدفاعية</h4>
+      <p class="cb-cap">فرض الإصدار الثاني على سيرفر قائم (أمر إعداد دفاعيّ)</p>
+<pre class="code">aws ec2 modify-instance-metadata-options \
+    --instance-id i-0abc1234567890def \
+    --http-tokens required \
+    --http-put-response-hop-limit 1</pre>
+      <ul class="clean">
+        <li>جعل <span class="en">IMDSv2</span> الافتراضيّ على مستوى الحساب لكلّ سيرفر جديد، وتعطيل الخدمة على السيرفرات التي لا تحتاجها.</li>
+        <li>تنبيهات <span class="en">GuardDuty</span> عند استعمال بيانات اعتماد سيرفر من خارج <span class="en">AWS</span>، وهو نمط ما فعله المهاجم في الحادثة.</li>
+      </ul>
+      <div class="maps"><span><span class="enw">ISO 27017</span> ‏CLD.9.5.2 تقوية الآلات الافتراضية</span><span><span class="enw">ISO 27001:2022</span> ‏A.8.16 المراقبة</span><span><span class="enw">CSA CCM</span> مجال IVS</span></div>
+    </div>
+  </article>
+
+  <!-- ══════════ ٤ ══════════ -->
+  <article class="scn" id="s4">
+    <div class="scn-h"><div class="n">٤</div><div><h3>دور بصلاحيات منتفخة</h3><div class="sub">المفهوم: الأدوار والسياسات وأقلّ صلاحية</div></div></div>
+    <div class="scn-b">
+      <h4 class="story">القصة</h4>
+      <p>المهاجم يحمل الآن بيانات الدور. على البطاقة المعلّقة بالمفتاح في المحاكاة مكتوب <span class="en">s3:*</span> على كلّ الموارد، مع أن التطبيق لا يحتاج إلا قراءة حاوية واحدة.</p>
+      <h4 class="idea">المفهوم</h4>
+      <p>المراحل الثلاث السابقة أعطت المهاجم هوية. هذه المرحلة تحدّد ماذا تساوي تلك الهوية. في الحادثة الحقيقية كان الدور قادراً على سرد أكثر من ٧٠٠ مجلد وحاوية ونسخها، فتأثّر نحو ١٠٠ مليون شخص في الولايات المتحدة و٦ ملايين في كندا.</p>
+      <div class="pair">
+        <div><p class="cb-cap"><span class="badge bad">قبل</span> ما كان على البطاقة</p>
+<pre class="code">{
+  <span class="k">"Effect"</span>: <span class="s">"Allow"</span>,
+  <span class="k">"Action"</span>: <span class="s">"s3:*"</span>,
+  <span class="k">"Resource"</span>: <span class="s">"*"</span>
+}</pre></div>
+        <div><p class="cb-cap"><span class="badge ok">بعد</span> ما يحتاجه التطبيق فعلاً</p>
+<pre class="code">{
+  <span class="k">"Effect"</span>: <span class="s">"Allow"</span>,
+  <span class="k">"Action"</span>: <span class="s">"s3:GetObject"</span>,
+  <span class="k">"Resource"</span>: <span class="s">"arn:aws:s3:::waf-rules/*"</span>
+}</pre></div>
+      </div>
+      <h4 class="why">لماذا الخيارات الأخرى خاطئة</h4>
+      <div class="wrongs">
+        <div class="wrong"><span class="x no">AdministratorAccess</span><span>يحوّل تسريب البيانات إلى سيطرة كاملة على الحساب: حذف السجلّات، وإنشاء مستخدمين خلفيين، وتشغيل موارد على حساب الشركة.</span></div>
+        <div class="wrong"><span class="x no">إضافة الدور لمجموعة</span><span>خطأ مفاهيميّ: المجموعات تضمّ مستخدمين فقط. وحتى لو أمكن، فالمشكلة في السياسة لا في طريقة إسنادها.</span></div>
+        <div class="wrong"><span class="x yes">تقليص السياسة</span><span>إجراء واحد وحاوية واحدة. الثغرة تبقى، لكن ما يُسرق عبرها يصغر إلى ما يحتاجه التطبيق لا أكثر.</span></div>
+      </div>
+      <h4 class="def">الضوابط الدفاعية</h4>
+      <ul class="clean">
+        <li>توليد السياسة من النشاط الفعليّ بـ<span class="en">IAM Access Analyzer</span> بعد فترة تشغيل تجريبية.</li>
+        <li>مراجعة دورية للصلاحيات بمعلومات «آخر استعمال»، وحذف ما لم يُستعمل منذ ٩٠ يوماً.</li>
+        <li>حدود صلاحيات على الأدوار التي ينشئها المطوّرون، فلا يستطيع أحد منح أكثر من السقف.</li>
+      </ul>
+      <div class="maps"><span><span class="enw">ISO 27001:2022</span> ‏A.5.15 ضبط الوصول</span><span>A.5.18 حقوق الوصول</span><span>A.8.2 الصلاحيات المميّزة</span><span><span class="enw">SOC 2</span> ‏CC6.3</span></div>
+    </div>
+  </article>
+
+  <!-- ══════════ ٥ ══════════ -->
+  <article class="scn" id="s5">
+    <div class="scn-h"><div class="n">٥</div><div><h3>بوابات تقييم السياسات</h3><div class="sub">المفهوم: الرفض الصريح يتغلّب على كلّ سماح</div></div></div>
+    <div class="scn-b">
+      <h4 class="story">القصة</h4>
+      <p>الطلب يصل إلى <span class="en">S3</span>. سياسة الهوية تقول <span class="en">Allow</span> على <span class="en">s3:*</span>، لكن سياسة الحاوية فيها رفض صريح لأيّ طلب لا يأتي عبر نقطة النهاية الخاصة بشبكة الشركة. والطلب جاء من جهاز المهاجم خارج الشبكة.</p>
+      <h4 class="idea">المفهوم</h4>
+      <p>هنا تعمل البوابة الأولى: أيّ رفض صريح في أيّ سياسة منطبقة ينهي التقييم. لا يهمّ عدد جمل السماح ولا مكانها ولا ترتيب إنشائها. هذه المرحلة «ماذا لو»: لم يكن هذا الشرط موجوداً في الحادثة الحقيقية، ولو وُجد لما استطاع المهاجم استعمال البيانات المسروقة من جهازه.</p>
+      <p class="cb-cap">سياسة حاوية ترفض كلّ طلب لا يمرّ عبر نقطة نهاية الشبكة الخاصة</p>
+<pre class="code">{
+  <span class="k">"Sid"</span>: <span class="s">"DenyOutsideCorporateVPC"</span>,
+  <span class="k">"Effect"</span>: <span class="s">"Deny"</span>,
+  <span class="k">"Principal"</span>: <span class="s">"*"</span>,
+  <span class="k">"Action"</span>: <span class="s">"s3:*"</span>,
+  <span class="k">"Resource"</span>: [<span class="s">"arn:aws:s3:::customer-data"</span>, <span class="s">"arn:aws:s3:::customer-data/*"</span>],
+  <span class="k">"Condition"</span>: {
+    <span class="k">"StringNotEquals"</span>: { <span class="s">"aws:SourceVpce"</span>: <span class="s">"vpce-0a1b2c3d4e5f"</span> }
+  }
+}</pre>
+      <h4 class="why">لماذا الخيارات الأخرى خاطئة</h4>
+      <div class="wrongs">
+        <div class="wrong"><span class="x no">يُسمح لوجود Allow</span><span>هذا هو الخطأ الأكثر انتشاراً: الظنّ أن السماح والرفض يتنافسان. لا منافسة، فالرفض الصريح يربح دائماً.</span></div>
+        <div class="wrong"><span class="x no">حسب الأقدم</span><span>تقييم السياسات لا يعرف الزمن. كلّ السياسات المنطبقة تُجمع وتُقيَّم معاً في لحظة الطلب.</span></div>
+        <div class="wrong"><span class="x yes">يُرفض عند البوابة الأولى</span><span>الرفض الصريح أولاً، ثم السماح، ثم الرفض الضمنيّ لما لم يُسمح به.</span></div>
+      </div>
+      <h4 class="def">الضوابط الدفاعية</h4>
+      <ul class="clean">
+        <li>شروط الشبكة على الحاويات الحسّاسة: <span class="en">aws:SourceVpce</span> أو <span class="en">aws:SourceVpc</span>.</li>
+        <li>شرط <span class="en">aws:PrincipalOrgID</span> لمنع أيّ هوية من خارج منظمة الشركة.</li>
+        <li>حظر الوصول العامّ <span class="en">(Block Public Access)</span> على مستوى الحساب، وتشفير بمفاتيح <span class="en">KMS</span> تحتاج صلاحية منفصلة لفكّها.</li>
+      </ul>
+      <div class="maps"><span><span class="enw">ISO 27001:2022</span> ‏A.8.3 تقييد الوصول للمعلومات</span><span><span class="enw">CSA CCM</span> مجال DSP</span><span><span class="enw">SOC 2</span> ‏CC6.1</span></div>
+    </div>
+  </article>
+
+  <!-- ══════════ ٦ ══════════ -->
+  <article class="scn" id="s6">
+    <div class="scn-h"><div class="n">٦</div><div><h3>إرهاق <span class="en">MFA</span> للمدير</h3><div class="sub">المفهوم: ليست كلّ مصادقة متعددة العوامل متساوية</div></div></div>
+    <div class="scn-b">
+      <h4 class="story">القصة</h4>
+      <p>لتوسيع الوصول، يملك المهاجم كلمة مرور المدير من تسريب سابق. يرسل ٤٠ إشعار موافقة إلى هاتفه في منتصف الليل، ثم يتصل به منتحلاً صفة الدعم الفني: «الإشعارات لن تتوقّف حتى توافق على واحد».</p>
+      <h4 class="idea">المفهوم</h4>
+      <p>هذا نمط اختراق <span class="enw">Uber</span> في أيلول ٢٠٢٢: كلمة مرور متعاقد اشتُريت على الأرجح بعد إصابة جهازه الشخصي ببرمجية خبيثة، ثم سيل من إشعارات الموافقة ورسالة على <span class="enw">WhatsApp</span> من شخص يدّعي أنه من تقنية المعلومات. بعد الدخول وجد المهاجم في الشبكة سكربتاً يحتوي بيانات اعتماد إدارية لمنصّة تدير الأسرار، ومنها وصل إلى أنظمة عديدة.</p>
+      <p>الدرس أن <span class="en">MFA</span> بزرّ موافقة يحوّل الأمن إلى قرار إنسان متعب في الثانية فجراً. المصادقة المقاومة للتصيّد تُخرج الإنسان من هذا القرار.</p>
+      <h4 class="why">لماذا الخيارات الأخرى خاطئة</h4>
+      <div class="wrongs">
+        <div class="wrong"><span class="x no">التحويل إلى SMS</span><span>تراجع لا تقدّم: <span class="en">SMS</span> معرّض لتبديل الشريحة، والمهاجم الذي يتّصل منتحلاً الدعم يستطيع أن يطلب الرمز بصوته.</span></div>
+        <div class="wrong"><span class="x no">التدريب وحده</span><span>التوعية ضرورية وتبقى ضابطاً بشرياً يفشل تحت الضغط. الضابط التقنيّ يجب أن يعمل حتى حين يخطئ الإنسان.</span></div>
+        <div class="wrong"><span class="x yes">مقاوم للتصيّد</span><span><span class="en">FIDO2</span> ومفاتيح المرور لا تعمل إلا مع الموقع الحقيقي، ومطابقة الأرقام تجعل الموافقة العمياء مستحيلة.</span></div>
+      </div>
+      <h4 class="def">الضوابط الدفاعية</h4>
+      <ul class="clean">
+        <li>مفاتيح <span class="en">FIDO2</span> إلزامية للحسابات المميّزة والمستخدم الجذري، ومطابقة الأرقام لبقية الموظفين.</li>
+        <li>حدّ لعدد الإشعارات في الدقيقة، وتنبيه أمنيّ عند تكرار الرفض، وزرّ «أبلغ عن محاولة» داخل الإشعار.</li>
+        <li>قاعدة تنظيمية معلنة: الدعم الفنيّ لا يطلب أبداً الموافقة على إشعار أو إملاء رمز.</li>
+        <li>عدم تخزين بيانات اعتماد إدارية في سكربتات، وهو ما ضاعف الضرر في الحادثة.</li>
+      </ul>
+      <div class="maps"><span><span class="enw">ISO 27001:2022</span> ‏A.8.5 المصادقة الآمنة</span><span>A.6.3 التوعية</span><span><span class="enw">CSA CCM</span> مجال IAM</span></div>
+    </div>
+  </article>
+
+  <div class="case"><div class="tag">الخطّ الزمني الحقيقي · Capital One</div>
+    <div class="dt-wrap" style="margin:8px 0 0"><table class="dt">
+      <tbody>
+        <tr><td class="k">٢٢–٢٣ آذار ٢٠١٩</td><td>الوصول غير المشروع عبر الجدار المُعدّ خطأً وتنزيل البيانات</td></tr>
+        <tr><td class="k">١٧ تموز ٢٠١٩</td><td>باحث أمنيّ خارجيّ يبلّغ البنك عبر برنامج الإفصاح عن ملفّات منشورة على <span class="enw">GitHub</span></td></tr>
+        <tr><td class="k">١٩ تموز ٢٠١٩</td><td>البنك يؤكّد الاختراق، أي بعد نحو أربعة أشهر من وقوعه</td></tr>
+        <tr><td class="k">آب ٢٠٢٠</td><td>مكتب مراقب العملة الأمريكي <span class="en">(OCC)</span> يفرض غرامة ٨٠ مليون دولار</td></tr>
+        <tr><td class="k">لاحقاً</td><td>تسوية دعوى جماعية بقيمة ١٩٠ مليون دولار</td></tr>
+      </tbody></table></div>
+    <p style="margin-top:10px">البيانات شملت نحو ١٤٠ ألف رقم ضمان اجتماعي و٨٠ ألف رقم حساب مصرفيّ مرتبط. الفجوة بين الاختراق واكتشافه، أربعة أشهر، هي بحدّ ذاتها درس في المراقبة.</p>
+  </div>
+
+  <div class="page-nav"><button class="nav-btn" data-go="2">→ السابق</button><button class="nav-btn" data-go="4">التالي: المحاكاة ←</button></div>
+</div></section>
+<!-- ============ END SLIDE scenarios ============ -->
+
+<!-- ============ SLIDE sim : المحاكاة ============ -->
+<section id="sim" class="slide"><div class="wrap sim-wrap">
+  <span class="chip">قلب المحاضرة · ٤٥ دقيقة</span>
+  <h2 class="page-title" style="margin-bottom:14px">المحاكاة: ليلة ٢٢ آذار</h2>
+  <div class="sim-grid">
+    <div>
+      <div id="stage"><canvas id="cv" aria-label="مشهد ثلاثي الأبعاد للبيئة السحابية، يُدوَّر بالسحب ويُقرَّب بعجلة الفأرة"></canvas><div id="hud"><span id="mode">عرض المرحلة</span><span id="tm" class="big"></span></div></div>
+      <div class="dots" id="dots"></div>
+    </div>
+    <div>
+      <div class="sim-meta">
+        <div class="met red"><span>سجلات مسرّبة</span><b id="mRec">٠</b></div>
+        <div class="met"><span>الأزرق : الأحمر</span><b id="mTeam">٠ : ٠</b></div>
+      </div>
+      <div class="sim-tools">
+        <button id="tbtn">مؤقّت النقاش ٦٠ ث</button>
+        <button id="abtn" aria-pressed="false">الخريطة الكاملة</button>
+        <button id="nbtn" aria-pressed="false">ملاحظات الأستاذ</button>
+      </div>
+      <div class="sim-card" id="card">
+        <div class="kick" id="kick"></div>
+        <h3 id="ttl"></h3>
+        <p class="story" id="story"></p>
+        <div class="turn" id="turn"></div>
+        <div id="opts"></div>
+        <p class="fb" id="fb"></p>
+        <div class="tnote" id="tnote" hidden></div>
+        <button class="nx" id="nx" hidden></button>
+      </div>
+      <div class="sim-card" id="rep" hidden></div>
+    </div>
+  </div>
+  <p class="quiz-note" style="margin-top:14px">التحكّم: السحب يدوّر المشهد، والعجلة تقرّبه. أرقام المراحل تحت المشهد تفتح أيّ مرحلة محلولة للمراجعة. الأرقام المسرّبة داخل المحاكاة توضيحية.</p>
+</div></section>
+<!-- ============ END SLIDE sim ============ -->
+
+<!-- ============ SLIDE grc : الحوكمة والقانون ============ -->
+<section id="grc" class="slide"><div class="wrap">
+  <span class="chip t">بعد تقرير الحادثة</span>
+  <h2 class="page-title">الحوكمة والمخاطر والامتثال والقانون</h2>
+  <svg class="underline" viewBox="0 0 180 14" preserveAspectRatio="none" aria-hidden="true"><path d="M3 9 Q45 2 90 8 T177 6" fill="none" stroke="var(--teal)" stroke-width="3" stroke-linecap="round"/></svg>
+  <p class="lead">المحاكاة أجابت عن سؤال المهندس: كيف توقف الهجوم؟ هذا التبويب يجيب عن أسئلة الإدارة: ما المخاطر التي كان يجب أن نراها مسبقاً؟ ما الذي يثبت للعملاء والجهات الرقابية أن ضوابطنا تعمل؟ ماذا يقول العقد مع المزوّد؟ وماذا يفرض القانون علينا الآن، في الساعات الأولى بعد الاكتشاف؟</p>
+
+  <!-- ══════════ ١ ══════════ -->
+  <h3 class="sec"><span class="num">١</span>تقييم مخاطر السحابة</h3>
+  <p>تقييم المخاطر يسبق الحادثة لا يلحقها. يمرّ بخمس خطوات: حصر الأصول (البيانات، الهويات، الخدمات)، ثم تحديد التهديدات ونقاط الضعف لكلّ أصل، ثم تقدير الاحتمال والأثر على مقياس من ١ إلى ٥، ثم قرار المعالجة، ثم إعادة التقدير بعد الضوابط لمعرفة الخطر المتبقّي. النتيجة تُسجَّل في سجلّ المخاطر ويُعيَّن لكلّ خطر مالك.</p>
+  <div class="rm-wrap">
+    <div class="rm-ctl"><div class="seg" role="group" aria-label="حالة الضوابط"><button id="rmB" aria-pressed="true">قبل الضوابط</button><button id="rmA" aria-pressed="false">بعد الضوابط</button></div></div>
+    <div class="rm" id="rm" aria-label="مصفوفة المخاطر: الاحتمال أفقياً والأثر عمودياً"></div>
+    <div class="rm-legend" id="rmLeg"></div>
+  </div>
+  <div class="takeaway"><b>ما تكشفه المصفوفة:</b> الضوابط لا تعمل كلّها بالطريقة نفسها. أقلّ صلاحية <span class="en">(R4)</span> لا تغيّر احتمال سرقة الدور، بل تخفض أثرها، فتنزل في عمودها ولا تتحرّك نحو احتمال أقلّ. أما <span class="en">FIDO2</span> <span class="en">(R6)</span> فتخفض الاحتمال ويبقى الأثر كما هو لو نجح الهجوم بطريق آخر.</div>
+
+  <!-- ══════════ ٢ ══════════ -->
+  <h3 class="sec"><span class="num">٢</span>CSA CCM وبرنامج STAR</h3>
+  <p>تحالف أمن السحابة <span class="en">(Cloud Security Alliance)</span> أصدر مصفوفة ضوابط السحابة <span class="en">(CCM)</span>: إطار مصمَّم للسحابة تحديداً، في إصداره الرابع ١٩٧ هدف ضبط موزّعة على ١٧ مجالاً، منها إدارة الهوية والوصول <span class="en">(IAM)</span>، وأمن البيانات والخصوصية <span class="en">(DSP)</span>، وأمن البنية والافتراضية <span class="en">(IVS)</span>. قيمتها العملية أنها تربط كلّ ضابط بما يقابله في <span class="en">ISO 27001</span> وغيره، فتطبيق ضابط واحد يُحتسب لأكثر من إطار.</p>
+  <div class="dt-wrap"><table class="dt">
+    <thead><tr><th>مستوى STAR</th><th>ما يتطلّبه</th><th>ماذا يثبت للعميل</th></tr></thead>
+    <tbody>
+      <tr><td class="k">المستوى ١</td><td>تقييم ذاتيّ: المزوّد يملأ استبيان <span class="en">CAIQ</span> وينشره في السجلّ</td><td>شفافية: هذا ما يقول المزوّد إنه يفعله، دون تحقّق خارجيّ</td></tr>
+      <tr><td class="k">المستوى ٢</td><td>تدقيق طرف ثالث: شهادة مبنية على <span class="en">ISO 27001</span>، أو تقرير مبنيّ على <span class="en">SOC 2</span></td><td>طرف مستقلّ تحقّق من الضوابط</td></tr>
+      <tr><td class="k">المستوى ٣</td><td>مراقبة مستمرّة للضوابط بدل اللقطات الدورية</td><td>أعلى ضمان، وأقلّ انتشاراً</td></tr>
+    </tbody></table></div>
+  <p>سجلّ <span class="en">STAR</span> عامّ ومجانيّ. قبل التعاقد مع مزوّد، يُفتح السجلّ ويُقرأ استبيانه ومستواه.</p>
+
+  <!-- ══════════ ٣ ══════════ -->
+  <h3 class="sec"><span class="num">٣</span>عائلة ISO/IEC 27000 في السحابة</h3>
+  <div class="dt-wrap"><table class="dt">
+    <thead><tr><th>المعيار</th><th>ماهيته</th><th>قابل للشهادة؟</th><th>صلته بالحادثة</th></tr></thead>
+    <tbody>
+      <tr><td class="k"><span class="en">27001:2022</span></td><td>نظام إدارة أمن المعلومات: سياسات ومخاطر ومراجعة إدارية وتحسين مستمرّ. الملحق <span class="en">A</span> فيه ٩٣ ضابطاً</td><td><span class="badge ok">نعم</span></td><td>ضوابط إدارة الإعدادات <span class="en">(A.8.9)</span> وحقوق الوصول <span class="en">(A.5.18)</span> والمصادقة <span class="en">(A.8.5)</span></td></tr>
+      <tr><td class="k"><span class="en">27002:2022</span></td><td>إرشاد تفصيليّ لتطبيق ضوابط الملحق <span class="en">A</span></td><td><span class="badge bad">لا</span></td><td>كيف تُطبَّق الضوابط أعلاه</td></tr>
+      <tr><td class="k"><span class="en">27017:2015</span></td><td>ضوابط السحابة: سبعة ضوابط إضافية بالرمز <span class="en">CLD</span> وإرشاد لسبعة وثلاثين ضابطاً، للمزوّد والعميل معاً</td><td>بتوسيع نطاق <span class="en">27001</span></td><td><span class="en">CLD.6.3.1</span> توزيع الأدوار بين المزوّد والعميل، <span class="en">CLD.9.5.2</span> تقوية الآلات الافتراضية</td></tr>
+      <tr><td class="k"><span class="en">27018:2019</span></td><td>حماية البيانات الشخصية حين يعالجها مزوّد سحابة عامة بصفته معالِجاً</td><td>بتوسيع نطاق <span class="en">27001</span></td><td>التزامات المزوّد تجاه بيانات عملاء البنك الشخصية</td></tr>
+    </tbody></table></div>
+  <div class="oops"><span class="i">!</span><div><b>شهادة المزوّد ليست شهادة للعميل.</b> حصول <span class="en">AWS</span> على <span class="en">ISO 27001</span> و<span class="en">27017</span> يغطّي ما هو ضمن مسؤوليتها. إعداد الجدار والأدوار في حساب البنك خارج نطاق تلك الشهادة تماماً.</div></div>
+
+  <!-- ══════════ ٤ ══════════ -->
+  <h3 class="sec"><span class="num">٤</span>تقارير SOC 2</h3>
+  <p>‏<span class="en">SOC 2</span> ليس شهادة بل تقرير يصدره مدقّق مستقلّ وفق معايير خدمات الثقة من المعهد الأمريكي للمحاسبين القانونيين <span class="en">(AICPA)</span>. المعيار الإلزاميّ هو الأمن، وتُضاف إليه حسب الخدمة معايير التوفّر وسلامة المعالجة والسرّية والخصوصية.</p>
+  <div class="dt-wrap"><table class="dt">
+    <thead><tr><th></th><th>النوع الأول <span class="en">(Type I)</span></th><th>النوع الثاني <span class="en">(Type II)</span></th></tr></thead>
+    <tbody>
+      <tr><td class="k">يجيب عن</td><td>هل الضوابط مصمَّمة بشكل مناسب؟</td><td>هل عملت الضوابط فعلاً طوال الفترة؟</td></tr>
+      <tr><td class="k">الزمن</td><td>تاريخ واحد</td><td>فترة، غالباً من ٣ إلى ١٢ شهراً</td></tr>
+      <tr><td class="k">القيمة للعميل</td><td>بداية مقبولة لمزوّد جديد</td><td>الدليل الذي يُطلب عادةً قبل التعاقد</td></tr>
+    </tbody></table></div>
+  <p>التقرير مقيّد التداول ويُشارَك بموجب اتفاقية عدم إفصاح، بينما <span class="en">SOC 3</span> ملخّص عامّ يمكن نشره. الجزء الأهمّ للقارئ المحترف هو قسم الاستثناءات: الضوابط التي وجد المدقّق أنها لم تعمل.</p>
+
+  <!-- ══════════ ٥ ══════════ -->
+  <h3 class="sec"><span class="num">٥</span>العقود واتفاقيات مستوى الخدمة</h3>
+  <p>العقد مع مزوّد السحابة هو المكان الذي تتحوّل فيه المسؤولية المشتركة إلى التزامات قابلة للمطالبة. البنود التي تُقرأ قبل التوقيع:</p>
+  <div class="dt-wrap"><table class="dt">
+    <thead><tr><th>البند</th><th>السؤال الذي يجيب عنه</th></tr></thead>
+    <tbody>
+      <tr><td class="k">موقع البيانات ونقلها</td><td>في أيّ منطقة تُخزَّن البيانات؟ ومتى يحقّ للمزوّد نقلها؟</td></tr>
+      <tr><td class="k">إبلاغ المزوّد عن الحوادث</td><td>خلال كم ساعة يبلّغنا المزوّد بحادثة في جانبه؟ نحتاج هذا لنفي بمهلة الـ٧٢ ساعة القانونية.</td></tr>
+      <tr><td class="k">حقّ التدقيق</td><td>هل نستطيع التدقيق بأنفسنا، أم نكتفي بتقارير <span class="en">SOC 2</span> وشهادات <span class="en">ISO</span>؟</td></tr>
+      <tr><td class="k">المتعاقدون من الباطن</td><td>من يعالج بياناتنا غير المزوّد؟ وهل نُخطَر بتغييرهم؟</td></tr>
+      <tr><td class="k">الخروج من العقد</td><td>كيف تُعاد بياناتنا وتُحذف عند الانتهاء؟ وهو ضابط <span class="en">CLD.8.1.5</span> في <span class="en">27017</span>.</td></tr>
+      <tr><td class="k">حدود المسؤولية</td><td>ما سقف تعويض المزوّد؟ غالباً قيمة اشتراك أشهر قليلة.</td></tr>
+      <tr><td class="k">القانون الحاكم</td><td>قانون أيّ دولة يحكم النزاع، وأين تُرفع الدعوى؟</td></tr>
+    </tbody></table></div>
+  <h4>حاسبة اتفاقية مستوى الخدمة</h4>
+  <div class="calc">
+    <div class="calc-row">
+      <label for="slaP">التوفّر الشهري المتعهَّد به</label>
+      <select id="slaP"><option value="99">٩٩٪</option><option value="99.5">٩٩٫٥٪</option><option value="99.9" selected>٩٩٫٩٪</option><option value="99.95">٩٩٫٩٥٪</option><option value="99.99">٩٩٫٩٩٪</option></select>
+      <label for="slaD">التوقّف الفعليّ هذا الشهر</label>
+      <select id="slaD"><option value="0">لا توقّف</option><option value="30">٣٠ دقيقة</option><option value="120" selected>ساعتان</option><option value="600">١٠ ساعات</option><option value="2880">يومان</option></select>
+    </div>
+    <div class="calc-out">
+      <div><div class="l">التوقّف المسموح شهرياً</div><div class="v" id="slaM"></div></div>
+      <div><div class="l">التوقّف المسموح سنوياً</div><div class="v" id="slaY"></div></div>
+      <div><div class="l">التوفّر الفعليّ</div><div class="v" id="slaA"></div></div>
+      <div><div class="l">رصيد الخدمة المستحقّ</div><div class="v" id="slaC"></div></div>
+    </div>
+    <p class="quiz-note" style="margin:10px 0 0">شهر من ٣٠ يوماً. درجات الرصيد مثال شائع لدى المزوّدين الكبار: ١٠٪ تحت التعهّد، و٣٠٪ تحت ٩٩٪، و١٠٠٪ تحت ٩٥٪. القيم الفعلية تختلف من خدمة لأخرى وتُقرأ في الاتفاقية نفسها.</p>
+  </div>
+  <div class="takeaway"><b>درس الحادثة:</b> اتفاقية مستوى الخدمة تقيس التوفّر. خلال اختراق <span class="enw">Capital One</span> كانت الخدمات متاحة ١٠٠٪، فلا خرق للاتفاقية، ولا رصيد خدمة، وتسريب ١٠٦ ملايين سجلّ. الاتفاقية لا تعوّض عن الأمن ولا تقيسه.</div>
+
+  <!-- ══════════ ٦ ══════════ -->
+  <h3 class="sec"><span class="num">٦</span>سيادة البيانات</h3>
+  <p>ثلاثة مصطلحات متقاربة تُخلط كثيراً. <b>إقامة البيانات</b> قرار تقنيّ: اختيار المنطقة التي تُخزَّن فيها. <b>سيادة البيانات</b> مسألة قانونية: البيانات تخضع لقانون الدولة التي تقع فيها، وقد تخضع أيضاً لقانون دولة المزوّد. <b>توطين البيانات</b> اشتراط قانونيّ بأن تبقى فئة من البيانات داخل الحدود.</p>
+  <p>المثال الأوضح على الفرق: قانون <span class="en">CLOUD Act</span> الأمريكي لسنة ٢٠١٨ يتيح للسلطات الأمريكية إلزام شركة أمريكية بتسليم بيانات تديرها حتى لو كانت مخزّنة خارج الولايات المتحدة. لذلك قد تكون البيانات مقيمة في منطقة ماليزية، وتبقى مع ذلك ضمن ولاية قانون أجنبيّ.</p>
+  <ul class="clean">
+    <li><b>‏GDPR:</b> نقل البيانات الشخصية خارج الاتحاد الأوروبي يتطلّب قرار كفاية للدولة المستقبلة، أو ضمانات مثل البنود التعاقدية القياسية.</li>
+    <li><b>‏PDPA بعد تعديل ٢٠٢٤:</b> أُلغي نظام القائمة البيضاء للدول، وصار النقل جائزاً إلى دولة لديها قانون مماثل جوهرياً أو تضمن مستوى حماية كافياً.</li>
+    <li><b>الضوابط التقنية:</b> سياسة <span class="en">SCP</span> ترفض أيّ إجراء خارج المناطق المسموح بها، وتشفير بمفاتيح يديرها العميل.</li>
+  </ul>
+
+  <!-- ══════════ ٧ ══════════ -->
+  <h3 class="sec"><span class="num">٧</span>القوانين الثلاثة: ماذا يجب فعله بعد الاكتشاف</h3>
+  <p>تخيّل أن الشركة في المحاكاة مصرف ماليزيّ له عملاء في الاتحاد الأوروبي. القوانين الثلاثة تنطبق معاً، وكلّ منها بساعة مختلفة.</p>
+  <div class="dt-wrap"><table class="dt">
+    <thead><tr><th></th><th><span class="en">GDPR</span></th><th><span class="en">PDPA</span> الماليزي (تعديل ٢٠٢٤)</th><th>قانون الأمن السيبراني ٢٠٢٤</th></tr></thead>
+    <tbody>
+      <tr><td class="k">ينطبق على</td><td>من يعالج بيانات أشخاص في الاتحاد الأوروبي، أينما كان مقرّه</td><td>معالجة البيانات الشخصية في المعاملات التجارية في ماليزيا، للمتحكّم والمعالِج</td><td>جهات البنية التحتية الوطنية الحرجة <span class="en">(NCII)</span>، والمصارف منها</td></tr>
+      <tr><td class="k">إبلاغ الجهة الرقابية</td><td>خلال ٧٢ ساعة من العلم بالخرق</td><td>القانون: في أقرب وقت ممكن. الإرشادات: خلال ٧٢ ساعة</td><td>فوراً، ثم تقرير تفصيليّ خلال ٦ ساعات، ثم تقرير كامل خلال ١٤ يوماً</td></tr>
+      <tr><td class="k">إبلاغ الأشخاص</td><td>دون تأخير غير مبرّر إذا كان الخطر عليهم مرتفعاً</td><td>إذا سبّب الخرق ضرراً جسيماً أو يُرجَّح أن يسبّبه</td><td>القانون يخاطب الجهة الرقابية والقطاع، لا الأفراد</td></tr>
+      <tr><td class="k">الجهة</td><td>سلطة حماية البيانات في الدولة العضو</td><td>مفوّض حماية البيانات الشخصية</td><td>الوكالة الوطنية للأمن السيبراني <span class="en">(NACSA)</span> وقائد القطاع</td></tr>
+      <tr><td class="k">العقوبة القصوى</td><td>٢٠ مليون يورو أو ٤٪ من الإيراد العالمي، أيّهما أعلى</td><td>مليون رنغيت و/أو ٣ سنوات سجناً لمخالفة المبادئ؛ ٢٥٠ ألف رنغيت و/أو سنتان لعدم الإبلاغ</td><td>غرامات وسجن يحدّدها القانون لكلّ مخالفة، ويُسأل الأفراد داخل الجهة</td></tr>
+      <tr><td class="k">التزامات مسبقة</td><td>سجلّ المعالجة، تقييم الأثر، مسؤول حماية بيانات في حالات محدّدة</td><td>تعيين مسؤول حماية بيانات، والتزامات أمنية مباشرة على المعالِج</td><td>تقييم مخاطر سنويّ، وتدقيق كلّ سنتين على الأقلّ</td></tr>
+    </tbody></table></div>
+  <div class="oops"><span class="i">!</span><div><b>ساعة الـ٦ ساعات تبدأ قبل الجميع.</b> في المحاكاة يُكتشف الخرق في الثانية فجراً. قبل الثامنة صباحاً يجب أن يكون التقرير التفصيليّ الأوّل قد وصل إلى <span class="en">NACSA</span>. هذا يعني أن خطة الاستجابة، ومن يملك صلاحية الإبلاغ، ورقم الجهة، يجب أن تكون مكتوبة ومعروفة قبل الحادثة.</div></div>
+
+  <!-- ══════════ ٨ ══════════ -->
+  <h3 class="sec"><span class="num">٨</span>من المسؤول؟ نموذج المسؤولية المشتركة</h3>
+  <div class="dt-wrap"><table class="dt">
+    <thead><tr><th>الطبقة (خدمة <span class="en">EC2</span>)</th><th>المسؤول</th><th>في الحادثة</th></tr></thead>
+    <tbody>
+      <tr><td class="k">مراكز البيانات والعتاد</td><td>المزوّد</td><td>لم تُخترق</td></tr>
+      <tr><td class="k">الشبكة الأساسية وطبقة الافتراضية</td><td>المزوّد</td><td>لم تُخترق</td></tr>
+      <tr><td class="k">نظام التشغيل وتحديثاته</td><td>العميل</td><td>—</td></tr>
+      <tr><td class="k">التطبيق وجدار <span class="en">WAF</span></td><td>العميل</td><td><span class="badge bad">الثغرة هنا</span></td></tr>
+      <tr><td class="k">الهويات والصلاحيات</td><td>العميل</td><td><span class="badge bad">الدور المنتفخ هنا</span></td></tr>
+      <tr><td class="k">البيانات وتصنيفها وتشفيرها</td><td>العميل</td><td><span class="badge bad">غياب شرط الشبكة هنا</span></td></tr>
+      <tr><td class="k">خيارات الأمان الافتراضية للخدمة</td><td>المزوّد، ويقرّر العميل تفعيلها</td><td><span class="en">IMDSv2</span> جاء بعد الحادثة</td></tr>
+    </tbody></table></div>
+  <div class="takeaway"><b>الخلاصة الإدارية:</b> كلّ الخلل في الحادثة وقع في الجانب الذي يملكه العميل. «نحن على السحابة» لا ينقل المسؤولية، بل يغيّر شكلها: من حماية الجدران إلى حماية الإعدادات والهويات.</div>
+
+  <div class="sig">إعداد: د. أمير هادي · مادة Cloud Computing Security</div>
+  <div class="page-nav"><button class="nav-btn" data-go="4">→ السابق</button><button class="nav-btn" data-go="6">التالي: سكربت الأستاذ ←</button></div>
+</div></section>
+<!-- ============ END SLIDE grc ============ -->
+
+<!-- ============ SLIDE script : سكربت الأستاذ ============ -->
+<section id="script" class="slide"><div class="wrap">
+  <span class="chip">للأستاذ فقط</span>
+  <h2 class="page-title">سكربت الإلقاء: ١٢٠ دقيقة</h2>
+  <svg class="underline" viewBox="0 0 180 14" preserveAspectRatio="none" aria-hidden="true"><path d="M3 9 Q45 2 90 8 T177 6" fill="none" stroke="var(--red)" stroke-width="3" stroke-linecap="round"/></svg>
+  <p class="lead">كلّ فقرة فيها ما تقوله بالنصّ أو قريباً منه، وما تفعله على الشاشة، والسؤال الذي تطرحه على الصف. الأزمنة تقريبية، والمحاكاة هي الجزء الذي يتمدّد إذا احتدم النقاش، فاحسب وقتك منها.</p>
+
+  <div class="facts">
+    <div class="fact"><div class="l">قبل المحاضرة</div><div class="v">افتح الصفحة واختبر المحاكاة على جهاز القاعة</div></div>
+    <div class="fact"><div class="l">على السبّورة</div><div class="v">جدول نقاط: أزرق | أحمر</div></div>
+    <div class="fact"><div class="l">إذا انقطع الإنترنت</div><div class="v">اشرح من تبويب «شرح السيناريوهات»</div></div>
+  </div>
+
+  <div class="beat"><div class="tm"><b>٠٠:٠٠</b>٥ دقائق</div><div>
+    <h4>الافتتاح: الخطّاف</h4>
+    <div class="do">أطفئ أنوار القاعة إن أمكن. افتح تبويب المحاكاة على المرحلة ١ دون أن تضغط شيئاً، ودع المشهد يدور.</div>
+    <div class="say">«ليلة ٢٢ آذار ٢٠١٩. مهندسة سابقة في شركة سحابية كبرى تجلس أمام حاسوبها. خلال ساعات تخرج بيانات مئة وستة ملايين إنسان من واحد من أكبر بنوك أمريكا. البنك لن يعرف بذلك إلا بعد أربعة أشهر، حين يرسل له شخص غريب رسالة: بياناتكم منشورة على الإنترنت. الليلة أنتم فريق الأمن في هذا البنك، والسؤال: هل كنتم ستوقفونها؟»</div>
+    <div class="ask">من يتوقّع أن البنك اخترقته ثغرة في <span class="en">AWS</span> نفسها؟ ارفعوا أيديكم. (احفظ العدد، ستعود إليه في الختام: الجواب لا.)</div>
+  </div></div>
+
+  <div class="beat"><div class="tm"><b>٠٠:٠٥</b>٥ دقائق</div><div>
+    <h4>تشكيل الفريقين والقواعد</h4>
+    <div class="do">قسّم القاعة إلى نصفين: يمين أزرق ويسار أحمر. كلّ فريق يختار متحدّثاً واحداً يعلن القرار.</div>
+    <div class="say">«القاعدة بسيطة: ستّ مراحل، والفريقان يتناوبان. في كلّ مرحلة دقيقة نقاش، ثم يعلن المتحدّث قراركم. القرار الصحيح يوقف المهاجم في تلك المرحلة ويعطيكم نقطة. القرار الخاطئ يفتح له الطريق ويرفع عدّاد البيانات المسرّبة. الفريق الآخر لا يتكلّم أثناء دور خصمه، لكنه يستطيع أن يكسب نقطة إضافية إذا شرح لماذا كان خيار خصمه خاطئاً.»</div>
+  </div></div>
+
+  <div class="beat"><div class="tm"><b>٠٠:١٠</b>١٥ دقيقة</div><div>
+    <h4>أساسيات IAM: المكوّنات والسياسة وأقلّ صلاحية</h4>
+    <div class="do">تبويب «أساسيات IAM»، الأقسام ١ و٢ و٣. اكتب على السبّورة: <span class="en">User · Group · Role · Policy</span>.</div>
+    <div class="say">«في السحابة لا يوجد جدار تعبره لتصبح في الداخل. كلّ شيء واجهة برمجية متاحة من أيّ مكان. من يحمل مفتاحاً صالحاً هو في الداخل. لذلك نقول إن الهوية هي المحيط الجديد.»</div>
+    <div class="say">«انتبهوا للفرق بين المستخدم والدور: المستخدم له مفتاح دائم يبقى حتى نلغيه، والدور ليس له مفتاح أصلاً. من يتقمّصه يأخذ مفتاحاً مؤقتاً يموت بعد ساعة. احفظوا هذا الفرق، فالمرحلة الأولى كلّها عنه.»</div>
+    <div class="ask">في مثال السياسة، لو حذفنا جملة <span class="en">Condition</span>، ما الذي تغيّر؟ (الجواب: صار المستخدم يقرأ التقارير حتى لو دخل بكلمة المرور وحدها.)</div>
+  </div></div>
+
+  <div class="beat"><div class="tm"><b>٠٠:٢٥</b>١٠ دقائق</div><div>
+    <h4>منطق التقييم والبيانات المؤقتة وMFA</h4>
+    <div class="do">الأقسام ٤ و٥ و٦. على مخطّط التقييم، أشر بالمؤشّر إلى البوابة الأولى وتوقّف عندها.</div>
+    <div class="say">«كلّ طلب يبدأ مرفوضاً. لكي يمرّ يجب أن يجد سماحاً، وألّا يجد رفضاً صريحاً في أيّ مكان. رفض واحد صريح يكفي لإيقاف كلّ شيء، مهما كثرت جمل السماح.»</div>
+    <div class="say">«جدول <span class="en">MFA</span> هذا سنعود إليه في المرحلة السادسة. لاحظوا فقط عمود مقاومة التصيّد: نعم واحدة فقط.»</div>
+  </div></div>
+
+  <div class="beat"><div class="tm"><b>٠٠:٣٥</b>٧ دقائق</div><div>
+    <h4>المحاكاة · المرحلة ١: المفتاح المنسيّ (الأزرق)</h4>
+    <div class="do">تبويب المحاكاة. اقرأ القصة بصوت مسموع. اضغط «مؤقّت النقاش». بعد إعلان القرار اضغط الخيار الذي اختاره الفريق.</div>
+    <div class="say">«انظروا إلى شاشة اللابتوب: السطران الأحمران. هذا مفتاح يبدأ بـ<span class="en">AKIA</span>، أي مفتاح دائم. الروبوتات تمسح <span class="en">GitHub</span> كلّ دقيقة بحثاً عن هذا النمط بالضبط.»</div>
+    <div class="ask">بعد القرار، أيّاً كان: لماذا لا يكفي حذف الـ<span class="en">commit</span>؟ من يعرف كيف يحتفظ <span class="en">git</span> بالتاريخ؟</div>
+    <div class="say">الانتقال: «حسناً، افترضوا أن المهاجم لم يحتج هذا المفتاح أصلاً. عنده طريق آخر، عبر موقع البنك نفسه.»</div>
+  </div></div>
+
+  <div class="beat"><div class="tm"><b>٠٠:٤٢</b>٧ دقائق</div><div>
+    <h4>المرحلة ٢: SSRF في جدار الحماية (الأحمر)</h4>
+    <div class="say">«الـ<span class="en">SSRF</span> تشبه أن تطلب من موظف الاستقبال، وهو موثوق داخل المبنى، أن يحضر لك ملفاً من غرفة لا يدخلها الزوّار. أنت لم تدخل، هو دخل نيابة عنك.»</div>
+    <div class="ask">من المسؤول عن هذا الخطأ: <span class="en">AWS</span> أم البنك؟ (اترك الصف يتجادل ٣٠ ثانية. الجواب: البنك، وسيعود هذا في نموذج المسؤولية المشتركة.)</div>
+    <div class="say">إذا اختار الفريق إغلاق المنفذ: «أوقفتم الهجوم وأوقفتم البنك معه. عملاء البنك لا يستطيعون الدخول الآن، وهذا خرق لاتفاقية مستوى الخدمة. الأمن الذي يقتل التوفّر ليس أمناً.»</div>
+  </div></div>
+
+  <div class="beat"><div class="tm"><b>٠٠:٤٩</b>٨ دقائق</div><div>
+    <h4>المرحلة ٣: IMDS (الأزرق)</h4>
+    <div class="do">قرّب المشهد بالعجلة على الشريحة فوق السيرفر حتى يُقرأ العنوان <span class="en">169.254.169.254</span>.</div>
+    <div class="say">«هذه الشريحة موجودة داخل كلّ سيرفر. السيرفر يسألها: من أنا؟ وما مفتاحي؟ فتعطيه مفتاح دوره. فكرة ممتازة، لأننا لا نخزّن مفاتيح على القرص. المشكلة أنها في الإصدار الأول كانت تجيب أيّ سؤال، حتى لو جاء من المهاجم عبر الثغرة.»</div>
+    <div class="say">«بعد هذه الحادثة بأشهر أطلقت <span class="en">AWS</span> الإصدار الثاني. أحياناً تتغيّر الصناعة كلّها بسبب حادثة واحدة.»</div>
+    <div class="ask">لماذا لا يمكن تفعيل <span class="en">MFA</span> على دور يستعمله سيرفر؟</div>
+  </div></div>
+
+  <div class="beat"><div class="tm"><b>٠٠:٥٧</b>٨ دقائق</div><div>
+    <h4>المرحلة ٤: الدور المنتفخ (الأحمر)</h4>
+    <div class="do">بعد الإجابة الصحيحة أشر إلى البطاقة المعلّقة بالمفتاح وهي تتحوّل من الأحمر إلى الأخضر.</div>
+    <div class="say">«هذه أهمّ مرحلة في المحاضرة. لاحظوا: الثغرة ما زالت موجودة، والمفتاح ما زال مسروقاً. الشيء الوحيد الذي تغيّر هو ما يستطيع المفتاح فعله. هذا هو أقلّ صلاحية: لا يمنع الاختراق، بل يقرّر حجمه.»</div>
+    <div class="ask">التطبيق يقرأ قواعد الجدار من حاوية واحدة. ما أصغر سياسة تكفيه؟ (اطلب من متطوّع أن يمليها عليك، واكتبها على السبّورة.)</div>
+  </div></div>
+
+  <div class="beat"><div class="tm"><b>٠١:٠٥</b>٨ دقائق</div><div>
+    <h4>المرحلة ٥: بوابات التقييم (الأزرق)</h4>
+    <div class="say">«هنا سنلعب لعبة ماذا لو. في الحادثة الحقيقية لم تكن هذه السياسة موجودة. لو كانت موجودة، لما استطاع المهاجم استعمال المفتاح من جهازه، حتى مع كلّ ما سبق.»</div>
+    <div class="ask">الطلب فيه <span class="en">Allow</span> في سياسة و<span class="en">Deny</span> في أخرى. من يربح؟ وهل يتغيّر الجواب لو أُنشئت سياسة الـ<span class="en">Allow</span> لاحقاً؟</div>
+    <div class="do">بعد الإجابة الصحيحة، أشر إلى الكرة الحمراء وهي تتوقّف عند البوابة الأولى.</div>
+  </div></div>
+
+  <div class="beat"><div class="tm"><b>٠١:١٣</b>٧ دقائق</div><div>
+    <h4>المرحلة ٦: إرهاق MFA (الأحمر)</h4>
+    <div class="say">«هذه ليست من قصة البنك، بل من اختراق <span class="en">Uber</span> سنة ٢٠٢٢. تخيّلوا: الثانية فجراً، هاتفكم يهتزّ أربعين مرة، ثم يأتيكم اتصال: أنا من الدعم الفني، اضغط موافقة لتتوقّف الإشعارات. كم واحداً منكم سيضغط؟»</div>
+    <div class="ask">ما الفرق بين إشعار عاديّ وإشعار بمطابقة أرقام؟ ولماذا يبقى <span class="en">FIDO2</span> أقوى من الاثنين؟</div>
+  </div></div>
+
+  <div class="beat"><div class="tm"><b>٠١:٢٠</b>٥ دقائق</div><div>
+    <h4>تقرير الحادثة والخريطة الكاملة</h4>
+    <div class="do">اضغط «تقرير الحادثة». المشهد يتحوّل تلقائياً للخريطة الكاملة. إن تسرّبت بيانات، أشر إلى المكعّبات وهي تتدفّق من الحاويات إلى المهاجم.</div>
+    <div class="say">«انظروا للسلسلة كاملة: مفتاح، ثم ثغرة، ثم شريحة، ثم دور، ثم حاوية. كان يكفي أن تنكسر حلقة واحدة. هذا ما نسمّيه الدفاع في العمق: لا تراهن على ضابط واحد.»</div>
+    <div class="say">«الآن انتهى عمل المهندسين. الساعة الثانية وأربع دقائق فجراً، والمدير التنفيذي يتصل بكم. لديكم ستّ ساعات قبل أن يجب أن يصل أول تقرير إلى الجهة الرقابية. ماذا تقولون له؟»</div>
+  </div></div>
+
+  <div class="beat"><div class="tm"><b>٠١:٢٥</b>٢٥ دقيقة</div><div>
+    <h4>الحوكمة والمخاطر والامتثال والقانون</h4>
+    <div class="do">تبويب «الحوكمة والقانون». في مصفوفة المخاطر ابدأ بـ«قبل الضوابط»، ثم اضغط «بعد الضوابط» ودع الطلبة يلاحظون حركة <span class="en">R4</span>.</div>
+    <div class="ask">لماذا نزل <span class="en">R4</span> في عموده ولم يتحرّك نحو احتمال أقلّ؟ (أقلّ صلاحية تخفض الأثر، لا الاحتمال.)</div>
+    <div class="say">في قسم المعايير: «الـ<span class="en">ISO</span> شهادة على نظام إدارة، والـ<span class="en">SOC 2</span> تقرير مدقّق عن ضوابط. والمهمّ: شهادة <span class="en">AWS</span> لا تغطّي إعداداتكم أنتم.»</div>
+    <div class="do">في الحاسبة اختر ٩٩٫٩٪ ثم «يومان»، واطلب من الصف توقّع الرصيد قبل أن تظهر النتيجة.</div>
+    <div class="say">في جدول القوانين: «ثلاث ساعات تدقّ معاً: ٦ ساعات لوكالة الأمن السيبراني، و٧٢ ساعة لمفوّض البيانات الماليزي، و٧٢ ساعة للسلطة الأوروبية. ومن لا يملك خطة مكتوبة قبل الحادثة لن يلحق أيّاً منها.»</div>
+    <div class="ask">ارجع إلى سؤال الافتتاح: من اخترق البنك، ثغرة في <span class="en">AWS</span> أم في البنك؟ افتح جدول المسؤولية المشتركة وانظر أين تقع الشارات الحمراء.</div>
+  </div></div>
+
+  <div class="beat"><div class="tm"><b>٠١:٥٠</b>٧ دقائق</div><div>
+    <h4>بطاقة الخروج</h4>
+    <div class="do">اطلب من كلّ طالب أن يكتب على ورقة إجابة ثلاثة أسئلة، ويسلّمها عند الباب.</div>
+    <div class="say">«أولاً: الفرق بين مفتاح <span class="en">AKIA</span> ومفتاح <span class="en">ASIA</span> في سطر واحد. ثانياً: سياسة فيها <span class="en">Allow</span> وأخرى فيها <span class="en">Deny</span>، ما النتيجة؟ ثالثاً: بعد اكتشاف الخرق في مصرف ماليزيّ، أيّ مهلة إبلاغ هي الأقصر؟»</div>
+  </div></div>
+
+  <div class="beat"><div class="tm"><b>٠١:٥٧</b>٣ دقائق</div><div>
+    <h4>الواجب والختام</h4>
+    <div class="do">تبويب «المراجعة والواجب». اعرض الواجبين وموعد التسليم.</div>
+    <div class="say">«المحاكاة متاحة لكم على الرابط نفسه. أعيدوها في البيت، وحاولوا أن تصلوا إلى تقرير فيه صفر سجلات مسرّبة. ومن يكتشف خطأ علمياً في المحاكاة له نقطة إضافية.»</div>
+  </div></div>
+
+  <h3 class="sec"><span class="num">⏱</span>إذا كان الوقت ٩٠ دقيقة</h3>
+  <ul class="clean">
+    <li>اختصر أساسيات <span class="en">IAM</span> إلى ١٥ دقيقة: المكوّنات والسياسة فقط، واترك التقييم و<span class="en">MFA</span> للمحاكاة.</li>
+    <li>خمس دقائق لكلّ مرحلة، والمؤقّت ٣٠ ثانية بدل ٦٠.</li>
+    <li>في الحوكمة: المصفوفة وجدول القوانين وجدول المسؤولية فقط، والمعايير قراءة منزلية من التبويب.</li>
+  </ul>
+
+  <div class="page-nav"><button class="nav-btn" data-go="5">→ السابق</button><button class="nav-btn" data-go="7">التالي: المراجعة والواجب ←</button></div>
+</div></section>
+<!-- ============ END SLIDE script ============ -->
+
+<!-- ============ SLIDE review : المراجعة والواجب ============ -->
+<section id="review" class="slide"><div class="wrap">
+  <span class="chip">بعد المحاضرة</span>
+  <h2 class="page-title">أسئلة المراجعة والواجب</h2>
+  <svg class="underline" viewBox="0 0 180 14" preserveAspectRatio="none" aria-hidden="true"><path d="M3 9 Q45 2 90 8 T177 6" fill="none" stroke="var(--red)" stroke-width="3" stroke-linecap="round"/></svg>
+  <p class="quiz-note">الحلول مع تعليل كلّ خيار في تبويب «الحلول والتعليل».</p>
+
+  <h3 class="sec"><span class="num">أ</span>الاختيار من متعدّد</h3>
+  <div class="q"><span class="qn">١.</span>أيّ أنواع بيانات الاعتماد التالية تنتهي صلاحيتها تلقائياً؟
+    <ol><li><span>أ)</span>مفتاح الوصول لمستخدم <span class="en">IAM</span></li><li><span>ب)</span>بيانات الاعتماد الصادرة عن <span class="en">STS</span> عند تقمّص دور</li><li><span>ج)</span>كلمة مرور لوحة التحكم</li><li><span>د)</span>مفتاح <span class="en">SSH</span> المخزّن على السيرفر</li></ol></div>
+  <div class="q"><span class="qn">٢.</span>سياسة هوية تسمح بـ<span class="en">s3:GetObject</span> على حاوية، وسياسة الحاوية ترفض صراحةً كلّ طلب من خارج نقطة نهاية محدّدة. طلب يأتي من خارجها. ما النتيجة؟
+    <ol><li><span>أ)</span>سماح، لأن سياسة الهوية أُرفقت مباشرةً بالهوية</li><li><span>ب)</span>سماح، لأن سياسة المورد لا تنطبق على هويات الحساب نفسه</li><li><span>ج)</span>رفض، لأن الرفض الصريح يتغلّب على أيّ سماح</li><li><span>د)</span>رفض ضمنيّ، لأن سياسة الحاوية لا تحتوي سماحاً</li></ol></div>
+  <div class="q"><span class="qn">٣.</span>ما الذي يجعل <span class="en">IMDSv2</span> أصعب استغلالاً عبر <span class="en">SSRF</span>؟
+    <ol><li><span>أ)</span>تشفير الاتصال بين التطبيق والخدمة</li><li><span>ب)</span>اشتراط رمز جلسة يُطلب بـ<span class="en">PUT</span> ويُرسل في ترويسة كلّ طلب</li><li><span>ج)</span>نقل الخدمة إلى عنوان سرّي يتغيّر دورياً</li><li><span>د)</span>اشتراط <span class="en">MFA</span> قبل إعطاء بيانات الاعتماد</li></ol></div>
+  <div class="q"><span class="qn">٤.</span>أيّ العبارات التالية صحيحة عن مجموعات <span class="en">IAM</span>؟
+    <ol><li><span>أ)</span>يمكن إضافة دور إلى مجموعة ليرث سياساتها</li><li><span>ب)</span>يمكن أن تحتوي مجموعة على مجموعة أخرى</li><li><span>ج)</span>المجموعة تضمّ مستخدمين فقط، ولا تُذكر بصفتها <span class="en">Principal</span> في سياسة مورد</li><li><span>د)</span>المجموعة تحصل على بيانات اعتماد خاصة بها</li></ol></div>
+  <div class="q"><span class="qn">٥.</span>ما وصف <span class="en">ISO/IEC 27017</span> الأدقّ؟
+    <ol><li><span>أ)</span>معيار نظام إدارة قابل للشهادة يحلّ محلّ <span class="en">27001</span> للسحابة</li><li><span>ب)</span>مدوّنة ممارسات تضيف ضوابط للسحابة، وتُعتمد بتوسيع نطاق شهادة <span class="en">27001</span></li><li><span>ج)</span>معيار لحماية البيانات الشخصية لدى المعالِج</li><li><span>د)</span>تقرير تدقيق يصدره محاسب قانونيّ</li></ol></div>
+  <div class="q"><span class="qn">٦.</span>عميل يريد دليلاً على أن ضوابط المزوّد عملت فعلاً خلال السنة الماضية. ماذا يطلب؟
+    <ol><li><span>أ)</span>تقرير <span class="en">SOC 2 Type I</span></li><li><span>ب)</span>تقرير <span class="en">SOC 2 Type II</span></li><li><span>ج)</span>استبيان <span class="en">CAIQ</span> من المستوى الأول في <span class="en">STAR</span></li><li><span>د)</span>نسخة من اتفاقية مستوى الخدمة</li></ol></div>
+  <div class="q"><span class="qn">٧.</span>ما مهلة إبلاغ السلطة الرقابية عن خرق البيانات الشخصية في <span class="en">GDPR</span>؟
+    <ol><li><span>أ)</span>٦ ساعات</li><li><span>ب)</span>٢٤ ساعة</li><li><span>ج)</span>٧٢ ساعة من العلم بالخرق</li><li><span>د)</span>١٤ يوماً</li></ol></div>
+  <div class="q"><span class="qn">٨.</span>في قانون الأمن السيبراني الماليزي ٢٠٢٤، متى يجب تقديم التقرير التفصيليّ الأوّل عن الحادثة؟
+    <ol><li><span>أ)</span>فوراً، ولا يوجد تقرير لاحق</li><li><span>ب)</span>خلال ٦ ساعات من الاكتشاف، بعد الإخطار الفوريّ</li><li><span>ج)</span>خلال ٧٢ ساعة كما في <span class="en">GDPR</span></li><li><span>د)</span>خلال ١٤ يوماً فقط</li></ol></div>
+
+  <h3 class="sec"><span class="num">ب</span>صحّ أو خطأ</h3>
+  <div class="tf"><span>١. حذف الـ<span class="en">commit</span> الذي يحتوي المفتاح من المستودع العامّ يزيل خطر التسريب.</span><span class="bx"><span><i></i>صحّ</span><span><i></i>خطأ</span></span></div>
+  <div class="tf"><span>٢. إعداد جدار <span class="en">WAF</span> على سيرفر <span class="en">EC2</span> مسؤولية العميل في نموذج المسؤولية المشتركة.</span><span class="bx"><span><i></i>صحّ</span><span><i></i>خطأ</span></span></div>
+  <div class="tf"><span>٣. الرفض الضمنيّ يمكن أن يُبطله سماح صريح.</span><span class="bx"><span><i></i>صحّ</span><span><i></i>خطأ</span></span></div>
+  <div class="tf"><span>٤. رموز <span class="en">SMS</span> نوع من المصادقة المقاومة للتصيّد.</span><span class="bx"><span><i></i>صحّ</span><span><i></i>خطأ</span></span></div>
+  <div class="tf"><span>٥. المستوى الأول في برنامج <span class="en">STAR</span> يتطلّب مدقّقاً خارجياً.</span><span class="bx"><span><i></i>صحّ</span><span><i></i>خطأ</span></span></div>
+  <div class="tf"><span>٦. توفّر شهريّ ٩٩٫٩٪ يسمح بنحو ٤٣ دقيقة توقّف في شهر من ٣٠ يوماً.</span><span class="bx"><span><i></i>صحّ</span><span><i></i>خطأ</span></span></div>
+
+  <h3 class="sec"><span class="num">ج</span>إجابة قصيرة</h3>
+  <div class="q"><span class="qn">١.</span>اشرح كيف كان مبدأ أقلّ صلاحية سيغيّر نتيجة حادثة <span class="enw">Capital One</span>، واذكر أداتين في <span class="en">AWS</span> تساعدان في تطبيقه.<span class="blank"></span><span class="blank"></span></div>
+  <div class="q"><span class="qn">٢.</span>طلب من حساب عضو في منظمة: سياسة <span class="en">SCP</span> تسمح، وسياسة الهوية تسمح، وسياسة الحاوية لا تذكر هذا الطلب. ما النتيجة؟ وماذا لو أُضيفت حدود صلاحيات لا تتضمّن الإجراء؟<span class="blank"></span><span class="blank"></span></div>
+  <div class="q"><span class="qn">٣.</span>ما الفرق بين إقامة البيانات وسيادة البيانات؟ أعطِ مثالاً تكون فيه البيانات مقيمة في دولة وخاضعة لقانون دولة أخرى.<span class="blank"></span><span class="blank"></span></div>
+
+  <h3 class="sec"><span class="num">د</span>الواجب</h3>
+  <div class="hw">
+    <div class="hw-head"><span class="hw-num">١</span><span class="hw-title">سياستان وثلاثة طلبات</span><span class="lv mid">متوسط</span></div>
+    <p>تطبيق تقارير يعمل على سيرفر <span class="en">EC2</span> ويحتاج قراءة الملفات تحت المسار <span class="en">monthly/</span> فقط من الحاوية <span class="en">acme-reports</span>. المطلوب: سياسة هوية للدور بأقلّ صلاحية، وسياسة حاوية ترفض كلّ طلب لا يمرّ عبر نقطة النهاية <span class="en">vpce-1a2b3c</span>.</p>
+    <p>ثم تتبّع منطق التقييم لثلاثة طلبات، وحدّد لكلّ منها النتيجة والبوابة التي حسمتها: (أ) قراءة <span class="en">monthly/oct.pdf</span> من داخل الشبكة، (ب) قراءة <span class="en">monthly/oct.pdf</span> من حاسوب منزليّ بالبيانات نفسها، (ج) قراءة <span class="en">annual/2025.pdf</span> من داخل الشبكة.</p>
+    <p class="hw-cond"><b>شروط تُفحَص:</b> لا يحتوي أيّ سطر على <span class="en">*</span> في <span class="en">Action</span>. والواجب ناقص إذا نُسب رفض الطلبين (ب) و(ج) إلى السبب نفسه، فأحدهما رفض صريح والآخر رفض ضمنيّ.</p>
+    <div class="hw-del"><span class="t">المُسلَّم</span><span>ملفّ <span class="en">JSON</span> للسياستين، وجدول من ثلاثة أسطر للطلبات.</span></div>
+  </div>
+  <div class="hw">
+    <div class="hw-head"><span class="hw-num">٢</span><span class="hw-title">مذكّرة الساعات الستّ</span><span class="lv hard">متقدّم</span></div>
+    <p>أنت مسؤول أمن المعلومات في مصرف ماليزيّ يخدم عملاء في ماليزيا وألمانيا. اكتُشف في الثانية فجراً تسريب يشبه حادثة المحاكاة. اكتب مذكّرة من صفحة واحدة إلى مجلس الإدارة تتضمّن: جدولاً زمنياً لالتزامات الإبلاغ تحت القوانين الثلاثة مع الجهة والمهلة، وقرار إبلاغ العملاء مع تبريره، وثلاثة مخاطر تُضاف إلى سجلّ المخاطر بدرجتها قبل الضوابط وبعدها، والبند الذي يجب مراجعته في عقد المزوّد.</p>
+    <p class="hw-cond"><b>شروط تُفحَص:</b> المذكّرة ناقصة إذا قرّرت إبلاغ كلّ العملاء أو عدم إبلاغ أحد دون ربط القرار بمعيار الضرر في كلّ قانون. وإذا تبيّن أن أحد القوانين لا ينطبق في رأيك، فذلك مقبول بشرط التعليل.</p>
+    <div class="hw-del"><span class="t">المُسلَّم</span><span>مذكّرة بصيغة <span class="en">PDF</span>، صفحة واحدة، مع جدول المخاطر.</span></div>
+  </div>
+
+  <div class="page-nav"><button class="nav-btn" data-go="6">→ السابق</button><button class="nav-btn" data-go="8">التالي: الحلول ←</button></div>
+</div></section>
+<!-- ============ END SLIDE review ============ -->
+
+<!-- ============ SLIDE solutions : الحلول ============ -->
+<section id="solutions" class="slide"><div class="wrap">
+  <span class="chip t">مفتاح الإجابة</span>
+  <h2 class="page-title">الحلول والتعليل</h2>
+  <svg class="underline" viewBox="0 0 180 14" preserveAspectRatio="none" aria-hidden="true"><path d="M3 9 Q45 2 90 8 T177 6" fill="none" stroke="var(--teal)" stroke-width="3" stroke-linecap="round"/></svg>
+  <p class="lead">لكلّ سؤال سبب صحّة الإجابة، وسبب خطأ الخيارات الأخرى، لأن الخيارات الخاطئة هي حيث يقيم سوء الفهم.</p>
+
+  <div class="sol-h">الاختيار من متعدّد</div>
+  <div class="sol"><p class="sq">١. أيّ أنواع بيانات الاعتماد تنتهي تلقائياً؟</p>
+    <div class="op bad"><span class="k">أ)</span><span>مفتاح الوصول دائم حتى يُلغى.</span></div>
+    <div class="op ok"><span class="k">ب)</span><span>بيانات <span class="en">STS</span> لها تاريخ انتهاء، من ١٥ دقيقة إلى ١٢ ساعة.</span></div>
+    <div class="op bad"><span class="k">ج)</span><span>كلمة المرور قد تخضع لسياسة تدوير، لكنها لا تنتهي ذاتياً كجلسة.</span></div>
+    <div class="op bad"><span class="k">د)</span><span>مفتاح <span class="en">SSH</span> ملفّ على القرص بلا عمر.</span></div>
+    <p class="why"><b>التعليل:</b> «أ» و«ج» و«د» كلّها أسرار طويلة الأمد يدير الإنسان عمرها، وهذا بالضبط ما يُنسى. المؤقت يموت وحده.</p></div>
+  <div class="sol"><p class="sq">٢. سماح في الهوية ورفض صريح في الحاوية</p>
+    <div class="op bad"><span class="k">أ)</span><span>مكان إرفاق السياسة لا يمنحها أولوية.</span></div>
+    <div class="op bad"><span class="k">ب)</span><span>سياسة المورد تنطبق على كلّ الهويات، بما فيها هويات الحساب.</span></div>
+    <div class="op ok"><span class="k">ج)</span><span>رفض صريح، ينهي التقييم.</span></div>
+    <div class="op bad"><span class="k">د)</span><span>النتيجة رفض فعلاً، لكن السبب خاطئ: وجود جملة <span class="en">Deny</span> يجعله صريحاً لا ضمنياً.</span></div>
+    <p class="why"><b>التعليل:</b> «د» هي الفخّ: إجابة صحيحة بسبب خاطئ. التمييز بين الصريح والضمنيّ مهمّ لأن الضمنيّ يُبطله أيّ سماح يُضاف لاحقاً، والصريح لا يُبطله شيء.</p></div>
+  <div class="sol"><p class="sq">٣. لماذا يصعب استغلال IMDSv2؟</p>
+    <div class="op bad"><span class="k">أ)</span><span>الاتصال داخل السيرفر نفسه، والتشفير لا يمنع السيرفر من سؤال نفسه.</span></div>
+    <div class="op ok"><span class="k">ب)</span><span>رمز الجلسة بـ<span class="en">PUT</span> وترويسة لا يستطيع أغلب <span class="en">SSRF</span> إرسالهما.</span></div>
+    <div class="op bad"><span class="k">ج)</span><span>العنوان ثابت ومعروف: <span class="en">169.254.169.254</span>.</span></div>
+    <div class="op bad"><span class="k">د)</span><span>الخدمة تخدم برامج لا بشراً.</span></div>
+    <p class="why"><b>التعليل:</b> الحماية في شكل الطلب لا في سرّيته. «ج» تخلط بين الإخفاء والأمن.</p></div>
+  <div class="sol"><p class="sq">٤. مجموعات IAM</p>
+    <div class="op bad"><span class="k">أ)</span><span>الأدوار لا تُضاف إلى مجموعات.</span></div>
+    <div class="op bad"><span class="k">ب)</span><span>المجموعات لا تتداخل.</span></div>
+    <div class="op ok"><span class="k">ج)</span><span>صحيح بشقّيه.</span></div>
+    <div class="op bad"><span class="k">د)</span><span>المجموعة ليست هوية، فلا بيانات اعتماد لها.</span></div>
+    <p class="why"><b>التعليل:</b> كلّ الخيارات الخاطئة تعامل المجموعة كهوية. هي أداة توزيع سياسات فقط.</p></div>
+  <div class="sol"><p class="sq">٥. ISO/IEC 27017</p>
+    <div class="op bad"><span class="k">أ)</span><span>لا يحلّ محلّ <span class="en">27001</span>، بل يُبنى عليه.</span></div>
+    <div class="op ok"><span class="k">ب)</span><span>مدوّنة ممارسات بسبعة ضوابط <span class="en">CLD</span>، تُعتمد بتوسيع نطاق <span class="en">27001</span>.</span></div>
+    <div class="op bad"><span class="k">ج)</span><span>هذا وصف <span class="en">27018</span>.</span></div>
+    <div class="op bad"><span class="k">د)</span><span>هذا وصف <span class="en">SOC 2</span>.</span></div>
+    <p class="why"><b>التعليل:</b> «ج» و«د» تخلطان بين أفراد العائلة، و«أ» تخطئ العلاقة: الإضافة لا الاستبدال.</p></div>
+  <div class="sol"><p class="sq">٦. دليل على عمل الضوابط خلال سنة</p>
+    <div class="op bad"><span class="k">أ)</span><span>النوع الأول لقطة في تاريخ واحد.</span></div>
+    <div class="op ok"><span class="k">ب)</span><span>النوع الثاني يختبر العمل الفعليّ خلال فترة.</span></div>
+    <div class="op bad"><span class="k">ج)</span><span>تقييم ذاتيّ بلا تحقّق خارجيّ.</span></div>
+    <div class="op bad"><span class="k">د)</span><span>الاتفاقية تعهّد بالتوفّر، لا دليل على ضوابط.</span></div>
+    <p class="why"><b>التعليل:</b> الكلمة المفتاحية «فعلاً» و«خلال». «ج» شفافية و«د» التزام، وكلاهما ليس دليلاً.</p></div>
+  <div class="sol"><p class="sq">٧. مهلة GDPR</p>
+    <div class="op bad"><span class="k">أ)</span><span>هذه مهلة التقرير التفصيليّ في القانون الماليزيّ للأمن السيبراني.</span></div>
+    <div class="op bad"><span class="k">ب)</span><span>لا وجود لها في <span class="en">GDPR</span>.</span></div>
+    <div class="op ok"><span class="k">ج)</span><span>المادة ٣٣: خلال ٧٢ ساعة من العلم.</span></div>
+    <div class="op bad"><span class="k">د)</span><span>مهلة التقرير الكامل في القانون الماليزيّ.</span></div>
+    <p class="why"><b>التعليل:</b> الخيارات الخاطئة مأخوذة من القانون الآخر عمداً، لاختبار التمييز بين القانونين.</p></div>
+  <div class="sol"><p class="sq">٨. التقرير التفصيليّ في قانون ٢٠٢٤</p>
+    <div class="op bad"><span class="k">أ)</span><span>الإخطار الفوريّ يتبعه تقريران.</span></div>
+    <div class="op ok"><span class="k">ب)</span><span>إخطار فوريّ، ثم ٦ ساعات، ثم ١٤ يوماً.</span></div>
+    <div class="op bad"><span class="k">ج)</span><span>خلط بـ<span class="en">GDPR</span> وإرشادات <span class="en">PDPA</span>.</span></div>
+    <div class="op bad"><span class="k">د)</span><span>١٤ يوماً للتقرير الكامل، لا الأوّل.</span></div>
+    <p class="why"><b>التعليل:</b> القانون يعمل على ثلاث مراحل، ولكلّ منها مهلتها.</p></div>
+
+  <div class="sol-h">صحّ أو خطأ</div>
+  <div class="sol"><p class="sq"><span class="tfk f">خطأ</span>١. حذف الـcommit يزيل الخطر</p><p class="why">التاريخ والنسخ والروبوتات. الإلغاء وحده يُبطل المفتاح.</p></div>
+  <div class="sol"><p class="sq"><span class="tfk t">صحّ</span>٢. إعداد WAF مسؤولية العميل</p><p class="why">كلّ ما يُبنى ويُعدّ داخل السحابة على العميل.</p></div>
+  <div class="sol"><p class="sq"><span class="tfk t">صحّ</span>٣. الرفض الضمنيّ يُبطله سماح</p><p class="why">الرفض الضمنيّ هو غياب السماح، فإذا وُجد سماح منطبق ولا رفض صريح، مرّ الطلب. أما الصريح فلا يُبطله شيء.</p></div>
+  <div class="sol"><p class="sq"><span class="tfk f">خطأ</span>٤. SMS مقاوم للتصيّد</p><p class="why">الرمز يمكن إدخاله في موقع مزيّف أو إملاؤه للمهاجم، ويتعرّض لتبديل الشريحة.</p></div>
+  <div class="sol"><p class="sq"><span class="tfk f">خطأ</span>٥. STAR المستوى الأول يتطلّب مدقّقاً</p><p class="why">المستوى الأول تقييم ذاتيّ. المدقّق يبدأ من المستوى الثاني.</p></div>
+  <div class="sol"><p class="sq"><span class="tfk t">صحّ</span>٦. ٩٩٫٩٪ ≈ ٤٣ دقيقة شهرياً</p><p class="why">٠٫١٪ من ٤٣٬٢٠٠ دقيقة = ٤٣٫٢ دقيقة.</p></div>
+
+  <div class="sol-h">إجابة قصيرة: نقاط التصحيح</div>
+  <div class="sol"><p class="sq">١. أقلّ صلاحية في حادثة Capital One</p>
+    <ul class="grading"><li>الثغرة وسرقة البيانات المؤقتة كانتا ستقعان، لكن ما يُسرق كان سيقتصر على ما يحتاجه الجدار (درجة).</li><li>ذكر أن الدور كان قادراً على سرد ونسخ أكثر من ٧٠٠ مجلد وحاوية (درجة).</li><li>أداتان من: <span class="en">IAM Access Analyzer</span>، معلومات آخر استعمال، حدود الصلاحيات، <span class="en">SCP</span> (درجة لكلّ أداة).</li></ul></div>
+  <div class="sol"><p class="sq">٢. SCP يسمح والهوية تسمح والحاوية صامتة</p>
+    <ul class="grading"><li>النتيجة سماح: داخل الحساب يكفي سماح الهوية، وصمت سياسة المورد لا يعني رفضاً (درجتان).</li><li>مع حدود صلاحيات لا تتضمّن الإجراء: رفض ضمنيّ، لأن الحدود تقاطع لا اتحاد (درجتان).</li><li>تُخصم درجة إذا وُصف الرفض الأخير بأنه صريح.</li></ul></div>
+  <div class="sol"><p class="sq">٣. الإقامة والسيادة</p>
+    <ul class="grading"><li>الإقامة موقع فعليّ يُختار تقنياً، والسيادة خضوع لقانون (درجتان).</li><li>مثال صحيح: بيانات في منطقة ماليزية لدى مزوّد أمريكيّ تبقى ضمن نطاق <span class="en">CLOUD Act</span>، أو ما يكافئه (درجتان).</li></ul></div>
+
+  <div class="sol-h">الواجب: معايير التصحيح</div>
+  <div class="sol"><p class="sq">الواجب ١</p>
+    <ul class="grading"><li>سياسة الهوية: <span class="en">s3:GetObject</span> على <span class="en">arn:aws:s3:::acme-reports/monthly/*</span> فقط.</li><li>سياسة الحاوية: <span class="en">Deny</span> مع <span class="en">StringNotEquals</span> على <span class="en">aws:SourceVpce</span>.</li><li>(أ) سماح: لا رفض صريح، وسماح الهوية ينطبق. (ب) رفض صريح عند البوابة الأولى. (ج) رفض ضمنيّ: لا رفض صريح لأن الطلب من الشبكة، ولا سماح لأن المسار خارج <span class="en">monthly/</span>.</li><li>الفخّ المصمَّم: من نسب (ب) و(ج) إلى السبب نفسه لم يميّز البوابتين.</li></ul></div>
+  <div class="sol"><p class="sq">الواجب ٢</p>
+    <ul class="grading"><li>الجدول الزمني: <span class="en">NACSA</span> فوراً ثم ٦ ساعات ثم ١٤ يوماً؛ مفوّض <span class="en">PDPA</span> خلال ٧٢ ساعة وفق الإرشادات؛ السلطة الألمانية خلال ٧٢ ساعة بموجب <span class="en">GDPR</span>.</li><li>قرار إبلاغ العملاء مربوط بمعيارين مختلفين: «خطر مرتفع» في <span class="en">GDPR</span>، و«ضرر جسيم» في <span class="en">PDPA</span>. تسريب أرقام حسابات يرجّح الإبلاغ في الحالتين.</li><li>ثلاثة مخاطر بدرجات قبل وبعد معقولة ومتّسقة مع مصفوفة المحاضرة.</li><li>بند العقد: مهلة إبلاغ المزوّد، أو حقّ التدقيق، أو موقع البيانات، مع التعليل.</li></ul></div>
+
+  <div class="sig">إعداد: د. أمير هادي · مادة Cloud Computing Security · جامعة الشعب</div>
+  <div class="page-nav"><button class="nav-btn" data-go="7">→ السابق</button><span></span></div>
+</div></section>
+<!-- ============ END SLIDE solutions ============ -->
+</main>
+
+<script src="vendor/three.min.js"></script>
+<script>
+(function(){
+const AR=new Intl.NumberFormat('ar-u-nu-arab');const ar=n=>AR.format(n);
+const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+
+/* ---------- tabs and routing ---------- */
+const tabs=[...document.querySelectorAll('.tab')],ids=tabs.map(t=>t.dataset.target);
+function show(id,push){if(!ids.includes(id))id='plan';
+  tabs.forEach(t=>t.classList.toggle('active',t.dataset.target===id));
+  document.querySelectorAll('.slide').forEach(s=>s.classList.toggle('active',s.id===id));
+  const t=tabs[ids.indexOf(id)];t.scrollIntoView({inline:'center',block:'nearest'});
+  if(push&&location.hash!=='#'+id)history.replaceState(null,'','#'+id);
+  window.scrollTo({top:0});if(id==='sim')window.__initSim&&window.__initSim();}
+tabs.forEach(t=>t.addEventListener('click',()=>show(t.dataset.target,1)));
+document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>show(ids[+b.dataset.go],1)));
+window.addEventListener('hashchange',()=>show(location.hash.slice(1)));
+
+/* ---------- font scale and theme ---------- */
+let fs=parseFloat(store.get('cbn:fs'))||1;const root=document.documentElement;
+const setFs=v=>{fs=Math.max(.85,Math.min(1.6,Math.round(v*100)/100));root.style.setProperty('--fs',fs);store.set('cbn:fs',fs)};setFs(fs);
+document.getElementById('fsUp').onclick=()=>setFs(fs+.1);document.getElementById('fsDown').onclick=()=>setFs(fs-.1);
+const th=store.get('cbn:theme');if(th)root.dataset.theme=th;
+document.getElementById('themeBtn').onclick=()=>{const dark=root.dataset.theme?root.dataset.theme==='dark':matchMedia('(prefers-color-scheme: dark)').matches;root.dataset.theme=dark?'light':'dark';store.set('cbn:theme',root.dataset.theme)};
+
+/* ---------- glossary ---------- */
+const gq=document.getElementById('gq'),gf=document.getElementById('gf'),terms=[...document.querySelectorAll('#gl .term')];let gsel='all';
+function gfilter(){const q=gq.value.trim().toLowerCase();let n=0;terms.forEach(t=>{const ok=(gsel==='all'||t.dataset.g===gsel)&&(!q||t.textContent.toLowerCase().includes(q));t.hidden=!ok;if(ok)n++});document.getElementById('gempty').hidden=n>0}
+gq.addEventListener('input',gfilter);
+gf.querySelectorAll('button').forEach(b=>b.onclick=()=>{gsel=b.dataset.g;gf.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));gfilter()});
+
+/* ---------- risk matrix ---------- */
+const RISKS=[
+ ['R1','مفتاح دائم مسرّب في مستودع عام',[4,4],[2,2],'بيانات مؤقتة وفحص الأسرار'],
+ ['R2','سوء إعداد جدار WAF يسمح بـSSRF',[4,4],[2,3],'إدارة الإعدادات وقائمة سماح'],
+ ['R3','سرقة بيانات السيرفر عبر IMDSv1',[3,5],[1,4],'فرض IMDSv2'],
+ ['R4','دور بصلاحيات تفوق حاجته',[3,5],[3,2],'أقلّ صلاحية: الأثر ينخفض والاحتمال يبقى'],
+ ['R5','حاويات بلا شرط شبكة',[3,5],[1,4],'رفض صريح خارج نقطة النهاية'],
+ ['R6','إرهاق MFA للحسابات المميّزة',[4,4],[1,4],'FIDO2: الاحتمال ينخفض والأثر يبقى']];
+const rm=document.getElementById('rm');let after=false;
+function lvl(l,i){const s=l*i;return s>=15?3:s>=8?2:1}
+function drawRM(){rm.innerHTML='';for(let i=5;i>=1;i--){const a=document.createElement('div');a.className='ax';a.textContent=ar(i);rm.appendChild(a);
+  for(let l=1;l<=5;l++){const c=document.createElement('div');c.className='cell lv'+lvl(l,i);c.title='الاحتمال '+ar(l)+' × الأثر '+ar(i)+' = '+ar(l*i);
+   RISKS.forEach(r=>{const p=after?r[3]:r[2];if(p[0]===l&&p[1]===i){const k=document.createElement('span');k.className='rk'+(after?' after':'');k.textContent=r[0];k.title=r[1];c.appendChild(k)}});rm.appendChild(c)}}
+ const e=document.createElement('div');e.className='ax';e.textContent='';rm.appendChild(e);for(let l=1;l<=5;l++){const a=document.createElement('div');a.className='ax';a.textContent=ar(l);rm.appendChild(a)}
+ document.getElementById('rmLeg').innerHTML='<div><b>المحور الأفقيّ:</b><span>الاحتمال من ١ إلى ٥ · <b>العموديّ:</b> الأثر من ١ إلى ٥ · الدرجة = الاحتمال × الأثر</span></div>'+RISKS.map(r=>{const p=after?r[3]:r[2];return `<div><span class="rk${after?' after':''}">${r[0]}</span><span>${r[1]} — الدرجة ${ar(p[0]*p[1])}${after?' · '+r[4]:''}</span></div>`}).join('')}
+document.getElementById('rmB').onclick=function(){after=false;this.setAttribute('aria-pressed',true);document.getElementById('rmA').setAttribute('aria-pressed',false);drawRM()};
+document.getElementById('rmA').onclick=function(){after=true;this.setAttribute('aria-pressed',true);document.getElementById('rmB').setAttribute('aria-pressed',false);drawRM()};
+drawRM();
+
+/* ---------- SLA calculator ---------- */
+const P=document.getElementById('slaP'),D=document.getElementById('slaD');
+const AR1=new Intl.NumberFormat('ar-u-nu-arab',{maximumFractionDigits:1}),AR3=new Intl.NumberFormat('ar-u-nu-arab',{maximumFractionDigits:3});
+function dur(m){if(m<120)return AR1.format(m)+' دقيقة';const h=m/60;if(h<48)return AR1.format(h)+' ساعة';return AR1.format(h/24)+' يوم'}
+function sla(){const p=+P.value,d=+D.value,M=43200;const allowM=M*(100-p)/100,allowY=525600*(100-p)/100,act=100*(M-d)/M;
+ const cr=act>=p?0:act>=99?10:act>=95?30:100;
+ document.getElementById('slaM').textContent=dur(allowM);document.getElementById('slaY').textContent=dur(allowY);
+ document.getElementById('slaA').textContent=AR3.format(act)+'٪';document.getElementById('slaC').textContent=cr?ar(cr)+'٪ من فاتورة الشهر':'لا شيء'}
+P.onchange=sla;D.onchange=sla;sla();
+
+show(location.hash.slice(1)||'plan');
+})();
+</script>
+<script>
+/* ---------- the 3D simulation, built on first open ---------- */
+window.__initSim=function(){if(window.__simOn)return;window.__simOn=1;
+if(!window.THREE){document.getElementById('stage').innerHTML='<div style="color:#b8cad6;padding:24px;line-height:1.9">تعذّر تحميل مكتبة الرسم ثلاثيّ الأبعاد. تأكّد من الاتصال بالإنترنت ثم أعد تحميل الصفحة، أو استعمل تبويب «شرح السيناريوهات».</div>';return}
+const AR=new Intl.NumberFormat('ar-u-nu-arab'),ar=n=>AR.format(n);
+const T=THREE,cv=document.getElementById('cv'),st=document.getElementById('stage');
+const R=new T.WebGLRenderer({canvas:cv,antialias:true});R.setPixelRatio(Math.min(devicePixelRatio,2));R.setClearColor(0x0b1620);
+const sc=new T.Scene();sc.fog=new T.Fog(0x0b1620,13,26);
+const cam=new T.PerspectiveCamera(40,1,0.1,60);
+sc.add(new T.HemisphereLight(0xcfe0ff,0x0b1620,0.6));const dl=new T.DirectionalLight(0xffffff,0.85);dl.position.set(4,9,6);sc.add(dl);
+const W=new T.Group();sc.add(W);
+const mat=(c,o={})=>new T.MeshStandardMaterial(Object.assign({color:c,roughness:.55,metalness:.25},o));
+const bx=(p,w,h,d,m,x=0,y=0,z=0)=>{const b=new T.Mesh(new T.BoxGeometry(w,h,d),m);b.position.set(x,y,z);p.add(b);return b};
+function ctex(w,h,draw){const c=document.createElement('canvas');c.width=w;c.height=h;const t=new T.CanvasTexture(c);t.draw=()=>{draw(c.getContext('2d'),w,h);t.needsUpdate=true};t.draw();return t}
+function sprite(txt,col,s=1){const t=ctex(512,96,(c,w,h)=>{c.clearRect(0,0,w,h);c.fillStyle='rgba(11,22,32,.88)';c.fillRect(0,0,w,h);c.strokeStyle=col;c.lineWidth=4;c.strokeRect(2,2,w-4,h-4);c.fillStyle=col;c.font='bold 44px monospace';c.textAlign='center';c.textBaseline='middle';c.fillText(txt,w/2,h/2)});const sp=new T.Sprite(new T.SpriteMaterial({map:t,depthWrite:false}));sp.scale.set(1.3*s,.245*s,1);return sp}
+function floorLabel(txt,col,x,z,w=2.4){const t=ctex(512,80,(c,W2,H)=>{c.clearRect(0,0,W2,H);c.fillStyle=col;c.font='bold 40px monospace';c.textBaseline='middle';c.fillText(txt,10,H/2)});const m=new T.Mesh(new T.PlaneGeometry(w,w*80/512),new T.MeshBasicMaterial({map:t,transparent:true,depthWrite:false}));m.rotation.x=-Math.PI/2;m.position.set(x,.03,z);W.add(m)}
+function zone(x1,x2,z1,z2,fill,edge,dash){const p=new T.Mesh(new T.PlaneGeometry(x2-x1,z2-z1),new T.MeshStandardMaterial({color:fill,roughness:.95}));p.rotation.x=-Math.PI/2;p.position.set((x1+x2)/2,.01,(z1+z2)/2);W.add(p);
+ const g=new T.BufferGeometry().setFromPoints([[x1,z1],[x2,z1],[x2,z2],[x1,z2],[x1,z1]].map(a=>new T.Vector3(a[0],.02,a[1])));const l=new T.Line(g,dash?new T.LineDashedMaterial({color:edge,dashSize:.2,gapSize:.12}):new T.LineBasicMaterial({color:edge}));l.computeLineDistances();W.add(l)}
+const base=new T.Mesh(new T.PlaneGeometry(40,40),mat(0x0c1822,{roughness:1}));base.rotation.x=-Math.PI/2;W.add(base);
+zone(-6.2,-2.6,-3.8,3.6,0x121a22,0x5F5E5A);floorLabel('INTERNET','#888780',-6.0,3.3);
+zone(-2.4,6.4,-3.8,3.6,0x101f2b,0xEF9F27);floorLabel('AWS CLOUD · us-east-1','#EF9F27',-2.2,3.3,3.4);
+zone(-2.1,1.7,-0.1,2.9,0x0f2a2e,0x3cc2b8,1);floorLabel('VPC 10.0.0.0/16','#5DCAA5',-1.9,2.65,2.2);
+floorLabel('IAM · GLOBAL','#FAC775',-0.6,-3.5,1.8);floorLabel('S3 · REGIONAL','#F0997B',4.0,-3.5,1.8);
+const N={},leds=[];
+function node(k,x,z,t,yl,r){const g=new T.Group();g.position.set(x,0,z);W.add(g);N[k]={g,t,yl,r,s:0,want:0};return g}
+{const g=node('net',-4.6,1.6,'المهاجم',1.65,.8);
+ const bm=mat(0x1b1f24,{roughness:.9});const body=new T.Mesh(new T.CylinderGeometry(.22,.42,1.1,20),bm);body.position.y=.55;g.add(body);
+ const hd=new T.Mesh(new T.SphereGeometry(.27,20,16,0,Math.PI*2,0,Math.PI*.62),mat(0x1b1f24,{roughness:.9,side:T.DoubleSide}));hd.position.y=1.28;g.add(hd);
+ const fc=new T.Mesh(new T.SphereGeometry(.17,16,12),mat(0x050608));fc.position.set(0,1.24,.07);g.add(fc);
+ bx(g,.6,.6,.4,mat(0x2a2f36),0,.3,.62);bx(g,.55,.03,.36,mat(0x9aa0a8,{metalness:.6}),0,.62,.62);
+ const lid=new T.Group();lid.position.set(0,.63,.8);lid.rotation.x=.3;g.add(lid);bx(lid,.55,.36,.02,mat(0x9aa0a8,{metalness:.6}),0,.18,0);
+ const scr=new T.Mesh(new T.PlaneGeometry(.5,.32),new T.MeshBasicMaterial({color:0xff3b30}));scr.position.set(0,.18,-.012);scr.rotation.y=Math.PI;lid.add(scr);
+ const pl=new T.PointLight(0xff3b30,1.3,3);pl.position.set(0,.9,.4);g.add(pl);}
+{const g=node('git',-4.6,-1.8,'مستودع GitHub عام',1.55,.9);g.rotation.y=.45;
+ bx(g,1.3,.62,.8,mat(0x3a3f47),0,.31,0);bx(g,1.12,.04,.72,mat(0xb7bcc4,{metalness:.6}),0,.64,0);
+ const sg=new T.Group();sg.position.set(0,.66,-.34);sg.rotation.x=-.28;g.add(sg);bx(sg,1.12,.72,.03,mat(0xb7bcc4,{metalness:.6}),0,.36,0);
+ const code=ctex(512,330,(c,w,h)=>{c.fillStyle='#0d1117';c.fillRect(0,0,w,h);c.fillStyle='#161b22';c.fillRect(0,0,w,34);c.fillStyle='#c9d1d9';c.font='18px monospace';c.fillText('acme/app · public · config.yml',14,23);
+  const ls=[['region: us-east-1','#c9d1d9'],['bucket: customer-data','#c9d1d9'],['aws_access_key_id:','#ff7b72'],['  AKIA****EXAMPLE','#ff7b72'],['aws_secret_access_key:','#ff7b72'],['  wJal****EXAMPLEKEY','#ff7b72'],['$ git push origin main','#7ee787']];
+  ls.forEach((l,i)=>{if(l[1]=='#ff7b72'){c.fillStyle='rgba(255,123,114,.16)';c.fillRect(0,48+i*38,w,34)}c.fillStyle=l[1];c.font='20px monospace';c.fillText(l[0],14,72+i*38)})});
+ const sp=new T.Mesh(new T.PlaneGeometry(1.02,.65),new T.MeshBasicMaterial({map:code}));sp.position.set(0,.36,.02);sg.add(sp);}
+{const g=node('adm',-3.4,-3.0,'هاتف المدير',1.35,.7);
+ bx(g,.55,.1,.4,mat(0x2a2f36),0,.05,0);const ph=new T.Group();ph.position.set(0,.1,0);ph.rotation.x=-.2;g.add(ph);
+ bx(ph,.52,1.0,.06,mat(0x15181c,{metalness:.6,roughness:.3}),0,.5,0);
+ const pt=ctex(256,512,(c,w,h)=>{c.fillStyle='#0b0d10';c.fillRect(0,0,w,h);c.fillStyle='#fff';c.font='bold 30px sans-serif';c.textAlign='center';c.fillText('02:14',w/2,60);
+  for(let i=0;i<4;i++){c.fillStyle='rgba(255,255,255,.13)';c.fillRect(16,96+i*90,w-32,78);c.fillStyle='#fff';c.font='bold 19px sans-serif';c.fillText('Approve sign-in?',w/2,128+i*90);c.fillStyle='#8be28b';c.font='17px sans-serif';c.fillText('Approve        Deny',w/2,158+i*90)}
+  c.fillStyle='#ff6b6b';c.font='bold 22px sans-serif';c.fillText('+36 more requests',w/2,h-26)});
+ const ps=new T.Mesh(new T.PlaneGeometry(.46,.92),new T.MeshBasicMaterial({map:pt}));ps.position.set(0,.5,.032);ph.add(ps);}
+{const g=node('waf',-1.3,1.2,'جدار WAF',1.75,.85);g.rotation.y=Math.PI/2;
+ const fm=mat(0x534AB7,{metalness:.5,roughness:.35});bx(g,.14,1.5,.14,fm,-.55,.75,0);bx(g,.14,1.5,.14,fm,.55,.75,0);bx(g,1.24,.14,.14,fm,0,1.5,0);bx(g,1.4,.06,.5,mat(0x2a2f36),0,.03,0);
+ for(let k=0;k<5;k++)bx(g,.96,.02,.02,new T.MeshBasicMaterial({color:0xAFA9EC}),0,.3+k*.25,0);
+ const sh=new T.Mesh(new T.CircleGeometry(.16,6),new T.MeshBasicMaterial({color:0xCECBF6,side:T.DoubleSide}));sh.position.set(0,1.5,.08);g.add(sh);}
+{const g=node('ec2',.5,1.2,'سيرفر EC2',2.55,.8);
+ bx(g,.9,2.0,.8,mat(0x22272e,{metalness:.5}),0,1.0,0);
+ for(let u=0;u<6;u++){bx(g,.8,.22,.04,mat(0x3a414b,{metalness:.6}),0,.35+u*.28,-.41);bx(g,.3,.06,.02,mat(0x111418),.18,.35+u*.28,-.44);for(let k=0;k<3;k++)leds.push(bx(g,.04,.04,.02,new T.MeshBasicMaterial({color:k?0x1D9E75:0x378ADD}),-.3+k*.07,.35+u*.28,-.44))}}
+{const g=node('imds',.5,1.2,'IMDS داخل السيرفر',2.95,.55);g.position.y=2.0;
+ bx(g,.5,.08,.5,mat(0x0e0f12,{roughness:.4}),0,.06,0);const gold=mat(0xd4af37,{metalness:.9,roughness:.3});
+ for(let k=-2;k<=2;k++){bx(g,.04,.03,.1,gold,k*.09,.03,.29);bx(g,.04,.03,.1,gold,k*.09,.03,-.29);bx(g,.1,.03,.04,gold,.29,.03,k*.09);bx(g,.1,.03,.04,gold,-.29,.03,k*.09)}
+ const lab=ctex(256,256,(c)=>{c.fillStyle='#0e0f12';c.fillRect(0,0,256,256);c.fillStyle='#c9d1d9';c.font='bold 46px monospace';c.textAlign='center';c.fillText('IMDS',128,118);c.font='22px monospace';c.fillText('169.254.169.254',128,166)});
+ const tp=new T.Mesh(new T.PlaneGeometry(.46,.46),new T.MeshBasicMaterial({map:lab}));tp.rotation.x=-Math.PI/2;tp.position.y=.105;g.add(tp);}
+let tagOk=false,tagTex;{const g=node('role',.6,-2.0,'دور IAM',1.85,.8);
+ const ped=new T.Mesh(new T.CylinderGeometry(.32,.4,.55,24),mat(0x2a2f36));ped.position.y=.27;g.add(ped);
+ const kg=new T.Group();kg.position.y=1.0;g.add(kg);N.role.key=kg;const gold=mat(0xd9a520,{metalness:.85,roughness:.25});
+ kg.add(new T.Mesh(new T.TorusGeometry(.2,.06,16,40),gold));const shf=new T.Mesh(new T.CylinderGeometry(.045,.045,.75,16),gold);shf.rotation.z=Math.PI/2;shf.position.x=.57;kg.add(shf);
+ bx(kg,.06,.16,.05,gold,.82,-.09,0);bx(kg,.06,.11,.05,gold,.92,-.07,0);
+ tagTex=ctex(256,110,(c,w,h)=>{c.fillStyle=tagOk?'#E1F5EE':'#FCEBEB';c.fillRect(0,0,w,h);c.fillStyle=tagOk?'#085041':'#791F1F';c.font='bold 30px monospace';c.textAlign='center';c.textBaseline='middle';c.fillText(tagOk?'s3:GetObject':'s3:*  on  *',w/2,h/2)});
+ const tag=new T.Mesh(new T.PlaneGeometry(.5,.21),new T.MeshBasicMaterial({map:tagTex,side:T.DoubleSide}));tag.position.set(-.05,-.38,0);kg.add(tag);}
+{const g=node('pol',3.0,-.4,'تقييم السياسات',1.95,1.4);
+ [[0xE24B4A,'1 Explicit Deny','#F09595'],[0x1D9E75,'2 Allow','#5DCAA5'],[0x888780,'3 Implicit Deny','#B4B2A9']].forEach((a,k)=>{const m=mat(a[0],{emissive:a[0],emissiveIntensity:.25});const x=-0.8+k*.8;
+  bx(g,.1,1.1,.1,m,x,.55,-.35);bx(g,.1,1.1,.1,m,x,.55,.35);bx(g,.12,.1,.82,m,x,1.12,0);const s=sprite(a[1],a[2],.7);s.position.set(x,1.45+(k%2)*.22,0);g.add(s)});}
+{const g=node('s3',5.0,-.4,'S3 · 700 حاوية',1.35,1.3);const bm=mat(0xC8553D,{roughness:.5,side:T.DoubleSide});
+ const lt=ctex(128,64,(c,w,h)=>{c.fillStyle='#C8553D';c.fillRect(0,0,w,h);c.fillStyle='#fff';c.font='bold 34px sans-serif';c.textAlign='center';c.textBaseline='middle';c.fillText('S3',w/2,h/2)});
+ for(let r=0;r<2;r++)for(let c=0;c<3;c++){const b=new T.Group();b.position.set(-0.4+r*.85,0,-0.8+c*.8);g.add(b);
+  const cy=new T.Mesh(new T.CylinderGeometry(.32,.24,.6,28,1,true),bm);cy.position.y=.3;b.add(cy);
+  const rim=new T.Mesh(new T.TorusGeometry(.32,.03,8,28),mat(0xe8e2d8,{metalness:.6}));rim.rotation.x=Math.PI/2;rim.position.y=.6;b.add(rim);
+  const dat=new T.Mesh(new T.CylinderGeometry(.29,.24,.42,24),mat(0x5DCAA5,{emissive:0x0F6E56,emissiveIntensity:.4}));dat.position.y=.22;b.add(dat);
+  const lp=new T.Mesh(new T.PlaneGeometry(.26,.13),new T.MeshBasicMaterial({map:lt}));lp.position.set(-.29,.32,0);lp.rotation.y=-Math.PI/2;b.add(lp)}}
+const L={};for(const k in N){const d=document.createElement('div');d.className='lb';d.textContent=N[k].t;st.appendChild(d);L[k]=d}
+const S=[
+{tg:'git',vis:['net','git'],p:[[-4.6,1.1,1.6],[-5.0,2.3,0],[-4.6,1.0,-1.6]],t:'مفتاح منسيّ على GitHub',s:'الساعة ٠٢:١٤ فجراً. مطوّر رفع ملف إعدادات فيه مفتاح وصول دائم إلى مستودع عام. خلال دقائق التقطته روبوتات تفحص GitHub بحثاً عن مفاتيح AWS.',
+ o:[['حذف الـcommit من المستودع',0,'الحذف لا يكفي. المفتاح بقي صالحاً، وتاريخ git ونسخ المستودع موجودة عند غيرك.'],['إلغاء المفتاح فوراً وتدويره، واستبداله ببيانات اعتماد مؤقتة',1,'صحيح. المفتاح الدائم هو المشكلة. الحل إلغاؤه، ثم مراجعة CloudTrail، ثم الاعتماد على أدوار ببيانات قصيرة العمر.'],['جعل المستودع خاصاً',0,'المفتاح سُرق بالفعل، وتغيير ظهور المستودع لا يُبطل صلاحيته.']],
+ n:'أشر إلى السطرين الأحمرين على اللابتوب. المفتاح يبدأ بـAKIA أي دائم. السؤال بعد القرار: لماذا لا يكفي حذف الـcommit؟ الجواب: تاريخ git والنسخ والروبوتات.'},
+{tg:'waf',vis:['net','waf','ec2'],p:[[-4.6,1.1,1.6],[-3.0,1.9,1.4],[-1.3,.9,1.2],[.0,.9,1.2]],t:'ثغرة SSRF في جدار WAF',s:'المهاجم يرسل طلباً عبر جدار حماية تطبيقات الويب. خطأ في إعداد الجدار يجعل السيرفر يرسل طلبات نيابة عن المهاجم إلى عناوين داخلية.',
+ o:[['إغلاق المنفذ 443 أمام الإنترنت',0,'هذا يوقف الموقع كلّه. الحماية يجب أن تحافظ على التوفّر، وهو جزء من اتفاقية مستوى الخدمة.'],['تجاهلها لأن السيرفر خلف جدار ناري',0,'الجدار الناري لا يرى الطلب لأنه يخرج من داخل السيرفر نفسه.'],['تصحيح قاعدة الـWAF والتحقّق من العناوين التي يطلبها التطبيق',1,'صحيح. أصل المشكلة سوء إعداد، وهو مسؤولية العميل في نموذج المسؤولية المشتركة.']],
+ n:'تشبيه موظف الاستقبال. سؤال الجدل: من المسؤول، AWS أم البنك؟ الجواب: البنك. احتفظ بالجواب لجدول المسؤولية المشتركة.'},
+{tg:'imds',vis:['ec2','imds'],p:[[.0,1.0,1.2],[-.4,2.0,1.9],[.5,2.4,1.5],[.5,2.15,1.2]],t:'سرقة بيانات الاعتماد من IMDS',s:'السيرفر نفسه يطلب العنوان 169.254.169.254 نيابة عن المهاجم، فيعيد له بيانات الاعتماد المؤقتة لدور السيرفر.',
+ o:[['فرض IMDSv2 الذي يتطلب رمز جلسة بطلب PUT',1,'صحيح. IMDSv2 يمنع هذا النمط من SSRF، لأن المهاجم لا يستطيع إنشاء الرمز بطلب GET بسيط.'],['تمديد عمر بيانات الاعتماد المؤقتة',0,'العكس تماماً. العمر الأطول يعطي المهاجم وقتاً أكثر.'],['تفعيل MFA على الدور',0,'الأدوار التي تستعملها الخدمات لا يجلس خلفها إنسان يكتب رمزاً.']],
+ n:'قرّب المشهد على الشريحة حتى يُقرأ العنوان. اذكر أن IMDSv2 أُطلق في تشرين الثاني ٢٠١٩، بعد الحادثة بأشهر.'},
+{tg:'role',vis:['ec2','imds','role'],p:[[.5,2.2,1.2],[.6,3.0,-.4],[.6,1.1,-1.9]],t:'دور بصلاحيات منتفخة',s:'المهاجم يحمل الآن مفتاح الدور. على البطاقة مكتوب s3:* على كلّ الموارد، مع أن التطبيق يحتاج قراءة حاوية واحدة فقط.',
+ o:[['إعطاء الدور AdministratorAccess لتسهيل العمل',0,'هذا يحوّل التسريب إلى سيطرة كاملة على الحساب.'],['تقليص السياسة إلى s3:GetObject على حاوية واحدة',1,'صحيح. أقلّ صلاحية تحدّد حجم الضرر. لو طُبّقت لتسرّبت حاوية واحدة بدل ٧٠٠.'],['إضافة الدور إلى مجموعة IAM',0,'الأدوار لا تُضاف إلى المجموعات، فالمجموعات للمستخدمين فقط.']],
+ n:'أهمّ مرحلة. بعد الجواب الصحيح أشر إلى البطاقة وهي تخضرّ: الثغرة باقية، والمفتاح مسروق، وما تغيّر هو ما يستطيع المفتاح فعله. اطلب متطوّعاً يملي أصغر سياسة.'},
+{tg:'pol',vis:['role','pol','s3'],p:[[.6,1.1,-1.9],[1.6,1.6,-1.2],[2.0,.65,-.4],[3.0,.65,-.4],[4.4,.75,-.4]],t:'بوابات تقييم السياسات',s:'الطلب يصل إلى S3. سياسة الهوية تقول Allow على s3:*، وسياسة الحاوية فيها رفض صريح لأيّ طلب من خارج شبكة الشركة. الطلب جاء من خارجها.',
+ o:[['يُسمح، لأن سياسة الهوية فيها Allow',0,'السماح لا يتغلّب على رفض صريح أبداً.'],['يُرفض عند البوابة الأولى، لأن الرفض الصريح يتغلّب على كلّ سماح',1,'صحيح. الترتيب: رفض صريح، ثم سماح، ثم رفض ضمنيّ. لو وُجدت هذه السياسة فعلاً لتوقّف الهجوم هنا.'],['يعتمد على أيّ سياسة أُنشئت أولاً',0,'ترتيب الإنشاء لا يهمّ في تقييم السياسات.']],
+ n:'قل إنها مرحلة «ماذا لو»: الشرط لم يكن موجوداً في الحادثة. بعد الجواب الصحيح الكرة تتوقّف عند البوابة الأولى.'},
+{tg:'adm',vis:['net','adm'],p:[[-4.6,1.1,1.6],[-4.4,2.2,-.6],[-3.4,1.0,-2.9]],t:'إرهاق MFA للمدير',s:'لتوسيع الوصول، يرسل المهاجم ٤٠ إشعار موافقة إلى هاتف المدير في منتصف الليل، ثم يتصل منتحلاً صفة الدعم الفني.',
+ o:[['MFA مقاوم للتصيّد مثل FIDO2 أو مطابقة الأرقام',1,'صحيح. مطابقة الأرقام ومفاتيح FIDO2 تكسر هذا الهجوم، لأن الضغط على «موافقة» وحده لا يكفي.'],['التحويل إلى رموز SMS',0,'SMS أضعف، ويتعرّض لتبديل الشريحة، ويمكن إملاؤه للمهاجم عبر الهاتف.'],['تدريب المدير على عدم الضغط فقط',0,'التوعية مهمّة، لكنها لا تكفي وحدها ضابطاً تقنياً.']],
+ n:'هذه من نمط Uber ٢٠٢٢ لا من قصة البنك. اسأل: كم واحداً منكم سيضغط في الثانية فجراً؟'}
+];
+const LEG=[['GDPR','إبلاغ السلطة خلال ٧٢ ساعة. الغرامة حتى ٢٠ مليون يورو أو ٤٪ من الإيراد العالمي.'],['PDPA الماليزي (تعديل ٢٠٢٤)','إبلاغ المفوّض خلال ٧٢ ساعة وفق الإرشادات. الغرامة حتى مليون رنغيت و/أو ٣ سنوات سجناً.'],['قانون الأمن السيبراني ٢٠٢٤','للبنى التحتية الحرجة: إبلاغ فوريّ، ثم تقرير خلال ٦ ساعات، ثم تقرير كامل خلال ١٤ يوماً.']];
+S.forEach(s=>{s.c=new T.CatmullRomCurve3(s.p.map(a=>new T.Vector3(...a)));s.tube=new T.Mesh(new T.TubeGeometry(s.c,60,.025,6),new T.MeshBasicMaterial({color:0xff3b30,transparent:true,opacity:.8}));s.tube.visible=false;W.add(s.tube)});
+const pk=new T.Group();W.add(pk);const core=new T.Mesh(new T.SphereGeometry(.1,16,12),new T.MeshBasicMaterial({color:0xff3b30}));pk.add(core);pk.add(new T.PointLight(0xff3b30,1.5,2.5));
+const trail=[];for(let j=0;j<10;j++){const m=new T.Mesh(new T.SphereGeometry(.065*(1-j/12),10,8),new T.MeshBasicMaterial({color:0xff3b30,transparent:true,opacity:.5*(1-j/10)}));W.add(m);trail.push(m)}
+const shields={},alarms={};
+function shield(k){const n=N[k];const g=new T.SphereGeometry(n.r,32,16,0,Math.PI*2,0,Math.PI/2);const s=new T.Mesh(g,new T.MeshBasicMaterial({color:0x5DCAA5,transparent:true,opacity:.14,side:T.DoubleSide,depthWrite:false}));s.add(new T.Mesh(g,new T.MeshBasicMaterial({color:0x5DCAA5,wireframe:true,transparent:true,opacity:.3})));s.scale.setScalar(.01);n.g.add(s);shields[k]=s}
+function alarm(k){const ms=[];N[k].g.traverse(o=>{if(o.isMesh&&o.material.isMeshStandardMaterial){o.material=o.material.clone();o.material.emissive=new T.Color(0xE24B4A);ms.push(o.material)}});alarms[k]=ms}
+const flow=[];let flowC=null;
+let yaw=.75,pitch=.62,dist=9,drag=null;const tgt=new T.Vector3(0,.6,0),want=tgt.clone();let wantD=9;
+st.addEventListener('pointerdown',e=>{drag=[e.clientX,e.clientY,yaw,pitch];st.setPointerCapture(e.pointerId);st.style.cursor='grabbing'});
+st.addEventListener('pointermove',e=>{if(!drag)return;yaw=drag[2]-(e.clientX-drag[0])*.008;pitch=Math.max(.2,Math.min(1.25,drag[3]+(e.clientY-drag[1])*.005))});
+st.addEventListener('pointerup',()=>{drag=null;st.style.cursor='grab'});
+st.addEventListener('wheel',e=>{e.preventDefault();wantD=Math.max(4,Math.min(16,wantD+e.deltaY*.01))},{passive:false});
+function size(){const w=st.clientWidth,h=st.clientHeight;if(!w||!h)return;R.setSize(w,h,false);cv.style.width=w+'px';cv.style.height=h+'px';cam.aspect=w/h;cam.updateProjectionMatrix()}
+new ResizeObserver(size).observe(st);size();
+let cur=0,view=0,all=false,done=false,rec=0,blue=0,red=0,notes=false;const ans=[];let pkC=null,pkK=0,pkStop=1;const hist=[];
+const $=id=>document.getElementById(id);
+function frame(keys){const b=new T.Box3();keys.forEach(k=>b.expandByPoint(N[k].g.position.clone().setY(N[k].yl*.5)));const c=b.getCenter(new T.Vector3()),sz=b.getSize(new T.Vector3());want.copy(c);want.y=.7;wantD=Math.max(5.2,Math.max(sz.x,sz.z)*1.35+3.2)*Math.max(1,1.05/cam.aspect)}
+function scene(){const s=S[view];const keys=all?Object.keys(N):s.vis;
+ for(const k in N)N[k].want=keys.includes(k)?1:0;
+ S.forEach((x,j)=>x.tube.visible=all?(j<ans.length||j===cur):j===view);
+ if(all){want.set(.4,.6,-.1);wantD=12.5*Math.max(1,1.05/cam.aspect)}else frame(s.vis);
+ for(const k in L){const j=S.findIndex(x=>x.tg===k);const a=j>=0?ans[j]:undefined;L[k].className='lb'+(a!==undefined?(S[j].o[a][1]?' ok':' hot'):(k===s.tg&&!all?' hot':''))}
+ const a=ans[view];pk.visible=!done&&!all;pkC=s.c;pkK=0;hist.length=0;pkStop=a!==undefined&&s.o[a][1]?.82:1;
+ trail.forEach(m=>m.visible=pk.visible);
+ $('mode').textContent=all?'الخريطة الكاملة':'المرحلة '+ar(view+1);
+ $('abtn').setAttribute('aria-pressed',all)}
+const v=new T.Vector3();
+(function loop(t){requestAnimationFrame(loop);if(!st.offsetParent)return;
+ if(!drag)yaw+=.001;tgt.lerp(want,.06);dist+=(wantD-dist)*.06;
+ cam.position.set(tgt.x+Math.sin(yaw)*dist*Math.cos(pitch),tgt.y+dist*Math.sin(pitch),tgt.z+Math.cos(yaw)*dist*Math.cos(pitch));cam.lookAt(tgt);
+ for(const k in N){const n=N[k];n.s+=(n.want-n.s)*.12;n.g.scale.setScalar(Math.max(.001,n.s));n.g.visible=n.s>.02;
+  v.copy(n.g.position);v.y=n.yl;v.project(cam);const d=L[k];d.style.opacity=n.s>.6&&v.z<1?1:0;d.style.left=((v.x+1)/2*st.clientWidth)+'px';d.style.top=((1-v.y)/2*st.clientHeight)+'px'}
+ leds.forEach((l,j)=>l.visible=Math.sin(t/(140+j*7)+j)>-.3);N.role.key.rotation.y+=.012;
+ if(pkC&&pk.visible){pkK=Math.min(pkStop,pkK+.006);const p=pkC.getPoint(pkK);hist.unshift(p.clone());hist.length=12;pk.position.copy(p);trail.forEach((m,j)=>{if(hist[j+1])m.position.copy(hist[j+1])})}
+ core.scale.setScalar(1+.25*Math.sin(t/150));
+ for(const k in shields){const s=shields[k];if(s.scale.x<1)s.scale.setScalar(Math.min(1,s.scale.x+.04))}
+ for(const k in alarms)alarms[k].forEach(m=>m.emissiveIntensity=.45+.45*Math.sin(t/120));
+ flow.forEach(m=>{m.userData.t=(m.userData.t+.004)%1;m.position.copy(flowC.getPoint(m.userData.t));m.rotation.x+=.05});
+ R.render(sc,cam)})(0);
+function dots(){$('dots').innerHTML='';S.forEach((s,j)=>{const b=document.createElement('button');b.textContent=ar(j+1);const a=ans[j];b.className=(a!==undefined?(s.o[a][1]?'d':'x'):j===cur?'a':'')+(j===view&&!done?' v':'');b.setAttribute('aria-label','المرحلة '+ar(j+1));if(j<=cur&&!done)b.onclick=()=>{view=j;all=false;card();scene();dots()};else b.disabled=true;$('dots').appendChild(b)})}
+function card(){const s=S[view],a=ans[view];$('kick').textContent='المرحلة '+ar(view+1)+' من ٦'+(view!==cur?' · مراجعة':'');$('ttl').textContent=s.t;$('story').textContent=s.s;
+ $('turn').textContent=view%2?'دور الفريق الأحمر':'دور الفريق الأزرق';$('opts').innerHTML='';
+ s.o.forEach((o,j)=>{const b=document.createElement('button');b.className='opt';b.textContent=o[0];if(a!==undefined){b.disabled=true;if(o[1])b.classList.add('good');else if(j===a)b.classList.add('bad')}else b.onclick=()=>pick(j);$('opts').appendChild(b)});
+ if(a!==undefined){$('fb').textContent=s.o[a][2];$('fb').style.color=s.o[a][1]?'var(--teal)':'var(--red)'}else $('fb').textContent='';
+ $('tnote').innerHTML='<b>ملاحظة للأستاذ:</b> '+s.n;$('tnote').hidden=!notes;
+ const nx=$('nx');if(view!==cur){nx.hidden=false;nx.textContent='العودة إلى المرحلة '+ar(cur+1)}else if(a!==undefined){nx.hidden=false;nx.textContent=cur<5?'المرحلة التالية':'تقرير الحادثة'}else nx.hidden=true}
+function pick(j){const s=S[view],o=s.o[j];ans[view]=j;stopT();
+ if(o[1]){shield(s.tg);s.tube.material.color.setHex(0x1D9E75);view%2?red++:blue++;if(s.tg==='role'){tagOk=true;tagTex.draw()}}else{alarm(s.tg);rec+=17000000}
+ $('mRec').textContent=ar(rec);$('mTeam').textContent=ar(blue)+' : '+ar(red);card();scene();dots()}
+$('nx').onclick=()=>{if(view!==cur){view=cur}else if(cur<5){cur++;view=cur}else return report();all=false;card();scene();dots()};
+$('abtn').onclick=()=>{if(done)return;all=!all;scene()};
+$('nbtn').onclick=function(){notes=!notes;this.setAttribute('aria-pressed',notes);$('tnote').hidden=!notes};
+let tmr=null;function stopT(){clearInterval(tmr);tmr=null;$('tm').textContent=''}
+$('tbtn').onclick=()=>{stopT();let n=60;$('tm').textContent=ar(n);tmr=setInterval(()=>{n--;$('tm').textContent=n>0?ar(n):'انتهى الوقت';if(n<=0){clearInterval(tmr);tmr=null}},1000)};
+function report(){done=true;all=true;scene();$('card').hidden=true;const ok=ans.filter((a,j)=>S[j].o[a][1]).length,pass=ok>=5;
+ if(rec){flowC=new T.CatmullRomCurve3([new T.Vector3(5,.8,-.4),new T.Vector3(1,3.4,-.6),new T.Vector3(-4.6,1.1,1.6)]);for(let j=0;j<26;j++){const m=new T.Mesh(new T.BoxGeometry(.08,.08,.08),new T.MeshBasicMaterial({color:0x5DCAA5}));m.userData.t=j/26;W.add(m);flow.push(m)}}
+ const r=$('rep');r.hidden=false;r.innerHTML=`<span class="stamp" style="color:var(--${pass?'teal':'red'})">${pass?'تمّ احتواء الهجوم':'تسرّبت البيانات'}</span>
+ <h3 style="margin:14px 0 4px;font-family:var(--display)">تقرير الحادثة</h3><p class="story" style="margin:0 0 10px">قرارات صحيحة: ${ar(ok)} من ٦ · سجلات مسرّبة: ${ar(rec)} · الأزرق ${ar(blue)} مقابل الأحمر ${ar(red)}</p>
+ <div style="font-size:14.5px;line-height:1.8">${LEG.map(l=>`<div style="border-top:1px solid var(--rule);padding:8px 0"><b>${l[0]}</b><br><span style="color:var(--ink2)">${l[1]}</span></div>`).join('')}</div>
+ <p class="story" style="margin:8px 0">في نموذج المسؤولية المشتركة: إعداد الجدار وصلاحيات الدور وحماية البيانات مسؤولية العميل، لا مزوّد السحابة. التفاصيل في تبويب «الحوكمة والقانون».</p>
+ <button class="nx" id="again">إعادة المحاكاة</button>`;$('again').onclick=reset;dots()}
+function reset(){location.hash='sim';location.reload()}
+card();scene();dots();
+};
+if(document.getElementById('sim').classList.contains('active'))window.__initSim();
+</script>
+</body>
+</html>
