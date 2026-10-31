@@ -107,7 +107,9 @@
    "course": "الذكاء الاصطناعي وتحليل البيانات",
    "file": "ai/week8_canvas.html",
    "slug": "ai",
-   "audio": true
+   "audio": true,
+   "video": "ai/week8_board.mp4",
+   "video_mb": 12
   },
   {
    "week": 8,

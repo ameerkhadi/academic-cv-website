@@ -264,10 +264,16 @@ window.CANVAS = {"tiles": [{"x": 3720, "y": 0, "w": 1600, "h": 900, "title": "أ
     setTimeout(() => c.remove(), 650);
   }
 
+  // the board never moves under the pen (31 Oct 2026): once a stylus is seen, finger/palm touches are ignored;
+  // only a real mouse pans (right-drag) — a pen's barrel button no longer drags the view
+  let PEN = false;
+  const palm = e => { if (e.pointerType === 'pen') PEN = true; return PEN && e.pointerType === 'touch'; };
+  const busy = () => !!(drawing || tracing || texting);
   svg.addEventListener('pointerdown', e => {
+    if (palm(e)) { e.preventDefault(); return; }
     hideCompass(); clearTimeout(restT);
     if (window.CANVAS && camDown(e)) return;
-    if (!penOn() || tool === 'laser') return; e.preventDefault(); collapse(true); svg.setPointerCapture(e.pointerId);
+    if (!penOn() || tool === 'laser') return; e.preventDefault(); collapse(true); try { svg.setPointerCapture(e.pointerId); } catch (_) {}
     if (tool === 'eraser') { drawing = { erase: true }; eraseAt(e); return; }
     const q = toBoard(e);
     if (TRACE) {
@@ -283,6 +289,7 @@ window.CANVAS = {"tiles": [{"x": 3720, "y": 0, "w": 1600, "h": 900, "title": "أ
     drawing.el.setAttribute('d', drawing.d + ' l0.1,0'); acts.push({ t: 'note', el: drawing.el });
   });
   svg.addEventListener('pointermove', e => {
+    if (palm(e)) return;
     if (window.CANVAS && camMove(e)) return;
     if (TRACE) { lastQ = toBoard(e); hideCompass(); clearTimeout(restT); restT = setTimeout(showCompass, 650); }
     if (penOn() && tool === 'laser') return laserAt(toBoard(e));
@@ -499,8 +506,8 @@ window.CANVAS = {"tiles": [{"x": 3720, "y": 0, "w": 1600, "h": 900, "title": "أ
   function camStep(d) { camGo(tileIx < 0 ? (d > 0 ? 0 : window.CANVAS.tiles.length - 1) : tileIx + d); }
   function tileAt(q) { return window.CANVAS.tiles.findIndex(t => q.x > t.x - 40 && q.x < t.x + t.w + 40 && q.y > t.y - 80 && q.y < t.y + t.h + 40); }
   function camDown(e) {
-    if (e.button === 2) { panS = { x: e.clientX, y: e.clientY, v: vb.slice() }; svg.setPointerCapture(e.pointerId); return true; }
-    if (tileIx < 0 && !(e.ctrlKey)) { const i = tileAt(toBoard(e)); if (i >= 0) camGo(i); return true; }
+    if (e.button === 2 && e.pointerType === 'mouse') { panS = { x: e.clientX, y: e.clientY, v: vb.slice() }; try { svg.setPointerCapture(e.pointerId); } catch (_) {} return true; }
+    if (tileIx === -1 && !(e.ctrlKey)) { const i = tileAt(toBoard(e)); if (i >= 0) camGo(i); return true; }
     return false;
   }
   function camMove(e) {
@@ -511,7 +518,7 @@ window.CANVAS = {"tiles": [{"x": 3720, "y": 0, "w": 1600, "h": 900, "title": "أ
   addEventListener('pointerup', () => { panS = null; });
   svg.addEventListener('contextmenu', e => { if (window.CANVAS) e.preventDefault(); });
   svg.addEventListener('wheel', e => {
-    if (!window.CANVAS) return; e.preventDefault();
+    if (!window.CANVAS) return; e.preventDefault(); if (busy()) return;
     const f = Math.pow(1.0015, e.deltaY), q = toBoard(e);
     setVB([q.x - (q.x - vb[0]) * f, q.y - (q.y - vb[1]) * f, vb[2] * f, vb[3] * f]); tileIx = -2;
   }, { passive: false });
@@ -710,7 +717,7 @@ window.CANVAS = {"tiles": [{"x": 3720, "y": 0, "w": 1600, "h": 900, "title": "أ
         if (it.kind === 'path') { const [lo, hi] = o.v.split(',').map(Number); setRange(it, lo, hi); }
         else if (!o.v) hideText(it); else { const [a, b] = o.v.split(',').map(Number); setText(it, a, b); }
         SY.items[o.i] = o.v;
-      } else if (o.t === 'v' && window.CANVAS) {
+      } else if (o.t === 'v' && window.CANVAS && !busy()) {
         setVB(o.v.split(' ').map(Number)); tileIx = o.k; SY.vb = o.v; touched = true;
       } else if (o.t === 'lz') { for (const [x, y] of o.p) laserAt({ x, y }, true); }
     }

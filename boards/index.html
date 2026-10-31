@@ -16,6 +16,8 @@ h1{font-family:"Reem Kufi","Noto Naskh Arabic",serif;color:var(--yel);font-size:
 .week h2{margin:0 0 10px;font-size:1.2rem;color:var(--cy)}
 .watch{display:flex;align-items:center;gap:12px;flex-wrap:wrap;text-decoration:none;color:var(--bg);background:var(--gr);border-radius:12px;padding:10px 16px;font-weight:700;font-size:1.05rem}
 .watch small{font-weight:500;opacity:.8}
+.dl{display:inline-flex;align-items:center;gap:8px;margin-top:8px;text-decoration:none;color:var(--yel);border:1.5px solid var(--yel);border-radius:12px;padding:7px 14px;font-weight:700}
+.dl small{font-weight:500;color:var(--mute)}
 .secs{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px;margin-top:10px}
 .secs a{display:block;text-decoration:none;color:var(--fg);border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:.95rem}
 .secs a:hover,.watch:hover{filter:brightness(1.08)}
@@ -43,6 +45,7 @@ fetch('boards.json',{cache:'no-store'}).then(r=>r.json()).then(({courses,boards}
       const bs=mine.filter(b=>b.week===w), cv=bs.find(b=>b.canvas), secs=bs.filter(b=>!b.canvas);
       return `<section class="week"><h2>الأسبوع ${WEEKS[w]||ar(w)}</h2>`
         +(cv?`<a class="watch" href="${cv.file}#watch">▶ شاهد شرح الأسبوع كاملًا <small>${ar(secs.length)} أقسام${cv.audio?' · بالصوت':''}</small></a>`:'')
+        +(cv&&cv.video?`<a class="dl" href="${cv.video}" download>⬇ تنزيل الفيديو <small>MP4، ${ar(cv.video_mb)} ميغابايت، يعمل بلا إنترنت</small></a>`:'')
         +`<div class="secs">${secs.map(b=>`<a href="${b.file}#watch">${ar(b.section)} · ${b.title}<span>${ar(b.scenes)} خطوات</span></a>`).join('')}</div></section>`;
     }).join('')||'<p class="empty">لا توجد سبّورات لهذه المادّة بعد.</p>';
   }

@@ -9793,9 +9793,13 @@
             <span class="w8-pt2">شرح المحاضرة الثامنة كاملةً خطوةً خطوة على السبّورة بالصوت، ومعه أزرار السابق والإيقاف والتالي</span>
           </button>
         </div>
+        <p class="w8-dlrow"><a class="w8-dl" href="../boards/ai/week8_board.mp4" download="week8-board.mp4">⬇ تنزيل الفيديو</a> <small>MP4، ١٢ دقيقة، ١٢ ميغابايت، يعمل على الهاتف بلا إنترنت</small></p>
         <style>
           .w8-player{position:relative;width:100%;max-width:900px;margin:6px auto 18px;aspect-ratio:16/9;border-radius:14px;overflow:hidden;border:3px solid #2b2f38;box-shadow:0 4px 14px rgba(0,0,0,.18);background:#11141a}
           .w8-player iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+          .w8-dlrow{max-width:900px;margin:-8px auto 18px;display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px}
+          .w8-dl{display:inline-block;background:#16a34a;color:#fff !important;font-weight:700;border-radius:999px;padding:7px 18px;text-decoration:none}
+          .w8-dlrow small{color:var(--muted,#666)}
           .w8-poster{position:absolute;inset:0;width:100%;border:0;background:radial-gradient(circle at 50% 42%,#1f2a3c,#11141a 70%);color:#eef1f6;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;font-family:inherit}
           .w8-play{width:84px;height:84px;border-radius:50%;background:#16a34a;display:grid;place-items:center;font-size:38px;padding-inline-start:6px;box-shadow:0 0 0 10px rgba(22,163,74,.18)}
           .w8-poster:hover .w8-play{transform:scale(1.06)}
@@ -9851,7 +9855,7 @@
         <script>
           document.getElementById('w8-poster').addEventListener('click', function(){
             var f=document.createElement('iframe');
-            f.src='../boards/ai/week8_canvas.html?v=20261029d#embed'; f.title='سبّورة الأسبوع الثامن';
+            f.src='../boards/ai/week8_canvas.html?v=20261031a#embed'; f.title='سبّورة الأسبوع الثامن';
             f.allow='autoplay';
             this.replaceWith(f);
           });
