@@ -3781,6 +3781,32 @@ html[data-lang="ku"] .cs .lang-ku{display:block} html[data-lang="ku"] .cs .lang-
 <div class="sol-item"><p class="sol-q"><span class="sq-n">4.</span> List <b>four</b> supply-chain hygiene practices for a team that deploys to the cloud.</p><p class="sol-why"><b>Marking guide:</b></p><ul class="sol-grading"><li>Keep an inventory / SBOM of components.</li><li>Pin versions and verify hashes or signatures.</li><li>Scan dependencies and images (e.g. Dependabot, Trivy) and patch quickly.</li><li>Use trusted registries only; least privilege for CI/CD and third-party integrations; review vendors before granting access.</li></ul></div>
 <div class="sol-kind"><span>Long scenario — model answer</span><span class="sk-line"></span></div>
 <div class="sol-item"><p class="sol-q">Rafidain Ride (fictional start-up)</p><p class="sol-why"><b>Model answer:</b></p><ul class="sol-grading"><li><b>a)</b> Root without MFA → IAM (#2). Public ID-card bucket → misconfiguration (#1) / accidental data disclosure (#7). Trip API without ownership check → insecure APIs (#3). <code>latest</code> images from a public registry → insecure third-party resources (#5). Logging off → limited visibility (#9). Any four with a correct mapping.</li><li><b>b)</b> Example: public ID bucket L5 × I5 = 25 (scanners find open buckets within hours; identity documents) · root without MFA L4 × I5 = 20 (phished/reused password = total control) · BOLA API L4 × I4 = 16 · <code>latest</code> images L3 × I4 = 12 · logging off L3 × I3 = 9 (it multiplies the others). Different numbers are fine if justified.</li><li><b>c)</b> Bucket: prevent = account-wide Block Public Access + serve images through signed, short-lived URLs; detect = CSPM rule / alert on any public bucket policy. Root: prevent = hardware MFA on root, lock it away, daily work through named users/roles with least privilege; detect = alert on any root sign-in.</li><li><b>d)</b> T1496 Resource Hijacking (likely crypto-mining) after T1078.004 Valid Accounts. Earlier signals: budget/billing anomaly alert; audit-log events creating instances in an unused region (needs logging ON); a guardrail that denies unused regions would have prevented it.</li></ul></div>
+        <div class="sol-week"><span class="sw-n">3</span><span class="sw-t">Week 3 solutions — Cloud governance, risk, compliance and the law</span></div>
+        <div class="sol-kind"><span>Multiple choice</span><span class="sk-line"></span></div>
+<div class="sol-item"><p class="sol-q"><span class="sq-n">1.</span> On the Capital One WAF role, applying <b>least privilege</b> mainly lowers which number?</p><div class="sol-opts"><div class="sol-opt bad"><span class="so-k">a)</span><span>The likelihood of SSRF</span></div><div class="sol-opt bad"><span class="so-k">b)</span><span>The provider’s share of responsibility</span></div><div class="sol-opt ok"><span class="so-k">c)</span><span>The impact of stolen role credentials</span></div><div class="sol-opt bad"><span class="so-k">d)</span><span>The SLA availability</span></div></div><p class="sol-why"><b>Reason:</b> Least privilege does not stop the theft; it makes stolen keys nearly useless, so the <b>impact</b> falls (4×5 → 4×1). SSRF likelihood is lowered by WAF fixes and IMDSv2; responsibility never moves to the provider; the SLA measures uptime, not security.</p></div>
+<div class="sol-item"><p class="sol-q"><span class="sq-n">2.</span> A customer wants evidence that a provider’s controls <b>actually worked during the last year</b>. What should it ask for?</p><div class="sol-opts"><div class="sol-opt ok"><span class="so-k">a)</span><span>A SOC 2 Type II report</span></div><div class="sol-opt bad"><span class="so-k">b)</span><span>A SOC 2 Type I report</span></div><div class="sol-opt bad"><span class="so-k">c)</span><span>The provider’s CAIQ (STAR Level 1)</span></div><div class="sol-opt bad"><span class="so-k">d)</span><span>A copy of the SLA</span></div></div><p class="sol-why"><b>Reason:</b> Type II tests operating effectiveness over a period (3–12 months). Type I checks design on one date only; a CAIQ is the provider’s own description; the SLA is a promise, not evidence.</p></div>
+<div class="sol-item"><p class="sol-q"><span class="sq-n">3.</span> What is <b>CSA STAR Level 1</b>?</p><div class="sol-opts"><div class="sol-opt bad"><span class="so-k">a)</span><span>An ISO/IEC 27001 certification</span></div><div class="sol-opt bad"><span class="so-k">b)</span><span>Continuous monitoring of controls</span></div><div class="sol-opt bad"><span class="so-k">c)</span><span>A third-party SOC 2 audit</span></div><div class="sol-opt ok"><span class="so-k">d)</span><span>A self-assessment: the provider publishes its CAIQ answers</span></div></div><p class="sol-why"><b>Reason:</b> Level 1 is self-assessment with no outside check. Third-party audit (ISO 27001 or SOC 2 based) is Level 2; continuous monitoring is Level 3.</p></div>
+<div class="sol-item"><p class="sol-q"><span class="sq-n">4.</span> Which is the most accurate description of <b>ISO/IEC 27017</b>?</p><div class="sol-opts"><div class="sol-opt bad"><span class="so-k">a)</span><span>A management-system standard that replaces 27001 for cloud</span></div><div class="sol-opt ok"><span class="so-k">b)</span><span>A code of practice that adds cloud controls and is adopted by extending a 27001 scope</span></div><div class="sol-opt bad"><span class="so-k">c)</span><span>The standard for protecting personal data processed by a public-cloud provider</span></div><div class="sol-opt bad"><span class="so-k">d)</span><span>An audit report issued by an accountant</span></div></div><p class="sol-why"><b>Reason:</b> 27017 adds 7 CLD controls and cloud guidance; it builds on 27001, it does not replace it. Personal data in public clouds is 27018; an accountant’s report is SOC 2.</p></div>
+<div class="sol-item"><p class="sol-q"><span class="sq-n">5.</span> An SLA promises <b>99.9%</b> monthly availability. In a 30-day month, how much downtime does that allow?</p><div class="sol-opts"><div class="sol-opt bad"><span class="so-k">a)</span><span>About 4.3 minutes</span></div><div class="sol-opt bad"><span class="so-k">b)</span><span>About 7.2 hours</span></div><div class="sol-opt ok"><span class="so-k">c)</span><span>About 43 minutes</span></div><div class="sol-opt bad"><span class="so-k">d)</span><span>About 3.6 hours</span></div></div><p class="sol-why"><b>Reason:</b> 30 days = 43,200 minutes; 0.1% of that = 43.2 minutes. 4.3 minutes is 99.99%; 3.6 hours is 99.5%; 7.2 hours is 99%.</p></div>
+<div class="sol-item"><p class="sol-q"><span class="sq-n">6.</span> During the Capital One breach the services stayed up while data was stolen. Could the bank claim an SLA service credit?</p><div class="sol-opts"><div class="sol-opt bad"><span class="so-k">a)</span><span>Yes, a full refund for the month</span></div><div class="sol-opt bad"><span class="so-k">b)</span><span>Yes, the standard 10% credit</span></div><div class="sol-opt bad"><span class="so-k">c)</span><span>Only if GDPR applies</span></div><div class="sol-opt ok"><span class="so-k">d)</span><span>No — the SLA measures availability, and availability was 100%</span></div></div><p class="sol-why"><b>Reason:</b> An SLA is about uptime. No downtime means no breach of the SLA and no credit, however much data was lost. GDPR is a separate legal duty, not an SLA trigger.</p></div>
+<div class="sol-item"><p class="sol-q"><span class="sq-n">7.</span> Under <b>GDPR</b>, how long does a controller have to notify the supervisory authority of a personal-data breach?</p><div class="sol-opts"><div class="sol-opt ok"><span class="so-k">a)</span><span>72 hours from becoming aware</span></div><div class="sol-opt bad"><span class="so-k">b)</span><span>6 hours</span></div><div class="sol-opt bad"><span class="so-k">c)</span><span>24 hours</span></div><div class="sol-opt bad"><span class="so-k">d)</span><span>14 days</span></div></div><p class="sol-why"><b>Reason:</b> GDPR Article 33: within 72 hours of becoming aware. 6 hours and 14 days are the Malaysian Cyber Security Act 2024 detailed and full reports; 24 hours is not the GDPR rule.</p></div>
+<div class="sol-item"><p class="sol-q"><span class="sq-n">8.</span> The US <b>CLOUD Act</b> is the classic example of the difference between:</p><div class="sol-opts"><div class="sol-opt bad"><span class="so-k">a)</span><span>Residency and localisation</span></div><div class="sol-opt ok"><span class="so-k">b)</span><span>Residency and sovereignty</span></div><div class="sol-opt bad"><span class="so-k">c)</span><span>An SLA and a SOC 2 report</span></div><div class="sol-opt bad"><span class="so-k">d)</span><span>A controller and a processor</span></div></div><p class="sol-why"><b>Reason:</b> Data can be <i>resident</i> outside the US yet still be reachable by US law because the provider is a US company — that is sovereignty. Localisation is a rule to keep data in-country; the other pairs are unrelated.</p></div>
+<div class="sol-kind"><span>True or False</span><span class="sk-line"></span></div>
+<div class="sol-item"><div class="sol-tf-line"><p class="sol-q"><span class="sq-n">1.</span> SOC 2 is a certificate issued by ISO.</p><span class="sol-badge f">False</span></div><p class="sol-why"><b>Reason:</b> SOC 2 is an attestation report by an independent auditor under the AICPA Trust Services Criteria — not ISO, and not a certificate.</p></div>
+<div class="sol-item"><div class="sol-tf-line"><p class="sol-q"><span class="sq-n">2.</span> A provider’s ISO/IEC 27001 certificate covers the IAM roles a customer creates in its own account.</p><span class="sol-badge f">False</span></div><p class="sol-why"><b>Reason:</b> The certificate covers the provider’s side of the shared-responsibility line. Roles, policies and WAF rules in the customer’s account are the customer’s.</p></div>
+<div class="sol-item"><div class="sol-tf-line"><p class="sol-q"><span class="sq-n">3.</span> Residual risk is the risk that remains after controls are applied.</p><span class="sol-badge t">True</span></div><p class="sol-why"><b>Reason:</b> Controls lower likelihood or impact, rarely to zero; the risk owner must accept what is left in writing.</p></div>
+<div class="sol-item"><div class="sol-tf-line"><p class="sol-q"><span class="sq-n">4.</span> Buying cyber insurance transfers both the financial impact and the accountability for the data to the insurer.</p><span class="sol-badge f">False</span></div><p class="sol-why"><b>Reason:</b> Transfer moves part of the financial impact only. The organisation stays accountable to customers and regulators.</p></div>
+<div class="sol-item"><div class="sol-tf-line"><p class="sol-q"><span class="sq-n">5.</span> In the Capital One breach, the attacker broke into AWS’s own infrastructure.</p><span class="sol-badge f">False</span></div><p class="sol-why"><b>Reason:</b> AWS was not broken. The flaws were a misconfigured WAF and an over-permissive role — both on the customer’s side.</p></div>
+<div class="sol-item"><div class="sol-tf-line"><p class="sol-q"><span class="sq-n">6.</span> CSA CCM maps its controls to other standards such as ISO/IEC 27001.</p><span class="sol-badge t">True</span></div><p class="sol-why"><b>Reason:</b> The mapping lets one implemented control count as evidence for several frameworks.</p></div>
+<div class="sol-item"><div class="sol-tf-line"><p class="sol-q"><span class="sq-n">7.</span> Data stored in a Bahrain region of a US-based provider can still be subject to US law.</p><span class="sol-badge t">True</span></div><p class="sol-why"><b>Reason:</b> Residency (Bahrain) does not settle sovereignty: the US CLOUD Act can reach data controlled by US companies.</p></div>
+<div class="sol-item"><div class="sol-tf-line"><p class="sol-q"><span class="sq-n">8.</span> The Iraqi Constitution of 2005 includes a right to personal privacy (Article 17).</p><span class="sol-badge t">True</span></div><p class="sol-why"><b>Reason:</b> Article 17 protects personal privacy; Article 40 protects the freedom and privacy of communications and correspondence.</p></div>
+<div class="sol-kind"><span>Short answer — marking points</span><span class="sk-line"></span></div>
+<div class="sol-item"><p class="sol-q"><span class="sq-n">1.</span> List the <b>five steps</b> of a cloud risk assessment and explain <b>residual risk</b>.</p><p class="sol-why"><b>Marking guide:</b></p><ul class="sol-grading"><li>Assets: data, identities, services.</li><li>Threats and weaknesses for each asset.</li><li>Score likelihood × impact (1–5 each, with a one-line reason).</li><li>Decide treatment: reduce, avoid, transfer or accept.</li><li>Re-score after controls = residual risk; the owner accepts it in writing, and it goes in the risk register.</li></ul></div>
+<div class="sol-item"><p class="sol-q"><span class="sq-n">2.</span> Compare <b>SOC 2 Type I</b> and <b>Type II</b>. Which do you ask for before signing, and why?</p><p class="sol-why"><b>Marking guide:</b></p><ul class="sol-grading"><li>Type I: control design at one date.</li><li>Type II: controls tested as working over a period (3–12 months).</li><li>Ask for Type II — it proves the controls operate, not just exist.</li><li>Read the exceptions section; the report is under NDA (SOC 3 is the public summary).</li></ul></div>
+<div class="sol-item"><p class="sol-q"><span class="sq-n">3.</span> Name <b>four contract clauses</b> you check before signing with a cloud provider, and the question each answers.</p><p class="sol-why"><b>Marking guide:</b></p><ul class="sol-grading"><li>Data location / transfer — where is it stored, when can it move?</li><li>Incident notice — how many hours until the provider tells us?</li><li>Right to audit — our own audit or SOC 2 / ISO reports?</li><li>Sub-processors, exit (return and deletion), liability cap, governing law — any one counts.</li></ul></div>
+<div class="sol-item"><p class="sol-q"><span class="sq-n">4.</span> Explain the difference between <b>data residency</b> and <b>data sovereignty</b>, with an example.</p><p class="sol-why"><b>Marking guide:</b></p><ul class="sol-grading"><li>Residency = the physical location / region chosen (technical).</li><li>Sovereignty = which country’s law applies (legal).</li><li>Example: data in a Frankfurt or Bahrain region of a US provider — resident there, but reachable under the US CLOUD Act.</li><li>Bonus: localisation = a legal rule to keep data in-country.</li></ul></div>
+<div class="sol-kind"><span>Long scenario — model answer</span><span class="sk-line"></span></div>
+<div class="sol-item"><p class="sol-q">Dijla Digital Bank (fictional)</p><p class="sol-why"><b>Model answer:</b></p><ul class="sol-grading"><li><b>a)</b> Public bucket: 4×5 = 20 → account-wide block public access + CSPM alert → 1×5 = 5. Over-broad staff access: 3×5 = 15 → least privilege + access review → 3×2 = 6. Late detection: 3×4 = 12 → alerts on public policies and unusual downloads → 2×3 = 6. (Any reasoned scores accepted.)</li><li><b>b)</b> GDPR applies to the German customers: tell the German supervisory authority within 72 hours (by Sunday 02:00) and the affected people without undue delay, because ID scans mean high risk. In Iraq: follow the Central Bank of Iraq’s instructions for banks and inform customers. Internally: incident team at once; preserve logs.</li><li><b>c)</b> No. The certificates and SOC 2 cover the provider’s side; the public setting was the bank’s configuration. The service never went down, so there is no SLA breach and no credit; liability is capped anyway.</li><li><b>d)</b> Clauses: incident notice within a fixed number of hours; right to audit / access to logs; data location and sub-processors; exit and deletion. Control: an organisation policy that denies resources outside approved regions, plus encryption with customer-managed keys.</li></ul></div>
         <div class="page-nav"><button class="nav-btn nav-prev" onclick="navigateSlide(-1)">← Previous</button><button class="nav-btn nav-next" onclick="navigateSlide(1)">Next →</button></div>
        </div>
        <div class="lang-ar" dir="rtl">
@@ -3838,6 +3864,32 @@ html[data-lang="ku"] .cs .lang-ku{display:block} html[data-lang="ku"] .cs .lang-
 <div class="sol-item"><p class="sol-q"><span class="sq-n">٤.</span> اذكر <b>أربع</b> ممارساتٍ لسلامة سلسلة التوريد لفريقٍ ينشر على السحابة.</p><p class="sol-why"><b>دليل التصحيح:</b></p><ul class="sol-grading"><li>جردٌ للمكوّنات / قائمة مكوّنات البرمجيّات SBOM.</li><li>تثبيت الإصدارات والتحقّق من البصمات أو التواقيع.</li><li>فحص المكتبات والصور (مثل Dependabot وTrivy) والترقيع السريع.</li><li>مستودعاتٌ موثوقة فقط، وأقلّ صلاحيّة لخطّ CI/CD وللتكاملات الخارجيّة، ومراجعة المورّد قبل منحه وصولًا.</li></ul></div>
 <div class="sol-kind"><span>السيناريو الطويل — الإجابة النموذجيّة</span><span class="sk-line"></span></div>
 <div class="sol-item"><p class="sol-q">شركة «رافدين رايد» (شركة ناشئة مختلَقة)</p><p class="sol-why"><b>الإجابة النموذجيّة:</b></p><ul class="sol-grading"><li><b>أ)</b> الجذر بلا MFA ← الهويّات والصلاحيّات (٢). حاوية الهويّات العامّة ← الإعدادات الخاطئة (١) / الكشف العرضيّ للبيانات (٧). واجهة الرحلات بلا فحص ملكيّة ← الواجهات غير الآمنة (٣). صور <code>latest</code> من مستودعٍ عامّ ← الموارد الخارجيّة غير الآمنة (٥). إيقاف السجلّات ← ضعف الرؤية (٩). أيّ أربعةٍ بربطٍ صحيح.</li><li><b>ب)</b> مثال: حاوية الهويّات ٥ × ٥ = ٢٥ (الماسحات تجد الحاويات المفتوحة خلال ساعات، والوثائق هويّات) | الجذر بلا MFA ٤ × ٥ = ٢٠ (كلمة مرورٍ مكرّرة أو مُصطادة = سيطرة كاملة) | واجهة BOLA ٤ × ٤ = ١٦ | صور latest ٣ × ٤ = ١٢ | إيقاف السجلّات ٣ × ٣ = ٩ (لكنّه يضاعف أثر الباقي). الأرقام المختلفة مقبولة إن عُلّلت.</li><li><b>ج)</b> الحاوية: المانع = منع الوصول العامّ على مستوى الحساب، وعرض الصور بروابط موقَّعة قصيرة العمر؛ الكاشف = قاعدة CSPM / تنبيهٌ عند أيّ سياسةٍ تجعل حاويةً عامّة. الجذر: المانع = مفتاح MFA عتاديّ للجذر وحفظه جانبًا، والعمل اليوميّ بمستخدمين وأدوارٍ مسمّاة بأقلّ صلاحيّة؛ الكاشف = تنبيهٌ عند أيّ دخولٍ بالجذر.</li><li><b>د)</b> T1496 الاستيلاء على الموارد (غالبًا تعدين عملات) بعد T1078.004 الحسابات الصالحة. إشاراتٌ أبكر: تنبيه الميزانيّة / شذوذ الفوترة؛ أحداث إنشاء أجهزةٍ في منطقةٍ غير مستخدمة في سجلّ التدقيق (يحتاج السجلّ مفعّلًا)؛ وقاعدةٌ تمنع المناطق غير المستخدمة كانت ستمنعه أصلًا.</li></ul></div>
+        <div class="sol-week"><span class="sw-n">٣</span><span class="sw-t">حلول الأسبوع الثالث — حوكمة السحابة والمخاطر والامتثال والقانون</span></div>
+        <div class="sol-kind"><span>الاختيار من متعدّد</span><span class="sk-line"></span></div>
+<div class="sol-item"><p class="sol-q"><span class="sq-n">١.</span> عند تطبيق <b>أقلّ صلاحية</b> على دور جدار WAF في Capital One، أيّ رقمٍ ينخفض أساسًا؟</p><div class="sol-opts"><div class="sol-opt bad"><span class="so-k">أ)</span><span>احتمال SSRF</span></div><div class="sol-opt bad"><span class="so-k">ب)</span><span>حصّة المزوّد من المسؤوليّة</span></div><div class="sol-opt ok"><span class="so-k">ج)</span><span>أثر سرقة مفاتيح الدور</span></div><div class="sol-opt bad"><span class="so-k">د)</span><span>نسبة التوفّر في الاتفاقيّة</span></div></div><p class="sol-why"><b>التعليل:</b> أقلّ صلاحية لا تمنع السرقة، بل تجعل المفاتيح المسروقة شبه عديمة الفائدة، فينخفض <b>الأثر</b> (٤×٥ ← ٤×١). احتمال SSRF يخفضه إصلاح الجدار وIMDSv2، والمسؤوليّة لا تنتقل إلى المزوّد، والاتفاقيّة تقيس التوفّر لا الأمن.</p></div>
+<div class="sol-item"><p class="sol-q"><span class="sq-n">٢.</span> عميلٌ يريد دليلًا على أنّ ضوابط المزوّد <b>عملت فعلًا خلال السنة الماضية</b>. ماذا يطلب؟</p><div class="sol-opts"><div class="sol-opt ok"><span class="so-k">أ)</span><span>تقرير SOC 2 من النوع الثاني</span></div><div class="sol-opt bad"><span class="so-k">ب)</span><span>تقرير SOC 2 من النوع الأوّل</span></div><div class="sol-opt bad"><span class="so-k">ج)</span><span>استبيان CAIQ للمزوّد (STAR المستوى ١)</span></div><div class="sol-opt bad"><span class="so-k">د)</span><span>نسخة من اتفاقيّة مستوى الخدمة</span></div></div><p class="sol-why"><b>التعليل:</b> النوع الثاني يختبر عمل الضوابط فعلًا خلال فترة (٣–١٢ شهرًا). النوع الأوّل يفحص التصميم في تاريخٍ واحد، وCAIQ وصفٌ يكتبه المزوّد عن نفسه، والاتفاقيّة تعهّدٌ لا دليل.</p></div>
+<div class="sol-item"><p class="sol-q"><span class="sq-n">٣.</span> ما هو <b>المستوى الأوّل في CSA STAR</b>؟</p><div class="sol-opts"><div class="sol-opt bad"><span class="so-k">أ)</span><span>شهادة ISO/IEC 27001</span></div><div class="sol-opt bad"><span class="so-k">ب)</span><span>مراقبةٌ مستمرّة للضوابط</span></div><div class="sol-opt bad"><span class="so-k">ج)</span><span>تدقيق SOC 2 من طرفٍ ثالث</span></div><div class="sol-opt ok"><span class="so-k">د)</span><span>تقييمٌ ذاتيّ: المزوّد ينشر إجاباته على CAIQ</span></div></div><p class="sol-why"><b>التعليل:</b> المستوى ١ تقييمٌ ذاتيّ بلا فحصٍ خارجيّ. تدقيق الطرف الثالث (المبنيّ على ISO 27001 أو SOC 2) هو المستوى ٢، والمراقبة المستمرّة هي المستوى ٣.</p></div>
+<div class="sol-item"><p class="sol-q"><span class="sq-n">٤.</span> ما الوصف الأدقّ لـ<b>ISO/IEC 27017</b>؟</p><div class="sol-opts"><div class="sol-opt bad"><span class="so-k">أ)</span><span>معيار نظام إدارة يحلّ محلّ 27001 للسحابة</span></div><div class="sol-opt ok"><span class="so-k">ب)</span><span>مدوّنة ممارساتٍ تضيف ضوابط سحابيّة وتُعتمد بتوسيع نطاق 27001</span></div><div class="sol-opt bad"><span class="so-k">ج)</span><span>معيار حماية البيانات الشخصيّة لدى مزوّد السحابة العامّة</span></div><div class="sol-opt bad"><span class="so-k">د)</span><span>تقرير تدقيقٍ يصدره محاسب قانونيّ</span></div></div><p class="sol-why"><b>التعليل:</b> 27017 يضيف ٧ ضوابط CLD وإرشادًا سحابيًّا، ويبني على 27001 ولا يحلّ محلّه. البيانات الشخصيّة في السحابة العامّة هي 27018، وتقرير المحاسب هو SOC 2.</p></div>
+<div class="sol-item"><p class="sol-q"><span class="sq-n">٥.</span> اتفاقيّةٌ تتعهّد بتوفّرٍ شهريّ <b>٩٩٫٩٪</b>. كم توقّفًا تسمح به في شهرٍ من ٣٠ يومًا؟</p><div class="sol-opts"><div class="sol-opt bad"><span class="so-k">أ)</span><span>نحو ٤٫٣ دقيقة</span></div><div class="sol-opt bad"><span class="so-k">ب)</span><span>نحو ٧٫٢ ساعة</span></div><div class="sol-opt ok"><span class="so-k">ج)</span><span>نحو ٤٣ دقيقة</span></div><div class="sol-opt bad"><span class="so-k">د)</span><span>نحو ٣٫٦ ساعة</span></div></div><p class="sol-why"><b>التعليل:</b> ٣٠ يومًا = ٤٣٬٢٠٠ دقيقة، و٠٫١٪ منها = ٤٣٫٢ دقيقة. ٤٫٣ دقيقة تقابل ٩٩٫٩٩٪، و٣٫٦ ساعة تقابل ٩٩٫٥٪، و٧٫٢ ساعة تقابل ٩٩٪.</p></div>
+<div class="sol-item"><p class="sol-q"><span class="sq-n">٦.</span> خلال اختراق Capital One بقيت الخدمات تعمل بينما سُرقت البيانات. هل يستحقّ المصرف رصيد خدمة من الاتفاقيّة؟</p><div class="sol-opts"><div class="sol-opt bad"><span class="so-k">أ)</span><span>نعم، استرداد كامل الشهر</span></div><div class="sol-opt bad"><span class="so-k">ب)</span><span>نعم، رصيد ١٠٪ المعتاد</span></div><div class="sol-opt bad"><span class="so-k">ج)</span><span>فقط إذا انطبق GDPR</span></div><div class="sol-opt ok"><span class="so-k">د)</span><span>لا — الاتفاقيّة تقيس التوفّر، والتوفّر كان ١٠٠٪</span></div></div><p class="sol-why"><b>التعليل:</b> الاتفاقيّة تخصّ التوفّر. لا توقّف يعني لا خرق للاتفاقيّة ولا رصيد، مهما ضاع من البيانات. أمّا GDPR فواجبٌ قانونيّ منفصل لا علاقة له بالرصيد.</p></div>
+<div class="sol-item"><p class="sol-q"><span class="sq-n">٧.</span> وفق <b>GDPR</b>، ما مهلة المتحكّم لإبلاغ السلطة الرقابيّة عن خرق بياناتٍ شخصيّة؟</p><div class="sol-opts"><div class="sol-opt ok"><span class="so-k">أ)</span><span>٧٢ ساعة من العلم بالخرق</span></div><div class="sol-opt bad"><span class="so-k">ب)</span><span>٦ ساعات</span></div><div class="sol-opt bad"><span class="so-k">ج)</span><span>٢٤ ساعة</span></div><div class="sol-opt bad"><span class="so-k">د)</span><span>١٤ يومًا</span></div></div><p class="sol-why"><b>التعليل:</b> المادّة ٣٣ من GDPR: خلال ٧٢ ساعة من العلم. الـ٦ ساعات والـ١٤ يومًا هما تقريرا قانون الأمن السيبرانيّ الماليزيّ ٢٠٢٤، و٢٤ ساعة ليست قاعدة GDPR.</p></div>
+<div class="sol-item"><p class="sol-q"><span class="sq-n">٨.</span> قانون <b>CLOUD Act</b> الأمريكيّ هو المثال الكلاسيكيّ على الفرق بين:</p><div class="sol-opts"><div class="sol-opt bad"><span class="so-k">أ)</span><span>الإقامة والتوطين</span></div><div class="sol-opt ok"><span class="so-k">ب)</span><span>الإقامة والسيادة</span></div><div class="sol-opt bad"><span class="so-k">ج)</span><span>اتفاقيّة الخدمة وتقرير SOC 2</span></div><div class="sol-opt bad"><span class="so-k">د)</span><span>المتحكّم والمعالِج</span></div></div><p class="sol-why"><b>التعليل:</b> قد تكون البيانات <i>مقيمةً</i> خارج الولايات المتّحدة ويصلها القانون الأمريكيّ لأنّ المزوّد شركةٌ أمريكيّة — وهذه هي السيادة. التوطين قاعدةٌ لإبقاء البيانات داخل البلد، والأزواج الأخرى لا صلة لها.</p></div>
+<div class="sol-kind"><span>صح أو خطأ</span><span class="sk-line"></span></div>
+<div class="sol-item"><div class="sol-tf-line"><p class="sol-q"><span class="sq-n">١.</span> SOC 2 شهادةٌ تصدرها منظّمة ISO.</p><span class="sol-badge f">خطأ</span></div><p class="sol-why"><b>التعليل:</b> SOC 2 تقرير تصديقٍ من مدقّقٍ مستقلّ وفق معايير خدمات الثقة من AICPA — ليس من ISO وليس شهادة.</p></div>
+<div class="sol-item"><div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٢.</span> شهادة ISO/IEC 27001 للمزوّد تغطّي أدوار IAM التي ينشئها العميل في حسابه.</p><span class="sol-badge f">خطأ</span></div><p class="sol-why"><b>التعليل:</b> الشهادة تغطّي جهة المزوّد من خطّ المسؤوليّة المشتركة. الأدوار والسياسات وقواعد الجدار في حساب العميل مسؤوليّة العميل.</p></div>
+<div class="sol-item"><div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٣.</span> الخطر المتبقّي هو ما يبقى من الخطر بعد تطبيق الضوابط.</p><span class="sol-badge t">صح</span></div><p class="sol-why"><b>التعليل:</b> الضوابط تخفض الاحتمال أو الأثر ونادرًا إلى الصفر، وعلى مالك الخطر أن يقبل الباقي كتابيًّا.</p></div>
+<div class="sol-item"><div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٤.</span> شراء تأمينٍ سيبرانيّ ينقل الأثر الماليّ والمسؤوليّة عن البيانات معًا إلى شركة التأمين.</p><span class="sol-badge f">خطأ</span></div><p class="sol-why"><b>التعليل:</b> النقل يحرّك جزءًا من الأثر الماليّ فقط، وتبقى المؤسّسة مسؤولةً أمام العملاء والجهات الرقابيّة.</p></div>
+<div class="sol-item"><div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٥.</span> في اختراق Capital One اخترق المهاجم بنية AWS نفسها.</p><span class="sol-badge f">خطأ</span></div><p class="sol-why"><b>التعليل:</b> لم تُخترق AWS. الخلل كان جدار WAF مضبوطًا خطأً ودورًا بصلاحيّاتٍ منتفخة — وكلاهما في جهة العميل.</p></div>
+<div class="sol-item"><div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٦.</span> مصفوفة CSA CCM تربط ضوابطها بمعايير أخرى مثل ISO/IEC 27001.</p><span class="sol-badge t">صح</span></div><p class="sol-why"><b>التعليل:</b> هذا الربط يجعل الضابط الواحد المطبَّق دليلًا لأكثر من إطار.</p></div>
+<div class="sol-item"><div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٧.</span> البيانات المخزّنة في منطقة البحرين لدى مزوّدٍ أمريكيّ قد تخضع للقانون الأمريكيّ أيضًا.</p><span class="sol-badge t">صح</span></div><p class="sol-why"><b>التعليل:</b> الإقامة (البحرين) لا تحسم السيادة: قانون CLOUD Act قد يصل إلى بياناتٍ تديرها شركاتٌ أمريكيّة.</p></div>
+<div class="sol-item"><div class="sol-tf-line"><p class="sol-q"><span class="sq-n">٨.</span> يتضمّن الدستور العراقيّ لسنة ٢٠٠٥ الحقّ في الخصوصيّة الشخصيّة (المادّة ١٧).</p><span class="sol-badge t">صح</span></div><p class="sol-why"><b>التعليل:</b> المادّة ١٧ تحمي الخصوصيّة الشخصيّة، والمادّة ٤٠ تحمي حرّيّة الاتصالات والمراسلات وسرّيّتها.</p></div>
+<div class="sol-kind"><span>أسئلة قصيرة — نقاط التصحيح</span><span class="sk-line"></span></div>
+<div class="sol-item"><p class="sol-q"><span class="sq-n">١.</span> اذكر <b>الخطوات الخمس</b> لتقييم مخاطر السحابة واشرح <b>الخطر المتبقّي</b>.</p><p class="sol-why"><b>نقاط التصحيح:</b></p><ul class="sol-grading"><li>حصر الأصول: البيانات والهويّات والخدمات.</li><li>التهديدات ونقاط الضعف لكلّ أصل.</li><li>تقدير الاحتمال × الأثر (١–٥ لكلٍّ منهما مع سببٍ في سطر).</li><li>قرار المعالجة: تخفيض أو تجنّب أو نقل أو قبول.</li><li>إعادة التقدير بعد الضوابط = الخطر المتبقّي؛ يقبله المالك كتابيًّا ويُسجَّل في سجلّ المخاطر.</li></ul></div>
+<div class="sol-item"><p class="sol-q"><span class="sq-n">٢.</span> قارن بين <b>SOC 2 النوع الأوّل</b> و<b>النوع الثاني</b>. أيّهما تطلب قبل التوقيع، ولماذا؟</p><p class="sol-why"><b>نقاط التصحيح:</b></p><ul class="sol-grading"><li>النوع الأوّل: تصميم الضوابط في تاريخٍ واحد.</li><li>النوع الثاني: اختبار عمل الضوابط خلال فترة (٣–١٢ شهرًا).</li><li>نطلب النوع الثاني لأنّه يثبت أنّ الضوابط تعمل لا أنّها موجودة فقط.</li><li>نقرأ قسم الاستثناءات؛ والتقرير يُشارَك باتفاقيّة عدم إفصاح (SOC 3 هو الملخّص العامّ).</li></ul></div>
+<div class="sol-item"><p class="sol-q"><span class="sq-n">٣.</span> اذكر <b>أربعة بنود</b> في العقد تفحصها قبل التوقيع مع مزوّد سحابة، والسؤال الذي يجيب عنه كلٌّ منها.</p><p class="sol-why"><b>نقاط التصحيح:</b></p><ul class="sol-grading"><li>موقع البيانات ونقلها — أين تُخزَّن ومتى يمكن نقلها؟</li><li>إبلاغ المزوّد عن الحوادث — خلال كم ساعة؟</li><li>حقّ التدقيق — تدقيقنا أم تقارير SOC 2 وISO؟</li><li>المتعاقدون من الباطن، الخروج (الإعادة والحذف)، سقف المسؤوليّة، القانون الحاكم — أيّ واحدٍ منها يُحتسب.</li></ul></div>
+<div class="sol-item"><p class="sol-q"><span class="sq-n">٤.</span> اشرح الفرق بين <b>إقامة البيانات</b> و<b>سيادة البيانات</b> مع مثال.</p><p class="sol-why"><b>نقاط التصحيح:</b></p><ul class="sol-grading"><li>الإقامة = الموقع أو المنطقة المختارة (تقنيّ).</li><li>السيادة = قانون أيّ دولةٍ ينطبق (قانونيّ).</li><li>مثال: بياناتٌ في منطقة فرانكفورت أو البحرين لدى مزوّدٍ أمريكيّ — مقيمةٌ هناك لكن يصلها CLOUD Act الأمريكيّ.</li><li>إضافة: التوطين = اشتراطٌ قانونيّ بإبقاء البيانات داخل البلد.</li></ul></div>
+<div class="sol-kind"><span>السيناريو الطويل — الإجابة النموذجيّة</span><span class="sk-line"></span></div>
+<div class="sol-item"><p class="sol-q">«مصرف دجلة الرقميّ» (مصرفٌ مختلَق)</p><p class="sol-why"><b>الإجابة النموذجيّة:</b></p><ul class="sol-grading"><li><b>أ)</b> حاويةٌ عامّة: ٤×٥ = ٢٠ ← منع الوصول العامّ على الحساب كلّه + تنبيه CSPM ← ١×٥ = ٥. وصول الموظّفين الواسع: ٣×٥ = ١٥ ← أقلّ صلاحية ومراجعة وصولٍ دوريّة ← ٣×٢ = ٦. تأخّر الاكتشاف: ٣×٤ = ١٢ ← تنبيهاتٌ على السياسات العامّة والتنزيلات غير المعتادة ← ٢×٣ = ٦. (تُقبل أيّ درجاتٍ معلّلة.)</li><li><b>ب)</b> ينطبق GDPR على العملاء في ألمانيا: إبلاغ السلطة الألمانيّة خلال ٧٢ ساعة (قبل الثانية فجر الأحد)، وإبلاغ المتضرّرين دون تأخيرٍ غير مبرّر لأنّ صور الهويّة خطرٌ مرتفع. في العراق: اتّباع تعليمات البنك المركزيّ العراقيّ للمصارف وإبلاغ العملاء. داخليًّا: فريق الاستجابة فورًا وحفظ السجلّات.</li><li><b>ج)</b> لا. الشهادات وتقرير SOC 2 تغطّي جهة المزوّد، أمّا جعل الحاوية عامّة فإعدادٌ من المصرف. والخدمة لم تتوقّف، فلا خرق للاتفاقيّة ولا رصيد، والمسؤوليّة محدودةٌ بسقفٍ أصلًا.</li><li><b>د)</b> البنود: إبلاغٌ عن الحوادث خلال عددٍ محدّد من الساعات، حقّ التدقيق والوصول إلى السجلّات، موقع البيانات والمتعاقدون من الباطن، الخروج والحذف. الضابط: سياسةٌ تنظيميّة ترفض أيّ موردٍ خارج المناطق المسموح بها، مع تشفيرٍ بمفاتيح يديرها العميل.</li></ul></div>
         <div class="page-nav"><button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button><button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button></div>
        </div>
        <div class="lang-ku" dir="rtl">
@@ -3895,6 +3947,8 @@ html[data-lang="ku"] .cs .lang-ku{display:block} html[data-lang="ku"] .cs .lang-
 <div class="sol-item"><p class="sol-q"><span class="sq-n">٤.</span> <b>چوار</b> کرداری پاکوخاوێنیی زنجیرەی دابینکردن بۆ تیمێک کە لەسەر هەور بڵاو دەکاتەوە بنووسە.</p><p class="sol-why"><b>ڕێنمایی نمرەدان:</b></p><ul class="sol-grading"><li>لیستی پێکهاتەکان / SBOM.</li><li>جێگیرکردنی وەشان و پشکنینی hash یان واژۆ.</li><li>سکانکردنی کتێبخانە و وێنەکان (وەک Dependabot و Trivy) و چاککردنەوەی خێرا.</li><li>تەنها کۆگای متمانەپێکراو؛ کەمترین دەسەڵات بۆ CI/CD و پەیوەستکارە دەرەکییەکان؛ پێداچوونەوەی دابینکەر پێش پێدانی دەستگەیشتن.</li></ul></div>
 <div class="sol-kind"><span>سیناریۆی درێژ — وەڵامی نموونەیی</span><span class="sk-line"></span></div>
 <div class="sol-item"><p class="sol-q">«ڕافیدەین ڕاید» (کۆمپانیایەکی نوێی خەیاڵی)</p><p class="sol-why"><b>وەڵامی نموونەیی:</b></p><ul class="sol-grading"><li><b>A)</b> root بەبێ MFA ← ناسنامە و دەستگەیشتن (٢). کۆگای گشتیی ناسنامەکان ← ڕێکخستنی هەڵە (١) / ئاشکرابوونی ڕێکەوتیی داتا (٧). APIی گەشت بەبێ پشکنینی خاوەندارێتی ← APIی ناسەلامەت (٣). وێنەی <code>latest</code> لە کۆگای گشتی ← سەرچاوەی ناسەلامەتی لایەنی سێیەم (٥). کوژاندنەوەی لۆگ ← بینینی سنووردار (٩). هەر چوارێک بە بەستنەوەی ڕاست.</li><li><b>B)</b> نموونە: کۆگای ناسنامەکان ٥ × ٥ = ٢٥ (سکانەرەکان لە چەند کاتژمێرێکدا کۆگای کراوە دەدۆزنەوە؛ بەڵگەنامەی ناسنامە) | root بەبێ MFA ٤ × ٥ = ٢٠ | APIی BOLA ٤ × ٤ = ١٦ | وێنەی latest ٣ × ٤ = ١٢ | لۆگی کوژاوە ٣ × ٣ = ٩ (بەڵام کاریگەریی ئەوانی تر زیاد دەکات). ژمارەی جیاواز قبووڵە ئەگەر هۆکاری هەبێت.</li><li><b>C)</b> کۆگا: ڕێگر = ڕێگرتن لە دەستگەیشتنی گشتی بۆ هەموو هەژمار، و پیشاندانی وێنەکان بە بەستەری واژۆکراوی کورتخایەن؛ دۆزەرەوە = یاسای CSPM / ئاگادارکردنەوە بۆ هەر سیاسەتێک کە کۆگایەک گشتی بکات. root: ڕێگر = کلیلی MFAی ڕەقەکاڵا بۆ root و لابردنی، کاری ڕۆژانە بە بەکارهێنەر و ڕۆڵی ناودار بە کەمترین دەسەڵات؛ دۆزەرەوە = ئاگادارکردنەوە بۆ هەر چوونەژوورەوەیەکی root.</li><li><b>D)</b> T1496 دەستبەسەرداگرتنی سەرچاوەکان (بە ئەگەری زۆر دەرهێنانی دراو) دوای T1078.004 هەژماری دروست. ئاماژەی زووتر: ئاگادارکردنەوەی بودجە / نائاسایی پسوولە؛ ڕووداوەکانی دروستکردنی ئامێر لە ناوچەیەکی بەکارنەهاتوو لە لۆگی پشکنیندا (پێویستی بە لۆگی چالاک هەیە)؛ و یاسایەک کە ناوچە بەکارنەهاتووەکان قەدەغە بکات ڕێگری لێ دەکرد.</li></ul></div>
+        <div class="sol-week"><span class="sw-n">٣</span><span class="sw-t">وەڵامەکانی هەفتەی سێیەم — حوکمڕانیی هەور، مەترسی، پابەندبوون و یاسا</span></div>
+<p class="sol-why">وەڵامەکانی ئەم هەفتەیە بە <b>عەرەبی</b> و <b>ئینگلیزی</b> بەردەستن — زمان لە سەرەوەی پەڕەکە بگۆڕە.</p>
         <div class="page-nav"><button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ پێشوو</button><button class="nav-btn nav-next" onclick="navigateSlide(1)">دواتر ←</button></div>
        </div>
         <div class="footer-note">🔑</div>
@@ -4858,13 +4912,625 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 })();
 </script>
       </div>
-      <div id="slide-3" class="slide content-slide cs" dir="ltr">
-        <span class="chip">Week 3</span>
-        <h2 class="page-title">Week Three</h2>
+      <div id="slide-3" class="slide content-slide rich-slide cs" dir="ltr">
+<style>
+/* ===== Week 3 (cloudsec) — scoped w3- ===== */
+.cs .w3-sim{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;background:#11141a;color:#eef1f6;border-radius:14px;padding:14px 16px;margin:14px 0}
+.cs .w3-sim b{display:block;font-size:1.05em}
+.cs .w3-sim small{display:block;color:#b8c1d1;line-height:1.7;max-width:46em}
+.cs .w3-go{display:inline-block;background:#d1453b;color:#fff !important;font-weight:700;border-radius:999px;padding:8px 18px;text-decoration:none;white-space:nowrap}
+.cs .w3-go:hover{filter:brightness(1.1)}
+.cs .w3-chain{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin:10px 0 14px}
+.cs .w3-st{border:2px solid var(--blue);border-radius:12px;padding:9px 12px;background:rgba(24,87,164,.05)}
+.cs .w3-st b{display:block;color:var(--blue)}
+.cs .w3-st small{display:block;line-height:1.7;margin-top:3px}
+.cs .w3-st.hi{border-color:var(--green);background:rgba(31,122,61,.07)}.cs .w3-st.hi b{color:var(--green)}
+.cs .w3-st.bad{border-color:var(--red);background:#fde8e4}.cs .w3-st.bad b{color:var(--red)}
+.cs .w3-five{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.cs .w3-reg td{font-size:13.5px}
+.cs .w3-reg .crit{background:#fde3df;font-weight:700}.cs .w3-reg .hi{background:#fdebd3;font-weight:700}.cs .w3-reg .med{background:#fff6cc;font-weight:700}.cs .w3-reg .lo{background:#e4f3ea;font-weight:700}
+.cs .w3-iq{border:2px solid var(--green);border-radius:14px;padding:12px 16px;margin:14px 0;background:rgba(31,122,61,.05)}
+.cs .w3-iq>b{color:var(--green);font-size:1.05em}
+.cs .w3-iq ul{margin:6px 0}
+.cs .w3-sla{background:var(--card);border:2px solid var(--blue);border-radius:16px;padding:14px;margin:14px 0}
+.cs .w3-sla h4{margin:0 0 8px;color:var(--blue)}
+.cs .w3-sla .w3-row{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:6px 0}
+.cs .w3-sla .w3-lbl{font-weight:700;min-width:11em}
+.cs .w3-sla .w3-opt{font:inherit;border:2px solid var(--blue);border-radius:999px;background:#fff;color:var(--ink);padding:4px 12px;cursor:pointer}
+.cs .w3-sla .w3-opt.on{background:var(--blue);color:#fff}
+.cs .w3-out{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-top:10px}
+.cs .w3-out div{border:1.5px dashed var(--line);border-radius:10px;padding:8px 10px;background:#fff}
+.cs .w3-out small{display:block;color:var(--muted)}
+.cs .w3-out b{font-size:1.15em}
+.cs .w3-out .w3-cr{border-color:var(--orange);background:#fff6ea}
+.cs .w3-note{font-size:.88em;color:var(--muted);margin-top:8px}
+</style>
+       <div class="lang-en">
+        <span class="chip chip-ch1">Week 3</span>
+        <h2 class="page-title">Cloud Governance, Risk, Compliance and the Law</h2>
         <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
-        <p class="lead-paragraph" style="color:var(--muted)">Coming soon — this lecture will be added before class.</p>
+        <p class="lead-paragraph">Last week we scored risks and matched each threat to a control. This week we answer the questions a <b>manager, an auditor and a lawyer</b> ask after a cloud breach: <b>Which risks should we have seen earlier? What proves our controls work? What does the contract with the provider promise? And what does the law make us do in the first hours?</b> One real public case runs through the whole lecture: the <b>Capital One breach of 2019</b>.</p>
+
+<div class="box b"><b class="t">🎯 By the end of this lecture you can:</b>
+<ol style="margin:4px 0 0">
+<li>Run a five-step <b>cloud risk assessment</b> and keep a <b>risk register</b>.</li>
+<li>Explain what <b>CSA CCM</b> and the three <b>STAR</b> levels prove to a customer.</li>
+<li>Tell <b>ISO/IEC 27001, 27017 and 27018</b> apart, and say why a provider’s certificate does not cover you.</li>
+<li>Choose between a <b>SOC 2 Type I</b> and <b>Type II</b> report.</li>
+<li>Read the key clauses of a cloud <b>contract</b> and calculate what an <b>SLA</b> really allows.</li>
+<li>Separate <b>data residency, sovereignty and localisation</b>, and compare breach-reporting duties under <b>GDPR</b>, the laws named in our syllabus, and Iraqi rules.</li>
+</ol></div>
+
+<div class="w3-sim"><div><b>🎮 In class: “Breach Night”</b><small>A six-stage 3D simulation of the same breach, played by two teams. Your lecturer opens it on the projector; you can replay it at home.</small></div><a class="w3-go" href="breach-night/#sim" target="_blank" rel="noopener">Open the simulation ↗</a></div>
+
+<div class="chapter-num" style="color:var(--teal);"><span class="cn-num">📖</span><span class="cn-title">Terms you need first</span></div>
+<p>These words appear throughout the lecture. Read them once before section 1.</p>
+<div class="tw"><table class="dt">
+<thead><tr><th>Term</th><th>Meaning</th><th>Example</th></tr></thead>
+<tbody>
+<tr><td>GRC</td><td><b>Governance</b> decides who decides and who is accountable; <b>risk management</b> decides what to protect first; <b>compliance</b> proves to outsiders that the controls exist and work.</td><td>A board policy, a risk register, and an audit report</td></tr>
+<tr><td>Risk assessment</td><td>Listing assets, threats and weaknesses, then scoring likelihood × impact for each risk.</td><td>“Customer data bucket: likelihood 4 × impact 5 = 20”</td></tr>
+<tr><td>Risk register</td><td>A living table: each risk, its owner, its score before and after controls, the decision and the review date.</td><td>One row per risk in a shared sheet</td></tr>
+<tr><td>Residual risk</td><td>The risk left after controls. Management accepts it in writing or asks for more controls.</td><td>Score falls from 20 to 8 and the owner signs</td></tr>
+<tr><td>Control</td><td>A measure that lowers the likelihood or the impact of a risk.</td><td>MFA, least privilege, an alert</td></tr>
+<tr><td>Framework</td><td>An organised list of controls that an organisation follows and can be checked against.</td><td>CSA CCM, ISO/IEC 27001 Annex A</td></tr>
+<tr><td>Certification</td><td>An accredited body checks an organisation and issues a certificate valid for a period.</td><td>ISO/IEC 27001 certificate, valid three years with yearly checks</td></tr>
+<tr><td>Attestation report</td><td>An independent auditor’s report on controls; not a pass/fail certificate.</td><td>SOC 2 Type II report</td></tr>
+<tr><td>CSA CCM</td><td>Cloud Controls Matrix from the Cloud Security Alliance: 197 control objectives in 17 domains (version 4).</td><td>Domain IAM, domain DSP (data security and privacy)</td></tr>
+<tr><td>CAIQ</td><td>A standard questionnaire based on CCM that a provider fills in to describe its controls.</td><td>A provider’s published CAIQ answers</td></tr>
+<tr><td>STAR</td><td>The CSA public registry. Level 1 self-assessment, Level 2 third-party audit, Level 3 continuous monitoring.</td><td>Looking up a provider before signing</td></tr>
+<tr><td>ISMS</td><td>Information Security Management System: the policies, risk process, reviews and improvement that ISO/IEC 27001 requires.</td><td>The university’s security policy and yearly review</td></tr>
+<tr><td>SLA</td><td>Service Level Agreement: a measurable promise, usually monthly availability, with a stated remedy.</td><td>“99.9% per month or a 10% credit”</td></tr>
+<tr><td>Service credit</td><td>The usual SLA remedy: a percentage off a future bill, not payment for your real losses.</td><td>10% of one month’s fee</td></tr>
+<tr><td>Data controller / processor</td><td>The controller decides why and how data is processed; the processor does it on the controller’s behalf.</td><td>A bank (controller) and its cloud provider (processor)</td></tr>
+<tr><td>Data residency</td><td>Where the data is physically stored — a technical choice of region.</td><td>Choosing the Bahrain region</td></tr>
+<tr><td>Data sovereignty</td><td>Data is subject to the law of the country where it sits, and possibly the law of the provider’s home country.</td><td>Data in Europe held by a US company</td></tr>
+<tr><td>Data localisation</td><td>A legal rule that a type of data must stay inside a country, or leave only under conditions.</td><td>Banking records that must stay in-country</td></tr>
+<tr><td>Breach notification</td><td>A legal duty to tell the regulator, and sometimes the affected people, within a deadline.</td><td>GDPR: the authority within 72 hours</td></tr>
+<tr><td>SSRF</td><td>Server-side request forgery: tricking a server into sending requests to addresses the attacker chooses, including internal ones.</td><td>The first step of the Capital One breach</td></tr>
+<tr><td>Least privilege</td><td>Each identity gets only the permissions its job needs.</td><td>A reporting app may read one folder, not every bucket</td></tr>
+</tbody></table></div>
+
+<div class="chapter-num" style="color:var(--red);"><span class="cn-num">1</span><span class="cn-title">The case: Capital One, 2019</span></div>
+<p>In March 2019 an attacker reached data of about <b>106 million</b> credit-card applicants of the US bank Capital One, stored in Amazon S3. The provider was <b>not</b> broken. Three customer-side weaknesses lined up:</p>
+<div class="w3-chain">
+  <div class="w3-st"><b>1 · Misconfigured WAF</b><small>The web application firewall could be tricked into making requests for the attacker (SSRF).</small></div>
+  <div class="w3-st"><b>2 · Metadata service</b><small>Through SSRF, the attacker asked the server’s metadata service for the temporary keys of its role.</small></div>
+  <div class="w3-st"><b>3 · Over-permissive role</b><small>The role could list and read far more S3 buckets than the WAF ever needed.</small></div>
+  <div class="w3-st bad"><b>4 · Data out</b><small>About 700 buckets listed; customer files copied out.</small></div>
+</div>
+<p>The consequences were not technical: the US bank regulator (OCC) fined the bank <b>$80 million</b> in 2020, and a customer class action settled for <b>$190 million</b>. The services stayed up the whole time, so <b>no SLA was broken</b>. That is why this lecture is about governance, assurance, contracts and law — not only about firewalls.</p>
+<div class="takeaway"><b>💡 Keep this question in mind:</b> for every section below, ask “where would this have helped Capital One?”</div>
+
+<div class="chapter-num" style="color:var(--blue);"><span class="cn-num">2</span><span class="cn-title">Cloud risk assessment</span></div>
+<p>A risk assessment comes <b>before</b> the incident, not after it. Five steps:</p>
+<div class="w3-chain w3-five"><div class="w3-st"><b>1 · List assets</b><small>data, identities, services</small></div><div class="w3-st"><b>2 · Threats &amp; weaknesses</b><small>for each asset</small></div><div class="w3-st"><b>3 · Score</b><small>likelihood × impact, 1–5 each</small></div><div class="w3-st hi"><b>4 · Decide treatment</b><small>reduce, avoid, transfer or accept</small></div><div class="w3-st"><b>5 · Re-score</b><small>residual risk; the owner signs</small></div></div>
+<p>Here is part of the risk register Capital One <i>could</i> have written before the breach (illustrative scores):</p>
+<div class="tw"><table class="dt w3-reg">
+<thead><tr><th>Risk</th><th>Before</th><th>Control</th><th>After</th><th>What the control changes</th></tr></thead>
+<tbody>
+<tr><td>SSRF through the WAF</td><td class="crit">4×5 = 20</td><td>Fix WAF rules; enforce IMDSv2 (session token)</td><td class="med">2×5 = 10</td><td>Lowers <b>likelihood</b></td></tr>
+<tr><td>Stolen role reads all buckets</td><td class="crit">4×5 = 20</td><td>Least privilege: the WAF role reads nothing in S3</td><td class="lo">4×1 = 4</td><td>Lowers <b>impact</b> — theft still possible, but useless</td></tr>
+<tr><td>Data leaves unnoticed</td><td class="hi">3×5 = 15</td><td>Alert when role keys are used from outside the cloud</td><td class="med">3×3 = 9</td><td>Shortens time to detect, so less is taken</td></tr>
+</tbody></table></div>
+<div class="oops"><b>⚠️ Controls do not all work the same way.</b> Least privilege does not make theft less likely — it makes the theft <b>small</b>. Phishing-resistant MFA does the opposite: it makes the theft less likely but does not limit the damage if another path works. A good register shows <b>which number</b> each control moves.</div>
+
+<div class="chapter-num" style="color:var(--green);"><span class="cn-num">3</span><span class="cn-title">CSA CCM and the STAR registry</span></div>
+<p>The <b>Cloud Security Alliance</b> publishes the <b>Cloud Controls Matrix (CCM)</b>, a framework made for cloud: version 4 has <b>197 control objectives in 17 domains</b>, such as Identity &amp; Access Management (IAM), Data Security &amp; Privacy (DSP) and Infrastructure &amp; Virtualisation Security (IVS). Each control is mapped to ISO/IEC 27001 and other standards, so one control can count for several frameworks.</p>
+<div class="tw"><table class="dt">
+<thead><tr><th>STAR level</th><th>What it requires</th><th>What it proves to you</th></tr></thead>
+<tbody>
+<tr><td>Level 1</td><td>Self-assessment: the provider fills in the CAIQ and publishes it</td><td>Transparency — what the provider <i>says</i> it does, with no outside check</td></tr>
+<tr><td>Level 2</td><td>Third-party audit: a certification based on ISO/IEC 27001 or an attestation based on SOC 2</td><td>An independent party checked the controls</td></tr>
+<tr><td>Level 3</td><td>Continuous monitoring of controls instead of yearly snapshots</td><td>The highest assurance, and the rarest</td></tr>
+</tbody></table></div>
+<p>The STAR registry is public and free. Before signing with a provider, look up its entry and read its level.</p>
+
+<div class="chapter-num" style="color:var(--orange);"><span class="cn-num">4</span><span class="cn-title">The ISO/IEC 27000 family in the cloud</span></div>
+<div class="tw"><table class="dt">
+<thead><tr><th>Standard</th><th>What it is</th><th>Certifiable?</th><th>Link to the case</th></tr></thead>
+<tbody>
+<tr><td>27001:2022</td><td>The ISMS: policies, risk process, management review, continual improvement. Annex A lists 93 controls.</td><td>Yes</td><td>Configuration management (A.8.9), access rights (A.5.18), authentication (A.8.5)</td></tr>
+<tr><td>27002:2022</td><td>Detailed guidance on how to apply the Annex A controls</td><td>No</td><td>How to implement the controls above</td></tr>
+<tr><td>27017:2015</td><td>Cloud code of practice: 7 extra cloud controls (prefix CLD) and cloud guidance for 37 existing controls, for provider <b>and</b> customer</td><td>By extending a 27001 scope</td><td>CLD.6.3.1 shared roles between provider and customer</td></tr>
+<tr><td>27018:2019</td><td>Protection of personal data (PII) when a public-cloud provider processes it as a processor</td><td>By extending a 27001 scope</td><td>The provider’s duties for the bank’s customer data</td></tr>
+</tbody></table></div>
+<div class="oops"><b>⚠️ The provider’s certificate is not your certificate.</b> AWS holding ISO/IEC 27001 and 27017 covers <b>its</b> side of the shared-responsibility line. The WAF rules and IAM roles inside the bank’s account were completely outside that certificate.</div>
+
+<div class="chapter-num" style="color:var(--violet);"><span class="cn-num">5</span><span class="cn-title">SOC 2 reports</span></div>
+<p><b>SOC 2</b> is not a certificate. It is a report by an independent auditor against the <b>Trust Services Criteria</b> of the AICPA. <b>Security</b> is always included; <b>availability, processing integrity, confidentiality</b> and <b>privacy</b> are added when they fit the service.</p>
+<div class="grid g3">
+  <div class="box b"><b class="t">Type I</b><small><b>Question:</b> are the controls designed properly?<br><b>Time:</b> one date.<br><b>Use:</b> an acceptable start for a new provider.</small></div>
+  <div class="box g"><b class="t">Type II</b><small><b>Question:</b> did the controls actually work during the period?<br><b>Time:</b> usually 3–12 months.<br><b>Use:</b> the evidence customers normally ask for before signing.</small></div>
+</div>
+<p>The report is restricted and shared under a non-disclosure agreement; <b>SOC 3</b> is a short public summary. The most important part for a professional reader is the <b>exceptions</b> section — controls the auditor found did <i>not</i> work.</p>
+
+<div class="chapter-num" style="color:var(--blue);"><span class="cn-num">6</span><span class="cn-title">Contracts and SLAs</span></div>
+<p>The contract is where shared responsibility becomes obligations you can claim. Read these clauses before signing:</p>
+<div class="tw"><table class="dt">
+<thead><tr><th>Clause</th><th>The question it answers</th></tr></thead>
+<tbody>
+<tr><td>Data location and transfer</td><td>Which region stores the data, and when may the provider move it?</td></tr>
+<tr><td>Provider incident notice</td><td>Within how many hours does the provider tell us about an incident on its side? We need this to meet our own legal deadline.</td></tr>
+<tr><td>Right to audit</td><td>Can we audit ourselves, or do we rely on SOC 2 and ISO reports?</td></tr>
+<tr><td>Sub-processors</td><td>Who else processes our data, and are we told when that changes?</td></tr>
+<tr><td>Exit</td><td>How is our data returned and deleted at the end? (ISO/IEC 27017 CLD.8.1.5)</td></tr>
+<tr><td>Liability cap</td><td>What is the most the provider will pay? Often a few months of fees.</td></tr>
+<tr><td>Governing law</td><td>Which country’s law decides a dispute, and where?</td></tr>
+</tbody></table></div>
+
+<div class="w3-sla" data-w3="sla"></div>
+<div class="takeaway"><b>💡 Lesson from the case:</b> an SLA measures <b>availability</b>. During the Capital One breach the service was up 100% of the time — no SLA breach, no credit, and 106 million records gone. An SLA neither measures nor replaces security.</div>
+
+<div class="chapter-num" style="color:var(--teal);"><span class="cn-num">7</span><span class="cn-title">Data residency, sovereignty and localisation</span></div>
+<div class="grid g3">
+  <div class="box b"><b class="t">Residency</b><small>A technical decision: the region you choose to store data in.</small></div>
+  <div class="box o"><b class="t">Sovereignty</b><small>A legal fact: the data is subject to the law where it sits — and possibly to the law of the provider’s home country.</small></div>
+  <div class="box v"><b class="t">Localisation</b><small>A legal requirement that a type of data stays inside the borders.</small></div>
+</div>
+<p>The clearest example: the US <b>CLOUD Act (2018)</b> lets US authorities require a US company to hand over data it controls even if it is stored outside the US. So data can be <b>resident</b> in a Gulf or European region and still fall under a foreign law.</p>
+<p>Technical controls that support residency: an organisation policy that <b>denies any action outside approved regions</b>, and encryption with <b>customer-managed keys</b>.</p>
+
+<div class="chapter-num" style="color:var(--red);"><span class="cn-num">8</span><span class="cn-title">The law after a breach: who must be told, and when?</span></div>
+<p>Our syllabus names three laws. GDPR applies to anyone processing data of people in the EU; the other two are Malaysian and are useful as a <b>comparison</b> of how fast a regulator can demand reports.</p>
+<div class="tw"><table class="dt">
+<thead><tr><th></th><th>GDPR (EU)</th><th>PDPA, Malaysia (amended 2024)</th><th>Cyber Security Act 2024, Malaysia</th></tr></thead>
+<tbody>
+<tr><td>Applies to</td><td>Anyone processing data of people in the EU, wherever they are</td><td>Personal data in commercial transactions in Malaysia</td><td>National critical information infrastructure, including banks</td></tr>
+<tr><td>Tell the regulator</td><td>Within <b>72 hours</b> of becoming aware</td><td>As soon as practicable (guidelines: 72 hours)</td><td>Immediately, a detailed report within <b>6 hours</b>, a full report within 14 days</td></tr>
+<tr><td>Tell the people</td><td>Without undue delay if the risk to them is high</td><td>If the breach causes or is likely to cause significant harm</td><td>Addressed to the regulator and sector, not individuals</td></tr>
+<tr><td>Maximum fine</td><td>€20 million or 4% of global annual turnover, whichever is higher</td><td>Up to RM 1 million and/or 3 years’ prison</td><td>Fines and prison per offence set in the Act</td></tr>
+</tbody></table></div>
+
+<div class="w3-iq"><b>🇮🇶 And in Iraq?</b>
+<p>At the time of writing Iraq has <b>no single comprehensive personal-data protection law</b> like GDPR. The rules a cloud team should know come from:</p>
+<ul>
+<li><b>The Constitution of 2005</b> — Article 17 (right to personal privacy) and Article 40 (freedom and privacy of communications and correspondence).</li>
+<li><b>Law No. 78 of 2012</b> on Electronic Signature and Electronic Transactions — legal value of electronic records and signatures.</li>
+<li><b>Sector regulators</b> — for example the Central Bank of Iraq for banks and payment companies, and the Communications and Media Commission (CMC) for telecom and Internet providers.</li>
+</ul>
+<p><b>Practical rule:</b> an Iraqi institution that serves EU residents may fall under GDPR; one that uses a foreign provider is subject to that provider’s home law as well. Always check for newer Iraqi legislation and your sector regulator’s instructions before relying on this summary.</p></div>
+
+<div class="oops"><b>⚠️ The shortest clock starts first.</b> If a breach is found at 2:00 a.m., a 6-hour rule means a detailed report by 8:00 a.m. The response plan, the person allowed to report, and the regulator’s contact must be written down <b>before</b> the incident.</div>
+
+<div class="chapter-num" style="color:var(--orange);"><span class="cn-num">9</span><span class="cn-title">Who was responsible?</span></div>
+<div class="tw"><table class="dt">
+<thead><tr><th>Layer (EC2 service)</th><th>Responsible</th><th>In the case</th></tr></thead>
+<tbody>
+<tr><td>Data centres and hardware</td><td>Provider</td><td>Not broken</td></tr>
+<tr><td>Core network and virtualisation</td><td>Provider</td><td>Not broken</td></tr>
+<tr><td>Operating system and patches</td><td>Customer</td><td>—</td></tr>
+<tr><td>Application and WAF</td><td>Customer</td><td><b>The flaw was here</b></td></tr>
+<tr><td>Identities and permissions</td><td>Customer</td><td><b>The over-permissive role was here</b></td></tr>
+<tr><td>Data classification and encryption</td><td>Customer</td><td><b>No network condition on the bucket</b></td></tr>
+<tr><td>Secure defaults of the service</td><td>Provider offers, customer enables</td><td>IMDSv2 arrived after the incident</td></tr>
+</tbody></table></div>
+<div class="takeaway"><b>💡 Management summary:</b> every failure in this case was on the customer’s side. “We are in the cloud” does not move responsibility — it changes its shape, from guarding walls to guarding <b>settings and identities</b>.</div>
+
+<div class="chapter-num" style="color:var(--teal);"><span class="cn-num">🎮</span><span class="cn-title">Activity A — Which evidence is it?</span></div>
+<div class="game" id="g13"><span class="score" id="g13s">0 / 0</span><div class="ctx" id="g13c"></div><div class="q" id="g13q"></div>
+<div class="btns"><button class="c" data-a="S">📝 Self-declared</button><button class="p" data-a="A">🔍 Independent audit</button><button data-a="C">📄 Contract promise</button></div>
+<div class="fb" id="g13f"></div><div class="btns"><button id="g13n" style="display:none">Next ▶</button></div></div>
+
+<div class="chapter-num" style="color:var(--teal);"><span class="cn-num">🎮</span><span class="cn-title">Activity B — Residency or sovereignty?</span></div>
+<div class="game" id="g14"><span class="score" id="g14s">0 / 0</span><div class="q" id="g14q"></div>
+<div class="btns"><button class="p" data-a="R">📍 Residency (technical)</button><button class="c" data-a="V">⚖️ Sovereignty (legal)</button></div>
+<div class="fb" id="g14f"></div><div class="btns"><button id="g14n" style="display:none">Next ▶</button></div></div>
+
+<div class="chapter-num" style="color:var(--teal);"><span class="cn-num">👆</span><span class="cn-title">Activity C — Spot the weak clauses</span></div>
+<p>Tap every phrase in this contract summary that should worry the customer. Safe phrases shake and count as a wrong tap.</p>
+<div class="w2-act" data-w3="spot"></div>
+
+<div class="chapter-num" style="color:var(--teal);"><span class="cn-num">👆</span><span class="cn-title">Activity D — Order the risk assessment</span></div>
+<p>Tap the cards in the right order, from the first step to the last.</p>
+<div class="w2-act" data-w3="order"></div>
+
+        <div class="section-heading" style="margin-top:22px;"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg><span>Review questions</span></div>
+        <p class="quiz-note">Answer on your own first, in the blank space. Then check the <b>🔑 Solutions &amp; reasoning</b> tab — it explains why each answer is right and why the others are wrong.</p>
+        <div class="section-heading" style="margin-top:14px;"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg><span>A. Multiple choice</span></div>
+<div class="mcq-item"><span class="q-num">1.</span> On the Capital One WAF role, applying <b>least privilege</b> mainly lowers which number?<ul class="mcq-options"><li><span class="opt-letter">a)</span> The likelihood of SSRF</li><li><span class="opt-letter">b)</span> The provider’s share of responsibility</li><li><span class="opt-letter">c)</span> The impact of stolen role credentials</li><li><span class="opt-letter">d)</span> The SLA availability</li></ul></div>
+<div class="mcq-item"><span class="q-num">2.</span> A customer wants evidence that a provider’s controls <b>actually worked during the last year</b>. What should it ask for?<ul class="mcq-options"><li><span class="opt-letter">a)</span> A SOC 2 Type II report</li><li><span class="opt-letter">b)</span> A SOC 2 Type I report</li><li><span class="opt-letter">c)</span> The provider’s CAIQ (STAR Level 1)</li><li><span class="opt-letter">d)</span> A copy of the SLA</li></ul></div>
+<div class="mcq-item"><span class="q-num">3.</span> What is <b>CSA STAR Level 1</b>?<ul class="mcq-options"><li><span class="opt-letter">a)</span> An ISO/IEC 27001 certification</li><li><span class="opt-letter">b)</span> Continuous monitoring of controls</li><li><span class="opt-letter">c)</span> A third-party SOC 2 audit</li><li><span class="opt-letter">d)</span> A self-assessment: the provider publishes its CAIQ answers</li></ul></div>
+<div class="mcq-item"><span class="q-num">4.</span> Which is the most accurate description of <b>ISO/IEC 27017</b>?<ul class="mcq-options"><li><span class="opt-letter">a)</span> A management-system standard that replaces 27001 for cloud</li><li><span class="opt-letter">b)</span> A code of practice that adds cloud controls and is adopted by extending a 27001 scope</li><li><span class="opt-letter">c)</span> The standard for protecting personal data processed by a public-cloud provider</li><li><span class="opt-letter">d)</span> An audit report issued by an accountant</li></ul></div>
+<div class="mcq-item"><span class="q-num">5.</span> An SLA promises <b>99.9%</b> monthly availability. In a 30-day month, how much downtime does that allow?<ul class="mcq-options"><li><span class="opt-letter">a)</span> About 4.3 minutes</li><li><span class="opt-letter">b)</span> About 7.2 hours</li><li><span class="opt-letter">c)</span> About 43 minutes</li><li><span class="opt-letter">d)</span> About 3.6 hours</li></ul></div>
+<div class="mcq-item"><span class="q-num">6.</span> During the Capital One breach the services stayed up while data was stolen. Could the bank claim an SLA service credit?<ul class="mcq-options"><li><span class="opt-letter">a)</span> Yes, a full refund for the month</li><li><span class="opt-letter">b)</span> Yes, the standard 10% credit</li><li><span class="opt-letter">c)</span> Only if GDPR applies</li><li><span class="opt-letter">d)</span> No — the SLA measures availability, and availability was 100%</li></ul></div>
+<div class="mcq-item"><span class="q-num">7.</span> Under <b>GDPR</b>, how long does a controller have to notify the supervisory authority of a personal-data breach?<ul class="mcq-options"><li><span class="opt-letter">a)</span> 72 hours from becoming aware</li><li><span class="opt-letter">b)</span> 6 hours</li><li><span class="opt-letter">c)</span> 24 hours</li><li><span class="opt-letter">d)</span> 14 days</li></ul></div>
+<div class="mcq-item"><span class="q-num">8.</span> The US <b>CLOUD Act</b> is the classic example of the difference between:<ul class="mcq-options"><li><span class="opt-letter">a)</span> Residency and localisation</li><li><span class="opt-letter">b)</span> Residency and sovereignty</li><li><span class="opt-letter">c)</span> An SLA and a SOC 2 report</li><li><span class="opt-letter">d)</span> A controller and a processor</li></ul></div>
+        <div class="section-heading" style="margin-top:22px;"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg><span>B. True or False</span></div>
+<div class="tf-item"><span>1. SOC 2 is a certificate issued by ISO.</span><span class="tf-boxes"><span><span class="box"></span> True</span><span><span class="box"></span> False</span></span></div>
+<div class="tf-item"><span>2. A provider’s ISO/IEC 27001 certificate covers the IAM roles a customer creates in its own account.</span><span class="tf-boxes"><span><span class="box"></span> True</span><span><span class="box"></span> False</span></span></div>
+<div class="tf-item"><span>3. Residual risk is the risk that remains after controls are applied.</span><span class="tf-boxes"><span><span class="box"></span> True</span><span><span class="box"></span> False</span></span></div>
+<div class="tf-item"><span>4. Buying cyber insurance transfers both the financial impact and the accountability for the data to the insurer.</span><span class="tf-boxes"><span><span class="box"></span> True</span><span><span class="box"></span> False</span></span></div>
+<div class="tf-item"><span>5. In the Capital One breach, the attacker broke into AWS’s own infrastructure.</span><span class="tf-boxes"><span><span class="box"></span> True</span><span><span class="box"></span> False</span></span></div>
+<div class="tf-item"><span>6. CSA CCM maps its controls to other standards such as ISO/IEC 27001.</span><span class="tf-boxes"><span><span class="box"></span> True</span><span><span class="box"></span> False</span></span></div>
+<div class="tf-item"><span>7. Data stored in a Bahrain region of a US-based provider can still be subject to US law.</span><span class="tf-boxes"><span><span class="box"></span> True</span><span><span class="box"></span> False</span></span></div>
+<div class="tf-item"><span>8. The Iraqi Constitution of 2005 includes a right to personal privacy (Article 17).</span><span class="tf-boxes"><span><span class="box"></span> True</span><span><span class="box"></span> False</span></span></div>
+        <div class="section-heading" style="margin-top:22px;"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg><span>C. Short answer</span></div>
+<div class="mcq-item"><span class="q-num">1.</span> List the <b>five steps</b> of a cloud risk assessment and explain <b>residual risk</b>.<span class="blank-line"></span><span class="blank-line"></span><span class="blank-line"></span></div>
+<div class="mcq-item"><span class="q-num">2.</span> Compare <b>SOC 2 Type I</b> and <b>Type II</b>. Which do you ask for before signing, and why?<span class="blank-line"></span><span class="blank-line"></span><span class="blank-line"></span></div>
+<div class="mcq-item"><span class="q-num">3.</span> Name <b>four contract clauses</b> you check before signing with a cloud provider, and the question each answers.<span class="blank-line"></span><span class="blank-line"></span><span class="blank-line"></span></div>
+<div class="mcq-item"><span class="q-num">4.</span> Explain the difference between <b>data residency</b> and <b>data sovereignty</b>, with an example.<span class="blank-line"></span><span class="blank-line"></span><span class="blank-line"></span></div>
+        <div class="section-heading" style="margin-top:22px;"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg><span>D. Long scenario</span></div>
+<div class="w2-scen"><b>Dijla Digital Bank (fictional)</b><p style="margin:6px 0 0">Dijla Digital Bank is a <b>fictional</b> Iraqi digital bank. Its mobile app runs on a US public-cloud provider, with data in the <b>Frankfurt</b> region; most customers are in Iraq and about 3,000 live in Germany. On a Thursday at <b>02:00</b> the team finds that a storage bucket with <b>40,000 customer ID scans</b> was public for nine days. The provider holds ISO/IEC 27001, 27017 and a SOC 2 Type II report. The contract says the provider reports incidents “without undue delay”, caps liability at three months of fees, and promises 99.95% availability.</p><ol type="a" style="margin:8px 0 0"><li>Write <b>three rows</b> of the risk register the bank should have had (risk, score before, control, score after).<span class="blank-line"></span><span class="blank-line"></span></li><li>Which <b>notification duties and deadlines</b> apply, and to whom? Draw a short timeline from 02:00.<span class="blank-line"></span><span class="blank-line"></span></li><li>Can the bank rely on the provider’s <b>certificates or the SLA</b> to recover its losses? Explain.<span class="blank-line"></span><span class="blank-line"></span></li><li>Propose <b>two contract clauses</b> to renegotiate and <b>one control</b> for residency or sovereignty.<span class="blank-line"></span><span class="blank-line"></span></li></ol></div>
+
+        <div class="mini-note">End of Lecture 3 — prepared by Asst. Prof. Dr. Ameer Hadi ★</div>
         <div class="page-nav"><button class="nav-btn nav-prev" onclick="navigateSlide(-1)">← Previous</button><button class="nav-btn nav-next" onclick="navigateSlide(1)">Next →</button></div>
-        <div class="footer-note">3</div>
+       </div>
+       <div class="lang-ar" dir="rtl">
+        <span class="chip chip-ch1">الأسبوع الثالث</span>
+        <h2 class="page-title">حوكمة السحابة والمخاطر والامتثال والقانون</h2>
+        <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
+        <p class="lead-paragraph">في الأسبوع الماضي قدّرنا المخاطر وربطنا كلّ تهديدٍ بضابط. هذا الأسبوع نجيب عن الأسئلة التي يطرحها <b>المدير والمدقّق والمحامي</b> بعد اختراقٍ سحابيّ: <b>ما المخاطر التي كان يجب أن نراها مبكّرًا؟ ما الذي يثبت أنّ ضوابطنا تعمل؟ بماذا يتعهّد العقد مع المزوّد؟ وماذا يفرض القانون علينا في الساعات الأولى؟</b> وتسير معنا في المحاضرة كلّها حادثةٌ حقيقيّة معلنة: <b>اختراق مصرف Capital One سنة ٢٠١٩</b>.</p>
+
+<div class="box b"><b class="t">🎯 في نهاية هذه المحاضرة تستطيع أن:</b>
+<ol style="margin:4px 0 0">
+<li>تُجري <b>تقييم مخاطر سحابيًّا</b> بخمس خطوات وتحتفظ بـ<b>سجلّ مخاطر</b>.</li>
+<li>تشرح ما تثبته <b>مصفوفة CSA CCM</b> ومستويات <b>STAR</b> الثلاثة للعميل.</li>
+<li>تميّز بين <b>ISO/IEC 27001 و27017 و27018</b>، وتبيّن لماذا لا تغطّيك شهادة المزوّد.</li>
+<li>تختار بين تقرير <b>SOC 2 من النوع الأوّل</b> و<b>النوع الثاني</b>.</li>
+<li>تقرأ أهمّ بنود <b>عقد</b> السحابة وتحسب ما تسمح به <b>اتفاقيّة مستوى الخدمة</b> فعلًا.</li>
+<li>تفرّق بين <b>إقامة البيانات وسيادتها وتوطينها</b>، وتقارن واجبات الإبلاغ عن الخرق في <b>GDPR</b> والقوانين المذكورة في المفردات والقواعد العراقيّة.</li>
+</ol></div>
+
+<div class="w3-sim"><div><b>🎮 في القاعة: «ليلة الاختراق»</b><small>محاكاةٌ ثلاثيّة الأبعاد من ستّ مراحل للحادثة نفسها، يلعبها الصفّ في فريقين. يفتحها الأستاذ على الشاشة، وتستطيع إعادتها في البيت.</small></div><a class="w3-go" href="breach-night/#sim" target="_blank" rel="noopener">افتح المحاكاة ↗</a></div>
+
+<div class="chapter-num" style="color:var(--teal);"><span class="cn-num">📖</span><span class="cn-title">مصطلحات تحتاجها أوّلًا</span></div>
+<p>هذه الكلمات تتكرّر في المحاضرة كلّها. اقرأها مرّةً قبل القسم الأوّل.</p>
+<div class="tw"><table class="dt">
+<thead><tr><th>المصطلح</th><th>المعنى</th><th>مثال</th></tr></thead>
+<tbody>
+<tr><td>الحوكمة والمخاطر والامتثال (GRC)</td><td><b>الحوكمة</b> تحدّد من يقرّر ومن يُحاسَب، و<b>إدارة المخاطر</b> تحدّد ما يُحمى أوّلًا، و<b>الامتثال</b> يثبت للجهات الخارجيّة أنّ الضوابط موجودة وتعمل.</td><td>سياسةٌ من مجلس الإدارة، وسجلّ مخاطر، وتقرير تدقيق</td></tr>
+<tr><td>تقييم المخاطر (Risk assessment)</td><td>حصر الأصول والتهديدات ونقاط الضعف، ثمّ تقدير الاحتمال × الأثر لكلّ خطر.</td><td>«حاوية بيانات العملاء: احتمال ٤ × أثر ٥ = ٢٠»</td></tr>
+<tr><td>سجلّ المخاطر (Risk register)</td><td>جدولٌ حيّ: كلّ خطرٍ ومالكه ودرجته قبل الضوابط وبعدها والقرار وموعد المراجعة.</td><td>سطرٌ لكلّ خطر في جدولٍ مشترك</td></tr>
+<tr><td>الخطر المتبقّي (Residual risk)</td><td>ما يبقى من الخطر بعد الضوابط؛ تقبله الإدارة كتابيًّا أو تطلب ضوابط إضافيّة.</td><td>تنزل الدرجة من ٢٠ إلى ٨ ويوقّع المالك</td></tr>
+<tr><td>الضابط (Control)</td><td>إجراءٌ يخفض احتمال الخطر أو أثره.</td><td>MFA، أقلّ صلاحية، تنبيه</td></tr>
+<tr><td>الإطار (Framework)</td><td>قائمةٌ منظّمة من الضوابط تتّبعها المؤسّسة ويمكن فحصها على أساسها.</td><td>CSA CCM، الملحق A من ISO/IEC 27001</td></tr>
+<tr><td>الشهادة (Certification)</td><td>جهةٌ معتمدة تفحص المؤسّسة وتمنحها شهادةً صالحة لمدّة.</td><td>شهادة ISO/IEC 27001 صالحة ثلاث سنوات مع فحصٍ سنويّ</td></tr>
+<tr><td>تقرير التصديق (Attestation report)</td><td>تقرير مدقّقٍ مستقلّ عن الضوابط، وليس شهادة نجاحٍ أو رسوب.</td><td>تقرير SOC 2 من النوع الثاني</td></tr>
+<tr><td>مصفوفة ضوابط السحابة (CSA CCM)</td><td>إطارٌ من تحالف أمن السحابة: ١٩٧ هدف ضبطٍ في ١٧ مجالًا (الإصدار الرابع).</td><td>مجال IAM، ومجال DSP (أمن البيانات والخصوصيّة)</td></tr>
+<tr><td>استبيان CAIQ</td><td>استبيانٌ موحّد مبنيّ على CCM يملؤه المزوّد ليصف ضوابطه.</td><td>إجابات CAIQ المنشورة لمزوّدٍ ما</td></tr>
+<tr><td>سجلّ STAR</td><td>السجلّ العامّ لتحالف أمن السحابة: المستوى ١ تقييمٌ ذاتيّ، والمستوى ٢ تدقيق طرفٍ ثالث، والمستوى ٣ مراقبةٌ مستمرّة.</td><td>البحث عن المزوّد قبل التوقيع</td></tr>
+<tr><td>نظام إدارة أمن المعلومات (ISMS)</td><td>السياسات وعمليّة المخاطر والمراجعات والتحسين التي يشترطها ISO/IEC 27001.</td><td>سياسة الأمن في الجامعة ومراجعتها السنويّة</td></tr>
+<tr><td>اتفاقيّة مستوى الخدمة (SLA)</td><td>تعهّدٌ قابل للقياس، غالبًا نسبة التوفّر الشهريّة، مع تعويضٍ محدّد.</td><td>«٩٩٫٩٪ شهريًّا أو رصيد ١٠٪»</td></tr>
+<tr><td>رصيد الخدمة (Service credit)</td><td>التعويض المعتاد عند خرق الاتفاقيّة: نسبةٌ تُخصم من فاتورةٍ قادمة، لا تعويضٌ عن خسارتك الفعليّة.</td><td>١٠٪ من اشتراك شهر</td></tr>
+<tr><td>المتحكّم والمعالِج (Controller / processor)</td><td>المتحكّم يقرّر لماذا وكيف تُعالَج البيانات، والمعالِج ينفّذ نيابةً عنه.</td><td>مصرفٌ (متحكّم) ومزوّد السحابة (معالِج)</td></tr>
+<tr><td>إقامة البيانات (Data residency)</td><td>المكان الذي تُخزَّن فيه البيانات فعلًا — قرارٌ تقنيّ باختيار المنطقة.</td><td>اختيار منطقة البحرين</td></tr>
+<tr><td>سيادة البيانات (Data sovereignty)</td><td>خضوع البيانات لقانون الدولة التي تقع فيها، وربّما لقانون دولة المزوّد أيضًا.</td><td>بياناتٌ في أوروبا تديرها شركةٌ أمريكيّة</td></tr>
+<tr><td>توطين البيانات (Data localisation)</td><td>اشتراطٌ قانونيّ بأن تبقى فئةٌ من البيانات داخل البلد، أو لا تخرج إلّا بشروط.</td><td>سجلّاتٌ مصرفيّة يجب أن تبقى داخل البلد</td></tr>
+<tr><td>الإبلاغ عن الخرق (Breach notification)</td><td>واجبٌ قانونيّ بإخطار الجهة الرقابيّة، وأحيانًا المتضرّرين، خلال مهلةٍ محدّدة.</td><td>GDPR: السلطة خلال ٧٢ ساعة</td></tr>
+<tr><td>تزوير الطلب من جهة الخادم (SSRF)</td><td>خداع الخادم ليرسل طلباتٍ إلى عناوين يختارها المهاجم، ومنها عناوين داخليّة.</td><td>الخطوة الأولى في اختراق Capital One</td></tr>
+<tr><td>أقلّ صلاحية (Least privilege)</td><td>كلّ هويّةٍ تحصل على الصلاحيّات التي يحتاجها عملها فقط.</td><td>تطبيق التقارير يقرأ مجلّدًا واحدًا لا كلّ الحاويات</td></tr>
+</tbody></table></div>
+
+<div class="chapter-num" style="color:var(--red);"><span class="cn-num">١</span><span class="cn-title">الحادثة: Capital One سنة ٢٠١٩</span></div>
+<p>في آذار ٢٠١٩ وصل مهاجمٌ إلى بيانات نحو <b>١٠٦ ملايين</b> متقدّمٍ لبطاقات الائتمان في المصرف الأمريكيّ Capital One، كانت مخزّنةً في Amazon S3. لم يُخترق المزوّد. اصطفّت ثلاث نقاط ضعفٍ في جهة العميل:</p>
+<div class="w3-chain">
+  <div class="w3-st"><b>١ | جدار WAF مضبوطٌ خطأً</b><small>أمكن خداع جدار حماية تطبيقات الويب ليرسل طلباتٍ لحساب المهاجم (SSRF).</small></div>
+  <div class="w3-st"><b>٢ | خدمة البيانات الوصفيّة</b><small>عبر SSRF طلب المهاجم من خدمة البيانات الوصفيّة في الخادم المفاتيح المؤقّتة لدوره.</small></div>
+  <div class="w3-st"><b>٣ | دورٌ بصلاحيّاتٍ منتفخة</b><small>كان الدور يستطيع عرض وقراءة حاويات S3 أكثر بكثيرٍ ممّا يحتاجه الجدار.</small></div>
+  <div class="w3-st bad"><b>٤ | خروج البيانات</b><small>عُرضت نحو ٧٠٠ حاوية ونُسخت ملفّات العملاء إلى الخارج.</small></div>
+</div>
+<p>العواقب لم تكن تقنيّة: غرّمت الجهة الرقابيّة المصرفيّة الأمريكيّة (OCC) المصرفَ <b>٨٠ مليون دولار</b> سنة ٢٠٢٠، وانتهت دعوى العملاء الجماعيّة بتسويةٍ قيمتها <b>١٩٠ مليون دولار</b>. وبقيت الخدمات تعمل طوال الوقت، فـ<b>لم تُخرق أيّ اتفاقيّة مستوى خدمة</b>. لهذا تدور محاضرة اليوم حول الحوكمة والضمان والعقود والقانون، لا حول الجدران النارية وحدها.</p>
+<div class="takeaway"><b>💡 احمل هذا السؤال معك:</b> في كلّ قسمٍ أدناه اسأل: «أين كان هذا سيساعد Capital One؟»</div>
+
+<div class="chapter-num" style="color:var(--blue);"><span class="cn-num">٢</span><span class="cn-title">تقييم مخاطر السحابة</span></div>
+<p>تقييم المخاطر يسبق الحادثة ولا يلحقها. خمس خطوات:</p>
+<div class="w3-chain w3-five"><div class="w3-st"><b>١ | حصر الأصول</b><small>البيانات والهويّات والخدمات</small></div><div class="w3-st"><b>٢ | التهديدات ونقاط الضعف</b><small>لكلّ أصل</small></div><div class="w3-st"><b>٣ | التقدير</b><small>الاحتمال × الأثر، من ١ إلى ٥ لكلٍّ منهما</small></div><div class="w3-st hi"><b>٤ | قرار المعالجة</b><small>تخفيض أو تجنّب أو نقل أو قبول</small></div><div class="w3-st"><b>٥ | إعادة التقدير</b><small>الخطر المتبقّي؛ ويوقّع المالك</small></div></div>
+<p>هذا جزءٌ من سجلّ المخاطر الذي <i>كان يمكن</i> أن يكتبه Capital One قبل الحادثة (الدرجات توضيحيّة):</p>
+<div class="tw"><table class="dt w3-reg">
+<thead><tr><th>الخطر</th><th>قبل</th><th>الضابط</th><th>بعد</th><th>ماذا يغيّر الضابط</th></tr></thead>
+<tbody>
+<tr><td>SSRF عبر جدار WAF</td><td class="crit">٤×٥ = ٢٠</td><td>إصلاح قواعد الجدار وفرض IMDSv2 (رمز جلسة)</td><td class="med">٢×٥ = ١٠</td><td>يخفض <b>الاحتمال</b></td></tr>
+<tr><td>دورٌ مسروق يقرأ كلّ الحاويات</td><td class="crit">٤×٥ = ٢٠</td><td>أقلّ صلاحية: دور الجدار لا يقرأ شيئًا من S3</td><td class="lo">٤×١ = ٤</td><td>يخفض <b>الأثر</b> — السرقة ممكنة لكنّها بلا فائدة</td></tr>
+<tr><td>خروج البيانات دون أن يلاحظه أحد</td><td class="hi">٣×٥ = ١٥</td><td>تنبيهٌ عند استعمال مفاتيح الدور من خارج السحابة</td><td class="med">٣×٣ = ٩</td><td>يقصّر زمن الاكتشاف فيقلّ المسروق</td></tr>
+</tbody></table></div>
+<div class="oops"><b>⚠️ الضوابط لا تعمل كلّها بالطريقة نفسها.</b> أقلّ صلاحية لا تجعل السرقة أقلّ احتمالًا، بل تجعلها <b>صغيرة</b>. أمّا MFA المقاوم للتصيّد فيفعل العكس: يخفض احتمال السرقة ولا يحدّ الضرر إن نجح طريقٌ آخر. السجلّ الجيّد يبيّن <b>أيّ رقمٍ</b> يحرّكه كلّ ضابط.</div>
+
+<div class="chapter-num" style="color:var(--green);"><span class="cn-num">٣</span><span class="cn-title">مصفوفة CSA CCM وسجلّ STAR</span></div>
+<p>يُصدر <b>تحالف أمن السحابة (Cloud Security Alliance)</b> <b>مصفوفة ضوابط السحابة (CCM)</b>، وهي إطارٌ مصمَّم للسحابة: في إصدارها الرابع <b>١٩٧ هدف ضبطٍ في ١٧ مجالًا</b>، منها إدارة الهويّة والوصول (IAM)، وأمن البيانات والخصوصيّة (DSP)، وأمن البنية والافتراضيّة (IVS). وكلّ ضابطٍ مربوطٌ بما يقابله في ISO/IEC 27001 وغيره، فيُحتسب الضابط الواحد لأكثر من إطار.</p>
+<div class="tw"><table class="dt">
+<thead><tr><th>مستوى STAR</th><th>ما يتطلّبه</th><th>ماذا يثبت لك</th></tr></thead>
+<tbody>
+<tr><td>المستوى ١</td><td>تقييمٌ ذاتيّ: المزوّد يملأ CAIQ وينشره</td><td>شفافية — ما <i>يقول</i> المزوّد إنّه يفعله، دون تحقّقٍ خارجيّ</td></tr>
+<tr><td>المستوى ٢</td><td>تدقيق طرفٍ ثالث: شهادةٌ مبنيّة على ISO/IEC 27001 أو تقريرٌ مبنيّ على SOC 2</td><td>جهةٌ مستقلّة تحقّقت من الضوابط</td></tr>
+<tr><td>المستوى ٣</td><td>مراقبةٌ مستمرّة للضوابط بدل اللقطات السنويّة</td><td>أعلى ضمان، وأقلّه انتشارًا</td></tr>
+</tbody></table></div>
+<p>سجلّ STAR عامّ ومجّانيّ. قبل التعاقد مع مزوّدٍ افتح سجلّه واقرأ مستواه.</p>
+
+<div class="chapter-num" style="color:var(--orange);"><span class="cn-num">٤</span><span class="cn-title">عائلة ISO/IEC 27000 في السحابة</span></div>
+<div class="tw"><table class="dt">
+<thead><tr><th>المعيار</th><th>ماهيّته</th><th>قابلٌ للشهادة؟</th><th>صلته بالحادثة</th></tr></thead>
+<tbody>
+<tr><td>27001:2022</td><td>نظام إدارة أمن المعلومات: سياساتٌ وعمليّة مخاطر ومراجعةٌ إداريّة وتحسينٌ مستمرّ. الملحق A فيه ٩٣ ضابطًا.</td><td>نعم</td><td>إدارة الإعدادات (A.8.9) وحقوق الوصول (A.5.18) والمصادقة (A.8.5)</td></tr>
+<tr><td>27002:2022</td><td>إرشادٌ تفصيليّ لتطبيق ضوابط الملحق A</td><td>لا</td><td>كيف تُطبَّق الضوابط أعلاه</td></tr>
+<tr><td>27017:2015</td><td>مدوّنة ممارساتٍ للسحابة: ٧ ضوابط سحابيّة إضافيّة (رمزها CLD) وإرشادٌ سحابيّ لـ٣٧ ضابطًا قائمًا، للمزوّد <b>والعميل</b></td><td>بتوسيع نطاق شهادة 27001</td><td>CLD.6.3.1 توزيع الأدوار بين المزوّد والعميل</td></tr>
+<tr><td>27018:2019</td><td>حماية البيانات الشخصيّة حين يعالجها مزوّد سحابةٍ عامّة بصفته معالِجًا</td><td>بتوسيع نطاق شهادة 27001</td><td>واجبات المزوّد تجاه بيانات عملاء المصرف</td></tr>
+</tbody></table></div>
+<div class="oops"><b>⚠️ شهادة المزوّد ليست شهادتك.</b> حصول AWS على ISO/IEC 27001 و27017 يغطّي <b>جهتها</b> من خطّ المسؤوليّة المشتركة. قواعد الجدار وأدوار IAM داخل حساب المصرف كانت خارج تلك الشهادة تمامًا.</div>
+
+<div class="chapter-num" style="color:var(--violet);"><span class="cn-num">٥</span><span class="cn-title">تقارير SOC 2</span></div>
+<p><b>SOC 2</b> ليس شهادة، بل تقريرٌ يصدره مدقّقٌ مستقلّ وفق <b>معايير خدمات الثقة</b> من المعهد الأمريكيّ للمحاسبين القانونيّين (AICPA). <b>الأمن</b> مشمولٌ دائمًا، وتُضاف <b>التوفّر وسلامة المعالجة والسرّيّة والخصوصيّة</b> حين تناسب الخدمة.</p>
+<div class="grid g3">
+  <div class="box b"><b class="t">النوع الأوّل (Type I)</b><small><b>السؤال:</b> هل الضوابط مصمَّمةٌ بشكلٍ مناسب؟<br><b>الزمن:</b> تاريخٌ واحد.<br><b>الاستعمال:</b> بدايةٌ مقبولة لمزوّدٍ جديد.</small></div>
+  <div class="box g"><b class="t">النوع الثاني (Type II)</b><small><b>السؤال:</b> هل عملت الضوابط فعلًا طوال الفترة؟<br><b>الزمن:</b> غالبًا من ٣ إلى ١٢ شهرًا.<br><b>الاستعمال:</b> الدليل الذي يطلبه العملاء عادةً قبل التوقيع.</small></div>
+</div>
+<p>التقرير مقيَّد التداول ويُشارَك باتفاقيّة عدم إفصاح، أمّا <b>SOC 3</b> فملخّصٌ عامّ قصير. وأهمّ جزءٍ للقارئ المحترف هو قسم <b>الاستثناءات</b>: الضوابط التي وجد المدقّق أنّها <i>لم</i> تعمل.</p>
+
+<div class="chapter-num" style="color:var(--blue);"><span class="cn-num">٦</span><span class="cn-title">العقود واتفاقيّات مستوى الخدمة</span></div>
+<p>العقد هو المكان الذي تتحوّل فيه المسؤوليّة المشتركة إلى التزاماتٍ يمكن المطالبة بها. اقرأ هذه البنود قبل التوقيع:</p>
+<div class="tw"><table class="dt">
+<thead><tr><th>البند</th><th>السؤال الذي يجيب عنه</th></tr></thead>
+<tbody>
+<tr><td>موقع البيانات ونقلها</td><td>في أيّ منطقةٍ تُخزَّن البيانات؟ ومتى يحقّ للمزوّد نقلها؟</td></tr>
+<tr><td>إبلاغ المزوّد عن الحوادث</td><td>خلال كم ساعةٍ يبلّغنا المزوّد بحادثةٍ في جهته؟ نحتاجه لنفي بمهلتنا القانونيّة.</td></tr>
+<tr><td>حقّ التدقيق</td><td>هل ندقّق بأنفسنا، أم نكتفي بتقارير SOC 2 وشهادات ISO؟</td></tr>
+<tr><td>المتعاقدون من الباطن</td><td>من يعالج بياناتنا غير المزوّد؟ وهل نُخطَر حين يتغيّرون؟</td></tr>
+<tr><td>الخروج من العقد</td><td>كيف تُعاد بياناتنا وتُحذف عند الانتهاء؟ (ISO/IEC 27017 الضابط CLD.8.1.5)</td></tr>
+<tr><td>سقف المسؤوليّة</td><td>ما أقصى ما يدفعه المزوّد؟ غالبًا اشتراك أشهرٍ قليلة.</td></tr>
+<tr><td>القانون الحاكم</td><td>قانون أيّ دولةٍ يحكم النزاع، وأين؟</td></tr>
+</tbody></table></div>
+
+<div class="w3-sla" data-w3="sla"></div>
+<div class="takeaway"><b>💡 درس الحادثة:</b> اتفاقيّة مستوى الخدمة تقيس <b>التوفّر</b>. خلال اختراق Capital One كانت الخدمة متاحةً ١٠٠٪ — لا خرق للاتفاقيّة، ولا رصيد خدمة، و١٠٦ ملايين سجلٍّ ضاعت. الاتفاقيّة لا تقيس الأمن ولا تعوّض عنه.</div>
+
+<div class="chapter-num" style="color:var(--teal);"><span class="cn-num">٧</span><span class="cn-title">إقامة البيانات وسيادتها وتوطينها</span></div>
+<div class="grid g3">
+  <div class="box b"><b class="t">الإقامة</b><small>قرارٌ تقنيّ: المنطقة التي تختار تخزين البيانات فيها.</small></div>
+  <div class="box o"><b class="t">السيادة</b><small>حقيقةٌ قانونيّة: البيانات تخضع لقانون مكانها — وربّما لقانون دولة المزوّد.</small></div>
+  <div class="box v"><b class="t">التوطين</b><small>اشتراطٌ قانونيّ بأن تبقى فئةٌ من البيانات داخل الحدود.</small></div>
+</div>
+<p>المثال الأوضح: قانون <b>CLOUD Act الأمريكيّ (٢٠١٨)</b> يتيح للسلطات الأمريكيّة إلزام شركةٍ أمريكيّة بتسليم بياناتٍ تديرها حتّى لو كانت مخزّنةً خارج الولايات المتّحدة. لذلك قد تكون البيانات <b>مقيمةً</b> في منطقةٍ خليجيّة أو أوروبيّة وتبقى خاضعةً لقانونٍ أجنبيّ.</p>
+<p>ضوابط تقنيّة تدعم الإقامة: سياسةٌ تنظيميّة <b>ترفض أيّ إجراءٍ خارج المناطق المسموح بها</b>، وتشفيرٌ بـ<b>مفاتيح يديرها العميل</b>.</p>
+
+<div class="chapter-num" style="color:var(--red);"><span class="cn-num">٨</span><span class="cn-title">القانون بعد الخرق: من نبلّغ، ومتى؟</span></div>
+<p>تذكر مفرداتنا ثلاثة قوانين. GDPR ينطبق على كلّ من يعالج بيانات أشخاصٍ في الاتحاد الأوروبيّ، والقانونان الآخران ماليزيّان ونستعملهما <b>للمقارنة</b>: كم يمكن أن تكون مهلة الجهة الرقابيّة قصيرة.</p>
+<div class="tw"><table class="dt">
+<thead><tr><th></th><th>GDPR (الاتحاد الأوروبيّ)</th><th>PDPA الماليزيّ (تعديل ٢٠٢٤)</th><th>قانون الأمن السيبرانيّ الماليزيّ ٢٠٢٤</th></tr></thead>
+<tbody>
+<tr><td>ينطبق على</td><td>كلّ من يعالج بيانات أشخاصٍ في الاتحاد الأوروبيّ أينما كان</td><td>البيانات الشخصيّة في المعاملات التجاريّة في ماليزيا</td><td>البنية التحتيّة الوطنيّة الحرجة، ومنها المصارف</td></tr>
+<tr><td>إبلاغ الجهة الرقابيّة</td><td>خلال <b>٧٢ ساعة</b> من العلم</td><td>في أقرب وقتٍ ممكن (الإرشادات: ٧٢ ساعة)</td><td>فورًا، ثمّ تقريرٌ تفصيليّ خلال <b>٦ ساعات</b>، ثمّ تقريرٌ كامل خلال ١٤ يومًا</td></tr>
+<tr><td>إبلاغ الأشخاص</td><td>دون تأخيرٍ غير مبرّر إذا كان الخطر عليهم مرتفعًا</td><td>إذا سبّب الخرق ضررًا جسيمًا أو يُرجَّح أن يسبّبه</td><td>يخاطب الجهة الرقابيّة والقطاع لا الأفراد</td></tr>
+<tr><td>الغرامة القصوى</td><td>٢٠ مليون يورو أو ٤٪ من الإيراد العالميّ السنويّ، أيّهما أعلى</td><td>حتّى مليون رنغيت و/أو ٣ سنوات سجنًا</td><td>غراماتٌ وسجنٌ لكلّ مخالفةٍ يحدّدها القانون</td></tr>
+</tbody></table></div>
+
+<div class="w3-iq"><b>🇮🇶 وفي العراق؟</b>
+<p>حتّى وقت كتابة هذه المحاضرة لا يوجد في العراق <b>قانونٌ شاملٌ واحد لحماية البيانات الشخصيّة</b> مثل GDPR. القواعد التي يحتاج فريق السحابة أن يعرفها تأتي من:</p>
+<ul>
+<li><b>دستور ٢٠٠٥</b> — المادّة ١٧ (الحقّ في الخصوصيّة الشخصيّة) والمادّة ٤٠ (حرّيّة الاتصالات والمراسلات وسرّيّتها).</li>
+<li><b>قانون التوقيع الإلكترونيّ والمعاملات الإلكترونيّة رقم ٧٨ لسنة ٢٠١٢</b> — الحجّيّة القانونيّة للسجلّات والتواقيع الإلكترونيّة.</li>
+<li><b>الجهات الرقابيّة القطاعيّة</b> — مثل البنك المركزيّ العراقيّ للمصارف وشركات الدفع، وهيئة الإعلام والاتصالات لشركات الاتصالات والإنترنت.</li>
+</ul>
+<p><b>قاعدةٌ عمليّة:</b> المؤسّسة العراقيّة التي تخدم مقيمين في الاتحاد الأوروبيّ قد يشملها GDPR، والتي تستعمل مزوّدًا أجنبيًّا تخضع بياناتها لقانون دولة المزوّد أيضًا. تحقّق دائمًا من أيّ تشريعٍ عراقيٍّ أحدث ومن تعليمات الجهة الرقابيّة لقطاعك قبل الاعتماد على هذا الملخّص.</p></div>
+
+<div class="oops"><b>⚠️ أقصر ساعةٍ تبدأ أوّلًا.</b> إذا اكتُشف الخرق في الثانية فجرًا، فقاعدة الساعات الستّ تعني تقريرًا تفصيليًّا قبل الثامنة صباحًا. خطّة الاستجابة، ومن يملك صلاحية الإبلاغ، ورقم الجهة الرقابيّة، يجب أن تكون مكتوبةً <b>قبل</b> الحادثة.</div>
+
+<div class="chapter-num" style="color:var(--orange);"><span class="cn-num">٩</span><span class="cn-title">من كان المسؤول؟</span></div>
+<div class="tw"><table class="dt">
+<thead><tr><th>الطبقة (خدمة EC2)</th><th>المسؤول</th><th>في الحادثة</th></tr></thead>
+<tbody>
+<tr><td>مراكز البيانات والعتاد</td><td>المزوّد</td><td>لم تُخترق</td></tr>
+<tr><td>الشبكة الأساسيّة والافتراضيّة</td><td>المزوّد</td><td>لم تُخترق</td></tr>
+<tr><td>نظام التشغيل وتحديثاته</td><td>العميل</td><td>—</td></tr>
+<tr><td>التطبيق وجدار WAF</td><td>العميل</td><td><b>الثغرة هنا</b></td></tr>
+<tr><td>الهويّات والصلاحيّات</td><td>العميل</td><td><b>الدور المنتفخ هنا</b></td></tr>
+<tr><td>تصنيف البيانات وتشفيرها</td><td>العميل</td><td><b>لا شرط شبكةٍ على الحاوية</b></td></tr>
+<tr><td>خيارات الأمان الافتراضيّة للخدمة</td><td>المزوّد يقدّمها والعميل يفعّلها</td><td>IMDSv2 جاء بعد الحادثة</td></tr>
+</tbody></table></div>
+<div class="takeaway"><b>💡 الخلاصة الإداريّة:</b> كلّ الخلل في هذه الحادثة وقع في جهة العميل. «نحن على السحابة» لا ينقل المسؤوليّة، بل يغيّر شكلها: من حراسة الجدران إلى حراسة <b>الإعدادات والهويّات</b>.</div>
+
+<div class="chapter-num" style="color:var(--teal);"><span class="cn-num">🎮</span><span class="cn-title">النشاط أ — ما نوع هذا الدليل؟</span></div>
+<div class="game" id="g15"><span class="score" id="g15s">0 / 0</span><div class="ctx" id="g15c"></div><div class="q" id="g15q"></div>
+<div class="btns"><button class="c" data-a="S">📝 تصريحٌ ذاتيّ</button><button class="p" data-a="A">🔍 تدقيقٌ مستقلّ</button><button data-a="C">📄 تعهّدٌ تعاقديّ</button></div>
+<div class="fb" id="g15f"></div><div class="btns"><button id="g15n" style="display:none">التالي ◀</button></div></div>
+
+<div class="chapter-num" style="color:var(--teal);"><span class="cn-num">🎮</span><span class="cn-title">النشاط ب — إقامةٌ أم سيادة؟</span></div>
+<div class="game" id="g16"><span class="score" id="g16s">0 / 0</span><div class="q" id="g16q"></div>
+<div class="btns"><button class="p" data-a="R">📍 إقامة (تقنيّ)</button><button class="c" data-a="V">⚖️ سيادة (قانونيّ)</button></div>
+<div class="fb" id="g16f"></div><div class="btns"><button id="g16n" style="display:none">التالي ◀</button></div></div>
+
+<div class="chapter-num" style="color:var(--teal);"><span class="cn-num">👆</span><span class="cn-title">النشاط ج — اكتشف البنود الضعيفة</span></div>
+<p>انقر كلّ عبارةٍ في ملخّص العقد هذا يجب أن تُقلق العميل. العبارات السليمة تهتزّ وتُحسب نقرةً خاطئة.</p>
+<div class="w2-act" data-w3="spot"></div>
+
+<div class="chapter-num" style="color:var(--teal);"><span class="cn-num">👆</span><span class="cn-title">النشاط د — رتّب خطوات تقييم المخاطر</span></div>
+<p>انقر البطاقات بالترتيب الصحيح، من الخطوة الأولى إلى الأخيرة.</p>
+<div class="w2-act" data-w3="order"></div>
+
+        <div class="section-heading" style="margin-top:22px;"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg><span>أسئلة المراجعة</span></div>
+        <p class="quiz-note">أجب وحدك أوّلًا في الفراغ، ثمّ راجع تبويب <b>🔑 الحلول والتعليل</b> — فيه سبب صحّة كلّ جوابٍ وخطأ البقيّة.</p>
+        <div class="section-heading" style="margin-top:14px;"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg><span>أ. الاختيار من متعدّد</span></div>
+<div class="mcq-item"><span class="q-num">١.</span> عند تطبيق <b>أقلّ صلاحية</b> على دور جدار WAF في Capital One، أيّ رقمٍ ينخفض أساسًا؟<ul class="mcq-options"><li><span class="opt-letter">أ)</span> احتمال SSRF</li><li><span class="opt-letter">ب)</span> حصّة المزوّد من المسؤوليّة</li><li><span class="opt-letter">ج)</span> أثر سرقة مفاتيح الدور</li><li><span class="opt-letter">د)</span> نسبة التوفّر في الاتفاقيّة</li></ul></div>
+<div class="mcq-item"><span class="q-num">٢.</span> عميلٌ يريد دليلًا على أنّ ضوابط المزوّد <b>عملت فعلًا خلال السنة الماضية</b>. ماذا يطلب؟<ul class="mcq-options"><li><span class="opt-letter">أ)</span> تقرير SOC 2 من النوع الثاني</li><li><span class="opt-letter">ب)</span> تقرير SOC 2 من النوع الأوّل</li><li><span class="opt-letter">ج)</span> استبيان CAIQ للمزوّد (STAR المستوى ١)</li><li><span class="opt-letter">د)</span> نسخة من اتفاقيّة مستوى الخدمة</li></ul></div>
+<div class="mcq-item"><span class="q-num">٣.</span> ما هو <b>المستوى الأوّل في CSA STAR</b>؟<ul class="mcq-options"><li><span class="opt-letter">أ)</span> شهادة ISO/IEC 27001</li><li><span class="opt-letter">ب)</span> مراقبةٌ مستمرّة للضوابط</li><li><span class="opt-letter">ج)</span> تدقيق SOC 2 من طرفٍ ثالث</li><li><span class="opt-letter">د)</span> تقييمٌ ذاتيّ: المزوّد ينشر إجاباته على CAIQ</li></ul></div>
+<div class="mcq-item"><span class="q-num">٤.</span> ما الوصف الأدقّ لـ<b>ISO/IEC 27017</b>؟<ul class="mcq-options"><li><span class="opt-letter">أ)</span> معيار نظام إدارة يحلّ محلّ 27001 للسحابة</li><li><span class="opt-letter">ب)</span> مدوّنة ممارساتٍ تضيف ضوابط سحابيّة وتُعتمد بتوسيع نطاق 27001</li><li><span class="opt-letter">ج)</span> معيار حماية البيانات الشخصيّة لدى مزوّد السحابة العامّة</li><li><span class="opt-letter">د)</span> تقرير تدقيقٍ يصدره محاسب قانونيّ</li></ul></div>
+<div class="mcq-item"><span class="q-num">٥.</span> اتفاقيّةٌ تتعهّد بتوفّرٍ شهريّ <b>٩٩٫٩٪</b>. كم توقّفًا تسمح به في شهرٍ من ٣٠ يومًا؟<ul class="mcq-options"><li><span class="opt-letter">أ)</span> نحو ٤٫٣ دقيقة</li><li><span class="opt-letter">ب)</span> نحو ٧٫٢ ساعة</li><li><span class="opt-letter">ج)</span> نحو ٤٣ دقيقة</li><li><span class="opt-letter">د)</span> نحو ٣٫٦ ساعة</li></ul></div>
+<div class="mcq-item"><span class="q-num">٦.</span> خلال اختراق Capital One بقيت الخدمات تعمل بينما سُرقت البيانات. هل يستحقّ المصرف رصيد خدمة من الاتفاقيّة؟<ul class="mcq-options"><li><span class="opt-letter">أ)</span> نعم، استرداد كامل الشهر</li><li><span class="opt-letter">ب)</span> نعم، رصيد ١٠٪ المعتاد</li><li><span class="opt-letter">ج)</span> فقط إذا انطبق GDPR</li><li><span class="opt-letter">د)</span> لا — الاتفاقيّة تقيس التوفّر، والتوفّر كان ١٠٠٪</li></ul></div>
+<div class="mcq-item"><span class="q-num">٧.</span> وفق <b>GDPR</b>، ما مهلة المتحكّم لإبلاغ السلطة الرقابيّة عن خرق بياناتٍ شخصيّة؟<ul class="mcq-options"><li><span class="opt-letter">أ)</span> ٧٢ ساعة من العلم بالخرق</li><li><span class="opt-letter">ب)</span> ٦ ساعات</li><li><span class="opt-letter">ج)</span> ٢٤ ساعة</li><li><span class="opt-letter">د)</span> ١٤ يومًا</li></ul></div>
+<div class="mcq-item"><span class="q-num">٨.</span> قانون <b>CLOUD Act</b> الأمريكيّ هو المثال الكلاسيكيّ على الفرق بين:<ul class="mcq-options"><li><span class="opt-letter">أ)</span> الإقامة والتوطين</li><li><span class="opt-letter">ب)</span> الإقامة والسيادة</li><li><span class="opt-letter">ج)</span> اتفاقيّة الخدمة وتقرير SOC 2</li><li><span class="opt-letter">د)</span> المتحكّم والمعالِج</li></ul></div>
+        <div class="section-heading" style="margin-top:22px;"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg><span>ب. صحّ أو خطأ</span></div>
+<div class="tf-item"><span>١. SOC 2 شهادةٌ تصدرها منظّمة ISO.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+<div class="tf-item"><span>٢. شهادة ISO/IEC 27001 للمزوّد تغطّي أدوار IAM التي ينشئها العميل في حسابه.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+<div class="tf-item"><span>٣. الخطر المتبقّي هو ما يبقى من الخطر بعد تطبيق الضوابط.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+<div class="tf-item"><span>٤. شراء تأمينٍ سيبرانيّ ينقل الأثر الماليّ والمسؤوليّة عن البيانات معًا إلى شركة التأمين.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+<div class="tf-item"><span>٥. في اختراق Capital One اخترق المهاجم بنية AWS نفسها.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+<div class="tf-item"><span>٦. مصفوفة CSA CCM تربط ضوابطها بمعايير أخرى مثل ISO/IEC 27001.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+<div class="tf-item"><span>٧. البيانات المخزّنة في منطقة البحرين لدى مزوّدٍ أمريكيّ قد تخضع للقانون الأمريكيّ أيضًا.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+<div class="tf-item"><span>٨. يتضمّن الدستور العراقيّ لسنة ٢٠٠٥ الحقّ في الخصوصيّة الشخصيّة (المادّة ١٧).</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+        <div class="section-heading" style="margin-top:22px;"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg><span>ج. أسئلةٌ قصيرة</span></div>
+<div class="mcq-item"><span class="q-num">١.</span> اذكر <b>الخطوات الخمس</b> لتقييم مخاطر السحابة واشرح <b>الخطر المتبقّي</b>.<span class="blank-line"></span><span class="blank-line"></span><span class="blank-line"></span></div>
+<div class="mcq-item"><span class="q-num">٢.</span> قارن بين <b>SOC 2 النوع الأوّل</b> و<b>النوع الثاني</b>. أيّهما تطلب قبل التوقيع، ولماذا؟<span class="blank-line"></span><span class="blank-line"></span><span class="blank-line"></span></div>
+<div class="mcq-item"><span class="q-num">٣.</span> اذكر <b>أربعة بنود</b> في العقد تفحصها قبل التوقيع مع مزوّد سحابة، والسؤال الذي يجيب عنه كلٌّ منها.<span class="blank-line"></span><span class="blank-line"></span><span class="blank-line"></span></div>
+<div class="mcq-item"><span class="q-num">٤.</span> اشرح الفرق بين <b>إقامة البيانات</b> و<b>سيادة البيانات</b> مع مثال.<span class="blank-line"></span><span class="blank-line"></span><span class="blank-line"></span></div>
+        <div class="section-heading" style="margin-top:22px;"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg><span>د. سيناريو طويل</span></div>
+<div class="w2-scen"><b>«مصرف دجلة الرقميّ» (مصرفٌ مختلَق)</b><p style="margin:6px 0 0">«مصرف دجلة الرقميّ» مصرفٌ عراقيٌّ رقميّ <b>مختلَق</b>. تطبيقه يعمل لدى مزوّد سحابةٍ عامّة أمريكيّ، وبياناته في منطقة <b>فرانكفورت</b>؛ أغلب عملائه في العراق ونحو ٣٬٠٠٠ منهم يقيمون في ألمانيا. يوم خميسٍ في <b>الثانية فجرًا</b> يكتشف الفريق أنّ حاوية تخزينٍ فيها <b>٤٠٬٠٠٠ صورة هويّة</b> للعملاء كانت عامّةً تسعة أيّام. لدى المزوّد شهادات ISO/IEC 27001 و27017 وتقرير SOC 2 من النوع الثاني. والعقد ينصّ على أنّ المزوّد يبلّغ عن الحوادث «دون تأخيرٍ غير مبرّر»، وسقف مسؤوليّته اشتراك ثلاثة أشهر، ويتعهّد بتوفّر ٩٩٫٩٥٪.</p><ol style="margin:8px 0 0"><li>اكتب <b>ثلاثة أسطر</b> من سجلّ المخاطر الذي كان يجب أن يملكه المصرف (الخطر، الدرجة قبل، الضابط، الدرجة بعد).<span class="blank-line"></span><span class="blank-line"></span></li><li>ما <b>واجبات الإبلاغ ومهلها</b>، ولمن؟ ارسم جدولًا زمنيًّا قصيرًا يبدأ من الثانية فجرًا.<span class="blank-line"></span><span class="blank-line"></span></li><li>هل يستطيع المصرف الاعتماد على <b>شهادات المزوّد أو الاتفاقيّة</b> لاسترداد خسائره؟ علّل.<span class="blank-line"></span><span class="blank-line"></span></li><li>اقترح <b>بندين</b> يُعاد التفاوض عليهما في العقد و<b>ضابطًا واحدًا</b> للإقامة أو السيادة.<span class="blank-line"></span><span class="blank-line"></span></li></ol></div>
+
+        <div class="mini-note">نهاية المحاضرة الثالثة — إعداد: أ.م.د. أمير هادي ★</div>
+        <div class="page-nav"><button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button><button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button></div>
+       </div>
+       <div class="lang-ku" dir="rtl">
+        <span class="chip chip-ch1">هەفتەی سێیەم</span>
+        <h2 class="page-title">حوکمڕانیی هەور، مەترسی، پابەندبوون و یاسا</h2>
+        <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
+        <p class="lead-paragraph">ئەم هەفتەیە وەڵامی ئەو پرسیارانە دەدەینەوە کە <b>بەڕێوەبەر، پشکنەر و پارێزەر</b> دوای تێکشکاندنێکی هەور دەیکەن. هەموو وانەکە لەسەر ڕووداوێکی ڕاستەقینەی ئاشکرایە: <b>تێکشکاندنی بانکی Capital One لە ساڵی ٢٠١٩</b>.</p>
+<div class="box b"><b class="t">🎯 لە کۆتایی ئەم وانەیەدا دەتوانیت:</b>
+<ol style="margin:4px 0 0">
+<li>هەڵسەنگاندنی مەترسیی هەور بە پێنج هەنگاو ئەنجام بدەیت و <b>تۆماری مەترسی</b> ڕابگریت.</li>
+<li>ڕوون بکەیتەوە <b>CSA CCM</b> و ئاستەکانی <b>STAR</b> چی دەسەلمێنن.</li>
+<li>جیاوازیی نێوان <b>ISO/IEC 27001، 27017 و 27018</b> بزانیت.</li>
+<li>لە نێوان ڕاپۆرتی <b>SOC 2 Type I</b> و <b>Type II</b> هەڵبژێریت.</li>
+<li>بەندە سەرەکییەکانی <b>گرێبەست</b> بخوێنیتەوە و <b>SLA</b> حیساب بکەیت.</li>
+<li>جیاوازیی نێوان <b>نیشتەجێبوون، سەروەری و ناوخۆییکردنی داتا</b> بزانیت و ئەرکەکانی ڕاگەیاندنی تێکشکاندن بەراورد بکەیت.</li>
+</ol></div>
+<div class="w3-sim"><div><b>🎮 لە پۆلدا: «شەوی تێکشکاندن»</b><small>لاسایکردنەوەیەکی سێ ڕەهەندی شەش قۆناغی بۆ هەمان ڕووداو، دوو تیم یاری دەکەن.</small></div><a class="w3-go" href="breach-night/#sim" target="_blank" rel="noopener">کردنەوەی لاسایکردنەوە ↗</a></div>
+<div class="oops"><b>📘 تێبینی:</b> دەقی تەواوی ئەم وانەیە، چالاکییەکان و پرسیارەکان بە <b>عەرەبی</b> و <b>ئینگلیزی</b> بەردەستن. زمان لە سەرەوەی پەڕەکە بگۆڕە.
+<div class="w2-bar" style="margin-top:8px"><button type="button" class="w2-btn" onclick="document.querySelector('#langSw [data-l=ar]').click()">العربية</button><button type="button" class="w2-btn" onclick="document.querySelector('#langSw [data-l=en]').click()">English</button></div></div>
+<div class="section-heading" style="margin-top:22px;"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg><span>زاراوە سەرەکییەکان</span></div>
+<ul class="cs-gloss"><li><b>GRC</b> — حوکمڕانی، مەترسی و پابەندبوون</li><li><b>Risk register</b> — تۆماری مەترسی</li><li><b>Residual risk</b> — مەترسیی ماوە</li><li><b>CSA CCM / STAR</b> — ماتریکسی کۆنترۆڵەکانی هەور / تۆماری STAR</li><li><b>ISO/IEC 27001 · 27017 · 27018</b></li><li><b>SOC 2 Type I / II</b></li><li><b>SLA · service credit</b> — ڕێککەوتنی ئاستی خزمەتگوزاری · قەرەبووی خزمەتگوزاری</li><li><b>Data residency / sovereignty / localisation</b> — نیشتەجێبوون / سەروەری / ناوخۆییکردنی داتا</li><li><b>Breach notification</b> — ڕاگەیاندنی تێکشکاندن</li><li><b>GDPR</b></li></ul>
+        <div class="mini-note">کۆتایی وانەی سێیەم — ئامادەکردنی: پ.ی.د. ئەمیر هادی ★</div>
+        <div class="page-nav"><button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ پێشوو</button><button class="nav-btn nav-next" onclick="navigateSlide(1)">دواتر ←</button></div>
+       </div>
+<script>
+/* Week 3 — games, tap activities and SLA calculator (EN / AR). game() is defined in the notebook's last script. */
+(function(){
+var AR='٠١٢٣٤٥٦٧٨٩';function num(n,l){return l==='en'?String(n):String(n).replace(/\d/g,function(d){return AR[d];}).replace('.','٫');}
+function el(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e;}
+function shake(e){e.classList.remove('w2-shake');void e.offsetWidth;e.classList.add('w2-shake');}
+function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}
+var UI={
+ en:{hits:'found',wrong:'wrong taps',again:'Start again ↺',allSpot:'All 6 weak clauses found. Which one would have hurt the bank most after a breach?',safe:'Not a problem — ',ordDone:'Correct order — this is a cloud risk assessment.',notNow:'Not yet — '},
+ ar:{hits:'اكتُشف',wrong:'نقرات خاطئة',again:'من جديد ↺',allSpot:'اكتشفت البنود الضعيفة الستّة كلّها. أيّها كان سيؤذي المصرف أكثر بعد الخرق؟',safe:'ليس مشكلة — ',ordDone:'ترتيبٌ صحيح — هذا هو تقييم مخاطر السحابة.',notNow:'ليس الآن — '}
+};
+/* Spot it: [text] = plain, [text, reason] = weak clause, [text, '', 1, why-safe] = safe */
+var SPOT={
+ en:[['Cloud services agreement — summary (fictional, training data)\n\n',0],
+  ['1. Data location: ',0],['the provider may store and move customer data to any region it chooses','you lose control of residency and may break a localisation rule or GDPR transfer rules.'],
+  ['.\n2. Availability: ',0],['99.95% per month, with service credits','',1,'a normal, measurable SLA — just remember it covers uptime only.'],
+  ['.\n3. Incidents: ',0],['the provider will inform the customer of security incidents when it considers it appropriate','no fixed deadline — you may miss your own 72-hour (or 6-hour) legal clock.'],
+  ['.\n4. Audit: ',0],['the customer has no right to audit and receives no audit reports','no SOC 2 / ISO evidence at all — you cannot prove the provider’s controls work.'],
+  ['.\n5. Encryption: ',0],['data is encrypted at rest; the customer may use its own keys','',1,'customer-managed keys are a good control for sovereignty.'],
+  ['.\n6. Sub-processors: ',0],['the provider may appoint sub-processors without notice','unknown third parties may process your data; you cannot assess them.'],
+  ['.\n7. Termination: ',0],['data is deleted immediately on termination, with no export period','no exit plan — you may lose your own data (ISO/IEC 27017 CLD.8.1.5).'],
+  ['.\n8. Liability: ',0],['total liability is limited to one month of fees, including for data breaches','one month’s fee will not cover fines, notification costs or lawsuits.'],
+  ['.\n9. Governing law: ',0],['the agreement is governed by the law stated on the order form','',1,'stating the governing law is normal; just read which country it is.'],['.',0]],
+ ar:[['ملخّص اتفاقيّة خدمات سحابيّة (مختلَق، بيانات تدريبيّة)\n\n',0],
+  ['١. موقع البيانات: ',0],['يحقّ للمزوّد تخزين بيانات العميل ونقلها إلى أيّ منطقةٍ يختارها','تفقد السيطرة على إقامة البيانات وقد تخالف قاعدة توطينٍ أو قواعد النقل في GDPR.'],
+  ['.\n٢. التوفّر: ',0],['٩٩٫٩٥٪ شهريًّا مع أرصدة خدمة','',1,'اتفاقيّةٌ عاديّة قابلة للقياس — تذكّر فقط أنّها تغطّي التوفّر وحده.'],
+  ['.\n٣. الحوادث: ',0],['يُبلغ المزوّد العميلَ بالحوادث الأمنيّة حين يراه مناسبًا','لا مهلة محدّدة — قد تفوتك ساعتك القانونيّة (٧٢ أو ٦ ساعات).'],
+  ['.\n٤. التدقيق: ',0],['لا يحقّ للعميل التدقيق ولا يتسلّم أيّ تقارير تدقيق','لا دليل SOC 2 أو ISO إطلاقًا — لا تستطيع إثبات أنّ ضوابط المزوّد تعمل.'],
+  ['.\n٥. التشفير: ',0],['البيانات مشفّرةٌ في التخزين، ويحقّ للعميل استعمال مفاتيحه','',1,'المفاتيح التي يديرها العميل ضابطٌ جيّد للسيادة.'],
+  ['.\n٦. المتعاقدون من الباطن: ',0],['يحقّ للمزوّد تعيين متعاقدين من الباطن دون إشعار','أطرافٌ مجهولة قد تعالج بياناتك ولا تستطيع تقييمها.'],
+  ['.\n٧. الإنهاء: ',0],['تُحذف البيانات فور الإنهاء دون مهلةٍ لتصديرها','لا خطّة خروج — قد تخسر بياناتك نفسها (ISO/IEC 27017 الضابط CLD.8.1.5).'],
+  ['.\n٨. المسؤوليّة: ',0],['حدّ المسؤوليّة الكلّيّ اشتراك شهرٍ واحد، بما في ذلك خروقات البيانات','اشتراك شهرٍ لا يغطّي الغرامات ولا تكاليف الإبلاغ ولا الدعاوى.'],
+  ['.\n٩. القانون الحاكم: ',0],['تخضع الاتفاقيّة للقانون المذكور في نموذج الطلب','',1,'تحديد القانون الحاكم أمرٌ عاديّ؛ اقرأ فقط أيّ دولةٍ هي.'],['.',0]]
+};
+var ORD={
+ en:[['List the assets: data, identities, services','start by knowing what you protect.'],['Find threats and weaknesses for each asset','you cannot score a risk you have not described.'],['Score likelihood × impact with a reason','scoring needs the threat and weakness first.'],['Decide the treatment and the owner','decisions come after scores.'],['Apply the controls','the decision becomes action.'],['Re-score: residual risk, owner signs','you can only measure what is left after the controls.']],
+ ar:[['حصر الأصول: البيانات والهويّات والخدمات','ابدأ بمعرفة ما تحميه.'],['تحديد التهديدات ونقاط الضعف لكلّ أصل','لا تقدّر خطرًا لم تصفه.'],['تقدير الاحتمال × الأثر مع السبب','التقدير يحتاج التهديد والثغرة أوّلًا.'],['قرار المعالجة وتعيين المالك','القرار يأتي بعد الدرجات.'],['تطبيق الضوابط','القرار يتحوّل إلى عمل.'],['إعادة التقدير: الخطر المتبقّي ويوقّع المالك','لا تقيس الباقي إلّا بعد الضوابط.']]
+};
+function spot(box,l){
+  var U=UI[l],data=SPOT[l],hits=0,bad=0,total=data.filter(function(d){return d[1];}).length;box.innerHTML='';
+  var sc=el('div','w2-sc'),txt=el('div','w2-doc'),list=el('ol','w2-found'),fb=el('div','w2-fb'),again=el('button','w2-btn',U.again);
+  function paint(){sc.textContent=U.hits+': '+num(hits,l)+' / '+num(total,l)+'   ·   '+U.wrong+': '+num(bad,l);}
+  data.forEach(function(d){
+    if(!d[1]&&!d[2]){txt.appendChild(document.createTextNode(d[0]));return;}
+    var s=el('span','w2-ph',d[0]);s.tabIndex=0;s.setAttribute('role','button');
+    s.onclick=function(){
+      if(s.classList.contains('hit'))return;
+      if(d[1]){s.classList.add('hit');hits++;var li=el('li');li.innerHTML='<b></b> — <span></span>';li.firstChild.textContent=d[0];li.lastChild.textContent=d[1];list.appendChild(li);
+        fb.className='w2-fb ok';fb.textContent=hits===total?U.allSpot:d[1];}
+      else{bad++;shake(s);s.classList.add('safe');fb.className='w2-fb no';fb.textContent=U.safe+d[3];}
+      paint();};
+    s.onkeydown=function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();s.onclick();}};
+    txt.appendChild(s);});
+  again.onclick=function(){spot(box,l);};
+  paint();[sc,txt,fb,list,again].forEach(function(x){box.appendChild(x);});
+}
+function order(box,l){
+  var U=UI[l],steps=ORD[l],next=0,bad=0;box.innerHTML='';
+  var sc=el('div','w2-sc'),grid=el('div','w2-ord'),fb=el('div','w2-fb'),again=el('button','w2-btn',U.again);
+  function paint(){sc.textContent=num(next,l)+' / '+num(steps.length,l)+'   ·   '+U.wrong+': '+num(bad,l);}
+  shuffle(steps.map(function(s,i){return [s,i];})).forEach(function(p){
+    var c=el('button','w2-card');c.innerHTML='<span class="w2-n">?</span><span></span>';c.lastChild.textContent=p[0][0];
+    c.onclick=function(){if(c.classList.contains('ok'))return;
+      if(p[1]===next){c.classList.add('ok');c.firstChild.textContent=num(next+1,l);next++;fb.className='w2-fb ok';fb.textContent=next===steps.length?U.ordDone:p[0][1];}
+      else{bad++;shake(c);fb.className='w2-fb no';fb.textContent=U.notNow+p[0][1];}
+      paint();};
+    grid.appendChild(c);});
+  again.onclick=function(){order(box,l);};
+  paint();[sc,grid,fb,again].forEach(function(x){box.appendChild(x);});
+}
+/* SLA calculator — 30-day month; credit tiers are a common example, real values differ per service */
+function sla(box,l){
+  var T={en:{h:'🧮 SLA calculator',p:'Promised monthly availability',d:'Actual downtime this month',m:'Allowed per month',y:'Allowed per year',a:'Actual availability',c:'Service credit due',none:'none',
+     note:'30-day month. Credit tiers are a common example from large providers: 10% below the promise, 30% below 99%, 100% below 95%. Read the real values in each service’s SLA.',
+     D:[['No downtime',0],['30 minutes',30],['2 hours',120],['10 hours',600],['2 days',2880]],min:'min',hr:'h'},
+   ar:{h:'🧮 حاسبة اتفاقيّة مستوى الخدمة',p:'التوفّر الشهريّ المتعهَّد به',d:'التوقّف الفعليّ هذا الشهر',m:'المسموح شهريًّا',y:'المسموح سنويًّا',a:'التوفّر الفعليّ',c:'رصيد الخدمة المستحقّ',none:'لا شيء',
+     note:'شهرٌ من ٣٠ يومًا. درجات الرصيد مثالٌ شائع لدى المزوّدين الكبار: ١٠٪ تحت التعهّد، و٣٠٪ تحت ٩٩٪، و١٠٠٪ تحت ٩٥٪. القيم الحقيقيّة تُقرأ في اتفاقيّة كلّ خدمة.',
+     D:[['لا توقّف',0],['٣٠ دقيقة',30],['ساعتان',120],['١٠ ساعات',600],['يومان',2880]],min:'دقيقة',hr:'ساعة'}}[l];
+  var P=[99,99.5,99.9,99.95,99.99],p=99.9,d=0,M=43200;
+  function dur(m){m=Math.round(m*10)/10;return m<120?num(m,l)+' '+T.min:num(Math.round(m/6)/10,l)+' '+T.hr;}
+  function render(){
+    box.innerHTML='';box.appendChild(el('h4',null,T.h));
+    [[T.p,P.map(function(v){return [num(v,l)+(l==='en'?'%':'٪'),v];}),function(v){p=v;},function(){return p;}],[T.d,T.D,function(v){d=v;},function(){return d;}]].forEach(function(r){
+      var row=el('div','w3-row');row.appendChild(el('span','w3-lbl',r[0]));
+      r[1].forEach(function(o){var b=el('button','w3-opt'+(r[3]()===o[1]?' on':''),o[0]);b.type='button';b.onclick=function(){r[2](o[1]);render();};row.appendChild(b);});
+      box.appendChild(row);});
+    var act=(M-d)/M*100,cr=act>=p?0:act>=99?10:act>=95?30:100;
+    var out=el('div','w3-out');
+    [[T.m,dur(M*(100-p)/100)],[T.y,dur(M*12*(100-p)/100)],[T.a,num(Math.round(act*1000)/1000,l)+(l==='en'?'%':'٪')],[T.c,cr?num(cr,l)+(l==='en'?'%':'٪'):T.none]].forEach(function(x,i){
+      var c=el('div',i===3?'w3-cr':null);c.appendChild(el('small',null,x[0]));c.appendChild(el('b',null,x[1]));out.appendChild(c);});
+    box.appendChild(out);box.appendChild(el('div','w3-note',T.note));
+  }
+  render();
+}
+function games(){
+  var A={
+   en:[{ctx:'Document',q:'The provider’s published CAIQ answers in the STAR registry (Level 1).',a:'S',why:'the provider describes itself; nobody outside checked it.'},
+       {ctx:'Document',q:'A SOC 2 Type II report covering the last 12 months.',a:'A',why:'an independent auditor tested that the controls worked over the period.'},
+       {ctx:'Document',q:'“99.95% monthly availability or a service credit.”',a:'C',why:'a promise in the SLA — enforceable, but it proves nothing about security.'},
+       {ctx:'Document',q:'An ISO/IEC 27001 certificate with a 27017 extension from an accredited body.',a:'A',why:'an accredited certification body audited the ISMS.'},
+       {ctx:'Document',q:'A marketing page saying “bank-grade security”.',a:'S',why:'a claim by the provider, with no outside check at all.'},
+       {ctx:'Document',q:'“The provider will notify the customer of incidents within 24 hours.”',a:'C',why:'a contract clause you can claim against.'},
+       {ctx:'Document',q:'A STAR Level 2 entry based on a third-party audit.',a:'A',why:'Level 2 means a third party audited the provider.'},
+       {ctx:'Document',q:'A data processing agreement listing the provider’s sub-processors.',a:'C',why:'a contractual commitment about who processes the data.'}],
+   ar:[{ctx:'وثيقة',q:'إجابات CAIQ المنشورة للمزوّد في سجلّ STAR (المستوى ١).',a:'S',why:'المزوّد يصف نفسه، ولم يفحصه أحدٌ من الخارج.'},
+       {ctx:'وثيقة',q:'تقرير SOC 2 من النوع الثاني يغطّي آخر ١٢ شهرًا.',a:'A',why:'مدقّقٌ مستقلّ اختبر أنّ الضوابط عملت خلال الفترة.'},
+       {ctx:'وثيقة',q:'«توفّرٌ شهريّ ٩٩٫٩٥٪ أو رصيد خدمة».',a:'C',why:'تعهّدٌ في الاتفاقيّة — قابلٌ للمطالبة، لكنّه لا يثبت شيئًا عن الأمن.'},
+       {ctx:'وثيقة',q:'شهادة ISO/IEC 27001 مع توسيع 27017 من جهةٍ معتمدة.',a:'A',why:'جهة شهاداتٍ معتمدة دقّقت نظام إدارة أمن المعلومات.'},
+       {ctx:'وثيقة',q:'صفحةٌ تسويقيّة تقول «أمانٌ بمستوى المصارف».',a:'S',why:'ادّعاءٌ من المزوّد بلا أيّ فحصٍ خارجيّ.'},
+       {ctx:'وثيقة',q:'«يُبلغ المزوّد العميل بالحوادث خلال ٢٤ ساعة».',a:'C',why:'بندٌ تعاقديّ يمكن المطالبة به.'},
+       {ctx:'وثيقة',q:'قيدٌ في STAR من المستوى ٢ مبنيّ على تدقيق طرفٍ ثالث.',a:'A',why:'المستوى ٢ يعني أنّ طرفًا ثالثًا دقّق المزوّد.'},
+       {ctx:'وثيقة',q:'اتفاقيّة معالجة بياناتٍ تذكر المتعاقدين من الباطن.',a:'C',why:'التزامٌ تعاقديّ بمن يعالج البيانات.'}]};
+  var B={
+   en:[{q:'The team picks the Bahrain region for the new database.',a:'R',why:'choosing a region is a technical decision about where data sits.'},
+       {q:'A US court orders a US provider to hand over data stored in Frankfurt.',a:'V',why:'the provider’s home law reaches the data wherever it is stored.'},
+       {q:'An organisation policy denies creating any resource outside two approved regions.',a:'R',why:'a technical control that enforces where data lives.'},
+       {q:'GDPR applies to an Iraqi company because it serves customers living in Germany.',a:'V',why:'which law governs the data is a legal question.'},
+       {q:'Backups are replicated to a second region in the same country.',a:'R',why:'a placement decision for copies of data.'},
+       {q:'A regulator asks which country’s courts can demand the bank’s records.',a:'V',why:'jurisdiction over data is sovereignty.'}],
+   ar:[{q:'يختار الفريق منطقة البحرين لقاعدة البيانات الجديدة.',a:'R',why:'اختيار المنطقة قرارٌ تقنيّ بمكان البيانات.'},
+       {q:'محكمةٌ أمريكيّة تلزم مزوّدًا أمريكيًّا بتسليم بياناتٍ مخزّنة في فرانكفورت.',a:'V',why:'قانون دولة المزوّد يصل إلى البيانات أينما خُزّنت.'},
+       {q:'سياسةٌ تنظيميّة ترفض إنشاء أيّ موردٍ خارج منطقتين مسموح بهما.',a:'R',why:'ضابطٌ تقنيّ يفرض مكان البيانات.'},
+       {q:'ينطبق GDPR على شركةٍ عراقيّة لأنّها تخدم عملاء يقيمون في ألمانيا.',a:'V',why:'أيّ قانونٍ يحكم البيانات سؤالٌ قانونيّ.'},
+       {q:'تُنسخ النسخ الاحتياطيّة إلى منطقةٍ ثانية في البلد نفسه.',a:'R',why:'قرار وضعٍ لنسخ البيانات.'},
+       {q:'جهةٌ رقابيّة تسأل: محاكم أيّ دولةٍ تستطيع طلب سجلّات المصرف؟',a:'V',why:'الولاية القضائيّة على البيانات هي السيادة.'}]};
+  var LA={en:{S:'Self-declared',A:'Independent audit',C:'Contract promise',R:'Residency',V:'Sovereignty'},ar:{S:'تصريحٌ ذاتيّ',A:'تدقيقٌ مستقلّ',C:'تعهّدٌ تعاقديّ',R:'إقامة',V:'سيادة'}};
+  [['en','g13','g14'],['ar','g15','g16']].forEach(function(x){
+    var l=x[0];if(!document.getElementById(x[1]))return;
+    game(x[1],A[l],function(a){return LA[l][a];});
+    game(x[2],B[l],function(a){return LA[l][a];});
+  });
+}
+function boot(){
+  document.querySelectorAll('#slide-3 [data-w3]').forEach(function(b){
+    var l=b.closest('.lang-ar')?'ar':'en',k=b.getAttribute('data-w3');
+    if(k==='spot')spot(b,l);else if(k==='order')order(b,l);else if(k==='sla')sla(b,l);
+  });
+  if(typeof game==='function')games();
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
+})();
+</script>
       </div>
       <div id="slide-4" class="slide content-slide cs" dir="ltr">
         <span class="chip">Week 4</span>
