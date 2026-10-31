@@ -895,13 +895,308 @@ p{margin:.55em 0}
       <!-- ============ END SLIDE 3 ============ -->
 
 <!-- ============ SLIDE 4 : الأسبوع الرابع ============ -->
-<div id="slide-4" class="slide content-slide">
+<div id="slide-4" class="slide content-slide rich-slide">
+<style>
+.gp4-obj{background:var(--card);border:1.5px dashed var(--line);border-radius:14px;padding:10px 16px;margin:12px 0}
+.gp4-code{direction:ltr;text-align:left;background:#11151c;color:#e6edf3;border-radius:12px;padding:12px 14px;font:calc(13.5px * var(--fs))/1.7 Consolas,monospace;overflow-x:auto;white-space:pre;margin:10px 0}
+.gp4-code .c{color:#8b949e}.gp4-code .k{color:#ff7b72}.gp4-code .f{color:#d2a8ff}.gp4-code .v{color:#79c0ff}
+.gp4-lab{background:var(--card);border:2px solid var(--blue);border-radius:16px;padding:12px 16px;margin:14px 0}
+.gp4-lab h4{margin:0 0 6px;color:var(--blue);font-size:calc(18px * var(--fs))}
+.gp4-two{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+.gp4-two>div{background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;min-width:0}
+.gp4-two>div b{display:block;margin-bottom:4px}
+@media (max-width:640px){.gp4-two{grid-template-columns:1fr}}
+.gp4-story{background:var(--card);border-inline-start:5px solid var(--green);border-radius:10px;padding:8px 12px;margin:6px 0}
+</style>
+
   <span class="chip">الأسبوع الرابع</span>
-  <div class="coming-soon">
-    <svg class="big-icon" viewBox="0 0 40 40"><circle cx="20" cy="20" r="15" fill="none" stroke="currentColor" stroke-width="3" filter="url(#sketchy)"/><path d="M20 11 V21 L27 25" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
-    <p class="cs-title">تنزل لاحقاً</p>
-    <p class="cs-sub">محتوى هذا الأسبوع سيُضاف قريباً.</p>
+  <h2 class="page-title">من الفكرة إلى النموذج: نظام إنترنت الأشياء لمشروعكم</h2>
+  <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
+
+  <p class="lead-paragraph">في الأسبوع الثالث حوّلنا ملفًّا إلى تطبيقٍ على الهاتف. لكنّ كثيرًا من مشاريعكم لا تبدأ من ملفّ، بل من <b>شيءٍ في العالم الحقيقيّ يجب أن يُقاس</b>: رطوبة تربة، أو حرارة مخزن، أو مكانٌ فارغ في موقف سيّارات. في هذا الأسبوع نتعلّم كيف تتحوّل الفكرة إلى نظام إنترنت أشياء: ما أجزاؤه، وكيف نكتب متطلّباته ونرسم مخطّطه، وكيف نبني نموذجه الأوّليّ <b>في المحاكي على حاسبات المختبر، دون أن يشتري أحدٌ أيّ قطعة</b>. مثالنا طوال المحاضرة «مزرعة الحلّة الذكيّة»، وهو مثالٌ تدريبيّ ببياناتٍ مختلقة.</p>
+
+  <div class="gp4-obj"><b>بعد هذه المحاضرة ستستطيع أن:</b>
+    <ul>
+      <li>تسمّي <b>الطبقات الخمس</b> لنظام إنترنت الأشياء، وتضع كلّ جزءٍ من مشروعك في طبقته.</li>
+      <li>تميّز بين <b>الحسّاس والمشغّل</b>، وبين الإشارة <b>الرقميّة والتماثليّة</b>.</li>
+      <li>تقرأ برنامج Arduino بسيطًا وتشرح ما تفعله <b>setup()</b> و<b>loop()</b>.</li>
+      <li>تكتب <b>متطلّبات</b> مشروعك الوظيفيّة وغير الوظيفيّة بصيغة <b>قصص المستخدم</b>.</li>
+      <li>ترسم <b>مخطّط الكتل</b> لنظامك.</li>
+      <li>تبني <b>نموذجًا أوّليًّا</b> في المحاكي وتسلّمه رابطًا تُحتسب عليه درجة المختبر.</li>
+    </ul>
   </div>
+
+  <div class="section-heading"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M4 15 H24 M17 7 L25 15 L17 23" fill="none" stroke="var(--red)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketchy)"/></svg><span>📖 مصطلحات تحتاجها أوّلًا</span></div>
+  <div class="dt-wrap"><table class="dt">
+    <tr><th>المصطلح</th><th>المعنى</th><th>مثال</th></tr>
+    <tr><td>إنترنت الأشياء <span class="ltr-inline">(IoT)</span></td><td>أجهزةٌ تقيس وتتّصل وتتصرّف وحدها عبر الشبكة</td><td>مزرعةٌ تسقي نفسها حين تجفّ التربة</td></tr>
+    <tr><td>الحسّاس <span class="ltr-inline">(Sensor)</span></td><td>يحوّل ظاهرةً فيزيائيّة إلى إشارةٍ كهربائيّة</td><td>حسّاس رطوبة التربة، DHT22 للحرارة</td></tr>
+    <tr><td>المشغّل <span class="ltr-inline">(Actuator)</span></td><td>يحوّل أمرًا كهربائيًّا إلى فعل</td><td>مضخّة، محرّك، صفّارة، مصباح</td></tr>
+    <tr><td>المتحكّم الدقيق <span class="ltr-inline">(Microcontroller)</span></td><td>حاسوبٌ صغير على لوحةٍ واحدة يقرأ الحسّاسات ويقرّر</td><td><span class="ltr-inline">Arduino Uno</span>، <span class="ltr-inline">ESP32</span></td></tr>
+    <tr><td>الإشارة التماثليّة <span class="ltr-inline">(Analog)</span></td><td>قيمةٌ متّصلة بين حدّين</td><td>رطوبة التربة: ٠ إلى ١٠٢٣</td></tr>
+    <tr><td>الإشارة الرقميّة <span class="ltr-inline">(Digital)</span></td><td>قيمتان فقط: تشغيل أو إطفاء</td><td>حسّاس حركة: يوجد أو لا يوجد</td></tr>
+    <tr><td>المحوّل التماثليّ الرقميّ <span class="ltr-inline">(ADC)</span></td><td>يحوّل الجهد إلى رقم يفهمه المتحكّم</td><td>في Uno: من ٠ إلى ١٠٢٣</td></tr>
+    <tr><td>المنفذ <span class="ltr-inline">(Pin)</span></td><td>نقطة توصيلٍ على اللوحة</td><td><span class="ltr-inline">A0</span> تماثليّ، <span class="ltr-inline">D7</span> رقميّ</td></tr>
+    <tr><td>المرحّل <span class="ltr-inline">(Relay)</span></td><td>مفتاحٌ يشغّله المتحكّم ليتحكّم بجهازٍ أكبر منه</td><td>تشغيل مضخّة ٢٢٠ فولت</td></tr>
+    <tr><td>الرسم البرمجيّ <span class="ltr-inline">(Sketch)</span></td><td>برنامج Arduino</td><td><span class="ltr-inline">setup()</span> مرّة، و<span class="ltr-inline">loop()</span> بلا توقّف</td></tr>
+    <tr><td>المحاكي <span class="ltr-inline">(Simulator)</span></td><td>برنامجٌ يحاكي اللوحة والقطع في المتصفّح</td><td><span class="ltr-inline">Wokwi</span>، <span class="ltr-inline">Tinkercad Circuits</span></td></tr>
+    <tr><td>المتطلّب الوظيفيّ</td><td>ما يجب أن يفعله النظام</td><td>«يشغّل المضخّة حين تجفّ التربة»</td></tr>
+    <tr><td>المتطلّب غير الوظيفيّ</td><td>كيف يجب أن يكون النظام: سرعة، أمان، سهولة</td><td>«تظهر القراءة على الهاتف خلال ثانيتين»</td></tr>
+    <tr><td>قصّة المستخدم <span class="ltr-inline">(User story)</span></td><td>متطلّبٌ بصوت المستخدم: بصفتي… أريد… لكي…</td><td>«بصفتي مزارعًا أريد تنبيهًا…»</td></tr>
+    <tr><td>مخطّط الكتل <span class="ltr-inline">(Block diagram)</span></td><td>رسمٌ للأجزاء الكبرى والعلاقات بينها</td><td>حسّاس ← Arduino ← مضخّة</td></tr>
+    <tr><td>النموذج الأوّليّ <span class="ltr-inline">(Prototype)</span></td><td>نسخةٌ أولى تعمل لتجربة الفكرة قبل الإنفاق</td><td>الدائرة في المحاكي قبل شراء القطع</td></tr>
+  </table></div>
+
+  <div class="section-heading"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M4 15 H24 M17 7 L25 15 L17 23" fill="none" stroke="var(--red)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketchy)"/></svg><span>١ · ما نظام إنترنت الأشياء؟ خمس طبقات</span></div>
+  <p>كلّ نظام إنترنت أشياء، من مزرعةٍ صغيرة إلى مدينةٍ ذكيّة، يتكوّن من خمس طبقات. القراءة تمشي من اليمين إلى اليسار، والقرار العاجل يرجع إلى الحقل دون انتظار السحابة:</p>
+  <figure class="ndiag"><svg viewBox="0 0 1600 330" role="img" aria-label="الطبقات الخمس لنظام إنترنت الأشياء">
+    <g filter="url(#sketchy)" fill="none" stroke-width="3">
+      <rect x="1330" y="60" width="230" height="140" rx="16" stroke="var(--green)"/><rect x="1035" y="60" width="230" height="140" rx="16" stroke="var(--blue)"/>
+      <rect x="740" y="60" width="230" height="140" rx="16" stroke="var(--orange)"/><rect x="445" y="60" width="230" height="140" rx="16" stroke="var(--violet)"/>
+      <rect x="150" y="60" width="230" height="140" rx="16" stroke="var(--ink)"/>
+      <path d="M1322 130 H1275 M1287 120 L1273 130 L1287 140 M1027 130 H980 M992 120 L978 130 L992 140 M732 130 H685 M697 120 L683 130 L697 140 M437 130 H390 M402 120 L388 130 L402 140" stroke="var(--ink)"/>
+      <path d="M1150 205 C1150 285 1450 285 1445 215 M1435 228 L1445 213 L1457 227" stroke="var(--red)" stroke-dasharray="10 8"/>
+    </g>
+    <g font-size="30" text-anchor="middle" fill="var(--ink)">
+      <text x="1445" y="118">١ الحسّاس</text><text x="1445" y="162" font-size="22" fill="var(--muted)">يقيس الرطوبة</text>
+      <text x="1150" y="118">٢ المتحكّم</text><text x="1150" y="162" font-size="22" fill="var(--muted)">Arduino يقرّر</text>
+      <text x="855" y="118">٣ الاتصال</text><text x="855" y="162" font-size="22" fill="var(--muted)">Wi-Fi أو كابل</text>
+      <text x="560" y="118">٤ السحابة</text><text x="560" y="162" font-size="22" fill="var(--muted)">تخزّن وتحلّل</text>
+      <text x="265" y="118">٥ التطبيق</text><text x="265" y="162" font-size="22" fill="var(--muted)">لوحة على الهاتف</text>
+    </g>
+    <text x="800" y="305" text-anchor="middle" font-size="24" fill="var(--red)">ورجوعًا: المتحكّم يشغّل المضخّة (المشغّل) دون انتظار السحابة</text>
+  </svg></figure>
+  <div class="gp4-two">
+    <div><b>في المزرعة الذكيّة</b>الحسّاس يقيس رطوبة التربة، وArduino يقارنها بحدّ الجفاف، فيشغّل المضخّة فورًا ويرسل القراءة إلى السحابة، والمزارع يرى الرسم البيانيّ على هاتفه.</div>
+    <div><b>في مشروعكم</b>اكتبوا لكلّ طبقةٍ سطرًا واحدًا: ماذا نقيس؟ من يقرّر؟ كيف تنتقل البيانات؟ أين تُخزَّن؟ من يراها؟ إن بقيت طبقةٌ فارغة فهذا سؤالٌ يجب أن يجيب عنه الفريق.</div>
+  </div>
+  <div class="takeaway"><b>الخلاصة:</b> إنترنت الأشياء ليس جهازًا، بل <b>سلسلة</b>. ضعف أيّ حلقةٍ فيها يوقف النظام كلّه.</div>
+
+  <div class="section-heading"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M4 15 H24 M17 7 L25 15 L17 23" fill="none" stroke="var(--red)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketchy)"/></svg><span>٢ · الحسّاسات والمشغّلات، والإشارة الرقميّة والتماثليّة</span></div>
+  <p>الحسّاس عين النظام، والمشغّل يده. ولكلّ حسّاسٍ نوع إشارة يحدّد أيّ منفذٍ نستعمل على اللوحة:</p>
+  <figure class="ndiag"><svg viewBox="0 0 1600 300" role="img" aria-label="الإشارة التماثلية والإشارة الرقمية">
+    <g filter="url(#sketchy)" fill="none" stroke-width="4">
+      <path d="M880 210 C930 80 980 80 1030 150 S1130 240 1180 140 S1280 60 1330 120 S1430 220 1500 110" stroke="var(--blue)"/>
+      <path d="M100 210 H180 V90 H330 V210 H400 V90 H560 V210 H640" stroke="var(--orange)"/>
+      <path d="M860 230 H1520 M100 230 H660" stroke="var(--muted)" stroke-width="2"/>
+    </g>
+    <g font-size="30" text-anchor="middle" fill="var(--ink)">
+      <text x="1190" y="52">إشارة تماثليّة: أيّ قيمة بين حدّين</text>
+      <text x="1190" y="280" font-size="24" fill="var(--muted)">رطوبة التربة ← analogRead ← رقم من ٠ إلى ١٠٢٣</text>
+      <text x="380" y="52">إشارة رقميّة: قيمتان فقط</text>
+      <text x="380" y="280" font-size="24" fill="var(--muted)">حسّاس حركة: يوجد (HIGH) أو لا يوجد (LOW)</text>
+    </g>
+  </svg></figure>
+  <div class="dt-wrap"><table class="dt">
+    <tr><th>الحسّاس</th><th>ماذا يقيس؟</th><th>نوع الإشارة</th><th>أين يفيد؟</th></tr>
+    <tr><td>حسّاس رطوبة التربة</td><td>رطوبة التربة</td><td>تماثليّة</td><td>ريّ ذكيّ</td></tr>
+    <tr><td><span class="ltr-inline">DHT22</span></td><td>الحرارة والرطوبة الجوّيّة</td><td>رقميّة</td><td>بيت زجاجيّ، مخزن أدوية</td></tr>
+    <tr><td>LDR (مقاومة ضوئيّة)</td><td>شدّة الضوء</td><td>تماثليّة</td><td>إنارة شارع تعمل ليلًا</td></tr>
+    <tr><td>HC-SR04 (فوق صوتيّ)</td><td>المسافة</td><td>رقميّة (نبضة)</td><td>مستوى الماء في خزّان، موقف سيّارات</td></tr>
+    <tr><td>PIR</td><td>حركة جسمٍ دافئ</td><td>رقميّة</td><td>إنذار، إنارة ممرّ</td></tr>
+  </table></div>
+  <p><b>المشغّلات الشائعة:</b> مصباح LED، وصفّارة، ومحرّك سيرفو، ومرحّلٌ يشغّل مضخّةً أو مروحة. المرحّل مهمّ لأنّ منفذ Arduino يعطي تيّارًا صغيرًا لا يكفي لتشغيل مضخّة.</p>
+  <div class="oops"><span class="o-i">⚠</span><div><b>خطأٌ شائع:</b> توصيل حسّاسٍ تماثليّ بمنفذٍ رقميّ. عندها لا تقرأ اللوحة إلّا ٠ أو ١، فيبدو الحسّاس «معطّلًا» وهو سليم. الحسّاس التماثليّ مكانه المنافذ A0 إلى A5.</div></div>
+
+  <div class="section-heading"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M4 15 H24 M17 7 L25 15 L17 23" fill="none" stroke="var(--red)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketchy)"/></svg><span>٣ · المتحكّم: كيف يفكّر Arduino؟</span></div>
+  <p>برنامج Arduino جزءان فقط: <b>setup()</b> يعمل مرّةً واحدة عند التشغيل، و<b>loop()</b> يتكرّر بلا توقّف. وفي كلّ دورةٍ أربع خطوات:</p>
+  <figure class="ndiag"><svg viewBox="0 0 1600 420" role="img" aria-label="دورة عمل برنامج Arduino">
+    <g filter="url(#sketchy)" fill="none" stroke-width="3">
+      <circle cx="800" cy="210" r="105" stroke="var(--ink)" stroke-dasharray="12 10"/>
+      <path d="M868 128 L880 140 L863 145 M882 278 L868 292 L862 275 M732 292 L720 280 L737 275 M718 142 L732 128 L738 145" stroke="var(--ink)"/>
+      <rect x="690" y="15" width="220" height="70" rx="14" stroke="var(--green)"/><rect x="960" y="175" width="230" height="70" rx="14" stroke="var(--blue)"/>
+      <rect x="690" y="335" width="220" height="70" rx="14" stroke="var(--red)"/><rect x="410" y="175" width="230" height="70" rx="14" stroke="var(--muted)"/>
+      <rect x="1250" y="160" width="290" height="100" rx="14" stroke="var(--orange)"/>
+      <path d="M1242 210 H1200 M1212 200 L1198 210 L1212 220" stroke="var(--orange)"/>
+    </g>
+    <g font-size="28" text-anchor="middle" fill="var(--ink)">
+      <text x="800" y="60">١ اقرأ الحسّاس</text><text x="1075" y="220">٢ قارن بالحدّ</text>
+      <text x="800" y="380">٣ شغّل أو أطفئ</text><text x="525" y="220">٤ انتظر ثانية</text>
+      <text x="1395" y="203" direction="ltr" fill="var(--orange)">setup()</text><text x="1395" y="243" font-size="22" fill="var(--muted)">مرّةً واحدة عند التشغيل</text>
+      <text x="800" y="205" direction="ltr" font-size="30" fill="var(--blue)">loop()</text><text x="800" y="240" font-size="20" fill="var(--muted)">بلا توقّف</text>
+    </g>
+  </svg></figure>
+  <p>هذا هو برنامج المزرعة كاملًا. اقرأه مع الدورة أعلاه، سطرًا بسطر:</p>
+<div class="gp4-code"><span class="k">const int</span> <span class="v">SOIL</span>  = A0;   <span class="c">// soil sensor (a potentiometer in the simulator)</span>
+<span class="k">const int</span> <span class="v">PUMP</span>  = 7;    <span class="c">// pump through a relay (an LED in the simulator)</span>
+<span class="k">const int</span> <span class="v">LIMIT</span> = 300;  <span class="c">// dry limit: change it to your team's number (lab task)</span>
+
+<span class="k">void</span> <span class="f">setup</span>() {
+  <span class="f">pinMode</span>(PUMP, OUTPUT);
+  Serial.<span class="f">begin</span>(9600);
+}
+
+<span class="k">void</span> <span class="f">loop</span>() {
+  <span class="k">int</span> soil = <span class="f">analogRead</span>(SOIL);          <span class="c">// 0 (dry) ... 1023 (wet)</span>
+  Serial.<span class="f">println</span>(soil);
+  <span class="k">if</span> (soil &lt; LIMIT) <span class="f">digitalWrite</span>(PUMP, HIGH);  <span class="c">// dry  -> pump on</span>
+  <span class="k">else</span>              <span class="f">digitalWrite</span>(PUMP, LOW);   <span class="c">// wet  -> pump off</span>
+  <span class="f">delay</span>(1000);
+}</div>
+  <div class="takeaway"><b>اصطلاحنا في المحاكي:</b> القيمة الصغيرة تعني تربةً جافّة، والكبيرة تعني تربةً رطبة. بعض الحسّاسات الحقيقيّة تعمل بالعكس، فاقرأ ورقة بيانات الحسّاس قبل اختيار الشرط.</div>
+
+  <div class="section-heading"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M4 15 H24 M17 7 L25 15 L17 23" fill="none" stroke="var(--red)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketchy)"/></svg><span>٤ · من الفكرة إلى المتطلّبات</span></div>
+  <p>قبل أيّ سلكٍ أو سطر كود، يكتب الفريق <b>ما يجب أن يفعله النظام</b> و<b>كيف يجب أن يكون</b>. والطريقة الأوضح أن نكتب بصوت المستخدم:</p>
+  <div class="gp4-story">«بصفتي <b>مزارعًا</b>، أريد أن <b>تُسقى التربة وحدها حين تجفّ</b>، لكي <b>لا أذهب إلى الحقل كلّ صباح</b>».</div>
+  <div class="gp4-story">«بصفتي <b>مزارعًا</b>، أريد <b>تنبيهًا على هاتفي إذا تجاوزت الحرارة ٤٥°</b>، لكي <b>أغطّي الزرع في الوقت المناسب</b>».</div>
+  <div class="dt-wrap"><table class="dt">
+    <tr><th>النوع</th><th>مثالٌ من المزرعة</th><th>كيف نفحصه؟</th></tr>
+    <tr><td>وظيفيّ</td><td>يشغّل المضخّة حين تقلّ الرطوبة عن الحدّ</td><td>نخفض القيمة في المحاكي فيضيء مصباح المضخّة</td></tr>
+    <tr><td>وظيفيّ</td><td>يسجّل كلّ قراءةٍ مع وقتها</td><td>نرى القراءات تتوالى في الشاشة التسلسليّة</td></tr>
+    <tr><td>غير وظيفيّ</td><td>تظهر القراءة على الهاتف خلال ثانيتين</td><td>نقيس الزمن بين التغيير وظهوره</td></tr>
+    <tr><td>غير وظيفيّ</td><td>كلفة القطع أقلّ من ٥٠ ألف دينار</td><td>جدول قطعٍ بالأسعار قبل الشراء</td></tr>
+  </table></div>
+  <div class="oops"><span class="o-i">⚠</span><div><b>متطلّبٌ لا يُفحص ليس متطلّبًا.</b> «نظامٌ سريع وجميل» لا يمكن اختباره. «تظهر القراءة خلال ثانيتين» يمكن اختباره بساعة.</div></div>
+
+  <div class="section-heading"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M4 15 H24 M17 7 L25 15 L17 23" fill="none" stroke="var(--red)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketchy)"/></svg><span>٥ · مخطّط الكتل: صورة النظام على ورقةٍ واحدة</span></div>
+  <p>مخطّط الكتل يبيّن الأجزاء الكبرى، والمنفذ الذي يتّصل به كلّ جزء، واتّجاه البيانات. هو أوّل ما يُرسم في تقرير المشروع، وأوّل ما تسأل عنه لجنة المناقشة:</p>
+  <figure class="ndiag"><svg viewBox="0 0 1600 420" role="img" aria-label="مخطط الكتل لمزرعة الحلة الذكية">
+    <g filter="url(#sketchy)" fill="none" stroke-width="3">
+      <rect x="1290" y="40" width="260" height="100" rx="14" stroke="var(--green)"/><rect x="1290" y="250" width="260" height="100" rx="14" stroke="var(--green)"/>
+      <rect x="900" y="130" width="280" height="140" rx="16" stroke="var(--blue)"/>
+      <rect x="520" y="40" width="270" height="100" rx="14" stroke="var(--red)"/><rect x="520" y="250" width="270" height="100" rx="14" stroke="var(--orange)"/>
+      <rect x="120" y="250" width="290" height="100" rx="14" stroke="var(--violet)"/><rect x="120" y="40" width="290" height="100" rx="14" stroke="var(--ink)"/>
+      <path d="M1282 90 L1190 170 M1282 300 L1190 235 M892 175 L800 100 M892 230 L800 295 M512 300 H420 M265 242 V150" stroke="var(--ink)"/>
+      <path d="M800 112 L795 96 L809 99 M800 283 L796 299 L811 296 M420 290 L410 300 L420 310 M255 160 L265 146 L275 160" stroke="var(--ink)"/>
+    </g>
+    <g font-size="27" text-anchor="middle" fill="var(--ink)">
+      <text x="1420" y="85">حسّاس رطوبة التربة</text><text x="1420" y="120" font-size="21" fill="var(--muted)">A0 · تماثليّ</text>
+      <text x="1420" y="295">DHT22 حرارة ورطوبة</text><text x="1420" y="330" font-size="21" fill="var(--muted)">D2 · رقميّ</text>
+      <text x="1040" y="195">Arduino Uno</text><text x="1040" y="235" font-size="21" fill="var(--muted)">يقرأ ويقرّر</text>
+      <text x="655" y="85">مرحّل ← مضخّة</text><text x="655" y="120" font-size="21" fill="var(--muted)">D7 · مشغّل</text>
+      <text x="655" y="295">وحدة Wi-Fi</text><text x="655" y="330" font-size="21" fill="var(--muted)">ESP8266 / ESP32</text>
+      <text x="265" y="295">منصّة سحابيّة</text><text x="265" y="330" font-size="21" fill="var(--muted)">تخزين + تنبيه</text>
+      <text x="265" y="85">لوحة على الهاتف</text><text x="265" y="120" font-size="21" fill="var(--muted)">المزارع يرى ويقرّر</text>
+    </g>
+    <text x="800" y="400" text-anchor="middle" font-size="23" fill="var(--red)">مخطّط الكتل يبيّن الأجزاء والعلاقات، لا الأسلاك. الأسلاك في مخطّط الدائرة داخل المحاكي.</text>
+  </svg></figure>
+  <div class="takeaway"><b>القاعدة:</b> كلّ سهمٍ في المخطّط يجب أن يجيب عن سؤال «ما الذي ينتقل هنا؟»: قراءة، أو أمر تشغيل، أو بيانات إلى الهاتف.</div>
+
+  <div class="section-heading"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M4 15 H24 M17 7 L25 15 L17 23" fill="none" stroke="var(--red)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketchy)"/></svg><span>٦ · المحاكي بدل الشراء: Wokwi على حاسبات المختبر</span></div>
+  <p>لا يحتاج أيّ طالبٍ إلى شراء لوحةٍ أو حسّاس في هذه المادّة. المحاكي يعرض لوحة Arduino والقطع في المتصفّح، ويشغّل الكود نفسه الذي يُرفع لاحقًا إلى لوحةٍ حقيقيّة إن قرّر الفريق بناء المشروع فعلًا.</p>
+  <div class="gp4-two">
+    <div><b>Wokwi</b><span class="ltr-inline">wokwi.com</span> · يعمل في المتصفّح بلا تثبيت، وفيه Arduino وESP32 والحسّاسات الشائعة، ويحفظ المشروع برابطٍ يمكن تسليمه.</div>
+    <div><b>Tinkercad Circuits</b><span class="ltr-inline">tinkercad.com</span> · بديلٌ مجّانيّ آخر، وفيه حسّاس رطوبة التربة جاهزًا، ويحتاج حسابًا مجّانيًّا.</div>
+  </div>
+  <div class="pipe">
+    <div class="pipe-row"><span class="pipe-n">١</span><div class="pipe-b"><b>افتح المحاكي على حاسبة المختبر</b><small>من المتصفّح: wokwi.com ← مشروعٌ جديد ← Arduino Uno.</small></div></div>
+    <div class="pipe-a">↓</div>
+    <div class="pipe-row"><span class="pipe-n">٢</span><div class="pipe-b"><b>أضِف القطع</b><small>زرّ + : مقاومة متغيّرة (تمثّل حسّاس الرطوبة)، ومصباح LED مع مقاومة ٢٢٠ أوم (يمثّل المضخّة).</small></div></div>
+    <div class="pipe-a">↓</div>
+    <div class="pipe-row"><span class="pipe-n">٣</span><div class="pipe-b"><b>صِل الأسلاك</b><small>المقاومة المتغيّرة: الطرفان إلى 5V و GND، والوسط إلى A0. المصباح: إلى المنفذ 7 عبر المقاومة، ثمّ إلى GND.</small></div></div>
+    <div class="pipe-a">↓</div>
+    <div class="pipe-row"><span class="pipe-n">٤</span><div class="pipe-b"><b>الصق البرنامج وشغّله</b><small>زرّ ▶. غيّر المقاومة المتغيّرة وراقب المصباح والشاشة التسلسليّة.</small></div></div>
+    <div class="pipe-a">↓</div>
+    <div class="pipe-row hi"><span class="pipe-n">٥</span><div class="pipe-b"><b>احفظ وانسخ الرابط</b><small>Save ← انسخ رابط المشروع. هذا الرابط هو ما تسلّمه.</small></div></div>
+  </div>
+  <div class="oops"><span class="o-i">⚠</span><div><b>الأمانة العلميّة:</b> قراءات المحاكي ليست قياساتٍ من تربةٍ حقيقيّة. اكتب في تقريرك ولقطاتك «قراءات محاكاة»، كما نكتب «بيانات مختلقة» على الملفّات التدريبيّة.</div></div>
+
+  <div class="section-heading"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M4 15 H24 M17 7 L25 15 L17 23" fill="none" stroke="var(--red)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketchy)"/></svg><span>٧ · مهمّة المختبر: النموذج الأوّليّ للمزرعة (١٠ درجات)</span></div>
+  <div class="gp4-lab"><h4>🧪 تُنجز على حاسبات المختبر خلال وقت المختبر</h4>
+    <p><b>المطلوب:</b> ابنِ دائرة المزرعة في Wokwi وشغّل البرنامج، بعد تعديلين خاصّين بفريقك:</p>
+    <ol>
+      <li><b>حدّ الجفاف الخاصّ بفريقك:</b> اجعل قيمة <span class="ltr-inline">LIMIT</span> تساوي ٣٠٠ زائد عشرة أضعاف رقم فريقك. الفريق ٧ مثلًا: ٣٠٠ + ٧٠ = ٣٧٠.</li>
+      <li><b>صفّارة إنذار:</b> أضِف صفّارة (Buzzer) على المنفذ 8 تعمل إذا نزلت القيمة عن نصف الحدّ.</li>
+      <li><b>جدول قراءات:</b> سجّل ثلاث قراءاتٍ من الشاشة التسلسليّة، وحالة المضخّة والصفّارة عند كلٍّ منها.</li>
+      <li><b>سؤالان «لماذا؟»:</b> لماذا وصلنا الحسّاس بـ A0 لا بمنفذٍ رقميّ؟ ولماذا نحتاج مرحّلًا مع مضخّةٍ حقيقيّة؟</li>
+    </ol>
+    <p><b>التسليم:</b> رابط مشروع Wokwi، ولقطة شاشة، والجدول والجوابان، على منصّة المادّة قبل نهاية المختبر.</p>
+  </div>
+  <div class="dt-wrap"><table class="dt">
+    <tr><th>المعيار</th><th>الدرجة</th><th>ما يُفحص</th></tr>
+    <tr><td>الدائرة</td><td>٣</td><td>الحسّاس على A0، والمصباح على 7 مع مقاومة، والصفّارة على 8</td></tr>
+    <tr><td>البرنامج يعمل</td><td>٣</td><td>المصباح يضيء ويطفأ عند الحدّ الصحيح</td></tr>
+    <tr><td>تعديلات الفريق</td><td>٢</td><td>الحدّ المحسوب من رقم الفريق، وشرط الصفّارة</td></tr>
+    <tr><td>الجدول والجوابان</td><td>٢</td><td>قراءات متّسقة مع الحدّ، وجوابان صحيحان</td></tr>
+  </table></div>
+  <div class="takeaway"><b>لماذا رقم الفريق؟</b> لأنّه يجعل لكلّ فريقٍ حلًّا مختلفًا يظهر في الكود والدائرة والجدول معًا، فيصير النسخ واضحًا من النظرة الأولى.</div>
+
+  <div class="section-heading"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M4 15 H24 M17 7 L25 15 L17 23" fill="none" stroke="var(--red)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketchy)"/></svg><span>أسئلة المراجعة</span></div>
+  <p class="quiz-note">الحلول والتعليل في تبويب «الحلول والتعليل» 🔑</p>
+  <p class="dt-cap">أولًا · الاختيار من متعدد</p>
+  <div class="mcq-item"><span class="q-num">١.</span> أيّ ترتيبٍ صحيح لطبقات نظام إنترنت الأشياء؟
+    <ul class="mcq-options">
+      <li><span class="opt-letter">أ)</span> التطبيق ← السحابة ← الحسّاس ← المتحكّم ← الاتصال</li>
+      <li><span class="opt-letter">ب)</span> الحسّاس ← المتحكّم ← الاتصال ← السحابة ← التطبيق</li>
+      <li><span class="opt-letter">ج)</span> المتحكّم ← التطبيق ← الحسّاس ← الاتصال ← السحابة</li>
+      <li><span class="opt-letter">د)</span> السحابة ← الحسّاس ← التطبيق ← الاتصال ← المتحكّم</li>
+    </ul></div>
+  <div class="mcq-item"><span class="q-num">٢.</span> حسّاس رطوبة التربة يعطي على Arduino Uno قيمًا من ٠ إلى ١٠٢٣. هذه إشارة:
+    <ul class="mcq-options">
+      <li><span class="opt-letter">أ)</span> رقميّة لها قيمتان فقط</li>
+      <li><span class="opt-letter">ب)</span> صوتيّة</li>
+      <li><span class="opt-letter">ج)</span> تماثليّة يحوّلها المحوّل التماثليّ الرقميّ إلى رقم</li>
+      <li><span class="opt-letter">د)</span> لاسلكيّة لا تحتاج سلكًا</li>
+    </ul></div>
+  <div class="mcq-item"><span class="q-num">٣.</span> أيّ ممّا يلي مشغّل لا حسّاس؟
+    <ul class="mcq-options">
+      <li><span class="opt-letter">أ)</span> مضخّة ماءٍ عبر مرحّل</li>
+      <li><span class="opt-letter">ب)</span> DHT22</li>
+      <li><span class="opt-letter">ج)</span> مقاومة ضوئيّة LDR</li>
+      <li><span class="opt-letter">د)</span> حسّاس حركة PIR</li>
+    </ul></div>
+  <div class="mcq-item"><span class="q-num">٤.</span> في برنامج Arduino، ما الجزء الذي يتكرّر بلا توقّف؟
+    <ul class="mcq-options">
+      <li><span class="opt-letter">أ)</span> setup()</li>
+      <li><span class="opt-letter">ب)</span> pinMode()</li>
+      <li><span class="opt-letter">ج)</span> Serial.begin()</li>
+      <li><span class="opt-letter">د)</span> loop()</li>
+    </ul></div>
+  <div class="mcq-item"><span class="q-num">٥.</span> أيّ ممّا يلي متطلّبٌ غير وظيفيّ؟
+    <ul class="mcq-options">
+      <li><span class="opt-letter">أ)</span> يشغّل المضخّة حين تجفّ التربة</li>
+      <li><span class="opt-letter">ب)</span> تظهر القراءات على الهاتف خلال ثانيتين على الأكثر</li>
+      <li><span class="opt-letter">ج)</span> يرسل تنبيهًا إذا ارتفعت الحرارة</li>
+      <li><span class="opt-letter">د)</span> يسجّل كلّ قراءةٍ مع وقتها</li>
+    </ul></div>
+  <div class="mcq-item"><span class="q-num">٦.</span> لماذا نستعمل محاكيًا مثل Wokwi في المختبر؟
+    <ul class="mcq-options">
+      <li><span class="opt-letter">أ)</span> لأنّه أسرع من اللوحة الحقيقيّة دائمًا</li>
+      <li><span class="opt-letter">ب)</span> لأنّه لا يحتاج كتابة كود</li>
+      <li><span class="opt-letter">ج)</span> لأنّه يعمل على حاسبات المختبر مجّانًا، والكود نفسه يعمل لاحقًا على اللوحة الحقيقيّة</li>
+      <li><span class="opt-letter">د)</span> لأنّ قراءاته قياساتٌ حقيقيّة من البيئة</li>
+    </ul></div>
+  <div class="mcq-item"><span class="q-num">٧.</span> أيّ صياغةٍ لقصّة مستخدمٍ صحيحة؟
+    <ul class="mcq-options">
+      <li><span class="opt-letter">أ)</span> «بصفتي مزارعًا، أريد تنبيهًا حين تجفّ التربة، لكي لا يذبل الزرع»</li>
+      <li><span class="opt-letter">ب)</span> «النظام يستعمل Wi-Fi»</li>
+      <li><span class="opt-letter">ج)</span> «نحتاج Arduino وحسّاسين»</li>
+      <li><span class="opt-letter">د)</span> «التطبيق جميل وسريع»</li>
+    </ul></div>
+  <div class="mcq-item"><span class="q-num">٨.</span> في مهمّة المختبر، لماذا يختلف «حدّ الجفاف» من فريقٍ إلى آخر؟
+    <ul class="mcq-options">
+      <li><span class="opt-letter">أ)</span> لأنّ حاسبات المختبر مختلفة</li>
+      <li><span class="opt-letter">ب)</span> لأنّ المحاكي يطلب ذلك</li>
+      <li><span class="opt-letter">ج)</span> لأنّ التربة مختلفة في كلّ قاعة</li>
+      <li><span class="opt-letter">د)</span> ليكون لكلّ فريقٍ حلّه الخاصّ، فلا يُنسخ الحلّ</li>
+    </ul></div>
+
+  <p class="dt-cap">ثانيًا · صح أم خطأ</p>
+  <div class="tf-item"><span>١. الحسّاس يحوّل ظاهرةً فيزيائيّة إلى إشارةٍ كهربائيّة.</span> <span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+  <div class="tf-item"><span>٢. يجب أن يشتري كلّ طالبٍ لوحة Arduino لينجز مهمّة المختبر.</span> <span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+  <div class="tf-item"><span>٣. دالّة setup() تعمل مرّةً واحدة عند تشغيل اللوحة.</span> <span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+  <div class="tf-item"><span>٤. الكود الذي يعمل في Wokwi لا يعمل أبدًا على لوحةٍ حقيقيّة.</span> <span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+  <div class="tf-item"><span>٥. قراءات المحاكي يجب أن تُوصف بأنّها محاكاة لا قياساتٍ حقيقيّة.</span> <span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+  <div class="tf-item"><span>٦. المرحّل يسمح للمتحكّم بتشغيل جهازٍ يحتاج تيّارًا أكبر، مثل المضخّة.</span> <span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+  <div class="tf-item"><span>٧. المتطلّبات الوظيفيّة تصف جودة النظام، مثل السرعة والأمان.</span> <span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+  <div class="tf-item"><span>٨. مخطّط الكتل يرسم كلّ سلكٍ وكلّ مقاومةٍ في الدائرة.</span> <span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+
+  <p class="dt-cap">ثالثًا · أسئلة قصيرة</p>
+  <div class="mcq-item"><span class="q-num">١.</span> اذكر الطبقات الخمس لنظام إنترنت الأشياء، مع مثالٍ لكلّ طبقةٍ من المزرعة الذكيّة.
+    <span class="blank-line"></span><span class="blank-line"></span></div>
+  <div class="mcq-item"><span class="q-num">٢.</span> ما الفرق بين الإشارة الرقميّة والتماثليّة؟ أعطِ مثالًا لكلٍّ منهما.
+    <span class="blank-line"></span><span class="blank-line"></span></div>
+  <div class="mcq-item"><span class="q-num">٣.</span> اكتب قصّتَي مستخدمٍ لمشروع فريقك.
+    <span class="blank-line"></span><span class="blank-line"></span></div>
+  <div class="mcq-item"><span class="q-num">٤.</span> اشرح ما يفعله loop() في برنامج الريّ، خطوةً خطوة.
+    <span class="blank-line"></span><span class="blank-line"></span></div>
+
+  <p class="dt-cap">رابعًا · سيناريو</p>
+  <div class="mcq-item"><span class="q-num">●</span> <b>سيناريو:</b> عمادة الكلّيّة تريد نظامًا يبيّن للطلبة عدد الأماكن الفارغة في <b>موقف سيّارات الكلّيّة</b> (٢٠ مكانًا) قبل وصولهم. فريقكم مكلّف بالنموذج الأوّليّ، دون شراء أيّ قطعة في هذه المرحلة.
+  <br>أ) ما الحسّاسات والمشغّلات المناسبة، ولماذا؟ <br>ب) ارسم الطبقات الخمس لهذا النظام. <br>ج) اكتب ثلاثة متطلّباتٍ وظيفيّة واثنين غير وظيفيّين. <br>د) كيف تختبرون الفكرة في المحاكي قبل الشراء؟
+  <span class="blank-line"></span><span class="blank-line"></span><span class="blank-line"></span><span class="blank-line"></span></div>
+
+  <p class="mini-note">نهاية محاضرة الأسبوع الرابع · إعداد: د. أمير هادي ★</p>
   <div class="page-nav"><button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button><button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button></div>
   <div class="footer-note">٤</div>
 </div>
@@ -1126,6 +1421,40 @@ p{margin:.55em 0}
 
   <div class="sol-kind"><span>السيناريو: إجابة نموذجيّة</span><span class="sk-line"></span></div>
   <div class="sol-item"><p class="sol-why"><b>أ)</b> لا مصدر واضح ولا مستخدم ولا وظائف ولا قيود؛ و«ضيف كلّ شي» يدفع إلى نشر بيانات شخصيّة، وقد يخترع كلود معلومات.</p><p class="sol-why"><b>ب)</b> «أرفقتُ ملفّ Excel لمختبرات الكلّيّة. المستخدم: طالب على هاتفه. ابنِ صفحة HTML واحدة: دليل مختبرات. الوظائف: ١) بحث باسم المختبر أو الجهاز ٢) تصفية بالطابق ٣) «مفتوح الآن» بحسب الساعة ٤) بطاقة لكلّ مختبر. القيود: بالعربيّة، تعمل على الهاتف، ولا تكتب معلومة غير موجودة في الملفّ، ولا تعرض أرقام الهواتف. الشكل: هادئ، وفي الأسفل تاريخ تحديث البيانات.»</p><p class="sol-why"><b>ج)</b> أسماء المشرفين وأرقام هواتفهم الشخصيّة؛ لأنّها بيانات شخصيّة لا تُنشر للعامّة دون إذن. يمكن وضع هاتف المكتب الرسميّ بدلها.</p><p class="sol-why"><b>د)</b> تحسين: «كبّر الخطّ إلى ١٨ على الهاتف»، «أضِف تصفية بالطابق». فحص: مقارنة ٣ مختبرات بالملفّ الأصليّ، وفتح الصفحة على الهاتف والتأكّد من غياب الهواتف الشخصيّة.</p></div>
+
+  <div class="sol-week"><span class="sw-n">٤</span><span class="sw-t">حلول الأسبوع الرابع — نظام إنترنت الأشياء لمشروعكم</span></div>
+  <div class="sol-kind"><span>الاختيار من متعدد</span><span class="sk-line"></span></div>
+  <div class="sol-item"><p class="sol-q"><span class="sq-n">١.</span> أيّ ترتيبٍ صحيح لطبقات نظام إنترنت الأشياء؟</p><div class="sol-opts"><div class="sol-opt bad"><span class="so-k">أ)</span><span>التطبيق ← السحابة ← الحسّاس ← المتحكّم ← الاتصال</span></div><div class="sol-opt ok"><span class="so-k">ب)</span><span>الحسّاس ← المتحكّم ← الاتصال ← السحابة ← التطبيق</span></div><div class="sol-opt bad"><span class="so-k">ج)</span><span>المتحكّم ← التطبيق ← الحسّاس ← الاتصال ← السحابة</span></div><div class="sol-opt bad"><span class="so-k">د)</span><span>السحابة ← الحسّاس ← التطبيق ← الاتصال ← المتحكّم</span></div></div><p class="sol-why"><b>التعليل:</b> البيانات تبدأ من الحسّاس الذي يقيس، ثمّ يقرّر المتحكّم، ثمّ تنتقل عبر الاتصال إلى السحابة، ثمّ تظهر في التطبيق. بقيّة الترتيبات تضع القرار أو العرض قبل وجود القراءة.</p></div>
+  <div class="sol-item"><p class="sol-q"><span class="sq-n">٢.</span> حسّاس رطوبة التربة يعطي على Arduino Uno قيمًا من ٠ إلى ١٠٢٣. هذه إشارة:</p><div class="sol-opts"><div class="sol-opt bad"><span class="so-k">أ)</span><span>رقميّة لها قيمتان فقط</span></div><div class="sol-opt bad"><span class="so-k">ب)</span><span>صوتيّة</span></div><div class="sol-opt ok"><span class="so-k">ج)</span><span>تماثليّة يحوّلها المحوّل التماثليّ الرقميّ إلى رقم</span></div><div class="sol-opt bad"><span class="so-k">د)</span><span>لاسلكيّة لا تحتاج سلكًا</span></div></div><p class="sol-why"><b>التعليل:</b> القيمة متّصلة بين حدّين، والـ ADC في Uno يحوّلها إلى رقم من ٠ إلى ١٠٢٣. الرقميّة قيمتان فقط، و«صوتيّة» و«لاسلكيّة» لا تصفان نوع الإشارة.</p></div>
+  <div class="sol-item"><p class="sol-q"><span class="sq-n">٣.</span> أيّ ممّا يلي مشغّل لا حسّاس؟</p><div class="sol-opts"><div class="sol-opt ok"><span class="so-k">أ)</span><span>مضخّة ماءٍ عبر مرحّل</span></div><div class="sol-opt bad"><span class="so-k">ب)</span><span>DHT22</span></div><div class="sol-opt bad"><span class="so-k">ج)</span><span>مقاومة ضوئيّة LDR</span></div><div class="sol-opt bad"><span class="so-k">د)</span><span>حسّاس حركة PIR</span></div></div><p class="sol-why"><b>التعليل:</b> المضخّة تنفّذ فعلًا بأمرٍ من المتحكّم. الثلاثة الأخرى تقيس شيئًا من البيئة فهي حسّاسات.</p></div>
+  <div class="sol-item"><p class="sol-q"><span class="sq-n">٤.</span> في برنامج Arduino، ما الجزء الذي يتكرّر بلا توقّف؟</p><div class="sol-opts"><div class="sol-opt bad"><span class="so-k">أ)</span><span>setup()</span></div><div class="sol-opt bad"><span class="so-k">ب)</span><span>pinMode()</span></div><div class="sol-opt bad"><span class="so-k">ج)</span><span>Serial.begin()</span></div><div class="sol-opt ok"><span class="so-k">د)</span><span>loop()</span></div></div><p class="sol-why"><b>التعليل:</b> loop() تتكرّر ما دامت اللوحة تعمل. setup() تعمل مرّة واحدة، وفيها نكتب pinMode و Serial.begin.</p></div>
+  <div class="sol-item"><p class="sol-q"><span class="sq-n">٥.</span> أيّ ممّا يلي متطلّبٌ غير وظيفيّ؟</p><div class="sol-opts"><div class="sol-opt bad"><span class="so-k">أ)</span><span>يشغّل المضخّة حين تجفّ التربة</span></div><div class="sol-opt ok"><span class="so-k">ب)</span><span>تظهر القراءات على الهاتف خلال ثانيتين على الأكثر</span></div><div class="sol-opt bad"><span class="so-k">ج)</span><span>يرسل تنبيهًا إذا ارتفعت الحرارة</span></div><div class="sol-opt bad"><span class="so-k">د)</span><span>يسجّل كلّ قراءةٍ مع وقتها</span></div></div><p class="sol-why"><b>التعليل:</b> السرعة صفةٌ لجودة النظام، فهي غير وظيفيّة. الخيارات الأخرى أفعالٌ يقوم بها النظام، فهي وظيفيّة.</p></div>
+  <div class="sol-item"><p class="sol-q"><span class="sq-n">٦.</span> لماذا نستعمل محاكيًا مثل Wokwi في المختبر؟</p><div class="sol-opts"><div class="sol-opt bad"><span class="so-k">أ)</span><span>لأنّه أسرع من اللوحة الحقيقيّة دائمًا</span></div><div class="sol-opt bad"><span class="so-k">ب)</span><span>لأنّه لا يحتاج كتابة كود</span></div><div class="sol-opt ok"><span class="so-k">ج)</span><span>لأنّه يعمل على حاسبات المختبر مجّانًا، والكود نفسه يعمل لاحقًا على اللوحة الحقيقيّة</span></div><div class="sol-opt bad"><span class="so-k">د)</span><span>لأنّ قراءاته قياساتٌ حقيقيّة من البيئة</span></div></div><p class="sol-why"><b>التعليل:</b> المحاكي يلغي الحاجة إلى الشراء ويحمي من تلف القطع، والكود ينتقل إلى اللوحة كما هو. لكنّه يحتاج كودًا، وقراءاته محاكاة لا قياس.</p></div>
+  <div class="sol-item"><p class="sol-q"><span class="sq-n">٧.</span> أيّ صياغةٍ لقصّة مستخدمٍ صحيحة؟</p><div class="sol-opts"><div class="sol-opt ok"><span class="so-k">أ)</span><span>«بصفتي مزارعًا، أريد تنبيهًا حين تجفّ التربة، لكي لا يذبل الزرع»</span></div><div class="sol-opt bad"><span class="so-k">ب)</span><span>«النظام يستعمل Wi-Fi»</span></div><div class="sol-opt bad"><span class="so-k">ج)</span><span>«نحتاج Arduino وحسّاسين»</span></div><div class="sol-opt bad"><span class="so-k">د)</span><span>«التطبيق جميل وسريع»</span></div></div><p class="sol-why"><b>التعليل:</b> القصّة تذكر المستخدم وما يريد ولماذا. الخيارات الأخرى قرارات تقنيّة أو صفات عامّة بلا مستخدم.</p></div>
+  <div class="sol-item"><p class="sol-q"><span class="sq-n">٨.</span> في مهمّة المختبر، لماذا يختلف «حدّ الجفاف» من فريقٍ إلى آخر؟</p><div class="sol-opts"><div class="sol-opt bad"><span class="so-k">أ)</span><span>لأنّ حاسبات المختبر مختلفة</span></div><div class="sol-opt bad"><span class="so-k">ب)</span><span>لأنّ المحاكي يطلب ذلك</span></div><div class="sol-opt bad"><span class="so-k">ج)</span><span>لأنّ التربة مختلفة في كلّ قاعة</span></div><div class="sol-opt ok"><span class="so-k">د)</span><span>ليكون لكلّ فريقٍ حلّه الخاصّ، فلا يُنسخ الحلّ</span></div></div><p class="sol-why"><b>التعليل:</b> الحدّ مرتبطٌ برقم الفريق، فيظهر في الكود والدائرة وجدول القراءات، ويكشف النسخ. الحاسبات والمحاكي والتربة لا علاقة لها بذلك.</p></div>
+
+  <div class="sol-kind"><span>صح أم خطأ</span><span class="sk-line"></span></div>
+  <div class="sol-item"><div class="sol-tf-line"><span class="sol-badge t">صح</span><p class="sol-q"><span class="sq-n">١.</span> الحسّاس يحوّل ظاهرةً فيزيائيّة إلى إشارةٍ كهربائيّة.</p></div><p class="sol-why">هذا تعريف الحسّاس: الرطوبة أو الحرارة أو الضوء تصير جهدًا يقرؤه المتحكّم.</p></div>
+  <div class="sol-item"><div class="sol-tf-line"><span class="sol-badge f">خطأ</span><p class="sol-q"><span class="sq-n">٢.</span> يجب أن يشتري كلّ طالبٍ لوحة Arduino لينجز مهمّة المختبر.</p></div><p class="sol-why">المهمّة تُنجز في المحاكي على حاسبات المختبر، بلا شراء.</p></div>
+  <div class="sol-item"><div class="sol-tf-line"><span class="sol-badge t">صح</span><p class="sol-q"><span class="sq-n">٣.</span> دالّة setup() تعمل مرّةً واحدة عند تشغيل اللوحة.</p></div><p class="sol-why">فيها الإعدادات الأولى، ثمّ تبدأ loop() بالتكرار.</p></div>
+  <div class="sol-item"><div class="sol-tf-line"><span class="sol-badge f">خطأ</span><p class="sol-q"><span class="sq-n">٤.</span> الكود الذي يعمل في Wokwi لا يعمل أبدًا على لوحةٍ حقيقيّة.</p></div><p class="sol-why">هو كود Arduino نفسه، يُرفع إلى اللوحة الحقيقيّة كما هو.</p></div>
+  <div class="sol-item"><div class="sol-tf-line"><span class="sol-badge t">صح</span><p class="sol-q"><span class="sq-n">٥.</span> قراءات المحاكي يجب أن تُوصف بأنّها محاكاة لا قياساتٍ حقيقيّة.</p></div><p class="sol-why">الأمانة العلميّة: المحاكي يولّد القيم ولا يقيس البيئة.</p></div>
+  <div class="sol-item"><div class="sol-tf-line"><span class="sol-badge t">صح</span><p class="sol-q"><span class="sq-n">٦.</span> المرحّل يسمح للمتحكّم بتشغيل جهازٍ يحتاج تيّارًا أكبر، مثل المضخّة.</p></div><p class="sol-why">منفذ Arduino لا يحتمل تيّار المضخّة، فيشغّل المرحّلَ والمرحّلُ يشغّل المضخّة.</p></div>
+  <div class="sol-item"><div class="sol-tf-line"><span class="sol-badge f">خطأ</span><p class="sol-q"><span class="sq-n">٧.</span> المتطلّبات الوظيفيّة تصف جودة النظام، مثل السرعة والأمان.</p></div><p class="sol-why">هذه غير وظيفيّة. الوظيفيّة تصف ما يفعله النظام.</p></div>
+  <div class="sol-item"><div class="sol-tf-line"><span class="sol-badge f">خطأ</span><p class="sol-q"><span class="sq-n">٨.</span> مخطّط الكتل يرسم كلّ سلكٍ وكلّ مقاومةٍ في الدائرة.</p></div><p class="sol-why">مخطّط الكتل يبيّن الأجزاء الكبرى والعلاقات؛ الأسلاك في مخطّط الدائرة.</p></div>
+
+  <div class="sol-kind"><span>الأسئلة القصيرة</span><span class="sk-line"></span></div>
+  <div class="sol-item"><p class="sol-q"><span class="sq-n">١.</span> اذكر الطبقات الخمس لنظام إنترنت الأشياء، مع مثالٍ لكلّ طبقةٍ من المزرعة الذكيّة.</p>
+    <ul class="sol-grading"><li>الحسّاس: رطوبة التربة (درجة).</li><li>المتحكّم: Arduino يقارن بالحدّ (درجة).</li><li>الاتصال: Wi-Fi (درجة).</li><li>السحابة: تخزين القراءات والتنبيه (درجة).</li><li>التطبيق: لوحة على هاتف المزارع (درجة).</li></ul></div>
+  <div class="sol-item"><p class="sol-q"><span class="sq-n">٢.</span> ما الفرق بين الإشارة الرقميّة والتماثليّة؟ أعطِ مثالًا لكلٍّ منهما.</p>
+    <ul class="sol-grading"><li>الرقميّة قيمتان فقط، والتماثليّة أيّ قيمةٍ بين حدّين (درجتان).</li><li>مثالٌ رقميّ صحيح، مثل PIR (درجة).</li><li>مثالٌ تماثليّ صحيح، مثل رطوبة التربة أو LDR (درجة).</li></ul></div>
+  <div class="sol-item"><p class="sol-q"><span class="sq-n">٣.</span> اكتب قصّتَي مستخدمٍ لمشروع فريقك.</p>
+    <ul class="sol-grading"><li>كلّ قصّةٍ فيها «بصفتي… أريد… لكي…» (درجة لكلّ قصّة).</li><li>المستخدم حقيقيّ ومحدّد، لا «النظام» (درجة).</li><li>الغاية «لكي…» واضحة وقابلة للفحص (درجة).</li></ul></div>
+  <div class="sol-item"><p class="sol-q"><span class="sq-n">٤.</span> اشرح ما يفعله loop() في برنامج الريّ، خطوةً خطوة.</p>
+    <ul class="sol-grading"><li>يقرأ الحسّاس بـ analogRead (درجة).</li><li>يقارن القيمة بالحدّ LIMIT (درجة).</li><li>يشغّل المضخّة أو يطفئها بـ digitalWrite (درجة).</li><li>ينتظر ثانيةً ثمّ يعيد (درجة).</li></ul></div>
+
+  <div class="sol-kind"><span>السيناريو: إجابة نموذجيّة</span><span class="sk-line"></span></div>
+  <div class="sol-item"><p class="sol-why"><b>أ)</b> حسّاس HC-SR04 فوق كلّ مكانٍ يقيس المسافة (سيّارة أم فراغ)، أو PIR عند المدخل للعدّ. المشغّل: مصباح أخضر/أحمر فوق كلّ مكان، أو شاشة عند البوّابة.</p><p class="sol-why"><b>ب)</b> الحسّاسات ← Arduino/ESP32 يحسب الفارغ ← Wi-Fi ← منصّة سحابيّة ← صفحة على هاتف الطالب.</p><p class="sol-why"><b>ج)</b> وظيفيّة: يعدّ الأماكن الفارغة، ويعرضها على الهاتف، ويضيء المصباح المناسب. غير وظيفيّة: يتحدّث العدد خلال ٥ ثوانٍ، ويُقرأ على الهاتف دون تكبير.</p><p class="sol-why"><b>د)</b> في Wokwi: حسّاسا HC-SR04 ومصباحان، وتغيير المسافة يدويًّا لمحاكاة دخول سيّارة وخروجها، مع وصف القراءات بأنّها محاكاة.</p></div>
 
   <div class="page-nav"><button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button><button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button></div>
 </div>
