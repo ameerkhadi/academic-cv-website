@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>محاكاة ثلاثية الأبعاد</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@500;700&display=swap">
+<style>
+:root{--bg:#f6f3ec;--fg:#1d2430}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0f1218;--fg:#eef1f6;color-scheme:dark}}
+:root[data-theme=dark]{--bg:#0f1218;--fg:#eef1f6;color-scheme:dark}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:"Noto Naskh Arabic",Tahoma,sans-serif}
+main{max-width:1280px;margin:0 auto;padding-block:18px 40px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1{font-size:clamp(22px,4vw,32px);margin:0 0 4px;text-wrap:balance}
+.sub{margin:0 0 16px;opacity:.75}
+.foot{margin-top:18px;font-size:13px;opacity:.6}
+.back{display:inline-block;margin-bottom:10px;font-weight:700;text-decoration:none;color:var(--fg);border:1.5px solid currentColor;border-radius:999px;padding:5px 14px;opacity:.85}
+</style></head><body><main>
+<a class="back" id="back" hidden></a>
+<h1 id="ttl"></h1><p class="sub" id="sub"></p>
+<div id="sim3d"></div>
+<p class="foot">إعداد: د. أمير هادي ★</p>
+</main>
+<script src="vendor/three.min.js"></script>
+<script src="sim3d.js"></script>
+<script src="sim.js"></script>
+<script>
+document.getElementById('ttl').textContent = SIM.title; document.title = SIM.title;
+document.getElementById('sub').textContent = SIM.sub || 'فريقان يتناوبان على القرار، والمشهد يتغيّر مع كلّ جواب.';
+if (SIM.back) { const b = document.getElementById('back'); b.href = SIM.back.href; b.textContent = SIM.back.label; b.hidden = false; }
+Sim3D.mount(document.getElementById('sim3d'), SIM);
+</script>
+</body></html>
