@@ -3056,6 +3056,16 @@ html[data-lang="ku"] .cs .lang-ku{display:block} html[data-lang="ku"] .cs .lang-
   var FALLBACK = 'https://docs.google.com/forms/d/e/1FAIpQLSdrvpH2bN4GydFVkRDdCYzNT2H_Xz71FsEV8ThKBB6U15AGpg/viewform';
   var ENTRIES = {evA1:'entry.687704945', evA2:'entry.139788920', evA3:'entry.807646595'};
   var KEY = 'cloudsec:eval:done', LATER = 'cloudsec:eval:later';
+  // يختفي التقييم تلقائيًا عند هذا الموعد (توقيت بغداد): الأحد 8 تشرين الثاني 2026، الساعة 00:00
+  var END = Date.parse('2026-11-08T00:00:00+03:00');
+  if (Date.now() >= END) {
+    ['evBanner','evFab','evOv'].forEach(function(id){ var e=document.getElementById(id); if(e) e.remove(); });
+    window.evOpen = window.evClose = window.evLater = window.evAlready = window.evSubmit = function(){};
+    return;
+  }
+  // عدّاد الزوار: فتح النموذج / إرسال / «قيّمتُ سابقًا» (بلا بيانات شخصية)
+  function ping(k){ var n='0'; try{ if(!localStorage.getItem('v_'+k)){ localStorage.setItem('v_'+k,'1'); n='1'; } }catch(e){}
+    new Image().src='https://ameer.itbabylon.org/sensors-api/hit?p='+k+'&n='+n+'&t='+Date.now(); }
   function get(k,s){try{return (s?sessionStorage:localStorage).getItem(k)}catch(e){return null}}
   function set(k,v,s){try{(s?sessionStorage:localStorage).setItem(k,v)}catch(e){}}
 
@@ -3114,10 +3124,10 @@ html[data-lang="ku"] .cs .lang-ku{display:block} html[data-lang="ku"] .cs .lang-
     });
   });
 
-  window.evOpen=function(){document.getElementById('evOv').classList.add('open');};
+  window.evOpen=function(){document.getElementById('evOv').classList.add('open'); ping('ev-cs-open');};
   window.evClose=function(){document.getElementById('evOv').classList.remove('open');};
   window.evLater=function(){set(LATER,'1',true);evClose();};
-  window.evAlready=function(){set(KEY,'1');markDone();evClose();};
+  window.evAlready=function(){set(KEY,'1');markDone();evClose(); ping('ev-cs-did');};
 
   window.evSubmit=function(){
     var err=document.getElementById('evErr'), btn=document.getElementById('evSend');
@@ -3130,7 +3140,7 @@ html[data-lang="ku"] .cs .lang-ku{display:block} html[data-lang="ku"] .cs .lang-
     if(miss){err.textContent=tr('need');err.style.display='block';return;}
     err.style.display='none'; btn.disabled=true; btn.textContent=tr('sending');
     fetch(ACTION,{method:'POST',mode:'no-cors',body:body}).then(function(){
-      set(KEY,'1'); markDone();
+      set(KEY,'1'); markDone(); ping('ev-cs-sent');
       document.getElementById('evForm').hidden=true;
       document.getElementById('evThanks').hidden=false;
     }).catch(function(){
