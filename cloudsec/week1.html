@@ -2950,11 +2950,11 @@ html[data-lang="ku"] .cs .lang-ku{display:block} html[data-lang="ku"] .cs .lang-
     z-index:9999;padding:16px}
   .ev-ov.open{display:flex}
   .ev-box{background:#fff;border-radius:18px;max-width:560px;width:100%;max-height:92vh;overflow:auto;
-    box-shadow:0 20px 50px rgba(0,0,0,.3);font-family:'Noto Naskh Arabic',serif;direction:rtl;color:#1d2b3a}
+    box-shadow:0 20px 50px rgba(0,0,0,.3);font-family:'Noto Naskh Arabic',serif;color:#1d2b3a}
   .ev-head{background:linear-gradient(135deg,#1857a4,#0f7a72);color:#fff;padding:18px 20px;border-radius:18px 18px 0 0;position:relative}
   .ev-head h3{margin:0;font-size:21px}
   .ev-head p{margin:4px 0 0;font-size:14.5px;opacity:.92}
-  .ev-x{position:absolute;left:12px;top:10px;background:none;border:0;color:#fff;font-size:26px;cursor:pointer}
+  .ev-x{position:absolute;inset-inline-end:12px;top:10px;background:none;border:0;color:#fff;font-size:26px;cursor:pointer}
   .ev-body{padding:16px 20px 20px}
   .ev-q{margin-bottom:14px}
   .ev-q label{display:block;font-weight:700;font-size:16px;margin-bottom:6px}
@@ -2971,6 +2971,10 @@ html[data-lang="ku"] .cs .lang-ku{display:block} html[data-lang="ku"] .cs .lang-
   .ev-send:disabled{opacity:.6;cursor:wait}
   .ev-err{color:#d1342b;font-size:14px;margin:8px 0 0;display:none}
   .ev-later{display:block;margin:10px auto 0;background:none;border:0;color:#5a6b7d;font:14px 'Noto Naskh Arabic',serif;cursor:pointer;text-decoration:underline}
+  .ev-did{border:1.5px solid rgba(255,255,255,.7);background:transparent;color:#fff;cursor:pointer;border-radius:999px;padding:8px 16px;font:14px 'Noto Naskh Arabic',serif}
+  .ev-banner.ev-done .ev-did{display:none}
+  .ev-ign{margin:8px 0 0!important;font-size:13.5px!important;background:rgba(255,255,255,.16);border-radius:8px;padding:5px 9px}
+  .ev-row2{display:flex;justify-content:center;gap:18px}
   .ev-thanks{text-align:center;padding:26px 20px}
   .ev-thanks .big{font-size:46px}
   .ev-thanks h3{margin:8px 0 4px;color:#1f7a3d}
@@ -2983,63 +2987,65 @@ html[data-lang="ku"] .cs .lang-ku{display:block} html[data-lang="ku"] .cs .lang-
   @media (max-width:560px){.ev-banner{margin:10px 8px}.ev-banner b{font-size:17px}}
 </style>
 
-<div class="ev-banner" id="evBanner" dir="rtl">
+<div class="ev-banner" id="evBanner">
   <div class="ev-ic">📝</div>
   <div class="ev-tx">
-    <b id="evBTitle">رأيك يهمّني: قيّم محاضرات أمن السحابة</b>
-    <span id="evBSub">ثلاثة أسئلة فقط، ودقيقة واحدة، وبدون تسجيل دخول. صراحتك تساعدني أحسّن المحاضرات القادمة.</span>
+    <b id="evBTitle" data-i18n="bt"></b>
+    <span id="evBSub" data-i18n="bs"></span>
   </div>
-  <button class="ev-btn" type="button" onclick="evOpen()">قيّم الآن ←</button>
+  <button class="ev-btn" type="button" onclick="evOpen()" data-i18n="bn"></button>
+  <button class="ev-did" type="button" onclick="evAlready()" data-i18n="did"></button>
 </div>
 
-<button class="ev-fab" id="evFab" type="button" onclick="evOpen()" hidden>📝 قيّم المحاضرات</button>
+<button class="ev-fab" id="evFab" type="button" onclick="evOpen()" hidden data-i18n="fab"></button>
 
 <div class="ev-ov" id="evOv" onclick="if(event.target===this)evClose()">
   <div class="ev-box" role="dialog" aria-modal="true" aria-labelledby="evT">
     <div id="evForm">
       <div class="ev-head">
-        <button class="ev-x" type="button" onclick="evClose()" aria-label="إغلاق">×</button>
-        <h3 id="evT">📝 تقييم محاضرات أمن السحابة</h3>
-        <p>اكتب بصراحة، فالتقييم يصلني دون اسمك.</p>
+        <button class="ev-x" type="button" onclick="evClose()" aria-label="Close">×</button>
+        <h3 id="evT" data-i18n="mt"></h3>
+        <p data-i18n="ms"></p>
+        <p class="ev-ign" data-i18n="ign"></p>
       </div>
       <div class="ev-body">
         <div class="ev-q">
-          <label>1. كيف تجد محاضرات أمن السحابة؟ <i>*</i></label>
+          <label><span data-i18n="q1"></span> <i>*</i></label>
           <div class="ev-chips" data-for="evA1">
-            <button type="button" class="ev-chip">ممتازة 🌟</button>
-            <button type="button" class="ev-chip">جيدة جدًا 👍</button>
-            <button type="button" class="ev-chip">جيدة</button>
-            <button type="button" class="ev-chip">متوسطة</button>
-            <button type="button" class="ev-chip">صعبة الفهم</button>
+            <button type="button" class="ev-chip" data-i18n="c11"></button>
+            <button type="button" class="ev-chip" data-i18n="c12"></button>
+            <button type="button" class="ev-chip" data-i18n="c13"></button>
+            <button type="button" class="ev-chip" data-i18n="c14"></button>
+            <button type="button" class="ev-chip" data-i18n="c15"></button>
           </div>
-          <textarea id="evA1" placeholder="اختر من فوق أو اكتب رأيك بكلماتك…"></textarea>
+          <textarea id="evA1" data-i18n-ph="p1"></textarea>
         </div>
         <div class="ev-q">
-          <label>2. ما أكثر شيء أعجبك تحديدًا؟ <i>*</i></label>
+          <label><span data-i18n="q2"></span> <i>*</i></label>
           <div class="ev-chips" data-for="evA2" data-multi="1">
-            <button type="button" class="ev-chip">محاكاة ليلة الاختراق</button>
-            <button type="button" class="ev-chip">فيديو الشرح</button>
-            <button type="button" class="ev-chip">الأمثلة الواقعية</button>
-            <button type="button" class="ev-chip">جدول المصطلحات</button>
-            <button type="button" class="ev-chip">الأسئلة والحلول</button>
+            <button type="button" class="ev-chip" data-i18n="c21"></button>
+            <button type="button" class="ev-chip" data-i18n="c22"></button>
+            <button type="button" class="ev-chip" data-i18n="c23"></button>
+            <button type="button" class="ev-chip" data-i18n="c24"></button>
+            <button type="button" class="ev-chip" data-i18n="c25"></button>
           </div>
-          <textarea id="evA2" placeholder="مثلًا: شرح الـ IAM بالأمثلة…"></textarea>
+          <textarea id="evA2" data-i18n-ph="p2"></textarea>
         </div>
         <div class="ev-q">
-          <label>3. ماذا تريد أن يُضاف أو يُحسَّن؟ <i>*</i></label>
-          <textarea id="evA3" placeholder="أي اقتراح، حتى لو صغير…"></textarea>
+          <label><span data-i18n="q3"></span> <i>*</i></label>
+          <textarea id="evA3" data-i18n-ph="p3"></textarea>
         </div>
-        <p class="ev-note">الأسئلة الثلاثة مطلوبة. يمكنك الضغط على الاقتراحات أو الكتابة مباشرة.</p>
-        <button class="ev-send" id="evSend" type="button" onclick="evSubmit()">إرسال التقييم ✓</button>
+        <p class="ev-note" data-i18n="note"></p>
+        <button class="ev-send" id="evSend" type="button" onclick="evSubmit()" data-i18n="send"></button>
         <p class="ev-err" id="evErr"></p>
-        <button class="ev-later" type="button" onclick="evLater()">لاحقًا</button>
+        <div class="ev-row2"><button class="ev-later" type="button" onclick="evAlready()" data-i18n="did2"></button><button class="ev-later" type="button" onclick="evLater()" data-i18n="later"></button></div>
       </div>
     </div>
     <div id="evThanks" class="ev-thanks" hidden>
       <div class="big">🙏</div>
-      <h3>شكرًا لك، وصل تقييمك</h3>
-      <p>سأقرأ كل الملاحظات وأستعملها في المحاضرات القادمة.</p>
-      <button class="ev-send" type="button" onclick="evClose()" style="max-width:220px">إغلاق</button>
+      <h3 data-i18n="th"></h3>
+      <p data-i18n="ts"></p>
+      <button class="ev-send" type="button" onclick="evClose()" style="max-width:220px" data-i18n="close"></button>
     </div>
   </div>
 </div>
@@ -3052,15 +3058,47 @@ html[data-lang="ku"] .cs .lang-ku{display:block} html[data-lang="ku"] .cs .lang-
   var KEY = 'cloudsec:eval:done', LATER = 'cloudsec:eval:later';
   function get(k,s){try{return (s?sessionStorage:localStorage).getItem(k)}catch(e){return null}}
   function set(k,v,s){try{(s?sessionStorage:localStorage).setItem(k,v)}catch(e){}}
+
+  var T={
+   ar:{bt:'رأيك يهمّني: قيّم محاضرات أمن السحابة',bs:'ثلاثة أسئلة فقط، ودقيقة واحدة، وبدون تسجيل دخول. إذا قيّمت سابقًا فتجاهل هذا التنبيه.',bn:'قيّم الآن ←',did:'قيّمتُ سابقًا ✓',fab:'📝 قيّم المحاضرات',
+       mt:'📝 تقييم محاضرات أمن السحابة',ms:'اكتب بصراحة، فالتقييم يصلني دون اسمك.',ign:'إذا ملأت التقييم من قبل، اضغط «قيّمتُ سابقًا» وتجاهل هذه الرسالة.',
+       q1:'1. كيف تجد محاضرات أمن السحابة؟',q2:'2. ما أكثر شيء أعجبك تحديدًا؟',q3:'3. ماذا تريد أن يُضاف أو يُحسَّن؟',
+       p1:'اختر من فوق أو اكتب رأيك بكلماتك…',p2:'مثلًا: شرح الـ IAM بالأمثلة…',p3:'أي اقتراح، حتى لو صغير…',
+       note:'الأسئلة الثلاثة مطلوبة. يمكنك الضغط على الاقتراحات أو الكتابة مباشرة.',send:'إرسال التقييم ✓',did2:'قيّمتُ سابقًا',later:'لاحقًا',
+       th:'شكرًا لك، وصل تقييمك',ts:'سأقرأ كل الملاحظات وأستعملها في المحاضرات القادمة.',close:'إغلاق',
+       c11:'ممتازة 🌟',c12:'جيدة جدًا 👍',c13:'جيدة',c14:'متوسطة',c15:'صعبة الفهم',c21:'محاكاة ليلة الاختراق',c22:'فيديو الشرح',c23:'الأمثلة الواقعية',c24:'جدول المصطلحات',c25:'الأسئلة والحلول',
+       doneT:'✓ شكرًا، قيّمت المحاضرات',doneS:'وصل رأيك. إذا عندك ملاحظة جديدة لاحقًا، أخبرني في المحاضرة.',
+       need:'رجاءً أجب على الأسئلة الثلاثة.',sending:'جارٍ الإرسال…',fail:'تعذّر الإرسال (تحقق من الإنترنت). أو <a href="'+FALLBACK+'" target="_blank" rel="noopener">افتح النموذج من هنا</a>.'},
+   en:{bt:'Your opinion matters: rate the Cloud Security lectures',bs:'Only three questions, one minute, no sign-in. If you have already filled it in, just ignore this.',bn:'Rate now →',did:'Already did it ✓',fab:'📝 Rate the lectures',
+       mt:'📝 Rate the Cloud Security lectures',ms:'Be honest. Your answers reach me without your name.',ign:'If you have already filled it in, press “Already did it” and ignore this message.',
+       q1:'1. How do you find the Cloud Security lectures?',q2:'2. What did you like most, exactly?',q3:'3. What should be added or improved?',
+       p1:'Pick one above or write in your own words…',p2:'e.g. explaining IAM with examples…',p3:'Any suggestion, even a small one…',
+       note:'All three questions are required. Tap a suggestion or type directly.',send:'Send ✓',did2:'Already did it',later:'Later',
+       th:'Thank you, your feedback was received',ts:'I will read every note and use it in the next lectures.',close:'Close',
+       c11:'Excellent 🌟',c12:'Very good 👍',c13:'Good',c14:'Average',c15:'Hard to follow',c21:'Breach Night simulation',c22:'The video',c23:'Real-world examples',c24:'Terms table',c25:'Questions & solutions',
+       doneT:'✓ Thank you for rating the lectures',doneS:'Your feedback was received. If you have a new note later, tell me in class.',
+       need:'Please answer all three questions.',sending:'Sending…',fail:'Could not send (check your internet). Or <a href="'+FALLBACK+'" target="_blank" rel="noopener">open the form here</a>.'}
+  };
+  function L(){return document.documentElement.dataset.lang==='en'?'en':'ar';}
+  function tr(k){return T[L()][k];}
+  function apply(){
+    var l=L(), dir=l==='en'?'ltr':'rtl';
+    ['evBanner','evOv','evFab'].forEach(function(id){var e=document.getElementById(id); if(e) e.setAttribute('dir',dir);});
+    document.querySelectorAll('[data-i18n]').forEach(function(e){ e.textContent=T[l][e.dataset.i18n]; });
+    document.querySelectorAll('[data-i18n-ph]').forEach(function(e){ e.placeholder=T[l][e.dataset.i18nPh]; });
+    if(get(KEY)==='1') markDone();
+  }
   var done = get(KEY)==='1';
 
   function markDone(){
     var b=document.getElementById('evBanner');
     b.classList.add('ev-done');
-    document.getElementById('evBTitle').textContent='✓ شكرًا، قيّمت المحاضرات';
-    document.getElementById('evBSub').textContent='وصل رأيك. إذا عندك ملاحظة جديدة لاحقًا، أخبرني في المحاضرة.';
+    document.getElementById('evBTitle').textContent=tr('doneT');
+    document.getElementById('evBSub').textContent=tr('doneS');
     document.getElementById('evFab').hidden=true;
   }
+  apply();
+  new MutationObserver(apply).observe(document.documentElement,{attributes:true,attributeFilter:['data-lang']});
   if(done) markDone(); else document.getElementById('evFab').hidden=false;
 
   document.querySelectorAll('.ev-chips').forEach(function(g){
@@ -3079,6 +3117,7 @@ html[data-lang="ku"] .cs .lang-ku{display:block} html[data-lang="ku"] .cs .lang-
   window.evOpen=function(){document.getElementById('evOv').classList.add('open');};
   window.evClose=function(){document.getElementById('evOv').classList.remove('open');};
   window.evLater=function(){set(LATER,'1',true);evClose();};
+  window.evAlready=function(){set(KEY,'1');markDone();evClose();};
 
   window.evSubmit=function(){
     var err=document.getElementById('evErr'), btn=document.getElementById('evSend');
@@ -3088,15 +3127,15 @@ html[data-lang="ku"] .cs .lang-ku{display:block} html[data-lang="ku"] .cs .lang-
       if(!v) miss=true;
       body.append(ENTRIES[id], v);
     });
-    if(miss){err.textContent='رجاءً أجب على الأسئلة الثلاثة.';err.style.display='block';return;}
-    err.style.display='none'; btn.disabled=true; btn.textContent='جارٍ الإرسال…';
+    if(miss){err.textContent=tr('need');err.style.display='block';return;}
+    err.style.display='none'; btn.disabled=true; btn.textContent=tr('sending');
     fetch(ACTION,{method:'POST',mode:'no-cors',body:body}).then(function(){
       set(KEY,'1'); markDone();
       document.getElementById('evForm').hidden=true;
       document.getElementById('evThanks').hidden=false;
     }).catch(function(){
-      btn.disabled=false; btn.textContent='إرسال التقييم ✓';
-      err.innerHTML='تعذّر الإرسال (تحقق من الإنترنت). أو <a href="'+FALLBACK+'" target="_blank" rel="noopener">افتح النموذج من هنا</a>.';
+      btn.disabled=false; btn.textContent=tr('send');
+      err.innerHTML=tr('fail');
       err.style.display='block';
     });
   };
