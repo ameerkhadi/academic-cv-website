@@ -8480,6 +8480,17 @@ game('g6',[
 ],a=>a);
 
 </script>
+<script>/* careers tab counter: counts once per visit when the Careers tab is opened; no personal data */
+(function(){
+  var K='nb-cloudsec-jobs', sent=false;
+  function ping(){ if(sent) return; try{ if(sessionStorage.getItem('c_'+K)) { sent=true; return; } sessionStorage.setItem('c_'+K,'1'); }catch(e){}
+    sent=true; var n='0'; try{ if(!localStorage.getItem('v_'+K)){ localStorage.setItem('v_'+K,'1'); n='1'; } }catch(e){}
+    new Image().src='https://ameer.itbabylon.org/sensors-api/hit?p='+K+'&n='+n+'&t='+Date.now(); }
+  function check(){ var s=document.getElementById('slide-jobs'); if(s && s.classList.contains('active')) ping(); }
+  var s=document.getElementById('slide-jobs');
+  if(s){ new MutationObserver(check).observe(s,{attributes:true,attributeFilter:['class']}); check(); }
+})();
+</script>
 <script>/* visit counter: no personal data */(function(p){var n="0";try{if(!localStorage.getItem("v_"+p)){localStorage.setItem("v_"+p,"1");n="1"}}catch(e){}new Image().src="https://ameer.itbabylon.org/sensors-api/hit?p="+p+"&n="+n+"&t="+Date.now()})("nb-cloudsec");</script>
 </body>
 </html>
