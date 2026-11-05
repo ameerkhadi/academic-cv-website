@@ -109,6 +109,17 @@ input{-webkit-user-select:text;user-select:text}
 .errs ol{margin:6px 0 0;padding-right:20px}.errs li{margin:0 0 8px;padding-bottom:6px;border-bottom:1px dashed rgba(127,127,127,.3)}
 .errs .eh{opacity:.75;font-size:13px}.errs .eg{background:#7c3aed;color:#fff;border-radius:8px;padding:0 6px;font-size:12px}
 .errs .ew{opacity:.85}.errs .en{font-size:13px;opacity:.8;margin-top:4px}
+.ledger{text-align:right;background:rgba(37,99,235,.06);border:1px solid rgba(37,99,235,.3);border-radius:12px;padding:8px 10px;margin:10px 0;font-size:13.5px;line-height:1.65}
+.ledger>summary{cursor:pointer;font-weight:700;font-size:15px}
+.lg-h,.lg-g>summary,.lg-r{display:grid;grid-template-columns:1fr 46px 50px 50px;gap:4px;align-items:start}
+.lg-h{font-size:12px;opacity:.7;border-bottom:1px solid rgba(127,127,127,.35);padding:6px 0 3px;margin-top:6px}
+.lg-h span:not(:first-child),.lg-g>summary span:not(:first-child),.lg-r span:not(:first-child){text-align:center;direction:ltr;unicode-bidi:isolate}
+.lg-g{border-bottom:1px dashed rgba(127,127,127,.3)}.lg-g>summary{cursor:pointer;font-weight:700;padding:5px 0;list-style:none}
+.lg-g>summary::-webkit-details-marker{display:none}
+.lg-r{padding:3px 8px 3px 0;font-size:13px}.lg-r small{display:block;opacity:.8;font-size:12px}
+.ledger .lost{color:#dc2626;font-weight:700}.ledger .ok{color:#16a34a}
+.lg-sum{margin-top:8px;padding-top:6px;border-top:2px solid rgba(127,127,127,.35)}.lg-sum>div{margin:3px 0}
+.lg-sum ul{margin:2px 0;padding-right:18px;font-size:13px}.lg-eq{font-weight:600}.lg-n{font-size:12px;opacity:.75}
 </style>
 </head>
 <body>
@@ -656,7 +667,7 @@ let S = null;
 function newState(name) {
   return {
     name, score: 0, combo: 0, clock: 8 * 60, evIndex: -1, ev: null, evStart: 0, queue: EVENTS.filter(e => !e.optional || $("fireOpt").checked),
-    caught: 0, missed: 0, missedList: [], errs: [], leaks: 0, late: 0, missedTasks: 0, ministryHarm: 0,
+    caught: 0, missed: 0, missedList: [], errs: [], ledger: [], comboBonus: 0, leaks: 0, late: 0, missedTasks: 0, ministryHarm: 0,
     fast: 0, claudeUses: 0, stars: [], evMistakes: 0, meetingDeadline: null,
     gate: { ok: 0, bad: 0 }, waited: {}, angry: {}, mode: "seat", ringUntil: 0, busy: false,
     V: makeVariants(), playing: true
@@ -984,7 +995,7 @@ function addPts(base, why) {
   if (base > 0) {
     S.combo++;
     const mult = S.combo >= 5 ? 2 : S.combo >= 3 ? 1.5 : 1;
-    pts = Math.round(base * mult);
+    pts = Math.round(base * mult); S.comboBonus += pts - base;
     popAt(`+${pts}${mult > 1 ? " 🔥×" + mult : ""} ${why || "⭐"}`, true);
   } else {
     S.combo = 0; S.evMistakes++; if (S.ev && S.ev.fire) S.fireBad = (S.fireBad || 0) + 1;
@@ -994,6 +1005,10 @@ function addPts(base, why) {
 }
 const GHOST_LINES = ["هههه… وقّعتَ على هلوستي! 👻", "صدّقتني مرة ثانية؟ أنا أكبر الآن!", "لم تتحقق؟ ممتاز… لي 😈", "كلما صدّقتني بلا تحقق، كبرت!", "أنا الهلوسة… ولن أتركك 👻"];
 const plain = x => String(x == null ? "" : x).replace(/<br\s*\/?>/g, " ").replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
+function led(item, max, got, why) {
+  if (!max && !got) return;
+  S.ledger.push({ at: fmtTime(S.clock), ev: S.ev ? plain(S.ev.title) : "", item: plain(item), max: Math.max(0, max), got, why: plain(why).replace(/^[❌✅😒📩⏱️]\s*/u, "") });
+}
 function logErr(did, right, why, ghost) {
   S.errs.push({ at: fmtTime(S.clock), ev: S.ev ? plain(S.ev.title) : "", did: plain(did), right: plain(right), why: plain(why).replace(/^[❌✅😒📩]\s*/u, ""), ghost: !!ghost });
 }
@@ -1135,6 +1150,9 @@ function showIntercom(e) {
 function gateChoose(e, c) {
   const ic = e.intercom, best = ic.best, ok = c === best;
   if (ok) S.gate.ok++; else S.gate.bad++;
+  { const mx = best === "deputy" ? 30 : 20, GL0 = { in: "أدخليه الآن", wait: "ليبقَ ينتظر", deputy: "حوّليه إلى المعاون" };
+    const pen = ok ? mx : c === "in" ? (best === "deputy" ? -20 : -10) : c === "wait" ? (best === "in" ? -15 : -10) : -25;
+    led("🚪 قرار الباب: «" + GL0[c] + "»", mx, pen, ok ? "" : "الصحيح «" + GL0[best] + "» — " + plain(c === "in" ? ic.in : c === "wait" ? ic.wait : ic.deputy)); }
   if (ok) {
     addPts(c === "deputy" ? 30 : 20, c === "deputy" ? "👔 تفويض" : c === "wait" ? "⏳ تنظيم" : "🚪");
     toast(ic.good, 3800);
@@ -1211,6 +1229,7 @@ function finishEvent() {
   const secs = (performance.now() - S.evStart) / 1000;
   let st = 1;
   if (S.evMistakes === 0) { st = 2; if (secs < 50) { st = 3; S.fast++; addPts(20, "⚡ سرعة"); } }
+  led("⚡ مكافأة الإنجاز بلا أخطاء خلال 50 ثانية", 20, st === 3 ? 20 : 0, st === 3 ? "" : S.evMistakes ? "لا تُمنح لأن في هذا الموقف قراراً خاطئاً" : "أنجزته بلا أخطاء لكن بعد " + Math.round(secs) + " ثانية");
   S.stars.push(st);
   if (e.after) e.after();
   S.ev = null; S.busy = false; updateHud(); deskStar.visible = false;
@@ -1247,8 +1266,8 @@ function renderStep() {
   if (st.ring) ringPhone();
   if (st.type === "arrive") {
     const late = S.clock > S.meetingDeadline;
-    if (late) { S.late++; logErr("وصلت إلى الاجتماع الساعة " + fmtTime(S.clock) + " بعد الموعد", "تتحرك قبل الموعد ومعك الموجز", "المدراء كانوا ينتظرونك، والتأخير يُحسب عليك"); h += `<div class="fb bad">😒 وصلت الساعة <b>${fmtTime(S.clock)}</b>، بعد الموعد. المدراء كانوا ينتظرونك.<span class="pts">−40</span></div>`; addPts(-40, "⏰ تأخير"); }
-    else { h += `<div class="fb good">✅ وصلت في الموعد (${fmtTime(S.clock)}) ومعك الموجز.<span class="pts">+60</span></div>`; addPts(60, "👥"); }
+    if (late) { S.late++; logErr("وصلت إلى الاجتماع الساعة " + fmtTime(S.clock) + " بعد الموعد", "تتحرك قبل الموعد ومعك الموجز", "المدراء كانوا ينتظرونك، والتأخير يُحسب عليك"); h += `<div class="fb bad">😒 وصلت الساعة <b>${fmtTime(S.clock)}</b>، بعد الموعد. المدراء كانوا ينتظرونك.<span class="pts">−40</span></div>`; addPts(-40, "⏰ تأخير"); led("⏰ الوصول إلى الاجتماع في الموعد", 60, -40, "وصلت الساعة " + fmtTime(S.clock) + " بعد الموعد"); }
+    else { h += `<div class="fb good">✅ وصلت في الموعد (${fmtTime(S.clock)}) ومعك الموجز.<span class="pts">+60</span></div>`; addPts(60, "👥"); led("⏰ الوصول إلى الاجتماع في الموعد", 60, 60, ""); }
     S.meetingDeadline = null;
     h += `<button class="btn" id="nx">متابعة ←</button>`;
     card.innerHTML = h; $("nx").onclick = () => { S.stepI++; renderStep(); }; return;
@@ -1256,8 +1275,8 @@ function renderStep() {
   if (st.alarmOff) { setAlarm(false); wcSmoke.visible = false; }
   if (st.type === "assemble") {
     const secs = Math.round((performance.now() - S.evacStart) / 1000);
-    if (secs <= 40) { h += `<div class="fb good">✅ وصلت نقطة التجمع خلال <b>${secs} ثانية</b>، بهدوء ومعك الموظفون.<span class="pts">+60</span></div>`; addPts(60, "🧯"); }
-    else { h += `<div class="fb mid">⏱️ وصلت بعد <b>${secs} ثانية</b>. في الإخلاء الحقيقي كل ثانية مهمة.<span class="pts">+10</span></div>`; addPts(10, "🧯"); }
+    if (secs <= 40) { h += `<div class="fb good">✅ وصلت نقطة التجمع خلال <b>${secs} ثانية</b>، بهدوء ومعك الموظفون.<span class="pts">+60</span></div>`; addPts(60, "🧯"); led("🧯 الوصول إلى نقطة التجمع خلال 40 ثانية", 60, 60, ""); }
+    else { h += `<div class="fb mid">⏱️ وصلت بعد <b>${secs} ثانية</b>. في الإخلاء الحقيقي كل ثانية مهمة.<span class="pts">+10</span></div>`; addPts(10, "🧯"); led("🧯 الوصول إلى نقطة التجمع خلال 40 ثانية", 60, 10, "وصلت بعد " + secs + " ثانية"); }
     h += `<button class="btn" id="nx">متابعة ←</button>`;
     card.innerHTML = h; $("nx").onclick = () => { S.stepI++; renderStep(); }; return;
   }
@@ -1291,6 +1310,9 @@ function chooseOpt(o) {
   if (o.leak) S.leaks++;
   if (o.catchTrap) S.caught++;
   if (o.missTrap) missTrap(o.missTrap);
+  { const stp0 = S.steps[S.stepI], mx = stp0 && stp0.opts ? Math.max(0, ...stp0.opts.map(x => x.p || 0)) : Math.max(0, o.p || 0);
+    const bo = stp0 && stp0.opts ? stp0.opts.reduce((a, b) => ((b.p || 0) > (a.p || 0) ? b : a)) : null;
+    led((stp0 && stp0.q ? plain(stp0.q) + " ← " : "") + "«" + plain(o.t) + "»", mx, o.p || 0, (o.p || 0) < mx ? (bo ? "الأفضل «" + plain(bo.t) + "» — " : "") + plain(val(o.fb)) : ""); }
   if (o.p < 0) {
     const stp = S.steps[S.stepI], best = stp && stp.opts ? stp.opts.reduce((a, b) => (b.p > a.p ? b : a)) : null;
     logErr("اخترت: «" + plain(o.t) + "»", best ? "«" + plain(best.t) + "»" : "", val(o.fb), !!o.missTrap);
@@ -1317,6 +1339,8 @@ function evalRows(st) {
       else { p = r.ptsBad || -20; line = `❌ ${r.label}: الصحيح «${r.ok}»`; logErr(r.label + " ← «" + ch + "»", r.ok, r.why || ""); }
       cls = "bad";
     }
+    { const mx = isTrap ? (r.ptsOk && r.ptsOk !== 30 ? r.ptsOk : 100) : (r.ptsOk || 10);
+      led(r.label + " ← «" + ch + "»", mx, p, ch === r.ok ? "" : ch === "— اختر —" ? "تُركت بلا قرار؛ الصحيح «" + r.ok + "»" : "الصحيح «" + r.ok + "»" + (r.why ? " — " + r.why : "") + (isTrap && ch === r.sug ? " (وافقت على خطأ كلود)" : "")); }
     const got = addPts(p, cls === "good" ? (isTrap ? "🕵️" : "") : "");
     h += `<div class="fb ${cls}">${line}<span class="pts">${got > 0 ? "+" + got : got}</span></div>`;
   });
@@ -1359,6 +1383,31 @@ function endDay() {
     <div class="badges">${badges.map(b => `<span class="badge">${b}</span>`).join("") || '<span class="badge">لا أوسمة هذه المرة — جرّب مجدداً!</span>'}</div>`;
   if (S.missedList.length) h += `<div class="missed"><b>❗ ما فاتك:</b><br>${S.missedList.map(x => `• ${x.tl}${x.why ? " — " + x.why : ""} <small>(${x.week})</small>`).join("<br>")}</div>`;
   else h += `<div class="fb good">👏 لم يفتك أي خطأ لكلود. هكذا يُستعمل الذكاء الاصطناعي: <b>يسرّع، وأنت تتحقق.</b></div>`;
+  {
+    const fmt = n => Math.round(n).toLocaleString("en-US"), sg = n => "⁦" + (n > 0 ? "+" : n < 0 ? "−" : "") + fmt(Math.abs(n)) + "⁩";
+    const groups = []; S.ledger.forEach(x => { const k = x.at + "|" + x.ev; let g = groups.find(y => y.k === k); if (!g) groups.push(g = { k, at: x.at, ev: x.ev, rows: [] }); g.rows.push(x); });
+    const tMax = S.ledger.reduce((a, x) => a + x.max, 0), tGot = S.ledger.reduce((a, x) => a + x.got, 0);
+    const ghostPts = S.missed === 0 ? 200 : 0, pct = v => Math.round(v * 100) + "%";
+    h += `<details class="ledger" open><summary>🧮 كيف حُسبت درجتك؟ الدرجة الكاملة لكل قرار، وكم خسرت ولماذا</summary>
+      <div class="lg-h"><span>الموقف / القرار</span><span>الكامل</span><span>حصلت</span><span>خسرت</span></div>
+      ${groups.map(g => { const gm = g.rows.reduce((a, x) => a + x.max, 0), gg = g.rows.reduce((a, x) => a + x.got, 0), gl = Math.max(0, gm - gg);
+        return `<details class="lg-g"${gl ? " open" : ""}><summary><span><span dir="ltr">${g.at}</span> · ${escapeHtml(g.ev)}</span><span>${fmt(gm)}</span><span>${sg(gg)}</span><span class="${gl ? "lost" : "ok"}">${gl ? "⁦−" + fmt(gl) + "⁩" : "✓"}</span></summary>
+          ${g.rows.map(x => { const l = Math.max(0, x.max - x.got); return `<div class="lg-r"><span>${escapeHtml(x.item)}${l && x.why ? `<small>💡 ${escapeHtml(x.why)}</small>` : ""}</span><span>${fmt(x.max)}</span><span>${sg(x.got)}</span><span class="${l ? "lost" : "ok"}">${l ? "⁦−" + fmt(l) + "⁩" : "✓"}</span></div>`; }).join("")}</details>`; }).join("")}
+      <div class="lg-sum">
+        <div>① نقاط القرارات: <b>${sg(tGot)}</b> من <b>${fmt(tMax)}</b> ← خسرت <b class="lost">${fmt(Math.max(0, tMax - tGot))}</b></div>
+        <div>② مكافأة السلسلة 🔥 (×1.5 بعد 3 قرارات صحيحة متتالية، و×2 بعد 5): <b>${sg(S.comboBonus)}</b></div>
+        <div>③ طرد شبح الهلوسة (لا خطأ لكلود يفوتك): <b>${sg(ghostPts)}</b> من 200</div>
+        <div class="lg-eq">مجموع النقاط = ① + ② + ③ = <b>${fmt(S.score)}</b></div>
+        <div>④ معامل الجودة = متوسط المؤشرات الأربعة = <b>${pct(avg)}</b>
+          <ul><li>🕵️ كشف أخطاء كلود: ${S.caught} من ${S.caught + S.missed} ← <b>${pct(m.acc)}</b></li>
+          <li>🔒 الخصوصية: ${S.leaks} تسريب، كل تسريب ينقص 50% ← <b>${pct(m.priv)}</b></li>
+          <li>🏛️ رضا الوزارة: تأخير ${S.late} + مهام متروكة ${S.missedTasks} + ضرر للوزارة ${S.ministryHarm}، كل واحد ينقص 20% ← <b>${pct(m.min)}</b></li>
+          <li>🚪 الباب والسرعة: 70% قرارات الباب الصحيحة (${S.gate.ok} من ${S.gate.ok + S.gate.bad}) + 30% المواقف المنجزة بسرعة بلا خطأ (${S.fast} من ${S.stars.length}) ← <b>${pct(m.spd)}</b></li></ul></div>
+        <div class="lg-eq">⑤ النتيجة النهائية = ${fmt(S.score)} × ${pct(avg)} = <b>${fmt(finalScore)}</b></div>
+        <div class="lg-eq">⑥ الدرجة = ${fmt(finalScore)} ÷ ${fmt(PERFECT)} × 10 = ${(finalScore / PERFECT * 10).toFixed(1)} ← تُقرَّب إلى <b>${mark10} / 10</b></div>
+        <div class="lg-n">${fmt(PERFECT)} هي نتيجة اليوم المثالي ${S.queue.some(e => e.fire) ? "مع سيناريوهات السلامة" : "بدون سيناريوهات السلامة"}. الدرجة لا تقل عن 1 ولا تزيد على 10. القواعد نفسها لكل الطلبة، وأخطاء كلود تتبدّل في كل محاولة.</div>
+      </div></details>`;
+  }
   if (S.errs.length) h += `<details class="errs" open><summary>📋 تفاصيل أخطائك (${S.errs.length.toLocaleString("ar-IQ")}) — ماذا فعلت، وما الصحيح، ولماذا</summary><ol>${S.errs.map(x => `<li><div class="eh"><span dir="ltr">${x.at}</span> · ${escapeHtml(x.ev)}${x.ghost ? ' <span class="eg">👻 خطأ كلود</span>' : ""}</div><div>❌ ${escapeHtml(x.did)}</div>${x.right ? `<div>✅ الصحيح: ${escapeHtml(x.right)}</div>` : ""}${x.why ? `<div class="ew">💡 ${escapeHtml(x.why)}</div>` : ""}</li>`).join("")}</ol><div class="en">استعمل هذه القائمة في ملاحظات الواجب: اختر 3 أخطاء واكتب لماذا كان القرار الصحيح صحيحاً.</div></details>`;
   else h += `<div class="fb good">🏆 لا يوجد أي قرار خاطئ اليوم. يوم مثالي!</div>`;
   h += `<button class="btn gold" id="again">🔁 أعِد المحاكاة</button><div class="note">📸 صوّر هذه الشاشة وارفعها مع ملاحظاتك في واجب الأسبوع 9 على منصة المادة. أخطاء كلود تتبدّل في كل محاولة.<br>محاكاة تدريبية لمادة الذكاء الاصطناعي وتحليل البيانات — د. أمير هادي. كل الأسماء والجهات خيالية.</div>
