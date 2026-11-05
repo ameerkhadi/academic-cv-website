@@ -1321,6 +1321,7 @@ function endDay() {
   const PERFECT = S.queue.some(e => e.fire) ? 6400 : 4850;
   const mark10 = Math.max(1, Math.min(10, Math.round(finalScore / PERFECT * 10)));
   S.mark10 = mark10;
+  try { new Image().src = "https://ameer.itbabylon.org/sensors-api/hit?p=sim-dg-done&n=1&t=" + Date.now(); } catch (e) {}
   const badges = [];
   if (S.missed === 0) badges.push("🕵️ صائد الهلوسات");
   if (S.leaks === 0) badges.push("🔒 حارس الأسرار");
@@ -1589,5 +1590,6 @@ camera.position.set(14.6, 14.5, 3.3); camera.lookAt(14.6, 0, -5.2);
 window.__dg = { get S() { return S; }, get player() { return player; }, VNPC, secretary };
 requestAnimationFrame(frame);
 </script>
+<script>/* visit counter: no personal data */(function(p){var n="0";try{if(!localStorage.getItem("v_"+p)){localStorage.setItem("v_"+p,"1");n="1"}}catch(e){}new Image().src="https://ameer.itbabylon.org/sensors-api/hit?p="+p+"&n="+n+"&t="+Date.now()})("sim-dg");</script>
 </body>
 </html>
