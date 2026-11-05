@@ -1,0 +1,1593 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>محاكي يوم في حياة المدير العام</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0f1720; --panel:#ffffff; --ink:#1b2430; --muted:#5b6675; --brand:#1f4e79; --gold:#e0a400;
+  --good:#1f8a4c; --bad:#c0392b; --claude:#5b3fa6; --claude-bg:#f2eefc; --line:#d9dee5;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;overflow:hidden;background:var(--bg);font-family:'Tajawal',Tahoma,Arial,sans-serif;color:var(--ink);-webkit-tap-highlight-color:transparent}
+#c{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:none}
+.hidden{display:none!important}
+/* HUD */
+#hud{position:fixed;top:0;left:0;right:0;display:flex;gap:6px;align-items:stretch;padding:8px;pointer-events:none;flex-wrap:wrap;z-index:5}
+.chip{background:rgba(255,255,255,.94);border-radius:12px;padding:6px 10px;font-weight:700;font-size:14px;box-shadow:0 2px 8px rgba(0,0,0,.25);display:flex;align-items:center;gap:6px}
+#hName{color:var(--brand)}
+#hScore{color:#8a5a00}
+#hCombo{color:#c4410c}
+#meters{display:flex;gap:6px}
+.meter{display:flex;flex-direction:column;gap:2px;font-size:11px;min-width:54px}
+.meter b{font-size:11px}
+.bar{height:5px;background:#e3e7ec;border-radius:3px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--good);transition:width .4s}
+#task{position:fixed;top:54px;right:8px;left:8px;margin:0 auto;max-width:560px;background:rgba(31,78,121,.95);color:#fff;border-radius:14px;padding:8px 12px;font-size:15px;display:flex;align-items:center;gap:10px;box-shadow:0 3px 12px rgba(0,0,0,.35);pointer-events:none;z-index:5}
+#arrow{width:30px;height:30px;flex:0 0 30px;display:flex;align-items:center;justify-content:center;font-size:22px;transition:transform .1s}
+#taskTxt{flex:1;line-height:1.4}
+#taskTxt small{display:block;opacity:.85;font-size:12px}
+/* labels */
+.lbl{position:fixed;transform:translate(-50%,-100%);background:rgba(15,23,32,.82);color:#fff;font-size:12px;font-weight:700;padding:3px 8px;border-radius:8px;white-space:nowrap;pointer-events:none;z-index:2}
+.lbl.target{background:#e0a400;color:#1b1b1b}
+/* controls */
+#joy{position:fixed;left:18px;bottom:22px;width:124px;height:124px;border-radius:50%;background:rgba(15,23,32,.28);border:3px solid rgba(31,78,121,.65);touch-action:none;z-index:6}
+#knob{position:absolute;left:34px;top:34px;width:50px;height:50px;border-radius:50%;background:rgba(31,78,121,.9);box-shadow:0 2px 8px rgba(0,0,0,.4)}
+#act{position:fixed;right:18px;bottom:34px;min-width:118px;height:64px;border-radius:32px;border:none;background:#e0a400;color:#1b1b1b;font-family:inherit;font-weight:800;font-size:18px;box-shadow:0 4px 14px rgba(0,0,0,.4);z-index:6;padding:0 18px}
+#keysHint{position:fixed;bottom:8px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,.7);font-size:12px;z-index:4;pointer-events:none}
+/* pop points */
+.pop{position:fixed;direction:ltr;unicode-bidi:isolate;font-weight:800;font-size:26px;pointer-events:none;z-index:30;text-shadow:0 2px 6px rgba(0,0,0,.5);animation:pop 1.4s ease-out forwards}
+.pop.good{color:#ffd54a}.pop.bad{color:#ff6b5b}
+@keyframes pop{0%{transform:translate(-50%,0) scale(.6);opacity:0}15%{transform:translate(-50%,-10px) scale(1.15);opacity:1}100%{transform:translate(-50%,-90px) scale(1);opacity:0}}
+/* modal */
+.overlay{position:fixed;inset:0;background:rgba(8,12,18,.62);display:flex;align-items:center;justify-content:center;z-index:20;padding:12px}
+.card{background:var(--panel);border-radius:18px;max-width:620px;width:100%;max-height:92vh;overflow:auto;padding:18px 18px 16px;box-shadow:0 10px 40px rgba(0,0,0,.5)}
+.card h2{margin:0 0 4px;font-size:20px;color:var(--brand)}
+.card .when{color:var(--muted);font-size:13px;margin-bottom:10px}
+.say{background:#f4f6f9;border-radius:12px;padding:10px 12px;margin:8px 0;line-height:1.7;font-size:15px}
+.claude{background:var(--claude-bg);border:1px solid #d9cff5;border-radius:12px;padding:10px 12px;margin:8px 0;line-height:1.7;font-size:15px}
+.claude .who{color:var(--claude);font-weight:800;font-size:13px;margin-bottom:2px}
+.q{font-weight:700;margin:12px 0 8px;font-size:16px}
+.opt{display:block;width:100%;text-align:right;background:#fff;border:2px solid var(--line);border-radius:12px;padding:11px 12px;margin:7px 0;font-family:inherit;font-size:15px;cursor:pointer;line-height:1.5}
+.opt:hover{border-color:var(--brand)}
+.row{border:1px solid var(--line);border-radius:12px;padding:9px 10px;margin:8px 0}
+.row .lab{font-weight:700;font-size:15px;line-height:1.5}
+.row .sug{color:var(--claude);font-size:13px;margin:4px 0}
+.row select{width:100%;font-family:inherit;font-size:15px;padding:8px;border-radius:10px;border:1px solid #b9c2cd;background:#fff}
+.btn{display:inline-block;background:var(--brand);color:#fff;border:none;border-radius:12px;padding:11px 20px;font-family:inherit;font-weight:700;font-size:16px;cursor:pointer;margin-top:10px}
+.btn.gold{background:var(--gold);color:#1b1b1b}
+.fb{border-radius:12px;padding:10px 12px;margin:8px 0;line-height:1.7;font-size:15px}
+.fb.good{background:#e8f6ee;border:1px solid #b5e0c6}
+.fb.bad{background:#fdecea;border:1px solid #f3c2bc}
+.fb.mid{background:#f4f6f9;border:1px solid var(--line)}
+.fb .pts{font-weight:800;margin-inline-start:6px}
+.timer{font-weight:800;color:var(--bad);font-size:18px}
+table.mini{width:100%;border-collapse:collapse;font-size:14px;margin:6px 0}
+table.mini td,table.mini th{border:1px solid var(--line);padding:5px 7px;text-align:right}
+table.mini tr.dup td{background:#fff6d6}
+.bars{margin:8px 0}
+.bars div{display:flex;align-items:center;gap:8px;margin:4px 0;font-size:13px}
+.bars span.b{height:14px;background:var(--brand);border-radius:4px}
+/* start & end */
+#start .card,#end .card{text-align:center}
+#start h1{margin:4px 0;color:var(--brand);font-size:26px}
+.tips{display:grid;gap:8px;margin:12px 0;text-align:right}
+.tip{background:#f4f6f9;border-radius:12px;padding:9px 12px;font-size:14px;line-height:1.6}
+#nameIn{width:100%;font-family:inherit;font-size:18px;padding:12px;border-radius:12px;border:2px solid var(--line);text-align:center;margin-top:6px}
+.bigname{font-size:24px;font-weight:800;color:var(--brand);margin:6px 0}
+.bigscore{font-size:46px;font-weight:800;color:#8a5a00;margin:2px 0}
+.grade{font-size:20px;font-weight:800;margin:4px 0}
+.badges{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:10px 0}
+.badge{background:#fff6d6;border:1px solid #f0d77a;border-radius:20px;padding:5px 10px;font-size:13px;font-weight:700}
+.missed{text-align:right;background:#fdecea;border-radius:12px;padding:8px 12px;margin:10px 0;font-size:14px;line-height:1.7}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin:10px 0;font-size:14px}
+.stats div{background:#f4f6f9;border-radius:10px;padding:6px}
+.note{font-size:12px;color:var(--muted);margin-top:8px}
+body{-webkit-user-select:none;user-select:none}
+input{-webkit-user-select:text;user-select:text}
+#goBtn{pointer-events:auto;background:#e0a400;color:#1b1b1b;border:none;border-radius:20px;padding:7px 12px;font-family:inherit;font-weight:800;font-size:14px;white-space:nowrap;touch-action:manipulation}
+#gbubble{position:fixed;transform:translate(-50%,-100%);background:#fff;color:#2b2f6b;border:2px solid #9fb0ff;border-radius:14px;padding:6px 10px;font-weight:800;font-size:14px;max-width:220px;text-align:center;z-index:4;pointer-events:none;box-shadow:0 4px 12px rgba(0,0,0,.3)}
+#toast{position:fixed;left:50%;bottom:110px;transform:translateX(-50%);background:rgba(20,24,40,.94);color:#fff;border-radius:14px;padding:10px 14px;font-size:15px;line-height:1.6;max-width:min(92vw,520px);z-index:15;text-align:center;box-shadow:0 6px 18px rgba(0,0,0,.4)}
+.opt,.btn,#act,#goBtn{touch-action:manipulation}
+@media (max-width:520px){
+  .chip{font-size:12px;padding:5px 8px} #meters{display:none}
+  #task{top:46px;font-size:14px;padding:7px 10px}
+  .overlay#modal{align-items:flex-end;padding:0}
+  #modal .card{border-radius:20px 20px 0 0;max-height:86vh;padding:14px 14px 22px}
+  .opt{padding:14px 12px;font-size:16px}
+  .row select{font-size:16px;padding:11px}
+  .btn{width:100%;padding:14px;font-size:17px}
+  #act{min-width:104px;height:72px;bottom:30px;font-size:19px}
+  #joy{width:136px;height:136px;bottom:24px}
+  #knob{left:40px;top:40px}
+}
+</style>
+</head>
+<body>
+<style>
+.ic-opts{display:grid;gap:8px;margin-top:10px}
+.ic-opts .opt{text-align:center;font-weight:700}
+@media (max-height:500px) and (orientation:landscape){#task{left:8px;right:auto;margin:0;max-width:330px;top:48px;font-size:13px}#task small{font-size:11px}}
+#pauseBtn{pointer-events:auto;border:none;cursor:pointer;font-family:inherit;font-size:16px;touch-action:manipulation}
+#pause{z-index:40}
+#pause .card{text-align:center;max-width:380px}
+#pause .btn{display:block;width:100%;margin-top:10px}
+#alarm{position:fixed;inset:0;pointer-events:none;z-index:3;animation:al .55s infinite alternate}
+@keyframes al{from{box-shadow:inset 0 0 0 4px rgba(220,30,30,.35)}to{box-shadow:inset 0 0 50px 12px rgba(230,30,30,.85)}}
+.optin{display:block;text-align:center;line-height:1.7;margin:12px 0 4px;font-weight:700;font-size:15px;background:#fff1ec;border:1px solid #f5c2b0;border-radius:12px;padding:9px 10px;cursor:pointer}
+.optin input{width:20px;height:20px;vertical-align:middle;margin-inline-end:6px}
+.gsel{display:flex;gap:8px;justify-content:center;margin:6px 0 2px;border-radius:14px}
+.gbtn{flex:1;padding:11px 8px;border-radius:12px;border:2px solid var(--line);background:#fff;font-family:inherit;font-weight:800;font-size:16px;cursor:pointer;touch-action:manipulation}
+.gbtn.on{border-color:var(--brand);background:#eaf2fb}
+.gbtn[data-g=f].on{border-color:#d9468a;background:#fdeaf3;color:#a3245f}
+.mark{font-size:20px;font-weight:800;color:#1f4e79;background:#eaf2fb;border-radius:12px;padding:6px 10px;margin:8px auto;display:inline-block}
+.mark small{font-size:12px;color:var(--muted);font-weight:700}
+.about{margin-top:14px;border-top:1px dashed var(--line);padding-top:10px;font-size:13px;line-height:1.8;color:#333;text-align:center}
+.about-h{font-weight:800;color:var(--brand);margin-bottom:2px}
+.about a{color:var(--brand);font-weight:700;direction:ltr;unicode-bidi:isolate}
+.about .copy{color:var(--muted);font-size:12px;margin-top:4px}
+.tag{position:fixed;transform:translate(-50%,-100%);background:rgba(255,255,255,.95);color:#1b2430;font-size:12px;font-weight:700;padding:2px 7px;border-radius:8px;white-space:nowrap;pointer-events:none;z-index:2;box-shadow:0 2px 6px rgba(0,0,0,.25)}
+</style>
+<canvas id="c"></canvas>
+
+<div id="hud" class="hidden">
+  <button class="chip" id="pauseBtn" title="إيقاف مؤقت">⏸</button>
+  <div class="chip" id="hName">🏛️</div>
+  <div class="chip">🕗 <span id="hClock">8:00</span></div>
+  <div class="chip" id="hScore">⭐ 0</div>
+  <div class="chip" id="hCombo">🔥 ×1</div>
+  <div class="chip" id="meters">
+    <div class="meter"><b>⏱️ الوقت</b><div class="bar"><i id="mSpeed"></i></div></div>
+    <div class="meter"><b>✅ الدقة</b><div class="bar"><i id="mAcc"></i></div></div>
+    <div class="meter"><b>🔒 السرية</b><div class="bar"><i id="mPriv"></i></div></div>
+    <div class="meter"><b>🏛️ الوزارة</b><div class="bar"><i id="mMin"></i></div></div>
+  </div>
+</div>
+<div id="task" class="hidden"><div id="arrow"><svg width="26" height="26" viewBox="0 0 26 26"><path d="M3 13 H19 M13 6 L21 13 L13 20" fill="none" stroke="#ffd54a" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div id="taskTxt"></div><button id="goBtn" class="hidden">🚶 خذني</button></div>
+<div id="labels"></div>
+<div id="tags"></div>
+<div id="gbubble" style="display:none"></div>
+<div id="toast" class="hidden"></div>
+<div id="alarm" class="hidden"></div>
+<div id="joy" class="hidden"><div id="knob"></div></div>
+<button id="act" class="hidden">✋ تفاعل</button>
+<div id="keysHint" class="hidden">الحاسوب: الأسهم أو WASD للمشي · E أو مسافة للتفاعل</div>
+
+<div id="start" class="overlay">
+  <div class="card">
+    <div style="font-size:40px">🏛️</div>
+    <h1 id="startH1">محاكي يوم في حياة المدير العام</h1>
+    <div style="color:var(--muted)">المديرية العامة للخدمات الإدارية — وزارة الخدمات العامة <small>(دائرة خيالية للتدريب)</small></div>
+    <div id="startTxt"><div class="tips">
+      <div class="tip">🪑 <b>أنت جالس في مكتبك، والناس تأتي إليك.</b> السكرتيرة تتصل: <b>«أُدخله؟»</b> فتختار: 🚪 أدخله الآن · ⏳ ليبقَ ينتظر · 👔 حوّله إلى المعاون. فكّر: من يحتاجك أنت، ومن يكفيه المعاون؟</div>
+      <div class="tip">🚶 <b>تخرج من مكتبك للاجتماعات فقط.</b> عندها امشِ بعصا التحكم أو اضغط <b>«خذني»</b>.</div>
+      <div class="tip">🤖 <b>كلود على حاسوبك:</b> يسرّع عملك لكنه <b>يخطئ أحياناً</b>. كل خطأ تكشفه = <b>+100</b>. وكل خطأ يفوتك يكبّر شبح الهلوسة 👻.</div>
+    </div>
+    </div>
+    <label class="optin"><input type="checkbox" id="fireOpt"> 🔥 أضِف سيناريوهات <b>السلامة</b>: حريق + إنذار دخان (خطة الإخلاء)</label>
+    <div class="q">أنت:</div>
+    <div class="gsel" id="gsel"><button class="gbtn" data-g="m" type="button">👨 مدير عام</button><button class="gbtn" data-g="f" type="button">👩 مديرة عامة</button></div>
+    <div class="q">الاسم:</div>
+    <input id="nameIn" maxlength="30" placeholder="مثلاً: أحمد">
+    <div><button class="btn gold" id="go">▶ ابدأ الدوام</button></div>
+  </div>
+</div>
+
+<div id="modal" class="overlay hidden"><div class="card" id="mcard"></div></div>
+<div id="end" class="overlay hidden"><div class="card" id="ecard"></div></div>
+<div id="pause" class="overlay hidden"><div class="card">
+  <div style="font-size:40px">⏸</div><h2 style="margin:4px 0;color:var(--brand)">المحاكاة متوقفة</h2>
+  <div style="color:var(--muted)">الوقت واقف… خذ راحتك ☕</div>
+  <button class="btn gold" id="pResume">▶ استمر</button>
+  <button class="btn" id="pRestart">🔁 ابدأ اليوم من جديد</button>
+  <button class="btn" id="pExit" style="background:#8a2b2b">🚪 خروج إلى الشاشة الرئيسية</button>
+</div></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+"use strict";
+/* ============================================================ helpers */
+const $ = id => document.getElementById(id);
+const rnd = n => Math.floor(Math.random() * n);
+const pick = a => a[rnd(a.length)];
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = rnd(i + 1); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const fmtTime = m => `${Math.floor(m / 60)}:${String(Math.floor(m % 60)).padStart(2, "0")}`;
+let GEN = 0;
+function later(fn, ms) { const g = GEN; setTimeout(() => { if (g === GEN && S && S.playing) fn(); }, ms); }
+const store = { get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} } };
+
+/* ============================================================ audio */
+let actx = null;
+function tone(f1, f2, dur, vol, type, delay) {
+  try {
+    actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+    const o = actx.createOscillator(), g = actx.createGain();
+    o.type = type || "triangle"; o.connect(g); g.connect(actx.destination);
+    const t = actx.currentTime + (delay || 0);
+    o.frequency.setValueAtTime(f1, t); o.frequency.exponentialRampToValueAtTime(f2, t + dur * 0.6);
+    g.gain.setValueAtTime(vol, t); g.gain.exponentialRampToValueAtTime(0.001, t + dur);
+    o.start(t); o.stop(t + dur + 0.02);
+  } catch (e) {}
+}
+const beep = good => tone(good ? 520 : 260, good ? 880 : 150, 0.3, 0.18);
+const knock = () => { tone(140, 90, 0.12, 0.35, "sine", 0); tone(140, 90, 0.12, 0.35, "sine", 0.18); };
+const ringSnd = () => { for (let i = 0; i < 2; i++) { tone(880, 880, 0.18, 0.12, "square", i * 0.5); tone(660, 660, 0.18, 0.12, "square", i * 0.5 + 0.2); } };
+
+/* ============================================================ 3D world */
+const IS_PHONE = matchMedia("(pointer:coarse)").matches || Math.min(innerWidth, innerHeight) < 600;
+const canvas = $("c");
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: "high-performance" });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, IS_PHONE ? 1.5 : 1.75));
+renderer.outputEncoding = THREE.sRGBEncoding;
+renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 0.92;
+renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0xb9c6d3);
+scene.fog = new THREE.Fog(0xb9c6d3, 38, 70);
+const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 200);
+scene.add(new THREE.HemisphereLight(0xfff7ea, 0x5d6a78, 0.6));
+const sun = new THREE.DirectionalLight(0xfff1dc, 1.05);
+sun.position.set(14, 26, 10); sun.castShadow = true;
+sun.shadow.mapSize.set(IS_PHONE ? 1024 : 2048, IS_PHONE ? 1024 : 2048);
+Object.assign(sun.shadow.camera, { left: -26, right: 26, top: 20, bottom: -20, near: 1, far: 70 });
+sun.shadow.bias = -0.0006; sun.shadow.normalBias = 0.02;
+scene.add(sun);
+
+function canvasTex(w, h, draw, rx, ry) {
+  const c = document.createElement("canvas"); c.width = w; c.height = h; draw(c.getContext("2d"), w, h);
+  const t = new THREE.CanvasTexture(c); t.encoding = THREE.sRGBEncoding;
+  if (rx) { t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(rx, ry); }
+  t.anisotropy = 4; return t;
+}
+const floorTex = canvasTex(256, 256, (g, w, h) => {
+  g.fillStyle = "#e6e0d4"; g.fillRect(0, 0, w, h);
+  for (let i = 0; i < 2600; i++) { g.fillStyle = `rgba(${120 + rnd(60)},${110 + rnd(50)},${95 + rnd(40)},${Math.random() * 0.08})`; g.fillRect(rnd(w), rnd(h), 2, 2); }
+  g.strokeStyle = "rgba(120,110,95,.35)"; g.lineWidth = 2; g.strokeRect(1, 1, w - 2, h - 2);
+}, 23, 17);
+const woodTex = canvasTex(256, 128, (g, w, h) => {
+  g.fillStyle = "#7a5534"; g.fillRect(0, 0, w, h);
+  for (let y = 0; y < h; y += 3) { g.strokeStyle = `rgba(${60 + rnd(40)},${35 + rnd(25)},${15 + rnd(15)},${0.15 + Math.random() * 0.2})`; g.beginPath(); g.moveTo(0, y + Math.random() * 2); g.bezierCurveTo(w * 0.3, y + rnd(4) - 2, w * 0.7, y + rnd(4) - 2, w, y + Math.random() * 2); g.stroke(); }
+});
+const rugTex = col => canvasTex(128, 128, (g, w, h) => {
+  g.fillStyle = col; g.fillRect(0, 0, w, h);
+  for (let i = 0; i < 1500; i++) { g.fillStyle = `rgba(0,0,0,${Math.random() * 0.06})`; g.fillRect(rnd(w), rnd(h), 1, 1); }
+  g.strokeStyle = "rgba(255,255,255,.35)"; g.lineWidth = 6; g.strokeRect(8, 8, w - 16, h - 16);
+});
+const screenTex = canvasTex(256, 160, (g, w, h) => {
+  g.fillStyle = "#f4f1fb"; g.fillRect(0, 0, w, h);
+  g.fillStyle = "#5b3fa6"; g.fillRect(0, 0, w, 22);
+  g.fillStyle = "#fff"; g.font = "bold 14px Tahoma"; g.textAlign = "right"; g.fillText("Claude 🤖", w - 10, 16);
+  for (let i = 0; i < 6; i++) { g.fillStyle = i % 2 ? "#d9cff5" : "#e9e9ee"; g.fillRect(i % 2 ? 20 : 70, 32 + i * 20, i % 2 ? 160 : 170, 12); }
+});
+const boardTex = canvasTex(256, 160, (g, w, h) => {
+  g.fillStyle = "#fbfbf8"; g.fillRect(0, 0, w, h);
+  const cols = ["#ffe27a", "#ffb3a7", "#a8e6b8", "#a7d3ff", "#ffe27a"];
+  for (let i = 0; i < 5; i++) { g.fillStyle = cols[i]; g.fillRect(14 + i * 47, 30 + (i % 2) * 50, 38, 38); g.fillStyle = "rgba(0,0,0,.35)"; g.fillRect(19 + i * 47, 40 + (i % 2) * 50, 26, 3); g.fillRect(19 + i * 47, 48 + (i % 2) * 50, 20, 3); }
+  g.fillStyle = "#1f4e79"; g.font = "bold 16px Tahoma"; g.textAlign = "center"; g.fillText("لوحة المتابعة", w / 2, 20);
+});
+const windowTex = canvasTex(128, 64, (g, w, h) => {
+  const gr = g.createLinearGradient(0, 0, 0, h); gr.addColorStop(0, "#cfe8ff"); gr.addColorStop(1, "#8fb7d9"); g.fillStyle = gr; g.fillRect(0, 0, w, h);
+  g.strokeStyle = "#e9edf1"; g.lineWidth = 5; g.strokeRect(2, 2, w - 4, h - 4); g.beginPath(); g.moveTo(w / 2, 0); g.lineTo(w / 2, h); g.stroke();
+});
+
+const MAT = {};
+const M = (c, opt) => { const k = c + JSON.stringify(opt || {}); return MAT[k] || (MAT[k] = new THREE.MeshStandardMaterial(Object.assign({ color: c, roughness: 0.75, metalness: 0.02 }, opt || {}))); };
+const WOOD = new THREE.MeshStandardMaterial({ map: woodTex, roughness: 0.55 });
+const colliders = [];
+function box(w, h, d, x, y, z, mat, solid, noShadow) {
+  const m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), typeof mat === "number" ? M(mat) : mat);
+  m.position.set(x, y, z); m.castShadow = !noShadow; m.receiveShadow = true; scene.add(m);
+  if (solid) colliders.push({ x1: x - w / 2, x2: x + w / 2, z1: z - d / 2, z2: z + d / 2 });
+  return m;
+}
+function cyl(rt, rb, h, x, y, z, mat, seg) {
+  const m = new THREE.Mesh(new THREE.CylinderGeometry(rt, rb, h, seg || 16), typeof mat === "number" ? M(mat) : mat);
+  m.position.set(x, y, z); m.castShadow = true; m.receiveShadow = true; scene.add(m); return m;
+}
+
+/* ---- floor, rooms ---- */
+const floor = new THREE.Mesh(new THREE.PlaneGeometry(46, 34), new THREE.MeshStandardMaterial({ map: floorTex, roughness: 0.85 }));
+floor.rotation.x = -Math.PI / 2; floor.receiveShadow = true; scene.add(floor);
+const ROOMS = {
+  office:    { x: 15, z: -8,  w: 15, d: 9,  rug: "#b8955f" },
+  waiting:   { x: 15, z: -1,  w: 15, d: 4,  rug: "#8fa9c6" },
+  deputy:    { x: 13, z: 5.5, w: 8,  d: 5,  rug: "#a79bc0" },
+  meeting:   { x: -12, z: -8, w: 13, d: 9,  rug: "#7fae8d" },
+  archive:   { x: -15, z: 7,  w: 9,  d: 8,  rug: "#b6a58f" },
+  finance:   { x: 0, z: -11,  w: 8,  d: 6,  rug: "#c9b479" },
+  hr:        { x: 2, z: 11.5, w: 7,  d: 6,  rug: "#c99a9a" },
+  reception: { x: -6, z: 12.5, w: 7, d: 5,  rug: "#9aa3ad" }
+};
+for (const k in ROOMS) { const r = ROOMS[k]; const m = new THREE.Mesh(new THREE.PlaneGeometry(r.w, r.d), new THREE.MeshStandardMaterial({ map: rugTex(r.rug), roughness: 0.95 })); m.rotation.x = -Math.PI / 2; m.position.set(r.x, 0.015, r.z); m.receiveShadow = true; scene.add(m); }
+
+const WALLC = 0xf1ede6, TRIM = 0x8a7d6d;
+function wall(w, h, d, x, z) { box(w, h, d, x, h / 2, z, WALLC, true); box(w + 0.02, 0.14, d + 0.02, x, 0.07, z, TRIM, false, true); box(w + 0.04, 0.06, d + 0.04, x, h, z, 0xdcd6cc, false, true); }
+wall(46, 3, 0.4, 0, -17); wall(0.4, 3, 34, -23, 0); wall(0.4, 3, 34, 23, 0); wall(46, 0.9, 0.4, 0, 17);
+for (let x = -19; x <= 19; x += 6.5) { const w = new THREE.Mesh(new THREE.PlaneGeometry(4, 1.6), new THREE.MeshBasicMaterial({ map: windowTex })); w.position.set(x, 1.75, -16.78); scene.add(w); }
+const WH = 1.25;
+wall(0.3, WH, 9, 7, -8.5);                         // office west
+/* glass front of the office: the director sees the secretary and the waiting bench */
+const GLASS = new THREE.MeshStandardMaterial({ color: 0xbfe3ff, transparent: true, opacity: 0.22, roughness: 0.08, metalness: 0.1, depthWrite: false });
+function glass(x1, x2, z) {
+  const w = x2 - x1, x = (x1 + x2) / 2;
+  const g = new THREE.Mesh(new THREE.BoxGeometry(w, 2.3, 0.06), GLASS); g.position.set(x, 1.15, z); scene.add(g);
+  colliders.push({ x1, x2, z1: z - 0.05, z2: z + 0.05 });
+  for (const y of [0.04, 2.3]) box(w, 0.08, 0.1, x, y, z, 0x5d6670, false, true);
+  for (let px = x1; px <= x2 + 0.01; px += w / Math.max(1, Math.round(w / 2.2))) box(0.07, 2.3, 0.1, px, 1.15, z, 0x5d6670, false, true);
+}
+glass(7, 13.6, -3.5); glass(17.4, 23, -3.5);
+wall(0.3, WH, 9, -5, -8.5);                        // meeting east
+wall(3.5, WH, 0.3, -21.25, -3.5); wall(4.5, WH, 0.3, -7.25, -3.5); // meeting front
+wall(0.3, WH, 7, -10.5, 7.5);                      // archive east
+
+/* ---- furniture builders ---- */
+function desk(x, z, w, d, rot) {
+  const g = new THREE.Group();
+  const top = new THREE.Mesh(new THREE.BoxGeometry(w, 0.08, d), WOOD); top.position.y = 0.82; top.castShadow = top.receiveShadow = true; g.add(top);
+  const front = new THREE.Mesh(new THREE.BoxGeometry(w - 0.1, 0.6, 0.05), WOOD); front.position.set(0, 0.48, d / 2 - 0.08); front.castShadow = true; g.add(front);
+  for (const sx of [-1, 1]) { const s = new THREE.Mesh(new THREE.BoxGeometry(0.07, 0.8, d - 0.05), WOOD); s.position.set(sx * (w / 2 - 0.05), 0.4, 0); s.castShadow = true; g.add(s); }
+  g.position.set(x, 0, z); g.rotation.y = rot || 0; scene.add(g);
+  colliders.push({ x1: x - w / 2, x2: x + w / 2, z1: z - d / 2, z2: z + d / 2 }); return g;
+}
+function chair(x, z, rot, col) {
+  const g = new THREE.Group(); const c = M(col || 0x2f3640);
+  const seat = new THREE.Mesh(new THREE.BoxGeometry(0.62, 0.1, 0.6), c); seat.position.y = 0.5; g.add(seat);
+  const back = new THREE.Mesh(new THREE.BoxGeometry(0.62, 0.7, 0.08), c); back.position.set(0, 0.88, -0.28); g.add(back);
+  const post = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 0.45, 8), M(0x777777)); post.position.y = 0.25; g.add(post);
+  const base = new THREE.Mesh(new THREE.CylinderGeometry(0.3, 0.3, 0.05, 10), M(0x555555)); base.position.y = 0.03; g.add(base);
+  g.traverse(o => { if (o.isMesh) o.castShadow = true; });
+  g.position.set(x, 0, z); g.rotation.y = rot || 0; scene.add(g); return g;
+}
+function monitor(x, z, rot, tex) {
+  const g = new THREE.Group();
+  const f = new THREE.Mesh(new THREE.BoxGeometry(1.0, 0.62, 0.06), M(0x1c1f24)); f.position.y = 1.25; g.add(f);
+  const s = new THREE.Mesh(new THREE.PlaneGeometry(0.92, 0.54), new THREE.MeshBasicMaterial({ map: tex || screenTex })); s.position.set(0, 1.25, 0.032); g.add(s);
+  const st = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.35, 0.06), M(0x2a2d33)); st.position.y = 0.98; g.add(st);
+  const kb = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.03, 0.22), M(0x2a2d33)); kb.position.set(0, 0.875, 0.42); g.add(kb);
+  g.traverse(o => { if (o.isMesh) o.castShadow = true; });
+  g.position.set(x, 0, z); g.rotation.y = rot || 0; scene.add(g); return g;
+}
+function papers(x, z, n) { for (let i = 0; i < n; i++) box(0.42, 0.012, 0.3, x + i * 0.05, 0.87 + i * 0.012, z + (i % 2) * 0.03, 0xfafafa, false); }
+function plant(x, z, s) {
+  s = s || 1; cyl(0.3 * s, 0.24 * s, 0.5 * s, x, 0.25 * s, z, 0x8b5a2b, 12);
+  for (let i = 0; i < 5; i++) { const l = new THREE.Mesh(new THREE.SphereGeometry(0.38 * s, 10, 8), M(i % 2 ? 0x3f8f4f : 0x2f7a42)); l.position.set(x + Math.cos(i * 1.3) * 0.22 * s, (0.8 + i * 0.12) * s, z + Math.sin(i * 1.3) * 0.22 * s); l.castShadow = true; scene.add(l); }
+}
+function shelf(x, z, w, rot) {
+  const g = new THREE.Group(); const fr = WOOD;
+  const back = new THREE.Mesh(new THREE.BoxGeometry(w, 2.2, 0.08), fr); back.position.set(0, 1.1, -0.26); g.add(back);
+  for (const sx of [-1, 1]) { const s = new THREE.Mesh(new THREE.BoxGeometry(0.06, 2.2, 0.6), fr); s.position.set(sx * w / 2, 1.1, 0); g.add(s); }
+  for (let r = 0; r < 4; r++) {
+    const b = new THREE.Mesh(new THREE.BoxGeometry(w, 0.05, 0.6), fr); b.position.set(0, 0.1 + r * 0.55, 0); g.add(b);
+    let px = -w / 2 + 0.1;
+    while (px < w / 2 - 0.15) { const bw = 0.08 + Math.random() * 0.1, bh = 0.3 + Math.random() * 0.15; const bk = new THREE.Mesh(new THREE.BoxGeometry(bw, bh, 0.36), M([0x7b2d26, 0x2d4f7b, 0x3f6b3a, 0xc9a227, 0x5b3f6b, 0xdedede][rnd(6)])); bk.position.set(px + bw / 2, 0.13 + r * 0.55 + bh / 2, 0.05); g.add(bk); px += bw + 0.015; }
+  }
+  g.traverse(o => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
+  g.position.set(x, 0, z); g.rotation.y = rot || 0; scene.add(g);
+  const hw = Math.abs(Math.cos(rot || 0)) > 0.5 ? w / 2 : 0.35, hd = Math.abs(Math.cos(rot || 0)) > 0.5 ? 0.35 : w / 2;
+  colliders.push({ x1: x - hw, x2: x + hw, z1: z - hd, z2: z + hd });
+}
+function cabinet(x, z) { box(0.9, 1.4, 0.6, x, 0.7, z, 0x9aa5b1, true); for (let i = 0; i < 3; i++) box(0.5, 0.04, 0.02, x, 0.3 + i * 0.42, z + 0.31, 0x666e78); }
+
+/* ---- office of the director general ---- */
+desk(13, -10.2, 3.6, 1.6);
+monitor(13, -10.5, Math.PI);                         // screen faces the director
+papers(11.6, -9.9, 4); papers(14.1, -9.8, 2);
+box(0.6, 0.12, 0.05, 13, 0.92, -9.42, 0x1f2a38);     // nameplate facing visitors
+/* desk phone */
+box(0.34, 0.1, 0.26, 14.5, 0.91, -10.6, 0x22262c);
+const phoneLight = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.06, 0.08), new THREE.MeshStandardMaterial({ color: 0x441111, emissive: 0xff2a2a, emissiveIntensity: 0 }));
+phoneLight.position.set(14.5, 0.99, -10.62); scene.add(phoneLight);
+chair(13, -11.6, 0, 0x3a2a20);
+chair(12.2, -8.3, Math.PI, 0x5a4636); chair(13.8, -8.3, Math.PI, 0x5a4636);
+const board = new THREE.Mesh(new THREE.PlaneGeometry(3.2, 2), new THREE.MeshBasicMaterial({ map: boardTex }));
+board.position.set(18.3, 1.55, -7); board.rotation.y = -Math.PI / 2; scene.add(board);
+box(0.08, 2.2, 3.4, 18.4, 1.55, -7, 0x2e5d4b, false);
+box(2.4, 0.45, 1, 9, 0.23, -5.6, 0x6f5b4b, true); box(2.4, 0.5, 0.25, 9, 0.6, -6.0, 0x6f5b4b);   // sofa
+shelf(10, -12.6, 2.4, 0); plant(17.8, -12.2, 1.1); plant(7.9, -4.3, 0.7); cabinet(20.5, -12.4); cabinet(21.5, -12.4);
+/* ---- secretary (outside the glass) + waiting bench ---- */
+desk(19.5, -0.8, 2.6, 1.1); monitor(19.2, -0.95, 0); papers(20.3, -0.8, 5);
+chair(19.5, 0.45, Math.PI);
+box(4, 0.45, 0.7, 10.7, 0.23, -0.95, 0x45627e, true); box(4, 0.5, 0.12, 10.7, 0.62, -0.62, 0x45627e);   // bench
+plant(8.2, -0.6, 0.8); plant(22, 1.8, 0.9);
+/* ---- deputy (المعاون) ---- */
+desk(13, 4.6, 3, 1.3); monitor(12.4, 4.5, 0); papers(13.8, 4.5, 3);
+chair(13, 5.8, Math.PI); cabinet(17.2, 7.4); cabinet(16.2, 7.4); plant(9, 7.4, 0.9);
+/* ---- meeting room ---- */
+desk(-12, -8, 7, 2.4);
+for (let i = 0; i < 3; i++) { chair(-14.5 + i * 2.5, -10, 0); chair(-14.5 + i * 2.5, -6, Math.PI); }
+const screenM = new THREE.Mesh(new THREE.PlaneGeometry(3.4, 1.9), new THREE.MeshBasicMaterial({ map: screenTex })); screenM.position.set(-12, 1.9, -16.7); scene.add(screenM);
+plant(-6, -12.5, 1);
+/* ---- archive ---- */
+for (let i = 0; i < 3; i++) shelf(-19.5 + i * 2.6, 7, 6, Math.PI / 2);
+/* ---- finance, HR, reception ---- */
+desk(0, -12.6, 3, 1.3); monitor(-0.5, -12.9, 0); papers(0.7, -12.5, 3); chair(0, -13.8, 0); cabinet(3.4, -13.6);
+desk(2, 12.9, 3, 1.3); monitor(1.4, 13.2, Math.PI); chair(2, 14.2, Math.PI); plant(5.2, 13.8, 0.9);
+box(4, 1.1, 0.9, -6, 0.55, 13.4, 0x56677a, true); box(4.2, 0.06, 1.1, -6, 1.13, 13.4, 0xd9d4c9, false);
+cyl(0.25, 0.25, 1, 5.5, 0.5, -15.8, 0xdfe6ee); cyl(0.22, 0.22, 0.45, 5.5, 1.22, -15.8, new THREE.MeshStandardMaterial({ color: 0x8fc4ef, transparent: true, opacity: 0.7 }));
+plant(-21.5, -15.5, 1.2); plant(21.5, 15, 1); plant(-21.5, 0.5, 1);
+
+/* ---- people ---- */
+const SKIN = [0xe2b48c, 0xd7a37c, 0xc68e66, 0xeac3a0];
+function person(o) {
+  const g = new THREE.Group(); const suit = M(o.suit), skin = M(o.skin || SKIN[rnd(4)]), pants = M(o.pants || 0x23272e);
+  const legs = [];
+  for (const s of [-1, 1]) {
+    const hip = new THREE.Group(); hip.position.set(s * 0.15, 0.85, 0);
+    const leg = new THREE.Mesh(new THREE.CylinderGeometry(0.11, 0.1, 0.8, 10), pants); leg.position.y = -0.4; hip.add(leg);
+    const shoe = new THREE.Mesh(new THREE.BoxGeometry(0.2, 0.1, 0.32), M(0x111111)); shoe.position.set(0, -0.82, 0.06); hip.add(shoe);
+    g.add(hip); legs.push(hip);
+  }
+  const torso = new THREE.Mesh(new THREE.CylinderGeometry(o.female ? 0.3 : 0.34, o.female ? 0.4 : 0.32, 0.85, 14), suit); torso.position.y = 1.28; g.add(torso);
+  if (o.female) { const skirt = new THREE.Mesh(new THREE.CylinderGeometry(0.36, 0.44, 0.5, 14), suit); skirt.position.y = 0.72; g.add(skirt); }
+  if (!o.female) {
+    const shirt = new THREE.Mesh(new THREE.BoxGeometry(0.22, 0.5, 0.05), M(0xf4f4f4)); shirt.position.set(0, 1.42, 0.31); g.add(shirt);
+    if (o.tie !== false) { const tie = new THREE.Mesh(new THREE.BoxGeometry(0.09, 0.42, 0.04), M(o.tie || 0x8a1c1c)); tie.position.set(0, 1.38, 0.34); g.add(tie); }
+  }
+  const arms = [];
+  for (const s of [-1, 1]) {
+    const sh = new THREE.Group(); sh.position.set(s * 0.42, 1.62, 0);
+    const arm = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.08, 0.72, 10), suit); arm.position.y = -0.36; sh.add(arm);
+    const hand = new THREE.Mesh(new THREE.SphereGeometry(0.08, 8, 6), skin); hand.position.y = -0.76; sh.add(hand);
+    sh.rotation.z = s * 0.08; g.add(sh); arms.push(sh);
+  }
+  const neck = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.1, 0.12, 8), skin); neck.position.y = 1.76; g.add(neck);
+  const head = new THREE.Mesh(new THREE.SphereGeometry(0.27, 18, 14), skin); head.position.y = 2.0; head.scale.set(1, 1.1, 1); g.add(head);
+  for (const s of [-1, 1]) { const e = new THREE.Mesh(new THREE.SphereGeometry(0.035, 8, 6), M(0x1a1a1a)); e.position.set(s * 0.09, 2.04, 0.24); g.add(e); }
+  if (o.female) {
+    const hc = M(o.hair || [0x2b1d14, 0x4a2f1f, 0x1c1410, 0x6b4a2e, 0x3a2418][rnd(5)]);
+    const top = new THREE.Mesh(new THREE.SphereGeometry(0.295, 18, 14, 0, Math.PI * 2, 0, Math.PI * 0.55), hc); top.position.y = 2.03; top.scale.set(1.02, 1.12, 1.06); top.rotation.x = -0.28; g.add(top);
+    const back = new THREE.Mesh(new THREE.SphereGeometry(0.27, 16, 12), hc); back.scale.set(1.05, 1.6, 0.6); back.position.set(0, 1.8, -0.13); g.add(back);
+  } else {
+    const hair = new THREE.Mesh(new THREE.SphereGeometry(0.285, 18, 14, 0, Math.PI * 2, 0, Math.PI * 0.45), M(o.hair || 0x2b211a)); hair.position.y = 2.04; hair.scale.set(1, 1.1, 1); hair.rotation.x = -0.25; g.add(hair);
+    if (o.beard) { const b = new THREE.Mesh(new THREE.SphereGeometry(0.2, 12, 10, 0, Math.PI * 2, Math.PI * 0.5, Math.PI * 0.5), M(o.hair || 0x2b211a)); b.position.set(0, 1.97, 0.07); b.scale.set(1.15, 0.8, 1.1); g.add(b); }
+  }
+  g.traverse(m => { if (m.isMesh) m.castShadow = true; });
+  g.position.set(o.x, 0, o.z); g.rotation.y = o.rot || 0; scene.add(g);
+  g.userData = { legs, arms, torso, phase: Math.random() * 6, typing: o.typing, baseTyping: o.typing, walkT: 0, sit: false };
+  if (o.sit) setSit(g, true);
+  return g;
+}
+function setSit(p, on) { p.userData.sit = on; p.position.y = on ? -0.32 : 0; }
+const PEOPLE = [];
+const secretary = person({ x: 19.5, z: 0.45, rot: Math.PI, female: true, suit: 0x3d5a80, hijab: 0x2f3e5c, typing: true, sit: true });
+const deputy = person({ x: 13, z: 5.8, rot: Math.PI, suit: 0x3b3b46, tie: 0x24527a, beard: true, typing: true, sit: true });
+PEOPLE.push(secretary, deputy,
+  person({ x: -6, z: 14.4, rot: Math.PI, suit: 0x7a6a50, tie: 0x4a3a2a }),
+  person({ x: 0, z: -13.8, suit: 0x4a4a5e, tie: 0x2a3d6b, typing: true, sit: true }),
+  person({ x: 2, z: 14.2, rot: Math.PI, female: true, suit: 0x7d4f4f, hijab: 0x9a6a5a, typing: true, sit: true }),
+  person({ x: -14.5, z: -10, suit: 0x3a4552, tie: 0x8a1c1c, beard: true, sit: true }), person({ x: -12, z: -10, suit: 0x52463a, tie: 0x1c4a8a, sit: true }),
+  person({ x: -9.5, z: -6, rot: Math.PI, female: true, suit: 0x40524a, hijab: 0x1f3d33, sit: true }));
+const CHAIR_SEAT = { x: 13, z: -11.55 };
+let player = null;
+function buildPlayer(f) {
+  if (player) scene.remove(player);
+  player = person(f ? { x: CHAIR_SEAT.x, z: CHAIR_SEAT.z, rot: 0, female: true, suit: 0xe07aa8, skin: 0xe8b993, hair: 0x3a2418 }
+                    : { x: CHAIR_SEAT.x, z: CHAIR_SEAT.z, rot: 0, suit: 0x1b2533, tie: 0xb0302a, skin: 0xd9a77e, hair: 0x1e1712 });
+  player.scale.set(1.1, 1.1, 1.1);
+}
+buildPlayer(false);
+const meRing = new THREE.Mesh(new THREE.RingGeometry(0.55, 0.68, 28), new THREE.MeshBasicMaterial({ color: 0x3fa9f5, transparent: true, opacity: 0.85 }));
+meRing.rotation.x = -Math.PI / 2; meRing.position.y = 0.03; scene.add(meRing);
+
+/* ---- visitors (created when needed) ---- */
+const VLOOK = {
+  rep:     { name: "مندوب شركة", short: "مندوب", suit: 0x6b6b7e, tie: 0xc47a1c },
+  planner: { name: "موظف التخطيط", short: "التخطيط", suit: 0x34495e, tie: 0x8a1c1c },
+  citizen: { name: "مواطن", short: "مواطن", suit: 0x6e7a5a, tie: false, beard: true },
+  finance: { name: "مدير المالية", short: "المالية", suit: 0x4a4a5e, tie: 0x2a3d6b, beard: true },
+  leave:   { name: "موظفة الخدمات", short: "الخدمات", female: true, suit: 0x7d4f4f, hijab: 0x9a6a5a },
+  it:      { name: "مسؤول تقنية المعلومات", short: "IT", suit: 0x2e5e4e, tie: 0x1c1c1c },
+  audit:   { name: "رئيسة فريق الرقابة المالية", short: "الرقابة", female: true, suit: 0x2b3a4a, hijab: 0x1c2733 },
+  audit2:  { name: "مدقق", short: "مدقق", suit: 0x3a3a3a, tie: 0x6b1c1c, hair: 0x555555 },
+  stat:    { name: "موظفة الإحصاء", short: "الإحصاء", female: true, suit: 0x40524a, hijab: 0x1f3d33 }
+};
+const VNPC = {};
+function visitor(who) {
+  if (who === "secretary") return secretary;
+  if (!VNPC[who]) { const p = person(Object.assign({ x: 0, z: -2, rot: 0 }, VLOOK[who])); p.visible = false; p.userData.state = "hidden"; VNPC[who] = p; PEOPLE.push(p); }
+  return VNPC[who];
+}
+
+/* ---- the hallucination ghost ---- */
+const ghost = new THREE.Group();
+const ghostMat = new THREE.MeshStandardMaterial({ color: 0xf4f6ff, emissive: 0x9fb0ff, emissiveIntensity: 0.35, transparent: true, opacity: 0.78, roughness: 0.4, side: THREE.DoubleSide });
+const gPts = []; for (let i = 0; i <= 14; i++) { const t = i / 14; const y = 1.6 - t * 1.9; const r = t < 0.35 ? Math.sin((t / 0.35) * Math.PI / 2) * 0.55 : 0.55 + (t - 0.35) * 0.35; gPts.push(new THREE.Vector2(Math.max(0.001, r), y)); }
+const gGeo = new THREE.LatheGeometry(gPts, 28);
+const gBase = gGeo.attributes.position.array.slice();
+const gBody = new THREE.Mesh(gGeo, ghostMat); ghost.add(gBody);
+for (const s of [-1, 1]) {
+  const eye = new THREE.Mesh(new THREE.SphereGeometry(0.11, 12, 10), new THREE.MeshBasicMaterial({ color: 0x10131c })); eye.scale.set(1, 1.4, 0.6); eye.position.set(s * 0.19, 1.15, 0.47); ghost.add(eye);
+  const glint = new THREE.Mesh(new THREE.SphereGeometry(0.03, 8, 6), new THREE.MeshBasicMaterial({ color: 0xffffff })); glint.position.set(s * 0.19 + 0.03, 1.22, 0.53); ghost.add(glint);
+  const arm = new THREE.Mesh(new THREE.SphereGeometry(0.16, 12, 10), ghostMat); arm.scale.set(1.6, 0.7, 0.7); arm.position.set(s * 0.68, 0.6, 0.05); ghost.add(arm); ghost.userData["arm" + s] = arm;
+}
+const mouth = new THREE.Mesh(new THREE.SphereGeometry(0.1, 12, 8), new THREE.MeshBasicMaterial({ color: 0x10131c })); mouth.scale.set(1.3, 0.8, 0.5); mouth.position.set(0, 0.88, 0.5); ghost.add(mouth);
+const gShadow = new THREE.Mesh(new THREE.CircleGeometry(0.7, 24), new THREE.MeshBasicMaterial({ color: 0x000000, transparent: true, opacity: 0.18 }));
+gShadow.rotation.x = -Math.PI / 2; scene.add(gShadow);
+ghost.visible = false; gShadow.visible = false; scene.add(ghost);
+function animateGhost(now) {
+  const a = gGeo.attributes.position.array;
+  for (let i = 0; i < a.length; i += 3) {
+    const y = gBase[i + 1];
+    if (y < 0.2) { const k = (0.2 - y) / 0.5; const ang = Math.atan2(gBase[i + 2], gBase[i]); const w = Math.sin(ang * 6 + now / 180) * 0.09 * k; a[i] = gBase[i] * (1 + w); a[i + 2] = gBase[i + 2] * (1 + w); a[i + 1] = y + Math.sin(ang * 6 + now / 180) * 0.06 * k; }
+  }
+  gGeo.attributes.position.needsUpdate = true;
+  for (const s of [-1, 1]) ghost.userData["arm" + s].position.y = 0.6 + Math.sin(now / 260 + s) * 0.12;
+}
+
+/* ---- beacon ---- */
+const beacon = new THREE.Group();
+const ring = new THREE.Mesh(new THREE.RingGeometry(1.0, 1.35, 40), new THREE.MeshBasicMaterial({ color: 0xffc400, side: THREE.DoubleSide, transparent: true, opacity: 0.9 }));
+ring.rotation.x = -Math.PI / 2; ring.position.y = 0.05; beacon.add(ring);
+const pillar = new THREE.Mesh(new THREE.CylinderGeometry(0.85, 0.85, 7, 24, 1, true), new THREE.MeshBasicMaterial({ color: 0xffd54a, transparent: true, opacity: 0.16, side: THREE.DoubleSide, depthWrite: false }));
+pillar.position.y = 3.5; beacon.add(pillar);
+const star = new THREE.Mesh(new THREE.OctahedronGeometry(0.28), new THREE.MeshBasicMaterial({ color: 0xffc400 })); star.position.y = 3.2; beacon.add(star);
+scene.add(beacon); beacon.position.set(999, 0, 999);
+const deskStar = new THREE.Mesh(new THREE.OctahedronGeometry(0.22), new THREE.MeshBasicMaterial({ color: 0xffc400 }));
+deskStar.position.set(13, 2.15, -10.5); deskStar.visible = false; scene.add(deskStar);
+const cup = new THREE.Group();
+{ const body = new THREE.Mesh(new THREE.CylinderGeometry(0.11, 0.09, 0.2, 14), M(0xf5f5f0)); body.position.y = 0.96; cup.add(body);
+  const cof = new THREE.Mesh(new THREE.CircleGeometry(0.1, 14), M(0x4a2c17)); cof.rotation.x = -Math.PI / 2; cof.position.y = 1.062; cup.add(cof);
+  const plate = new THREE.Mesh(new THREE.CylinderGeometry(0.17, 0.17, 0.015, 16), M(0xf5f5f0)); plate.position.y = 0.868; cup.add(plate); }
+cup.position.set(12.1, 0, -10.75); cup.visible = false; scene.add(cup);
+/* ---- toilet (WC) + the smoking employee (fire option) ---- */
+wall(0.25, 2.2, 3.4, 19.2, 7.0); wall(3.6, 2.2, 0.25, 21.0, 8.7);
+box(0.06, 0.5, 0.9, 19.06, 1.5, 5.6, 0x1f4e79, false, true);
+const wcSign = new THREE.Mesh(new THREE.PlaneGeometry(0.8, 0.4), new THREE.MeshBasicMaterial({ map: canvasTex(128, 64, (g, w, h) => { g.fillStyle = "#1f4e79"; g.fillRect(0, 0, w, h); g.fillStyle = "#fff"; g.font = "bold 34px Tahoma"; g.textAlign = "center"; g.fillText("WC 🚻", w / 2, 44); }) }));
+wcSign.position.set(19.05, 2.0, 6.2); wcSign.rotation.y = -Math.PI / 2; scene.add(wcSign);
+box(0.6, 0.45, 0.7, 22.2, 0.23, 7.8, 0xf0f0f0, true); box(0.7, 0.9, 0.4, 20.4, 0.75, 8.4, 0xe8e8e8, true);
+const sensor = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.18, 0.06, 14), new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0xff2020, emissiveIntensity: 0 }));
+sensor.position.set(20.9, 2.25, 6.4); scene.add(sensor);
+const smoker = person({ x: 21.2, z: 6.6, rot: -Math.PI / 2, suit: 0x56606b, tie: false, beard: true });
+smoker.visible = false;
+const cig = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.02, 0.18, 6), M(0xffffff)); cig.rotation.z = Math.PI / 2; cig.position.set(0.12, 1.9, 0.3); smoker.add(cig);
+const wcSmoke = new THREE.Group(); wcSmoke.position.set(20.9, 0, 6.5); wcSmoke.visible = false; scene.add(wcSmoke);
+const WCPUFF = [];
+for (let i = 0; i < 7; i++) { const sm = new THREE.Mesh(new THREE.SphereGeometry(0.25, 8, 6), new THREE.MeshStandardMaterial({ color: 0xbfbfbf, transparent: true, opacity: 0.5, depthWrite: false })); sm.userData.t = i / 7; wcSmoke.add(sm); WCPUFF.push(sm); }
+function animateWcSmoke(now) {
+  for (const sm of WCPUFF) { sm.userData.t = (sm.userData.t + 0.005) % 1; const t = sm.userData.t; sm.position.set(Math.sin(t * 6 + sm.id) * 0.3, 1.9 + t * 0.7, Math.cos(t * 5 + sm.id) * 0.3); sm.scale.setScalar(0.5 + t * 1.6); sm.material.opacity = 0.5 * (1 - t); }
+  sensor.material.emissiveIntensity = Math.sin(now / 80) > 0 ? 2.5 : 0.2;
+}
+
+/* ---- fire (optional scenario) ---- */
+const fireG = new THREE.Group(); fireG.position.set(-14.6, 0, 7.2); fireG.visible = false; scene.add(fireG);
+const FLAMES = [], SMOKE = [];
+for (let i = 0; i < 6; i++) {
+  const outer = new THREE.Mesh(new THREE.ConeGeometry(0.45, 1.6, 10), new THREE.MeshBasicMaterial({ color: 0xff5a00, transparent: true, opacity: 0.85, depthWrite: false }));
+  const inner = new THREE.Mesh(new THREE.ConeGeometry(0.22, 0.9, 10), new THREE.MeshBasicMaterial({ color: 0xffd23a, transparent: true, opacity: 0.95, depthWrite: false }));
+  const g = new THREE.Group(); outer.position.y = 0.8; inner.position.y = 0.5; g.add(outer); g.add(inner);
+  g.position.set((i % 3 - 1) * 0.9 + Math.random() * 0.3, 0, (Math.floor(i / 3) - 0.5) * 1.2); g.userData.ph = Math.random() * 6; fireG.add(g); FLAMES.push(g);
+}
+for (let i = 0; i < 10; i++) { const sm = new THREE.Mesh(new THREE.SphereGeometry(0.6, 10, 8), new THREE.MeshStandardMaterial({ color: 0x555555, transparent: true, opacity: 0.45, depthWrite: false })); sm.userData.t = i / 10; fireG.add(sm); SMOKE.push(sm); }
+const fireLight = new THREE.PointLight(0xff7a2a, 0, 14); fireLight.position.set(0, 1.8, 0); fireG.add(fireLight);
+function animateFire(now) {
+  for (const f of FLAMES) { const k = 0.8 + Math.sin(now / 90 + f.userData.ph) * 0.2 + Math.random() * 0.08; f.scale.set(1, k, 1); }
+  for (const sm of SMOKE) { sm.userData.t = (sm.userData.t + 0.004) % 1; const t = sm.userData.t; sm.position.set(Math.sin(t * 9 + sm.id) * 0.6, 1.4 + t * 5, Math.cos(t * 7 + sm.id) * 0.5); sm.scale.setScalar(0.6 + t * 1.6); sm.material.opacity = 0.5 * (1 - t); }
+  fireLight.intensity = 2 + Math.sin(now / 70) * 0.6;
+}
+let alarmT = null;
+function setAlarm(on, noFire) {
+  clearInterval(alarmT); alarmT = null; fireG.visible = on && !noFire; $("alarm").classList.toggle("hidden", !on);
+  if (!on) sensor.material.emissiveIntensity = 0;
+  if (on) { const r = () => { if (S && !S.paused) { tone(950, 650, 0.32, 0.1, "sawtooth"); tone(950, 650, 0.32, 0.1, "sawtooth", 0.4); } }; r(); alarmT = setInterval(r, 1100); }
+}
+let evacSaved = null;
+function evacPathFor(p) {
+  const x = p.position.x, z = p.position.z, pts = [];
+  const r = roomOf(x, z);
+  if (r === "office") { if (z < -9) pts.push(DESK_SIDE); pts.push({ x: 15.5, z: -5 }, { x: 15.5, z: -2.2 }, { x: 6, z: -2.2 }, { x: 6, z: 11.5 }); }
+  else if (r === "meeting") { if (z < -8) pts.push({ x: x, z: -10.9 }, { x: -16.5, z: -10.9 }, { x: -16.5, z: -2.3 }); else pts.push({ x: x, z: -4.6 }, { x: x, z: -2.3 }); pts.push({ x: 6, z: -2.3 }, { x: 6, z: 11.5 }); }
+  else if (z < -10) pts.push({ x: x - 1.9, z: z }, { x: x - 1.9, z: -2.2 }, { x: 6, z: -2.2 }, { x: 6, z: 11.5 });
+  else if (x > 17 && z > -1.5 && z < 3) pts.push({ x: 18.4, z: z }, { x: 18.4, z: 11 });
+  else if (x > 9 && z > 3 && z < 8) pts.push({ x: 9.5, z: z }, { x: 9.5, z: 11 });
+  else if (z > -3.5 && z < 3) pts.push({ x: x, z: -1.9 }, { x: 6, z: -1.9 }, { x: 6, z: 11.5 });
+  return pts;
+}
+function startEvac() {
+  evacSaved = [];
+  let i = 0;
+  for (const p of PEOPLE) {
+    if (!p.visible) continue;
+    evacSaved.push({ p, x: p.position.x, z: p.position.z, rot: p.rotation.y, sit: p.userData.sit, typing: p.userData.typing, state: p.userData.state });
+    const slot = { x: 8.4 + (i % 7) * 1.05, z: 15.0 + Math.floor(i / 7) * 0.9 }; i++;
+    const path = evacPathFor(p); path.push(slot);
+    setTimeout(() => { if (S && S.evac) walkTo(p, path, () => { p.rotation.y = Math.PI; }, 3.0 + Math.random() * 0.6); }, 300 + Math.random() * 1200);
+  }
+}
+function endEvac() {
+  if (S) { S.evac = false; S.camAt = null; }
+  smoker.visible = false; wcSmoke.visible = false;
+  setAlarm(false);
+  if (!evacSaved) return;
+  for (const o of evacSaved) { walkers.delete(o.p); o.p.position.set(o.x, 0, o.z); o.p.rotation.y = o.rot; setSit(o.p, o.sit); o.p.userData.typing = o.typing; if (o.state) o.p.userData.state = o.state; }
+  evacSaved = null;
+}
+
+
+/* ---- labels ---- */
+const SPOTS = {
+  desk:      { x: 13, z: -9.0, y: 0.2, label: "🤖 حاسوبك" },
+  meeting:   { x: -12, z: -4.6, label: "👥 قاعة الاجتماعات" },
+  secretary: { x: 19.5, z: -0.8, label: "🗂️ السكرتيرة" },
+  deputy:    { x: 13, z: 4.6, label: "👔 المعاون" },
+  finance:   { x: 0, z: -10.6, label: "💰 المالية" },
+  hr:        { x: 2, z: 11, label: "👤 الموارد البشرية" },
+  archive:   { x: -12.5, z: 4.2, label: "🗄️ الأرشيف" },
+  reception: { x: -6, z: 11.6, label: "🙋 الاستعلامات" },
+  assembly:  { x: 11.5, z: 13.4, label: "🟢 نقطة التجمع" },
+  wc:        { x: 21.0, z: 7.0, label: "🚻 دورة المياه" }
+};
+const labelEls = {};
+for (const k in SPOTS) { const d = document.createElement("div"); d.className = "lbl"; d.textContent = SPOTS[k].label; $("labels").appendChild(d); labelEls[k] = d; }
+const tagEls = {};
+function tagFor(who) { if (!tagEls[who]) { const d = document.createElement("div"); d.className = "tag"; $("tags").appendChild(d); tagEls[who] = d; } return tagEls[who]; }
+
+/* ============================================================ input */
+const keys = {};
+addEventListener("keydown", e => {
+  keys[e.key.toLowerCase()] = true;
+  if ((e.key === "e" || e.key === "E" || e.key === " " || e.key === "Enter") && !$("act").classList.contains("hidden") && modalClosed()) { e.preventDefault(); interact(); }
+});
+addEventListener("keyup", e => { keys[e.key.toLowerCase()] = false; });
+let joyV = { x: 0, z: 0 }, joyId = null, joyO = null;
+const joy = $("joy"), knob = $("knob");
+joy.addEventListener("pointerdown", e => { joyId = e.pointerId; const r = joy.getBoundingClientRect(); joyO = { x: r.left + r.width / 2, y: r.top + r.height / 2 }; joy.setPointerCapture(e.pointerId); moveJoy(e); });
+joy.addEventListener("pointermove", e => { if (e.pointerId === joyId) moveJoy(e); });
+const endJoy = e => { if (e.pointerId === joyId) { joyId = null; joyV = { x: 0, z: 0 }; knob.style.transform = ""; } };
+joy.addEventListener("pointerup", endJoy); joy.addEventListener("pointercancel", endJoy);
+function moveJoy(e) {
+  let dx = e.clientX - joyO.x, dy = e.clientY - joyO.y; const L = Math.hypot(dx, dy), max = 46;
+  if (L > max) { dx *= max / L; dy *= max / L; }
+  knob.style.transform = `translate(${dx}px,${dy}px)`;
+  joyV = { x: dx / max, z: dy / max };
+}
+$("act").addEventListener("click", () => interact());
+$("goBtn").addEventListener("click", e => { e.stopPropagation(); startAuto(); });
+
+/* ============================================================ game state */
+let S = null;
+function newState(name) {
+  return {
+    name, score: 0, combo: 0, clock: 8 * 60, evIndex: -1, ev: null, evStart: 0, queue: EVENTS.filter(e => !e.optional || $("fireOpt").checked),
+    caught: 0, missed: 0, missedList: [], leaks: 0, late: 0, missedTasks: 0, ministryHarm: 0,
+    fast: 0, claudeUses: 0, stars: [], evMistakes: 0, meetingDeadline: null,
+    gate: { ok: 0, bad: 0 }, waited: {}, angry: {}, mode: "seat", ringUntil: 0, busy: false,
+    V: makeVariants(), playing: true
+  };
+}
+function makeVariants() {
+  const letters = shuffle([
+    { t: "نزاع مع مقاول على عقد صيانة المبنى", ok: "القانونية", wrong: "المالية" },
+    { t: "طلب نقل موظف إلى فرع المحافظة", ok: "الموارد البشرية", wrong: "القانونية" },
+    { t: "عطل في منظومة الأرشفة الإلكترونية", ok: "تقنية المعلومات", wrong: "للحفظ" },
+    { t: "دعوة لورشة تدريبية في الوزارة الأسبوع القادم", ok: "للمشاركة: ترشيح موظفَين", wrong: "للحفظ" },
+    { t: "مطالبة مالية من شركة النقل المتعاقدة", ok: "المالية", wrong: "الموارد البشرية" }
+  ]).slice(0, 4);
+  const wrongIdx = shuffle([0, 1, 2, 3]).slice(0, 2);
+  letters.forEach((l, i) => l.trap = wrongIdx.includes(i));
+  return {
+    mailTrap: pick([
+      { t: "الوزارة: تزويدنا ببيانات الملاك قبل يوم الخميس", why: "طلب من الوزارة بموعد نهائي قريب" },
+      { t: "ديوان الرقابة: الإجابة عن الاستيضاح خلال 3 أيام", why: "جهة رقابية وموعد نهائي" }
+    ]),
+    letters,
+    secret: pick(["تقرير التدقيق الداخلي عن العقود", "محضر لجنة التحقيق الإداري"]),
+    promise: pick([
+      { s: "وسنقوم بتعويضكم مالياً خلال 7 أيام.", why: "التعويض المالي ليس من صلاحية المدير العام، ويحتاج موافقة وزارية" },
+      { s: "وقد تقرر نقل الموظف المقصّر فوراً.", why: "النقل قرار إداري يحتاج تحقيقاً، ولا يُعلن للمواطن في رد على شكوى" }
+    ]),
+    dup: pick([{ item: "صيانة المولدات", v: 12 }, { item: "الوقود", v: 9 }]),
+    date: pick([[12, 20], [9, 19], [15, 25]]),
+    circ: pick([{ fake: "4417/ت", real: "3982/ت" }, { fake: "2290/م", real: "2209/م" }, { fake: "715/خ", real: "751/خ" }]),
+    app: pick([
+      { item: "رسم إصدار هوية الموظف", bad: "5,000 دينار", ok: "25,000 دينار" },
+      { item: "مدة إنجاز معاملة التقاعد", bad: "3 أيام", ok: "30 يوماً" },
+      { item: "المستمسكات المطلوبة لتجديد الإجازة", bad: "هوية فقط", ok: "هوية + بطاقة سكن + صورة" }
+    ])
+  };
+}
+
+/* ============================================================ events
+   kind: "desk"  = on your computer (you stay seated)
+         "visit" = someone comes to your office (from: bench | secretary | hall)
+         "go"    = you walk to a meeting
+   intercom.best: "in" | "wait" | "deputy"                                       */
+const DEPTS = ["القانونية", "المالية", "الموارد البشرية", "تقنية المعلومات", "للحفظ", "للمشاركة: ترشيح موظفَين"];
+const EVENTS = [
+  { id: "mail", kind: "desk", time: 480, title: "📧 البريد الإلكتروني", task: "اضغط «افتح الحاسوب»: 12 رسالة جديدة",
+    steps: V => [
+      { type: "choice", say: "صباح الخير! وصلتك <b>12 رسالة</b> منذ أمس. الوقت ضيق، وكلود جاهز على شاشتك.", q: "ماذا تطلب من كلود؟",
+        opts: [
+          { t: "«شوف البريد»", p: 0, fb: "أمر غامض… أعطاك كلود كلاماً عاماً لا يفيد. الأمر الواضح يوفّر وقتك (الأسبوع 1: هندسة الأوامر)." },
+          { t: "«صنّف الرسائل: عاجل / مهم / عادي، واستخرج كل موعد نهائي والجهة المرسِلة»", p: 20, claude: true, fb: "أمر واضح ومحدّد. كلود أعطاك جدولاً مرتباً." },
+          { t: "«احذف كل الرسائل غير المهمة»", p: -30, fb: "لا تعطِ الذكاء صلاحية حذف دون مراجعة (الأسبوع 6: مسوّدة لا إرسال). قد يحذف شيئاً مهماً." }
+        ] },
+      { type: "rows", say: "هذا تصنيف كلود لأهم 4 رسائل. <b>راجِعه</b>: أبقِ الصحيح، وصحّح الخطأ إن وجد.", options: ["عاجل", "مهم", "عادي"],
+        rows: shuffle([
+          { label: V.mailTrap.t, sug: "عادي", ok: "عاجل", trap: true, tl: "رسالة مهمة صنّفها كلود «عادي»", week: "الأسبوع 7: راجِع تصنيف المساعد للبريد", why: V.mailTrap.why },
+          { label: "طلب صيانة مكيفات الطابق الثاني", sug: "مهم", ok: "مهم" },
+          { label: "النشرة الأسبوعية لأخبار الأقسام", sug: "عادي", ok: "عادي" },
+          { label: "دعوة لحفل تقاعد زميل يوم الأحد القادم", sug: "عادي", ok: "عادي" }
+        ]) }
+    ] },
+  { id: "paper", kind: "visit", from: "secretary", who: "secretary", time: 500, title: "🗂️ البريد الورقي", task: "السكرتيرة تطرق الباب: معها 4 كتب",
+    steps: V => [
+      { type: "rows", say: "السكرتيرة: «أستاذ، وصلت أربعة كتب. صوّرتها وكلود اقترح <b>هامشاً</b> لكل كتاب.»", q: "اختر الهامش الصحيح لكل كتاب:", options: DEPTS,
+        rows: V.letters.map(l => ({ label: l.t, sug: l.trap ? l.wrong : l.ok, ok: l.ok, trap: l.trap, ptsOk: 30, tl: "هامش خاطئ: «" + l.t + "»", week: "الأسبوع 7: الإحالة قرارك أنت لا كلود", why: "الصحيح: " + l.ok })) }
+    ] },
+  { id: "rep", kind: "visit", from: "bench", who: "rep", time: 520, title: "🧾 مندوب شركة", task: "السكرتيرة على الخط…", filler: true,
+    intercom: { txt: "أستاذ، <b>مندوب شركة قرطاسية</b> يريد يعرض عليك أسعار أوراق وأحبار.", best: "deputy",
+      good: "👔 أحسنت! عروض القرطاسية من شغل المعاون. وفّرت وقتك للمهم.",
+      in: "⏳ ضاع ربع ساعة على عرض أسعار كان المعاون يستلمه.", wait: "😐 بقي ينتظر بلا فائدة، والموضوع أصلاً من شغل المعاون." },
+    inSay: "المندوب: «عندنا عرض خاص على الأحبار والأوراق…» 📄<br>ربع ساعة من وقتك على موضوع <b>يستلمه المعاون</b>." },
+  { id: "secret", kind: "visit", from: "secretary", who: "secretary", time: 540, title: "🔒 كتاب سرّي", task: "السكرتيرة تدخل: معها كتاب مختوم «سرّي»",
+    steps: V => [
+      { type: "choice", say: `السكرتيرة: «وصل <b>${V.secret}</b>، مختوم بختم <b>سرّي</b>، وعدد صفحاته 18.»`, q: "ماذا تفعل؟",
+        opts: [
+          { t: "أصوّره وأطلب من كلود تلخيصه حتى أوفّر الوقت", p: -80, leak: true, fb: "⚠️ <b>تسريب!</b> السرّي لا يُرفع إلى أي خدمة ذكاء اصطناعي خارجية (الأسبوع 2: تصنيف البيانات)." },
+          { t: "أقرأه بنفسي وأحفظه في الخزانة", p: 50, fb: "🔒 قرار صحيح. السرّي يبقى عندك، حتى لو أخذ وقتاً أطول." },
+          { t: "أعطيه للسكرتيرة لتلخّصه لي", p: 0, fb: "ليس تسريباً للخارج، لكنه يوسّع دائرة الاطلاع على كتاب سرّي. الأفضل أن تقرأه بنفسك." }
+        ] }
+    ] },
+  { id: "letter", kind: "visit", from: "bench", who: "planner", time: 555, title: "✉️ كتاب رسمي للوزارة", task: "السكرتيرة على الخط…",
+    intercom: { txt: "<b>موظف التخطيط</b> عنده كتاب للوزارة لازم يطلع <b>اليوم</b> بتوقيعك.", best: "in",
+      good: "🚪 صحيح. كتاب للوزارة بموعد اليوم يحتاج توقيعك أنت.",
+      wait: "😠 الكتاب موعده اليوم… خلّيته ينتظر وتأخر.", deputy: "👔 المعاون رجّعه: «هذا كتاب للوزارة، يحتاج توقيع المدير العام.»" },
+    steps: V => [
+      { type: "choice", say: "موظف التخطيط: «أستاذ، كتبته بكلود بدقيقتين! بس وقّع.»", claudeTxt: () => `السادة وزارة الخدمات العامة المحترمون،<br>إشارةً إلى <mark>تعميمكم المرقّم ${V.circ.fake}</mark> في 3/9/2026، نرفق لكم جدول احتياجات دائرتنا من التدريب لعام 2027.<br>مع التقدير.`, q: "ماذا تفعل قبل التوقيع؟",
+        opts: [
+          { t: "أوقّع، الصياغة ممتازة", p: -50, missTrap: { tl: "رقم تعميم مختلق في كتاب رسمي", week: "الأسبوع 1: افترض أن الإجابة خاطئة حتى يثبت العكس", why: `لا يوجد تعميم بالرقم ${V.circ.fake}؛ الصحيح ${V.circ.real}` }, fb: `❌ الكتاب ذهب للوزارة برقم تعميم <b>غير موجود</b> (${V.circ.fake}). كلود اخترعه، والصحيح ${V.circ.real}.` },
+          { t: "أطلب منه يطابق رقم التعميم مع الأرشيف أولاً", p: 100, catchTrap: true, fb: `🕵️ <b>كشفت الهلوسة!</b> الأرشيف: لا يوجد تعميم بالرقم ${V.circ.fake}. الرقم الصحيح <b>${V.circ.real}</b>. كلود كتبه بثقة لكنه مخترع.` },
+          { t: "أمنع استعمال كلود في الكتب الرسمية نهائياً", p: 0, fb: "مبالغة. كلود يوفّر الوقت في الصياغة؛ المهم أن تتحقق من الأرقام والمراجع." }
+        ] },
+      { type: "choice", say: "الموظف: «أستاذ، هذا النوع من الكتب أكتبه <b>كل أسبوع</b> تقريباً.»", q: "بماذا تنصحه؟",
+        opts: [
+          { t: "يكتب أمراً جديداً لكلود كل مرة", p: 0, fb: "يشتغل، لكنه يعيد نفس الجهد كل أسبوع." },
+          { t: "يحوّله إلى <b>قالب</b> فيه فراغات (الجهة، الرقم، التاريخ) ويحتفظ به", p: 30, claude: true, fb: "✅ هذا درس الأسبوع 3: <b>الأمر يُكتب مرة لحالة واحدة، والقالب فيه فراغات تملؤها كل مرة.</b>" },
+          { t: "يرفع كل كتب الدائرة القديمة إلى كلود ليتعلّم منها", p: -30, fb: "❌ قد تحوي معلومات شخصية أو سرية. ما لا تريد خروجه من الدائرة لا ترفعه (الأسبوع 2–3)." }
+        ] }
+    ] },
+  { id: "citizen", kind: "visit", from: "bench", who: "citizen", time: 585, title: "🙋 شكوى مواطن", task: "السكرتيرة على الخط…",
+    intercom: { txt: "<b>مواطن</b> ينتظر من الصبح، معاملته متأخرة <b>3 أشهر</b>.", best: "in",
+      good: "🚪 صحيح. مواطن متضرر وانتظر طويلاً، يستحق أن تسمعه.",
+      wait: "😠 المواطن انتظر 3 أشهر… وانتظر أكثر اليوم. صبره نفد.", deputy: "👔 المواطن رفض: «أريد المدير العام، راجعت المعاون مرتين!»" },
+    steps: V => [
+      { type: "choice", say: "المواطن <b>علي حسن كاظم</b> سلّمك شكوى مكتوبة: رقم الهوية <b>1998xxxx4417</b>، هاتف <b>0780xxxx512</b>، معاملته متأخرة 3 أشهر.", q: "تريد مسودة رد سريعة من كلود. كيف تبدأ؟",
+        opts: [
+          { t: "ألصق الشكوى كما هي في كلود", p: -80, leak: true, fb: "⚠️ <b>تسريب بيانات شخصية</b>: الاسم ورقم الهوية والهاتف. احذف ما لا يفيد ورمّز الباقي أولاً (الأسبوع 3 و5: أداة الماسك)." },
+          { t: "أخفي الاسم والهوية والهاتف أولاً، ثم أطلب المسودة", p: 40, claude: true, fb: "🔒 ممتاز. كلود لا يحتاج اسم المواطن ليكتب رداً جيداً." },
+          { t: "أكتب الرد بخط يدي دون كلود", p: 0, fb: "آمن، لكنه بطيء. يمكنك استعمال كلود بأمان إذا أخفيت البيانات." }
+        ] },
+      { type: "choice", claudeTxt: () => `السيد المواطن المحترم،<br>نعتذر عن التأخير في معاملتكم، وقد وجّهنا القسم المختص بإنجازها خلال أسبوعين. <mark>${V.promise.s}</mark><br>مع التقدير.`, q: "مسودة كلود جاهزة. ماذا تفعل؟",
+        opts: [
+          { t: "أوقّعها كما هي", p: -50, missTrap: { tl: "وعد في رد الشكوى خارج صلاحيتك", week: "الأسبوع 7: راجِع كل جملة قبل التوقيع", why: V.promise.why }, fb: "❌ وقّعت على وعد ليس من صلاحيتك: " + V.promise.why + "." },
+          { t: "أحذف الجملة الأخيرة ثم أوقّع", p: 100, catchTrap: true, fb: "🕵️ <b>كشفت الفخ!</b> " + V.promise.why + "." },
+          { t: "أرفض المسودة كلها وأكتب من جديد", p: 20, fb: "آمن، لكنك أضعت وقتاً. كانت المسودة جيدة عدا جملة واحدة." }
+        ] }
+    ] },
+  { id: "finance", kind: "visit", from: "bench", who: "finance", time: 605, title: "📊 ملف المصروفات", task: "السكرتيرة على الخط…",
+    intercom: { txt: "<b>مدير المالية</b> جاب ملف مصروفات الشهر. الوزارة تريد أرقامه في اجتماع 11.", best: "in",
+      good: "🚪 صحيح. تحتاج هذه الأرقام قبل الاجتماع.",
+      wait: "😠 الاجتماع قريب وأرقام المالية لم تُراجَع بعد!", deputy: "👔 المعاون رجّعه: «الأرقام ستُعرض باسمك في الاجتماع، راجعها بنفسك.»" },
+    steps: V => [
+      { type: "choice", say: () => "مدير المالية: «هذا ملف مصروفات الشهر (بملايين الدنانير). الوزارة تسأل عن أعلى 3 أبواب صرف.»" + expTable(V), q: "ماذا تفعل؟",
+        opts: [
+          { t: "أطلب من كلود مباشرة: «أعطني أعلى 3 أبواب صرف»", p: -30, missTrap: { tl: "صف مكرر في ملف المصروفات", week: "الأسبوع 5: بيانات سيئة تدخل، قرار سيئ يخرج", why: "صف «" + V.dup.item + "» مكرر فتضاعف رقمه" }, fb: () => "❌ النتيجة مضخّمة: «" + V.dup.item + "» ظهر <b>" + (V.dup.v * 2) + " مليون</b> لأن الصف مكرر." + expBars(V, false) },
+          { t: "أنظّف الصف المكرر أولاً، ثم أطلب التحليل", p: 50, catchTrap: true, claude: true, fb: () => "📊 <b>ممتاز!</b> حذفت الصف المكرر فصارت الأرقام صحيحة." + expBars(V, true) }
+        ] },
+      { type: "choice", say: "مدير المالية: «الأرقام جاهزة. نرسل الجدول للوزارة؟»", q: "حسب <b>هرم المعرفة</b> (بيانات ← معلومات ← رؤية ← قرار)، ماذا ينقص؟",
+        opts: [
+          { t: "لا شيء، نرسل الجدول كما هو", p: 0, fb: "الجدول <b>بيانات ومعلومات</b> فقط. الوزارة تحتاج رؤية وقراراً (الأسبوع 5)." },
+          { t: "نضيف الرؤية والقرار: «رواتب العقود أكبر باب، ونقترح مراجعة العقود المنتهية»", p: 30, fb: "✅ هذا هو الهرم كاملاً: من الأرقام إلى رؤية ثم قرار (الأسبوع 5)." }
+        ] }
+    ] },
+  { id: "smoke", optional: "fire", fire: true, kind: "alarm", noFire: true, camAt: { x: 20.8, z: 6.4 }, time: 610, title: "🚨 إنذار دخان!", task: "حسّاس الدخان في دورة المياه",
+    steps: V => [
+      { type: "choice", say: "🚨 <b>إنذار!</b> لوحة الحسّاسات: <b>حسّاس الدخان — دورة المياه، الطابق الأول</b>. الموظفون ينظرون إليك…", q: "ماذا تفعل؟",
+        opts: [
+          { t: "أطفئ الإنذار، أكيد عطل في الحسّاس", p: -40, fb: "❌ لا تفترض أن الإنذار عطل. ربما حريق حقيقي. تحقّق أولاً." },
+          { t: "أرسل مسؤول السلامة يتحقق فوراً، والموظفون مستعدّون للإخلاء", p: 40, fb: "✅ صحيح: تحقّق سريع، والجميع جاهز للخروج إذا تأكد الحريق." },
+          { t: "أخلي المبنى كله فوراً", p: 20, fb: "آمن 👍، لكنه أوقف الدائرة نصف ساعة. التحقق السريع من مكان الحسّاس كان يكفي أولاً." }
+        ] },
+      { type: "info", alarmOff: true, say: "🧯 مسؤول السلامة: «أستاذ، <b>ماكو حريق</b>. موظف كان <b>يدخّن في دورة المياه</b> 🚬 والحسّاس اشتغل. سبّب ذعراً بين المراجعين.»", btn: "متابعة ←" },
+      { type: "choice", say: "طلبت من كلود مسودة أمر إداري بالعقوبة:", claudeTxt: () => "<b>أمر إداري</b><br>نظراً لتدخين الموظف في دورة المياه وتسبّبه بإنذار حريق، تقرّر <mark>فصل الموظف (سعد عباس)</mark> من الخدمة، <mark>ويُعلَّق هذا الأمر على لوحة الإعلانات باسمه الكامل</mark> ليكون عبرة.", q: "ماذا تفعل بالمسودة؟",
+        opts: [
+          { t: "أوقّعها كما هي، ليكون عبرة", p: -60, missTrap: { tl: "عقوبة مبالغ بها وتشهير باسم الموظف", week: "الأسبوع 2 و7: العقوبة قرار بشري، ولا تشهير بالبيانات الشخصية", why: "العقوبة تكون متناسبة وبعد سماع إفادته، ولا يُعلَّق اسمه للتشهير" }, fb: "❌ كلود بالغ: الفصل عقوبة لا تتناسب مع المخالفة، والتشهير باسمه يمسّ خصوصيته. العقوبة <b>قرارك أنت</b> بعد التحقيق." },
+          { t: "أسمع إفادته أولاً، ثم عقوبة <b>متناسبة</b> (لفت نظر أو إنذار) وفق قانون انضباط موظفي الدولة، <b>بلا تشهير</b>", p: 100, catchTrap: true, fb: "🕵️ <b>أحسنت!</b> كشفت مبالغة كلود. سماع الموظف، ثم عقوبة متناسبة، ومن دون نشر اسمه." },
+          { t: "أتجاهل الموضوع، مجرد سيجارة", p: -30, fb: "❌ التدخين داخل الدائرة مخالفة، وأوقف العمل وسبّب ذعراً. لا بد من إجراء متناسب." }
+        ] },
+      { type: "choice", say: "حتى لا يتكرر هذا…", q: "ما الإجراء الصحيح؟",
+        opts: [
+          { t: "نفصل حسّاسات الدخان حتى لا تزعجنا", p: -50, fb: "❌ الحسّاس أنقذ الموقف! تعطيله يعرّض الجميع للخطر في حريق حقيقي." },
+          { t: "تعميم بمنع التدخين داخل البناية + مكان مخصص للتدخين في الخارج", p: 30, fb: "✅ حل عملي: القاعدة واضحة للجميع، والبديل موجود." }
+        ] }
+    ], after: () => { S.camAt = null; smoker.visible = false; wcSmoke.visible = false; } },
+  { id: "leave", kind: "visit", from: "bench", who: "leave", time: 625, title: "📝 طلب إجازة", task: "السكرتيرة على الخط…", filler: true,
+    intercom: { txt: "<b>موظفة من الخدمات</b> تريد توقيع إجازة اعتيادية <b>يوم واحد</b>.", best: "deputy",
+      good: "👔 أحسنت! توقيع الإجازة القصيرة من صلاحية المعاون.",
+      in: "⏳ وقّعت إجازة يوم واحد بنفسك… وهي من صلاحية المعاون.", wait: "😐 انتظرت ساعة على توقيع كان المعاون يكمله بدقيقة." },
+    inSay: "الموظفة: «شكراً أستاذ!» ✍️<br>توقيع إجازة يوم واحد <b>من صلاحية المعاون</b>. التفويض يوفّر وقتك للقرارات الكبيرة." },
+  { id: "brief", kind: "desk", time: 635, title: "📝 موجز الاجتماع", task: "اضغط «افتح الحاسوب»: كلود جهّز موجز اجتماع 11:00",
+    steps: V => [
+      { type: "choice", claudeTxt: () => `<b>موجز اجتماع المدراء — الساعة 11:00</b><br>• بيانات الملاك مطلوبة من الوزارة.<br>• شكوى المواطن: الرد خلال أسبوعين.<br>• <mark>اجتماع الوزارة القادم يوم ${V.date[1]} تشرين الثاني.</mark>`, q: "الاجتماع بعد دقائق. ماذا تفعل بالموجز؟",
+        opts: [
+          { t: "أطبعه وأدخل الاجتماع به", p: -50, missTrap: { tl: "تاريخ خاطئ في موجز الاجتماع", week: "الأسبوع 7: طابِق الموجز مع المصدر", why: `الرسالة الأصلية تقول ${V.date[0]} لا ${V.date[1]}` }, fb: `❌ في الموجز تاريخ خاطئ: الرسالة الأصلية تقول <b>${V.date[0]}</b> تشرين الثاني، وكلود كتب ${V.date[1]} (هلوسة).` },
+          { t: "أطابق التواريخ مع الرسالة الأصلية بسرعة", p: 100, catchTrap: true, fb: `🕵️ <b>كشفت الهلوسة!</b> الرسالة الأصلية تقول <b>${V.date[0]}</b> تشرين الثاني لا ${V.date[1]}. صحّحت الموجز.` }
+        ] },
+      { type: "info", say: "⏰ <b>الاجتماع الساعة 11:00!</b> لديك حتى <b>11:05</b> للوصول إلى قاعة الاجتماعات. قم من مكتبك وأسرع! 🏃", btn: "🚶 انطلق!" }
+    ], after: () => { S.clock = 10 * 60 + 50; S.meetingDeadline = 11 * 60 + 5; } },
+  { id: "meeting", kind: "go", spot: "meeting", time: 650, title: "👥 اجتماع المدراء", task: "أسرع إلى قاعة الاجتماعات قبل 11:05!", keepClock: true,
+    steps: V => [
+      { type: "arrive" },
+      { type: "choice", say: "مدير الخدمات: «كم صرفنا هذا الشهر على <b>" + V.dup.item + "</b>؟ الوزارة ستسأل.»", q: "ماذا تجيب؟",
+        opts: shuffle([
+          { t: V.dup.v + " مليون دينار", p: 40, fb: "✅ صحيح، هذا الرقم بعد حذف الصف المكرر." },
+          { t: (V.dup.v * 2) + " مليون دينار", p: -30, fb: "❌ هذا الرقم المضخّم بسبب الصف المكرر. الرقم الصحيح " + V.dup.v + " مليون." }
+        ]) },
+      { type: "info", say: "👥 انتهى الاجتماع. <b>ارجع إلى مكتبك</b>، الناس تنتظرك.", btn: "🚶 ارجع لمكتبي" }
+    ] },
+  { id: "skill", kind: "desk", time: 700, title: "⚠️ تنبيه على حاسوبك", task: "اضغط «افتح الحاسوب»: تنبيه أمني",
+    steps: V => [
+      { type: "choice", ring: true, claudeTxt: () => "⚠️ <b>تنبيه:</b> مهارة جديدة اسمها <b>«ملخّص سريع»</b> نُصّبت على حاسوب قسم الإحصاء من <b>موقع مجهول</b>.<br>الوصف يقول: «تلخّص البريد». لكنها تطلب صلاحية: <mark>قراءة كل البريد + الإرسال إلى خادم خارجي</mark>.", q: "📞 ترفع سماعة الهاتف. بمن تتصل؟",
+        opts: [
+          { t: "📞 مسؤول تقنية المعلومات", p: 30, fb: "✅ صحيح. هذه مسألة أمن معلومات. مسؤول الـ IT في طريقه إليك." },
+          { t: "📞 السكرتيرة", p: 0, fb: "السكرتيرة حوّلت المكالمة إلى مسؤول الـ IT. وصلت، لكن بعد دقائق." },
+          { t: "📞 مدير المالية", p: -20, fb: "❌ المالية لا علاقة لها. ضاع وقت، ثم اتصلت بمسؤول الـ IT." }
+        ] }
+    ] },
+  { id: "it", kind: "visit", from: "hall", who: "it", time: 705, title: "🧩 مهارة مجهولة المصدر", task: "مسؤول الـ IT قادم إلى مكتبك…",
+    steps: V => [
+      { type: "choice", say: "مسؤول الـ IT: «أستاذ، الموظف نزّلها من الإنترنت لأنها تختصر وقته. <b>الوصف</b> يقول تلخيص، لكن <b>المتن</b> فيه أمر يرسل البريد إلى خادم خارجي.»", q: "ماذا تقرر؟",
+        opts: [
+          { t: "خلّوها، تختصر الوقت والموظف مرتاح", p: -80, leak: true, fb: "⚠️ <b>تسريب!</b> بريد الدائرة يذهب إلى خادم مجهول. <b>الخطر فيما لا تعلنه المهارة</b> (الأسبوع 4)." },
+          { t: "تُحذف فوراً، ولا تُنصّب إلا مهارات من مصدر موثوق بعد قراءة متنها", p: 100, catchTrap: true, fb: "🛡️ <b>قرار صحيح!</b> تثبيت مهارة من مصدر مجهول = تثبيت برنامج مجهول على حاسوب الدائرة (الأسبوع 4)." },
+          { t: "نسأل كلود: هل هذه المهارة آمنة؟", p: -20, fb: "❌ كلود قد لا يرى ما يخفيه المتن. فحص المهارة ومصدرها <b>مسؤولية بشرية</b> (الأسبوع 4)." }
+        ] }
+    ] },
+  { id: "break", kind: "break", time: 720, title: "☕ استراحة الغداء", task: "12:00 – 12:30: استراحة غداء وقهوة",
+    steps: V => [
+      { type: "choice", say: "🕛 الساعة <b>12:00</b>. نصف ساعة <b>استراحة</b>: غداء وقهوة ☕🍽️<br>السكرتيرة: «أستاذ، الغداء وصل، والموظفون في قاعة الاستراحة.»", q: "كيف تقضي الاستراحة؟",
+        opts: [
+          { t: "☕ أتغدّى وأشرب قهوة وأرتاح نصف ساعة", p: 30, fb: "😌 ممتاز! الراحة ترجّع تركيزك… والتركيز هو الذي يكشف أخطاء كلود بعد الظهر." },
+          { t: "🍽️ أتغدّى مع الموظفين وأسمع مشاكلهم", p: 40, fb: "👥 ذكي! سمعت منهم أن منظومة الأرشفة بطيئة. المدير القريب من موظفيه يعرف المشكلة قبل أن يصله كتاب." },
+          { t: "💻 أكمل الشغل بلا استراحة", p: 0, fb: "😓 يمشي الحال… لكن التعب يقلّل الانتباه، وأغلب الأخطاء تفوت في آخر الدوام. خذ استراحتك المرة القادمة." }
+        ] },
+      { type: "info", say: "☕ … ⏳ <b>12:30</b> انتهت الاستراحة. نرجع للشغل! الناس بدأت تتجمع على المصطبة.", btn: "💪 نرجع للشغل" }
+    ], after: () => { S.clock = 750; } },
+  { id: "app", kind: "visit", from: "bench", who: "stat", time: 755, title: "📱 تطبيق جديد", task: "السكرتيرة على الخط…",
+    intercom: { txt: "<b>موظفة الإحصاء</b> تريد تعرض عليك تطبيقاً عملته. تقول: <b>مو مستعجل</b>.<br><small>⚠️ وعلى شاشتك: وكيل كلود ينتظر موافقتك على إجراءات البريد.</small>", best: "wait",
+      good: "⏳ تنظيم وقت ممتاز! المستعجل أولاً (الوكيل)، ثم التطبيق.",
+      in: "😐 أدخلتها، والوكيل بقي ينتظر موافقتك على البريد.", deputy: "👔 المعاون: «تطبيق سيُنشر للمواطنين… هذا قرار المدير العام.»" },
+    steps: V => [
+      { type: "choice", say: () => `موظفة الإحصاء: «حوّلت <b>كتيّب معاملات الدائرة</b> إلى تطبيق «دليل المعاملات» بكلود في 10 دقائق! يشتغل على الموبايل بدون إنترنت. ننشره للمواطنين اليوم؟» 📱<br><small>من التطبيق: ${V.app.item} ← <b>${V.app.bad}</b></small>`, q: "ماذا تقرر؟",
+        opts: [
+          { t: "ممتاز، انشروه اليوم", p: -60, missTrap: { tl: "تطبيق بمعلومة خاطئة نُشر للمواطنين", week: "الأسبوع 8: لا تعتمد على تطبيق لم تفحصه بعينك", why: `${V.app.item}: التطبيق يقول ${V.app.bad} والكتيّب ${V.app.ok}` }, fb: `❌ نُشر بخطأ: ${V.app.item} في التطبيق <b>${V.app.bad}</b> والكتيّب يقول <b>${V.app.ok}</b>. مواطنون سيأتون بمعلومة خاطئة!` },
+          { t: "تطابق 5 معاملات عشوائية مع الكتيّب الأصلي قبل النشر", p: 100, catchTrap: true, fb: `🕵️ <b>المطابقة كشفت الخطأ!</b> ${V.app.item}: التطبيق <b>${V.app.bad}</b>، والكتيّب <b>${V.app.ok}</b>. صُحّح ثم نُشر ✅ (الأسبوع 8).` },
+          { t: "لا نحتاج تطبيقات، المواطن يراجع الدائرة", p: 0, fb: "ضيّعت فرصة جيدة. التطبيق مفيد، المهم <b>فحصه قبل النشر</b>." }
+        ] }
+    ] },
+  { id: "mcp", kind: "desk", time: 760, title: "🤖 وكيل كلود (MCP)", task: "اضغط «افتح الحاسوب»: وكيل كلود ينتظر موافقتك",
+    steps: V => [
+      { type: "rows", say: "وكيل كلود رتّب بريدك ويقترح 3 إجراءات. <b>لا شيء يُنفَّذ قبل موافقتك.</b>", options: ["✅ موافقة", "❌ رفض"],
+        rows: [
+          { label: "أرشفة 30 نشرة إخبارية قديمة", sug: "✅ موافقة", ok: "✅ موافقة", ptsOk: 10 },
+          { label: "حذف 5 رسائل «قديمة» (بينها: <b>متابعة من الوزارة بخصوص بيانات الملاك</b>)", sug: "✅ موافقة", ok: "❌ رفض", trap: true, ptsOk: 80, ptsBad: -60, harm: true, tl: "الوكيل حذف رسالة متابعة من الوزارة", week: "الأسبوع 6: راجِع كل إجراء للوكيل", why: "بين الرسائل المحذوفة متابعة رسمية من الوزارة" },
+          { label: "إرسال 3 ردود جاهزة (أحدها: رد شكوى المواطن موجَّه إلى <b>مدير المالية</b> بالخطأ)", sug: "✅ موافقة", ok: "❌ رفض", trap: true, ptsOk: 80, ptsBad: -60, harm: true, tl: "رد أُرسل إلى جهة خاطئة", week: "الأسبوع 6: مسوّدة لا إرسال، وتأكد من المستلم", why: "رد المواطن كان موجهاً إلى مدير المالية" }
+        ] }
+    ] },
+  { id: "audit", kind: "visit", from: "hall", who: "audit", companion: "audit2", time: 770, title: "🔎 فريق الرقابة المالية", task: "السكرتيرة على الخط…",
+    intercom: { txt: "أستاذ، <b>فريق ديوان الرقابة المالية</b> وصل <b>بدون موعد مسبق</b>. يريدون التدقيق في <b>الامتثال والمستندات والمخاطر</b>.", best: "in",
+      good: "🚪 صحيح. الرقابة جهة رسمية؛ التعاون والشفافية من أول دقيقة.",
+      wait: "😠 تأخير فريق الرقابة يعطي انطباعاً أنكم تخفون شيئاً. سُجّلت ملاحظة.", deputy: "👔 الفريق رفض: «نريد المدير العام شخصياً، هو المسؤول أمام الديوان.»" },
+    steps: V => [
+      { type: "choice", say: "🔎 <b>١ · التدقيق:</b> رئيسة الفريق: «نريد مستندات صرف <b>عقد صيانة المولدات</b>.» طلبت من كلود تجهيز الملف:", claudeTxt: () => "✅ ملف التدقيق جاهز. المستندات كاملة: العقد، أمر الصرف، الفاتورة، <mark>محضر الاستلام الموقّع من اللجنة</mark>.", q: "ماذا تسلّم للمدققين؟",
+        opts: [
+          { t: "أسلّم قائمة كلود كما هي، قال إنها كاملة", p: -60, missTrap: { tl: "ملف تدقيق ينقصه محضر الاستلام", week: "الأسبوع 1 و7: طابِق ما يقوله كلود مع الملف الحقيقي", why: "كلود افترض وجود محضر الاستلام، وهو غير موجود في الملف" }, fb: "❌ المدققة فتحت الملف: <b>محضر الاستلام غير موجود!</b> كلود افترض أنه موجود. صارت <b>ملاحظة رقابية</b> مع شبهة تضليل." },
+          { t: "نطابق القائمة مع الملف الورقي قبل التسليم", p: 100, catchTrap: true, fb: "🕵️ <b>كشفتها!</b> محضر الاستلام <b>غير موجود</b> في الملف؛ كلود افترض وجوده. أخبرت المدققين بصراحة وطلبت مهلة لاستكماله. <b>الشفافية أفضل من مفاجأة في التقرير.</b>" },
+          { t: "نقول: المستندات في الأرشيف، نرسلها لاحقاً", p: -20, fb: "❌ المماطلة تُسجَّل ملاحظة سلبية، والمدقق سيطلبها على أي حال." }
+        ] },
+      { type: "choice", say: "📜 <b>٢ · الامتثال:</b> المدقق: «ما <b>سياستكم</b> في استعمال الذكاء الاصطناعي مع بيانات الدائرة والمواطنين؟»", q: "ماذا تجيب؟",
+        opts: [
+          { t: "لا توجد سياسة، كل موظف يستعمله بطريقته", p: -40, fb: "❌ ملاحظة امتثال: لا ضوابط مكتوبة. هذا ما حذّرنا منه في الأسبوع 2 (سياسة استخدام مؤسسي)." },
+          { t: "سياسة مكتوبة: تصنيف البيانات، السرّي لا يُرفع، إخفاء الهوية، ومراجعة بشرية لكل مخرج قبل التوقيع", p: 60, fb: "✅ ممتاز! هذا هو الامتثال: <b>استعمال وفق ضوابط</b> (الأسبوع 2، والإخفاء في الأسبوعين 3 و5، والمراجعة البشرية في الأسبوع 7)." },
+          { t: "نمنع الذكاء الاصطناعي في الدائرة تماماً", p: 0, fb: "آمن، لكنه يضيّع الفائدة. الامتثال يعني <b>الاستعمال وفق ضوابط</b>، لا المنع." }
+        ] },
+      { type: "rows", say: "⚠️ <b>٣ · المخاطر:</b> المدقق يطلب <b>سجلّ المخاطر</b>. كلود صاغ 4 مخاطر وقيّمها. <b>راجِع التقييم:</b>", options: ["عالية", "متوسطة", "منخفضة"],
+        rows: shuffle([
+          { label: "تسريب بيانات المواطنين عبر أدوات ذكاء اصطناعي خارجية", sug: "منخفضة", ok: "عالية", trap: true, ptsOk: 80, ptsBad: -50, tl: "خطر تسريب البيانات قُيّم «منخفضاً»", week: "الأسبوع 2 و5: البيانات الشخصية", why: "الأثر على المواطنين والدائرة كبير جداً" },
+          { label: "اعتماد مخرجات كلود في الكتب الرسمية دون مراجعة", sug: "منخفضة", ok: "عالية", trap: true, ptsOk: 80, ptsBad: -50, tl: "خطر الهلوسة في الكتب الرسمية قُيّم «منخفضاً»", week: "الأسبوع 1: الهلوسة", why: "رأيت اليوم بنفسك رقم تعميم مختلقاً وتاريخاً خاطئاً" },
+          { label: "انقطاع الإنترنت ليوم واحد", sug: "متوسطة", ok: "متوسطة", ptsOk: 15 },
+          { label: "تأخّر توريد القرطاسية أسبوعاً", sug: "منخفضة", ok: "منخفضة", ptsOk: 15 }
+        ]) },
+      { type: "info", say: "🔎 رئيسة الفريق: «شكراً على تعاونكم وشفافيتكم. <b>التقرير الأولي</b> يصلكم خلال أسبوع.»", btn: "متابعة ←" }
+    ] },
+  { id: "fire", optional: "fire", fire: true, kind: "alarm", time: 780, title: "🚨 حريق في الأرشيف!", task: "إنذار حريق! تصرّف بسرعة",
+    steps: V => [
+      { type: "choice", say: "🚨 <b>إنذار حريق!</b> دخان كثيف يخرج من <b>غرفة الأرشيف</b>. الموظفون ينظرون إليك… أنت المدير.", q: "ما أول شيء تفعله؟",
+        opts: [
+          { t: "أكمل شغلي، أكيد إنذار كاذب", p: -60, fb: "❌ لا تفترض أبداً أن الإنذار كاذب. كل ثانية مهمة." },
+          { t: "أطلب من كلود أن يكتب خطة إخلاء الآن", p: -30, fb: "❌ لا وقت! خطة الإخلاء <b>تُكتب ويُتدرَّب عليها قبل</b> الحريق، لا أثناءه. كلود يساعدك في كتابتها مسبقاً." },
+          { t: "أفعّل الإنذار العام، وأتصل بالدفاع المدني <b>115</b>، وأفتح خطة الإخلاء المعتمدة", p: 60, fb: "✅ صحيح: الإنذار، ثم الدفاع المدني، ثم الخطة الجاهزة." }
+        ] },
+      { type: "rows", say: "هذه خطة الإخلاء التي <b>كتبها كلود بداية السنة</b> ولم يراجعها أحد 😬. راجِعها بسرعة قبل أن تعلنها للموظفين:", options: ["✅ نعتمد", "❌ نشطب"],
+        rows: shuffle([
+          { label: "الخروج من <b>الباب الشرقي</b> إلى الممر الرئيسي", sug: "✅ نعتمد", ok: "✅ نعتمد", ptsOk: 15 },
+          { label: "المسار المختصر: عبر <b>الممر الغربي بجانب الأرشيف</b>", sug: "✅ نعتمد", ok: "❌ نشطب", trap: true, ptsOk: 80, ptsBad: -60, tl: "مسار إخلاء يمرّ بجانب مكان الحريق", week: "الأسبوع 1 و7: طابِق خطة كلود مع الواقع", why: "الحريق في الأرشيف، والمسار يمرّ بالخطر" },
+          { label: "استعمال <b>المصعد</b> للنزول بسرعة من الطابق الثاني", sug: "✅ نعتمد", ok: "❌ نشطب", trap: true, ptsOk: 80, ptsBad: -60, tl: "المصعد في خطة الإخلاء", week: "الأسبوع 1: افترض أن الإجابة خاطئة حتى يثبت العكس", why: "المصعد ممنوع في الحريق: ينقطع التيار ويعلق الناس" },
+          { label: "<b>إنقاذ الوثائق الأصلية</b> من الأرشيف قبل الخروج", sug: "✅ نعتمد", ok: "❌ نشطب", trap: true, ptsOk: 80, ptsBad: -60, tl: "العودة لإنقاذ الوثائق", week: "الأسبوع 7: القرار البشري يراجع كل بند", why: "الأرواح قبل الأوراق، ولا أحد يدخل منطقة الحريق" },
+          { label: "لكل قسم <b>مسؤول</b> يعدّ موظفيه في نقطة التجمع", sug: "✅ نعتمد", ok: "✅ نعتمد", ptsOk: 15 },
+          { label: "مساعدة <b>كبار السن وذوي الإعاقة والمراجعين</b> أولاً", sug: "✅ نعتمد", ok: "✅ نعتمد", ptsOk: 15 }
+        ]) },
+      { type: "info", say: "🚶 <b>اخرج إلى نقطة التجمع 🟢</b> في الساحة الأمامية! امشِ ولا تركض، وخذ الموظفين معك.", btn: "🚶 انطلق" }
+    ], after: () => { S.camAt = null; S.evac = true; S.evacStart = performance.now(); startEvac(); } },
+  { id: "evac", optional: "fire", fire: true, kind: "go", spot: "assembly", time: 781, keepClock: true, title: "🟢 الإخلاء", task: "اخرج إلى نقطة التجمع 🟢 في الساحة الأمامية",
+    goToast: "🚨 اخرج إلى <b>نقطة التجمع 🟢</b>! امشِ ولا تركض، أو اضغط «خذني».",
+    steps: V => [
+      { type: "assemble" },
+      { type: "choice", say: "📋 مسؤولو الأقسام عدّوا الموظفين: <b>13 من 14</b>. تنقص <b>موظفة الأرشيف</b>!", q: "ماذا تفعل؟",
+        opts: [
+          { t: "أرجع بنفسي وأبحث عنها", p: -60, fb: "❌ لا ترجع إلى مبنى يحترق؛ قد تصبح أنت الضحية الثانية." },
+          { t: "أبلّغ فرق الدفاع المدني فوراً بمكانها الأخير", p: 80, fb: "✅ صحيح! فرق الإنقاذ مدرّبة ومجهّزة. بعد دقائق أخرجوها سالمة 🙏" },
+          { t: "ننتظر، ربما خرجت من باب آخر", p: -30, fb: "❌ الانتظار يضيّع دقائق ثمينة. بلّغ الدفاع المدني فوراً." }
+        ] },
+      { type: "choice", say: "🚒 الدفاع المدني سيطر على الحريق. السبب: <b>تماس كهربائي</b> في الأرشيف.", q: "بعد الحادث، كيف تستعمل كلود؟",
+        opts: [
+          { t: "يكتب تقرير الحادث وأرسله إلى الوزارة مباشرة", p: -20, fb: "❌ التقرير الرسمي تراجعه أنت وتطابقه مع تقرير الدفاع المدني قبل الإرسال (مسوّدة لا إرسال، الأسبوع 6)." },
+          { t: "يكتب <b>مسوّدة</b> خطة إخلاء محدّثة + جدول تدريب كل 3 أشهر، وأراجعها مع مسؤول السلامة", p: 50, claude: true, fb: "✅ هذا هو الاستعمال الصحيح: كلود يكتب المسوّدة، والخبير يراجع، والموظفون يتدرّبون." }
+        ] },
+      { type: "info", say: "✅ انتهى الإخلاء بسلام. الجميع يعود إلى مكانه…", btn: "🏢 نرجع إلى المكتب" }
+    ], after: () => { endEvac(); S.clock = 800; } },
+  { id: "board", kind: "desk", time: 800, title: "📋 لوحة المتابعة", task: "اضغط «افتح الحاسوب»: مهام بمواعيد اليوم",
+    steps: V => [
+      { type: "rows", timed: 35, say: "5 مهام على لوحة المتابعة. <b>لديك 35 ثانية!</b> كل مهمة لا تُعالَج = كتاب «تأكيد» من الوزير 📩", options: ["— اختر —", "أنجزه الآن", "أُحيله إلى القسم المختص", "أفوّضه للمعاون", "أؤجله للأسبوع القادم"], noSug: true,
+        rows: [
+          { label: "الرد على الوزارة: بيانات الملاك (الموعد: اليوم)", sug: "— اختر —", ok: "أنجزه الآن", ptsOk: 40 },
+          { label: "تقرير الصيانة الشهري (الموعد: بعد أسبوع)", sug: "— اختر —", ok: "أُحيله إلى القسم المختص", ptsOk: 40 },
+          { label: "توقيع إجازات قصيرة لثلاثة موظفين", sug: "— اختر —", ok: "أفوّضه للمعاون", ptsOk: 40 },
+          { label: "طلب مقابلة صحفية عن مشروع الأرشفة (غير مستعجل)", sug: "— اختر —", ok: "أؤجله للأسبوع القادم", ptsOk: 40 },
+          { label: "توقيع رواتب العقود (الموعد: اليوم)", sug: "— اختر —", ok: "أنجزه الآن", ptsOk: 40 }
+        ] }
+    ] }
+];
+
+function expRows(V, cleaned) {
+  const rows = [["رواتب العقود", 30], ["صيانة المولدات", 12], ["الوقود", 9], ["القرطاسية", 3.5]];
+  const out = [];
+  rows.forEach(r => { out.push({ n: r[0], v: r[1] }); if (r[0] === V.dup.item && !cleaned) out.push({ n: r[0], v: r[1], dup: true }); });
+  return out;
+}
+function expTable(V) {
+  return '<table class="mini"><tr><th>الباب</th><th>المبلغ (مليون)</th></tr>' + expRows(V, false).map(r => `<tr${r.dup ? ' class="dup"' : ""}><td>${r.n}</td><td>${r.v}</td></tr>`).join("") + "</table>";
+}
+function expBars(V, cleaned) {
+  const agg = {}; expRows(V, cleaned).forEach(r => agg[r.n] = (agg[r.n] || 0) + r.v);
+  const top = Object.entries(agg).sort((a, b) => b[1] - a[1]).slice(0, 3);
+  return '<div class="bars">' + top.map(([n, v]) => `<div><span style="width:110px">${n}</span><span class="b" style="width:${v * 5}px"></span><b>${v}</b></div>`).join("") + "</div>";
+}
+
+/* ============================================================ scoring */
+function popAt(text, good) {
+  const d = document.createElement("div"); d.className = "pop " + (good ? "good" : "bad"); d.textContent = text;
+  d.style.left = (window.innerWidth / 2) + "px"; d.style.top = (window.innerHeight * 0.32) + "px";
+  document.body.appendChild(d); setTimeout(() => d.remove(), 1500);
+}
+function addPts(base, why) {
+  if (!base) return 0;
+  let pts = base;
+  if (base > 0) {
+    S.combo++;
+    const mult = S.combo >= 5 ? 2 : S.combo >= 3 ? 1.5 : 1;
+    pts = Math.round(base * mult);
+    popAt(`+${pts}${mult > 1 ? " 🔥×" + mult : ""} ${why || "⭐"}`, true);
+  } else {
+    S.combo = 0; S.evMistakes++; if (S.ev && S.ev.fire) S.fireBad = (S.fireBad || 0) + 1;
+    popAt(`${pts} ${why || ""}`, false);
+  }
+  S.score += pts; beep(base > 0); updateHud(); return pts;
+}
+const GHOST_LINES = ["هههه… وقّعتَ على هلوستي! 👻", "صدّقتني مرة ثانية؟ أنا أكبر الآن!", "لم تتحقق؟ ممتاز… لي 😈", "كلما صدّقتني بلا تحقق، كبرت!", "أنا الهلوسة… ولن أتركك 👻"];
+function missTrap(m) {
+  S.missed++; S.missedList.push(m);
+  const first = !ghost.visible;
+  ghost.visible = true; gShadow.visible = true; updateGhost();
+  if (first) {
+    ghost.position.set(player.position.x - 1.8, 1, player.position.z + 1.3);
+    setTimeout(() => toast("👻 <b>ظهر شبح الهلوسة!</b><br>الهلوسة = معلومة خاطئة يقولها الذكاء الاصطناعي بثقة. كل خطأ لكلود يفوتك يكبّر الشبح. اكشف الأخطاء حتى تطرده!", 6500), 400);
+    ghostSay("أنا الهلوسة! وقّعتَ على خطئي 👻");
+  } else ghostSay(GHOST_LINES[rnd(GHOST_LINES.length)]);
+}
+function updateGhost() { const s = Math.min(1.9, 0.75 + 0.18 * S.missed); ghost.scale.set(s, s, s); }
+function meters() {
+  const acc = (S.caught + S.missed) ? S.caught / (S.caught + S.missed) : 1;
+  const priv = Math.max(0, 1 - 0.5 * S.leaks);
+  const min = Math.max(0, 1 - 0.2 * (S.late + S.missedTasks + S.ministryHarm));
+  const g = S.gate.ok + S.gate.bad;
+  const spd = g ? Math.max(0, S.gate.ok / g * 0.7 + 0.3 * Math.min(1, S.fast / Math.max(1, S.stars.length))) : 1;
+  return { acc, priv, min, spd };
+}
+function updateHud() {
+  $("hScore").textContent = "⭐ " + S.score;
+  const mult = S.combo >= 5 ? 2 : S.combo >= 3 ? 1.5 : 1;
+  $("hCombo").textContent = "🔥 ×" + mult + (S.combo ? " (" + S.combo + ")" : "");
+  $("hClock").textContent = fmtTime(S.clock);
+  const m = meters();
+  for (const [id, v] of [["mAcc", m.acc], ["mPriv", m.priv], ["mMin", m.min], ["mSpeed", m.spd]]) { $(id).style.width = (v * 100) + "%"; $(id).style.background = v > 0.66 ? "#1f8a4c" : v > 0.33 ? "#e0a400" : "#c0392b"; }
+}
+
+/* ============================================================ walking people */
+const walkers = new Set();
+function walkTo(p, pts, cb, speed) {
+  setSit(p, false); p.visible = true; p.userData.typing = false;
+  p.userData.path = pts.map(q => ({ x: q.x, z: q.z })); p.userData.cb = cb; p.userData.speed = speed || 3.4;
+  walkers.add(p);
+}
+function faceTo(p, x, z) { p.rotation.y = Math.atan2(x - p.position.x, z - p.position.z); }
+const BENCH = [{ x: 9.4, z: -0.95 }, { x: 10.7, z: -0.95 }, { x: 12.0, z: -0.95 }];
+const DOOR_OUT = { x: 15.5, z: -2.4 }, DOOR_IN = { x: 15.5, z: -4.8 };
+const VCHAIR = { x: 12.2, z: -8.3 }, SEC_STAND = { x: 14.9, z: -8.7 };
+const HALL_IN = { x: 3, z: -2.2 };
+
+function refreshBench() {
+  if (!S) return;
+  const up = S.queue.slice(Math.max(0, S.evIndex)).filter(e => e.kind === "visit" && e.from === "bench" && !S.done[e.id]);
+  const seen = {};
+  up.slice(0, 3).forEach((e, i) => {
+    seen[e.who] = 1;
+    const p = visitor(e.who), u = p.userData, seat = BENCH[i];
+    if (u.state === "inside" || u.state === "walkin") return;
+    if (u.seat === i && (u.state === "bench" || u.state === "tobench")) return;
+    u.seat = i;
+    const sitDown = () => { p.position.set(seat.x, -0.32, seat.z); p.rotation.y = Math.PI; setSit(p, true); u.state = "bench"; };
+    if (u.state === "hidden") { p.position.set(HALL_IN.x, 0, HALL_IN.z); u.state = "tobench"; walkTo(p, [{ x: seat.x, z: -1.9 }, seat], sitDown); }
+    else { u.state = "tobench"; walkTo(p, [{ x: p.position.x, z: -1.9 }, { x: seat.x, z: -1.9 }, seat], sitDown); }
+  });
+  for (const who in VNPC) { if (!seen[who] && VNPC[who].userData.state === "bench") VNPC[who].userData.state = "bench"; }
+}
+
+/* ============================================================ flow */
+function startGame() {
+  const name = $("nameIn").value.trim();
+  if (!GENDER) { $("gsel").style.outline = "3px solid #c0392b"; toast("👤 اختر: مدير عام أو مديرة عامة", 2500); return; }
+  if (!name) { $("nameIn").focus(); $("nameIn").style.borderColor = "#c0392b"; return; }
+  store.set("dgday:name", name);
+  endEvac();
+  GEN++; walkers.clear(); if (S) clearInterval(S.tmr); $("modal").classList.add("hidden"); $("pause").classList.add("hidden");
+  S = newState(name); S.done = {}; cup.visible = false;
+  for (const w in VNPC) { const p = VNPC[w]; p.visible = false; p.userData.state = "hidden"; p.userData.seat = -1; walkers.delete(p); }
+  for (const k in tagEls) tagEls[k].style.display = "none";
+  secretary.position.set(19.5, -0.32, 0.45); secretary.rotation.y = Math.PI; setSit(secretary, true); secretary.userData.typing = true; walkers.delete(secretary);
+  buildPlayer(FEMALE); sitPlayer(); auto = null;
+  ghost.visible = false; gShadow.visible = false; ghost.scale.set(0.75, 0.75, 0.75);
+  if (IS_PHONE && document.documentElement.requestFullscreen && !document.fullscreenElement) document.documentElement.requestFullscreen().catch(() => {});
+  $("start").classList.add("hidden"); $("end").classList.add("hidden");
+  for (const id of ["hud", "task"]) $(id).classList.remove("hidden");
+  $("pauseBtn").classList.remove("hidden");
+  $("hName").textContent = "🏛️ المدير العام: " + name;
+  setTimeout(() => toast("🪑 أنت في مكتبك. <b>الناس تأتي إليك</b>، والسكرتيرة تتصل قبل أن يدخل أحد. تخرج للاجتماع فقط.", 5200), 500);
+  updateHud(); refreshBench();
+  later(nextEvent, 1200);
+}
+function sitPlayer() {
+  S && (S.mode = "seat");
+  player.position.set(CHAIR_SEAT.x, 0, CHAIR_SEAT.z); player.rotation.y = 0; setSit(player, true);
+  $("joy").classList.add("hidden"); $("keysHint").classList.add("hidden");
+}
+function standPlayer() {
+  S.mode = "walk"; setSit(player, false);
+  $("joy").classList.remove("hidden");
+  if (!matchMedia("(pointer:coarse)").matches) $("keysHint").classList.remove("hidden");
+}
+function setTask(html) { $("taskTxt").innerHTML = html; }
+function nextEvent() {
+  S.evIndex++;
+  if (S.evIndex >= S.queue.length) return endDay();
+  const e = S.queue[S.evIndex];
+  S.ev = e; S.evMistakes = 0; S.evStart = performance.now(); S.busy = false;
+  if (!e.keepClock) S.clock = Math.max(S.clock, e.time);
+  for (const k in labelEls) labelEls[k].classList.toggle("target", (e.kind === "desk" && k === "desk") || (e.kind === "go" && k === e.spot));
+  deskStar.visible = e.kind === "desk";
+  beacon.position.set(999, 0, 999);
+  setTask(`${e.title}<small>${e.task}</small>`);
+  $("arrow").style.visibility = e.kind === "go" ? "visible" : "hidden";
+  updateHud(); refreshBench();
+  if (e.kind === "desk") { beep(true); }
+  else if (e.kind === "alarm") { S.busy = true; setAlarm(true, e.noFire); S.camAt = e.camAt || { x: -14.6, z: 7.2 }; if (e.noFire) { smoker.visible = true; wcSmoke.visible = true; } toast(e.noFire ? "🚨 <b>إنذار!</b> حسّاس الدخان اشتغل!" : "🚨 <b>إنذار حريق!</b> دخان من غرفة الأرشيف!", 3000); later(() => { S.busy = false; openSteps(); }, 2600); }
+  else if (e.kind === "break") { S.busy = true; cup.visible = true; toast("🕛 الساعة 12:00… <b>وقت الاستراحة</b> ☕", 2600); later(() => { S.busy = false; openSteps(); }, 1600); }
+  else if (e.kind === "go") { standPlayer(); const t = SPOTS[e.spot]; beacon.position.set(t.x, 0, t.z); toast(e.goToast || "🚶 قم من مكتبك! امشِ بعصا التحكم أو اضغط <b>«خذني»</b>.", 3800); }
+  else if (e.kind === "visit") startVisit(e);
+}
+function startVisit(e) {
+  S.busy = true;
+  const p = visitor(e.who);
+  const needIntercom = e.intercom && !S.waited[e.id];
+  const go = () => {
+    if (needIntercom) { ringPhone(); later(() => showIntercom(e), 700); }
+    else {
+      if (e.from === "bench") toast(`📞 السكرتيرة: «صار دور <b>${VLOOK[e.who].name}</b>.»`, 2600);
+      else if (e.from === "secretary") toast("🚪 طَق طَق… السكرتيرة تدخل.", 2200);
+      else toast(`🚶 <b>${VLOOK[e.who] ? VLOOK[e.who].name : ""}</b> في الطريق إليك.`, 2200);
+      enterVisitor(e, false);
+    }
+  };
+  // a bench visitor must be seated before the phone rings
+  if (e.from === "bench" && p.userData.state !== "bench") { const wait = () => { if (p.userData.state === "bench") go(); else later(wait, 200); }; wait(); }
+  else go();
+}
+function ringPhone() { S.ringUntil = performance.now() + 1600; ringSnd(); }
+function showIntercom(e) {
+  const ic = e.intercom;
+  let h = `<h2>📞 السكرتيرة على الخط</h2><div class="when">🕗 ${fmtTime(S.clock)} · ${e.title}</div><div class="say">${ic.txt}</div><div class="q">ماذا تقول لها؟</div><div class="ic-opts">
+    <button class="opt" data-c="in">🚪 أدخليه الآن</button><button class="opt" data-c="wait">⏳ ليبقَ ينتظر قليلاً</button><button class="opt" data-c="deputy">👔 حوّليه إلى المعاون</button></div>`;
+  $("mcard").innerHTML = h; $("modal").classList.remove("hidden");
+  $("mcard").querySelectorAll(".opt").forEach(b => b.onclick = () => { $("modal").classList.add("hidden"); gateChoose(e, b.dataset.c); });
+}
+function gateChoose(e, c) {
+  const ic = e.intercom, best = ic.best, ok = c === best;
+  if (ok) S.gate.ok++; else S.gate.bad++;
+  if (ok) {
+    addPts(c === "deputy" ? 30 : 20, c === "deputy" ? "👔 تفويض" : c === "wait" ? "⏳ تنظيم" : "🚪");
+    toast(ic.good, 3800);
+    if (c === "in") return enterVisitor(e, false);
+    if (c === "wait") return requeue(e);
+    return toDeputy(e);
+  }
+  // wrong choice
+  if (c === "in") {           // best was wait or deputy
+    addPts(best === "deputy" ? -20 : -10, "⏳");
+    if (best === "deputy") S.clock += 15;
+    toast(ic.in, 4000);
+    return enterVisitor(e, best === "deputy");
+  }
+  if (c === "wait") {         // best was in or deputy
+    addPts(best === "in" ? -15 : -10, "😠");
+    toast(ic.wait, 4000);
+    if (best === "deputy") return toDeputy(e, true);
+    S.angry[e.who] = 1; return requeue(e);
+  }
+  // c === deputy, best was in or wait → the deputy sends him back
+  addPts(-25, "👔"); toast(ic.deputy, 4200);
+  return enterVisitor(e, false);
+}
+function requeue(e) {
+  S.waited[e.id] = 1;
+  S.queue.splice(S.evIndex, 1);
+  S.queue.splice(Math.min(S.evIndex + 1, S.queue.length), 0, e);
+  S.evIndex--; S.ev = null; S.busy = false;
+  later(nextEvent, 900);
+}
+function toDeputy(e, late) {
+  const p = visitor(e.who); S.done[e.id] = 1; p.userData.state = "leaving";
+  walkTo(p, [{ x: p.position.x, z: -1.9 }, { x: 13, z: -1.9 }, { x: 13, z: 3.2 }], () => { faceTo(p, 13, 5.8); setTimeout(() => { p.visible = false; p.userData.state = "gone"; }, 2500); });
+  S.stars.push(late ? 1 : 3); S.ev = null; S.busy = false;
+  later(() => { refreshBench(); nextEvent(); }, 1200);
+}
+function enterVisitor(e, wasteful) {
+  const p = visitor(e.who), u = p.userData;
+  S.done[e.id] = 1; u.state = "walkin";
+  setTask(`${e.title}<small>🚶 ${e.who === "secretary" ? "السكرتيرة" : VLOOK[e.who].name} في الطريق إلى مكتبك…</small>`);
+  let path;
+  if (e.from === "secretary") path = [{ x: 21.4, z: 0.45 }, { x: 21.4, z: -2.4 }, DOOR_OUT, DOOR_IN, SEC_STAND];
+  else if (e.from === "hall") { p.position.set(HALL_IN.x, 0, HALL_IN.z); path = [DOOR_OUT, DOOR_IN, { x: VCHAIR.x, z: VCHAIR.z + 0.7 }, VCHAIR]; }
+  else path = [{ x: p.position.x, z: -1.9 }, DOOR_OUT, DOOR_IN, { x: VCHAIR.x, z: VCHAIR.z + 0.7 }, VCHAIR];
+  if (e.companion) {
+    const c = visitor(e.companion); c.position.set(HALL_IN.x - 1.3, 0, HALL_IN.z); c.userData.state = "walkin";
+    walkTo(c, [{ x: DOOR_OUT.x - 0.6, z: DOOR_OUT.z }, { x: DOOR_IN.x - 0.6, z: DOOR_IN.z }, { x: 13.8, z: -7.6 }, { x: 13.8, z: -8.3 }], () => { c.rotation.y = Math.PI; setSit(c, true); c.userData.state = "inside"; }, 3.2);
+  }
+  let knocked = false;
+  p.userData.onPoint = q => { if (!knocked && q === DOOR_OUT) { knocked = true; knock(); } };
+  walkTo(p, path, () => {
+    u.state = "inside";
+    if (e.from === "secretary") faceTo(p, CHAIR_SEAT.x, CHAIR_SEAT.z);
+    else { p.rotation.y = Math.PI; setSit(p, true); }
+    later(() => { refreshBench(); openSteps(wasteful ? [{ type: "info", say: e.inSay, btn: "متابعة ←" }] : null); }, 350);
+  });
+  later(refreshBench, 900);
+}
+function exitVisitor(e) {
+  const p = visitor(e.who), u = p.userData;
+  if (e.who === "secretary") {
+    walkTo(p, [DOOR_IN, DOOR_OUT, { x: 21.4, z: -2.4 }, { x: 21.4, z: 0.45 }, { x: 19.5, z: 0.45 }], () => { p.rotation.y = Math.PI; setSit(p, true); p.userData.typing = true; });
+    return;
+  }
+  u.state = "leaving";
+  walkTo(p, [{ x: VCHAIR.x, z: VCHAIR.z + 0.7 }, DOOR_IN, DOOR_OUT, { x: 6, z: -2.2 }, { x: 1, z: -2.2 }], () => { p.visible = false; u.state = "gone"; });
+  if (e.companion) { const c = visitor(e.companion); c.userData.state = "leaving"; walkTo(c, [{ x: 13.8, z: -7.4 }, { x: DOOR_IN.x - 0.6, z: DOOR_IN.z }, { x: DOOR_OUT.x - 0.6, z: DOOR_OUT.z }, { x: 6, z: -1.6 }, { x: 1, z: -1.6 }], () => { c.visible = false; c.userData.state = "gone"; }); }
+}
+function finishEvent() {
+  const e = S.ev;
+  const secs = (performance.now() - S.evStart) / 1000;
+  let st = 1;
+  if (S.evMistakes === 0) { st = 2; if (secs < 50) { st = 3; S.fast++; addPts(20, "⚡ سرعة"); } }
+  S.stars.push(st);
+  if (e.after) e.after();
+  S.ev = null; S.busy = false; updateHud(); deskStar.visible = false;
+  if (e.kind === "visit") { exitVisitor(e); later(nextEvent, 900); }
+  else if (e.kind === "go") returnToDesk();
+  else later(nextEvent, 350);
+}
+function returnToDesk() {
+  S.mode = "return"; beacon.position.set(999, 0, 999);
+  setTask("🚶 العودة إلى مكتبك<small>الناس تنتظرك في الخارج…</small>"); $("arrow").style.visibility = "hidden";
+  auto = planTo(CHAIR_SEAT); S.returning = true;
+}
+
+/* ============================================================ modal / steps */
+function modalClosed() { return $("modal").classList.contains("hidden"); }
+function interact() {
+  if (!S || !S.ev || !modalClosed() || S.busy) return;
+  if (S.ev.kind === "desk" && S.mode === "seat") return openSteps();
+  if (S.ev.kind === "go" && nearTarget()) return openSteps();
+}
+function openSteps(override) {
+  const e = S.ev; if (!e) return;
+  S.busy = true;
+  S.steps = override || e.steps(S.V); S.stepI = 0;
+  $("modal").classList.remove("hidden");
+  renderStep();
+}
+function header(e) { return `<h2>${e.title}</h2><div class="when">🕗 ${fmtTime(S.clock)}${e.kind === "visit" ? " · 🚪 في مكتبك" : e.kind === "desk" ? " · 🤖 على حاسوبك" : e.kind === "break" ? " · ☕ استراحة" : ""}</div>`; }
+const val = x => typeof x === "function" ? x() : x;
+function renderStep() {
+  const e = S.ev, st = S.steps[S.stepI], card = $("mcard");
+  if (!st) { $("modal").classList.add("hidden"); finishEvent(); return; }
+  let h = header(e);
+  if (st.ring) ringPhone();
+  if (st.type === "arrive") {
+    const late = S.clock > S.meetingDeadline;
+    if (late) { S.late++; h += `<div class="fb bad">😒 وصلت الساعة <b>${fmtTime(S.clock)}</b>، بعد الموعد. المدراء كانوا ينتظرونك.<span class="pts">−40</span></div>`; addPts(-40, "⏰ تأخير"); }
+    else { h += `<div class="fb good">✅ وصلت في الموعد (${fmtTime(S.clock)}) ومعك الموجز.<span class="pts">+60</span></div>`; addPts(60, "👥"); }
+    S.meetingDeadline = null;
+    h += `<button class="btn" id="nx">متابعة ←</button>`;
+    card.innerHTML = h; $("nx").onclick = () => { S.stepI++; renderStep(); }; return;
+  }
+  if (st.alarmOff) { setAlarm(false); wcSmoke.visible = false; }
+  if (st.type === "assemble") {
+    const secs = Math.round((performance.now() - S.evacStart) / 1000);
+    if (secs <= 40) { h += `<div class="fb good">✅ وصلت نقطة التجمع خلال <b>${secs} ثانية</b>، بهدوء ومعك الموظفون.<span class="pts">+60</span></div>`; addPts(60, "🧯"); }
+    else { h += `<div class="fb mid">⏱️ وصلت بعد <b>${secs} ثانية</b>. في الإخلاء الحقيقي كل ثانية مهمة.<span class="pts">+10</span></div>`; addPts(10, "🧯"); }
+    h += `<button class="btn" id="nx">متابعة ←</button>`;
+    card.innerHTML = h; $("nx").onclick = () => { S.stepI++; renderStep(); }; return;
+  }
+  if (st.type === "info") {
+    h += `<div class="say">${val(st.say)}</div><button class="btn gold" id="nx">${st.btn || "متابعة ←"}</button>`;
+    card.innerHTML = h; $("nx").onclick = () => { S.stepI++; renderStep(); }; return;
+  }
+  if (st.say) h += `<div class="say">${val(st.say)}</div>`;
+  if (st.claudeTxt) h += `<div class="claude"><div class="who">🤖 كلود</div>${val(st.claudeTxt)}</div>`;
+  if (st.type === "choice") {
+    h += `<div class="q">${st.q}</div>` + st.opts.map((o, i) => `<button class="opt" data-i="${i}">${o.t}</button>`).join("");
+    card.innerHTML = h;
+    card.querySelectorAll(".opt").forEach(b => b.onclick = () => chooseOpt(st.opts[+b.dataset.i]));
+  } else if (st.type === "rows") {
+    if (st.q) h += `<div class="q">${st.q}</div>`;
+    if (st.timed) h += `<div class="timer" id="tmr">⏳ ${st.timed}</div>`;
+    h += st.rows.map((r, i) => `<div class="row"><div class="lab">${r.label}</div>${st.noSug ? "" : `<div class="sug">🤖 كلود يقترح: <b>${r.sug}</b></div>`}<select data-i="${i}">${st.options.map(o => `<option${o === r.sug ? " selected" : ""}>${o}</option>`).join("")}</select></div>`).join("");
+    h += `<button class="btn gold" id="ok">✔ اعتماد وتوقيع</button>`;
+    card.innerHTML = h;
+    let done = false;
+    const submit = () => { if (done) return; done = true; clearInterval(S.tmr); evalRows(st); };
+    $("ok").onclick = submit;
+    if (st.timed) { let t = st.timed; S.tmr = setInterval(() => { if (S.paused) return; t--; const el = $("tmr"); if (el) el.textContent = "⏳ " + t; if (t <= 0) submit(); }, 1000); }
+  }
+  card.scrollTop = 0;
+}
+function chooseOpt(o) {
+  const card = $("mcard");
+  const cls = o.p > 0 ? "good" : o.p < 0 ? "bad" : "mid";
+  if (o.claude) S.claudeUses++;
+  if (o.leak) S.leaks++;
+  if (o.catchTrap) S.caught++;
+  if (o.missTrap) missTrap(o.missTrap);
+  const got = addPts(o.p, o.leak ? "🔒" : o.catchTrap ? "🕵️" : "");
+  card.innerHTML = header(S.ev) + `<div class="fb ${cls}">${val(o.fb)}${o.p ? `<span class="pts">${got > 0 ? "+" + got : got}</span>` : ""}</div><button class="btn" id="nx">متابعة ←</button>`;
+  card.scrollTop = 0;
+  $("nx").onclick = () => { S.stepI++; renderStep(); };
+}
+function evalRows(st) {
+  const card = $("mcard"); const sels = card.querySelectorAll("select");
+  let h = header(S.ev);
+  st.rows.forEach((r, i) => {
+    const ch = sels[i].value; const isTrap = r.trap && r.sug !== r.ok;
+    let line, cls, p;
+    if (ch === r.ok) {
+      p = isTrap ? (r.ptsOk && r.ptsOk !== 30 ? r.ptsOk : 100) : (r.ptsOk || 10);
+      if (isTrap) S.caught++;
+      cls = "good"; line = isTrap ? `🕵️ <b>كشفت خطأ كلود:</b> ${r.label} ← ${r.ok}` : `✅ ${r.label} ← ${r.ok}`;
+    } else if (ch === "— اختر —") {
+      p = -40; S.missedTasks++; cls = "bad"; line = `📩 لم تُعالَج: ${r.label} ← وصل كتاب «تأكيد» من الوزير`;
+    } else {
+      if (isTrap && ch === r.sug) { p = r.ptsBad || -50; missTrap({ tl: r.tl, week: r.week, why: r.why }); if (r.harm) S.ministryHarm++; line = `❌ ${r.label}: وافقت على اقتراح كلود الخاطئ. ${r.why || ("الصحيح: " + r.ok)}`; }
+      else { p = r.ptsBad || -20; line = `❌ ${r.label}: الصحيح «${r.ok}»`; }
+      cls = "bad";
+    }
+    const got = addPts(p, cls === "good" ? (isTrap ? "🕵️" : "") : "");
+    h += `<div class="fb ${cls}">${line}<span class="pts">${got > 0 ? "+" + got : got}</span></div>`;
+  });
+  h += `<button class="btn" id="nx">متابعة ←</button>`;
+  card.innerHTML = h; card.scrollTop = 0;
+  $("nx").onclick = () => { S.stepI++; renderStep(); };
+}
+
+/* ============================================================ end */
+function endDay() {
+  S.playing = false; S.clock = 14 * 60; S.ev = null; updateHud();
+  if (S.missed === 0) { S.score += 200; popAt("+200 👻 طردت شبح الهلوسة!", true); }
+  const m = meters(); const avg = (m.acc + m.priv + m.min + m.spd) / 4;
+  const finalScore = Math.max(0, Math.round(S.score * avg));
+  updateHud();
+  const grade = finalScore >= 2800 ? ["🥇 ذهبي", "مدير رقمي متمكّن"] : finalScore >= 1700 ? ["🥈 فضي", "مدير جيد يحتاج تدقيقاً أكثر"] : ["🥉 برونزي", "مدير يحتاج متابعة"];
+  const PERFECT = S.queue.some(e => e.fire) ? 6400 : 4850;
+  const mark10 = Math.max(1, Math.min(10, Math.round(finalScore / PERFECT * 10)));
+  S.mark10 = mark10;
+  const badges = [];
+  if (S.missed === 0) badges.push("🕵️ صائد الهلوسات");
+  if (S.leaks === 0) badges.push("🔒 حارس الأسرار");
+  if (S.gate.bad === 0) badges.push("🚪 سيّد الباب");
+  if (S.late === 0 && S.missedTasks === 0) badges.push("⏱️ مدير الوقت");
+  if (S.claudeUses >= 3) badges.push("🤝 المدير الرقمي");
+  if (S.queue.some(e => e.fire) && !S.fireBad) badges.push("🧯 قائد الإخلاء");
+  if (S.stars.length && S.stars.every(s => s === 3)) badges.push("🏆 يوم مثالي");
+  const starsTotal = S.stars.reduce((a, b) => a + b, 0);
+  let h = `<div style="font-size:38px">🏛️</div><div style="color:var(--muted)">تقرير نهاية الدوام — 2:00 ظهراً</div>
+    <div class="bigname">المدير العام: ${escapeHtml(S.name)}</div>
+    <div class="bigscore">${finalScore.toLocaleString("ar-IQ")}</div>
+    <div class="grade">${grade[0]} — «${grade[1]}»</div>
+    <div class="mark">📝 الدرجة: <b>${mark10}</b> / 10 <small>${S.queue.some(e => e.fire) ? "· مع سيناريوهات السلامة" : ""}</small></div>
+    <div class="stats">
+      <div>⭐ النقاط: <b>${S.score}</b></div><div>🌟 النجوم: <b>${starsTotal} / ${S.stars.length * 3}</b></div>
+      <div>🕵️ أخطاء كلود المكشوفة: <b>${S.caught} / ${S.caught + S.missed}</b></div><div>🔒 تسريبات: <b>${S.leaks}</b></div>
+      <div>🚪 قرارات الباب الصحيحة: <b>${S.gate.ok} / ${S.gate.ok + S.gate.bad}</b></div><div>🏛️ رضا الوزارة: <b>${Math.round(m.min * 100)}%</b></div>
+    </div>
+    <div class="badges">${badges.map(b => `<span class="badge">${b}</span>`).join("") || '<span class="badge">لا أوسمة هذه المرة — جرّب مجدداً!</span>'}</div>`;
+  if (S.missedList.length) h += `<div class="missed"><b>❗ ما فاتك:</b><br>${S.missedList.map(x => `• ${x.tl}${x.why ? " — " + x.why : ""} <small>(${x.week})</small>`).join("<br>")}</div>`;
+  else h += `<div class="fb good">👏 لم يفتك أي خطأ لكلود. هكذا يُستعمل الذكاء الاصطناعي: <b>يسرّع، وأنت تتحقق.</b></div>`;
+  h += `<button class="btn gold" id="again">🔁 أعِد المحاكاة</button><div class="note">📸 صوّر هذه الشاشة وارفعها مع ملاحظاتك في واجب الأسبوع 9 على منصة المادة. أخطاء كلود تتبدّل في كل محاولة.<br>محاكاة تدريبية لمادة الذكاء الاصطناعي وتحليل البيانات — د. أمير هادي. كل الأسماء والجهات خيالية.</div>
+    <div class="about"><div class="about-h">عن المُعِدّ</div>
+      <b>د. أمير كاظم هادي</b> — أستاذ مساعد في علوم الحاسوب، كلية تكنولوجيا المعلومات، جامعة بابل.<br>
+      أستاذ مادة «الذكاء الاصطناعي وتحليل البيانات». تصميم المحاكي وسيناريوهاته وبرمجته.<br>
+      <a href="https://ameer.itbabylon.org" target="_blank" rel="noopener">ameer.itbabylon.org</a>
+      <div class="copy">© 2026 د. أمير كاظم هادي. جميع الحقوق محفوظة. يُسمح باستعماله للتعليم مع ذكر المصدر.</div></div>`;
+  $("ecard").innerHTML = h;
+  for (const id of ["task", "joy", "act", "keysHint", "goBtn"]) $(id).classList.add("hidden");
+  $("pauseBtn").classList.add("hidden");
+  for (const k in labelEls) labelEls[k].classList.remove("target");
+  beacon.position.set(999, 0, 999); deskStar.visible = false;
+  setTimeout(() => $("end").classList.remove("hidden"), 900);
+  $("again").onclick = () => { $("end").classList.add("hidden"); $("nameIn").value = S.name; startGame(); };
+}
+function escapeHtml(s) { return s.replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
+
+/* ============================================================ player walking */
+function collide(nx, nz) {
+  const r = 0.45;
+  for (const c of colliders) if (nx > c.x1 - r && nx < c.x2 + r && nz > c.z1 - r && nz < c.z2 + r) return true;
+  return false;
+}
+const HUB = { x: 4, z: -2.2 };
+const DOORS = {
+  office:  [{ x: 15.5, z: -5 }, { x: 15.5, z: -2.2 }],
+  meeting: [{ x: -12, z: -4.6 }, { x: -12, z: -2.3 }],
+  archive: [{ x: -12.5, z: 4.2 }, { x: -12.5, z: 2.6 }]
+};
+const DESK_SIDE = { x: 15.7, z: -11.6 };
+function roomOf(x, z) { if (x > 7 && z < -3.5) return "office"; if (x < -5 && z < -3.5) return "meeting"; if (x < -10.5 && z > 3.6) return "archive"; return "hall"; }
+let auto = null, autoStuck = 0;
+function lineClear(a, b) { const d = Math.hypot(b.x - a.x, b.z - a.z), n = Math.ceil(d / 0.25); for (let i = 1; i < n; i++) { const k = i / n; if (collide(a.x + (b.x - a.x) * k, a.z + (b.z - a.z) * k)) return false; } return true; }
+function planTo(t) {
+  const p = player.position, a = roomOf(p.x, p.z), b = roomOf(t.x, t.z);
+  const pts = [];
+  let cur = { x: p.x, z: p.z };
+  const push = q => { if (!lineClear(cur, q) && roomOf(cur.x, cur.z) === "office") pts.push(DESK_SIDE); pts.push(q); cur = q; };
+  if (a === b && a !== "hall") { push(t); return pts; }
+  if (a !== "hall") DOORS[a].forEach(push);
+  const entry = b !== "hall" ? DOORS[b].slice().reverse() : [];
+  const next = entry.length ? entry[0] : t;
+  if (!lineClear(cur, next)) { pts.push(HUB); cur = HUB; }
+  entry.forEach(q => { pts.push(q); cur = q; });
+  push(t);
+  return pts;
+}
+function startAuto() { if (!S || !S.ev || !modalClosed() || S.mode !== "walk") return; auto = planTo(SPOTS[S.ev.spot]); autoStuck = 0; }
+function nearTarget() { const t = SPOTS[S.ev.spot]; return Math.hypot(player.position.x - t.x, player.position.z - t.z) <= 2.6; }
+
+/* ============================================================ loop */
+const tmpV = new THREE.Vector3();
+let last = performance.now();
+function animPerson(p, moving, now, speed) {
+  const u = p.userData; if (!u.legs) return;
+  if (moving) {
+    u.walkT += speed;
+    const s = Math.sin(u.walkT * 9) * 0.6;
+    u.legs[0].rotation.x = s; u.legs[1].rotation.x = -s; u.arms[0].rotation.x = -s * 0.8; u.arms[1].rotation.x = s * 0.8;
+    return;
+  }
+  if (u.sit) { for (const l of u.legs) l.rotation.x = -1.45; }
+  else for (const l of u.legs) l.rotation.x *= 0.8;
+  const br = Math.sin(now / 600 + u.phase) * 0.04;
+  u.arms[0].rotation.x = u.typing ? -0.9 + Math.sin(now / 90 + u.phase) * 0.12 : u.arms[0].rotation.x * 0.8 + br;
+  u.arms[1].rotation.x = u.typing ? -0.9 + Math.cos(now / 80 + u.phase) * 0.12 : u.arms[1].rotation.x * 0.8 - br;
+  u.torso.scale.y = 1 + Math.sin(now / 700 + u.phase) * 0.015;
+}
+function stepWalkers(dt, now) {
+  for (const p of Array.from(walkers)) {
+    const u = p.userData, t = u.path[0];
+    if (!t) { walkers.delete(p); const cb = u.cb; u.cb = null; if (cb) cb(); continue; }
+    const dx = t.x - p.position.x, dz = t.z - p.position.z, d = Math.hypot(dx, dz), st = u.speed * dt;
+    if (d <= st) { p.position.x = t.x; p.position.z = t.z; const q = u.path.shift(); if (u.onPoint) u.onPoint(q); }
+    else { p.position.x += dx / d * st; p.position.z += dz / d * st; const want = Math.atan2(dx, dz); let dr = want - p.rotation.y; dr = Math.atan2(Math.sin(dr), Math.cos(dr)); p.rotation.y += dr * Math.min(1, dt * 12); }
+    animPerson(p, true, now, st / 6);
+  }
+}
+function frame(now) {
+  const dt = Math.min(0.05, (now - last) / 1000); last = now;
+  const W = window.innerWidth, H = window.innerHeight;
+  const paused = !!(S && S.paused);
+  if (!paused) stepWalkers(dt, now);
+  if (S && S.playing && !paused && modalClosed() && (S.mode === "walk" || S.mode === "return")) {
+    let ix = joyV.x, iz = joyV.z;
+    if (keys["arrowleft"] || keys["a"]) ix -= 1; if (keys["arrowright"] || keys["d"]) ix += 1;
+    if (keys["arrowup"] || keys["w"]) iz -= 1; if (keys["arrowdown"] || keys["s"]) iz += 1;
+    let L = Math.hypot(ix, iz);
+    if (L > 0.08 && S.mode === "walk") auto = null; else L = 0;
+    if (auto && auto.length) {
+      const t = auto[0], dx = t.x - player.position.x, dz = t.z - player.position.z, d = Math.hypot(dx, dz);
+      if (d < 0.25) {
+        auto.shift();
+        if (!auto.length) {
+          auto = null;
+          if (S.mode === "return") { sitPlayer(); later(nextEvent, 400); }
+          else later(() => { if (S && S.ev && nearTarget()) interact(); }, 120);
+        }
+      } else { ix = dx / d; iz = dz / d; L = 1; }
+    }
+    let moving = false;
+    if (L > 0.08) {
+      const sp = (S.mode === "return" ? 8 : 7) * Math.min(1, L); ix /= L; iz /= L;
+      const ox = player.position.x, oz = player.position.z;
+      const nx = ox + ix * sp * dt, nz = oz + iz * sp * dt;
+      if (!collide(nx, oz)) player.position.x = nx;
+      if (!collide(player.position.x, nz)) player.position.z = nz;
+      const want = Math.atan2(ix, iz); let dr = want - player.rotation.y; dr = Math.atan2(Math.sin(dr), Math.cos(dr)); player.rotation.y += dr * Math.min(1, dt * 14);
+      moving = Math.hypot(player.position.x - ox, player.position.z - oz) > 0.001;
+      if (auto) { if (!moving) { autoStuck += dt; if (autoStuck > 0.6) { if (S.mode === "return") { sitPlayer(); auto = null; later(nextEvent, 300); } else { auto = null; toast("🕹️ الطريق مسدود، حرّك الشخصية قليلاً بعصا التحكم"); } } } else autoStuck = 0; }
+      animPerson(player, moving, now, sp * dt / 6);
+    } else animPerson(player, false, now, 0);
+    if (S.meetingDeadline) { S.clockAcc = (S.clockAcc || 0) + dt; if (S.clockAcc >= 1) { S.clockAcc = 0; S.clock += 1; updateHud(); } }
+    if (S.ev && S.ev.kind === "go" && S.mode === "walk") {
+      const t = SPOTS[S.ev.spot]; const d = Math.hypot(player.position.x - t.x, player.position.z - t.z);
+      $("act").textContent = "✋ تفاعل";
+      $("act").classList.toggle("hidden", d > 2.6);
+      $("goBtn").classList.toggle("hidden", d <= 2.6 || !!auto);
+      const ang = Math.atan2(t.z - player.position.z, t.x - player.position.x);
+      $("arrow").style.transform = `rotate(${ang}rad)`; $("arrow").style.opacity = d < 2.6 ? 0.3 : 1;
+    } else { $("act").classList.add("hidden"); $("goBtn").classList.add("hidden"); }
+  } else {
+    animPerson(player, false, now, 0);
+    $("goBtn").classList.add("hidden");
+    const deskReady = S && S.playing && S.ev && S.ev.kind === "desk" && S.mode === "seat" && modalClosed() && !S.busy;
+    $("act").textContent = "💻 افتح الحاسوب";
+    $("act").classList.toggle("hidden", !deskReady);
+  }
+  for (const n of PEOPLE) if (!walkers.has(n)) animPerson(n, false, now, 0);
+  meRing.position.x = player.position.x; meRing.position.z = player.position.z;
+  /* phone light */
+  phoneLight.material.emissiveIntensity = S && now < S.ringUntil ? (Math.sin(now / 60) > 0 ? 2.2 : 0.2) : 0;
+  if (fireG.visible) animateFire(now);
+  if (wcSmoke.visible) animateWcSmoke(now);
+  deskStar.rotation.y = now / 500; deskStar.position.y = 2.15 + Math.sin(now / 300) * 0.12;
+  if (ghost.visible) {
+    const gx = player.position.x - 1.8, gz = player.position.z + 1.3;
+    ghost.position.x += (gx - ghost.position.x) * 0.035; ghost.position.z += (gz - ghost.position.z) * 0.035;
+    ghost.position.y = 0.9 + Math.sin(now / 420) * 0.22; ghost.rotation.y = Math.sin(now / 900) * 0.35;
+    animateGhost(now);
+    gShadow.position.set(ghost.position.x, 0.02, ghost.position.z); gShadow.scale.setScalar(ghost.scale.x * (1.1 - Math.sin(now / 420) * 0.1));
+  }
+  const pls = 1 + Math.sin(now / 250) * 0.12; ring.scale.set(pls, pls, pls); star.rotation.y = now / 600; star.position.y = 3.2 + Math.sin(now / 300) * 0.2;
+  /* camera: framed on the office while seated, follows the player while walking */
+  const portrait = H > W;
+  let tx, tz, camH, camZ;
+  if (S && S.camAt) { tx = S.camAt.x; tz = S.camAt.z + (portrait ? 4 : 2); camH = portrait ? 19 : 14; camZ = portrait ? 11 : 9; }
+  else if (!S || S.mode === "seat") { tx = portrait ? 13.4 : 14.6; tz = portrait ? -4.6 : -6.6; camH = portrait ? 21 : 17.5; camZ = portrait ? 13 : 9.5; }
+  else { tx = player.position.x; tz = player.position.z; camH = portrait ? 19 : 14.5; camZ = portrait ? 12 : 11.5; }
+  camera.position.x += (tx - camera.position.x) * 0.08; camera.position.z += (tz + camZ - camera.position.z) * 0.08; camera.position.y += (camH - camera.position.y) * 0.08;
+  camera.lookAt(camera.position.x, 0, camera.position.z - camZ);
+  renderer.render(scene, camera);
+  for (const k in SPOTS) {
+    tmpV.set(SPOTS[k].x, SPOTS[k].y != null ? SPOTS[k].y : 2.7, SPOTS[k].z).project(camera);
+    const el = labelEls[k];
+    if (tmpV.z > 1 || Math.abs(tmpV.x) > 1.05 || Math.abs(tmpV.y) > 1.05 || !S || (k === "assembly" && !S.evac) || (k === "wc" && !smoker.visible)) { el.style.display = "none"; continue; }
+    el.style.display = ""; el.style.left = ((tmpV.x + 1) / 2 * W) + "px"; el.style.top = ((1 - tmpV.y) / 2 * H) + "px";
+  }
+  /* name + mood tags over the people waiting on the bench */
+  for (const who in VNPC) {
+    const p = VNPC[who], el = tagFor(who), st = p.userData.state;
+    if (!S || !S.playing || !(st === "bench" || st === "tobench")) { el.style.display = "none"; continue; }
+    tmpV.set(p.position.x, p.position.y + 2.65, p.position.z).project(camera);
+    if (tmpV.z > 1 || Math.abs(tmpV.x) > 1.05 || Math.abs(tmpV.y) > 1.05) { el.style.display = "none"; continue; }
+    el.style.display = ""; el.textContent = (S.angry[who] ? "😠 " : "🙂 ") + VLOOK[who].short;
+    el.style.left = ((tmpV.x + 1) / 2 * W) + "px"; el.style.top = ((1 - tmpV.y) / 2 * H - ((p.userData.seat % 2) ? 22 : 0)) + "px";
+  }
+  if (ghost.visible && bubbleUntil > now) {
+    tmpV.set(ghost.position.x, ghost.position.y + 1.9 * ghost.scale.y, ghost.position.z).project(camera);
+    const b = $("gbubble"); b.style.display = ""; b.style.left = ((tmpV.x + 1) / 2 * W) + "px"; b.style.top = ((1 - tmpV.y) / 2 * H) + "px";
+  } else $("gbubble").style.display = "none";
+  requestAnimationFrame(frame);
+}
+let bubbleUntil = 0;
+function ghostSay(txt) { $("gbubble").textContent = txt; bubbleUntil = performance.now() + 4500; }
+let toastT = null;
+function toast(txt, ms) { const t = $("toast"); t.innerHTML = txt; t.classList.remove("hidden"); clearTimeout(toastT); toastT = setTimeout(() => t.classList.add("hidden"), ms || 3500); }
+function resize() {
+  const w = window.innerWidth, h = window.innerHeight; renderer.setSize(w, h, false);
+  camera.aspect = w / h; camera.fov = w < h ? 60 : 48; camera.updateProjectionMatrix();
+}
+
+addEventListener("resize", resize); resize();
+
+/* ============================================================ female player (المديرة العامة) */
+let FEMALE = false;
+const FEM = [
+  ["أنت المدير", "أنتِ المديرة"], ["المدير العام", "المديرة العامة"], ["هو المسؤول", "هي المسؤولة"],
+  ["مدير رقمي متمكّن", "مديرة رقمية متمكّنة"], ["مدير جيد يحتاج تدقيقاً أكثر", "مديرة جيدة تحتاج تدقيقاً أكثر"], ["مدير يحتاج متابعة", "مديرة تحتاج متابعة"],
+  ["صائد الهلوسات", "صائدة الهلوسات"], ["حارس الأسرار", "حارسة الأسرار"], ["سيّد الباب", "سيّدة الباب"], ["مدير الوقت", "مديرة الوقت"], ["المدير الرقمي", "المديرة الرقمية"], ["قائد الإخلاء", "قائدة الإخلاء"],
+  ["لا ترجع", "لا ترجعي"], ["لا تركض", "لا تركضي"], ["لا تريد", "لا تريدين"], ["لا تعتمد", "لا تعتمدي"], ["لا تعطِ", "لا تعطي"], ["لا تفترض", "لا تفترضي"], ["لا ترفعه", "لا ترفعيه"],
+  ["لم تتحقق", "لم تتحققي"], ["لم تفحصه", "لم تفحصيه"], ["تريد مسودة", "تريدين مسودة"], ["ترفع سماعة", "ترفعين سماعة"], ["تخرج من", "تخرجين من"],
+  ["ماذا تفعل", "ماذا تفعلين"], ["ماذا تطلب", "ماذا تطلبين"], ["ماذا تقرر", "ماذا تقررين"], ["ماذا تجيب", "ماذا تجيبين"], ["ماذا تقول", "ماذا تقولين"], ["ماذا تسلّم", "ماذا تسلّمين"],
+  ["كيف تبدأ", "كيف تبدئين"], ["بمن تتصل", "بمن تتصلين"], ["بماذا تنصحه", "بماذا تنصحينه"], ["كيف تقضي", "كيف تقضين"], ["كيف تستعمل", "كيف تستعملين"],
+  ["شيء تفعله", "شيء تفعلينه"], ["أن تعلنها", "أن تعلنيها"], ["أن تقرأه", "أن تقرئيه"], ["تراجعه أنت", "تراجعينه أنتِ"], ["حتى تطرده", "حتى تطرديه"], ["خطأ تكشفه", "خطأ تكشفينه"], ["فتختار", "فتختارين"],
+  ["وقّعتَ", "وقّعتِ"], ["تخرج للاجتماع", "تخرجين للاجتماع"], ["وأسرع", "وأسرعي"], ["ولا تركض", "ولا تركضي"], ["وخذ", "وخذي"], ["صحّح", "صحّحي"], ["تحتاج هذه", "تحتاجين هذه"], ["افترض", "افترضي"], ["وتأكد", "وتأكدي"], ["المدير القريب من موظفيه", "المديرة القريبة من موظفيها"], ["جالس", "جالسة"], ["أنت", "أنتِ"], ["أستاذ", "أستاذة"],
+  ["اضغط", "اضغطي"], ["افتح", "افتحي"], ["امشِ", "امشي"], ["قم", "قومي"], ["اخرج", "اخرجي"], ["ارجع", "ارجعي"], ["أسرع", "أسرعي"], ["تصرّف", "تصرّفي"],
+  ["راجِعه", "راجِعيه"], ["راجِعها", "راجِعيها"], ["راجِع", "راجِعي"], ["أبقِ", "أبقي"], ["اختر", "اختاري"], ["خذ", "خذي"], ["انطلق", "انطلقي"], ["جرّب", "جرّبي"],
+  ["صوّر", "صوّري"], ["اكشف", "اكشفي"], ["حرّك", "حرّكي"], ["تحقّق", "تحقّقي"], ["بلّغ", "بلّغي"], ["فكّر", "فكّري"], ["اكتب", "اكتبي"], ["طابِق", "طابِقي"]
+];
+const AR = "\\u0621-\\u065F\\u0670-\\u06FF";
+const FEM_RX = FEM.map(([a, b]) => [new RegExp("(^|[^" + AR + "])" + a.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "(?![" + AR + "])", "g"), "$1" + b]);
+function fem(t) { if (!FEMALE || !t) return t; for (const [r, b] of FEM_RX) t = t.replace(r, b); return t; }
+function femDom(root) { if (!root) return; const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT); let n; while ((n = w.nextNode())) { const v = fem(n.data); if (v !== n.data) n.data = v; } }
+const femObs = new MutationObserver(ms => { if (!FEMALE) return; for (const m of ms) femDom(m.target.nodeType === 3 ? m.target.parentNode : m.target); });
+for (const id of ["mcard", "toast", "taskTxt", "ecard", "gbubble", "act", "hName"]) femObs.observe($(id), { childList: true, characterData: true, subtree: true });
+const START_TXT = $("startTxt").innerHTML;
+let GENDER = store.get("dgday:gender") || "";
+function setGender(g) {
+  GENDER = g; store.set("dgday:gender", g); FEMALE = g === "f";
+  document.querySelectorAll(".gbtn").forEach(b => b.classList.toggle("on", b.dataset.g === g));
+  $("startTxt").innerHTML = START_TXT; femDom($("startTxt"));
+  $("startH1").textContent = FEMALE ? "محاكي يوم في حياة المديرة العامة" : "محاكي يوم في حياة المدير العام";
+  $("gsel").style.outline = "";
+}
+document.querySelectorAll(".gbtn").forEach(b => b.onclick = () => setGender(b.dataset.g));
+if (GENDER) setGender(GENDER);
+
+$("go").onclick = startGame;
+function setPause(on) {
+  if (!S || !S.playing) return;
+  S.paused = on; $("pause").classList.toggle("hidden", !on);
+  if (on) { joyV = { x: 0, z: 0 }; knob.style.transform = ""; }
+}
+function exitGame() {
+  if (!S) return;
+  endEvac();
+  GEN++; S.playing = false; S.paused = false; clearInterval(S.tmr); walkers.clear(); auto = null;
+  for (const id of ["modal", "pause", "end", "hud", "task", "joy", "act", "keysHint", "goBtn", "toast"]) $(id).classList.add("hidden");
+  for (const k in labelEls) labelEls[k].classList.remove("target");
+  beacon.position.set(999, 0, 999); deskStar.visible = false;
+  $("nameIn").value = S.name; $("start").classList.remove("hidden");
+}
+$("pauseBtn").onclick = () => setPause(true);
+$("pResume").onclick = () => setPause(false);
+$("pRestart").onclick = () => { $("pause").classList.add("hidden"); $("nameIn").value = S.name; startGame(); };
+$("pExit").onclick = exitGame;
+addEventListener("keydown", e => { if ((e.key === "Escape" || e.key === "p" || e.key === "P") && S && S.playing) setPause(!S.paused); });
+document.addEventListener("visibilitychange", () => { if (document.hidden && S && S.playing && !S.paused) setPause(true); });
+$("nameIn").addEventListener("keydown", e => { if (e.key === "Enter") startGame(); });
+const saved = store.get("dgday:name"); if (saved) $("nameIn").value = saved;
+$("fireOpt").checked = store.get("dgday:fire") === "1";
+$("fireOpt").onchange = () => store.set("dgday:fire", $("fireOpt").checked ? "1" : "0");
+camera.position.set(14.6, 14.5, 3.3); camera.lookAt(14.6, 0, -5.2);
+window.__dg = { get S() { return S; }, get player() { return player; }, VNPC, secretary };
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>
