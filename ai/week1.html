@@ -10549,11 +10549,11 @@
         <div class="w9-vid" id="w9-vid">
           <button type="button" class="w9-poster" id="w9-poster" aria-label="انقر لرؤية الشرح">
             <span class="w9-play">▶</span>
-            <span class="w9-pt1">🎬 فيديو الشرح يُضاف قبل المحاضرة</span>
+            <span class="w9-pt1">انقر لرؤية الشرح</span>
             <span class="w9-pt2">شرح المحاضرة التاسعة كاملةً بصوتٍ عراقيّ: كلّ سيناريو في المحاكي، ولماذا القرار الصحيح صحيح</span>
           </button>
         </div>
-        <p class="w9-dlrow" id="w9-dlrow" style="display:none"><a class="w9-dl" href="video/week9_walkthrough.mp4" download="ai-week9.mp4">⬇ تنزيل الفيديو</a> <small>MP4، يعمل على الهاتف بلا إنترنت بعد التنزيل</small></p>
+        <p class="w9-dlrow" id="w9-dlrow"><a class="w9-dl" href="video/week9_walkthrough.mp4" download="ai-week9.mp4">⬇ تنزيل الفيديو</a> <small>MP4، ١١ دقيقة، ٦٦ ميغابايت، بصوتٍ عراقيّ، يعمل على الهاتف بلا إنترنت بعد التنزيل</small></p>
         <style>
           .w9-vid{position:relative;width:100%;max-width:900px;margin:6px auto 8px;aspect-ratio:16/9;border-radius:14px;overflow:hidden;border:3px solid #2b2f38;box-shadow:0 4px 14px rgba(0,0,0,.18);background:#11141a}
           .w9-vid video{position:absolute;inset:0;width:100%;height:100%;background:#0b0f16}
@@ -10621,9 +10621,9 @@
           .w9g-msg{text-align:center;font-weight:700;margin:6px 0;min-height:1.6em}
         </style>
         <script>
-          document.getElementById('w9-poster').addEventListener('click', function(){ if(!window.W9_VIDEO_READY) return;
+          document.getElementById('w9-poster').addEventListener('click', function(){
             var v=document.createElement('video');
-            v.src='video/week9_walkthrough.mp4?v=20261105a'; v.controls=true; v.autoplay=true; v.playsInline=true;
+            v.src='video/week9_walkthrough.mp4?v=20261105v'; v.controls=true; v.autoplay=true; v.playsInline=true;
             this.replaceWith(v); var p=v.play(); if(p&&p.catch) p.catch(function(){});
           });
         </script>
@@ -10914,13 +10914,13 @@
           <span>٧. كيف تُحسب نتيجتك ودرجتك من ١٠</span>
         </div>
         <div class="pipe">
-          <div class="pipe-row"><span class="pipe-n">١</span><div class="pipe-b"><b>النقاط</b><small>لكلّ قرارٍ صحيح نقاط، و<b>+١٠٠</b> لكلّ خطأٍ لكلود تكشفه. القرار الخاطئ يُنقص النقاط.</small></div></div>
+          <div class="pipe-row"><span class="pipe-n">١</span><div class="pipe-b"><b>النقاط</b><small>لكلّ قرارٍ صحيح نقاط، و<strong>+١٠٠</strong> لكلّ خطأٍ لكلود تكشفه. القرار الخاطئ يُنقص النقاط.</small></div></div>
           <div class="pipe-a">▼</div>
           <div class="pipe-row"><span class="pipe-n">٢</span><div class="pipe-b"><b>السلسلة 🔥</b><small>ثلاثة قراراتٍ صحيحة متتالية تضرب النقاط في ١٫٥، وخمسة في ٢. أيّ خطأ يعيد السلسلة إلى البداية.</small></div></div>
           <div class="pipe-a">▼</div>
           <div class="pipe-row"><span class="pipe-n">٣</span><div class="pipe-b hi"><b>المؤشّرات الأربعة</b><small>⏱️ الوقت (قرارات الباب والسرعة)، ✅ الدقّة (أخطاء كلود التي كشفتها)، 🔒 السرّيّة (التسريبات)، 🏛️ رضا الوزارة (التأخير والمهامّ الفائتة). النتيجة النهائيّة = النقاط × متوسّطها.</small></div></div>
           <div class="pipe-a">▼</div>
-          <div class="pipe-row"><span class="pipe-n">٤</span><div class="pipe-b"><b>📝 الدرجة من ١٠</b><small>النتيجة النهائيّة ÷ النتيجة الكاملة × ١٠، وأقلّ درجة ١. النتيجة الكاملة نحو <b>٤٨٥٠</b> من دون سيناريوهات السلامة، ونحو <b>٦٤٠٠</b> معها.</small></div></div>
+          <div class="pipe-row"><span class="pipe-n">٤</span><div class="pipe-b"><b>📝 الدرجة من ١٠</b><small>النتيجة النهائيّة ÷ النتيجة الكاملة × ١٠، وأقلّ درجة ١. النتيجة الكاملة نحو <strong>٤٨٥٠</strong> من دون سيناريوهات السلامة، ونحو <strong>٦٤٠٠</strong> معها.</small></div></div>
         </div>
         <p>وفي التقرير أيضًا: <b>النجوم</b> (٣ نجوم لكلّ مهمّة بلا خطأ وبسرعة)، و<b>الأوسمة</b> (صائد الهلوسات، حارس الأسرار، سيّد الباب، مدير الوقت، المدير الرقميّ، قائد الإخلاء، يوم مثاليّ)، وقائمة <b>«ما فاتك»</b>: كلّ خطأٍ لكلود لم تكشفه، مع سببه والأسبوع الذي يعالجه. وكلّما فاتك خطأ كبر <b>شبح الهلوسة</b> 👻 خلفك.</p>
         <div class="takeaway"><b>اقرأ «ما فاتك» قبل أن تعيد المحاكاة:</b> هي خريطتك لما تراجعه. الأخطاء تتبدّل في كلّ محاولة، فلا ينفعك حفظ الأجوبة، بل ينفعك فهم <span class="hl hl-green">لماذا</span>.</div>
