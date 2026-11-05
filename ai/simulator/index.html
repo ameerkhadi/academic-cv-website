@@ -104,6 +104,11 @@ input{-webkit-user-select:text;user-select:text}
   #joy{width:136px;height:136px;bottom:24px}
   #knob{left:40px;top:40px}
 }
+.errs{text-align:right;background:rgba(220,38,38,.07);border:1px solid rgba(220,38,38,.3);border-radius:12px;padding:8px 12px;margin:10px 0;font-size:14px;line-height:1.7}
+.errs summary{cursor:pointer;font-weight:700;font-size:15px}
+.errs ol{margin:6px 0 0;padding-right:20px}.errs li{margin:0 0 8px;padding-bottom:6px;border-bottom:1px dashed rgba(127,127,127,.3)}
+.errs .eh{opacity:.75;font-size:13px}.errs .eg{background:#7c3aed;color:#fff;border-radius:8px;padding:0 6px;font-size:12px}
+.errs .ew{opacity:.85}.errs .en{font-size:13px;opacity:.8;margin-top:4px}
 </style>
 </head>
 <body>
@@ -651,7 +656,7 @@ let S = null;
 function newState(name) {
   return {
     name, score: 0, combo: 0, clock: 8 * 60, evIndex: -1, ev: null, evStart: 0, queue: EVENTS.filter(e => !e.optional || $("fireOpt").checked),
-    caught: 0, missed: 0, missedList: [], leaks: 0, late: 0, missedTasks: 0, ministryHarm: 0,
+    caught: 0, missed: 0, missedList: [], errs: [], leaks: 0, late: 0, missedTasks: 0, ministryHarm: 0,
     fast: 0, claudeUses: 0, stars: [], evMistakes: 0, meetingDeadline: null,
     gate: { ok: 0, bad: 0 }, waited: {}, angry: {}, mode: "seat", ringUntil: 0, busy: false,
     V: makeVariants(), playing: true
@@ -988,6 +993,10 @@ function addPts(base, why) {
   S.score += pts; beep(base > 0); updateHud(); return pts;
 }
 const GHOST_LINES = ["هههه… وقّعتَ على هلوستي! 👻", "صدّقتني مرة ثانية؟ أنا أكبر الآن!", "لم تتحقق؟ ممتاز… لي 😈", "كلما صدّقتني بلا تحقق، كبرت!", "أنا الهلوسة… ولن أتركك 👻"];
+const plain = x => String(x == null ? "" : x).replace(/<br\s*\/?>/g, " ").replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
+function logErr(did, right, why, ghost) {
+  S.errs.push({ at: fmtTime(S.clock), ev: S.ev ? plain(S.ev.title) : "", did: plain(did), right: plain(right), why: plain(why).replace(/^[❌✅😒📩]\s*/u, ""), ghost: !!ghost });
+}
 function missTrap(m) {
   S.missed++; S.missedList.push(m);
   const first = !ghost.visible;
@@ -1134,6 +1143,8 @@ function gateChoose(e, c) {
     return toDeputy(e);
   }
   // wrong choice
+  const GL = { in: "🚪 أدخليه الآن", wait: "⏳ ليبقَ ينتظر", deputy: "👔 حوّليه إلى المعاون" };
+  logErr("قرار الباب: " + GL[c], GL[best], c === "in" ? ic.in : c === "wait" ? ic.wait : ic.deputy);
   if (c === "in") {           // best was wait or deputy
     addPts(best === "deputy" ? -20 : -10, "⏳");
     if (best === "deputy") S.clock += 15;
@@ -1236,7 +1247,7 @@ function renderStep() {
   if (st.ring) ringPhone();
   if (st.type === "arrive") {
     const late = S.clock > S.meetingDeadline;
-    if (late) { S.late++; h += `<div class="fb bad">😒 وصلت الساعة <b>${fmtTime(S.clock)}</b>، بعد الموعد. المدراء كانوا ينتظرونك.<span class="pts">−40</span></div>`; addPts(-40, "⏰ تأخير"); }
+    if (late) { S.late++; logErr("وصلت إلى الاجتماع الساعة " + fmtTime(S.clock) + " بعد الموعد", "تتحرك قبل الموعد ومعك الموجز", "المدراء كانوا ينتظرونك، والتأخير يُحسب عليك"); h += `<div class="fb bad">😒 وصلت الساعة <b>${fmtTime(S.clock)}</b>، بعد الموعد. المدراء كانوا ينتظرونك.<span class="pts">−40</span></div>`; addPts(-40, "⏰ تأخير"); }
     else { h += `<div class="fb good">✅ وصلت في الموعد (${fmtTime(S.clock)}) ومعك الموجز.<span class="pts">+60</span></div>`; addPts(60, "👥"); }
     S.meetingDeadline = null;
     h += `<button class="btn" id="nx">متابعة ←</button>`;
@@ -1280,6 +1291,10 @@ function chooseOpt(o) {
   if (o.leak) S.leaks++;
   if (o.catchTrap) S.caught++;
   if (o.missTrap) missTrap(o.missTrap);
+  if (o.p < 0) {
+    const stp = S.steps[S.stepI], best = stp && stp.opts ? stp.opts.reduce((a, b) => (b.p > a.p ? b : a)) : null;
+    logErr("اخترت: «" + plain(o.t) + "»", best ? "«" + plain(best.t) + "»" : "", val(o.fb), !!o.missTrap);
+  }
   const got = addPts(o.p, o.leak ? "🔒" : o.catchTrap ? "🕵️" : "");
   card.innerHTML = header(S.ev) + `<div class="fb ${cls}">${val(o.fb)}${o.p ? `<span class="pts">${got > 0 ? "+" + got : got}</span>` : ""}</div><button class="btn" id="nx">متابعة ←</button>`;
   card.scrollTop = 0;
@@ -1296,10 +1311,10 @@ function evalRows(st) {
       if (isTrap) S.caught++;
       cls = "good"; line = isTrap ? `🕵️ <b>كشفت خطأ كلود:</b> ${r.label} ← ${r.ok}` : `✅ ${r.label} ← ${r.ok}`;
     } else if (ch === "— اختر —") {
-      p = -40; S.missedTasks++; cls = "bad"; line = `📩 لم تُعالَج: ${r.label} ← وصل كتاب «تأكيد» من الوزير`;
+      p = -40; S.missedTasks++; cls = "bad"; line = `📩 لم تُعالَج: ${r.label} ← وصل كتاب «تأكيد» من الوزير`; logErr("تركت بلا قرار: " + r.label, r.ok, "انتهى الوقت ولم تعالجها، فوصل كتاب تأكيد من الوزير");
     } else {
-      if (isTrap && ch === r.sug) { p = r.ptsBad || -50; missTrap({ tl: r.tl, week: r.week, why: r.why }); if (r.harm) S.ministryHarm++; line = `❌ ${r.label}: وافقت على اقتراح كلود الخاطئ. ${r.why || ("الصحيح: " + r.ok)}`; }
-      else { p = r.ptsBad || -20; line = `❌ ${r.label}: الصحيح «${r.ok}»`; }
+      if (isTrap && ch === r.sug) { p = r.ptsBad || -50; missTrap({ tl: r.tl, week: r.week, why: r.why }); if (r.harm) S.ministryHarm++; line = `❌ ${r.label}: وافقت على اقتراح كلود الخاطئ. ${r.why || ("الصحيح: " + r.ok)}`; logErr(r.label + " ← «" + ch + "» (اقتراح كلود)", r.ok, (r.why || "") + (r.week ? " — " + r.week : ""), true); }
+      else { p = r.ptsBad || -20; line = `❌ ${r.label}: الصحيح «${r.ok}»`; logErr(r.label + " ← «" + ch + "»", r.ok, r.why || ""); }
       cls = "bad";
     }
     const got = addPts(p, cls === "good" ? (isTrap ? "🕵️" : "") : "");
@@ -1344,6 +1359,8 @@ function endDay() {
     <div class="badges">${badges.map(b => `<span class="badge">${b}</span>`).join("") || '<span class="badge">لا أوسمة هذه المرة — جرّب مجدداً!</span>'}</div>`;
   if (S.missedList.length) h += `<div class="missed"><b>❗ ما فاتك:</b><br>${S.missedList.map(x => `• ${x.tl}${x.why ? " — " + x.why : ""} <small>(${x.week})</small>`).join("<br>")}</div>`;
   else h += `<div class="fb good">👏 لم يفتك أي خطأ لكلود. هكذا يُستعمل الذكاء الاصطناعي: <b>يسرّع، وأنت تتحقق.</b></div>`;
+  if (S.errs.length) h += `<details class="errs" open><summary>📋 تفاصيل أخطائك (${S.errs.length.toLocaleString("ar-IQ")}) — ماذا فعلت، وما الصحيح، ولماذا</summary><ol>${S.errs.map(x => `<li><div class="eh"><span dir="ltr">${x.at}</span> · ${escapeHtml(x.ev)}${x.ghost ? ' <span class="eg">👻 خطأ كلود</span>' : ""}</div><div>❌ ${escapeHtml(x.did)}</div>${x.right ? `<div>✅ الصحيح: ${escapeHtml(x.right)}</div>` : ""}${x.why ? `<div class="ew">💡 ${escapeHtml(x.why)}</div>` : ""}</li>`).join("")}</ol><div class="en">استعمل هذه القائمة في ملاحظات الواجب: اختر 3 أخطاء واكتب لماذا كان القرار الصحيح صحيحاً.</div></details>`;
+  else h += `<div class="fb good">🏆 لا يوجد أي قرار خاطئ اليوم. يوم مثالي!</div>`;
   h += `<button class="btn gold" id="again">🔁 أعِد المحاكاة</button><div class="note">📸 صوّر هذه الشاشة وارفعها مع ملاحظاتك في واجب الأسبوع 9 على منصة المادة. أخطاء كلود تتبدّل في كل محاولة.<br>محاكاة تدريبية لمادة الذكاء الاصطناعي وتحليل البيانات — د. أمير هادي. كل الأسماء والجهات خيالية.</div>
     <div class="about"><div class="about-h">عن المُعِدّ</div>
       <b>د. أمير كاظم هادي</b> — أستاذ مساعد في علوم الحاسوب، كلية تكنولوجيا المعلومات، جامعة بابل.<br>
