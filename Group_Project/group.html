@@ -1211,15 +1211,256 @@ p{margin:.55em 0}
 <!-- ============ END SLIDE 4 ============ -->
 
 <!-- ============ SLIDE 5 : الأسبوع الخامس ============ -->
-<div id="slide-5" class="slide content-slide">
+<div id="slide-5" class="slide content-slide rich-slide">
+<style>
+.gp5-obj{background:var(--card);border:1.5px dashed var(--line);border-radius:14px;padding:10px 16px;margin:12px 0}
+.gp5-three{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:10px 0}
+.gp5-three>div,.gp5-two>div{background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;min-width:0}
+.gp5-three>div b,.gp5-two>div b{display:block;margin-bottom:4px}
+.gp5-two{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+@media (max-width:760px){.gp5-three,.gp5-two{grid-template-columns:1fr}}
+.gp5-st{display:inline-block;font-size:calc(13px * var(--fs));font-weight:700;border-radius:999px;padding:0 10px;margin-inline-start:6px}
+.gp5-ok{background:#dcfce7;color:#166534}.gp5-wait{background:#fef3c7;color:#92400e}
+.gp5-org{background:#0b1220;border-radius:16px;padding:8px;margin:10px 0}
+.gp5-org svg{width:100%;height:auto;display:block}
+.gp5-org .nd text{text-anchor:middle;fill:#fff;font-weight:700}.gp5-org .nd .sub{fill:#c9d1d9;font-weight:400}
+.gp5-org .nd.hl rect{stroke:#fff!important;stroke-width:4}
+.gp5-org .ln{stroke:#3b4757;stroke-width:2.5;fill:none}.gp5-org .ln.on{stroke:#f59e0b;stroke-dasharray:8 6;animation:gp5dash .8s linear infinite}
+@keyframes gp5dash{to{stroke-dashoffset:-28}}
+.gp5-ctl{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.gp5-ctl button{font:inherit;font-weight:700;border-radius:10px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);padding:5px 14px;cursor:pointer}
+.gp5-ctl .pri{background:#16a34a;color:#fff;border-color:#16a34a}.gp5-ctl .red{border-color:var(--red);color:var(--red)}
+.gp5-say{background:var(--card);border-inline-start:5px solid var(--orange);border-radius:10px;padding:8px 12px;min-height:3.2em}
+.gp5-num{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:10px 0}
+.gp5-num>div{background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:8px;text-align:center}
+.gp5-num b{display:block;font-size:calc(28px * var(--fs));color:var(--orange)}
+@media (max-width:640px){.gp5-num{grid-template-columns:1fr 1fr}}
+.gp5-hw{background:var(--card);border:2px solid var(--blue);border-radius:16px;padding:12px 16px;margin:14px 0}
+.gp5-hw h4{margin:0 0 6px;color:var(--blue);font-size:calc(18px * var(--fs))}
+</style>
+
   <span class="chip">الأسبوع الخامس</span>
-  <div class="coming-soon">
-    <svg class="big-icon" viewBox="0 0 40 40"><circle cx="20" cy="20" r="15" fill="none" stroke="currentColor" stroke-width="3" filter="url(#sketchy)"/><path d="M20 11 V21 L27 25" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
-    <p class="cs-title">تنزل لاحقاً</p>
-    <p class="cs-sub">محتوى هذا الأسبوع سيُضاف قريباً.</p>
+  <h2 class="page-title">إدارة المشاريع غير الربحية: دروسٌ من مشروع «الكتاب يحچي»</h2>
+  <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
+
+  <p class="lead-paragraph">في الأسابيع الماضية تعلّمنا مراحل المشروع وأدواته. ثمّ نفّذتم مشروعًا حقيقيًّا لا تمرينًا: حوّلتم كتبًا مدرسيّة رسميّة للصفّ الثالث المتوسّط إلى <b>كتبٍ تفاعليّة تتكلّم</b> يفتحها التلميذ في هاتفه مجّانًا. هذا الأسبوع لا نضيف أداةً جديدة، بل نقرأ ما حدث فعلًا: <b>كيف وُزّع العمل، وأين نجحنا، وأين تعثّرنا، وماذا نفعل في المرّة القادمة</b>. هذا هو جوهر إدارة المشاريع غير الربحيّة.</p>
+
+  <div class="gp5-obj"><b>بعد هذه المحاضرة ستستطيع أن:</b>
+    <ul>
+      <li>تعرّف <b>المشروع غير الربحيّ</b> وتميّزه عن المشروع التجاريّ والعمل التطوّعيّ العشوائيّ.</li>
+      <li>ترسم <b>هيكل الأدوار</b> في مشروعٍ كبير: مدير المشروع، والمنسّق، وقائد الفريق، والعضو، وتحدّد ممّن يستلم كلٌّ منهم ولمن يسلّم.</li>
+      <li>تتتبّع <b>رحلة المُخرَج</b> من العضو حتى النشر، وتحدّد نقاط الفحص فيها.</li>
+      <li>تشرح لماذا يكون <b>الدمج</b> أصعب مرحلة، وكيف يمنع <b>المعيار المشترك</b> أكثر أخطائه.</li>
+      <li>تكتب <b>تقريرًا عن حصّتك</b> في مشروعٍ جماعيّ: ماذا عملت، وما المشكلة، وماذا تعلّمت.</li>
+    </ul>
   </div>
+
+  <div class="section-heading"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M4 15 H24 M17 7 L25 15 L17 23" fill="none" stroke="var(--red)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketchy)"/></svg><span>📖 مصطلحات تحتاجها أوّلًا</span></div>
+  <div class="dt-wrap"><table class="dt">
+    <tr><th>المصطلح</th><th>المعنى</th><th>مثال من «الكتاب يحچي»</th></tr>
+    <tr><td>مشروع غير ربحيّ <span class="ltr-inline">(Non-profit)</span></td><td>مشروعٌ هدفه منفعة الناس لا الربح، ويُدار بانضباط المشاريع التجاريّة</td><td>كتب تفاعليّة مجّانيّة لتلاميذ الثالث المتوسّط</td></tr>
+    <tr><td>نطاق المشروع <span class="ltr-inline">(Scope)</span></td><td>حدود ما سيُنجز وما لن يُنجز</td><td>كتاب الفيزياء كاملًا، لا كلّ كتب المرحلة</td></tr>
+    <tr><td>هيكل تقسيم العمل <span class="ltr-inline">(WBS)</span></td><td>تقسيم المشروع إلى أجزاءٍ صغيرة يملك كلَّ جزءٍ شخصٌ واحد</td><td>كتاب ← فصول ← صفحات لكلّ عضو</td></tr>
+    <tr><td>المُخرَج <span class="ltr-inline">(Deliverable)</span></td><td>شيءٌ ملموس يُسلَّم في موعده</td><td>ملف HTML لصفحات العضو، وفهرس الفصل من القائد</td></tr>
+    <tr><td>المعيار المشترك <span class="ltr-inline">(Standard)</span></td><td>قواعد واحدة يلتزم بها الجميع قبل البدء</td><td>البرومبت الموحّد، وقاعدة تسمية الملفّات</td></tr>
+    <tr><td>الدمج <span class="ltr-inline">(Integration)</span></td><td>جمع أعمال الأفراد في منتجٍ واحد يعمل</td><td>٤٠ ملفًّا تصير كتابًا واحدًا بروابط صحيحة</td></tr>
+    <tr><td>ضمان الجودة <span class="ltr-inline">(QA)</span></td><td>فحص المُخرَج قبل تسليمه أو نشره</td><td>مقارنة النصّ بالكتاب الأصليّ، وتجربة الصفحة في الهاتف</td></tr>
+    <tr><td>أصحاب المصلحة <span class="ltr-inline">(Stakeholders)</span></td><td>كلّ من يتأثّر بالمشروع</td><td>التلاميذ، والمعلّمون، والمدارس، ووزارة التربية</td></tr>
+    <tr><td>التغذية الراجعة <span class="ltr-inline">(Feedback)</span></td><td>ملاحظات المستخدمين التي توجّه التحسين</td><td>زرّ «⚠️ بلّغ عن خطأ» في كلّ صفحة</td></tr>
+  </table></div>
+
+  <div class="section-heading"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M4 15 H24 M17 7 L25 15 L17 23" fill="none" stroke="var(--red)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketchy)"/></svg><span>١ · ما المشروع غير الربحيّ؟</span></div>
+  <p>المشروع غير الربحيّ لا يبيع شيئًا، والمستفيد منه هو المجتمع: هنا التلميذ الذي لا يملك مختبرًا، والمعلّم الذي يريد وسيلةً حديثة. لكنّه <b>ليس عملًا تطوّعيًّا عشوائيًّا</b>؛ فله هدف، ونطاق، وفريق، وأدوار، ومواعيد، ومراجعة جودة، ونشر، تمامًا مثل أيّ مشروعٍ في شركة.</p>
+  <div class="gp5-two">
+    <div><b>ما يشبه فيه المشروع التجاريّ</b>هدفٌ مكتوب، ومواعيد تسليم، وأدوار ومسؤوليّات، وجودة تُفحص قبل النشر، وتوثيق لما حدث.</div>
+    <div><b>ما يختلف فيه</b>لا ربح ولا رواتب، فالدافع هو الأثر. والمستخدم لا يدفع، لذلك يجب أن يكون المنتج سهلًا ومجّانيًّا ويعمل حتى دون إنترنت.</div>
+  </div>
+  <div class="note-box" style="background:var(--card);border-inline-start:5px solid var(--blue);border-radius:10px;padding:8px 12px;margin:10px 0">حقوق الكتب الأصليّة محفوظة لوزارة التربية العراقيّة — المديريّة العامّة للمناهج. نحن «المساهمون في هذه النسخة التفاعليّة» لأغراضٍ تعليميّة غير ربحيّة.</div>
+  <div class="takeaway"><b>الخلاصة:</b> «غير ربحيّ» يصف <b>الهدف</b>، لا مستوى الاحتراف.</div>
+
+  <div class="section-heading"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M4 15 H24 M17 7 L25 15 L17 23" fill="none" stroke="var(--red)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketchy)"/></svg><span>٢ · ماذا عملت الشُّعب الثلاث؟</span></div>
+  <div class="gp5-three">
+    <div><b>الشعبة A — الصباحي <span class="gp5-st gp5-ok">✓ سُلِّم</span></b>كتاب <b>الفيزياء</b>. ثمانية فرق، فريق لكلّ فصل (الفصلان ٨ و٩ فريق واحد). سُلِّم في <b>٤٠ ملفًّا</b> تغطّي <b>١٦٤ صفحة من ١٦٨</b>.</div>
+    <div><b>الشعبة B — الصباحي <span class="gp5-st gp5-ok">✓ سُلِّم</span></b>كتاب <b>الكيمياء</b>. تسعة فرق و<b>٣١ طالبًا</b>. القاعدة: التجارب مختبرات ثلاثيّة الأبعاد، وباقي الصفحات تفاعليّة. النتيجة <b>١٤٧ صفحة</b> و<b>٢٤ مختبرًا ثلاثيّ الأبعاد</b>.</div>
+    <div><b>المسائي <span class="gp5-st gp5-wait">⏳ بانتظار التسليم</span></b>كتاب <b>الاجتماعيات</b>. مجموعتان ومنسّق. لم يُسلَّم بعد، وعند تسليمه يمرّ بالمراحل نفسها: مراجعة، وإصلاح، وصوت، ونشر.</div>
+  </div>
+  <div class="dt-wrap"><table class="dt">
+    <tr><th>الكتاب</th><th>كما سلّمه الطلبة</th><th>بعد التطوير</th></tr>
+    <tr><td>الفيزياء</td><td><a href="https://ameer.itbabylon.org/talk/b/physics-original-5d3bb6ff/" target="_blank" rel="noopener">النسخة الأصليّة ↗</a></td><td><a href="https://ameer.itbabylon.org/talk/b/physics-8d5b6fd6/" target="_blank" rel="noopener">الكتاب الذي يُقلَّب ↗</a></td></tr>
+    <tr><td>الكيمياء</td><td><a href="https://ameer.itbabylon.org/talk/b/chemistry-original-8f11d340/" target="_blank" rel="noopener">النسخة الأصليّة ↗</a></td><td><a href="https://ameer.itbabylon.org/talk/b/chemistry-736f4de4/" target="_blank" rel="noopener">الكتاب المطوَّر ↗</a></td></tr>
+  </table></div>
+
+  <div class="section-heading"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M4 15 H24 M17 7 L25 15 L17 23" fill="none" stroke="var(--red)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketchy)"/></svg><span>٣ · هيكل المشروع: من يسلّم لمن؟</span></div>
+  <p>شغّلوا الرحلة لتروا كيف تسافر صفحةٌ واحدة من العضو حتّى الكتاب المنشور، ثمّ شغّلوا «سيناريو الخطأ» لتروا ماذا يحدث حين تغيب نقاط الفحص.</p>
+  <div class="gp5-org"><svg id="gp5-svg" viewBox="0 0 1000 470" role="img" aria-label="هيكل فريق المشروع">
+    <g id="gp5-lines"></g><g id="gp5-nodes"></g>
+    <g id="gp5-pkt" style="display:none"><rect x="-46" y="-17" width="92" height="34" rx="9" fill="#fff"/><text id="gp5-pktT" y="7" text-anchor="middle" font-size="17" font-weight="900" fill="#111">📄 ص 15</text></g>
+    <rect x="40" y="395" width="250" height="56" rx="14" fill="#0f2e1a" stroke="#3fb950" stroke-width="2"/><text x="165" y="430" text-anchor="middle" fill="#3fb950" font-weight="900" font-size="19">🌍 الكتاب المنشور للتلاميذ</text>
+  </svg></div>
+  <div class="gp5-ctl"><button class="pri" id="gp5-play">▶ شغّل الرحلة</button><button id="gp5-step">⏭ خطوة</button><button class="red" id="gp5-fail">✗ سيناريو الخطأ</button><button id="gp5-reset">↺ من جديد</button></div>
+  <div class="gp5-say" id="gp5-say">اضغط «شغّل الرحلة».</div>
+  <div class="dt-wrap"><table class="dt">
+    <tr><th>الدور</th><th>العدد</th><th>المسؤوليّة</th><th>يسلّم إلى</th></tr>
+    <tr><td><b>مدير المشروع</b></td><td>١</td><td>الهدف، والبرومبت الموحّد، وتوزيع الفصول، والمواعيد، والمراجعة النهائيّة، والتطوير، والنشر</td><td>الجمهور</td></tr>
+    <tr><td><b>المنسّق</b></td><td>١ لكلّ شعبة</td><td>يجمع الفصول في كتابٍ واحد بصفحةٍ رئيسيّة وروابط، ويتابع الفرق المتأخّرة</td><td>مدير المشروع</td></tr>
+    <tr><td><b>قائد الفريق</b></td><td>١ لكلّ فصل</td><td>يوزّع الصفحات، ويجمع ملفّات أعضائه ويفحصها، ويصنع فهرس الفصل</td><td>المنسّق</td></tr>
+    <tr><td><b>العضو</b></td><td>٤–٥ لكلّ فريق</td><td>يحوّل صفحاته إلى ملفٍّ تفاعليّ حسب البرومبت، ويختبره في هاتفه</td><td>القائد</td></tr>
+  </table></div>
+  <div class="takeaway"><b>الخلاصة:</b> كلّ شخصٍ يعرف <b>ممّن يستلم ولمن يسلّم</b>. هذا وحده يمنع ضياع العمل بين ٧٠ شخصًا.</div>
+
+  <div class="section-heading"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M4 15 H24 M17 7 L25 15 L17 23" fill="none" stroke="var(--red)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketchy)"/></svg><span>٤ · رحلة المُخرَج ونقاط الفحص</span></div>
+  <div class="pipe">
+    <div class="pipe-row"><span class="pipe-n">١</span><div class="pipe-b"><b>العضو يبني صفحاته</b><small>حسب البرومبت الموحّد: نصّ الكتاب حرفيًّا، وإضافة توضيحيّة، ومحاكاة، وصوت. <b>فحص:</b> هل فتحتُها في الهاتف؟</small></div></div>
+    <div class="pipe-a">↓</div>
+    <div class="pipe-row"><span class="pipe-n">٢</span><div class="pipe-b"><b>القائد يجمع الفصل</b><small>يستلم ملفّات أعضائه ويصنع فهرس الفصل. <b>فحص:</b> هل كلّ صفحات الفصل موجودة؟ هل تكرّرت صفحة؟ هل الأسماء حسب القاعدة؟</small></div></div>
+    <div class="pipe-a">↓</div>
+    <div class="pipe-row"><span class="pipe-n">٣</span><div class="pipe-b"><b>المنسّق يجمع الكتاب</b><small>يربط الفصول بصفحةٍ رئيسيّة. <b>فحص:</b> هل تعمل كلّ الروابط؟ هل وصل كلّ فصل؟</small></div></div>
+    <div class="pipe-a">↓</div>
+    <div class="pipe-row"><span class="pipe-n">٤</span><div class="pipe-b"><b>مدير المشروع يراجع ويطوّر</b><small>يقارن بالكتاب الأصليّ، ويصلح، ويضيف الأشكال الحقيقيّة والصوت والمختبرات. <b>فحص:</b> هل النصّ مطابق؟ هل الصياغة القانونيّة صحيحة؟</small></div></div>
+    <div class="pipe-a">↓</div>
+    <div class="pipe-row"><span class="pipe-n">٥</span><div class="pipe-b"><b>النشر والتغذية الراجعة</b><small>الكتاب على الهاتف، ويعمل دون إنترنت، وفي كلّ صفحة زرّ «بلّغ عن خطأ» يعيد الملاحظة إلى الفريق.</small></div></div>
+  </div>
+  <div class="oops"><span class="o-i">⚠</span><div><b>أكثر الأخطاء تكرارًا في التسليم:</b> ملفّات بأسماء مختلفة، وصفحة عملها عضوان وصفحة لم يأخذها أحد، ونصوص لم تُنقل حرفيًّا، وروابط تعمل في حاسوب الطالب فقط، وتسليم متأخّر من بعض الفرق.</div></div>
+
+  <div class="section-heading"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M4 15 H24 M17 7 L25 15 L17 23" fill="none" stroke="var(--red)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketchy)"/></svg><span>٥ · ماذا أضافت مرحلة التطوير؟</span></div>
+  <div class="gp5-two">
+    <div><b>🔧 إصلاح ودمج</b>دُمجت الصفحات المكرّرة، وبُنيت الناقصة (الفيزياء ص ٥–٦ و١٤٧–١٤٨، والكيمياء ص ١٢١)، ووُحّدت الأسماء، وأُصلحت الروابط، وأُزيلت النوافذ المنبثقة.</div>
+    <div><b>🖼️ محتوى أغنى</b>أشكال الكتاب الحقيقيّة، ورسوم متحرّكة للمفاهيم الصعبة، وثلاثة مختبرات ثلاثيّة الأبعاد احترافيّة في الفيزياء، وجدولا المختبرات والتجارب.</div>
+    <div><b>🔊 للتلميذ</b>صوتٌ مسجّل لكلّ صفحة مع إيقافٍ وسرعة، وكتابٌ يُقلَّب صفحةً صفحة، و🔍 بحثٌ في كلّ الكتاب، ويعمل دون إنترنت.</div>
+    <div><b>🧑‍🏫 للمعلّم والجودة</b>زرّ «بلّغ عن خطأ»، ودليل المدرّس، وملصق QR، وعدّاد زيارات لكلّ فصل.</div>
+  </div>
+  <div class="gp5-num">
+    <div><b>٣١٥</b>صفحة تفاعليّة</div><div><b>١٦٦</b>شكلًا حقيقيًّا</div><div><b>٢٧</b>مختبرًا ثلاثيّ الأبعاد</div>
+    <div><b>٣١٥</b>صفحة مسموعة</div><div><b>٢</b>كتابان منشوران</div><div><b>٠ د.ع</b>على التلميذ</div>
+  </div>
+
+  <div class="section-heading"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M4 15 H24 M17 7 L25 15 L17 23" fill="none" stroke="var(--red)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketchy)"/></svg><span>٦ · دروس الإدارة من مشروعنا</span></div>
+  <ol>
+    <li><b>الهدف الواضح يوحّد الفريق.</b> «كتابٌ يتكلّم لكلّ تلميذ» جملةٌ واحدة فهمها الجميع.</li>
+    <li><b>قسّم العمل حسب البنية الطبيعيّة.</b> الكتاب فصول، فصار لكلّ فصلٍ فريق ولكلّ عضوٍ صفحاتٌ محدّدة.</li>
+    <li><b>المعيار المشترك قبل البدء.</b> كلّ اختلافٍ في التسمية أو القالب صار عملًا إضافيًّا عند الدمج.</li>
+    <li><b>الدمج أصعب مرحلة.</b> ٤٠ ملفًّا جيّدًا لا تصنع كتابًا جيّدًا تلقائيًّا.</li>
+    <li><b>افحص في كلّ مرحلة، لا في النهاية فقط.</b> الخطأ الذي يكتشفه القائد أرخص من الذي يكتشفه المدير.</li>
+    <li><b>جرّب على جهاز المستخدم.</b> التلميذ يفتح الكتاب في الهاتف، لا في حاسوب المختبر.</li>
+    <li><b>الجانب القانونيّ جزءٌ من المشروع.</b> نذكر حقوق الوزارة، ونكتب «المساهمون» لا «صنّاع الكتاب».</li>
+    <li><b>استمع للمستخدم.</b> البلاغات والزيارات وملاحظات المعلّمين تحدّد التحسين القادم.</li>
+  </ol>
+  <div class="takeaway"><b>الخلاصة:</b> نجاح المشروع الجماعيّ لا يأتي من أفضل فرد، بل من <b>أوضح توزيعٍ وأبكر فحص</b>.</div>
+
+  <div class="section-heading"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M4 15 H24 M17 7 L25 15 L17 23" fill="none" stroke="var(--red)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketchy)"/></svg><span>٧ · الواجب: «حصّتي من مشروع الكتاب يحچي»</span></div>
+  <div class="gp5-hw"><h4>✍️ على منصّة المادّة — الدرجة ٢ — آخر موعد السبت ١٤ تشرين الثاني ٢٠٢٦</h4>
+    <p style="margin:0 0 6px">ادخل <a href="https://ameer.itbabylon.org/courses/" target="_blank" rel="noopener">منصّة المادّة ↗</a> بكود بطاقتك، واكتب بنفسك وبكلماتك:</p>
+    <ol style="margin:0">
+      <li><b>الكتاب والفصل والصفحات</b> التي عملتها، ودورك: عضو، أو قائد، أو منسّق.</li>
+      <li><b>ماذا عملت بالضبط:</b> نصّ، أو محاكاة، أو أسئلة، أو مختبر ثلاثيّ، أو جمع الفصل، أو تنسيق.</li>
+      <li><b>مشكلة واجهتك وكيف حللتها.</b></li>
+      <li><b>ماذا تعلّمت</b>، وماذا ستفعل بشكلٍ مختلف لو أعدنا المشروع.</li>
+    </ol>
+    <p style="margin:6px 0 0">طلبة المسائي: اكتبوا ما عملتموه حتّى الآن في كتاب الاجتماعيات.</p>
+  </div>
+  <div class="gp4-sim" style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;background:#11141a;color:#eef1f6;border-radius:14px;padding:14px 16px;margin:14px 0"><div><b style="display:block">🚀 المهمّة القادمة</b><small style="display:block;color:#b8c1d1">تُعلن قريبًا. سنرسل لكم الفكرة والبرومبت.</small></div></div>
+
+  <div class="section-heading"><svg class="arrow-icon" viewBox="0 0 30 30"><path d="M4 15 H24 M17 7 L25 15 L17 23" fill="none" stroke="var(--red)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="url(#sketchy)"/></svg><span>أسئلة المراجعة</span></div>
+  <p class="quiz-note">الحلول والتعليل في تبويب «الحلول والتعليل» 🔑</p>
+  <p class="dt-cap">أولًا · الاختيار من متعدد</p>
+  <div class="mcq-item"><span class="q-num">١.</span> ما الذي يميّز المشروع غير الربحيّ؟
+    <ul class="mcq-options">
+      <li><span class="opt-letter">أ)</span> لا يحتاج مواعيد ولا أدوارًا</li>
+      <li><span class="opt-letter">ب)</span> هدفه منفعة الناس لا الربح، ويُدار بانضباط المشاريع</li>
+      <li><span class="opt-letter">ج)</span> يعمل فيه كلّ شخصٍ ما يشاء</li>
+      <li><span class="opt-letter">د)</span> لا يحتاج فحص جودة لأنّه مجّانيّ</li>
+    </ul></div>
+  <div class="mcq-item"><span class="q-num">٢.</span> قائد الفريق يسلّم فصله إلى:
+    <ul class="mcq-options">
+      <li><span class="opt-letter">أ)</span> مدير المشروع مباشرة</li>
+      <li><span class="opt-letter">ب)</span> الأعضاء</li>
+      <li><span class="opt-letter">ج)</span> المنسّق</li>
+      <li><span class="opt-letter">د)</span> الجمهور</li>
+    </ul></div>
+  <div class="mcq-item"><span class="q-num">٣.</span> تقسيم الكتاب إلى فصول ثمّ صفحات لكلّ عضو يُسمّى:
+    <ul class="mcq-options">
+      <li><span class="opt-letter">أ)</span> هيكل تقسيم العمل (WBS)</li>
+      <li><span class="opt-letter">ب)</span> ضمان الجودة</li>
+      <li><span class="opt-letter">ج)</span> التغذية الراجعة</li>
+      <li><span class="opt-letter">د)</span> النشر</li>
+    </ul></div>
+  <div class="mcq-item"><span class="q-num">٤.</span> أرخص طريقة لمنع اختلاف أسماء الملفّات:
+    <ul class="mcq-options">
+      <li><span class="opt-letter">أ)</span> نصلحها كلّها في النهاية</li>
+      <li><span class="opt-letter">ب)</span> قاعدة تسمية موحّدة قبل البدء</li>
+      <li><span class="opt-letter">ج)</span> يسمّي كلّ طالبٍ كما يشاء</li>
+      <li><span class="opt-letter">د)</span> نتجاهل الأسماء</li>
+    </ul></div>
+  <div class="mcq-item"><span class="q-num">٥.</span> لماذا نكتب «المساهمون في هذه النسخة التفاعليّة» بدل «صنّاع الكتاب»؟
+    <ul class="mcq-options">
+      <li><span class="opt-letter">أ)</span> لأنّها أقصر</li>
+      <li><span class="opt-letter">ب)</span> لإخفاء الأسماء</li>
+      <li><span class="opt-letter">ج)</span> لا فرق بينهما</li>
+      <li><span class="opt-letter">د)</span> لأنّ الكتاب الأصليّ ملك الوزارة، ونحن أضفنا نسخةً تفاعليّة فقط</li>
+    </ul></div>
+  <div class="mcq-item"><span class="q-num">٦.</span> أيّ ممّا يلي مثالٌ على التغذية الراجعة في مشروعنا؟
+    <ul class="mcq-options">
+      <li><span class="opt-letter">أ)</span> البرومبت الموحّد</li>
+      <li><span class="opt-letter">ب)</span> زرّ «⚠️ بلّغ عن خطأ»</li>
+      <li><span class="opt-letter">ج)</span> فهرس الفصل</li>
+      <li><span class="opt-letter">د)</span> الصوت المسجّل</li>
+    </ul></div>
+
+  <p class="dt-cap">ثانيًا · صح أم خطأ</p>
+  <div class="tf-item"><span>١. المشروع غير الربحيّ لا يحتاج مواعيد تسليم لأنّه تطوّعيّ.</span> <span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+  <div class="tf-item"><span>٢. إذا كان كلّ ملفٍّ جيّدًا وحده، فالكتاب المدموج سيكون جيّدًا تلقائيًّا.</span> <span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+  <div class="tf-item"><span>٣. القائد مسؤول عن فحص ملفّات أعضائه قبل تسليم الفصل.</span> <span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+  <div class="tf-item"><span>٤. يكفي أن نجرّب الكتاب على حاسوب المختبر لأنّ الهاتف يعرضه بالطريقة نفسها.</span> <span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+  <div class="tf-item"><span>٥. الخطأ الذي يُكتشف مبكّرًا أرخص من الخطأ الذي يُكتشف بعد الدمج.</span> <span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+  <div class="tf-item"><span>٦. التلاميذ والمعلّمون ووزارة التربية من أصحاب المصلحة في مشروعنا.</span> <span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+
+  <p class="dt-cap">ثالثًا · سيناريو</p>
+  <div class="mcq-item"><span class="q-num">١.</span> قبل يومين من الموعد اكتشف القائد أنّ عضوين عملا الصفحة نفسها، وأنّ صفحةً أخرى لم يأخذها أحد. ماذا يفعل؟ وما الدرس للمرّة القادمة؟
+    <span class="blank-line"></span><span class="blank-line"></span><span class="blank-line"></span></div>
+  <div class="mcq-item"><span class="q-num">٢.</span> أنت المنسّق، وفريقٌ لم يسلّم فصله والموعد غدًا. ماذا تفعل؟
+    <span class="blank-line"></span><span class="blank-line"></span><span class="blank-line"></span></div>
+  <div class="mcq-item"><span class="q-num">٣.</span> تلميذٌ أرسل عبر «بلّغ عن خطأ» أنّ معادلةً في ص ٦٠ خاطئة. ما الخطوات؟
+    <span class="blank-line"></span><span class="blank-line"></span><span class="blank-line"></span></div>
+
+  <p class="mini-note">نهاية محاضرة الأسبوع الخامس · إعداد: د. أمير هادي ★</p>
   <div class="page-nav"><button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button><button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button></div>
   <div class="footer-note">٥</div>
+<script>
+(function(){
+var NS='http://www.w3.org/2000/svg',G=function(i){return document.getElementById(i)};
+var N={pm:{x:500,y:55,w:300,h:64,c:'#e59a2f',t:'مدير المشروع',s:'الهدف والمراجعة والنشر'},co:{x:500,y:165,w:300,h:60,c:'#3b82f6',t:'المنسّق',s:'كتابٌ كامل لكلّ شعبة'},
+ l0:{x:200,y:275,w:200,h:56,c:'#7a5ab5',t:'قائد فصل ١',s:'فهرس الفصل'},l1:{x:500,y:275,w:200,h:56,c:'#7a5ab5',t:'قائد فصل ٢',s:'فهرس الفصل'},l2:{x:800,y:275,w:200,h:56,c:'#7a5ab5',t:'قائد فصل …',s:'فهرس الفصل'}};
+var M=[];[200,500,800].forEach(function(cx,i){[70,0,-70].forEach(function(d,j){var k='m'+i+j;M.push(k);N[k]={x:cx+d,y:365,w:62,h:44,c:'#2ea043',t:'عضو',s:''};});});
+function el(n,a,p){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e;}
+var L={};function link(a,b){var A=N[a],B=N[b];L[a+'>'+b]=el('path',{'class':'ln',d:'M'+A.x+' '+(A.y+A.h/2)+' C'+A.x+' '+((A.y+B.y)/2+20)+','+B.x+' '+((A.y+B.y)/2)+','+B.x+' '+(B.y-B.h/2)},G('gp5-lines'));}
+link('pm','co');['l0','l1','l2'].forEach(function(l){link('co',l);});M.forEach(function(m){link('l'+m[1],m);});
+for(var k in N){var n=N[k],g=el('g',{'class':'nd',id:'gp5n_'+k},G('gp5-nodes'));el('rect',{x:n.x-n.w/2,y:n.y-n.h/2,width:n.w,height:n.h,rx:14,fill:n.c+'33',stroke:n.c,'stroke-width':2},g);
+ var t=el('text',{x:n.x,y:n.y+(n.s?-2:6),'font-size':k[0]==='m'?14:20},g);t.textContent=n.t;if(n.s){var s=el('text',{x:n.x,y:n.y+20,'font-size':14,'class':'sub'},g);s.textContent=n.s;}}
+var OK=[['m00','<b>العضو</b> يحوّل صفحته (ص ١٥) إلى ملفٍّ تفاعليّ حسب البرومبت، ويختبرها في هاتفه.',null],
+ ['l0','يسلّمها إلى <b>قائد الفصل</b>، فيجمع ملفّات أعضائه ويفحصها ويصنع فهرس الفصل.','m00'],
+ ['co','القائد يسلّم الفصل كاملًا إلى <b>المنسّق</b>، فيجمع الفصول في كتابٍ واحد بصفحةٍ رئيسيّة وروابط.','l0'],
+ ['pm','المنسّق يسلّم الكتاب إلى <b>مدير المشروع</b> للمراجعة والتطوير: أشكالٌ حقيقيّة، وصوت، ومختبرات، وإصلاح الأخطاء.','co'],
+ ['pub','بعد المراجعة يُنشر <b>الكتاب</b> مجّانًا للتلاميذ، ويعمل في الهاتف حتّى دون إنترنت. ✓','pm']];
+var BAD=[['m00','<b>عضوان</b> عملا الصفحة نفسها، وصفحةٌ أخرى لم يأخذها أحد…',null],
+ ['l0','<b>القائد</b> لم يفحص الملفّات، وسلّمها كما هي باسمين مختلفين.','m00'],
+ ['co','<b>المنسّق</b> دمج الفصول، فظهرت صفحةٌ مكرّرة وصفحةٌ ناقصة ورابطٌ مكسور. ✗','l0'],
+ ['pm','<b>مدير المشروع</b> يكتشف المشكلة في المراجعة، فيعيد الدمج ويبني الناقص، وتتأخّر المرحلة كلّها. الدرس: جدول توزيعٍ مكتوب، وفحص القائد قبل التسليم.','co']];
+var seq=OK,i=-1,timer=null;
+function pos(k){return k==='pub'?{x:165,y:395}:{x:N[k].x,y:N[k].y};}
+function mv(a,b){var p=G('gp5-pkt');p.style.display='';var A=pos(a),B=pos(b),t0=performance.now();
+ (function f(now){var k=Math.min(1,(now-t0)/1100),e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;p.setAttribute('transform','translate('+(A.x+(B.x-A.x)*e)+','+(A.y+(B.y-A.y)*e)+')');if(k<1)requestAnimationFrame(f);})(t0);}
+function hl(k){[].forEach.call(document.querySelectorAll('#gp5-svg .nd'),function(n){n.classList.remove('hl');});var n=G('gp5n_'+k);if(n)n.classList.add('hl');}
+function step(){if(i>=seq.length-1)return false;i++;var s=seq[i],k=s[0],from=s[2];
+ [].forEach.call(document.querySelectorAll('#gp5-svg .ln'),function(l){l.classList.remove('on');});
+ if(from){var ln=L[k+'>'+from]||L[from+'>'+k];if(ln)ln.classList.add('on');}
+ var bad=seq===BAD&&i>=2;G('gp5-pktT').textContent=bad?'⚠️ ص 15':'📄 ص 15';G('gp5-pkt').querySelector('rect').setAttribute('fill',bad?'#ffb4ae':'#fff');
+ hl(k);G('gp5-say').innerHTML=s[1];if(from)mv(from,k);else{var a=pos(k);G('gp5-pkt').style.display='';G('gp5-pkt').setAttribute('transform','translate('+a.x+','+a.y+')');}return true;}
+function reset(s){clearInterval(timer);timer=null;seq=s||OK;i=-1;G('gp5-pkt').style.display='none';hl('');[].forEach.call(document.querySelectorAll('#gp5-svg .ln'),function(l){l.classList.remove('on');});
+ G('gp5-say').textContent=seq===BAD?'سيناريو الخطأ: اضغط «خطوة» أو «شغّل».':'اضغط «شغّل الرحلة».';}
+function play(){if(i>=seq.length-1)reset(seq);clearInterval(timer);step();timer=setInterval(function(){if(!step()){clearInterval(timer);timer=null;}},3200);}
+G('gp5-play').onclick=play;G('gp5-step').onclick=function(){clearInterval(timer);timer=null;step();};G('gp5-fail').onclick=function(){reset(BAD);play();};G('gp5-reset').onclick=function(){reset(OK);};
+})();
+</script>
 </div>
 <!-- ============ END SLIDE 5 ============ -->
 
@@ -1463,6 +1704,26 @@ p{margin:.55em 0}
 
   <div class="sol-kind"><span>السيناريو: إجابة نموذجيّة</span><span class="sk-line"></span></div>
   <div class="sol-item"><p class="sol-why"><b>أ)</b> حسّاس HC-SR04 فوق كلّ مكانٍ يقيس المسافة (سيّارة أم فراغ)، أو PIR عند المدخل للعدّ. المشغّل: مصباح أخضر/أحمر فوق كلّ مكان، أو شاشة عند البوّابة.</p><p class="sol-why"><b>ب)</b> الحسّاسات ← Arduino/ESP32 يحسب الفارغ ← Wi-Fi ← منصّة سحابيّة ← صفحة على هاتف الطالب.</p><p class="sol-why"><b>ج)</b> وظيفيّة: يعدّ الأماكن الفارغة، ويعرضها على الهاتف، ويضيء المصباح المناسب. غير وظيفيّة: يتحدّث العدد خلال ٥ ثوانٍ، ويُقرأ على الهاتف دون تكبير.</p><p class="sol-why"><b>د)</b> في Wokwi: حسّاسا HC-SR04 ومصباحان، وتغيير المسافة يدويًّا لمحاكاة دخول سيّارة وخروجها، مع وصف القراءات بأنّها محاكاة.</p></div>
+
+    <div class="sol-week"><span class="sw-n">٥</span><span class="sw-t">حلول الأسبوع الخامس — إدارة المشاريع غير الربحية</span></div>
+  <div class="sol-kind"><span>الاختيار من متعدد</span><span class="sk-line"></span></div>
+  <div class="sol-item"><p class="sol-q"><span class="sq-n">١.</span> ما الذي يميّز المشروع غير الربحيّ؟</p><div class="sol-opts"><div class="sol-opt bad"><span class="so-k">أ)</span><span>لا يحتاج مواعيد ولا أدوارًا</span></div><div class="sol-opt ok"><span class="so-k">ب)</span><span>هدفه منفعة الناس لا الربح، ويُدار بانضباط المشاريع</span></div><div class="sol-opt bad"><span class="so-k">ج)</span><span>يعمل فيه كلّ شخصٍ ما يشاء</span></div><div class="sol-opt bad"><span class="so-k">د)</span><span>لا يحتاج فحص جودة لأنّه مجّانيّ</span></div></div><p class="sol-why"><b>التعليل:</b> «غير ربحيّ» يصف الهدف لا مستوى الاحتراف. بقيّة الخيارات تصف الفوضى: بلا مواعيد ولا أدوار ولا جودة لا يصل المشروع إلى المستفيد.</p></div>
+  <div class="sol-item"><p class="sol-q"><span class="sq-n">٢.</span> قائد الفريق يسلّم فصله إلى:</p><div class="sol-opts"><div class="sol-opt bad"><span class="so-k">أ)</span><span>مدير المشروع مباشرة</span></div><div class="sol-opt bad"><span class="so-k">ب)</span><span>الأعضاء</span></div><div class="sol-opt ok"><span class="so-k">ج)</span><span>المنسّق</span></div><div class="sol-opt bad"><span class="so-k">د)</span><span>الجمهور</span></div></div><p class="sol-why"><b>التعليل:</b> كلّ دورٍ يسلّم إلى الدور الذي فوقه: العضو للقائد، والقائد للمنسّق، والمنسّق للمدير. التسليم المباشر للمدير يغرقه بملفّات متفرّقة ويتخطّى فحص الدمج.</p></div>
+  <div class="sol-item"><p class="sol-q"><span class="sq-n">٣.</span> تقسيم الكتاب إلى فصول ثمّ صفحات لكلّ عضو يُسمّى:</p><div class="sol-opts"><div class="sol-opt ok"><span class="so-k">أ)</span><span>هيكل تقسيم العمل (WBS)</span></div><div class="sol-opt bad"><span class="so-k">ب)</span><span>ضمان الجودة</span></div><div class="sol-opt bad"><span class="so-k">ج)</span><span>التغذية الراجعة</span></div><div class="sol-opt bad"><span class="so-k">د)</span><span>النشر</span></div></div><p class="sol-why"><b>التعليل:</b> WBS يقسّم المشروع إلى أجزاءٍ صغيرة لكلّ جزءٍ مالكٌ واحد. ضمان الجودة فحص، والتغذية الراجعة ملاحظات المستخدمين، والنشر آخر مرحلة.</p></div>
+  <div class="sol-item"><p class="sol-q"><span class="sq-n">٤.</span> أرخص طريقة لمنع اختلاف أسماء الملفّات:</p><div class="sol-opts"><div class="sol-opt bad"><span class="so-k">أ)</span><span>نصلحها كلّها في النهاية</span></div><div class="sol-opt ok"><span class="so-k">ب)</span><span>قاعدة تسمية موحّدة قبل البدء</span></div><div class="sol-opt bad"><span class="so-k">ج)</span><span>يسمّي كلّ طالبٍ كما يشاء</span></div><div class="sol-opt bad"><span class="so-k">د)</span><span>نتجاهل الأسماء</span></div></div><p class="sol-why"><b>التعليل:</b> المعيار المشترك قبل البدء يكلّف سطرًا واحدًا في البرومبت، أمّا الإصلاح في النهاية فيكلّف إعادة تسمية الملفّات وإصلاح كلّ الروابط إليها.</p></div>
+  <div class="sol-item"><p class="sol-q"><span class="sq-n">٥.</span> لماذا نكتب «المساهمون في هذه النسخة التفاعليّة» بدل «صنّاع الكتاب»؟</p><div class="sol-opts"><div class="sol-opt bad"><span class="so-k">أ)</span><span>لأنّها أقصر</span></div><div class="sol-opt bad"><span class="so-k">ب)</span><span>لإخفاء الأسماء</span></div><div class="sol-opt bad"><span class="so-k">ج)</span><span>لا فرق بينهما</span></div><div class="sol-opt ok"><span class="so-k">د)</span><span>لأنّ الكتاب الأصليّ ملك الوزارة، ونحن أضفنا نسخةً تفاعليّة فقط</span></div></div><p class="sol-why"><b>التعليل:</b> حقوق الكتاب الأصليّ محفوظة لوزارة التربية، ودورنا هو المساهمة في نسخةٍ تفاعليّة تعليميّة غير ربحيّة. «صنّاع الكتاب» يوحي بأنّنا مؤلّفوه.</p></div>
+  <div class="sol-item"><p class="sol-q"><span class="sq-n">٦.</span> أيّ ممّا يلي مثالٌ على التغذية الراجعة في مشروعنا؟</p><div class="sol-opts"><div class="sol-opt bad"><span class="so-k">أ)</span><span>البرومبت الموحّد</span></div><div class="sol-opt ok"><span class="so-k">ب)</span><span>زرّ «⚠️ بلّغ عن خطأ»</span></div><div class="sol-opt bad"><span class="so-k">ج)</span><span>فهرس الفصل</span></div><div class="sol-opt bad"><span class="so-k">د)</span><span>الصوت المسجّل</span></div></div><p class="sol-why"><b>التعليل:</b> زرّ البلاغ يعيد ملاحظة المستخدم إلى الفريق ليصحّح. البرومبت معيار، والفهرس مُخرَج، والصوت ميزة في المنتج.</p></div>
+  <div class="sol-kind"><span>صح أم خطأ</span><span class="sk-line"></span></div>
+  <div class="sol-item"><p class="sol-q"><span class="sq-n">١.</span> المشروع غير الربحيّ لا يحتاج مواعيد تسليم لأنّه تطوّعيّ. <b>(خطأ)</b></p><p class="sol-why"><b>التعليل:</b> المستفيدون ينتظرونه، والمواعيد هي التي تجعل عشرات الأشخاص يعملون معًا.</p></div>
+  <div class="sol-item"><p class="sol-q"><span class="sq-n">٢.</span> إذا كان كلّ ملفٍّ جيّدًا وحده، فالكتاب المدموج سيكون جيّدًا تلقائيًّا. <b>(خطأ)</b></p><p class="sol-why"><b>التعليل:</b> الدمج يكشف التكرار والنقص واختلاف الأسماء والروابط المكسورة، ولهذا هو أصعب مرحلة.</p></div>
+  <div class="sol-item"><p class="sol-q"><span class="sq-n">٣.</span> القائد مسؤول عن فحص ملفّات أعضائه قبل تسليم الفصل. <b>(صح)</b></p><p class="sol-why"><b>التعليل:</b> هو أوّل نقطة فحص بعد العضو، والخطأ الذي يكتشفه أرخص من الذي يكتشفه المنسّق أو المدير.</p></div>
+  <div class="sol-item"><p class="sol-q"><span class="sq-n">٤.</span> يكفي أن نجرّب الكتاب على حاسوب المختبر لأنّ الهاتف يعرضه بالطريقة نفسها. <b>(خطأ)</b></p><p class="sol-why"><b>التعليل:</b> الشاشة الصغيرة واللمس يغيّران كلّ شيء؛ في مختبراتنا مثلًا كانت صناديق التعليمات تغطّي المشهد الثلاثيّ على الهاتف فقط. نجرّب دائمًا على جهاز المستخدم.</p></div>
+  <div class="sol-item"><p class="sol-q"><span class="sq-n">٥.</span> الخطأ الذي يُكتشف مبكّرًا أرخص من الخطأ الذي يُكتشف بعد الدمج. <b>(صح)</b></p><p class="sol-why"><b>التعليل:</b> قبل الدمج يصلحه صاحبه في دقائق، وبعد الدمج يحتاج تتبّعه في عشرات الملفّات والروابط.</p></div>
+  <div class="sol-item"><p class="sol-q"><span class="sq-n">٦.</span> التلاميذ والمعلّمون ووزارة التربية من أصحاب المصلحة في مشروعنا. <b>(صح)</b></p><p class="sol-why"><b>التعليل:</b> التلميذ يستعمل الكتاب، والمعلّم يدرّس به، والوزارة تملك حقوق الكتاب الأصليّ؛ كلّهم يتأثّرون بالمشروع.</p></div>
+  <div class="sol-kind"><span>سيناريو</span><span class="sk-line"></span></div>
+  <div class="sol-item"><p class="sol-q"><span class="sq-n">١.</span> عضوان عملا الصفحة نفسها، وصفحةٌ لم يأخذها أحد، والموعد بعد يومين.</p><p class="sol-why">يختار القائد النسخة الأفضل من الصفحة المكرّرة أو يدمج أفضل ما فيهما، ويكلّف أحد العضوين فورًا بالصفحة الناقصة، ويبلّغ المنسّق بالتغيير. <b>الدرس:</b> جدول توزيعٍ مكتوب ومشترك منذ اليوم الأوّل، فيه اسم مالكٍ واحد لكلّ صفحة.</p></div>
+  <div class="sol-item"><p class="sol-q"><span class="sq-n">٢.</span> فريقٌ لم يسلّم فصله والموعد غدًا، وأنت المنسّق.</p><p class="sol-why">تتواصل مع القائد لتعرف السبب وما أُنجز، وتسلّم ما هو جاهز في موعده مع توضيح الناقص، وتبلّغ مدير المشروع بموعدٍ جديد واقعيّ للفصل المتأخّر. لا تؤخّر الكتاب كلّه بسبب فصلٍ واحد، ولا تُخفِ المشكلة.</p></div>
+  <div class="sol-item"><p class="sol-q"><span class="sq-n">٣.</span> بلاغ: معادلة في ص ٦٠ خاطئة.</p><p class="sol-why">نتحقّق من الكتاب الأصليّ: إن كان الخطأ منّا نصحّحه ونعيد النشر ونسجّل التغيير، وإن كان النصّ مطابقًا للأصل نبقيه حرفيًّا ونضيف توضيحًا في «إضافة توضيحيّة». ثمّ نشكر صاحب البلاغ، فالتغذية الراجعة هي التي تحسّن المشروع.</p></div>
 
   <div class="page-nav"><button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button><button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button></div>
 </div>
