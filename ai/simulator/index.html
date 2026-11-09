@@ -141,6 +141,12 @@ input{-webkit-user-select:text;user-select:text}
 .gbtn[data-g=f].on{border-color:#d9468a;background:#fdeaf3;color:#a3245f}
 .mark{font-size:20px;font-weight:800;color:#1f4e79;background:#eaf2fb;border-radius:12px;padding:6px 10px;margin:8px auto;display:inline-block}
 .mark small{font-size:12px;color:var(--muted);font-weight:700}
+.fbx{margin-top:14px;border:1px solid var(--line);border-radius:14px;padding:12px;text-align:right;background:#f7f9fc}
+.fbx h3{margin:0 0 2px;font-size:16px;color:var(--brand)}.fbx p{margin:0 0 8px;font-size:13px;color:var(--muted)}
+.fbx .fbrow{display:flex;gap:8px;flex-wrap:wrap}.fbx .fbrow input{flex:1 1 160px}
+.fbx input,.fbx textarea{width:100%;border:1px solid var(--line);border-radius:10px;padding:9px 10px;font:inherit;font-size:15px;color:var(--ink);background:#fff;margin-bottom:8px}
+.fbx textarea{min-height:90px;resize:vertical}.fbx .btn{margin-top:0}
+.fbx .msg{font-size:13px;margin-top:6px}.fbx .msg.ok{color:var(--good);font-weight:700}.fbx .msg.err{color:var(--bad)}
 .about{margin-top:14px;border-top:1px dashed var(--line);padding-top:10px;font-size:13px;line-height:1.8;color:#333;text-align:center}
 .about-h{font-weight:800;color:var(--brand);margin-bottom:2px}
 .about a{color:var(--brand);font-weight:700;direction:ltr;unicode-bidi:isolate}
@@ -1411,12 +1417,32 @@ function endDay() {
   if (S.errs.length) h += `<details class="errs" open><summary>📋 تفاصيل أخطائك (${S.errs.length.toLocaleString("ar-IQ")}) — ماذا فعلت، وما الصحيح، ولماذا</summary><ol>${S.errs.map(x => `<li><div class="eh"><span dir="ltr">${x.at}</span> · ${escapeHtml(x.ev)}${x.ghost ? ' <span class="eg">👻 خطأ كلود</span>' : ""}</div><div>❌ ${escapeHtml(x.did)}</div>${x.right ? `<div>✅ الصحيح: ${escapeHtml(x.right)}</div>` : ""}${x.why ? `<div class="ew">💡 ${escapeHtml(x.why)}</div>` : ""}</li>`).join("")}</ol><div class="en">استعمل هذه القائمة في ملاحظات الواجب: اختر 3 أخطاء واكتب لماذا كان القرار الصحيح صحيحاً.</div></details>`;
   else h += `<div class="fb good">🏆 لا يوجد أي قرار خاطئ اليوم. يوم مثالي!</div>`;
   h += `<button class="btn gold" id="again">🔁 أعِد المحاكاة</button><div class="note">📸 صوّر هذه الشاشة وارفعها مع ملاحظاتك في واجب الأسبوع 9 على منصة المادة. أخطاء كلود تتبدّل في كل محاولة.<br>محاكاة تدريبية لمادة الذكاء الاصطناعي وتحليل البيانات — د. أمير هادي. كل الأسماء والجهات خيالية.</div>
+    <div class="fbx" id="fbx"><h3>✉️ أرسل ملاحظاتك إلى المُعِدّ د. أمير هادي</h3>
+      <p>رأيك يطوّر المحاكي: ما الذي أعجبك؟ ما الذي كان صعباً أو غير واضح؟ ماذا تقترح؟ الاسم والإيميل اختياريان.</p>
+      <div class="fbrow"><input id="fbName" maxlength="80" placeholder="الاسم (اختياري)" autocomplete="name"><input id="fbMail" type="email" maxlength="120" dir="ltr" placeholder="الإيميل (اختياري)" autocomplete="email"></div>
+      <textarea id="fbText" maxlength="3000" placeholder="اكتب ملاحظاتك هنا…"></textarea>
+      <button class="btn" id="fbSend">إرسال الملاحظات</button><div class="msg" id="fbMsg"></div></div>
     <div class="about"><div class="about-h">عن المُعِدّ</div>
       <b>د. أمير كاظم هادي</b> — أستاذ مساعد في علوم الحاسوب، كلية تكنولوجيا المعلومات، جامعة بابل.<br>
       أستاذ مادة «الذكاء الاصطناعي وتحليل البيانات». تصميم المحاكي وسيناريوهاته وبرمجته.<br>
       <a href="https://ameer.itbabylon.org" target="_blank" rel="noopener">ameer.itbabylon.org</a>
       <div class="copy">© 2026 د. أمير كاظم هادي. جميع الحقوق محفوظة. يُسمح باستعماله للتعليم مع ذكر المصدر.</div></div>`;
   $("ecard").innerHTML = h;
+  $("fbName").value = S.name || "";
+  $("fbSend").onclick = async () => {
+    const msg = $("fbMsg"), c = $("fbText").value.trim(), mail = $("fbMail").value.trim();
+    if (c.length < 2) { msg.className = "msg err"; msg.textContent = "اكتب ملاحظتك أولاً."; $("fbText").focus(); return; }
+    if (mail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)) { msg.className = "msg err"; msg.textContent = "الإيميل غير صحيح — صحّحه أو اتركه فارغاً."; return; }
+    $("fbSend").disabled = true; msg.className = "msg"; msg.textContent = "جارٍ الإرسال…";
+    try {
+      const r = await fetch("https://ameer.itbabylon.org/sensors-api/course/feedback", { method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ src: "sim-dg", name: $("fbName").value.trim(), email: mail, comment: c, mark: String(S.mark10 || ""), score: "" }) });
+      const j = await r.json().catch(() => ({}));
+      if (j.ok) { $("fbx").innerHTML = '<h3>✅ شكراً لك!</h3><p style="margin:0">وصلت ملاحظاتك إلى د. أمير هادي.</p>'; return; }
+      msg.className = "msg err"; msg.textContent = j.error === "limit" ? "وصلت حدّ الإرسال لليوم. شكراً لك!" : "لم تُرسل. حاول مرة أخرى.";
+    } catch (e) { msg.className = "msg err"; msg.textContent = "تعذّر الاتصال. تأكد من الإنترنت وحاول مرة أخرى."; }
+    $("fbSend").disabled = false;
+  };
   for (const id of ["task", "joy", "act", "keysHint", "goBtn"]) $(id).classList.add("hidden");
   $("pauseBtn").classList.add("hidden");
   for (const k in labelEls) labelEls[k].classList.remove("target");
