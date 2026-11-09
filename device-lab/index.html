@@ -287,5 +287,6 @@ function check(f){f.text().then(t=>{const L=[];const ok=(c,s)=>L.push(`<li class
   document.getElementById('checks').innerHTML=L.join('');document.getElementById('pv').style.display='block';
   const pv=document.getElementById('pvf');pv.srcdoc=t;});}
 </script>
+<script>/* visit counter: no personal data */(function(p){var n="0";try{if(!localStorage.getItem("v_"+p)){localStorage.setItem("v_"+p,"1");n="1"}}catch(e){}new Image().src="https://ameer.itbabylon.org/sensors-api/hit?p="+p+"&n="+n+"&t="+Date.now()})("dl-page");</script>
 </body>
 </html>
