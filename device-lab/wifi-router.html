@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta name="robots" content="index,follow">
+<meta property="og:title" content="Device Lab — an interactive exploded Wi-Fi router">
+<meta property="og:description" content="74 parts, explode/assemble, fault-finding and a quiz — built by Claude Sonnet 5.5 from a student prompt. University of Babylon.">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>رسم تفكيكي: راوتر Wi-Fi منزلي</title>
+<meta name="ltt-device" content="راوتر Wi-Fi منزلي">
+<meta name="ltt-author" content="مثال — Claude Sonnet 5.5">
+<meta name="ltt-team" content="مثال">
+<meta name="ltt-section" content="مثال">
+<meta name="ltt-leader" content="د. أمير كاظم هادي">
+<style>
+:root{--paper:#f3ecdb;--card:#faf5e8;--ink:#3b322a;--mute:#7b6d5e;--line:#cfc3a8;--acc:#c4522a;--accbg:#f9e3d3;--ok:#4f6b3a;--bad:#9a3b2a}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"Segoe UI",Tahoma,"Noto Naskh Arabic","Noto Sans Arabic",system-ui,sans-serif;line-height:1.7;font-size:16px}
+.wrap{max-width:1060px;margin:0 auto;padding:0 14px}
+header.top{padding:16px 0 10px;border-bottom:1px solid var(--line)}
+h1{font-size:1.4rem;margin:0 0 2px;line-height:1.4}
+.sub{margin:0;color:var(--mute);font-size:.92rem}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.badges span{background:#ece3cd;border:1px solid var(--line);border-radius:20px;padding:1px 10px;font-size:.82rem}
+.grid{display:grid;grid-template-columns:minmax(0,1fr);gap:14px;padding:14px 0 24px}
+@media(min-width:900px){.grid{grid-template-columns:minmax(0,1.6fr) minmax(300px,1fr);align-items:start}.wide{grid-column:1/-1}}
+.card{background:var(--card);border:1.5px solid #8d7f6c;border-radius:12px;padding:12px}
+.figtop{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.tag{background:var(--ink);color:#f6efdc;border-radius:6px;padding:0 10px;font-weight:700;font-size:.9rem}
+.figtop h2{font-size:1.02rem;margin:0}
+.hint{margin:6px 0 8px;color:var(--mute);font-size:.86rem}
+.stage{border:1px solid var(--line);border-radius:8px;background-color:#f6f0e0;background-image:linear-gradient(#e6dcc5 1px,transparent 1px),linear-gradient(90deg,#e6dcc5 1px,transparent 1px);background-size:24px 24px;overflow:hidden;direction:ltr}
+svg{display:block;width:100%;height:auto;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.readout{margin-top:8px;font-family:Consolas,"Courier New",monospace;font-size:.8rem;background:#ece3cd;border:1px dashed #a69a82;border-radius:8px;padding:6px 10px;color:#4a3f35;min-height:3.6em;direction:rtl}
+.ctrls{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+button{font:inherit;cursor:pointer}
+.btn{min-height:44px;padding:0 16px;border-radius:10px;border:1.5px solid #6e6252;background:#efe6d0;color:var(--ink);font-weight:700}
+.btn:hover{background:#e6dbc0}
+.btn.main{background:var(--ink);color:#f6efdc}
+.btn.warn{background:var(--accbg);border-color:var(--acc);color:#7d2f10}
+h3{font-size:1rem;margin:0 0 6px}
+#iname{font-size:1.15rem;font-weight:700;margin:0}
+#ien{direction:ltr;text-align:right;color:var(--mute);font-size:.85rem;margin:0 0 6px;font-family:Consolas,monospace}
+.row{margin:4px 0;font-size:.93rem}
+.chip{display:inline-block;background:var(--accbg);border:1px solid var(--acc);color:#7d2f10;border-radius:14px;padding:0 9px;font-size:.78rem}
+ol.ord{margin:0;padding:0 20px 0 0;font-size:.88rem}
+ol.ord li{margin:3px 0}
+details{border-top:1px solid var(--line);padding:4px 0}
+summary{cursor:pointer;font-weight:700;font-size:.9rem;min-height:30px}
+.pl{display:flex;flex-wrap:wrap;gap:5px;padding:4px 0 6px}
+.pl button{border:1px solid #b5a88e;background:#f1e9d4;border-radius:14px;padding:1px 9px;font-size:.78rem;min-height:30px}
+.pl button.cur{background:var(--accbg);border-color:var(--acc)}
+.sus{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.res{margin:6px 0;padding:8px 10px;border-radius:8px;font-size:.93rem}
+.res.ok{background:#e6ecd8;border:1px solid var(--ok)}
+.res.no{background:#f4ddd4;border:1px solid var(--bad)}
+.opt{display:block;width:100%;text-align:right;margin:6px 0;padding:8px 12px;min-height:44px;border:1.5px solid #8d7f6c;border-radius:10px;background:#f1e9d4}
+.opt.ok{background:#e6ecd8;border-color:var(--ok)}
+.opt.no{background:#f4ddd4;border-color:var(--bad)}
+footer{border-top:1px solid var(--line);padding:14px 0 26px;text-align:center;color:var(--mute);font-size:.9rem}
+.part{cursor:pointer}
+.part path{stroke:#5b4e41;stroke-width:.55;stroke-linejoin:round}
+.part path.ns{stroke:none}
+.part.sel path.t,.part.on path.t{fill:#f6bf98}
+.part.sel path.l,.part.on path.l{fill:#e39a66}
+.part.sel path.r,.part.on path.r{fill:#c97b45}
+.part.sel path:not(.ns){stroke:#8f3a15}
+.pk{pointer-events:none}
+.pk path{stroke:#8f3a15;stroke-width:.5}
+.tx{font-family:Consolas,"Courier New",monospace;font-weight:700;pointer-events:none}
+.fx{pointer-events:none}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+<h1>مختبر التفكيك: راوتر Wi-Fi منزلي</h1>
+<p class="sub">رسم تفكيكي إيزومتري تفاعلي لراوتر منزلي ثنائي النطاق (مثال تعليمي عام، وليس طرازاً بعينه)</p>
+<div class="badges"><span>مثال: بناه Claude Sonnet 5.5 من برومبت الطالب</span><span>الإشراف: د. أمير كاظم هادي</span><span>مشروع مختبر التفكيك</span></div>
+</div></header>
+
+<main class="wrap grid">
+<section class="card" aria-label="شكل 1">
+<div class="figtop"><span class="tag">شكل 1</span><h2>رحلة الحزمة داخل الراوتر: من الكابل إلى الهواء</h2></div>
+<p class="hint">مرّر المؤشر أو اضغط على أي قطعة لترى اسمها ووظيفتها. اضغط «فكّك» فتنفصل المجموعات بالترتيب وتظهر الحزم (المكعبات البرتقالية) تجري داخل الجهاز. المصابيح الأمامية تومض مع مرور الحزم.</p>
+<div class="stage"><svg id="svg" viewBox="0 0 560 560" role="img" aria-label="رسم إيزومتري تفكيكي لراوتر Wi-Fi منزلي">
+<defs><filter id="bl" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="5"/></filter><filter id="bl2" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="3"/></filter></defs>
+<g id="gridL"></g>
+<g id="shL"></g>
+<g id="partsL"></g>
+<g id="fxL" class="fx"></g>
+</svg></div>
+<div class="readout" id="readout" aria-live="polite"></div>
+<div class="ctrls">
+<button class="btn main" id="bExp" type="button">🔩 فكّك</button>
+<button class="btn warn" id="bFault" type="button">🚨 ما العطل؟</button>
+<button class="btn" id="bMot" type="button">⏸ أوقف الحركة</button>
+</div>
+</section>
+
+<aside>
+<section class="card" id="insp" style="margin-bottom:14px">
+<h3>بطاقة القطعة</h3>
+<p id="iname">اضغط على أي قطعة</p>
+<p id="ien">&nbsp;</p>
+<div class="row" id="ifn">كل قطعة في الرسم لها اسم عربي وإنكليزي ووظيفة. الأسماء لا تظهر على الرسم بل هنا فقط.</div>
+<div class="row" id="irest"></div>
+<div class="row" id="igrp"></div>
+</section>
+<section class="card" style="margin-bottom:14px">
+<h3>ترتيب التفكيك (7 مجموعات)</h3>
+<ol class="ord" id="ord"></ol>
+</section>
+<section class="card">
+<h3>فهرس القطع (<span id="pcount"></span> قطعة)</h3>
+<div id="index"></div>
+</section>
+</aside>
+
+<section class="card wide" id="faultBox" hidden>
+<h3>🚨 ما العطل؟</h3>
+<p id="symptom" class="row"></p>
+<p class="row">اختر قطعة لتفحصها (من الأزرار أو بالضغط عليها في الرسم):</p>
+<div class="sus" id="sus"></div>
+<div id="fres"></div>
+<button class="btn" id="fclose" type="button">إغلاق السيناريو</button>
+</section>
+
+<section class="card wide" id="quiz">
+<h3>سؤال للتأكد</h3>
+<p class="row" id="qtext"></p>
+<div id="qopts"></div>
+<div id="qres"></div>
+</section>
+</main>
+
+<footer><div class="wrap">مثال تعليمي بناه Claude Sonnet 5.5 من برومبت الطالب، بإشراف د. أمير كاظم هادي — مشروع «مختبر التفكيك»، كلية تكنولوجيا المعلومات، جامعة بابل</div></footer>
+
+<script>
+(function(){
+'use strict';
+var S=1.45,OX=262,OY=285,C30=Math.cos(Math.PI/6),S30=0.5,BB=null;
+function iso(x,y,z){return [OX+(x-y)*C30*S, OY+(x+y)*S30*S-z*S];}
+function P(x,y,z){
+  if(BB){if(x<BB[0])BB[0]=x;if(y<BB[1])BB[1]=y;if(z<BB[2])BB[2]=z;if(x>BB[3])BB[3]=x;if(y>BB[4])BB[4]=y;if(z>BB[5])BB[5]=z;}
+  var q=iso(x,y,z);return q[0].toFixed(1)+','+q[1].toFixed(1);
+}
+function F(pts,fill,cls){var d='M';for(var i=0;i<pts.length;i++){d+=(i?'L':'')+P(pts[i][0],pts[i][1],pts[i][2]);}return '<path class="'+cls+'" fill="'+fill+'" d="'+d+'Z"/>';}
+function L(pts,st,w,op){
+  var a=[];for(var i=0;i<pts.length;i++)a.push(P(pts[i][0],pts[i][1],pts[i][2]));
+  return '<polyline class="ln" fill="none" stroke="'+st+'" stroke-width="'+(w||0.6)+'"'+(op?' stroke-opacity="'+op+'"':'')+' stroke-linecap="round" stroke-linejoin="round" points="'+a.join(' ')+'"/>';
+}
+var K={
+  cream:['#f4ecd9','#ded3ba','#c6b99c'],
+  grey:['#d9d4c8','#b9b3a6','#9a9488'],
+  dgrey:['#9a948a','#7a746b','#5f5a52'],
+  ink:['#6a645b','#4d4842','#37332e'],
+  brown:['#c2a27c','#a38463','#85694c'],
+  gold:['#e1c27d','#c1a05c','#9c7f43'],
+  pcb:['#aab08f','#8c9275','#70765d'],
+  metal:['#ece9e1','#c9c5bb','#a8a49a'],
+  blue:['#b3c1cc','#93a3b0','#75848f'],
+  paper:['#faf5e8','#e9e0c8','#d3c8aa'],
+  pad:['#c5cdb4','#a9b296','#8d967a']
+};
+var PKP=['#f2a674','#d9824c','#b95f30'];
+function box(x,y,z,w,d,h,pal,o){
+  o=o||{};
+  var s=F([[x,y+d,z],[x+w,y+d,z],[x+w,y+d,z+h],[x,y+d,z+h]],pal[1],'l');
+  s+=F([[x+w,y,z],[x+w,y+d,z],[x+w,y+d,z+h],[x+w,y,z+h]],pal[2],'r');
+  s+=F([[x,y,z+h],[x+w,y,z+h],[x+w,y+d,z+h],[x,y+d,z+h]],pal[0],'t');
+  if(o.hl!==false&&w>2.5&&d>2.5&&h>1.2){s+=L([[x+.3,y+d-.3,z+h],[x+w-.3,y+d-.3,z+h],[x+w-.3,y+.3,z+h]],'#fffaf0',.7,.85);}
+  return s;
+}
+function cyl(cx,cy,z,r,h,pal,o){
+  o=o||{};var n=o.n||16,s='',A=Math.PI/4;
+  function ring(zz,a0,a1){var a=[];for(var i=0;i<=n;i++){var t=a0+(a1-a0)*i/n;a.push([cx+r*Math.cos(t),cy+r*Math.sin(t),zz]);}return a;}
+  s+=F(ring(z,A,3*A).concat(ring(z+h,3*A,A)),pal[1],'l');
+  s+=F(ring(z,-A,A).concat(ring(z+h,A,-A)),pal[2],'r');
+  s+=F(ring(z+h,0,2*Math.PI),pal[0],'t');
+  return s;
+}
+function rect2(x,y,w,d,z,fill){return F([[x,y,z],[x+w,y,z],[x+w,y+d,z],[x,y+d,z]],fill,'x ns');}
+function rectR(xc,y,z,w,h,fill){return F([[xc,y,z],[xc,y+w,z],[xc,y+w,z+h],[xc,y,z+h]],fill,'x ns');}
+function rectL(yc,x,z,w,h,fill){return F([[x,yc,z],[x+w,yc,z],[x+w,yc,z+h],[x,yc,z+h]],fill,'x ns');}
+function disc(cx,cy,z,r,fill,n){n=n||14;var a=[];for(var i=0;i<n;i++){var t=i/n*6.2832;a.push([cx+r*Math.cos(t),cy+r*Math.sin(t),z]);}return F(a,fill,'x ns');}
+function discX(xc,yc,zc,r,fill,n){n=n||14;var a=[];for(var i=0;i<n;i++){var t=i/n*6.2832;a.push([xc,yc+r*Math.cos(t),zc+r*Math.sin(t)]);}return F(a,fill,'x ns');}
+function discY(yc,xc,zc,r,fill,n){n=n||14;var a=[];for(var i=0;i<n;i++){var t=i/n*6.2832;a.push([xc+r*Math.cos(t),yc,zc+r*Math.sin(t)]);}return F(a,fill,'x ns');}
+function arc(cx,cy,z,r,a0,a1,st,w){var a=[];for(var i=0;i<=10;i++){var t=a0+(a1-a0)*i/10;a.push([cx+r*Math.cos(t),cy+r*Math.sin(t),z]);}return L(a,st,w);}
+function tx(k,x,y,z,str,sz,fill){
+  if(BB)P(x,y,z);
+  var q=iso(x,y,z),m;
+  if(k==='T')m=[C30*S,S30*S,-C30*S,S30*S];else if(k==='L')m=[C30*S,S30*S,0,S];else m=[C30*S,-S30*S,0,S];
+  return '<text class="tx" transform="matrix('+m[0].toFixed(3)+' '+m[1].toFixed(3)+' '+m[2].toFixed(3)+' '+m[3].toFixed(3)+' '+q[0].toFixed(1)+' '+q[1].toFixed(1)+')" font-size="'+sz+'" fill="'+fill+'">'+str+'</text>';
+}
+function screw(cx,cy,z,r){
+  return cyl(cx,cy,z,r,1.3,K.metal)+L([[cx-r*.7,cy-r*.7,z+1.32],[cx+r*.7,cy+r*.7,z+1.32]],'#4a4238',.7)+L([[cx-r*.7,cy+r*.7,z+1.32],[cx+r*.7,cy-r*.7,z+1.32]],'#4a4238',.7);
+}
+function chip(x,y,z,w,d,h,pal,mk,pins){
+  var s=box(x,y,z,w,d,h,pal),i,t;
+  if(pins){for(i=0;i<pins;i++){t=(i+.5)/pins;s+=box(x+w,y+t*d-.4,z,1.1,.8,.6,K.gold,{hl:false});s+=box(x+t*w-.4,y+d,z,.8,1.1,.6,K.gold,{hl:false});}}
+  s+=disc(x+1.6,y+1.6,z+h+.05,.6,'#d8d0c0',8);
+  if(mk){var sz=Math.min(3.4,(w-3)/(mk.length*0.62));s+=tx('T',x+2.4,y+d/2+1.2,z+h+.05,mk,sz.toFixed(2),'#e2dccf');}
+  return s;
+}
+
+/* ---------- parts registry ---------- */
+var parts=[],byId={};
+function def(g,id,ar,en,fn,rests,build,o){
+  o=o||{};BB=[1e9,1e9,1e9,-1e9,-1e9,-1e9];
+  var svg=build();
+  var p={id:id,g:g,ar:ar,en:en,fn:fn,rests:rests,svg:svg,bb:BB.slice(),ex:(o.ex===undefined?1:o.ex),vec:o.vec||null,after:o.after||[],cls:o.cls||'',el:null};
+  BB=null;parts.push(p);byId[id]=p;return p;
+}
+var GN=['الأطراف الخارجية: الهوائيات والملحقات','الغطاء العلوي','الجدران والمؤشرات','التبريد والحماية','الرقائق والمنافذ','اللوحة والمسامير','القاعدة والأرجل'];
+var GV=[[55,0,40],[0,0,90],[0,0,60],[22,0,44],[22,0,20],[0,0,8],[0,0,-16]];
+var ACC=[26,14,0];
+var ORD=['تنفصل أولاً: الهوائيات (للأعلى ويميناً)، والمودم والكبل والمحوّل (تبتعد على الطاولة)','الغطاء العلوي مع الملصق والبراغي (للأعلى)','الجدران الأربعة مع المؤشرات وزر WPS (للأعلى)','المشتّت الحراري وعلب الحجب (للأعلى ويميناً)','الرقائق والمنافذ (للأعلى، والمنافذ تخرج نحو الخلف)','لوحة PCB ومساميرها (ترتفع قليلاً عن الركائز)','تبقى القاعدة والركائز، وتنزل الأرجل المطاطية للأسفل'];
+
+var SP=[[12,12],[12,84],[112,12],[112,40]];
+var AR3=['الأول','الثاني','الثالث'];
+var AY=[14,48,82];
+var UY=[16.5,31.5,74.5];
+
+/* G6 base */
+def(6,'base','القاعدة السفلية','Bottom base plate','الصفيحة التي تحمل كل الأجزاء الداخلية وتغلق الجهاز من الأسفل','الأرجل المطاطية (من الأسفل)',function(){
+  var s=box(0,0,0,150,96,3,K.grey),i;
+  for(i=0;i<6;i++)s+=rect2(22+i*21,8,3,80,3.05,'#a39d90');
+  for(i=0;i<4;i++)s+=disc(SP[i][0],SP[i][1],3.06,4.6,'#c9c3b6',16);
+  s+=L([[1,95,3.05],[149,95,3.05],[149,1,3.05]],'#f8f2e2',.7);
+  return s;
+},{ex:0});
+[[12,12],[12,84],[138,12],[138,84]].forEach(function(p,i){
+  def(6,'foot'+(i+1),'رِجل مطاطية '+(i+1),'Rubber foot','تمنع انزلاق الجهاز وتترك فراغاً تحته لدخول الهواء','القاعدة السفلية',function(){
+    return cyl(p[0],p[1],-3,5,3,K.ink,{n:18})+disc(p[0],p[1],0.05,2.6,'#37332e',10);
+  });
+});
+SP.forEach(function(p,i){
+  def(6,'so'+(i+1),'ركيزة اللوحة '+(i+1),'PCB standoff','عمود معدني قصير يرفع اللوحة عن القاعدة فيمنع التماس ويتيح مرور الهواء','القاعدة السفلية',function(){
+    return cyl(p[0],p[1],3,3.2,6,K.metal)+disc(p[0],p[1],9.05,1.3,'#3a342d',10);
+  },{ex:0});
+});
+
+/* G5 PCB */
+var TR=[
+ [[50,41],[58,41]],[[44,58],[52,58],[52,50],[58,50]],[[82,45],[90,45],[90,56],[94,56]],
+ [[108,56],[117,56]],[[68,34],[68,24]],[[68,58],[68,70]],[[74,17],[80,16]],[[90,16],[96,16.5]],
+ [[74,77],[80,76]],[[90,76],[96,74.5]],[[24,44],[30,44],[30,30],[56,30]],
+ [[135,78],[135,75],[109,75],[109,72]],[[96,36],[96,31.5]],[[117,12],[122,12]],[[103,36],[112,36],[112,43]]
+];
+def(5,'pcb','لوحة الدوائر المطبوعة (PCB)','Printed circuit board','لوحة رقيقة تحمل مسارات نحاسية تربط الرقائق والمنافذ ببعضها وتغذّيها بالطاقة','الركائز (Standoffs)',function(){
+  var s=box(6,8,9,135,80,2,K.pcb),i,j;
+  for(i=0;i<TR.length;i++){
+    var t=TR[i],pts=[];
+    for(j=0;j<t.length;j++)pts.push([t[j][0],t[j][1],11.05]);
+    s+=L(pts,'#c8a45e',1.15);
+    s+=disc(t[0][0],t[0][1],11.06,.8,'#e1c27d',8);
+    s+=disc(t[t.length-1][0],t[t.length-1][1],11.06,.8,'#e1c27d',8);
+  }
+  for(i=0;i<4;i++)s+=disc(SP[i][0],SP[i][1],11.04,4.2,'#c9ab6c',16);
+  s+=L([[56,32,11.05],[84,32,11.05],[84,60,11.05],[56,60,11.05],[56,32,11.05]],'#f4efe0',.6);
+  s+=L([[35,33,11.05],[51,33,11.05],[51,49,11.05],[35,49,11.05],[35,33,11.05]],'#f4efe0',.6);
+  s+=L([[35,53,11.05],[45,53,11.05],[45,63,11.05],[35,63,11.05],[35,53,11.05]],'#f4efe0',.6);
+  s+=tx('T',16,38.5,11.05,'UART',3,'#f4efe0');
+  s+=tx('T',92,81.2,11.05,'RST',2.6,'#f4efe0');
+  s+=tx('T',101,81.2,11.05,'WPS',2.6,'#f4efe0');
+  return s;
+});
+SP.forEach(function(p,i){
+  def(5,'psc'+(i+1),'برغي اللوحة '+(i+1),'PCB screw','يشدّ اللوحة إلى الركيزة فلا تهتز عند نقل الجهاز','لوحة PCB',function(){return screw(p[0],p[1],11,2.8);});
+});
+
+/* G4 chips and ports */
+var PB='لوحة الدوائر (PCB)';
+def(4,'soc','المعالج الرئيسي SoC','System-on-Chip (CPU)','دماغ الراوتر: ينفّذ نظام التشغيل ويفحص عنوان كل حزمة ويقرّر وجهتها (Wi-Fi أم LAN) ويدير الجدار الناري',PB,function(){
+  return box(57.2,33.2,11,25.6,25.6,1,K.dgrey,{hl:false})+chip(58,34,12,24,24,3,K.ink,'SoC',0);
+});
+def(4,'ram','ذاكرة الوصول العشوائي RAM','RAM (DDR)','ذاكرة عمل مؤقتة تحفظ جداول التوجيه والاتصالات الجارية',PB,function(){return chip(36,34,11,14,14,2.5,K.ink,'RAM',0);});
+def(4,'flash','ذاكرة الفلاش','SPI NOR flash','تخزّن نظام الراوتر (Firmware) والإعدادات فلا تضيع عند إطفاء الجهاز',PB,function(){return chip(36,54,11,8,8,2,K.ink,'SPI',4);});
+def(4,'r24','رقاقة راديو Wi-Fi لنطاق 2.4 GHz','Wi-Fi radio chip (2.4 GHz)','تحوّل البيانات الرقمية إلى إشارة راديوية للنطاق الأطول مدى والأبطأ عادةً',PB,function(){return chip(60,10,11,14,14,2,K.ink,'2.4G',0);});
+def(4,'r5','رقاقة راديو Wi-Fi لنطاق 5 GHz','Wi-Fi radio chip (5 GHz)','تقوم بالعمل نفسه لنطاق 5 GHz الأسرع عادةً والأقصر مدى',PB,function(){return chip(60,70,11,14,14,2,K.ink,'5G',0);});
+def(4,'fem24','وحدة الواجهة الأمامية FEM (2.4)','Front-end module','تضخّم إشارة الإرسال وتقوّي الاستقبال قبل الهوائي',PB,function(){return chip(80,12,11,10,8,1.6,K.dgrey,'FEM',2);});
+def(4,'fem5','وحدة الواجهة الأمامية FEM (5)','Front-end module','تضخّم إشارة الإرسال وتقوّي الاستقبال لنطاق 5 GHz',PB,function(){return chip(80,72,11,10,8,1.6,K.dgrey,'FEM',2);});
+def(4,'sw','رقاقة مفتاح الشبكة (Switch/PHY)','Ethernet switch / PHY','تربط منافذ الكابل ببعضها وبالمعالج (في بعض الطرازات تكون مدمجة داخل المعالج)',PB,function(){return chip(94,50,11,14,12,2.4,K.ink,'SWITCH',5);});
+def(4,'xtal','بلورة التوقيت','Crystal oscillator','تعطي نبضة توقيت ثابتة تعتمد عليها الرقائق في عملها',PB,function(){
+  return box(46,22,11,6,4,2,K.metal)+L([[47,24,13.05],[51,24,13.05]],'#6e665c',.6);
+});
+def(4,'reg','منظّم الجهد','Voltage regulator','يحوّل الجهد القادم من المحوّل إلى الجهود الأصغر التي تحتاجها الرقائق',PB,function(){return chip(40,72,11,8,8,2,K.ink,'REG',3);});
+def(4,'ind','ملف الحث','Power inductor','يخزّن الطاقة ويمهّد التيار في دارة تحويل الجهد',PB,function(){
+  return box(104,62,11,10,10,5,K.ink)+disc(109,67,16.05,3.8,'#7b5f3d',14)+disc(109,67,16.08,1.6,'#4d3f2c',10);
+});
+[[113,82,'cap1'],[122,82,'cap2']].forEach(function(c,i){
+  def(4,c[2],'مكثف كهربائي '+(i+1),'Electrolytic capacitor','يخزّن شحنة صغيرة ويملّس الجهد فيمنع تذبذب الطاقة',PB,function(){
+    return cyl(c[0],c[1],11,3.5,8,K.dgrey)+cyl(c[0],c[1],14,3.56,1.5,K.gold)+L([[c[0]-2,c[1],19.05],[c[0]+2,c[1],19.05]],'#4a4238',.6)+L([[c[0],c[1]-2,19.05],[c[0],c[1]+2,19.05]],'#4a4238',.6);
+  });
+});
+def(4,'mag','محوّلات العزل المغناطيسية','Ethernet magnetics','تعزل كهربائياً بين كابل الشبكة والدارة وتمرّر الإشارة دون تلف عند الصواعق والتيارات الشاردة',PB,function(){
+  var s='',i;for(i=0;i<5;i++){s+=box(117,6+13*i+1,11,10,10,5,K.dgrey);s+=L([[118,6+13*i+2,16.05],[126,6+13*i+2,16.05]],'#4a4238',.5);}return s;
+});
+[0,1,2].forEach(function(i){
+  def(4,'ufl'+(i+1),'موصل الهوائي U.FL '+AR3[i],'U.FL antenna connector','قابس صغير يُكبس (دون لحام) ويصل كبل الهوائي الرفيع بدارة الراديو',PB,function(){
+    var y=UY[i]-2.5;return box(96,y,11,5,5,2.4,K.metal)+disc(98.5,UY[i],13.45,1.4,'#6e665c',8)+disc(98.5,UY[i],13.48,.6,'#e1c27d',6);
+  });
+});
+def(4,'uart','منفذ UART للتشخيص','UART debug header','أربعة دبابيس يستعملها المهندسون لقراءة رسائل الإقلاع وتشخيص الأعطال',PB,function(){
+  var s=box(20,40,11,4,12,2.5,K.ink,{hl:false}),i;for(i=0;i<4;i++)s+=cyl(22,42+i*2.7,13.5,.55,2.5,K.gold,{n:6});return s;
+});
+def(4,'rst','مفتاح Reset على اللوحة','Reset tactile switch','يعيد إعدادات المصنع عند الضغط المطوّل عبر ثقب صغير في الواجهة',PB,function(){
+  return box(94,82,11,6,6,2.4,K.metal)+cyl(97,85,13.4,1.5,1.2,K.ink,{n:10});
+});
+def(4,'wps','مفتاح WPS على اللوحة','WPS tactile switch','يبدأ ربط جهاز بالشبكة بضغطة بدل كتابة كلمة المرور',PB,function(){
+  return box(102,82,11,6,6,2.4,K.metal)+cyl(105,85,13.4,1.7,1.5,K.brown,{n:10});
+});
+function rj(i,pal){
+  var y0=6+13*i;
+  var s=box(127,y0,11,20,12,12,pal);
+  s+=rectR(147.05,y0+1,12.5,10,8,'#2a2420');
+  s+=rectR(147.1,y0+2,13,8,2.4,'#6e665c');
+  for(var j=0;j<7;j++)s+=L([[147.12,y0+2.6+j*1.05,13.4],[147.12,y0+2.6+j*1.05,14.8]],'#c9a95f',.5);
+  s+=rectR(147.08,y0+4,19.4,4,1.2,'#2a2420');
+  s+=L([[130,y0+.2,23.05],[146,y0+.2,23.05]],'#6a6a66',.5);
+  return s;
+}
+def(4,'jwan','منفذ WAN (الإنترنت)','WAN RJ45 port','يستقبل كبل الإنترنت القادم من المودم؛ كل ما يدخل منه يُعامل كقادم من الخارج',PB,function(){return rj(0,K.blue);});
+for(var li=1;li<=4;li++){(function(i){
+  def(4,'jlan'+i,'منفذ LAN '+i,'LAN RJ45 port','يوصل حاسوباً أو طابعة بالشبكة المحلية بكبل',PB,function(){return rj(i,K.dgrey);});
+})(li);}
+def(4,'jdc','منفذ الطاقة DC','DC power jack','يستقبل قابس محوّل الطاقة ويوزّع التيار على اللوحة',PB,function(){
+  return box(133,78,11,14,10,9,K.dgrey)+discX(147.05,83,15.5,3.6,'#2a2420',14)+discX(147.1,83,15.5,1,'#c9a95f',8);
+});
+
+/* G3 cooling */
+def(3,'pad','وسادة التوصيل الحراري','Thermal pad','طبقة طرية تملأ الفراغ المجهري بين المعالج والمشتّت فتنقل الحرارة','المعالج SoC',function(){return box(60,36,15,20,20,1.5,K.pad,{hl:false});});
+def(3,'heatsink','المشتّت الحراري','Heatsink','زعانف معدنية تنشر حرارة المعالج في الهواء المحيط',"وسادة التوصيل الحراري",function(){
+  var s=box(54,30,16.5,30,30,2.5,K.metal),i;
+  for(i=0;i<7;i++){s+=box(55+i*4.1,31,19,2.2,28,10,K.metal,{hl:false});s+=L([[55+i*4.1,59,29.02],[57.2+i*4.1,59,29.02]],'#fffaf0',.6);}
+  return s;
+});
+function canSvg(y){
+  var s=box(58,y,11,34,18,7,K.metal),i,j;
+  s+=L([[59,y+1,18.05],[91,y+1,18.05],[91,y+17,18.05],[59,y+17,18.05],[59,y+1,18.05]],'#8d897f',.6);
+  for(j=0;j<2;j++)for(i=0;i<5;i++)s+=disc(65+i*6,y+6+j*6,18.06,1.1,'#7c786f',8);
+  return s;
+}
+def(3,'can24','علبة الحجب الراديوي (2.4 GHz)','RF shield can','علبة معدنية تحمي دارة الراديو من التشويش الخارجي وتمنع تسرّب إشاراتها','لوحة PCB',function(){return canSvg(8);},{after:['r24','fem24']});
+def(3,'can5','علبة الحجب الراديوي (5 GHz)','RF shield can','علبة معدنية تحمي دارة راديو 5 GHz من التشويش','لوحة PCB',function(){return canSvg(68);},{after:['r5','fem5']});
+
+/* G2 walls and indicators */
+var LX=[14,28,42,56,70];
+def(2,'wallR','جدار المنافذ الخلفي','Rear port wall','جدار تُفتح فيه فتحات المنافذ، ويحمل كتابة WAN وLAN وDC','القاعدة السفلية',function(){
+  var s=box(147,0,3,3,96,29,K.cream),i,j;
+  for(i=0;i<5;i++){
+    var y0=6+13*i;
+    s+=rectR(150.05,y0-1,10,14,14,'#3a332c');
+    s+=rectR(150.1,y0+2,12,8,2.4,'#6e665c');
+    for(j=0;j<7;j++)s+=L([[150.12,y0+2.6+j*1.05,12.4],[150.12,y0+2.6+j*1.05,13.8]],'#c9a95f',.5);
+  }
+  s+=discX(150.05,83,15.5,4.6,'#3a332c',16)+discX(150.1,83,15.5,1.3,'#8a7a5c',8);
+  s+=tx('R',18,150.06,25.8,'WAN',3.4,'#7a6d5e');
+  s+=tx('R',52,150.06,25.8,'LAN',3.4,'#7a6d5e');
+  s+=tx('R',91,150.06,25.8,'DC IN',3.2,'#7a6d5e');
+  s+=L([[150.06,2,5.5],[150.06,94,5.5]],'#b9ac90',.6);
+  return s;
+});
+def(2,'wallF','جدار المؤشرات الأمامي','Front indicator wall','يحمل نوافذ مؤشرات الحالة وزر WPS وثقب Reset وشقوق تهوية','القاعدة السفلية',function(){
+  var s=box(0,93,3,147,3,29,K.cream),i;
+  var lb=['PWR','WAN','2.4G','5G','LAN'];
+  for(i=0;i<5;i++){s+=rectL(96.05,LX[i]-1,15.2,8,5,'#51493f');s+=tx('L',LX[i]-.4,96.06,11.2,lb[i],2.7,'#7a6d5e');}
+  s+=discY(96.05,97,12.8,1.1,'#2a2420',10)+tx('L',91,96.06,8.2,'RESET',2.5,'#7a6d5e');
+  s+=tx('L',102,96.06,7.2,'WPS',2.5,'#7a6d5e');
+  for(i=0;i<6;i++)s+=rectL(96.05,114+i*4.2,10,2,16,'#6f6559');
+  s+=L([[2,96.06,5.5],[145,96.06,5.5]],'#b9ac90',.6);
+  return s;
+});
+def(2,'wallA','الجدار الجانبي (يسار)','Left side wall','جدار جانبي فيه أضلاع تقوية وخطاطيف تثبيت داخلية','القاعدة السفلية',function(){
+  var s=box(0,0,3,3,93,29,K.cream),i;
+  for(i=0;i<3;i++){s+=box(3,14+i*28,3,1.5,3,24,K.cream,{hl:false});s+=rectR(3.05,22+i*28,22,6,6,'#51493f');}
+  return s;
+});
+def(2,'wallB','الجدار الجانبي (خلفي)','Back side wall','جدار جانبي خلفي بأضلاع تقوية وفتحات تثبيت','القاعدة السفلية',function(){
+  var s=box(3,0,3,144,3,29,K.cream),i;
+  for(i=0;i<3;i++){s+=box(20+i*50,3,3,3,1.5,24,K.cream,{hl:false});s+=rectL(3.05,34+i*50,22,6,6,'#51493f');}
+  return s;
+});
+var LEDN=[['led_pwr','مؤشر الطاقة','Power LED','يضيء ما دام الجهاز يتلقى الطاقة'],['led_wan','مؤشر الإنترنت (WAN)','WAN LED','يضيء ويومض عند وجود اتصال وحركة بيانات على منفذ WAN'],['led_w24','مؤشر Wi-Fi 2.4 GHz','Wi-Fi 2.4 GHz LED','يومض عند بثّ واستقبال الشبكة اللاسلكية 2.4 GHz'],['led_w5','مؤشر Wi-Fi 5 GHz','Wi-Fi 5 GHz LED','يدل على أن شبكة 5 GHz تعمل'],['led_lan','مؤشر الشبكة السلكية (LAN)','LAN LED','يضيء عند اتصال جهاز بكبل بمنفذ LAN وتبادل بيانات']];
+LEDN.forEach(function(l,i){
+  def(2,l[0],l[1],l[2],l[3],'جدار المؤشرات الأمامي',function(){
+    return box(LX[i],96,15.6,6,1.2,3.4,K.ink)+rectL(97.25,LX[i]+1,16.4,4,1.2,'#8d897f');
+  });
+});
+def(2,'wpscap','زر WPS (الغطاء الخارجي)','WPS button cap','الجزء الذي يضغطه المستخدم ويدفع المفتاح الصغير على اللوحة','جدار المؤشرات الأمامي',function(){
+  return box(102,96,10.5,6,1.4,5,K.brown)+arc(105,97.45,13,1.4,0,6.2,'#4a4238',.5);
+});
+
+/* G1 lid */
+def(1,'lid','الغطاء العلوي','Top cover','يغطي الدارة ويحميها من الغبار واللمس ويحمل الهوائيات والملصق','الجدران (الواجهة والمنافذ والجانبان)',function(){
+  var s=box(0,0,32,150,96,2,K.cream),i;
+  s+=box(2,2,34,146,92,2,K.cream);
+  s+=L([[8,8,36.05],[142,8,36.05],[142,88,36.05],[8,88,36.05],[8,8,36.05]],'#b9ac90',.7);
+  [20,60,100].forEach(function(x){s+=rectL(96.05,x,32.6,10,1,'#6f6559');});
+  [18,66].forEach(function(y){s+=rectR(150.05,y,32.6,10,1,'#6f6559');});
+  return s;
+});
+def(1,'vent','شبكة التهوية','Vent grille','شقوق تسمح بصعود الهواء الدافئ وخروجه (أغلب الراوترات بلا مروحة)','الغطاء العلوي',function(){
+  var s=box(12,8,36,52,34,.7,K.grey,{hl:false}),i;
+  for(i=0;i<9;i++)s+=rect2(15+i*5.4,11,2.4,28,36.72,'#463e36');
+  return s;
+});
+def(1,'logo','شارة Wi-Fi','Wi-Fi badge','شارة بصرية تدل على أن الجهاز يبثّ شبكة لاسلكية','الغطاء العلوي',function(){
+  var s=cyl(30,68,36,11,.8,K.brown,{n:20}),r;
+  [3.5,6.5,9.5].forEach(function(r){s+=arc(30,73,36.85,r,-2.356,-0.785,'#3b322a',1);});
+  s+=disc(30,73,36.86,1.2,'#3b322a',8);
+  return s;
+});
+def(1,'label','ملصق المواصفات','Specification label','يحمل اسم الشبكة وكلمة المرور الافتراضية وعنوان الإدارة وقيم الطاقة المكتوبة عليه','الغطاء العلوي',function(){
+  var s=box(70,52,36,42,34,.5,K.paper,{hl:false}),r,c;
+  s+=rect2(70,52,42,5,36.52,'#5a4f44')+tx('T',72,55.6,36.54,'WI-FI ROUTER',3.4,'#f4ecd9');
+  var qr=['1110101','1010011','1110110','0001001','1011101','1010010','1110111'];
+  for(r=0;r<7;r++)for(c=0;c<7;c++)if(qr[r].charAt(c)==='1')s+=rect2(73+c*2,59+r*2,1.9,1.9,36.52,'#3b322a');
+  s+=tx('T',90,63,36.54,'SSID ....',2.9,'#3b322a')+tx('T',90,68,36.54,'KEY ....',2.9,'#3b322a')+tx('T',90,73,36.54,'ADMIN ....',2.9,'#3b322a');
+  for(c=0;c<20;c++)s+=rect2(73+c*1.85,77,(c%3===0?1.2:.7),6,36.52,'#4d443a');
+  return s;
+});
+[[7,5],[7,91],[143,5],[143,91]].forEach(function(p,i){
+  def(1,'ls'+(i+1),'برغي الغطاء '+(i+1),'Cover screw','يثبّت الغطاء على الجدران','الغطاء العلوي',function(){return screw(p[0],p[1],36,2.6);});
+});
+
+/* G0 antennas and accessories */
+[0,1,2].forEach(function(i){
+  var yc=AY[i];
+  def(0,'hinge'+(i+1),'مفصل الهوائي '+AR3[i],'Antenna hinge','يثبّت الهوائي بالغطاء ويسمح بإمالته وتدويره لتحسين الاستقبال','الغطاء العلوي',function(){
+    return box(135.5,yc-5,36,11,10,4,K.dgrey)+cyl(141,yc,40,4.2,5,K.ink)+disc(141,yc,45.05,1.6,'#9a948a',10);
+  });
+  def(0,'ant'+(i+1),'هوائي Wi-Fi خارجي '+AR3[i],'External Wi-Fi antenna','يبثّ الموجات الراديوية ويلتقط إشارات الأجهزة؛ يمكن تغيير اتجاهه','مفصل الهوائي '+AR3[i],function(){
+    return cyl(141,yc,45,2.5,57,K.ink,{n:12})+cyl(141,yc,62,2.85,1,K.dgrey,{n:12})+cyl(141,yc,80,2.85,1,K.dgrey,{n:12})+cyl(141,yc,102,1.8,2,K.ink,{n:10});
+  });
+});
+def(0,'modem','مودم/ONT مزوّد الخدمة (جهاز خارجي)','ISP modem / ONT (external)','جهاز المزوّد الذي يوصل خط الإنترنت إلى الكبل؛ ليس جزءاً من الراوتر','سطح الطاولة',function(){
+  var s=box(172,2,0,26,24,20,K.cream),i;
+  for(i=0;i<5;i++)s+=rect2(176+i*4,6,1.8,14,20.05,'#8d8576');
+  for(i=0;i<3;i++)s+=rectR(198.05,6+i*5,12,3,3,'#51493f');
+  s+=rectR(198.05,19,5,5,5,'#2a2420');
+  s+=tx('L',174,26.05,4,'MODEM',3,'#7a6d5e');
+  return s;
+},{vec:ACC});
+def(0,'plug','قابس كبل WAN (RJ45)','WAN cable RJ45 plug','ينقل بيانات الإنترنت من المودم إلى منفذ WAN','منفذ WAN',function(){
+  return box(150,8,13,10,8,8,K.ink)+box(160,9.5,14.5,3,5,5,K.dgrey)+rectL(16.05,152,19,6,1,'#8d897f');
+},{vec:ACC});
+def(0,'cable','كبل Ethernet','Ethernet cable','أزواج نحاسية ملتوية تحمل الإشارة بين المودم والراوتر','قابس كبل WAN',function(){
+  return box(163,10.5,15.5,9,3,3,K.ink,{hl:false});
+},{vec:ACC});
+def(0,'dcplug','قابس الطاقة DC','DC barrel plug','يُدخل التيار المستمر إلى منفذ DC في الراوتر','منفذ الطاقة DC',function(){
+  return box(150,80,12.5,9,6,6,K.ink);
+},{vec:ACC});
+def(0,'cord','سلك المحوّل','Power cord','يوصل خرج المحوّل بقابس DC','قابس الطاقة DC',function(){
+  return box(159,81.5,14,16,3,3.5,K.ink,{hl:false});
+},{vec:ACC});
+def(0,'adapter','محوّل الطاقة الخارجي','External power adapter','يحوّل تيار الحائط المتناوب إلى تيار مستمر منخفض الجهد (قيمته مكتوبة على ملصقه)','سطح الطاولة',function(){
+  var s=box(175,72,0,24,20,22,K.cream),i;
+  for(i=0;i<4;i++)s+=rect2(180+i*4,76,1.8,12,22.05,'#8d8576');
+  s+=rectR(199.05,76,7,12,9,'#faf5e8')+tx('R',87,199.06,13,'OUTPUT DC',2.4,'#3b322a')+tx('R',87,199.06,9.5,'INPUT AC',2.4,'#3b322a');
+  return s;
+},{vec:ACC});
+
+/* ---------- static layers ---------- */
+var gridL=document.getElementById('gridL'),shL=document.getElementById('shL'),partsL=document.getElementById('partsL'),fxL=document.getElementById('fxL');
+(function(){
+  var d='',i;
+  for(i=-10;i<=230;i+=20){d+='M'+P(i,-10,0)+'L'+P(i,130,0);}
+  for(i=-10;i<=130;i+=20){d+='M'+P(-10,i,0)+'L'+P(230,i,0);}
+  var rr=[[4,6],[158,6],[158,106],[4,106]].map(function(p){return P(p[0],p[1],0);}).join('L');
+  gridL.innerHTML='<path d="'+d+'" fill="none" stroke="#d6cbb1" stroke-width=".5" opacity=".8"/>';
+  shL.innerHTML='<path d="M'+rr+'Z" fill="#4a3a2a" opacity=".26" filter="url(#bl)"/>'+
+    '<g id="shAnt"></g><g id="shAcc"></g>';
+})();
+var shAnt=document.getElementById('shAnt'),shAcc=document.getElementById('shAcc');
+var antSh=[];
+(function(){
+  var h='',i;
+  for(i=0;i<3;i++){h+='<ellipse rx="'+(1.2247*5*S).toFixed(1)+'" ry="'+(0.7071*5*S).toFixed(1)+'" cx="'+iso(141,AY[i],0)[0].toFixed(1)+'" cy="'+iso(141,AY[i],0)[1].toFixed(1)+'" fill="#4a3a2a" opacity="0" filter="url(#bl2)"/>';}
+  shAnt.innerHTML=h;antSh=shAnt.querySelectorAll('ellipse');
+  function rc(x0,y0,x1,y1){return [[x0,y0],[x1,y0],[x1,y1],[x0,y1]].map(function(p){return P(p[0],p[1],0);}).join('L');}
+  shAcc.innerHTML='<path d="M'+rc(173,3,204,32)+'Z M'+rc(176,73,205,98)+'Z M'+rc(150,8,176,16)+'Z" fill="#4a3a2a" opacity=".24" filter="url(#bl2)"/>';
+})();
+/* base-top shadow pseudo part */
+var shadowTop={id:'shtop',g:5,bb:[8,10,3,142,90,3.1],ex:0,vec:null,after:[],pseudo:true};
+var stSvg=(function(){BB=null;return '<path d="M'+[[10,12],[140,12],[140,88],[10,88]].map(function(p){return P(p[0],p[1],3.06);}).join('L')+'Z" fill="#4a3a2a" opacity="0" filter="url(#bl2)" id="stp"/>';})();
+
+/* build DOM */
+var html='',i;
+for(i=0;i<parts.length;i++){var p=parts[i];html+='<g class="part'+(p.id.indexOf('led_')===0?' led':'')+'" data-id="'+p.id+'">'+p.svg+'</g>';}
+html+='<g id="gst">'+stSvg+'</g>';
+var pkSvg=box(-2.25,-2.25,-2.25,4.5,4.5,4.5,PKP);
+var NPK=4;
+for(i=0;i<NPK;i++)html+='<g class="pk" id="pk'+i+'" style="display:none">'+pkSvg+'</g>';
+partsL.innerHTML=html;
+var els=partsL.querySelectorAll('.part');
+for(i=0;i<els.length;i++){byId[els[i].getAttribute('data-id')].el=els[i];}
+var stEl=document.getElementById('gst'),stp=document.getElementById('stp');
+var pks=[];
+for(i=0;i<NPK;i++){pks.push({el:document.getElementById('pk'+i),type:'A',ant:0,idx:0,f:0,hold:0,wait:i*1.6+.2,vis:false,w:null,pos:[0,0,0],id:'pk'+i,bb:[0,0,0,0,0,0],after:[],pseudo:true,op:1});}
+var nextN=0;
+function mkPath(type,ant){
+  var w=[[168,12,17,'acc',0],[158,12,17,'acc',0],[141,12,17,'g4',1],[122,12,19,'g4',1],[122,56,19,'g4',1],[101,56,19,'g4',1],[90,45,19,'g4',1],[70,45,33,'g3',1]];
+  if(type==='A'){w.push([92,45,19,'g4',1],[92,UY[ant],19,'g4',1],[99,UY[ant],19,'g4',1],[141,AY[ant],44,'g0',0],[141,AY[ant],104,'g0',0]);}
+  else{w.push([101,56,19,'g4',1],[122,56,19,'g4',1],[122,51,19,'g4',1],[140,51,17,'g4',1],[158,51,17,'g4',0]);}
+  return w;
+}
+function spawn(pk,wait){
+  pk.type=(nextN%2===0)?'A':'B';pk.ant=Math.floor(nextN/2)%3;nextN++;
+  pk.w=mkPath(pk.type,pk.ant);pk.idx=0;pk.f=0;pk.hold=0;pk.wait=wait;pk.vis=false;
+}
+for(i=0;i<NPK;i++)spawn(pks[i],i*1.6+.2);
+var stA=['يغادر المودم عبر كبل Ethernet','يدخل قابس WAN','يمرّ بمنفذ WAN','يعبر محوّلات العزل','يعبر محوّلات العزل','يصل رقاقة مفتاح الشبكة','يتجه إلى المعالج','المعالج SoC يفحص عنوان الحزمة ويقرّر الوجهة','يتجه إلى رقاقة الراديو','يعبر الراديو والمضخّم FEM','يصل موصل U.FL','يصعد في الهوائي','يُبثّ موجاتٍ راديوية'];
+var stB=['يغادر المودم عبر كبل Ethernet','يدخل قابس WAN','يمرّ بمنفذ WAN','يعبر محوّلات العزل','يعبر محوّلات العزل','يصل رقاقة مفتاح الشبكة','يتجه إلى المعالج','المعالج SoC يفحص عنوان الحزمة ويقرّر الوجهة','يعود إلى مفتاح الشبكة','يعبر محوّلات العزل','يتجه إلى منفذ LAN','يخرج من منفذ LAN','يصل إلى الجهاز المتصل بالكابل'];
+
+/* ---------- state ---------- */
+var loc=[0,0,0,0,0,0,0],prog=0,target=0,motionOn=true;
+var reduce=false;
+try{reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;}catch(e){reduce=false;}
+if(reduce)motionOn=false;
+function ease(t){var c=0.7;t=t-1;return 1+(c+1)*t*t*t+c*t*t;}
+function updLoc(){var d=.11,span=1+6*d,k;for(k=0;k<7;k++){var t=Math.max(0,Math.min(1,prog*span-k*d));loc[k]=ease(t);}}
+function vecFor(p){var l=loc[p.g]*p.ex,v=p.vec||GV[p.g];return [v[0]*l,v[1]*l,v[2]*l];}
+function keyOff(k){if(k==='acc'){var l=loc[0];return [ACC[0]*l,ACC[1]*l,ACC[2]*l];}var g=+k.slice(1),l2=loc[g];return [GV[g][0]*l2,GV[g][1]*l2,GV[g][2]*l2];}
+function tr(v){return [(v[0]-v[1])*C30*S,(v[0]+v[1])*S30*S-v[2]*S];}
+
+/* painter order */
+function curBB(it){
+  var v=it.pseudo&&it.w!==undefined?[0,0,0]:(it.vec!==undefined||it.g!==undefined?vecFor(it):[0,0,0]);
+  var b=it.bb;return [b[0]+v[0],b[1]+v[1],b[2]+v[2],b[3]+v[0],b[4]+v[1],b[5]+v[2]];
+}
+function rel(a,b){
+  if(a.after&&a.after.indexOf(b.id)>=0)return 1;
+  if(b.after&&b.after.indexOf(a.id)>=0)return -1;
+  var e=.6,neg=0,pos=0,k;
+  for(k=0;k<3;k++){if(a.c[k+3]<=b.c[k]+e)neg++;else if(b.c[k+3]<=a.c[k]+e)pos++;}
+  if(neg&&!pos)return -1;if(pos&&!neg)return 1;return 0;
+}
+var lastOrder='';
+function sortAll(){
+  var items=[],k,it;
+  for(k=0;k<parts.length;k++){it=parts[k];it.c=curBB(it);it.key=(it.c[0]+it.c[3]+it.c[1]+it.c[4])+(it.c[2]+it.c[5]);items.push(it);}
+  shadowTop.c=curBB(shadowTop);shadowTop.key=(shadowTop.c[0]+shadowTop.c[3]+shadowTop.c[1]+shadowTop.c[4])+(shadowTop.c[2]+shadowTop.c[5]);items.push(shadowTop);
+  for(k=0;k<NPK;k++){var q=pks[k];if(q.vis&&q.op>0.02){var o=2.25;q.c=[q.pos[0]-o,q.pos[1]-o,q.pos[2]-o,q.pos[0]+o,q.pos[1]+o,q.pos[2]+o];q.key=(q.c[0]+q.c[3]+q.c[1]+q.c[4])+(q.c[2]+q.c[5]);items.push(q);}}
+  var n=items.length,indeg=[],adj=[],i,j,r;
+  for(i=0;i<n;i++){indeg.push(0);adj.push([]);}
+  for(i=0;i<n;i++)for(j=i+1;j<n;j++){r=rel(items[i],items[j]);if(r<0){adj[i].push(j);indeg[j]++;}else if(r>0){adj[j].push(i);indeg[i]++;}}
+  var used=[],out=[];for(i=0;i<n;i++)used.push(false);
+  for(var c=0;c<n;c++){
+    var best=-1;
+    for(i=0;i<n;i++){if(used[i]||indeg[i]!==0)continue;if(best<0||items[i].key<items[best].key)best=i;}
+    if(best<0){for(i=0;i<n;i++){if(used[i])continue;if(best<0||indeg[i]<indeg[best]||(indeg[i]===indeg[best]&&items[i].key<items[best].key))best=i;}}
+    used[best]=true;out.push(items[best]);
+    for(j=0;j<adj[best].length;j++)indeg[adj[best][j]]--;
+  }
+  var sig=out.map(function(x){return x.id;}).join(',');
+  if(sig!==lastOrder){
+    lastOrder=sig;
+    for(i=0;i<out.length;i++){var o2=out[i],el=o2.pseudo?(o2.id==='shtop'?stEl:o2.el):o2.el;if(el)partsL.appendChild(el);}
+  }
+}
+pks.forEach(function(q){q.g=undefined;});
+
+/* ---------- apply ---------- */
+function applyTr(){
+  var k,p,t;
+  for(k=0;k<parts.length;k++){p=parts[k];t=tr(vecFor(p));p.el.setAttribute('transform','translate('+t[0].toFixed(2)+' '+t[1].toFixed(2)+')');}
+  var l5=loc[5],l1=loc[1],l4=loc[4];
+  stp.setAttribute('opacity',(0.12*l5+0.1*l1+0.06*l4).toFixed(3));
+  for(k=0;k<3;k++){var o0=tr([GV[0][0]*loc[0],GV[0][1]*loc[0],0]);antSh[k].setAttribute('transform','translate('+o0[0].toFixed(1)+' '+o0[1].toFixed(1)+')');antSh[k].setAttribute('opacity',(0.28*Math.min(1,loc[0]*1.2)).toFixed(3));}
+  var oa=tr([ACC[0]*loc[0],ACC[1]*loc[0],0]);shAcc.setAttribute('transform','translate('+oa[0].toFixed(1)+' '+oa[1].toFixed(1)+')');
+}
+
+/* ---------- packets, LEDs, waves ---------- */
+var SPEED=62,rings=[],ringEls=[],ledState={},elapsed=0;
+(function(){var h='',k;for(k=0;k<12;k++)h+='<ellipse fill="none" stroke="#c4522a" stroke-width="1.2" opacity="0" cx="0" cy="0" rx="1" ry="1"/>';fxL.innerHTML=h;ringEls=fxL.querySelectorAll('ellipse');})();
+function wpos(w){var o=keyOff(w[3]);return [w[0]+o[0],w[1]+o[1],w[2]+o[2]];}
+function dist(a,b){var x=a[0]-b[0],y=a[1]-b[1],z=a[2]-b[2];return Math.sqrt(x*x+y*y+z*z);}
+function stepPk(pk,dt){
+  if(pk.wait>0){pk.wait-=dt;pk.vis=false;return;}
+  pk.vis=true;
+  var n=pk.w.length;
+  if(pk.hold>0){pk.hold-=dt;}
+  else{
+    var a=wpos(pk.w[pk.idx]),b=wpos(pk.w[pk.idx+1]),Ln=Math.max(1,dist(a,b));
+    pk.f+=SPEED*dt/Ln;
+    while(pk.f>=1){
+      pk.f-=1;pk.idx++;
+      if(pk.idx>=n-1){
+        if(pk.type==='A'){var wl=wpos(pk.w[n-1]);rings.push({x:pk.w[n-1][0],y:pk.w[n-1][1],z:pk.w[n-1][2],k:'g0',age:0});}
+        spawn(pk,.5+Math.random()*1.2);pk.vis=false;return;
+      }
+      if(pk.idx===7){pk.hold=.7;pk.f=0;break;}
+    }
+  }
+  var A2=wpos(pk.w[pk.idx]),B2=wpos(pk.w[pk.idx+1]),f=Math.min(1,pk.f);
+  pk.pos=[A2[0]+(B2[0]-A2[0])*f,A2[1]+(B2[1]-A2[1])*f,A2[2]+(B2[2]-A2[2])*f];
+  var v=pk.w[pk.idx][4]+(pk.w[pk.idx+1][4]-pk.w[pk.idx][4])*f;
+  pk.op=1-v*(1-loc[1]);
+}
+function drawPk(){
+  for(var k=0;k<NPK;k++){
+    var q=pks[k];
+    if(!q.vis||q.op<=0.02||reduce&&!motionOn&&!q.vis){q.el.style.display='none';continue;}
+    var t=tr(q.pos);
+    q.el.style.display='';
+    q.el.setAttribute('transform','translate('+t[0].toFixed(2)+' '+t[1].toFixed(2)+')');
+    q.el.setAttribute('opacity',q.op.toFixed(2));
+  }
+}
+function setLed(id,on){if(ledState[id]===on)return;ledState[id]=on;var p=byId[id];if(p&&p.el)p.el.classList.toggle('on',on);}
+function updLeds(){
+  var wan=false,w24=false,lan=false,k;
+  if(!motionOn&&reduce){setLed('led_pwr',true);setLed('led_wan',true);setLed('led_w24',true);setLed('led_w5',true);setLed('led_lan',true);return;}
+  for(k=0;k<NPK;k++){var q=pks[k];if(!q.vis)continue;if(q.idx<=2)wan=true;if(q.type==='A'&&q.idx>=9)w24=true;if(q.type==='B'&&q.idx>=9)lan=true;}
+  setLed('led_pwr',true);setLed('led_wan',wan);setLed('led_w24',w24);setLed('led_lan',lan);setLed('led_w5',Math.sin(elapsed*2.2)>0.1);
+}
+function drawRings(dt){
+  var k,j=0;
+  for(k=rings.length-1;k>=0;k--){rings[k].age+=dt;if(rings[k].age>1.7)rings.splice(k,1);}
+  for(k=0;k<rings.length&&j<12;k++){
+    var r=rings[k],o=keyOff(r.k),c=iso(r.x+o[0],r.y+o[1],r.z+o[2]);
+    var radii=[4+r.age*30,4+Math.max(0,r.age-.4)*30];
+    for(var m=0;m<2&&j<12;m++){
+      var rr=radii[m],op=(1-r.age/1.7)*(m===0?.75:.5);
+      if(m===1&&r.age<.4)continue;
+      var e=ringEls[j++];e.setAttribute('cx',c[0].toFixed(1));e.setAttribute('cy',c[1].toFixed(1));e.setAttribute('rx',(1.2247*rr*S).toFixed(1));e.setAttribute('ry',(0.7071*rr*S).toFixed(1));e.setAttribute('opacity',Math.max(0,op).toFixed(2));
+    }
+  }
+  for(;j<12;j++)ringEls[j].setAttribute('opacity','0');
+}
+
+/* ---------- UI ---------- */
+var bExp=document.getElementById('bExp'),bFault=document.getElementById('bFault'),bMot=document.getElementById('bMot'),readout=document.getElementById('readout');
+var faultMode=false,pinned=null,hov=null,solved=false;
+function stageText(){
+  for(var k=0;k<NPK;k++){var q=pks[k];if(q.vis&&q.op>0.02){return (q.type==='A'?stA:stB)[Math.min(q.idx,12)]+' ('+(q.type==='A'?'مسار: WAN إلى Wi-Fi':'مسار: WAN إلى LAN')+')';}}
+  return 'لا حزمة مرئية داخل الجهاز الآن';
+}
+function updReadout(){
+  var cnt=0,k;for(k=0;k<7;k++)if(loc[k]>0.5)cnt++;
+  var st=prog<=0.001&&target===0?'مجمَّع':(prog>=0.999&&target===1?'مفكَّك بالكامل':(target===1?'ينفصل...':'يعود للتركيب...'));
+  var cur=hov||pinned;
+  readout.innerHTML='الحالة: '+st+' | المجموعات المنفصلة: '+cnt+'/7<br>القطعة: '+(cur?byId[cur].ar:'لم تُختَر')+'<br>الحزمة: '+(motionOn?stageText():'الحركة متوقفة');
+}
+function showCard(){
+  var cur=hov||pinned,n=document.getElementById('iname'),e=document.getElementById('ien'),f=document.getElementById('ifn'),r=document.getElementById('irest'),g=document.getElementById('igrp');
+  if(!cur){n.textContent='اضغط على أي قطعة';e.innerHTML='&nbsp;';f.textContent='كل قطعة في الرسم لها اسم عربي وإنكليزي ووظيفة. الأسماء لا تظهر على الرسم بل هنا فقط.';r.textContent='';g.innerHTML='';return;}
+  var p=byId[cur];
+  n.textContent=p.ar;e.textContent=p.en;f.textContent='الوظيفة: '+p.fn;r.textContent='تستند على: '+p.rests;
+  g.innerHTML='<span class="chip">المجموعة '+(p.g+1)+': '+GN[p.g]+'</span>';
+}
+function refresh(){
+  var cur=hov||pinned,k;
+  for(k=0;k<parts.length;k++)parts[k].el.classList.toggle('sel',parts[k].id===cur);
+  var bs=document.querySelectorAll('#index button');
+  for(k=0;k<bs.length;k++)bs[k].classList.toggle('cur',bs[k].getAttribute('data-id')===pinned);
+  showCard();updReadout();
+}
+function pick(id){
+  if(faultMode){judge(id);return;}
+  pinned=(pinned===id)?null:id;refresh();
+}
+var svg=document.getElementById('svg');
+svg.addEventListener('pointerover',function(e){
+  if(e.pointerType==='touch')return;
+  var g=e.target.closest?e.target.closest('.part'):null;
+  var id=g?g.getAttribute('data-id'):null;
+  if(id!==hov){hov=id;refresh();}
+});
+svg.addEventListener('pointerleave',function(){if(hov!==null){hov=null;refresh();}});
+svg.addEventListener('click',function(e){
+  var g=e.target.closest?e.target.closest('.part'):null;
+  if(!g)return;pick(g.getAttribute('data-id'));
+});
+function setTarget(t){
+  target=t;
+  if(reduce){prog=t;}
+  bExp.textContent=t===1?'🔧 ركّب':'🔩 فكّك';
+}
+bExp.addEventListener('click',function(){setTarget(target===1?0:1);});
+bMot.addEventListener('click',function(){
+  motionOn=!motionOn;
+  bMot.textContent=motionOn?'⏸ أوقف الحركة':'▶ شغّل الحركة';
+  if(!motionOn&&reduce)updLeds();
+});
+if(reduce)bMot.textContent='▶ شغّل الحركة';
+
+/* order list and index */
+(function(){
+  var o=document.getElementById('ord'),h='',k;
+  for(k=0;k<7;k++)h+='<li><b>'+GN[k]+'</b><br><span style="color:#7b6d5e">'+ORD[k]+'</span></li>';
+  o.innerHTML=h;
+  document.getElementById('pcount').textContent=parts.length;
+  var ix='';
+  for(k=0;k<7;k++){
+    ix+='<details'+(k===4?' open':'')+'><summary>'+(k+1)+'. '+GN[k]+'</summary><div class="pl">';
+    parts.forEach(function(p){if(p.g===k)ix+='<button type="button" data-id="'+p.id+'">'+p.ar+'</button>';});
+    ix+='</div></details>';
+  }
+  var idx=document.getElementById('index');idx.innerHTML=ix;
+  idx.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;pick(b.getAttribute('data-id'));});
+})();
+
+/* fault scenario */
+var SUS=[
+ {id:'ufl1',ok:true,t:'موصل U.FL للهوائي الأول',why:'هذا هو السبب. موصل U.FL صغير يُكبس على اللوحة دون لحام، وعند تحريك الراوتر أو شدّ الهوائي قد ينفلت جزئياً، فتضيع نسبة كبيرة من قدرة البث والاستقبال في ذلك الهوائي. الإنترنت السلكي لا يمرّ عبره، لذلك يبقى ممتازاً. الحل: افتح الغطاء وأعد كبس الموصل بحذر.'},
+ {id:'jwan',ok:false,t:'منفذ WAN',why:'ليس السبب. منفذ WAN يستقبل الإنترنت من المودم؛ لو كان معطوباً لانقطع الإنترنت عن كل الأجهزة بما فيها الموصولة بالكابل. هنا الكابل ممتاز، أي أن المسار السلكي سليم.'},
+ {id:'heatsink',ok:false,t:'المشتّت الحراري',why:'ليس السبب. ضعف التبريد يسبّب أعراضاً عامة: بطء أو إعادة تشغيل للجهاز كله، فيتأثر الكابل أيضاً، وليس ضعف Wi-Fi فقط بعد تحريك الجهاز.'}
+];
+var fbox=document.getElementById('faultBox'),fres=document.getElementById('fres'),susEl=document.getElementById('sus');
+document.getElementById('symptom').innerHTML='<b>العَرَض:</b> بعد أن حرّك مستخدم الراوتر إلى زاوية أخرى صار Wi-Fi ضعيفاً جداً ويضيع بعد غرفة واحدة، بينما الإنترنت بالكابل مباشرةً ممتاز.';
+var tried={};
+function buildSus(){
+  var h='';SUS.forEach(function(s){h+='<button type="button" class="btn" data-id="'+s.id+'">🔍 افحص: '+s.t+'</button>';});
+  susEl.innerHTML=h;
+}
+buildSus();
+susEl.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;judge(b.getAttribute('data-id'));});
+function judge(id){
+  var s=null;SUS.forEach(function(x){if(x.id===id)s=x;});
+  pinned=id;
+  if(!s){fres.insertAdjacentHTML('afterbegin','<div class="res no">هذه القطعة ('+byId[id].ar+') ليست ضمن القطع الثلاث المقترحة. جرّب إحدى القطع الثلاث.</div>');refresh();return;}
+  if(!tried[id]){
+    tried[id]=true;
+    fres.insertAdjacentHTML('afterbegin','<div class="res '+(s.ok?'ok':'no')+'">'+(s.ok?'✅':'❌')+' <b>'+s.t+':</b> '+s.why+'</div>');
+  }
+  refresh();
+}
+bFault.addEventListener('click',function(){
+  faultMode=true;fbox.hidden=false;setTarget(1);
+  fbox.scrollIntoView({behavior:reduce?'auto':'smooth',block:'nearest'});
+});
+document.getElementById('fclose').addEventListener('click',function(){
+  faultMode=false;fbox.hidden=true;fres.innerHTML='';tried={};pinned=null;refresh();
+});
+
+/* quiz */
+var QO=[
+ {t:'الهوائي',ok:false,why:'الهوائي يبثّ ويلتقط الموجات فقط، ولا يفحص عناوين الحزم.'},
+ {t:'المعالج الرئيسي SoC',ok:true,why:'صحيح: المعالج يقرأ عنوان كل حزمة ويقرّر أن تذهب إلى الراديو (Wi-Fi) أو إلى مفتاح الشبكة (LAN)، وهذا ما رأيته عند نقطة التوقف في مسار الحزمة.'},
+ {t:'المشتّت الحراري',ok:false,why:'المشتّت يبعد الحرارة عن المعالج ولا يتخذ أي قرار.'},
+ {t:'محوّل الطاقة',ok:false,why:'المحوّل يزوّد الجهاز بالطاقة فقط، ولا يتعامل مع البيانات.'}
+];
+document.getElementById('qtext').textContent='أي قطعة تقرّر لكل حزمة قادمة من منفذ WAN هل تذهب إلى شبكة Wi-Fi أم إلى أحد منافذ LAN؟';
+(function(){
+  var q=document.getElementById('qopts'),h='';
+  QO.forEach(function(o,i){h+='<button type="button" class="opt" data-i="'+i+'">'+['أ','ب','ج','د'][i]+') '+o.t+'</button>';});
+  q.innerHTML=h;
+  q.addEventListener('click',function(e){
+    var b=e.target.closest('button');if(!b)return;
+    var i=+b.getAttribute('data-i'),o=QO[i];
+    b.classList.add(o.ok?'ok':'no');
+    b.textContent=(o.ok?'✅ ':'❌ ')+b.textContent;
+    document.getElementById('qres').innerHTML='<div class="res '+(o.ok?'ok':'no')+'">'+(o.ok?'✅':'❌')+' '+o.why+'</div>';
+  });
+})();
+
+/* ---------- main loop ---------- */
+var lastT=0,roTimer=0;
+function frame(ts){
+  var dt=Math.min(.05,(ts-lastT)/1000||0);lastT=ts;
+  if(reduce)prog=target;
+  else if(prog<target)prog=Math.min(target,prog+dt/2.0);
+  else if(prog>target)prog=Math.max(target,prog-dt/2.0);
+  updLoc();
+  if(motionOn){elapsed+=dt;for(var k=0;k<NPK;k++)stepPk(pks[k],dt);}
+  applyTr();drawPk();sortAll();
+  if(motionOn){updLeds();drawRings(dt);}
+  roTimer+=dt;if(roTimer>.12){roTimer=0;updReadout();}
+  requestAnimationFrame(frame);
+}
+setTarget(0);
+refresh();
+if(reduce){setLed('led_pwr',true);setLed('led_wan',true);setLed('led_w24',true);setLed('led_w5',true);setLed('led_lan',true);}
+requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
