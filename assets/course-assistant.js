@@ -32,7 +32,7 @@
     '#ca-p.open{display:flex}#ca-h{display:flex;align-items:center;gap:8px;padding:10px 12px;background:linear-gradient(135deg,#4a2f9e,#1857a4);color:#fff;cursor:move;touch-action:none;user-select:none}',
     '#ca-h b{flex:1;font-size:16px}#ca-h button{background:rgba(255,255,255,.18);border:0;color:#fff;border-radius:8px;padding:4px 9px;cursor:pointer;font:inherit}',
     '#ca-m{flex:1;overflow-y:auto;padding:12px;background:#f5f7fb}.ca-b{max-width:88%;padding:8px 11px;border-radius:12px;margin:6px 0;white-space:pre-wrap;word-wrap:break-word}',
-    '.ca-b.bot{background:#fff;border:1px solid #e1e6ef}.ca-b.me{background:#e8e2ff;margin-inline-start:auto}.ca-b.sys{background:#fff7e0;border:1px solid #f0dca0;font-size:14px}',
+    '.ca-b a{color:#1857a4;text-decoration:underline;word-break:break-all;unicode-bidi:isolate}.ca-b.bot{background:#fff;border:1px solid #e1e6ef}.ca-b.me{background:#e8e2ff;margin-inline-start:auto}.ca-b.sys{background:#fff7e0;border:1px solid #f0dca0;font-size:14px}',
     '.ca-act{display:flex;gap:6px;margin:-2px 0 8px}.ca-act button,.ca-chips button{border:1px solid #cdd6e4;background:#fff;color:#3b3a8f;border-radius:999px;padding:3px 10px;font:13px "Segoe UI",Tahoma,sans-serif;cursor:pointer}',
     '.ca-chips{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 8px}#ca-f{display:flex;gap:6px;padding:8px;border-top:1px solid #e1e6ef;background:#fff}',
     '#ca-f textarea{flex:1;resize:none;height:44px;border:1px solid #cdd6e4;border-radius:10px;padding:8px;font:15px "Segoe UI",Tahoma,sans-serif;color:#1d2b3a;background:#fff}',
@@ -100,6 +100,17 @@
   // ---- chat ----
   function clean(x) { return String(x || '').replace(/\*\*|__|^#+\s*/gm, '').replace(/^\s*[-*]\s+/gm, '• ').trim(); }
   function bubble(cls, text) { var d = document.createElement('div'); d.className = 'ca-b ' + cls; d.textContent = text; M.appendChild(d); M.scrollTop = M.scrollHeight; return d; }
+  // links in an answer become clickable (built as DOM nodes, never innerHTML); trailing punctuation stays outside the link
+  function linked(el, text) {
+    el.textContent = ''; var re = /https?:\/\/[^\s<>"«»]+/g, last = 0, m;
+    while ((m = re.exec(text))) {
+      var url = m[0].replace(/[.,،؛:!?)\]]+$/, ''), end = m.index + url.length;
+      if (m.index > last) el.appendChild(document.createTextNode(text.slice(last, m.index)));
+      var a = document.createElement('a'); a.href = url; a.textContent = url; a.target = '_blank'; a.rel = 'noopener'; a.dir = 'ltr'; el.appendChild(a);
+      last = end; re.lastIndex = end;
+    }
+    if (last < text.length) el.appendChild(document.createTextNode(text.slice(last)));
+  }
   function chips() {
     var list = (CHIPS[C] || {})[L()] || (CHIPS[C] || {}).ar || []; if (!list.length) return;
     var w = document.createElement('div'); w.className = 'ca-chips';
@@ -121,7 +132,7 @@
       .then(function (x) {
         var j = x[1];
         if (!j.ok) { w.className = 'ca-b sys'; w.textContent = t(j.error === 'limit' ? 'limit' : j.error === 'busy' ? 'busy' : j.error === 'off' ? 'off' : 'err'); return; }
-        var a = clean(j.answer); w.textContent = a; hist.push({ who: 'me', text: q }, { who: 'bot', text: a });
+        var a = clean(j.answer); linked(w, a); hist.push({ who: 'me', text: q }, { who: 'bot', text: a });
         var act = document.createElement('div'); act.className = 'ca-act';
         var b = document.createElement('button'); b.type = 'button'; b.textContent = t('doc'); b.onclick = function () { doctor(q, a, b); };
         act.appendChild(b); M.appendChild(act); M.scrollTop = M.scrollHeight;
