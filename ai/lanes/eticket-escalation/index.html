@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>نظام التذاكر مع التصعيد — مثال المسارات</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+<script>
+// Ticket system with escalation (AI week 10, applied-study example). Fictional directorate, names and numbers.
+const STATES = `<div class="le-list" style="margin-top:8px">
+  <div data-k="new">🆕 جديدة</div><div data-k="work">⚙️ قيد الإنجاز</div>
+  <div data-k="esc1">⏰ مُصعَّدة إلى المشرف</div><div data-k="esc2">🚨 مُصعَّدة إلى المدير</div>
+  <div data-k="done">✅ منجزة</div><div data-k="lost" style="display:none">📄 ضائعة بين المكاتب</div></div>`;
+window.LANES = {
+  title: 'نظام التذاكر مع التصعيد 🎫',
+  sub: 'كلّ طلب يأخذ <b>تذكرة برقمٍ ووقتٍ ومسؤول</b>. فإذا بقيت التذكرة <b>٤٨ ساعة بلا إجراء</b> صعدت تلقائيًّا إلى المشرف، ثمّ إلى المدير. <small>مثال تدريبيّ: الجهة والأسماء والأرقام خياليّة.</small>',
+  lanes: [
+    { id: 'cit', icon: '🧑', title: 'المراجع', role: 'مواطن عنده طلب' },
+    { id: 'sys', icon: '🎫', title: 'نظام التذاكر', role: 'يسجّل، ويعدّ الساعات، ويصعّد', html: STATES },
+    { id: 'emp', icon: '👩‍💼', title: 'الموظّف', role: 'مسؤول عن التذكرة' },
+    { id: 'sup', icon: '🧑‍💼', title: 'المشرف', role: 'يتابع المتأخّر' },
+    { id: 'dir', icon: '🏛️', title: 'المدير', role: 'آخر درجة في التصعيد' }
+  ],
+  lesson: '💡 <b>الفكرة:</b> لا طلبَ بلا رقم، ولا تأخيرَ بلا تنبيه. النظام لا يُنجز المعاملة بدل الموظّف، لكنّه <b>لا يسمح لها بأن تُنسى</b>.',
+  scenarios: [
+    { label: '✅ طلب يُنجز في وقته', lesson: '💡 <b>المسار الطبيعيّ:</b> رقمٌ يتابع به المراجع طلبه، ومسؤولٌ واضح، وإنجازٌ قبل ٤٨ ساعة، فلا حاجة إلى تصعيد.', steps: [
+      { at: 'cit', card: '<span class="k">📝 طلب</span>تجديد إجازة ممارسة مهنة', text: 'يقدّم المراجع طلبه عند الاستقبال أو من الموقع.' },
+      { at: 'sys', hit: 'new', panel: { sys: '<div>🎫 التذكرة <b>T-1047</b></div><div>🕘 الأحد ٩:١٠</div><div>⏱️ منذ الإنشاء: ٠ ساعة</div>' }, card: '<span class="k">🎫 تذكرة</span>T-1047 · جديدة', text: 'ينشئ النظام <b>تذكرة برقم ووقت</b>، فلا يضيع الطلب بين المكاتب.' },
+      { at: 'cit', card: '<span class="k">📱 رسالة</span>طلبك برقم T-1047، تابعه من الموقع', text: 'يأخذ المراجع <b>رقم التذكرة</b>، فيتابع طلبه بدل أن يراجع كلّ يوم.' },
+      { at: 'emp', hit: 'work', card: '<span class="k">📥 إسناد</span>T-1047 إلى الموظّفة سارة', text: 'تُسنَد التذكرة إلى <b>موظّفٍ واحد مسؤول</b> باسمه.' },
+      { at: 'emp', think: { emp: '📂 أراجع المستمسكات<br>✍️ أُكمل الإجراء' }, panel: { sys: '<div>🎫 T-1047</div><div>⏱️ منذ الإنشاء: ٢٦ ساعة</div><div>🟢 ضمن المهلة</div>' }, card: '<span class="k">⚙️ قيد الإنجاز</span>تدقيق الطلب', text: 'تعمل الموظّفة على الطلب، والنظام يعدّ الساعات.' },
+      { at: 'sys', hit: 'done', cls: 'ok', panel: { sys: '<div>🎫 T-1047</div><div>✅ أُنجزت بعد <b>٣١ ساعة</b></div>' }, card: '<span class="k">✅ منجزة</span>بعد ٣١ ساعة', text: 'تُغلَق التذكرة <b>قبل ٤٨ ساعة</b>، فلا يحدث تصعيد.' },
+      { at: 'cit', cls: 'ok', card: '<span class="k">📱 رسالة</span>طلبك جاهز، تفضّل بالاستلام', text: 'يعرف المراجع أنّ طلبه جاهز دون أن يسأل.' }
+    ] },
+    { label: '⏰ طلب يتأخّر ← تصعيد', lesson: '💡 <b>التصعيد:</b> التأخير لا يُخفى. بعد ٤٨ ساعة يعرف المشرف، وبعد ٤٨ أخرى يعرف المدير. وكلّ ذلك مسجّل، فيُقاس في الدراسة.', steps: [
+      { at: 'cit', card: '<span class="k">📝 طلب</span>نقل ملكيّة', text: 'مراجعٌ آخر يقدّم طلبه.' },
+      { at: 'sys', hit: 'new', panel: { sys: '<div>🎫 التذكرة <b>T-1052</b></div><div>🕘 الأحد ١٠:٠٠</div><div>⏱️ ٠ ساعة</div>' }, card: '<span class="k">🎫 تذكرة</span>T-1052 · جديدة', text: 'تذكرة جديدة برقم ووقت.' },
+      { at: 'emp', hit: 'work', think: { emp: '📚 عندي ١٥ معاملة<br>سأؤجّله…' }, card: '<span class="k">📥 إسناد</span>T-1052 إلى الموظّف علي', text: 'الموظّف مشغول، فيبقى الطلب بلا إجراء.' },
+      { at: 'sys', hit: 'esc1', cls: 'bad', panel: { sys: '<div>🎫 T-1052</div><div>⏱️ <b>٤٨ ساعة بلا إجراء</b></div><div>🔴 تجاوز المهلة</div>' }, card: '<span class="k">⏰ ٤٨ ساعة</span>لا إجراء على T-1052', text: 'مرّت <b>٤٨ ساعة</b> دون أيّ إجراء، فيصعّد النظام تلقائيًّا، دون أن يطلب أحد.' },
+      { at: 'sup', think: { sup: '🔍 لماذا تأخّر؟<br>👉 أنقله لموظّف أقلّ ضغطًا' }, card: '<span class="k">🚩 تنبيه</span>T-1052 متأخّرة', text: 'يصل التنبيه إلى <b>المشرف</b>، فيعيد إسناد الطلب أو يحلّ العائق.' },
+      { at: 'emp', card: '<span class="k">↪️ إعادة إسناد</span>T-1052 إلى الموظّفة نور', text: 'ينتقل الطلب إلى موظّفة أخرى.' },
+      { at: 'sys', hit: 'esc2', cls: 'bad', panel: { sys: '<div>🎫 T-1052</div><div>⏱️ <b>٩٦ ساعة</b></div><div>🚨 ما زالت متأخّرة</div>' }, card: '<span class="k">🚨 ٤٨ ساعة أخرى</span>التذكرة ما زالت مفتوحة', text: 'ينقص الطلبَ مستمسكٌ من دائرة أخرى، فتمرّ ٤٨ ساعة أخرى، فيصعّد النظام إلى <b>المدير</b>.' },
+      { at: 'dir', think: { dir: '📞 أتّصل بالدائرة الأخرى<br>✍️ أوجّه كتابًا عاجلًا' }, card: '<span class="k">🏛️ قرار</span>كتاب عاجل إلى الدائرة المعنيّة', text: 'المدير يحلّ ما لا يستطيعه الموظّف: <b>عائق بين دائرتين</b>.' },
+      { at: 'sys', hit: 'done', cls: 'ok', panel: { sys: '<div>🎫 T-1052</div><div>✅ أُنجزت بعد <b>١٠٢ ساعة</b></div><div>📊 سُجّل التصعيد في التقرير</div>' }, card: '<span class="k">✅ منجزة</span>مع سجلّ التصعيد', text: 'يُنجز الطلب، ويبقى <b>سجلّ التأخير والتصعيد</b> في التقرير اليوميّ، وهو من بيانات القياس البعديّ.' },
+      { at: 'cit', cls: 'ok', card: '<span class="k">📱 رسالة</span>طلبك جاهز، نعتذر عن التأخير', text: 'المراجع لم يُنسَ، حتّى مع التأخير.' }
+    ] },
+    { label: '📄 قبل النظام: الورق', lesson: '💡 <b>لماذا نحتاج النظام؟</b> في الورق لا رقم ولا عدّاد ولا تنبيه، فلا يعرف أحد أنّ الطلب متأخّر إلّا المراجع. وهذا ما يقيسه «القياس القبليّ».', steps: [
+      { at: 'cit', card: '<span class="k">📝 طلب ورقيّ</span>نقل ملكيّة', text: 'يقدّم المراجع طلبه ورقيًّا.' },
+      { at: 'emp', miss: 'lost', cls: 'bad', think: { emp: '📚 كومة أوراق<br>لا أعرف أيّها أقدم' }, card: '<span class="k">📄 بلا رقم</span>الطلب في الكومة', text: 'لا رقم ولا وقت تسجيل. يدخل الطلب في كومة، ولا يُعرف أيّها أقدم.' },
+      { at: 'cit', cls: 'bad', card: '<span class="k">🔁 مراجعة</span>«راجعنا بعد يومين»', text: 'يعود المراجع مرّة بعد مرّة يسأل عن طلبه.' },
+      { at: 'sup', cls: 'bad', think: { sup: '❓ لا أعرف بوجوده أصلًا' }, card: '<span class="k">🙈 لا تنبيه</span>المشرف لا يعلم', text: 'لا يعلم المشرف ولا المدير بالتأخير، لأنّ أحدًا لا يُبلغهما.' },
+      { at: 'dir', cls: 'bad', card: '<span class="k">📨 شكوى</span>المراجع يشتكي بعد أسبوعين', text: 'أوّل ما يعرفه المدير عن الطلب: <b>شكوى</b>. وهنا يبدأ القياس القبليّ: كم ينتظر المراجع؟ وكم شكوى في الشهر؟' }
+    ] }
+  ]
+};
+</script>
+<script src="lane_engine.js"></script>
+</body>
+</html>
