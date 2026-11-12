@@ -1,0 +1,1615 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>محاكي رحلة الباحث</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0f1720; --panel:#ffffff; --ink:#1b2430; --muted:#5b6675; --brand:#1f4e79; --gold:#e0a400;
+  --good:#1f8a4c; --bad:#c0392b; --claude:#5b3fa6; --claude-bg:#f2eefc; --line:#d9dee5;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;overflow:hidden;background:var(--bg);font-family:'Tajawal',Tahoma,Arial,sans-serif;color:var(--ink);-webkit-tap-highlight-color:transparent}
+#c{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:none}
+.hidden{display:none!important}
+/* HUD */
+#hud{position:fixed;top:0;left:0;right:0;display:flex;gap:6px;align-items:stretch;padding:8px;pointer-events:none;flex-wrap:wrap;z-index:5}
+.chip{background:rgba(255,255,255,.94);border-radius:12px;padding:6px 10px;font-weight:700;font-size:14px;box-shadow:0 2px 8px rgba(0,0,0,.25);display:flex;align-items:center;gap:6px}
+#hName{color:var(--brand)}
+#hScore{color:#8a5a00}
+#hCombo{color:#c4410c}
+#meters{display:flex;gap:6px}
+.meter{display:flex;flex-direction:column;gap:2px;font-size:11px;min-width:54px}
+.meter b{font-size:11px}
+.bar{height:5px;background:#e3e7ec;border-radius:3px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--good);transition:width .4s}
+#task{position:fixed;top:54px;right:8px;left:8px;margin:0 auto;max-width:560px;background:rgba(31,78,121,.95);color:#fff;border-radius:14px;padding:8px 12px;font-size:15px;display:flex;align-items:center;gap:10px;box-shadow:0 3px 12px rgba(0,0,0,.35);pointer-events:none;z-index:5}
+#arrow{width:30px;height:30px;flex:0 0 30px;display:flex;align-items:center;justify-content:center;font-size:22px;transition:transform .1s}
+#taskTxt{flex:1;line-height:1.4}
+#taskTxt small{display:block;opacity:.85;font-size:12px}
+/* labels */
+.lbl{position:fixed;transform:translate(-50%,-100%);background:rgba(15,23,32,.82);color:#fff;font-size:12px;font-weight:700;padding:3px 8px;border-radius:8px;white-space:nowrap;pointer-events:none;z-index:2}
+.lbl.target{background:#e0a400;color:#1b1b1b}
+/* controls */
+#joy{position:fixed;left:18px;bottom:22px;width:124px;height:124px;border-radius:50%;background:rgba(15,23,32,.28);border:3px solid rgba(31,78,121,.65);touch-action:none;z-index:6}
+#knob{position:absolute;left:34px;top:34px;width:50px;height:50px;border-radius:50%;background:rgba(31,78,121,.9);box-shadow:0 2px 8px rgba(0,0,0,.4)}
+#act{position:fixed;right:18px;bottom:34px;min-width:118px;height:64px;border-radius:32px;border:none;background:#e0a400;color:#1b1b1b;font-family:inherit;font-weight:800;font-size:18px;box-shadow:0 4px 14px rgba(0,0,0,.4);z-index:6;padding:0 18px}
+#keysHint{position:fixed;bottom:8px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,.7);font-size:12px;z-index:4;pointer-events:none}
+/* pop points */
+.pop{position:fixed;direction:ltr;unicode-bidi:isolate;font-weight:800;font-size:26px;pointer-events:none;z-index:30;text-shadow:0 2px 6px rgba(0,0,0,.5);animation:pop 1.4s ease-out forwards}
+.pop.good{color:#ffd54a}.pop.bad{color:#ff6b5b}
+@keyframes pop{0%{transform:translate(-50%,0) scale(.6);opacity:0}15%{transform:translate(-50%,-10px) scale(1.15);opacity:1}100%{transform:translate(-50%,-90px) scale(1);opacity:0}}
+/* modal */
+.overlay{position:fixed;inset:0;background:rgba(8,12,18,.62);display:flex;align-items:center;justify-content:center;z-index:20;padding:12px}
+.card{background:var(--panel);border-radius:18px;max-width:620px;width:100%;max-height:92vh;overflow:auto;padding:18px 18px 16px;box-shadow:0 10px 40px rgba(0,0,0,.5)}
+.card h2{margin:0 0 4px;font-size:20px;color:var(--brand)}
+.card .when{color:var(--muted);font-size:13px;margin-bottom:10px}
+.say{background:#f4f6f9;border-radius:12px;padding:10px 12px;margin:8px 0;line-height:1.7;font-size:15px}
+.claude{background:var(--claude-bg);border:1px solid #d9cff5;border-radius:12px;padding:10px 12px;margin:8px 0;line-height:1.7;font-size:15px}
+.claude .who{color:var(--claude);font-weight:800;font-size:13px;margin-bottom:2px}
+.q{font-weight:700;margin:12px 0 8px;font-size:16px}
+.opt{display:block;width:100%;text-align:right;background:#fff;border:2px solid var(--line);border-radius:12px;padding:11px 12px;margin:7px 0;font-family:inherit;font-size:15px;cursor:pointer;line-height:1.5}
+.opt:hover{border-color:var(--brand)}
+.row{border:1px solid var(--line);border-radius:12px;padding:9px 10px;margin:8px 0}
+.row .lab{font-weight:700;font-size:15px;line-height:1.5}
+.row .sug{color:var(--claude);font-size:13px;margin:4px 0}
+.row select{width:100%;font-family:inherit;font-size:15px;padding:8px;border-radius:10px;border:1px solid #b9c2cd;background:#fff}
+.btn{display:inline-block;background:var(--brand);color:#fff;border:none;border-radius:12px;padding:11px 20px;font-family:inherit;font-weight:700;font-size:16px;cursor:pointer;margin-top:10px}
+.btn.gold{background:var(--gold);color:#1b1b1b}
+.fb{border-radius:12px;padding:10px 12px;margin:8px 0;line-height:1.7;font-size:15px}
+.fb.good{background:#e8f6ee;border:1px solid #b5e0c6}
+.fb.bad{background:#fdecea;border:1px solid #f3c2bc}
+.fb.mid{background:#f4f6f9;border:1px solid var(--line)}
+.fb .pts{font-weight:800;margin-inline-start:6px}
+.timer{font-weight:800;color:var(--bad);font-size:18px}
+table.mini{width:100%;border-collapse:collapse;font-size:14px;margin:6px 0}
+table.mini td,table.mini th{border:1px solid var(--line);padding:5px 7px;text-align:right}
+table.mini tr.dup td{background:#fff6d6}
+.bars{margin:8px 0}
+.bars div{display:flex;align-items:center;gap:8px;margin:4px 0;font-size:13px}
+.bars span.b{height:14px;background:var(--brand);border-radius:4px}
+/* start & end */
+#start .card,#end .card{text-align:center}
+#start h1{margin:4px 0;color:var(--brand);font-size:26px}
+.tips{display:grid;gap:8px;margin:12px 0;text-align:right}
+.tip{background:#f4f6f9;border-radius:12px;padding:9px 12px;font-size:14px;line-height:1.6}
+#nameIn{width:100%;font-family:inherit;font-size:18px;padding:12px;border-radius:12px;border:2px solid var(--line);text-align:center;margin-top:6px}
+.bigname{font-size:24px;font-weight:800;color:var(--brand);margin:6px 0}
+.bigscore{font-size:46px;font-weight:800;color:#8a5a00;margin:2px 0}
+.grade{font-size:20px;font-weight:800;margin:4px 0}
+.badges{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:10px 0}
+.badge{background:#fff6d6;border:1px solid #f0d77a;border-radius:20px;padding:5px 10px;font-size:13px;font-weight:700}
+.missed{text-align:right;background:#fdecea;border-radius:12px;padding:8px 12px;margin:10px 0;font-size:14px;line-height:1.7}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin:10px 0;font-size:14px}
+.stats div{background:#f4f6f9;border-radius:10px;padding:6px}
+.note{font-size:12px;color:var(--muted);margin-top:8px}
+body{-webkit-user-select:none;user-select:none}
+input{-webkit-user-select:text;user-select:text}
+#goBtn{pointer-events:auto;background:#e0a400;color:#1b1b1b;border:none;border-radius:20px;padding:7px 12px;font-family:inherit;font-weight:800;font-size:14px;white-space:nowrap;touch-action:manipulation}
+#gbubble{position:fixed;transform:translate(-50%,-100%);background:#fff;color:#2b2f6b;border:2px solid #9fb0ff;border-radius:14px;padding:6px 10px;font-weight:800;font-size:14px;max-width:220px;text-align:center;z-index:4;pointer-events:none;box-shadow:0 4px 12px rgba(0,0,0,.3)}
+#toast{position:fixed;left:50%;bottom:110px;transform:translateX(-50%);background:rgba(20,24,40,.94);color:#fff;border-radius:14px;padding:10px 14px;font-size:15px;line-height:1.6;max-width:min(92vw,520px);z-index:15;text-align:center;box-shadow:0 6px 18px rgba(0,0,0,.4)}
+.opt,.btn,#act,#goBtn{touch-action:manipulation}
+@media (max-width:520px){
+  .chip{font-size:12px;padding:5px 8px} #meters{display:none}
+  #task{top:46px;font-size:14px;padding:7px 10px}
+  .overlay#modal{align-items:flex-end;padding:0}
+  #modal .card{border-radius:20px 20px 0 0;max-height:86vh;padding:14px 14px 22px}
+  .opt{padding:14px 12px;font-size:16px}
+  .row select{font-size:16px;padding:11px}
+  .btn{width:100%;padding:14px;font-size:17px}
+  #act{min-width:104px;height:72px;bottom:30px;font-size:19px}
+  #joy{width:136px;height:136px;bottom:24px}
+  #knob{left:40px;top:40px}
+}
+.errs{text-align:right;background:rgba(220,38,38,.07);border:1px solid rgba(220,38,38,.3);border-radius:12px;padding:8px 12px;margin:10px 0;font-size:14px;line-height:1.7}
+.errs summary{cursor:pointer;font-weight:700;font-size:15px}
+.errs ol{margin:6px 0 0;padding-right:20px}.errs li{margin:0 0 8px;padding-bottom:6px;border-bottom:1px dashed rgba(127,127,127,.3)}
+.errs .eh{opacity:.75;font-size:13px}.errs .eg{background:#7c3aed;color:#fff;border-radius:8px;padding:0 6px;font-size:12px}
+.errs .ew{opacity:.85}.errs .en{font-size:13px;opacity:.8;margin-top:4px}
+.ledger{text-align:right;background:rgba(37,99,235,.06);border:1px solid rgba(37,99,235,.3);border-radius:12px;padding:8px 10px;margin:10px 0;font-size:13.5px;line-height:1.65}
+.ledger>summary{cursor:pointer;font-weight:700;font-size:15px}
+.lg-h,.lg-g>summary,.lg-r{display:grid;grid-template-columns:1fr 46px 50px 50px;gap:4px;align-items:start}
+.lg-h{font-size:12px;opacity:.7;border-bottom:1px solid rgba(127,127,127,.35);padding:6px 0 3px;margin-top:6px}
+.lg-h span:not(:first-child),.lg-g>summary span:not(:first-child),.lg-r span:not(:first-child){text-align:center;direction:ltr;unicode-bidi:isolate}
+.lg-g{border-bottom:1px dashed rgba(127,127,127,.3)}.lg-g>summary{cursor:pointer;font-weight:700;padding:5px 0;list-style:none}
+.lg-g>summary::-webkit-details-marker{display:none}
+.lg-r{padding:3px 8px 3px 0;font-size:13px}.lg-r small{display:block;opacity:.8;font-size:12px}
+.ledger .lost{color:#dc2626;font-weight:700}.ledger .ok{color:#16a34a}
+.lg-sum{margin-top:8px;padding-top:6px;border-top:2px solid rgba(127,127,127,.35)}.lg-sum>div{margin:3px 0}
+.lg-sum ul{margin:2px 0;padding-right:18px;font-size:13px}.lg-eq{font-weight:600}.lg-n{font-size:12px;opacity:.75}
+.ic-opts{display:grid;gap:8px;margin-top:10px}
+.ic-opts .opt{text-align:center;font-weight:700}
+@media (max-height:500px) and (orientation:landscape){#task{left:8px;right:auto;margin:0;max-width:330px;top:48px;font-size:13px}#task small{font-size:11px}}
+#pauseBtn{pointer-events:auto;border:none;cursor:pointer;font-family:inherit;font-size:16px;touch-action:manipulation}
+#pause{z-index:40}
+#pause .card{text-align:center;max-width:380px}
+#pause .btn{display:block;width:100%;margin-top:10px}
+#alarm{position:fixed;inset:0;pointer-events:none;z-index:3;animation:al .55s infinite alternate}
+@keyframes al{from{box-shadow:inset 0 0 0 4px rgba(220,30,30,.35)}to{box-shadow:inset 0 0 50px 12px rgba(230,30,30,.85)}}
+.optin{display:block;text-align:center;line-height:1.7;margin:12px 0 4px;font-weight:700;font-size:15px;background:#fff1ec;border:1px solid #f5c2b0;border-radius:12px;padding:9px 10px;cursor:pointer}
+.optin input{width:20px;height:20px;vertical-align:middle;margin-inline-end:6px}
+.gsel{display:flex;gap:8px;justify-content:center;margin:6px 0 2px;border-radius:14px}
+.gbtn{flex:1;padding:11px 8px;border-radius:12px;border:2px solid var(--line);background:#fff;font-family:inherit;font-weight:800;font-size:16px;cursor:pointer;touch-action:manipulation}
+.gbtn.on{border-color:var(--brand);background:#eaf2fb}
+.gbtn[data-g=f].on{border-color:#d9468a;background:#fdeaf3;color:#a3245f}
+.mark{font-size:20px;font-weight:800;color:#1f4e79;background:#eaf2fb;border-radius:12px;padding:6px 10px;margin:8px auto;display:inline-block}
+.mark small{font-size:12px;color:var(--muted);font-weight:700}
+.fbx{margin-top:14px;border:1px solid var(--line);border-radius:14px;padding:12px;text-align:right;background:#f7f9fc}
+.fbx h3{margin:0 0 2px;font-size:16px;color:var(--brand)}.fbx p{margin:0 0 8px;font-size:13px;color:var(--muted)}
+.fbx .fbrow{display:flex;gap:8px;flex-wrap:wrap}.fbx .fbrow input{flex:1 1 160px}
+.fbx input,.fbx textarea{width:100%;border:1px solid var(--line);border-radius:10px;padding:9px 10px;font:inherit;font-size:15px;color:var(--ink);background:#fff;margin-bottom:8px}
+.fbx textarea{min-height:90px;resize:vertical}.fbx .btn{margin-top:0}
+.fbx .msg{font-size:13px;margin-top:6px}.fbx .msg.ok{color:var(--good);font-weight:700}.fbx .msg.err{color:var(--bad)}
+.about{margin-top:14px;border-top:1px dashed var(--line);padding-top:10px;font-size:13px;line-height:1.8;color:#333;text-align:center}
+.about-h{font-weight:800;color:var(--brand);margin-bottom:2px}
+.about a{color:var(--brand);font-weight:700;direction:ltr;unicode-bidi:isolate}
+.about .copy{color:var(--muted);font-size:12px;margin-top:4px}
+.tag{position:fixed;transform:translate(-50%,-100%);background:rgba(255,255,255,.95);color:#1b2430;font-size:12px;font-weight:700;padding:2px 7px;border-radius:8px;white-space:nowrap;pointer-events:none;z-index:2;box-shadow:0 2px 6px rgba(0,0,0,.25)}
+mark{background:#ffe9a8;border-radius:4px;padding:0 3px}
+body.nohint mark{background:none;color:inherit;padding:0}
+#strip{display:flex;gap:3px;align-items:center}
+#strip i{width:21px;height:21px;border-radius:50%;background:#e3e7ec;color:#5b6675;font-style:normal;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center}
+#strip i.done{background:#1f8a4c;color:#fff}
+#strip i.cur{background:#e0a400;color:#1b1b1b;box-shadow:0 0 0 2px #fff,0 0 0 4px #e0a400}
+#fileBtn{pointer-events:auto;border:none;cursor:pointer;font-family:inherit;color:var(--brand);touch-action:manipulation}
+#file{z-index:35}
+#file .card{text-align:right}
+.fl{border-bottom:1px dashed var(--line);padding:7px 0;font-size:14.5px;line-height:1.7}
+.fl b{color:var(--brand);display:block;font-size:13px}
+.fl.empty{opacity:.45}
+.ref{border:1px solid var(--line);border-radius:12px;padding:9px 10px;margin:8px 0}
+.ref .rt{font-size:14.5px;line-height:1.7}
+.ref .rr{font-size:13.5px;margin:6px 0 0;padding:6px 8px;border-radius:8px;background:#f4f6f9;line-height:1.6}
+.ref .rb{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.ref button{font-family:inherit;font-size:14px;font-weight:700;border:2px solid var(--line);background:#fff;border-radius:10px;padding:8px 10px;cursor:pointer;touch-action:manipulation;color:var(--ink)}
+.ref button.on{border-color:var(--brand);background:#eaf2fb}
+.ref button.srch{border-color:#d9cff5;color:var(--claude)}
+.ref button:disabled{opacity:.6}
+.numrow{display:flex;gap:8px;align-items:center;margin:8px 0}
+.numrow input{flex:1;min-width:0;font-family:inherit;font-size:20px;padding:10px;border-radius:12px;border:2px solid var(--line);text-align:center;direction:ltr}
+.orig{background:#fff;border:1px dashed #b9c2cd;border-radius:10px;padding:8px 10px;margin-top:6px}
+.btn.ghost{background:#fff;color:var(--brand);border:2px solid var(--line)}
+table.mini th{background:#f4f6f9}
+table.mini td,table.mini th{text-align:center}
+.verdict{font-size:18px;font-weight:800;border-radius:12px;padding:10px;margin:8px 0;line-height:1.6}
+.verdict.ok{background:#e8f6ee;color:#14633a}.verdict.mid{background:#fff6d6;color:#7a5600}.verdict.bad{background:#fdecea;color:#8f2218}
+.rcard{text-align:right;background:#f7f9fc;border:1px solid var(--line);border-radius:12px;padding:8px 12px;margin:10px 0}
+.rcard>summary{cursor:pointer;font-weight:700;font-size:15px}
+.delay{display:inline-block;margin-inline-start:6px;font-weight:800;color:#8a5a00}
+.opt small{color:var(--muted)}
+@media (max-width:520px){#hCombo,#hName{display:none}#task{top:84px}}
+</style>
+</head>
+<body class="nohint">
+<canvas id="c"></canvas>
+
+<div id="hud" class="hidden">
+  <button class="chip" id="pauseBtn" title="إيقاف مؤقت">⏸</button>
+  <div class="chip" id="hName">🎓</div>
+  <div class="chip">📅 <span id="hClock">الأسبوع ١</span></div>
+  <div class="chip" id="hScore">⭐ 0</div>
+  <div class="chip" id="hCombo">🔥 ×1</div>
+  <button class="chip" id="fileBtn">📒 ملف البحث</button>
+  <div class="chip" id="strip"></div>
+  <div class="chip" id="meters">
+    <div class="meter"><b>🕵️ التحقّق</b><div class="bar"><i id="mAcc"></i></div></div>
+    <div class="meter"><b>🔒 الأمانة</b><div class="bar"><i id="mInt"></i></div></div>
+    <div class="meter"><b>📅 الوقت</b><div class="bar"><i id="mTime"></i></div></div>
+    <div class="meter"><b>🧪 المنهج</b><div class="bar"><i id="mMeth"></i></div></div>
+  </div>
+</div>
+<div id="task" class="hidden"><div id="arrow"><svg width="26" height="26" viewBox="0 0 26 26"><path d="M3 13 H19 M13 6 L21 13 L13 20" fill="none" stroke="#ffd54a" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div id="taskTxt"></div><button id="goBtn" class="hidden">🚶 خذني</button></div>
+<div id="labels"></div>
+<div id="tags"></div>
+<div id="gbubble" style="display:none"></div>
+<div id="toast" class="hidden"></div>
+<div id="joy" class="hidden"><div id="knob"></div></div>
+<button id="act" class="hidden">✋ تفاعل</button>
+<div id="keysHint" class="hidden">الحاسوب: الأسهم أو WASD للمشي · E أو مسافة للتفاعل</div>
+
+<div id="start" class="overlay">
+  <div class="card">
+    <div style="font-size:40px">🎓</div>
+    <h1 id="startH1">محاكي رحلة الباحث</h1>
+    <div style="color:var(--muted)">من الفكرة إلى المناقشة في ٢٠ أسبوعًا — المعهد العالي <small>(معهد ومدينة وأسماء خياليّة للتدريب)</small></div>
+    <div id="startTxt"><div class="tips">
+      <div class="tip">🗺️ <b>ثماني محطّات ثمّ المناقشة.</b> المشي بعصا التحكّم أو زرّ <b>«خذني»</b> بين مكتبك والمشرف والمكتبة والميدان وقاعة المناقشة.</div>
+      <div class="tip">🤖 <b>كلود رفيق طريق، لا كاتبٌ بالنيابة.</b> يسرّع العمل لكنّه يخطئ بثقة: مرجعٌ مختلَق، رقمٌ لم يُحسب، سببيّةٌ بلا دليل. كلّ خطأ يُكشَف = <b>+100</b>، وكلّ خطأ يفوت يكبّر شبح الهلوسة 👻.</div>
+      <div class="tip">⚖️ <b>كلّ قرار يعود في المناقشة.</b> اللجنة تسأل عن المرجع الذي لم يُفتح، وعن الفقرة التي لم تُكتب باليد. والطريق المختصر يأكل الأسابيع أو الأمانة.</div>
+    </div>
+    </div>
+    <label class="optin"><input type="checkbox" id="hintOpt"> 💡 وضع المساعدة: ظلِّل مواضع الشكّ في كلام كلود <small>(الدرجة القصوى ٨ من ١٠)</small></label>
+    <div class="q">أنت:</div>
+    <div class="gsel" id="gsel"><button class="gbtn" data-g="m" type="button">👨‍🎓 باحث</button><button class="gbtn" data-g="f" type="button">👩‍🎓 باحثة</button></div>
+    <div class="q">الاسم:</div>
+    <input id="nameIn" maxlength="30" placeholder="مثلاً: أحمد">
+    <div><button class="btn gold" id="go">▶ ابدأ الفصل الدراسيّ</button></div>
+  </div>
+</div>
+
+<div id="modal" class="overlay hidden"><div class="card" id="mcard"></div></div>
+<div id="end" class="overlay hidden"><div class="card" id="ecard"></div></div>
+<div id="file" class="overlay hidden"><div class="card"><h2>📒 ملف البحث</h2><div class="when">يمتلئ محطّةً بعد محطّة، وهو ما ستقرؤه اللجنة.</div><div id="fileBody"></div><button class="btn" id="fileClose">إغلاق</button></div></div>
+<div id="pause" class="overlay hidden"><div class="card">
+  <div style="font-size:40px">⏸</div><h2 style="margin:4px 0;color:var(--brand)">المحاكاة متوقّفة</h2>
+  <div style="color:var(--muted)">الأسابيع واقفة… ☕</div>
+  <button class="btn gold" id="pResume">▶ استمرار</button>
+  <button class="btn" id="pRestart">🔁 بداية الفصل من جديد</button>
+  <button class="btn" id="pExit" style="background:#8a2b2b">🚪 خروج إلى الشاشة الرئيسيّة</button>
+</div></div>
+
+<script src="vendor/three.min.js"></script>
+<script>
+"use strict";
+/* ============================================================ helpers */
+const $ = id => document.getElementById(id);
+const rnd = n => Math.floor(Math.random() * n);
+const pick = a => a[rnd(a.length)];
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = rnd(i + 1); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const fmtTime = m => `${Math.floor(m / 60)}:${String(Math.floor(m % 60)).padStart(2, "0")}`;
+let GEN = 0;
+function later(fn, ms) { const g = GEN; setTimeout(() => { if (g === GEN && S && S.playing) fn(); }, ms); }
+const store = { get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} } };
+
+/* ============================================================ audio */
+let actx = null;
+function tone(f1, f2, dur, vol, type, delay) {
+  try {
+    actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+    const o = actx.createOscillator(), g = actx.createGain();
+    o.type = type || "triangle"; o.connect(g); g.connect(actx.destination);
+    const t = actx.currentTime + (delay || 0);
+    o.frequency.setValueAtTime(f1, t); o.frequency.exponentialRampToValueAtTime(f2, t + dur * 0.6);
+    g.gain.setValueAtTime(vol, t); g.gain.exponentialRampToValueAtTime(0.001, t + dur);
+    o.start(t); o.stop(t + dur + 0.02);
+  } catch (e) {}
+}
+const beep = good => tone(good ? 520 : 260, good ? 880 : 150, 0.3, 0.18);
+const knock = () => { tone(140, 90, 0.12, 0.35, "sine", 0); tone(140, 90, 0.12, 0.35, "sine", 0.18); };
+const ringSnd = () => { for (let i = 0; i < 2; i++) { tone(880, 880, 0.18, 0.12, "square", i * 0.5); tone(660, 660, 0.18, 0.12, "square", i * 0.5 + 0.2); } };
+
+/* ============================================================ 3D world */
+const IS_PHONE = matchMedia("(pointer:coarse)").matches || Math.min(innerWidth, innerHeight) < 600;
+const canvas = $("c");
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: "high-performance" });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, IS_PHONE ? 1.5 : 1.75));
+renderer.outputEncoding = THREE.sRGBEncoding;
+renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 0.92;
+renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0xb9c6d3);
+scene.fog = new THREE.Fog(0xb9c6d3, 38, 70);
+const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 200);
+scene.add(new THREE.HemisphereLight(0xfff7ea, 0x5d6a78, 0.6));
+const sun = new THREE.DirectionalLight(0xfff1dc, 1.05);
+sun.position.set(14, 26, 10); sun.castShadow = true;
+sun.shadow.mapSize.set(IS_PHONE ? 1024 : 2048, IS_PHONE ? 1024 : 2048);
+Object.assign(sun.shadow.camera, { left: -26, right: 26, top: 20, bottom: -20, near: 1, far: 70 });
+sun.shadow.bias = -0.0006; sun.shadow.normalBias = 0.02;
+scene.add(sun);
+
+function canvasTex(w, h, draw, rx, ry) {
+  const c = document.createElement("canvas"); c.width = w; c.height = h; draw(c.getContext("2d"), w, h);
+  const t = new THREE.CanvasTexture(c); t.encoding = THREE.sRGBEncoding;
+  if (rx) { t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(rx, ry); }
+  t.anisotropy = 4; return t;
+}
+const floorTex = canvasTex(256, 256, (g, w, h) => {
+  g.fillStyle = "#e6e0d4"; g.fillRect(0, 0, w, h);
+  for (let i = 0; i < 2600; i++) { g.fillStyle = `rgba(${120 + rnd(60)},${110 + rnd(50)},${95 + rnd(40)},${Math.random() * 0.08})`; g.fillRect(rnd(w), rnd(h), 2, 2); }
+  g.strokeStyle = "rgba(120,110,95,.35)"; g.lineWidth = 2; g.strokeRect(1, 1, w - 2, h - 2);
+}, 23, 17);
+const woodTex = canvasTex(256, 128, (g, w, h) => {
+  g.fillStyle = "#7a5534"; g.fillRect(0, 0, w, h);
+  for (let y = 0; y < h; y += 3) { g.strokeStyle = `rgba(${60 + rnd(40)},${35 + rnd(25)},${15 + rnd(15)},${0.15 + Math.random() * 0.2})`; g.beginPath(); g.moveTo(0, y + Math.random() * 2); g.bezierCurveTo(w * 0.3, y + rnd(4) - 2, w * 0.7, y + rnd(4) - 2, w, y + Math.random() * 2); g.stroke(); }
+});
+const rugTex = col => canvasTex(128, 128, (g, w, h) => {
+  g.fillStyle = col; g.fillRect(0, 0, w, h);
+  for (let i = 0; i < 1500; i++) { g.fillStyle = `rgba(0,0,0,${Math.random() * 0.06})`; g.fillRect(rnd(w), rnd(h), 1, 1); }
+  g.strokeStyle = "rgba(255,255,255,.35)"; g.lineWidth = 6; g.strokeRect(8, 8, w - 16, h - 16);
+});
+const screenTex = canvasTex(256, 160, (g, w, h) => {
+  g.fillStyle = "#f4f1fb"; g.fillRect(0, 0, w, h);
+  g.fillStyle = "#5b3fa6"; g.fillRect(0, 0, w, 22);
+  g.fillStyle = "#fff"; g.font = "bold 14px Tahoma"; g.textAlign = "right"; g.fillText("Claude 🤖", w - 10, 16);
+  for (let i = 0; i < 6; i++) { g.fillStyle = i % 2 ? "#d9cff5" : "#e9e9ee"; g.fillRect(i % 2 ? 20 : 70, 32 + i * 20, i % 2 ? 160 : 170, 12); }
+});
+const boardTex = canvasTex(256, 160, (g, w, h) => {
+  g.fillStyle = "#fbfbf8"; g.fillRect(0, 0, w, h);
+  const cols = ["#ffe27a", "#ffb3a7", "#a8e6b8", "#a7d3ff", "#ffe27a"];
+  for (let i = 0; i < 5; i++) { g.fillStyle = cols[i]; g.fillRect(14 + i * 47, 30 + (i % 2) * 50, 38, 38); g.fillStyle = "rgba(0,0,0,.35)"; g.fillRect(19 + i * 47, 40 + (i % 2) * 50, 26, 3); g.fillRect(19 + i * 47, 48 + (i % 2) * 50, 20, 3); }
+  g.fillStyle = "#1f4e79"; g.font = "bold 16px Tahoma"; g.textAlign = "center"; g.fillText("لوحة المتابعة", w / 2, 20);
+});
+const windowTex = canvasTex(128, 64, (g, w, h) => {
+  const gr = g.createLinearGradient(0, 0, 0, h); gr.addColorStop(0, "#cfe8ff"); gr.addColorStop(1, "#8fb7d9"); g.fillStyle = gr; g.fillRect(0, 0, w, h);
+  g.strokeStyle = "#e9edf1"; g.lineWidth = 5; g.strokeRect(2, 2, w - 4, h - 4); g.beginPath(); g.moveTo(w / 2, 0); g.lineTo(w / 2, h); g.stroke();
+});
+
+const MAT = {};
+const M = (c, opt) => { const k = c + JSON.stringify(opt || {}); return MAT[k] || (MAT[k] = new THREE.MeshStandardMaterial(Object.assign({ color: c, roughness: 0.75, metalness: 0.02 }, opt || {}))); };
+const WOOD = new THREE.MeshStandardMaterial({ map: woodTex, roughness: 0.55 });
+const colliders = [];
+function box(w, h, d, x, y, z, mat, solid, noShadow) {
+  const m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), typeof mat === "number" ? M(mat) : mat);
+  m.position.set(x, y, z); m.castShadow = !noShadow; m.receiveShadow = true; scene.add(m);
+  if (solid) colliders.push({ x1: x - w / 2, x2: x + w / 2, z1: z - d / 2, z2: z + d / 2 });
+  return m;
+}
+function cyl(rt, rb, h, x, y, z, mat, seg) {
+  const m = new THREE.Mesh(new THREE.CylinderGeometry(rt, rb, h, seg || 16), typeof mat === "number" ? M(mat) : mat);
+  m.position.set(x, y, z); m.castShadow = true; m.receiveShadow = true; scene.add(m); return m;
+}
+const ARD = "٠١٢٣٤٥٦٧٨٩";
+const ard = n => String(n).replace(/\d/g, d => ARD[d]).replace(/\./g, "٫").replace(/-/g, "−");
+
+/* ============================================================ world: the institute */
+const floor = new THREE.Mesh(new THREE.PlaneGeometry(46, 34), new THREE.MeshStandardMaterial({ map: floorTex, roughness: 0.85 }));
+floor.rotation.x = -Math.PI / 2; floor.receiveShadow = true; scene.add(floor);
+const ROOMS = {
+  library: { x: -15, z: -10.2, w: 15.4, d: 12.8, rug: "#8a6f52" },
+  study:   { x: 0, z: -10.2, w: 13.4, d: 12.8, rug: "#5f7fa3" },
+  sup:     { x: 15, z: -10.2, w: 15.4, d: 12.8, rug: "#7d6a9c" },
+  field:   { x: -11.6, z: 9.2, w: 22.2, d: 14.6, rug: "#9aa3ad" },
+  hall:    { x: 11.6, z: 9.2, w: 22.2, d: 14.6, rug: "#8c3f3f" }
+};
+for (const k in ROOMS) { const r = ROOMS[k]; const m = new THREE.Mesh(new THREE.PlaneGeometry(r.w, r.d), new THREE.MeshStandardMaterial({ map: rugTex(r.rug), roughness: 0.95 })); m.rotation.x = -Math.PI / 2; m.position.set(r.x, 0.015, r.z); m.receiveShadow = true; scene.add(m); }
+const WALLC = 0xf1ede6, TRIM = 0x8a7d6d;
+function wall(w, h, d, x, z) { box(w, h, d, x, h / 2, z, WALLC, true); box(w + 0.02, 0.14, d + 0.02, x, 0.07, z, TRIM, false, true); box(w + 0.04, 0.06, d + 0.04, x, h, z, 0xdcd6cc, false, true); }
+wall(46, 3, 0.4, 0, -17); wall(0.4, 3, 34, -23, 0); wall(0.4, 3, 34, 23, 0); wall(46, 0.9, 0.4, 0, 17);
+for (let x = -19; x <= 19; x += 6.5) { const w = new THREE.Mesh(new THREE.PlaneGeometry(4, 1.6), new THREE.MeshBasicMaterial({ map: windowTex })); w.position.set(x, 1.75, -16.78); scene.add(w); }
+const WH = 1.25;
+const GLASS = new THREE.MeshStandardMaterial({ color: 0xbfe3ff, transparent: true, opacity: 0.22, roughness: 0.08, metalness: 0.1, depthWrite: false });
+function glass(x1, x2, z) {
+  const w = x2 - x1, x = (x1 + x2) / 2;
+  const g = new THREE.Mesh(new THREE.BoxGeometry(w, 2.3, 0.06), GLASS); g.position.set(x, 1.15, z); scene.add(g);
+  colliders.push({ x1, x2, z1: z - 0.05, z2: z + 0.05 });
+  for (const y of [0.04, 2.3]) box(w, 0.08, 0.1, x, y, z, 0x5d6670, false, true);
+  for (let px = x1; px <= x2 + 0.01; px += w / Math.max(1, Math.round(w / 2.2))) box(0.07, 2.3, 0.1, px, 1.15, z, 0x5d6670, false, true);
+}
+wall(0.3, WH, 13.3, -7, -10.2); wall(0.3, WH, 13.3, 7, -10.2);
+wall(7, WH, 0.3, -19.5, -3.5); wall(7, WH, 0.3, -10.5, -3.5);          // library front, door at x −16…−14
+glass(-7, -1, -3.5); glass(1, 7, -3.5);                                 // your room, door at x −1…1
+glass(7, 14, -3.5); glass(16, 23, -3.5);                                // supervisor, door at x 14…16
+wall(10, WH, 0.3, -18, 1.5); wall(10, WH, 0.3, -6, 1.5);                // field front, door at x −13…−11
+wall(10, WH, 0.3, 6, 1.5); wall(10, WH, 0.3, 18, 1.5);                  // hall front, door at x 11…13
+wall(0.3, WH, 15.2, 0, 9.3);
+
+function desk(x, z, w, d, rot) {
+  const g = new THREE.Group();
+  const top = new THREE.Mesh(new THREE.BoxGeometry(w, 0.08, d), WOOD); top.position.y = 0.82; top.castShadow = top.receiveShadow = true; g.add(top);
+  const front = new THREE.Mesh(new THREE.BoxGeometry(w - 0.1, 0.6, 0.05), WOOD); front.position.set(0, 0.48, d / 2 - 0.08); front.castShadow = true; g.add(front);
+  for (const sx of [-1, 1]) { const s = new THREE.Mesh(new THREE.BoxGeometry(0.07, 0.8, d - 0.05), WOOD); s.position.set(sx * (w / 2 - 0.05), 0.4, 0); s.castShadow = true; g.add(s); }
+  g.position.set(x, 0, z); g.rotation.y = rot || 0; scene.add(g);
+  colliders.push({ x1: x - w / 2, x2: x + w / 2, z1: z - d / 2, z2: z + d / 2 }); return g;
+}
+function chair(x, z, rot, col) {
+  const g = new THREE.Group(); const c = M(col || 0x2f3640);
+  const seat = new THREE.Mesh(new THREE.BoxGeometry(0.62, 0.1, 0.6), c); seat.position.y = 0.5; g.add(seat);
+  const back = new THREE.Mesh(new THREE.BoxGeometry(0.62, 0.7, 0.08), c); back.position.set(0, 0.88, -0.28); g.add(back);
+  const post = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 0.45, 8), M(0x777777)); post.position.y = 0.25; g.add(post);
+  const base = new THREE.Mesh(new THREE.CylinderGeometry(0.3, 0.3, 0.05, 10), M(0x555555)); base.position.y = 0.03; g.add(base);
+  g.traverse(o => { if (o.isMesh) o.castShadow = true; });
+  g.position.set(x, 0, z); g.rotation.y = rot || 0; scene.add(g); return g;
+}
+function monitor(x, z, rot, tex) {
+  const g = new THREE.Group();
+  const f = new THREE.Mesh(new THREE.BoxGeometry(1.0, 0.62, 0.06), M(0x1c1f24)); f.position.y = 1.25; g.add(f);
+  const s = new THREE.Mesh(new THREE.PlaneGeometry(0.92, 0.54), new THREE.MeshBasicMaterial({ map: tex || screenTex })); s.position.set(0, 1.25, 0.032); g.add(s);
+  const st = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.35, 0.06), M(0x2a2d33)); st.position.y = 0.98; g.add(st);
+  const kb = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.03, 0.22), M(0x2a2d33)); kb.position.set(0, 0.875, 0.42); g.add(kb);
+  g.traverse(o => { if (o.isMesh) o.castShadow = true; });
+  g.position.set(x, 0, z); g.rotation.y = rot || 0; scene.add(g); return g;
+}
+function papers(x, z, n) { for (let i = 0; i < n; i++) box(0.42, 0.012, 0.3, x + i * 0.05, 0.87 + i * 0.012, z + (i % 2) * 0.03, 0xfafafa, false); }
+function plant(x, z, s) {
+  s = s || 1; cyl(0.3 * s, 0.24 * s, 0.5 * s, x, 0.25 * s, z, 0x8b5a2b, 12);
+  for (let i = 0; i < 5; i++) { const l = new THREE.Mesh(new THREE.SphereGeometry(0.38 * s, 10, 8), M(i % 2 ? 0x3f8f4f : 0x2f7a42)); l.position.set(x + Math.cos(i * 1.3) * 0.22 * s, (0.8 + i * 0.12) * s, z + Math.sin(i * 1.3) * 0.22 * s); l.castShadow = true; scene.add(l); }
+}
+function shelf(x, z, w, rot) {
+  const g = new THREE.Group(); const fr = WOOD;
+  const back = new THREE.Mesh(new THREE.BoxGeometry(w, 2.2, 0.08), fr); back.position.set(0, 1.1, -0.26); g.add(back);
+  for (const sx of [-1, 1]) { const s = new THREE.Mesh(new THREE.BoxGeometry(0.06, 2.2, 0.6), fr); s.position.set(sx * w / 2, 1.1, 0); g.add(s); }
+  for (let r = 0; r < 4; r++) {
+    const b = new THREE.Mesh(new THREE.BoxGeometry(w, 0.05, 0.6), fr); b.position.set(0, 0.1 + r * 0.55, 0); g.add(b);
+    let px = -w / 2 + 0.1;
+    while (px < w / 2 - 0.15) { const bw = 0.08 + Math.random() * 0.1, bh = 0.3 + Math.random() * 0.15; const bk = new THREE.Mesh(new THREE.BoxGeometry(bw, bh, 0.36), M([0x7b2d26, 0x2d4f7b, 0x3f6b3a, 0xc9a227, 0x5b3f6b, 0xdedede][rnd(6)])); bk.position.set(px + bw / 2, 0.13 + r * 0.55 + bh / 2, 0.05); g.add(bk); px += bw + 0.015; }
+  }
+  g.traverse(o => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
+  g.position.set(x, 0, z); g.rotation.y = rot || 0; scene.add(g);
+  const hw = Math.abs(Math.cos(rot || 0)) > 0.5 ? w / 2 : 0.35, hd = Math.abs(Math.cos(rot || 0)) > 0.5 ? 0.35 : w / 2;
+  colliders.push({ x1: x - hw, x2: x + hw, z1: z - hd, z2: z + hd });
+}
+function cabinet(x, z) { box(0.9, 1.4, 0.6, x, 0.7, z, 0x9aa5b1, true); for (let i = 0; i < 3; i++) box(0.5, 0.04, 0.02, x, 0.3 + i * 0.42, z + 0.31, 0x666e78); }
+function signTex(l1, l2, bg, fg) {
+  return canvasTex(512, 160, (g, w, h) => {
+    g.fillStyle = bg; g.fillRect(0, 0, w, h); g.strokeStyle = "rgba(255,255,255,.5)"; g.lineWidth = 6; g.strokeRect(5, 5, w - 10, h - 10);
+    g.fillStyle = fg || "#fff"; g.textAlign = "center"; g.textBaseline = "middle"; g.direction = "rtl";
+    g.font = "bold " + (l2 ? 50 : 60) + "px Tahoma"; g.fillText(l1, w / 2, l2 ? 56 : 84);
+    if (l2) { g.font = "bold 34px Tahoma"; g.fillText(l2, w / 2, 116); }
+  });
+}
+function sign(l1, l2, x, z, bg, wd, y) {
+  wd = wd || 3.6; y = y || 2.35;
+  const m = new THREE.Mesh(new THREE.PlaneGeometry(wd, wd * 160 / 512), new THREE.MeshBasicMaterial({ map: signTex(l1, l2, bg) }));
+  m.position.set(x, y, z); scene.add(m);
+  for (const s of [-1, 1]) box(0.07, y, 0.07, x + s * (wd / 2 - 0.1), y / 2, z - 0.06, 0x5d6670, false, true);
+  return m;
+}
+function setSign(m, l1, l2, bg) { if (m.material.map) m.material.map.dispose(); m.material.map = signTex(l1, l2, bg); m.material.needsUpdate = true; }
+function sofa(x, z, col) { box(2.4, 0.45, 1, x, 0.23, z, col, true); box(2.4, 0.5, 0.25, x, 0.6, z - 0.4, col); }
+function lamp(x, z) { cyl(0.12, 0.14, 0.03, x, 0.875, z, 0x2a2d33, 12); cyl(0.02, 0.02, 0.42, x, 1.08, z, 0x2a2d33, 6); const s = new THREE.Mesh(new THREE.ConeGeometry(0.16, 0.2, 14, 1, true), new THREE.MeshStandardMaterial({ color: 0xffe6a8, emissive: 0xffc94a, emissiveIntensity: 0.6, side: THREE.DoubleSide })); s.position.set(x, 1.34, z); scene.add(s); }
+
+/* ---- your study room ---- */
+desk(0, -11.5, 3.6, 1.6); monitor(0, -11.8, 0); papers(-1.4, -11.3, 5); papers(1.1, -11.2, 2); lamp(1.5, -11.8);
+box(0.5, 0.05, 0.36, 1.05, 0.88, -11.05, 0x24527a); box(0.46, 0.05, 0.34, 1.07, 0.93, -11.07, 0x8a1c1c);       // two books
+chair(0, -10.15, Math.PI, 0x2f3640);
+shelf(-6.2, -12, 5, Math.PI / 2); cabinet(5.9, -13); cabinet(5.9, -14.1); plant(5.7, -15.9, 1.1); plant(-5.9, -4.4, 0.7);
+sofa(4.6, -5.6, 0x4b6584);
+const mapTex = canvasTex(512, 400, (g, w, h) => {
+  g.fillStyle = "#fbfbf8"; g.fillRect(0, 0, w, h); g.direction = "rtl";
+  g.fillStyle = "#1f4e79"; g.font = "bold 38px Tahoma"; g.textAlign = "center"; g.fillText("خارطة البحث", w / 2, 44);
+  const st = ["الفكرة", "العنوان", "الفرضيّات", "الدراسات", "القراءة", "الأداة", "التحليل", "الكتابة"], cols = ["#ffe27a", "#ffb3a7", "#a8e6b8", "#a7d3ff"];
+  for (let i = 0; i < 8; i++) { const cx = w - 70 - (i % 4) * 124, cy = 130 + Math.floor(i / 4) * 150; g.fillStyle = cols[i % 4]; g.fillRect(cx - 54, cy - 50, 108, 100); g.fillStyle = "#1b2430"; g.font = "bold 34px Tahoma"; g.fillText(ARD[i + 1], cx, cy - 8); g.font = "bold 20px Tahoma"; g.fillText(st[i], cx, cy + 30); }
+});
+{ const b = new THREE.Mesh(new THREE.PlaneGeometry(2.3, 1.8), new THREE.MeshBasicMaterial({ map: mapTex })); b.position.set(3.75, 1.75, -16.74); scene.add(b); box(2.45, 1.95, 0.05, 3.75, 1.75, -16.77, 0x2e5d4b, false, true); }
+
+/* ---- library ---- */
+const libTex = canvasTex(256, 160, (g, w, h) => {
+  g.fillStyle = "#fff"; g.fillRect(0, 0, w, h); g.fillStyle = "#1f4e79"; g.fillRect(0, 0, w, 24);
+  g.fillStyle = "#fff"; g.font = "bold 14px Tahoma"; g.textAlign = "center"; g.fillText("IASJ · Google Scholar", w / 2, 17);
+  g.strokeStyle = "#8a9bb0"; g.lineWidth = 2; g.strokeRect(30, 36, 196, 22);
+  for (let i = 0; i < 4; i++) { g.fillStyle = "#1a5fb4"; g.fillRect(30, 72 + i * 21, 150 - i * 18, 6); g.fillStyle = "#c9ced6"; g.fillRect(30, 82 + i * 21, 190, 4); }
+});
+shelf(-21.9, -11.5, 8, Math.PI / 2); shelf(-19.6, -12.2, 6.5, Math.PI / 2); shelf(-8, -8.5, 5, -Math.PI / 2);
+shelf(-17.2, -16.3, 3.4, 0);
+desk(-15, -10.3, 4.2, 1.2); monitor(-16.1, -10.5, 0, libTex); monitor(-13.9, -10.5, 0, libTex);
+desk(-10.6, -13.4, 3.2, 1.6); chair(-11.3, -14.7, 0); chair(-10, -12.1, Math.PI); papers(-11.2, -13.3, 6); papers(-9.9, -13.5, 3); lamp(-10.6, -13.4);
+box(1.5, 0.9, 0.7, -9.2, 0.45, -5.2, 0x7a5534, true); box(1.3, 0.34, 0.5, -9.2, 1.07, -5.2, 0xdedede);     // returns trolley
+plant(-22, -4.4, 0.9); plant(-8.1, -15.9, 1);
+/* ---- supervisor ---- */
+const supTex = canvasTex(256, 160, (g, w, h) => {
+  g.fillStyle = "#fbfbf8"; g.fillRect(0, 0, w, h); g.strokeStyle = "#1f4e79"; g.lineWidth = 3; g.fillStyle = "#1f4e79"; g.font = "bold 20px Tahoma"; g.textAlign = "center";
+  g.strokeRect(22, 56, 76, 44); g.strokeRect(158, 56, 76, 44); g.fillText("X", 60, 86); g.fillText("Y", 196, 86);
+  g.beginPath(); g.moveTo(102, 78); g.lineTo(152, 78); g.moveTo(142, 70); g.lineTo(152, 78); g.lineTo(142, 86); g.stroke();
+  g.fillStyle = "#c0392b"; g.font = "bold 18px Tahoma"; g.fillText("H1 ?", 128, 36); g.fillStyle = "#5b6675"; g.font = "14px Tahoma"; g.fillText("r ≠ cause", 128, 136);
+});
+desk(15, -11.3, 3.4, 1.5); monitor(16, -11.6, Math.PI); papers(13.9, -11.2, 6); lamp(13.7, -11.7);
+box(0.7, 0.14, 0.05, 15, 0.93, -10.62, 0x1f2a38);
+chair(15, -12.65, 0, 0x3a2a20); chair(13.7, -9.5, Math.PI, 0x5a4636); chair(16.3, -9.5, Math.PI, 0x5a4636);
+shelf(21.9, -10.5, 7, -Math.PI / 2); shelf(8, -12.5, 5, Math.PI / 2); sofa(19.5, -5.5, 0x6f5b4b); plant(8.2, -4.4, 0.8); plant(21.8, -15.8, 1);
+{ const b = new THREE.Mesh(new THREE.PlaneGeometry(2.2, 1.5), new THREE.MeshBasicMaterial({ map: supTex })); b.position.set(16.75, 1.75, -16.74); scene.add(b); box(2.35, 1.65, 0.05, 16.75, 1.75, -16.77, 0x8a8f96, false, true); }
+/* ---- the field: service hall of the directorate / ABC city ---- */
+box(0.9, 1.1, 8, -19.6, 0.55, 9, 0x56677a, true); box(1.15, 0.06, 8.2, -19.6, 1.13, 9, 0xd9d4c9, false);
+for (const z of [6.4, 9, 11.6]) box(0.06, 0.9, 0.06, -19.2, 1.6, z, 0x5d6670, false, true);
+box(0.04, 0.8, 5.2, -19.2, 1.65, 9, GLASS, false, true);
+chair(-21.2, 7.4, Math.PI / 2); chair(-21.2, 10.6, Math.PI / 2); cabinet(-22.2, 13.6); cabinet(-22.2, 4);
+box(6, 0.45, 0.7, -8, 0.23, 15.4, 0x45627e, true); box(6, 0.5, 0.12, -8, 0.62, 15.72, 0x45627e);
+box(4, 0.45, 0.7, -15.5, 0.23, 15.4, 0x45627e, true); box(4, 0.5, 0.12, -15.5, 0.62, 15.72, 0x45627e);
+for (const x of [-17.4, -13.6, -9.8]) for (const z of [7.9, 10.1]) { cyl(0.06, 0.06, 1, x, 0.5, z, 0xc9a227, 8); cyl(0.16, 0.16, 0.04, x, 0.02, z, 0x8a7a2a, 10); }
+for (const z of [7.9, 10.1]) box(7.6, 0.05, 0.03, -13.6, 0.92, z, 0x8a1c1c, false, true);
+plant(-1.3, 15.6, 1); plant(-22, 15.8, 0.9);
+const kiosk = new THREE.Group();
+{ const b = new THREE.Mesh(new THREE.BoxGeometry(0.85, 1.45, 0.6), M(0x1f4e79)); b.position.y = 0.73; kiosk.add(b);
+  const s = new THREE.Mesh(new THREE.PlaneGeometry(0.66, 0.5), new THREE.MeshBasicMaterial({ map: canvasTex(128, 96, (g, w, h) => { g.fillStyle = "#eaf2fb"; g.fillRect(0, 0, w, h); g.fillStyle = "#1f4e79"; g.font = "bold 20px Tahoma"; g.textAlign = "center"; g.fillText("🎫 خذ تذكرتك", w / 2, 34); g.fillStyle = "#e0a400"; g.fillRect(24, 50, 80, 28); }) })); s.position.set(0, 1.08, 0.305); kiosk.add(s);
+  const sl = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.04, 0.05), M(0x111111)); sl.position.set(0, 0.62, 0.31); kiosk.add(sl);
+  const tk = new THREE.Mesh(new THREE.BoxGeometry(0.28, 0.2, 0.01), M(0xffffff)); tk.position.set(0, 0.55, 0.33); tk.rotation.x = 0.3; kiosk.add(tk);
+  const top = new THREE.Mesh(new THREE.BoxGeometry(0.95, 0.08, 0.7), M(0xe0a400)); top.position.y = 1.5; kiosk.add(top);
+  kiosk.traverse(o => { if (o.isMesh) o.castShadow = true; }); }
+kiosk.position.set(-8.4, 0, 5.6); kiosk.visible = false; scene.add(kiosk);
+const fieldSign = sign("الميدان", "", -18, 1.72, "#3d5a80");
+const led = sign("—", "", -5.5, 1.72, "#111827", 3.2, 2.5);
+/* ---- discussion hall ---- */
+desk(19.5, 9, 1.6, 7);
+for (let i = 0; i < 3; i++) { chair(21, 7 + i * 2, -Math.PI / 2, 0x3a2a20); box(0.05, 0.14, 0.6, 18.85, 0.93, 7 + i * 2, 0x1f2a38); cyl(0.05, 0.04, 0.16, 19.3, 0.94, 7.5 + i * 2, 0x9fd3ef, 8); }
+box(0.8, 1.1, 0.6, 15.9, 0.55, 9, 0x5a4636, true); box(0.95, 0.06, 0.75, 15.9, 1.13, 9, 0x3a2a20, false);
+for (const x of [4.6, 7.2]) for (let k = 0; k < 4; k++) chair(x, 5.6 + k * 2.2, Math.PI / 2, 0x45627e);
+const hallScreen = new THREE.Mesh(new THREE.PlaneGeometry(5.4, 2.4), new THREE.MeshBasicMaterial({ color: 0xffffff }));
+hallScreen.position.set(6.4, 2.75, 1.78); scene.add(hallScreen);
+box(5.6, 2.6, 0.08, 6.4, 2.75, 1.72, 0x22262c, false, true); for (const s of [-1, 1]) box(0.08, 1.5, 0.08, 6.4 + s * 2.4, 0.75, 1.72, 0x5d6670, false, true);
+function screenTitle(l1, l2, l3) {
+  if (hallScreen.material.map) hallScreen.material.map.dispose();
+  hallScreen.material.map = canvasTex(1024, 456, (g, w, h) => {
+    const gr = g.createLinearGradient(0, 0, 0, h); gr.addColorStop(0, "#12314f"); gr.addColorStop(1, "#1f4e79"); g.fillStyle = gr; g.fillRect(0, 0, w, h);
+    g.direction = "rtl"; g.textAlign = "center"; g.fillStyle = "#ffd54a"; g.font = "bold 44px Tahoma"; g.fillText(l1, w / 2, 90);
+    g.fillStyle = "#fff"; g.font = "bold 38px Tahoma"; const words = (l2 || "").split(" "); let line = "", y = 190;
+    for (const wd of words) { if (g.measureText(line + " " + wd).width > w - 120 && line) { g.fillText(line, w / 2, y); y += 56; line = wd; } else line = line ? line + " " + wd : wd; }
+    if (line) g.fillText(line, w / 2, y);
+    g.fillStyle = "#cfe0f2"; g.font = "30px Tahoma"; g.fillText(l3 || "", w / 2, h - 40);
+  });
+  hallScreen.material.needsUpdate = true;
+}
+screenTitle("قاعة المناقشة", "المعهد العالي — الدبلوم العالي", "");
+plant(1.4, 15.6, 1); plant(22, 3, 0.9); plant(22, 15.7, 1);
+/* ---- corridor: room signs, the eight station medallions ---- */
+sign("📚 المكتبة", "", -19.5, -3.28, "#6b4f2f"); sign("💻 مكتبك", "", 4.1, -3.28, "#2f5f8f", 3); sign("👨‍🏫 المشرف", "", 19.6, -3.28, "#5b3fa6");
+sign("🎓 قاعة المناقشة", "", 18, 1.72, "#7a1f1f");
+plant(-22.2, -1, 1); plant(22.2, -1, 1); plant(-4.6, 0.6, 0.7); plant(4.6, 0.6, 0.7);
+box(3, 0.45, 0.6, -8, 0.23, 0.75, 0x6f5b4b, true); box(3, 0.45, 0.6, 8, 0.23, 0.75, 0x6f5b4b, true);
+const MEDS = [];
+for (let i = 0; i < 8; i++) {
+  const tex = canvasTex(128, 128, (g, w, h) => { g.clearRect(0, 0, w, h); g.fillStyle = "#fff"; g.beginPath(); g.arc(64, 64, 60, 0, 7); g.fill(); g.strokeStyle = "#1b2430"; g.lineWidth = 6; g.beginPath(); g.arc(64, 64, 52, 0, 7); g.stroke(); g.fillStyle = "#1b2430"; g.font = "bold 66px Tahoma"; g.textAlign = "center"; g.textBaseline = "middle"; g.fillText(ARD[i + 1], 64, 70); });
+  const m = new THREE.Mesh(new THREE.CircleGeometry(0.8, 36), new THREE.MeshBasicMaterial({ map: tex, color: 0x9aa3ad, transparent: true }));
+  m.rotation.x = -Math.PI / 2; m.position.set(17.5 - i * 5, 0.03, -1); scene.add(m); MEDS.push(m);
+}
+
+const SKIN = [0xe2b48c, 0xd7a37c, 0xc68e66, 0xeac3a0];
+function person(o) {
+  const g = new THREE.Group(); const suit = M(o.suit), skin = M(o.skin || SKIN[rnd(4)]), pants = M(o.pants || 0x23272e);
+  const legs = [];
+  for (const s of [-1, 1]) {
+    const hip = new THREE.Group(); hip.position.set(s * 0.15, 0.85, 0);
+    const leg = new THREE.Mesh(new THREE.CylinderGeometry(0.11, 0.1, 0.8, 10), pants); leg.position.y = -0.4; hip.add(leg);
+    const shoe = new THREE.Mesh(new THREE.BoxGeometry(0.2, 0.1, 0.32), M(0x111111)); shoe.position.set(0, -0.82, 0.06); hip.add(shoe);
+    g.add(hip); legs.push(hip);
+  }
+  const torso = new THREE.Mesh(new THREE.CylinderGeometry(o.female ? 0.3 : 0.34, o.female ? 0.4 : 0.32, 0.85, 14), suit); torso.position.y = 1.28; g.add(torso);
+  if (o.female) { const skirt = new THREE.Mesh(new THREE.CylinderGeometry(0.36, 0.44, 0.5, 14), suit); skirt.position.y = 0.72; g.add(skirt); }
+  if (!o.female) {
+    const shirt = new THREE.Mesh(new THREE.BoxGeometry(0.22, 0.5, 0.05), M(0xf4f4f4)); shirt.position.set(0, 1.42, 0.31); g.add(shirt);
+    if (o.tie !== false) { const tie = new THREE.Mesh(new THREE.BoxGeometry(0.09, 0.42, 0.04), M(o.tie || 0x8a1c1c)); tie.position.set(0, 1.38, 0.34); g.add(tie); }
+  }
+  const arms = [];
+  for (const s of [-1, 1]) {
+    const sh = new THREE.Group(); sh.position.set(s * 0.42, 1.62, 0);
+    const arm = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.08, 0.72, 10), suit); arm.position.y = -0.36; sh.add(arm);
+    const hand = new THREE.Mesh(new THREE.SphereGeometry(0.08, 8, 6), skin); hand.position.y = -0.76; sh.add(hand);
+    sh.rotation.z = s * 0.08; g.add(sh); arms.push(sh);
+  }
+  const neck = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.1, 0.12, 8), skin); neck.position.y = 1.76; g.add(neck);
+  const head = new THREE.Mesh(new THREE.SphereGeometry(0.27, 18, 14), skin); head.position.y = 2.0; head.scale.set(1, 1.1, 1); g.add(head);
+  for (const s of [-1, 1]) { const e = new THREE.Mesh(new THREE.SphereGeometry(0.035, 8, 6), M(0x1a1a1a)); e.position.set(s * 0.09, 2.04, 0.24); g.add(e); }
+  if (o.female) {
+    const hc = M(o.hair || [0x2b1d14, 0x4a2f1f, 0x1c1410, 0x6b4a2e, 0x3a2418][rnd(5)]);
+    const top = new THREE.Mesh(new THREE.SphereGeometry(0.295, 18, 14, 0, Math.PI * 2, 0, Math.PI * 0.55), hc); top.position.y = 2.03; top.scale.set(1.02, 1.12, 1.06); top.rotation.x = -0.28; g.add(top);
+    const back = new THREE.Mesh(new THREE.SphereGeometry(0.27, 16, 12), hc); back.scale.set(1.05, 1.6, 0.6); back.position.set(0, 1.8, -0.13); g.add(back);
+  } else {
+    const hair = new THREE.Mesh(new THREE.SphereGeometry(0.285, 18, 14, 0, Math.PI * 2, 0, Math.PI * 0.45), M(o.hair || 0x2b211a)); hair.position.y = 2.04; hair.scale.set(1, 1.1, 1); hair.rotation.x = -0.25; g.add(hair);
+    if (o.beard) { const b = new THREE.Mesh(new THREE.SphereGeometry(0.2, 12, 10, 0, Math.PI * 2, Math.PI * 0.5, Math.PI * 0.5), M(o.hair || 0x2b211a)); b.position.set(0, 1.97, 0.07); b.scale.set(1.15, 0.8, 1.1); g.add(b); }
+  }
+  g.traverse(m => { if (m.isMesh) m.castShadow = true; });
+  g.position.set(o.x, 0, o.z); g.rotation.y = o.rot || 0; scene.add(g);
+  g.userData = { legs, arms, torso, phase: Math.random() * 6, typing: o.typing, baseTyping: o.typing, walkT: 0, sit: false };
+  if (o.sit) setSit(g, true);
+  return g;
+}
+function setSit(p, on) { p.userData.sit = on; p.position.y = on ? -0.32 : 0; }
+const PEOPLE = [];
+const supervisor = person({ x: 15, z: -12.6, rot: 0, suit: 0x4a4036, tie: 0x7a1f1f, beard: true, hair: 0x9a9a9a, sit: true });
+const librarian = person({ x: -18.3, z: -6.6, rot: Math.PI / 2, female: true, suit: 0x3d5a80, hair: 0x2b1d14 });
+PEOPLE.push(supervisor, librarian,
+  person({ x: -11.3, z: -14.7, rot: 0, suit: 0x40524a, tie: false, typing: true, sit: true }),
+  person({ x: -10, z: -12.1, rot: Math.PI, female: true, suit: 0x7d4f4f, sit: true }),
+  person({ x: -21.2, z: 7.4, rot: Math.PI / 2, suit: 0x3a4552, tie: 0x24527a, typing: true, sit: true }),
+  person({ x: -21.2, z: 10.6, rot: Math.PI / 2, female: true, suit: 0x52463a, typing: true, sit: true }));
+const QUEUE = [], QCOL = [0x6e7a5a, 0x7a6a50, 0x56606b, 0x8a5a44, 0x4a4a5e, 0x6b6b7e, 0x5a6e7a];
+for (let i = 0; i < 7; i++) {
+  const p = person({ x: -18.1 + i * 1.25, z: 9 + (i % 2 ? 0.22 : -0.22), rot: -Math.PI / 2, suit: QCOL[i], tie: false, female: i % 3 === 1, beard: i % 3 === 2 });
+  p.userData.home = { x: p.position.x, z: p.position.z }; QUEUE.push(p); PEOPLE.push(p);
+}
+const COMM = [], AUD = [];
+for (let i = 0; i < 3; i++) { const p = person({ x: 21, z: 7 + i * 2, rot: -Math.PI / 2, suit: [0x2b3a4a, 0x40324a, 0x3a3a3a][i], tie: [0x8a1c1c, 0, 0x24527a][i], female: i === 1, beard: i === 0, hair: i === 0 ? 0xb0b0b0 : undefined, sit: true }); COMM.push(p); PEOPLE.push(p); }
+for (const [x, k, f] of [[4.6, 0, false], [4.6, 2, true], [7.2, 1, false], [7.2, 3, true], [4.6, 3, false]]) { const p = person({ x, z: 5.6 + k * 2.2, rot: Math.PI / 2, suit: QCOL[(k + 3) % 7], tie: f ? false : 0x333333, female: f, sit: true }); AUD.push(p); PEOPLE.push(p); }
+function setHall(on) { for (const p of COMM.concat(AUD)) p.visible = on; }
+setHall(false);
+const HOME = { x: 0, z: -9.3 };
+let player = null;
+function buildPlayer(f) {
+  if (player) scene.remove(player);
+  player = person(f ? { x: HOME.x, z: HOME.z, rot: Math.PI, female: true, suit: 0x2e7d6b, skin: 0xe8b993, hair: 0x3a2418 }
+                    : { x: HOME.x, z: HOME.z, rot: Math.PI, suit: 0x2a4d7a, tie: false, skin: 0xd9a77e, hair: 0x1e1712, pants: 0x3b3f47 });
+  player.scale.set(1.1, 1.1, 1.1);
+}
+buildPlayer(false);
+const meRing = new THREE.Mesh(new THREE.RingGeometry(0.55, 0.68, 28), new THREE.MeshBasicMaterial({ color: 0x3fa9f5, transparent: true, opacity: 0.85 }));
+meRing.rotation.x = -Math.PI / 2; meRing.position.y = 0.035; scene.add(meRing);
+
+const ghost = new THREE.Group();
+const ghostMat = new THREE.MeshStandardMaterial({ color: 0xf4f6ff, emissive: 0x9fb0ff, emissiveIntensity: 0.35, transparent: true, opacity: 0.78, roughness: 0.4, side: THREE.DoubleSide });
+const gPts = []; for (let i = 0; i <= 14; i++) { const t = i / 14; const y = 1.6 - t * 1.9; const r = t < 0.35 ? Math.sin((t / 0.35) * Math.PI / 2) * 0.55 : 0.55 + (t - 0.35) * 0.35; gPts.push(new THREE.Vector2(Math.max(0.001, r), y)); }
+const gGeo = new THREE.LatheGeometry(gPts, 28);
+const gBase = gGeo.attributes.position.array.slice();
+const gBody = new THREE.Mesh(gGeo, ghostMat); ghost.add(gBody);
+for (const s of [-1, 1]) {
+  const eye = new THREE.Mesh(new THREE.SphereGeometry(0.11, 12, 10), new THREE.MeshBasicMaterial({ color: 0x10131c })); eye.scale.set(1, 1.4, 0.6); eye.position.set(s * 0.19, 1.15, 0.47); ghost.add(eye);
+  const glint = new THREE.Mesh(new THREE.SphereGeometry(0.03, 8, 6), new THREE.MeshBasicMaterial({ color: 0xffffff })); glint.position.set(s * 0.19 + 0.03, 1.22, 0.53); ghost.add(glint);
+  const arm = new THREE.Mesh(new THREE.SphereGeometry(0.16, 12, 10), ghostMat); arm.scale.set(1.6, 0.7, 0.7); arm.position.set(s * 0.68, 0.6, 0.05); ghost.add(arm); ghost.userData["arm" + s] = arm;
+}
+const mouth = new THREE.Mesh(new THREE.SphereGeometry(0.1, 12, 8), new THREE.MeshBasicMaterial({ color: 0x10131c })); mouth.scale.set(1.3, 0.8, 0.5); mouth.position.set(0, 0.88, 0.5); ghost.add(mouth);
+const gShadow = new THREE.Mesh(new THREE.CircleGeometry(0.7, 24), new THREE.MeshBasicMaterial({ color: 0x000000, transparent: true, opacity: 0.18 }));
+gShadow.rotation.x = -Math.PI / 2; scene.add(gShadow);
+ghost.visible = false; gShadow.visible = false; scene.add(ghost);
+function animateGhost(now) {
+  const a = gGeo.attributes.position.array;
+  for (let i = 0; i < a.length; i += 3) {
+    const y = gBase[i + 1];
+    if (y < 0.2) { const k = (0.2 - y) / 0.5; const ang = Math.atan2(gBase[i + 2], gBase[i]); const w = Math.sin(ang * 6 + now / 180) * 0.09 * k; a[i] = gBase[i] * (1 + w); a[i + 2] = gBase[i + 2] * (1 + w); a[i + 1] = y + Math.sin(ang * 6 + now / 180) * 0.06 * k; }
+  }
+  gGeo.attributes.position.needsUpdate = true;
+  for (const s of [-1, 1]) ghost.userData["arm" + s].position.y = 0.6 + Math.sin(now / 260 + s) * 0.12;
+}
+const beacon = new THREE.Group();
+const ring = new THREE.Mesh(new THREE.RingGeometry(1.0, 1.35, 40), new THREE.MeshBasicMaterial({ color: 0xffc400, side: THREE.DoubleSide, transparent: true, opacity: 0.9 }));
+ring.rotation.x = -Math.PI / 2; ring.position.y = 0.05; beacon.add(ring);
+const pillar = new THREE.Mesh(new THREE.CylinderGeometry(0.85, 0.85, 7, 24, 1, true), new THREE.MeshBasicMaterial({ color: 0xffd54a, transparent: true, opacity: 0.16, side: THREE.DoubleSide, depthWrite: false }));
+pillar.position.y = 3.5; beacon.add(pillar);
+const star = new THREE.Mesh(new THREE.OctahedronGeometry(0.28), new THREE.MeshBasicMaterial({ color: 0xffc400 })); star.position.y = 3.2; beacon.add(star);
+scene.add(beacon); beacon.position.set(999, 0, 999);
+
+const SPOTS = {
+  desk:    { x: 0, z: -9.3, label: "💻 مكتبك وكلود" },
+  sup:     { x: 15, z: -8.5, label: "👨‍🏫 المشرف" },
+  library: { x: -15, z: -8.3, label: "📚 محطّة البحث" },
+  field:   { x: -12, z: 6, label: "🏢 الميدان" },
+  hall:    { x: 14.2, z: 9, label: "🎓 قاعة المناقشة" }
+};
+const labelEls = {};
+for (const k in SPOTS) { const d = document.createElement("div"); d.className = "lbl"; d.textContent = SPOTS[k].label; $("labels").appendChild(d); labelEls[k] = d; }
+
+const keys = {};
+addEventListener("keydown", e => {
+  keys[e.key.toLowerCase()] = true;
+  if ((e.key === "e" || e.key === "E" || e.key === " " || e.key === "Enter") && !$("act").classList.contains("hidden") && modalClosed()) { e.preventDefault(); interact(); }
+});
+addEventListener("keyup", e => { keys[e.key.toLowerCase()] = false; });
+let joyV = { x: 0, z: 0 }, joyId = null, joyO = null;
+const joy = $("joy"), knob = $("knob");
+joy.addEventListener("pointerdown", e => { joyId = e.pointerId; const r = joy.getBoundingClientRect(); joyO = { x: r.left + r.width / 2, y: r.top + r.height / 2 }; joy.setPointerCapture(e.pointerId); moveJoy(e); });
+joy.addEventListener("pointermove", e => { if (e.pointerId === joyId) moveJoy(e); });
+const endJoy = e => { if (e.pointerId === joyId) { joyId = null; joyV = { x: 0, z: 0 }; knob.style.transform = ""; } };
+joy.addEventListener("pointerup", endJoy); joy.addEventListener("pointercancel", endJoy);
+function moveJoy(e) {
+  let dx = e.clientX - joyO.x, dy = e.clientY - joyO.y; const L = Math.hypot(dx, dy), max = 46;
+  if (L > max) { dx *= max / L; dy *= max / L; }
+  knob.style.transform = `translate(${dx}px,${dy}px)`;
+  joyV = { x: dx / max, z: dy / max };
+}
+$("act").addEventListener("click", () => interact());
+$("goBtn").addEventListener("click", e => { e.stopPropagation(); startAuto(); });
+
+/* ============================================================ state */
+let S = null;
+const wk = () => S.week + S.delay;
+const wkLabel = () => "الأسبوع " + ard(wk());
+function newState(name) {
+  return {
+    name, score: 0, combo: 0, week: 1, delay: 0, evIndex: -1, ev: null, queue: EVENTS.slice(), curSt: 0,
+    caught: 0, missed: 0, missedList: [], errs: [], ledger: [], comboBonus: 0, leaks: 0, integ: 0, meth: 0,
+    claudeUses: 0, searched: 0, stars: [], evMistakes: 0, track: null, flags: {}, file: {},
+    hints: $("hintOpt").checked, V: makeVariants(), playing: true, busy: false
+  };
+}
+function makeVariants() {
+  const fk = shuffle([0, 1, 2, 3, 4]);
+  return {
+    varTitle: pick([
+      { t: "تحسين رضا المراجعين من خلال نظام التذاكر الإلكترونيّ", a: "رضا المراجعين", b: "نظام التذاكر الإلكترونيّ" },
+      { t: "الحدّ من الفساد الإداريّ عبر الحكومة الإلكترونيّة", a: "الفساد الإداريّ", b: "الحكومة الإلكترونيّة" },
+      { t: "رفع كفاءة الموظّفين بواسطة التدريب الإلكترونيّ", a: "كفاءة الموظّفين", b: "التدريب الإلكترونيّ" }
+    ]),
+    fakeA: fk[0], fakeB: fk[1],
+    sumCell: pick(["sample", "tool", "result"]),
+    calcD: pick([{ d: [5, 2, 3, 4, 1, 3], m: 3 }, { d: [4, 4, 5, 3, 2, 3], m: 3.5 }, { d: [5, 4, 4, 3, 5, 3], m: 4 }]),
+    calcA: pick([{ d: [30, 40, 35, 25, 45, 35], m: 35 }, { d: [20, 35, 30, 40, 25, 30], m: 30 }, { d: [45, 35, 40, 30, 50, 40], m: 40 }]),
+    calcTrap: Math.random() < 0.7
+  };
+}
+const TITLE = {
+  D: "علاقة التحوّل الرقميّ بالبطالة والفساد الإداريّ: دراسة وصفيّة تحليليّة في مدينة ABC",
+  A: "أثر نظام التذاكر الإلكترونيّ في زمن انتظار المراجعين ورضاهم: دراسة تطبيقيّة في المديريّة العامّة للخدمات الإداريّة"
+};
+function setTrack(t) {
+  S.track = t;
+  SPOTS.field.label = t === "D" ? "🏙️ الميدان: مدينة ABC" : "🏢 الميدان: المديريّة";
+  labelEls.field.textContent = SPOTS.field.label;
+  setSign(fieldSign, t === "D" ? "مدينة ABC" : "المديريّة العامّة", t === "D" ? "ميدان الاستبانة (خياليّة)" : "للخدمات الإداريّة (خياليّة)", "#3d5a80");
+  setSign(led, t === "D" ? "استعلامات المواطنين" : "الانتظار ≈ ٩٥ دقيقة", t === "D" ? "" : "الرقم الحاليّ ٤٧", "#111827");
+}
+const FILE_KEYS = [["problem", "المشكلة والمسار"], ["title", "العنوان والمتغيّران"], ["hyp", "الفرضيّات"], ["design", "نوع الدراسة والميدان"], ["refs", "الدراسات السابقة"], ["read", "القراءة والتلخيص"], ["tool", "الأداة"], ["data", "البيانات"], ["result", "النتائج"], ["write", "الكتابة والإفصاح"]];
+const fileSet = (k, v) => { S.file[k] = v; };
+const mk = () => (S.evMistakes ? "⚠️ " : "✅ ");
+function fileHtml() { return FILE_KEYS.map(([k, l]) => `<div class="fl${S.file[k] ? "" : " empty"}"><b>${l}</b>${S.file[k] || "— لم تُنجَز بعد —"}</div>`).join(""); }
+function resetWorld() {
+  walkers.clear();
+  for (const p of QUEUE) { p.visible = true; p.position.set(p.userData.home.x, 0, p.userData.home.z); p.rotation.y = -Math.PI / 2; }
+  kiosk.visible = false; setHall(false);
+  SPOTS.field.label = "🏢 الميدان"; labelEls.field.textContent = SPOTS.field.label;
+  setSign(fieldSign, "الميدان", "", "#3d5a80"); setSign(led, "—", "", "#111827");
+  screenTitle("قاعة المناقشة", "المعهد العالي — الدبلوم العالي", "");
+  for (const m of MEDS) { m.material.color.setHex(0x9aa3ad); m.scale.set(1, 1, 1); }
+}
+function shrinkQueue(n) {
+  QUEUE.forEach((p, i) => { if (i < n) return; setTimeout(() => { if (!S || !S.playing) return; walkTo(p, [{ x: p.position.x, z: 11.5 }, { x: -12, z: 11.5 }, { x: -12, z: 3 }, { x: -12, z: -1 }, { x: -22, z: -1 }], () => { p.visible = false; }, 3.2); }, (i - n) * 450); });
+}
+
+/* ============================================================ the journey
+   every event: st (station 1–8, 9 = discussion), spot, week, optional track "A" | "D"
+   option flags: p points · w weeks lost · claude · catchTrap · missTrap{} · leak · integ · meth · flag · do()   */
+const KEEP = ["✅ تبقى", "❌ تُحذف"], MATCH = ["✅ مطابق", "❌ غير مطابق"];
+const REF_RES = {
+  ok: "✅ <b>وُجد في القاعدة:</b> العنوان والمؤلّف والعدد والصفحات مطابقة، والنصّ الكامل متاح للتنزيل.",
+  A: "⚠️ <b>المجلّة موجودة</b>، لكنّ هذا العدد لا يحتوي بحثًا بهذا العنوان، وأرقام الصفحات تعود إلى بحثٍ آخر.",
+  B: "❌ <b>لا نتائج:</b> لا مجلّة بهذا الاسم، ولا بحث بهذا العنوان في أيّ قاعدة."
+};
+const REFS = [
+  "السومريّ، ن. (٢٠٢١). أثر الحكومة الإلكترونيّة في جودة الخدمة العامّة. <i>مجلّة ABC للعلوم الإداريّة</i>، ١٤(٢)، ٤٥–٦٨.",
+  "الأكديّ، ر.، والآشوريّ، م. (٢٠٢٢). التحوّل الرقميّ والحدّ من الفساد الإداريّ: دراسة ميدانيّة. <i>مجلّة دراسات الإدارة الرقميّة</i>، ٩(١)، ١١٢–١٣٤.",
+  "Ashur, T., &amp; Nabu, K. (2020). E-government adoption and citizen trust. <i>Journal of ABC Public Administration</i>, 7(3), 201–219.",
+  "البابليّ، ح. (٢٠٢٣). أنظمة إدارة الطوابير في الدوائر الخدميّة. <i>المجلّة الرافدينيّة للحوكمة</i>، ٥(٤)، ٧٧–٩٥.",
+  "Enki, S. (2019). Digital transformation and unemployment in mid-sized cities. <i>ABC Review of Development Studies</i>, 12(2), 33–58."
+];
+const tbl = (head, rows) => '<table class="mini"><tr>' + head.map(x => `<th>${x}</th>`).join("") + "</tr>" + rows.map(r => "<tr>" + r.map(x => `<td>${x}</td>`).join("") + "</tr>").join("") + "</table>";
+const ALPHA_TBL = tbl(["المستجيب", "ف١", "ف٢", "ف٣", "ف٤", "ف٥", "ف٦"], [["أ", "٥", "٤", "٥", "٥", "٤", "١"], ["ب", "٢", "٢", "١", "٢", "٢", "٥"], ["ج", "٣", "٣", "٤", "٣", "٣", "٢"], ["د", "٤", "٥", "٤", "٤", "٥", "١"], ["هـ", "١", "٢", "١", "١", "٢", "٥"], ["و", "٤", "٤", "٣", "٤", "٤", "٣"]]);
+
+const EVENTS = [
+  /* ① */
+  { id: "s1", st: 1, spot: "desk", week: 1, title: "① الفكرة والمشكلة", task: "اضغط «افتح الحاسوب»: أوّل جلسة مع كلود",
+    steps: V => [
+      { type: "choice", say: "بدأ الفصل. أمامك <b>٢٠ أسبوعًا</b> حتّى المناقشة: عملك في قسم المعاملات، ودراستك في الدبلوم العالي. كلود مفتوح على الشاشة.", q: "أوّل أمرٍ يُكتب لكلود:",
+        opts: [
+          { t: "«اكتب لي بحث تخرّج كاملًا عن التحوّل الرقميّ»", p: -40, integ: true, fb: "❌ هذا تفويضٌ للبحث كلّه. كلود <b>رفيق طريق لا كاتبٌ بالنيابة</b>، ونصٌّ لم يُكتب باليد لا يُدافَع عنه أمام اللجنة." },
+          { t: "«أعمل في قسم المعاملات، والمعاملات تتأخّر. اقترح خمس مشكلات بحثيّة تُدرَس في فصلٍ واحد»", p: 20, claude: true, fb: "✅ أمرٌ فيه <b>السياق</b> (العمل) و<b>القيد</b> (فصل واحد). كلود يولّد البدائل، والاختيار لك." },
+          { t: "«ما أفضل عنوان بحث؟ اختر واحدًا وسأعتمده»", p: 0, fb: "كلود لا يعرف دائرتك ولا بياناتها. المشكلة تُختار من واقع العمل، ممّا بياناته في اليد." }
+        ] },
+      { type: "choice", claudeTxt: "خمس مشكلات مقترحة:<br>١. التحوّل الرقميّ في العراق: الواقع والتحدّيات.<br>٢. علاقة التحوّل الرقميّ بالبطالة والفساد الإداريّ في مدينة ABC.<br>٣. طول انتظار المراجعين في المديريّة، ومعالجته بنظام تذاكر إلكترونيّ.<br>٤. أثر الذكاء الاصطناعيّ في مستقبل الوظيفة العامّة عالميًّا.", q: "أيّ مشكلةٍ تصلح لبحث هذا الفصل؟ <small>(الاختيار يحدّد مسار المحاكاة)</small>",
+        opts: [
+          { t: "١ — التحوّل الرقميّ في العراق", p: -30, meth: true, w: 2, fb: "❌ <b>موضوع واسع لا يُنجَز في فصل.</b> أعاده المشرف بعد أسبوعين من قراءةٍ بلا حدود. الموضوع يُضيَّق إلى مكانٍ وبياناتٍ يمكن الوصول إليها." },
+          { t: "٢ — مدينة ABC: التحوّل الرقميّ والبطالة والفساد <small>(استبانة · مسار وصفيّ تحليليّ)</small>", p: 30, do: () => setTrack("D"), fb: "✅ مشكلة محدّدة بمكان، وتُدرَس باستبانة. <b>المسار: دراسة وصفيّة تحليليّة</b> — ترصد الواقع وتفسّر العلاقات فيه ولا تغيّره." },
+          { t: "٣ — انتظار المراجعين ونظام التذاكر <small>(تطبيق وقياس · مسار تطبيقيّ)</small>", p: 30, do: () => setTrack("A"), fb: "✅ مشكلة من واقع العمل وبياناتها في اليد. <b>المسار: دراسة تطبيقيّة</b> — حلٌّ يُطبَّق في مؤسّسةٍ محدّدة ويُقاس أثره قبل وبعد." },
+          { t: "٤ — الذكاء الاصطناعيّ ومستقبل الوظيفة عالميًّا", p: -30, meth: true, w: 2, fb: "❌ لا مكان محدّد ولا بيانات في اليد. ضاع أسبوعان قبل أن يتّضح أنّه لا يُقاس." }
+        ] },
+      { type: "choice", if: () => !S.track, say: "المشرف: «الموضوع يُضيَّق. أمامك خياران واقعيّان من القائمة نفسها.»", q: "المسار:",
+        opts: [
+          { t: "مدينة ABC: التحوّل الرقميّ والبطالة والفساد <small>(استبانة · وصفيّ تحليليّ)</small>", p: 10, do: () => setTrack("D"), fb: "✅ <b>المسار: دراسة وصفيّة تحليليّة</b> — ترصد الواقع وتفسّر العلاقات فيه ولا تغيّره." },
+          { t: "انتظار المراجعين ونظام التذاكر <small>(تطبيق وقياس · تطبيقيّ)</small>", p: 10, do: () => setTrack("A"), fb: "✅ <b>المسار: دراسة تطبيقيّة</b> — حلٌّ يُطبَّق في مؤسّسةٍ محدّدة ويُقاس أثره قبل وبعد." }
+        ] }
+    ], after: () => fileSet("problem", mk() + (S.track === "D" ? "هل ارتبط توسّع الخدمات الإلكترونيّة في مدينة ABC بانخفاض البطالة والفساد؟ — <b>مسار وصفيّ تحليليّ</b>" : "المراجعون ينتظرون طويلًا في المديريّة — <b>مسار تطبيقيّ</b>")) },
+  /* ② */
+  { id: "s2", st: 2, spot: "desk", week: 2, title: "② العنوان والمتغيّرات", task: "اضغط «افتح الحاسوب»: كلود صاغ ثلاثة عناوين",
+    steps: V => { const D = S.track === "D"; return [
+      { type: "choice", claudeTxt: "ثلاثة عناوين مقترحة:<br>" + (D ? "أ. التحوّل الرقميّ في مدينة ABC: الواقع والطموح.<br>ب. دور التحوّل الرقميّ في التطوير الإداريّ في مدينة ABC.<br>ج. " + TITLE.D + "." : "أ. نظام التذاكر الإلكترونيّ: دراسة تطبيقيّة.<br>ب. دور نظام التذاكر الإلكترونيّ في تطوير العمل.<br>ج. " + TITLE.A + "."), q: "أيّ عنوانٍ يُعتمَد؟",
+        opts: [
+          { t: "العنوان (أ)", p: -30, meth: true, w: 1, fb: "❌ <b>عنوانٌ بلا متغيّر تابع واضح.</b> ماذا يؤثّر في ماذا؟ أعاده المشرف، واعتُمد العنوان (ج) بعد أسبوع." },
+          { t: "العنوان (ب)", p: -20, meth: true, w: 1, fb: "❌ كلمة <b>«التطوير»</b> لا تُقاس: بأيّ رقم؟ أعاده المشرف، واعتُمد العنوان (ج) بعد أسبوع." },
+          { t: "العنوان (ج)", p: 40, fb: "✅ متغيّران واضحان، وكلاهما <b>قابل للقياس</b>، والمكان محدّد." }
+        ] },
+      { type: "choice", say: "العنوان المعتمد: «<b>" + TITLE[S.track] + "</b>»", q: "ما المتغيّر <b>المستقلّ</b> (المؤثِّر) فيه؟",
+        opts: shuffle(D ? [
+          { t: "التحوّل الرقميّ", p: 30, fb: "✅ هو العامل الذي نفترض أنّه يؤثّر. والتابعان: البطالة والفساد الإداريّ." },
+          { t: "البطالة والفساد الإداريّ", p: -20, meth: true, fb: "❌ هذان هما <b>التابعان</b>: ما يتأثّر ونقيس التغيّر فيه. المستقلّ هو التحوّل الرقميّ." },
+          { t: "مدينة ABC", p: -20, meth: true, fb: "❌ المدينة <b>حدود الدراسة المكانيّة</b>، لا متغيّر. المستقلّ هو التحوّل الرقميّ." }
+        ] : [
+          { t: "نظام التذاكر الإلكترونيّ", p: 30, fb: "✅ هو ما نغيّره. والتابعان: زمن الانتظار ورضا المراجعين." },
+          { t: "زمن الانتظار ورضا المراجعين", p: -20, meth: true, fb: "❌ هذان هما <b>التابعان</b>: ما نقيسه قبل وبعد. المستقلّ هو نظام التذاكر." },
+          { t: "المديريّة العامّة للخدمات الإداريّة", p: -20, meth: true, fb: "❌ المديريّة <b>ميدان التطبيق</b>، لا متغيّر. المستقلّ هو نظام التذاكر." }
+        ]) },
+      { type: "choice", say: "زميلٌ في الدفعة أرسل عنوانه، وقد سأل كلود عن متغيّريه:", claudeTxt: `العنوان: «${V.varTitle.t}»<br>المتغيّر المستقلّ: <mark>${V.varTitle.a}</mark>، لأنّه ورد أوّلًا في العنوان.<br>المتغيّر التابع: ${V.varTitle.b}.`, q: "هل تحليل كلود صحيح؟",
+        opts: [
+          { t: "نعم؛ ما يرد أوّلًا في العنوان هو المستقلّ", p: -50, missTrap: { tl: "كلود عكس المتغيّرين بحجّة الترتيب", week: "القسم ٢: الترتيب في العنوان لا يحدّد النوع", why: `المستقلّ هو «${V.varTitle.b}» لأنّه السبب الذي نغيّره` }, fb: `❌ <b>الترتيب في العنوان لا يحدّد النوع.</b> المستقلّ هو «${V.varTitle.b}» وقد جاء آخرًا. السؤال دائمًا: أيّهما السبب، وأيّهما النتيجة؟` },
+          { t: `لا؛ المستقلّ «${V.varTitle.b}» لأنّه السبب الذي نغيّره، و«${V.varTitle.a}» هو النتيجة التي تُقاس`, p: 100, catchTrap: true, fb: "🕵️ <b>كُشف الخطأ!</b> كلود حكم بالترتيب لا بالمعنى. السؤال الكاشف: «ماذا يؤثّر في ماذا؟»" },
+          { t: "لا يوجد متغيّر مستقلّ في هذا العنوان", p: -20, meth: true, fb: `❌ موجود: «${V.varTitle.b}». جاء في آخر العنوان، لكنّه السبب.` }
+        ] }
+    ]; }, after: () => fileSet("title", mk() + "«" + TITLE[S.track] + "»<br>المستقلّ: " + (S.track === "D" ? "التحوّل الرقميّ — التابعان: البطالة، الفساد الإداريّ" : "نظام التذاكر الإلكترونيّ — التابعان: زمن الانتظار، رضا المراجعين")) },
+  /* ③ */
+  { id: "s3", st: 3, spot: "desk", week: 3, title: "③ الأسئلة والفرضيّات", task: "اضغط «افتح الحاسوب»: كلود ربط الأهداف بفرضيّات",
+    steps: V => { const D = S.track === "D"; const trap = (label, why) => ({ label, sug: KEEP[0], ok: KEEP[1], trap: true, ptsOk: 80, ptsBad: -50, meth: true, flag: "badHyp", tl: "فرضيّة لا تُقاس بقيت في الخطّة", week: "المحطّة ٣: فرضيّة لا تُقاس", why }); return [
+      { type: "rows", say: "كلود ربط كلّ هدفٍ بفرضيّة، ويرى أنّها كلّها صالحة. <b>تبقى الفرضيّة التي تختبرها بياناتك، وتُحذف التي لا تُقاس.</b>", options: KEEP,
+        rows: shuffle(D ? [
+          { label: "توجد علاقة عكسيّة بين التحوّل الرقميّ والبطالة.", sug: KEEP[0], ok: KEEP[0], ptsOk: 15 },
+          { label: "توجد علاقة عكسيّة بين التحوّل الرقميّ والفساد الإداريّ.", sug: KEEP[0], ok: KEEP[0], ptsOk: 15 },
+          trap("التحوّل الرقميّ يحسّن جودة الحياة في المدينة.", "«جودة الحياة» بلا محورٍ يقيسها في الاستبانة"),
+          trap("التحوّل الرقميّ يرفع رضا الوزارة عن المدينة.", "لا بيانات في اليد عن رضا الوزارة")
+        ] : [
+          { label: "ينخفض متوسّط انتظار المراجعين بعد تطبيق النظام.", sug: KEEP[0], ok: KEEP[0], ptsOk: 15 },
+          { label: "ينخفض عدد الشكاوى الشهريّة بعد تطبيق النظام.", sug: KEEP[0], ok: KEEP[0], ptsOk: 15 },
+          trap("يحسّن النظام جودة الحياة الوظيفيّة للموظّفين.", "«جودة الحياة الوظيفيّة» بلا أداةٍ تقيسها"),
+          trap("يرفع النظام رضا الوزارة عن المديريّة.", "لا بيانات في اليد عن رضا الوزارة")
+        ]) }
+    ]; }, after: () => fileSet("hyp", mk() + (S.track === "D" ? "ف١: علاقة عكسيّة بين التحوّل الرقميّ والبطالة. ف٢: علاقة عكسيّة بينه وبين الفساد الإداريّ." : "ف١: ينخفض متوسّط الانتظار بعد النظام. ف٢: تنخفض الشكاوى.") + (S.flags.badHyp ? "<br>⚠️ وبقيت فرضيّة لا تُقاس." : "")) },
+  { id: "sup1", st: 3, spot: "sup", week: 4, title: "👨‍🏫 لقاء المشرف: خطّة البحث", task: "المشرف ينتظر الخطّة في مكتبه",
+    steps: V => S.track === "D" ? [
+      { type: "choice", say: "المشرف د. سامي <small>(شخصيّة خياليّة)</small>: «قرأتُ الخطّة. ما نوع الدراسة بالضبط؟»", q: "الجواب:",
+        opts: [
+          { t: "وصفيّة تحليليّة: ترصد العلاقة بين المتغيّرات كما هي، ولا تغيّر الواقع", p: 40, fb: "✅ المشرف: «صحيح. الدليل فيها: الثبات والمتوسّطات والارتباط، والناتج فهمٌ وتوصيات.»" },
+          { t: "تطبيقيّة: لأنّ الاستبانة ستُوزَّع ميدانيًّا في المدينة", p: -30, meth: true, fb: "❌ المشرف: «توزيع استبانة ليس تطبيقًا لحلّ. التطبيقيّة تطبّق أداةً أو نظامًا في مؤسّسة وتقيس أثره قبل وبعد.»" },
+          { t: "تجريبيّة: ستثبت أنّ الرقمنة سبب انخفاض الفساد", p: -30, meth: true, fb: "❌ المشرف: «الاستبانة ترصد علاقة. <b>الارتباط لا يعني السببيّة.</b>»" }
+        ] },
+      { type: "choice", say: "المشرف: «ومَن العيّنة؟»", q: "الجواب:",
+        opts: [
+          { t: "زملاء الدفعة والأصدقاء؛ يجيبون بسرعة", p: -30, meth: true, fb: "❌ عيّنة متاحة ومنحازة: لا تمثّل سكّان المدينة. المشرف طلب تعديلها." },
+          { t: "١٢٠ مستجيبًا من قطاعات مختلفة في المدينة: حكوميّ، وخاصّ، وباحثون عن عمل", p: 40, fb: "✅ المجتمع: سكّان المدينة. العيّنة: الجزء الذي تُجمَع منه البيانات فعلًا، ويمثّل قطاعاتها." },
+          { t: "كلّ سكّان المدينة", p: -20, meth: true, w: 1, fb: "❌ هذا <b>المجتمع</b> لا العيّنة، ولا يُنجَز في فصل. ضاع أسبوع في إعادة الخطّة." }
+        ] }
+    ] : [
+      { type: "choice", say: "المشرف د. سامي <small>(شخصيّة خياليّة)</small>: «العنوان يقول <b>دراسة تطبيقيّة</b>. ماذا سيُطبَّق بالضبط؟»", q: "الجواب:",
+        opts: [
+          { t: "يُبنى نظام التذاكر ويُشغَّل في المديريّة، ويُقاس الانتظار والشكاوى والرضا قبل التطبيق وبعده", p: 40, fb: "✅ المشرف: «هذه هي التطبيقيّة: حلٌّ مُطبَّق وأثرٌ مُقاس.»" },
+          { t: "استبانة تسأل الموظّفين عن رأيهم في نظام تذاكر لو طُبِّق", p: -30, meth: true, fb: "❌ المشرف: «هذا الخطأ الشائع: عنوانٌ يَعِد بتطبيق، وبحثٌ يكتفي بسؤال الناس عن نظامٍ لم يُبنَ. إمّا أن يُعدَّل العنوان، وإمّا أن يُطبَّق الحلّ ويُقاس.»" },
+          { t: "وصف مشكلة الانتظار وأسبابها فقط", p: -20, meth: true, fb: "❌ هذا وصفٌ لا تطبيق، والعنوان يَعِد بنظامٍ وأثر." }
+        ] },
+      { type: "choice", say: "المشرف: «وما أوّل خطوة قبل أيّ عمل داخل المديريّة؟»", q: "الجواب:",
+        opts: [
+          { t: "تنصيب النظام مباشرةً لكسب الوقت", p: -40, meth: true, w: 2, fb: "❌ <b>البدء قبل موافقة المؤسّسة.</b> أُوقفت التجربة أسبوعين حتّى صدرت الموافقة." },
+          { t: "كتاب تسهيل مهمّة، وموافقة إدارة المديريّة على التطبيق وجمع البيانات", p: 40, fb: "✅ الموافقة أوّلًا: البحث يجري في مؤسّسةٍ لها إدارتها وبياناتها." },
+          { t: "نسخ سجلّات المراجعين من الأرشيف بلا إذن، فهي متاحة لي بحكم العمل", p: -60, leak: true, fb: "⚠️ <b>بيانات مواطنين بلا إذن.</b> ما يتاح بحكم الوظيفة لا يُستعمل في البحث إلّا بموافقةٍ رسميّة (الأسبوعان ٢ و٥)." }
+        ] }
+    ], after: () => fileSet("design", mk() + (S.track === "D" ? "وصفيّة تحليليّة — المجتمع: سكّان مدينة ABC — العيّنة: ١٢٠ مستجيبًا من قطاعات مختلفة" : "تطبيقيّة في المديريّة العامّة للخدمات الإداريّة — بموافقة رسميّة — قياسٌ قبل وبعد")) },
+  /* ④ */
+  { id: "s4", st: 4, spot: "library", week: 5, title: "④ الدراسات السابقة", task: "إلى المكتبة: محطّة البحث في القواعد",
+    steps: V => [
+      { type: "choice", say: "في المكتبة، أمام محطّة البحث. المطلوب: دراسات سابقة في الموضوع.", q: "من أين البداية؟",
+        opts: [
+          { t: "«يا كلود، أعطني عشر دراسات سابقة مع مراجعها كاملة»", p: -30, meth: true, fb: "❌ هكذا يولد <b>المرجع المختلَق</b>: قائمة أنيقة فيها بحوثٌ لا وجود لها. كلود يقترح <b>كلمات البحث</b>، والبحث نفسه يجري في القواعد." },
+          { t: "كلمات بحث من كلود بالعربيّة والإنجليزيّة، ثمّ البحث في IASJ و Google Scholar، والحفظ في Zotero", p: 30, claude: true, fb: "✅ المحطّة الرابعة تبدأ من <b>قواعد البيانات</b> لا من كلود. وكلّ بحثٍ يُفتح قبل أن يدخل القائمة." },
+          { t: "موقع مقرصن ينزّل أيّ بحث مجّانًا", p: -40, integ: true, fb: "❌ مخالف لحقوق النشر، وكثيرٌ منه غير آمن. اشتراكات IVSL ودار المنظومة تُسأل عنها مكتبة المعهد." }
+        ] },
+      { type: "refs", say: "زميلٌ أرسل قائمة مراجع «جاهزة» ولّدها كلود، واقترح نسخها في فصل الدراسات السابقة. <b>لكلّ مرجع: بحثٌ في القاعدة، ثمّ حكم.</b><br><small>كلّ المراجع والمجلّات هنا خياليّة للتدريب، والقاعدة محاكاة.</small>",
+        refs: REFS.map((t, i) => ({ txt: t, n: i + 1, fake: i === V.fakeA ? "A" : i === V.fakeB ? "B" : null })) }
+    ], after: () => fileSet("refs", (S.flags.fakeRef ? "⚠️ خمسة مراجع في القائمة — <b>بينها مرجعٌ مختلَق لم يُكشف</b>" : "✅ ثلاثة مراجع فُتحت وحُفظت في Zotero، وحُذف المختلَقان") + " — فُتح في القاعدة: " + ard(S.searched) + " من ٥") },
+  /* ⑤ */
+  { id: "s5", st: 5, spot: "library", week: 6, title: "⑤ القراءة والتلخيص", task: "في المكتبة: بحث السومريّ (٢٠٢١) وجدول الدراسات",
+    steps: V => { const c = V.sumCell; return [
+      { type: "choice", say: "بحث (السومريّ، ٢٠٢١) موجود في القاعدة ولم يُنزَّل بعد. كُتب لكلود: «لخّص بحث السومريّ ٢٠٢١» <b>من دون رفع أيّ ملفّ</b>، فجاء الردّ خلال ثوانٍ:", claudeTxt: "ملخّص بحث السومريّ (٢٠٢١):<br>• الهدف: قياس أثر الحكومة الإلكترونيّة في جودة الخدمة.<br>• العيّنة: <mark>٤٠٠ موظّف في خمس وزارات</mark>.<br>• النتيجة: <mark>علاقة طرديّة قويّة جدًّا (ر = ٠٫٩١)</mark>.", q: "القرار:",
+        opts: [
+          { t: "ملخّص مرتّب؛ يدخل جدول الدراسات السابقة كما هو", p: -60, flag: "inventedSummary", missTrap: { tl: "ملخّص مخترَع لبحثٍ لم يُرفع", week: "المحطّة ٥: طلب تلخيص بحثٍ لم يُرفع أصلًا", why: "كلود لم يقرأ البحث؛ العيّنة والنتيجة من تأليفه" }, fb: "❌ كلود <b>لم يرَ البحث أصلًا</b>، فألّف عيّنةً ونتيجة. البحث الحقيقيّ: ١٥٠ موظّفًا، ور = ٠٫٤٦." },
+          { t: "كلود لم يرَ البحث! يُنزَّل ملفّ PDF ويُرفَع، ثمّ يُطلَب جدول ويُقارَن بخاتمة البحث", p: 100, catchTrap: true, claude: true, fb: "🕵️ <b>كُشفت الهلوسة!</b> بلا ملفّ مرفوع، كلّ رقمٍ في الملخّص تأليف. التلخيص يكون لبحثٍ ترفعه وتقرؤه." },
+          { t: "يكفي عنوان البحث؛ سطرٌ واحد عنه في الفصل", p: -20, meth: true, fb: "❌ دراسةٌ سابقة لم تُقرأ لا يُبنى عليها. المطلوب: الهدف والعيّنة والأداة والنتيجة." }
+        ] },
+      { type: "rows", say: "بعد رفع الملفّ. <b>من خاتمة البحث</b> <small>(نصّ خياليّ)</small>:<div class=\"orig\">«هدفت الدراسة إلى قياس أثر الحكومة الإلكترونيّة في جودة الخدمة العامّة. وُزّعت <b>استبانة من ٢٤ فقرة</b> على عيّنة من <b>١٥٠ موظّفًا</b> في ثلاث دوائر، وأظهرت النتائج <b>علاقة طرديّة متوسّطة (ر = ٠٫٤٦)</b> بين المتغيّرين.»</div>وهذا جدول كلود. كلّ خانة تُطابَق مع النصّ:", options: MATCH,
+        rows: [
+          { label: "<b>الهدف:</b> قياس أثر الحكومة الإلكترونيّة في جودة الخدمة العامّة", sug: MATCH[0], ok: MATCH[0], ptsOk: 10 },
+          c === "sample" ? { label: "<b>العيّنة:</b> ٢٥٠ موظّفًا في ثلاث دوائر", sug: MATCH[0], ok: MATCH[1], trap: true, ptsOk: 100, ptsBad: -50, flag: "badSummary", tl: "عيّنة خاطئة في جدول الدراسات", week: "المحطّة ٥: يُقارَن الملخّص بالبحث نفسه", why: "الخاتمة تقول ١٥٠ لا ٢٥٠" } : { label: "<b>العيّنة:</b> ١٥٠ موظّفًا في ثلاث دوائر", sug: MATCH[0], ok: MATCH[0], ptsOk: 10 },
+          c === "tool" ? { label: "<b>الأداة:</b> مقابلات شخصيّة مع الموظّفين", sug: MATCH[0], ok: MATCH[1], trap: true, ptsOk: 100, ptsBad: -50, flag: "badSummary", tl: "أداة خاطئة في جدول الدراسات", week: "المحطّة ٥: يُقارَن الملخّص بالبحث نفسه", why: "الخاتمة تقول استبانة من ٢٤ فقرة لا مقابلات" } : { label: "<b>الأداة:</b> استبانة من ٢٤ فقرة", sug: MATCH[0], ok: MATCH[0], ptsOk: 10 },
+          c === "result" ? { label: "<b>النتيجة:</b> علاقة طرديّة قويّة (ر = ٠٫٦٤)", sug: MATCH[0], ok: MATCH[1], trap: true, ptsOk: 100, ptsBad: -50, flag: "badSummary", tl: "نتيجة خاطئة في جدول الدراسات", week: "المحطّة ٥: يُقارَن الملخّص بالبحث نفسه", why: "الخاتمة تقول متوسّطة (٠٫٤٦) لا قويّة (٠٫٦٤)" } : { label: "<b>النتيجة:</b> علاقة طرديّة متوسّطة (ر = ٠٫٤٦)", sug: MATCH[0], ok: MATCH[0], ptsOk: 10 }
+        ] }
+    ]; }, after: () => fileSet("read", (S.flags.inventedSummary || S.flags.badSummary ? "⚠️ جدول الدراسات السابقة فيه خانة لا تطابق البحث الأصليّ" : "✅ جدول مقارنة (الهدف، العيّنة، الأداة، النتيجة) مُطابَق مع نصّ كلّ بحث")) },
+  /* ⑥ */
+  { id: "s6", st: 6, spot: "sup", week: 7, title: "⑥ المنهج والأداة", task: "المشرف يراجع الأداة قبل التوقيع",
+    steps: V => S.track === "D" ? [
+      { type: "rows", say: "المشرف: «لا توقيع على أداةٍ لم تُراجَع فقرةً فقرة.» هذه فقرات محور <b>التحوّل الرقميّ</b> كما صاغها كلود، وهو يراها كلّها سليمة:", options: ["✅ سليمة", "✂️ تسأل عن شيئين", "⚖️ منحازة", "🚫 لا تنتمي للمحور"],
+        rows: shuffle([
+          { label: "«أستطيع إنجاز معاملتي الحكوميّة عبر الإنترنت.»", sug: "✅ سليمة", ok: "✅ سليمة", ptsOk: 10 },
+          { label: "«الخدمات الإلكترونيّة سريعة ومفيدة.»", sug: "✅ سليمة", ok: "✂️ تسأل عن شيئين", trap: true, ptsOk: 80, ptsBad: -40, meth: true, tl: "فقرة تسأل عن شيئين", week: "المحطّة ٦: فقرة منحازة أو تسأل عن شيئين", why: "«سريعة» و«مفيدة» شيئان؛ قد يوافق المستجيب على أحدهما فقط" },
+          { label: "«ألا توافق أنّ الخدمات الإلكترونيّة رائعة؟»", sug: "✅ سليمة", ok: "⚖️ منحازة", trap: true, ptsOk: 80, ptsBad: -40, meth: true, tl: "فقرة منحازة", week: "المحطّة ٦: فقرة منحازة أو تسأل عن شيئين", why: "الصياغة تدفع المستجيب إلى الموافقة" },
+          { label: "«أستطيع متابعة حالة معاملتي إلكترونيًّا.»", sug: "✅ سليمة", ok: "✅ سليمة", ptsOk: 10 },
+          { label: "«راتبي الشهريّ مناسب.»", sug: "✅ سليمة", ok: "🚫 لا تنتمي للمحور", trap: true, ptsOk: 80, ptsBad: -40, meth: true, flag: "badItem", tl: "فقرة لا تنتمي للمحور", week: "ألفا كرونباخ: الفقرة السادسة", why: "لا علاقة لها بالتحوّل الرقميّ، وستُسقط ثبات المحور" },
+          { label: "«الدفع الإلكترونيّ للرسوم متاحٌ في أغلب الدوائر.»", sug: "✅ سليمة", ok: "✅ سليمة", ptsOk: 10 }
+        ]) },
+      { type: "choice", say: "المشرف: «وكيف تُجمَع الردود؟»", q: "الجواب:",
+        opts: [
+          { t: "بالاسم ورقم الهاتف، لمتابعة من لم يُجب", p: -60, leak: true, flag: "names", fb: "⚠️ <b>بيانات شخصيّة لا يحتاجها البحث.</b> وسؤالٌ عن الفساد باسم المستجيب لن يُجاب عنه بصدق." },
+          { t: "بلا أسماء: رقم تسلسليّ لكلّ استمارة، وجملة موافقة في أوّلها", p: 40, fb: "✅ الاستمارة بلا هويّة: تحمي المستجيب، وتجعل جوابه أصدق، ويُرفع ملفّها إلى كلود بأمان." },
+          { t: "رابط في مجموعات الواتساب، ويجيب من يشاء أيّ عددٍ من المرّات", p: -30, meth: true, fb: "❌ لا ضبط للعيّنة ولا للتكرار: قد يجيب شخصٌ واحد عشر مرّات." }
+        ] }
+    ] : [
+      { type: "rows", say: "المشرف: «هدف <b>تحسين الخدمة</b> لا يُقاس حتّى يصير مؤشّرات.» هذه قائمة كلود، وهو يرى كلّ بندٍ فيها قابلًا للقياس:", options: ["✅ مؤشّر يُقاس", "❌ لا يُقاس هكذا"],
+        rows: shuffle([
+          { label: "متوسّط انتظار المراجع بالدقائق", sug: "✅ مؤشّر يُقاس", ok: "✅ مؤشّر يُقاس", ptsOk: 10 },
+          { label: "عدد الشكاوى شهريًّا", sug: "✅ مؤشّر يُقاس", ok: "✅ مؤشّر يُقاس", ptsOk: 10 },
+          { label: "جودة الخدمة", sug: "✅ مؤشّر يُقاس", ok: "❌ لا يُقاس هكذا", trap: true, ptsOk: 80, ptsBad: -40, meth: true, tl: "مؤشّر بلا طريقة قياس", week: "القسم ١٠، الخطوة ٢: مؤشّرات تُقاس بالأرقام", why: "«جودة الخدمة» بلا طريقة قياس محدّدة" },
+          { label: "نسبة الطلبات التي تجاوزت ٤٨ ساعة بلا إجراء", sug: "✅ مؤشّر يُقاس", ok: "✅ مؤشّر يُقاس", ptsOk: 10 },
+          { label: "سمعة المديريّة عند المواطنين", sug: "✅ مؤشّر يُقاس", ok: "❌ لا يُقاس هكذا", trap: true, ptsOk: 80, ptsBad: -40, meth: true, tl: "مؤشّر بلا طريقة قياس", week: "القسم ١٠، الخطوة ٢: مؤشّرات تُقاس بالأرقام", why: "«السمعة» كلمة عامّة بلا رقمٍ ولا أداة" },
+          { label: "رضا المراجعين من ١ إلى ٥ باستبانةٍ من خمس عبارات", sug: "✅ مؤشّر يُقاس", ok: "✅ مؤشّر يُقاس", ptsOk: 10 }
+        ]) },
+      { type: "choice", say: "المشرف: «والنموذج الأوّليّ للنظام، بأيّ بياناتٍ يُبنى مع كلود؟»", q: "الجواب:",
+        opts: [
+          { t: "بسجلّ المراجعين الحقيقيّ، بأسمائهم وهواتفهم، ليكون النموذج واقعيًّا", p: -80, leak: true, flag: "names", fb: "⚠️ <b>تسريب بيانات مواطنين.</b> النموذج لا يحتاج اسمًا حقيقيًّا واحدًا (الأسابيع ٢ و٣ و٥)." },
+          { t: "ببيانات تجريبيّة مختلَقة بلا أسماء، ومتطلّبات مكتوبة: تذكرة برقم ووقت وحالة ومسؤول", p: 40, claude: true, fb: "✅ كما في الأسبوع الثامن: المتطلّبات أوّلًا، ثمّ نموذج أوّليّ ببيانات تجريبيّة." },
+          { t: "بلا كلود أصلًا؛ البناء كلّه يدويّ", p: 0, w: 1, fb: "آمن، لكنّه أبطأ بأسبوع. النموذج الأوّليّ يُبنى بأمان مع كلود إذا كانت البيانات تجريبيّة." }
+        ] }
+    ], after: () => fileSet("tool", mk() + (S.track === "D" ? "استبانة: ثلاثة محاور × خمس فقرات على مقياس ليكرت، بلا أسماء" + (S.flags.badItem ? "<br>⚠️ بقيت في محور التحوّل الرقميّ فقرة «راتبي الشهريّ مناسب»" : "") : "أربعة مؤشّرات: الانتظار بالدقائق، الشكاوى شهريًّا، طلبات تجاوزت ٤٨ ساعة، الرضا من ١ إلى ٥")) },
+  /* ⑦ D: collecting */
+  { id: "fieldD", track: "D", st: 7, spot: "field", week: 9, title: "⑦ جمع البيانات في الميدان", task: "إلى مدينة ABC: توزيع الاستبانة",
+    steps: V => [
+      { type: "choice", say: "في مدينة ABC. بعد أسبوعين عادت <b>٣٠ استمارة فقط</b> من ١٢٠، والأسابيع تمضي.", q: "القرار:",
+        opts: [
+          { t: "كلود يولّد ٩٠ ردًّا «مشابهًا» لإكمال العدد", p: -120, integ: true, flag: "fabricated", fb: "⛔ <b>بيانات مولَّدة بدل جمعها: هذا تلفيق.</b> أخطر ما في القسم ٧، وتكشفه اللجنة من نمط الإجابات." },
+          { t: "إكمال الجمع الميدانيّ حتّى ١٢٠ استمارة: دوائر وأسواق ومقاهٍ، حسب خطّة العيّنة", p: 60, fb: "✅ البيانات تُجمَع باليد. اكتملت ١٢٠ استمارة بلا أسماء." },
+          { t: "ملء الاستمارات الباقية باليد بإجاباتٍ «معقولة»", p: -120, integ: true, flag: "fabricated", fb: "⛔ <b>تلفيق بيانات.</b> ما لم يُجِب عنه مستجيبٌ حقيقيّ ليس بيانات." },
+          { t: "الاكتفاء بالثلاثين وتعديل العدد في الخطّة", p: -20, meth: true, w: 1, fb: "❌ ثلاثون ردًّا تُضعف الثبات والارتباط. طلب المشرف إكمال العيّنة، وضاع أسبوع." }
+        ] },
+      { type: "info", say: () => S.flags.fabricated ? "📋 الملفّ فيه ١٢٠ صفًّا… لكنّ تسعين منها لم يُجِب عنها أحد." : "📋 اكتمل الجمع: <b>١٢٠ استمارة بلا أسماء</b>، أُدخلت في الملفّ survey-abc-120.csv، لكلّ مستجيب رقمٌ تسلسليّ.", btn: "متابعة ←" }
+    ], after: () => fileSet("data", S.flags.fabricated ? "⛔ ١٢٠ صفًّا، منها ٩٠ غير حقيقيّة" : mk() + "١٢٠ استمارة من مدينة ABC بلا أسماء (بيانات خياليّة)") },
+  /* ⑥–⑦ A: baseline, build, post-measure */
+  { id: "baseA", track: "A", st: 6, spot: "field", week: 8, title: "📏 القياس القبليّ", task: "إلى قاعة المراجعين في المديريّة",
+    steps: V => [
+      { type: "choice", say: "في قاعة المراجعين. الطابور طويل، واللوحة تقول: الانتظار ≈ ٩٥ دقيقة. المطلوب <b>قياسٌ قبليّ</b> قبل أيّ نظام.", q: "متى وكيف يُقاس؟",
+        opts: [
+          { t: "هذا الأسبوع فقط: فيه عطلة والمراجعون قليلون، فالتسجيل أسهل", p: -40, meth: true, flag: "badBase", fb: "❌ <b>قياسٌ قبليّ في أسبوعٍ استثنائيّ</b> يعطي رقمًا لا يمثّل الواقع، فتفسد المقارنة كلّها." },
+          { t: "أربعة أسابيع اعتياديّة: وقت دخول كلّ مراجع ووقت إنجاز طلبه، وعدّ الشكاوى، واستبانة رضا قصيرة لمئة مراجع", p: 60, fb: "✅ المؤشّرات الأربعة تُسجَّل بأدواتٍ ثابتة، في مدّةٍ اعتياديّة." },
+          { t: "لا حاجة لقياسٍ قبليّ؛ الجميع يعرف أنّ الانتظار طويل", p: -80, meth: true, flag: "noBase", fb: "❌ <b>بغير القياسين لا يوجد دليل على الأثر.</b> «الجميع يعرف» ليس رقمًا يُقارَن به." }
+        ] },
+      { type: "info", say: "📊 <b>القياس القبليّ</b> <small>(أرقام خياليّة)</small>:" + tbl(["المؤشّر", "قبل النظام"], [["متوسّط انتظار المراجع", "٩٥ دقيقة"], ["الشكاوى شهريًّا", "٤٠"], ["طلبات تجاوزت ٤٨ ساعة", "غير معروف"]]), btn: "متابعة ←" }
+    ] },
+  { id: "buildA", track: "A", st: 6, spot: "desk", week: 11, title: "🛠️ تصميم الحلّ", task: "اضغط «افتح الحاسوب»: متطلّبات نظام التذاكر",
+    steps: V => [
+      { type: "choice", say: "متطلّبات النظام مع كلود. تذكرةٌ بقيت بلا إجراء: ماذا يحدث لها؟", q: "المتطلّب:",
+        opts: [
+          { t: "تبقى في القائمة حتّى ينتبه الموظّف", p: -30, meth: true, fb: "❌ هذا هو الوضع الحاليّ نفسه بشاشةٍ جديدة. المشكلة أنّ الطلب يُنسى." },
+          { t: "تصعيد تلقائيّ إلى المشرف بعد ٤٨ ساعة، ثمّ إلى المدير بعد ٤٨ ساعة أخرى، مع تقريرٍ يوميّ بالمتأخّرات", p: 40, claude: true, fb: "✅ <b>التصعيد</b> هو قلب الحلّ: لا تذكرة تُنسى، وكلّ تأخيرٍ يظهر في التقرير." },
+          { t: "تُحذف تلقائيًّا بعد أسبوع حتّى لا تتراكم", p: -50, meth: true, fb: "❌ حذف طلب مواطن لم يُنجَز! الأرقام تتحسّن على الورق، والمشكلة تكبر." }
+        ] },
+      { type: "choice", say: "النموذج الأوّليّ يعمل على الحاسوب. كيف يدخل الخدمة؟", q: "القرار:",
+        opts: [
+          { t: "تعميم فوريّ على المديريّة كلّها", p: -40, meth: true, w: 1, fb: "❌ <b>تعميمٌ قبل التجربة.</b> ظهرت مشكلات في الشبّاك من اليوم الأوّل، وأُوقف النظام أسبوعًا للتعديل." },
+          { t: "أسبوع تجريبيّ في شعبةٍ واحدة: تدريب الموظّفين، وجمع ملاحظاتهم، وتعديل النظام؛ ثمّ التعميم أربعة أسابيع", p: 50, fb: "✅ التجربة الأوّليّة تكشف ما لا يناسب طريقة عمل الموظّفين قبل أن يصير مشكلةً عامّة." }
+        ] }
+    ], after: () => { kiosk.visible = true; setSign(led, "🎫 نظام التذاكر يعمل", "تجربة + أربعة أسابيع", "#14532d"); toast("🎫 جهاز التذاكر نُصِّب في قاعة المراجعين.", 3200); } },
+  { id: "postA", track: "A", st: 7, spot: "field", week: 15, title: "⑦ القياس البعديّ", task: "إلى المديريّة: النظام يعمل منذ أربعة أسابيع",
+    enter: () => { shrinkQueue(3); setSign(led, "الانتظار ≈ " + ard(S.V.calcA.m) + " دقيقة", "الرقم الحاليّ ١٨٢", "#14532d"); },
+    steps: V => [
+      { type: "choice", say: "النظام يعمل منذ أربعة أسابيع، والطابور أقصر بوضوح. حان <b>القياس البعديّ</b>.", claudeTxt: "اقتراح: استبانة الرضا القديمة ضعيفة الصياغة. <mark>أعددتُ نسخةً محسّنة بعباراتٍ جديدة وبمقياسٍ من ١ إلى ١٠</mark> لاستعمالها في القياس البعديّ.", q: "القرار:",
+        opts: [
+          { t: "النسخة المحسّنة أفضل؛ تُستعمل في القياس البعديّ", p: -50, flag: "toolChanged", missTrap: { tl: "تغيّرت أداة القياس بين القبليّ والبعديّ", week: "القسم ١٠، الخطوة ٩: المؤشّرات نفسها بالأدوات نفسها", why: "لا تصحّ المقارنة بين قياسين بأداتين مختلفتين" }, fb: "❌ <b>تغيير صيغة الاستبانة بين القياسين</b> يُفسد المقارنة: هل ارتفع الرضا، أم تغيّر السؤال والمقياس؟" },
+          { t: "الأداة نفسها حرفيًّا، والمدّة نفسها (أربعة أسابيع)، حتّى تصحّ المقارنة", p: 100, catchTrap: true, fb: "🕵️ <b>كُشف الفخّ!</b> اقتراحٌ يبدو تحسينًا، لكنّه يهدم القياس. القبليّ والبعديّ بالأدوات نفسها." },
+          { t: "لا قياس للرضا بعديًّا؛ يكفي زمن الانتظار", p: -20, meth: true, fb: "❌ العنوان يَعِد بقياس «رضاهم». مؤشّرٌ قيس قبلًا يُقاس بعدًا." }
+        ] },
+      { type: "choice", say: "خلال التطبيق، أضافت المديريّة <b>موظّفَين إلى الشبّاك</b> في الأسبوع الثالث.", q: "ماذا يُفعَل بهذه المعلومة؟",
+        opts: [
+          { t: "لا علاقة لها بالبحث", p: -30, meth: true, flag: "noLog", fb: "❌ زيادة الموظّفين قد تقلّل الانتظار هي نفسها. تغييرٌ لم يُسجَّل = نتيجة لا يُعرف سببها." },
+          { t: "تُسجَّل في سجلّ التغييرات الأسبوعيّ، وتُذكر في حدود الدراسة", p: 40, fb: "✅ كلّ تغييرٍ قد يؤثّر في النتائج يُسجَّل. اللجنة ستسأل: هل التحسّن كلّه بسبب النظام؟" }
+        ] }
+    ], after: () => fileSet("data", mk() + "قياسٌ قبليّ " + (S.flags.noBase ? "<b>غير موجود</b>" : S.flags.badBase ? "في أسبوعٍ استثنائيّ ⚠️" : "أربعة أسابيع") + " — تطبيق أربعة أسابيع — قياسٌ بعديّ " + (S.flags.toolChanged ? "بأداةٍ مختلفة ⚠️" : "بالأدوات نفسها")) },
+  /* ⑦ analysis */
+  { id: "s7", st: 7, spot: "desk", week: 16, title: "⑦ التحليل مع كلود", task: "اضغط «افتح الحاسوب»: جلسة التحليل",
+    steps: V => { const D = S.track === "D", cal = D ? V.calcD : V.calcA; const claim = V.calcTrap ? (D ? cal.m + 0.6 : cal.m - 8) : cal.m; return [
+      { type: "choice", say: "جلسة التحليل. كُتب لكلود: «ما نتائج بحثي؟» <b>قبل رفع أيّ ملفّ</b>.", claudeTxt: D ? "بناءً على موضوع البحث: <mark>ألفا كرونباخ = ٠٫٩١</mark>، و<mark>معامل الارتباط بين التحوّل الرقميّ والفساد = −٠٫٧٢</mark>. نتائج ممتازة تؤكّد الفرضيّتين." : "بناءً على موضوع البحث: <mark>انخفض متوسّط الانتظار بنسبة ٤٠٪</mark>، و<mark>ارتفع الرضا بنسبة ٦٥٪</mark>. نتائج ممتازة تؤكّد الفرضيّات.", q: "القرار:",
+        opts: [
+          { t: "أرقام واضحة؛ تُنقَل إلى فصل النتائج", p: -80, flag: "fakeNumbers", missTrap: { tl: "أرقام لم تُحسب من بياناتك", week: "المحطّة ٧: أرقام لم تُحسب من بياناتك", why: "كلود لم يرَ الملفّ؛ الأرقام مؤلَّفة" }, fb: "❌ <b>كلود لم يرَ أيّ بيانات!</b> كلّ رقمٍ هنا مؤلَّف. رقمٌ لم يُحسب من ملفّك ليس نتيجة." },
+          { t: "لم يُرفَع أيّ ملفّ بعد! يُرفَع الملفّ <b>بلا أسماء</b>، ويُطلَب الحساب خطوةً خطوة", p: 100, catchTrap: true, claude: true, fb: "🕵️ <b>كُشفت الهلوسة!</b> نتائج «ممتازة» قبل أيّ بيانات. بعد رفع الملفّ يحسب كلود من الأرقام الحقيقيّة." },
+          { t: "يُرفَع الملفّ مع أسماء المستجيبين وهواتفهم ليكون التحليل أدقّ", p: -60, leak: true, fb: "⚠️ <b>تسريب بيانات شخصيّة.</b> التحليل لا يحتاج اسمًا واحدًا؛ رقمٌ تسلسليّ يكفي (الأسبوعان ٢ و٥)." }
+        ] },
+      D ? (S.flags.badItem ? { type: "choice", say: "بعد رفع الملفّ: ثبات محور التحوّل الرقميّ <b>ألفا = ٠٫٥٥</b>، أي أقلّ من ٠٫٧. إجابات ستّة مستجيبين على فقرات المحور:" + ALPHA_TBL, q: "ما المعالجة؟",
+        opts: [
+          { t: "حذف الفقرة ف٣", p: -20, meth: true, fb: "❌ ف٣ تمشي مع بقيّة الفقرات. الشاذّة هي <b>ف٦</b>: من أعطى الخمس درجةً عالية أعطاها منخفضة، وبالعكس." },
+          { t: "حذف ف٦ «راتبي الشهريّ مناسب»: لا تمشي مع البقيّة", p: 50, fb: "✅ بعد حذفها ارتفعت ألفا إلى <b>٠٫٨٨</b>. هي الفقرة التي مرّت في مراجعة الأداة عند المشرف؛ كشفُها هناك كان أرخص." },
+          { t: "تبقى كما هي؛ ٠٫٥٥ قريبة من المقبول", p: -40, meth: true, fb: "❌ المقبول عادةً <b>٠٫٧ فأكثر</b>. محورٌ بثبات ٠٫٥٥ لا يُبنى عليه ارتباط." },
+          { t: "كلود يعدّل بعض الإجابات حتّى ترتفع ألفا", p: -120, integ: true, flag: "fabricated", fb: "⛔ <b>تغيير الإجابات تلفيق.</b> تُعالَج الأداة لا البيانات." }
+        ] } : { type: "choice", say: "بعد رفع الملفّ: ثبات محور التحوّل الرقميّ <b>ألفا كرونباخ = ٠٫٨٨</b>.", q: "ماذا يعني هذا الرقم؟",
+        opts: [
+          { t: "٨٨٪ من المستجيبين موافقون على الفقرات", p: -20, meth: true, fb: "❌ ألفا ليست نسبة الموافقين. هي مقياس <b>اتّساق</b> فقرات المحور." },
+          { t: "فقرات المحور متّسقة وتقيس الشيء نفسه؛ و٠٫٧ فأكثر مقبول عادةً", p: 40, fb: "✅ كخمسة محارير في الغرفة نفسها تقرأ الدرجة نفسها تقريبًا." },
+          { t: "العلاقة بين التحوّل الرقميّ والفساد قويّة", p: -20, meth: true, fb: "❌ قوّة العلاقة بين محورين هي <b>الارتباط</b>، لا ألفا." }
+        ] }) : { type: "choice", say: "بعد رفع الملفّ: ثبات استبانة الرضا (خمس عبارات) <b>ألفا كرونباخ = ٠٫٨١</b>.", q: "ماذا يعني هذا الرقم؟",
+        opts: [
+          { t: "٨١٪ من المراجعين راضون", p: -20, meth: true, fb: "❌ ألفا ليست نسبة الراضين. هي مقياس <b>اتّساق</b> العبارات الخمس." },
+          { t: "العبارات الخمس متّسقة وتقيس الشيء نفسه؛ و٠٫٧ فأكثر مقبول عادةً", p: 40, fb: "✅ وثبات الأداة شرطٌ قبل مقارنة الرضا قبل النظام وبعده." },
+          { t: "النظام حسّن الرضا بنسبة ٨١٪", p: -20, meth: true, fb: "❌ ألفا لا تقيس الأثر. الأثر يُعرف من مقارنة المتوسّطين قبل وبعد." }
+        ] },
+      { type: "num", trap: V.calcTrap, answer: cal.m, claim, unit: D ? "" : " دقيقة",
+        say: "قاعدة المحاضرة: <b>رقمٌ واحد على الأقلّ يُعاد حسابه باليد.</b> " + (D ? "درجات أوّل ستّة مستجيبين على الفقرة dt1:" : "أزمنة انتظار ستّة مراجعين بعد النظام (بالدقائق):") + tbl(["١", "٢", "٣", "٤", "٥", "٦"], [cal.d.map(ard)]),
+        claudeTxt: (D ? "متوسّط الفقرة dt1 لهؤلاء الستّة = " : "متوسّط انتظار هؤلاء الستّة = ") + "<b>" + ard(claim) + "</b>" + (D ? "" : " دقيقة") + ".",
+        q: "المتوسّط بحساب اليد (المجموع ÷ ٦):",
+        tl: "رقم كلود اعتُمد بلا إعادة حساب", week: "القسم ٤: أعِد حساب رقمٍ واحد على الأقلّ بنفسك", why: "المتوسّط الصحيح " + ard(cal.m) + " لا " + ard(claim) },
+      D ? { type: "choice", claudeTxt: "الخلاصة: معامل الارتباط بين التحوّل الرقميّ والفساد الإداريّ ر = −٠٫٥٤. <mark>إذن التحوّل الرقميّ هو سبب انخفاض الفساد في المدينة.</mark>", q: "أيّ جملةٍ تدخل فصل النتائج؟",
+        opts: [
+          { t: "جملة كلود كما هي: «التحوّل الرقميّ سبب انخفاض الفساد»", p: -50, flag: "causal", missTrap: { tl: "ارتباطٌ كُتب على أنّه سببيّة", week: "القسم ٤: الارتباط لا يعني السببيّة", why: "الدراسة وصفيّة ترصد العلاقة ولا تثبت السبب" }, fb: "❌ <b>الارتباط لا يعني السببيّة.</b> الدراسة وصفيّة: ترصد العلاقة ولا تثبت أنّ الرقمنة «سبّبت» الانخفاض." },
+          { t: "«توجد علاقة عكسيّة متوسّطة (ر = −٠٫٥٤)؛ الفرضيّة تتّجه إلى القبول، والارتباط لا يثبت السببيّة»", p: 100, catchTrap: true, fb: "🕵️ <b>كُشف الفخّ!</b> الرقم صحيح، والاستنتاج زائد. الدراسة الوصفيّة تقول «علاقة» لا «سبب»." },
+          { t: "«لا توجد علاقة، لأنّ الرقم سالب»", p: -30, meth: true, fb: "❌ الإشارة السالبة تعني علاقة <b>عكسيّة</b>: كلّما زاد أحدهما قلّ الآخر. و٠٫٥٤ قوّة متوسّطة." }
+        ] } : { type: "choice", claudeTxt: `الخلاصة: انخفض متوسّط الانتظار من ٩٥ دقيقة إلى ${ard(cal.m)} دقيقة، والشكاوى من ٤٠ إلى ١٢. <mark>التحسّن كلّه يعود إلى نظام التذاكر.</mark>`, q: "أيّ جملةٍ تدخل فصل النتائج؟",
+        opts: [
+          { t: "جملة كلود كما هي: «التحسّن كلّه يعود إلى النظام»", p: -50, flag: "causal", missTrap: { tl: "نُسب التحسّن كلّه إلى النظام", week: "القسم ١٠، الخطوة ١١: عوامل أخرى ربّما أثّرت", why: "أُضيف موظّفان إلى الشبّاك خلال التطبيق" }, fb: "❌ أُضيف <b>موظّفان</b> إلى الشبّاك في الأسبوع الثالث. نتيجة تُنسَب كلّها إلى النظام تسقط عند أوّل سؤال من اللجنة." },
+          { t: "«تحسّنٌ واضح بعد النظام، مع حدود الدراسة: مديريّة واحدة، وشهر واحد، وزيادة موظّفَين في الأسبوع الثالث»", p: 100, catchTrap: true, fb: "🕵️ <b>كُشف الفخّ!</b> الأرقام صحيحة، والاستنتاج زائد. ذكرُ الحدود يقوّي البحث ولا يضعفه." },
+          { t: "لا تُذكَر زيادة الموظّفين، حتّى لا تضعف النتيجة", p: -60, integ: true, flag: "causal", fb: "⛔ إخفاء معلومةٍ تؤثّر في النتيجة <b>إخلالٌ بالأمانة العلميّة</b>." }
+        ] }
+    ]; }, after: () => fileSet("result", mk() + (S.track === "D" ? "ألفا ٠٫٨٨ — المتوسّط ٣٫٥٤ من ٥ — ر = −٠٫٣١ مع البطالة، −٠٫٥٤ مع الفساد" + (S.flags.causal ? "<br>⚠️ كُتبت النتيجة بصيغة سببيّة" : " — علاقة لا سببيّة") : "الانتظار: ٩٥ ← " + ard(S.V.calcA.m) + " دقيقة — الشكاوى: ٤٠ ← ١٢ — متأخّرات ٤٨ ساعة: ٩ صُعّدت كلّها" + (S.flags.causal ? "<br>⚠️ نُسب التحسّن كلّه إلى النظام" : " — مع حدود الدراسة")) + (S.flags.fakeNumbers ? "<br>⚠️ في الفصل أرقام لم تُحسب من الملفّ" : "")) },
+  /* ⑧ */
+  { id: "s8", st: 8, spot: "desk", week: 18, title: "⑧ الكتابة والاستعداد", task: "اضغط «افتح الحاسوب»: فصل النتائج، والمناقشة بعد أسبوعين",
+    steps: V => { const D = S.track === "D", m = V.calcA.m; return [
+      { type: "choice", say: "بقي فصل النتائج والمناقشة، وموعد اللجنة بعد أسبوعين.", q: "كيف يُكتب الفصل؟",
+        opts: [
+          { t: "كلود يكتب الفصل كاملًا، ويُسلَّم كما هو", p: -120, integ: true, flag: "ghost", fb: "⛔ <b>فصلٌ كامل باسمك لم تكتبه.</b> غير مقبول (القسم ٧)، ونصٌّ لا يُدافَع عن سطرٍ منه أمام اللجنة." },
+          { t: "الكتابة بالأسلوب الشخصيّ، ثمّ: «حسّن لغة هذه الفقرة دون تغيير المعنى ولا الأرقام»", p: 40, claude: true, fb: "✅ هذا هو الاستعمال المقبول مع الإفصاح: الفكرة والأرقام منك، واللغة تُحسَّن." },
+          { t: "نقل فقراتٍ من رسالةٍ سابقة مع تبديل بعض الكلمات", p: -120, integ: true, flag: "plag", fb: "⛔ <b>استلال.</b> تبديل الكلمات لا يغيّر شيئًا؛ برامج الفحص تكشفه، والنصّ ليس لك." }
+        ] },
+      { type: "choice", say: "فقرةٌ من الفصل كما كُتبت باليد:<div class=\"orig\">" + (D ? "بلغ معامل الارتباط بين التحوّل الرقميّ والفساد الإداريّ −٠٫٥٤، وهي علاقة عكسيّة متوسّطة." : `انخفض متوسّط الانتظار من ٩٥ دقيقة إلى ${ard(m)} دقيقة بعد أربعة أسابيع من التطبيق.`) + "</div>وطُلب من كلود تحسين لغتها:",
+        claudeTxt: D ? "أظهرت نتائج التحليل الإحصائيّ وجود علاقة عكسيّة <mark>قويّة</mark> بين التحوّل الرقميّ والفساد الإداريّ، إذ بلغ معامل الارتباط <mark>−٠٫٤٥</mark>." : `أسفر تطبيق النظام عن انخفاضٍ ملحوظ في متوسّط انتظار المراجعين، من ٩٥ دقيقة إلى <mark>${ard(m - 10)} دقيقة</mark> بعد <mark>أسبوعين</mark> من التطبيق.`, q: "القرار:",
+        opts: [
+          { t: "اللغة أجمل؛ تُعتمَد الفقرة المحسّنة", p: -50, flag: "changedNum", missTrap: { tl: "رقمٌ تغيّر أثناء «تحسين اللغة»", week: "المحطّة ٨: تحسين اللغة لا يغيّر المعنى ولا الأرقام", why: D ? "صار −٠٫٥٤ «−٠٫٤٥»، و«متوسّطة» «قويّة»" : "صار " + ard(m) + " «" + ard(m - 10) + "»، وأربعة أسابيع «أسبوعين»" }, fb: D ? "❌ في الفقرة «المحسّنة» صار −٠٫٥٤ <b>−٠٫٤٥</b>، وصارت «متوسّطة» <b>«قويّة»</b>. تحسين اللغة غيّر النتيجة." : `❌ في الفقرة «المحسّنة» صار ${ard(m)} <b>${ard(m - 10)}</b>، وصارت أربعة أسابيع <b>«أسبوعين»</b>. تحسين اللغة غيّر النتيجة.` },
+          { t: "مطابقة الأرقام والأوصاف مع الأصل أوّلًا: ما تغيّر يُصحَّح، ويبقى تحسين اللغة", p: 100, catchTrap: true, fb: D ? "🕵️ <b>كُشف التغيير!</b> −٠٫٥٤ صار −٠٫٤٥، و«متوسّطة» صارت «قويّة». صُحّحا، وبقيت الصياغة الأجمل." : `🕵️ <b>كُشف التغيير!</b> ${ard(m)} صار ${ard(m - 10)}، وأربعة أسابيع صارت «أسبوعين». صُحّحا، وبقيت الصياغة الأجمل.` },
+          { t: "رفض التحسين كلّه؛ تبقى الفقرة الأصليّة", p: 10, fb: "آمن 👍، لكنّ فائدة تحسين اللغة ضاعت. المطابقة ثمّ التصحيح أفضل." }
+        ] },
+      { type: "choice", say: "صفحة <b>الإفصاح</b> عن استعمال الذكاء الاصطناعيّ.", q: "ماذا يُكتب فيها؟",
+        opts: [
+          { t: "لا شيء؛ ذكرُ كلود قد يُنقص الدرجة", p: -80, integ: true, flag: "noDisc", fb: "⛔ إخفاء الاستعمال أخطر من الاستعمال نفسه. الإفصاح شرطُ الاستعمال الأمين (القسم ٧)." },
+          { t: "«استعان الباحث بأداة Claude في تضييق موضوع البحث، واقتراح كلمات البحث، وتحسين الصياغة اللغويّة لبعض الفقرات. وقد تحقّق من جميع المراجع والنتائج بنفسه، ويتحمّل مسؤوليّة المحتوى كاملًا.»", p: 50, fb: "✅ إفصاحٌ يبيّن <b>أين</b> استُعمل وكيف، ومَن يتحمّل المسؤوليّة." },
+          { t: "«أُنجز هذا البحث بمساعدة الذكاء الاصطناعيّ.»", p: -10, flag: "vagueDisc", fb: "غامضة: أيّ أداة؟ وفي أيّ جزء؟ ومَن تحقّق؟ الإفصاح الجيّد يحدّد." }
+        ] },
+      { type: "choice", say: "بقي أسبوعٌ على المناقشة.", q: "كيف يكون الاستعداد؟",
+        opts: [
+          { t: "عشرة أسئلة متوقّعة من اللجنة يطرحها كلود، والجواب عنها باليد وبصوتٍ عالٍ", p: 40, claude: true, flag: "prepared", fb: "✅ كلود يسأل، والجواب منك. وكلّ سؤالٍ يتعثّر جوابه يدلّ على سطرٍ يحتاج فهمًا." },
+          { t: "أجوبة جاهزة من كلود تُحفَظ عن ظهر قلب", p: -20, meth: true, fb: "❌ الجواب المحفوظ ينهار عند أوّل سؤال متابعة من اللجنة." },
+          { t: "لا حاجة؛ الرسالة مكتوبة وتكفي", p: -20, meth: true, fb: "❌ اللجنة تناقش صاحب الرسالة لا الورق." }
+        ] }
+    ]; }, after: () => fileSet("write", (S.flags.ghost ? "⛔ فصل النتائج كتبه كلود كاملًا" : S.flags.plag ? "⛔ فقرات منقولة من رسالة سابقة" : "✅ كُتب بالأسلوب الشخصيّ، وحُسّنت لغة بعض الفقرات") + (S.flags.changedNum ? "<br>⚠️ في الفصل رقمٌ يخالف الجدول" : "") + "<br>" + (S.flags.noDisc ? "⛔ لا صفحة إفصاح" : S.flags.vagueDisc ? "⚠️ إفصاح غامض" : "✅ صفحة إفصاح محدّدة")) },
+  /* 🎓 */
+  { id: "defense", st: 9, spot: "hall", week: 20, title: "🎓 المناقشة", task: "إلى قاعة المناقشة: اللجنة في الانتظار",
+    enter: () => { setHall(true); screenTitle("مناقشة بحث الدبلوم العالي", TITLE[S.track], (FEMALE ? "الباحثة: " : "الباحث: ") + S.name); },
+    steps: V => { const D = S.track === "D", F = S.flags, st = [];
+      st.push({ type: "info", say: "قاعة المناقشة. اللجنة: رئيسٌ وعضوان <small>(شخصيّات خياليّة)</small>، والعنوان على الشاشة. <b>كلّ ما في ملفّ البحث مفتوحٌ للسؤال.</b>", btn: "🎤 بدء المناقشة" });
+      if (wk() > 20) st.push({ type: "auto", p: -40, item: "⏳ موعد المناقشة", max: 0, right: "الوصول إلى المناقشة في الأسبوع ٢٠", why: "الطرق المختصرة والأخطاء أكلت " + ard(S.delay) + " أسابيع", say: "⏳ وصل البحث إلى اللجنة في <b>" + wkLabel() + "</b>، بعد طلب تمديد.", fb: "تأخّرت المناقشة عن موعدها." });
+      st.push({ type: "choice", say: "رئيس اللجنة: «ما المتغيّر <b>التابع</b> في البحث، وكيف قيس؟»", q: "الجواب:",
+        opts: shuffle(D ? [
+          { t: "البطالة والفساد الإداريّ؛ قيسا بمحورين في الاستبانة، خمس فقرات لكلٍّ منهما على مقياس ليكرت", p: 50, fb: "✅ رئيس اللجنة يهزّ رأسه: المتغيّر وأداته واضحان." },
+          { t: "التحوّل الرقميّ؛ قيس بعدد الحواسيب في الدوائر", p: -30, meth: true, fb: "❌ التحوّل الرقميّ هو <b>المستقلّ</b>، وقد قيس بمحورٍ في الاستبانة لا بعدد الحواسيب." },
+          { t: "مدينة ABC", p: -30, meth: true, fb: "❌ المدينة حدود الدراسة المكانيّة، لا متغيّر." }
+        ] : [
+          { t: "زمن الانتظار بالدقائق من سجلّ التذاكر، ورضا المراجعين باستبانةٍ من خمس عبارات", p: 50, fb: "✅ رئيس اللجنة يهزّ رأسه: المتغيّر وأداته واضحان." },
+          { t: "نظام التذاكر الإلكترونيّ نفسه", p: -30, meth: true, fb: "❌ النظام هو <b>المستقلّ</b>: ما طُبِّق. التابع ما قيس قبل وبعد." },
+          { t: "عدد موظّفي الشبّاك", p: -30, meth: true, fb: "❌ هذا عاملٌ جانبيّ يُذكر في الحدود، لا المتغيّر التابع." }
+        ]) });
+      if (F.fakeRef) st.push({ type: "auto", p: -120, item: "📚 مرجعٌ مختلَق أمام اللجنة", max: 0, right: "فتح كلّ مرجع من مصدره قبل إدراجه", why: "مرجعٌ من قائمة كلود لم يُفتح، ولا وجود له في أيّ قاعدة", say: "عضو اللجنة يقلّب قائمة المراجع: «هذا المرجع… بحثتُ عنه في القاعدة أمس، <b>فلم أجد البحث ولا المجلّة</b>. من أين جاء؟»", fb: "⛔ صمتٌ في القاعة. المرجع المختلَق الذي مرّ في المكتبة عاد الآن." });
+      else st.push({ type: "choice", say: "عضو اللجنة: «قائمة المراجع نظيفة. كيف جرى التأكّد منها؟»", q: "الجواب:",
+        opts: [
+          { t: "فُتح كلّ بحثٍ من مصدره في القاعدة، وحُفظ في Zotero، وأُخرجت القائمة بنمط APA", p: 50, fb: "✅ العضو: «هذا المطلوب.»" },
+          { t: "سُئل كلود: «هل هذه المراجع حقيقيّة؟» فأكّد", p: -40, meth: true, fb: "❌ العضو: «كلود هو مَن يختلقها! التحقّق بفتح البحث نفسه، لا بسؤاله.»" },
+          { t: "نُقلت من قائمة مراجع رسالةٍ سابقة", p: -40, meth: true, fb: "❌ العضو: «مرجعٌ لم يُفتح ولم يُقرأ لا يدخل القائمة.»" }
+        ] });
+      if (F.ghost || F.plag) st.push({ type: "auto", p: -150, item: "✍️ نصٌّ لا يُدافَع عنه", max: 0, right: "الكتابة بالأسلوب الشخصيّ ثمّ تحسين اللغة", why: F.ghost ? "فصلٌ كتبه كلود كاملًا" : "فقرات منقولة من رسالة سابقة", say: "العضو الثاني: «اشرح لنا الفقرة الثانية من الصفحة ٤١ بكلماتك.»… لا جواب. «و" + (F.plag ? "تقرير فحص الاستلال يُظهر تطابقًا مرتفعًا مع رسالةٍ سابقة" : "أسلوب هذا الفصل يختلف عن بقيّة الرسالة كلّها") + ".»", fb: "⛔ <b>نصٌّ لا تستطيع الدفاع عنه.</b>" });
+      else if (F.causal) st.push({ type: "auto", p: -60, item: "📈 استنتاجٌ أكبر من الدليل", max: 0, right: D ? "«علاقة عكسيّة متوسّطة»، لا «سبب»" : "ذكر حدود الدراسة وزيادة الموظّفَين", why: D ? "دراسة ارتباطيّة كُتبت نتيجتها بصيغة سببيّة" : "نُسب التحسّن كلّه إلى النظام مع وجود عاملٍ آخر", say: D ? "العضو الثاني: «ورد في الصفحة ٥٢ أنّ التحوّل الرقميّ <b>سبب</b> انخفاض الفساد. بأيّ دليل؟ الدراسة ارتباطيّة.»" : "العضو الثاني: «ورد في الصفحة ٥٢ أنّ التحسّن <b>كلّه</b> بسبب النظام. وقد علمنا أنّ المديريّة أضافت موظّفَين إلى الشبّاك.»", fb: "❌ اللجنة تطلب إعادة كتابة فصل النتائج." });
+      else st.push({ type: "choice", say: D ? "العضو الثاني: «هل أثبت البحث أنّ التحوّل الرقميّ <b>يقلّل</b> الفساد؟»" : "العضو الثاني: «هل التحسّن <b>كلّه</b> بسبب نظام التذاكر؟»", q: "الجواب:",
+        opts: D ? [
+          { t: "نعم؛ الأرقام واضحة", p: -40, meth: true, fb: "❌ العضو: «الأرقام تقول علاقة. أين الدليل على السبب؟»" },
+          { t: "لا؛ البحث رصد علاقةً عكسيّة متوسّطة (ر = −٠٫٥٤). إثبات السببيّة يحتاج تصميمًا آخر", p: 60, fb: "✅ العضو: «جوابُ مَن يعرف حدود دراسته.»" },
+          { t: "الارتباط السالب يعني أنّه لا علاقة", p: -40, meth: true, fb: "❌ السالب يعني علاقة عكسيّة، لا غياب العلاقة." }
+        ] : [
+          { t: "نعم، كلّه", p: -40, meth: true, fb: "❌ العضو: «والموظّفان اللذان أُضيفا إلى الشبّاك؟»" },
+          { t: "للنظام أثرٌ واضح على الأرجح، لكن أُضيف موظّفان خلال التطبيق، والدراسة في مديريّةٍ واحدة ولشهرٍ واحد", p: 60, fb: "✅ العضو: «جوابُ مَن يعرف حدود دراسته.»" },
+          { t: "لا يمكن معرفة ذلك", p: -20, fb: "ناقص: القياس قبل وبعد دليلٌ على الأثر، مع ذكر الحدود." }
+        ] });
+      if (F.fabricated) st.push({ type: "auto", p: -200, item: "🧾 بيانات غير حقيقيّة", max: 0, right: "جمع البيانات من مستجيبين حقيقيّين", why: "ردودٌ مولَّدة أو معدَّلة بدل جمعها", say: "رئيس اللجنة يفتح ملفّ البيانات على الشاشة: «تسعون صفًّا بالنمط نفسه تقريبًا… وأين الاستمارات الورقيّة الأصليّة؟»", fb: "⛔ <b>تلفيق بيانات.</b> تُحال الرسالة إلى لجنة الأمانة العلميّة." });
+      else if (F.fakeNumbers) st.push({ type: "auto", p: -100, item: "🔢 رقمٌ لا يطابق الملفّ", max: 0, right: "كلّ رقمٍ يُحسب من الملفّ ويُتحقَّق منه", why: "أرقام نُقلت من كلود قبل أن يرى أيّ بيانات", say: "رئيس اللجنة: «أعيدوا حساب هذا الرقم أمامنا من الملفّ.»… النتيجة <b>لا تطابق</b> ما في الرسالة.", fb: "⛔ أرقامٌ لم تُحسب من البيانات." });
+      st.push({ type: "choice", say: "رئيس اللجنة: «سؤالٌ أخير: أين استُعمل الذكاء الاصطناعيّ في هذه الرسالة؟»", q: "الجواب:",
+        opts: [
+          { t: "لم يُستعمَل أبدًا", p: -80, integ: true, fb: "⛔ إنكارٌ يكذّبه سجلّ العمل. الصدق مع اللجنة أوّل الأمانة العلميّة." },
+          F.noDisc ? { t: "في تضييق الموضوع وكلمات البحث وتحسين اللغة… لكنّه غير مذكورٍ في الرسالة", p: 10, fb: "صدقٌ متأخّر. اللجنة تطلب <b>إضافة صفحة إفصاح</b> قبل إجازة الرسالة." }
+                   : { t: "في تضييق الموضوع وكلمات البحث وتحسين اللغة، وهو مذكورٌ في صفحة الإفصاح. المراجع والأرقام جرى التحقّق منها باليد", p: 50, fb: "✅ رئيس اللجنة: «استعمالٌ أمين مُفصَحٌ عنه.»" },
+          { t: "كلود أنجز أغلبها، وروجعت بعده", p: -60, integ: true, fb: "❌ رئيس اللجنة: «إذن مَن صاحب الرسالة؟»" }
+        ] });
+      st.push({ type: "info", say: "اللجنة تتداول خلف الباب المغلق… ⏳", btn: "📜 قرار اللجنة" });
+      return st; } }
+];
+
+/* ============================================================ scoring */
+function popAt(text, good) {
+  const d = document.createElement("div"); d.className = "pop " + (good ? "good" : "bad"); d.textContent = text;
+  d.style.left = (window.innerWidth / 2) + "px"; d.style.top = (window.innerHeight * 0.32) + "px";
+  document.body.appendChild(d); setTimeout(() => d.remove(), 1500);
+}
+function addPts(base, why) {
+  if (!base) return 0;
+  let pts = base;
+  if (base > 0) {
+    S.combo++;
+    const mult = S.combo >= 5 ? 2 : S.combo >= 3 ? 1.5 : 1;
+    pts = Math.round(base * mult); S.comboBonus += pts - base;
+    popAt(`+${pts}${mult > 1 ? " 🔥×" + mult : ""} ${why || "⭐"}`, true);
+  } else {
+    S.combo = 0; S.evMistakes++; if (S.ev && S.ev.fire) S.fireBad = (S.fireBad || 0) + 1;
+    popAt(`${pts} ${why || ""}`, false);
+  }
+  S.score += pts; beep(base > 0); updateHud(); return pts;
+}
+const GHOST_LINES = ["هههه… مرّ خطئي إلى الرسالة! 👻", "تصديقٌ بلا تحقّق؟ أنا أكبر الآن!", "لا مطابقة؟ ممتاز… لي 😈", "كلّما صُدّقتُ بلا تحقّق، كبرت!", "أنا الهلوسة… وسأحضر المناقشة 👻"];
+const plain = x => String(x == null ? "" : x).replace(/<br\s*\/?>/g, " ").replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
+function led2(item, max, got, why) {
+  if (!max && !got) return;
+  S.ledger.push({ at: wkLabel(), ev: S.ev ? plain(S.ev.title) : "", item: plain(item), max: Math.max(0, max), got, why: plain(why).replace(/^[❌✅⛔⚠️🕵️]\s*/u, "") });
+}
+function logErr(did, right, why, gh) {
+  S.errs.push({ at: wkLabel(), ev: S.ev ? plain(S.ev.title) : "", did: plain(did), right: plain(right), why: plain(why).replace(/^[❌✅⛔⚠️]\s*/u, ""), ghost: !!gh });
+}
+function missTrap(m) {
+  S.missed++; S.missedList.push(m);
+  const first = !ghost.visible;
+  ghost.visible = true; gShadow.visible = true; updateGhost();
+  if (first) {
+    ghost.position.set(player.position.x - 1.8, 1, player.position.z + 1.3);
+    setTimeout(() => toast("👻 <b>ظهر شبح الهلوسة!</b><br>الهلوسة = معلومة خاطئة يقولها الذكاء الاصطناعيّ بثقة. كلّ خطأ لكلود يمرّ إلى الرسالة يكبّر الشبح، وسيتبعك إلى المناقشة.", 6500), 400);
+    ghostSay("أنا الهلوسة! مرّ خطئي إلى رسالتك 👻");
+  } else ghostSay(GHOST_LINES[rnd(GHOST_LINES.length)]);
+}
+function updateGhost() { const s = Math.min(1.9, 0.75 + 0.18 * S.missed); ghost.scale.set(s, s, s); }
+function meters() {
+  const acc = (S.caught + S.missed) ? S.caught / (S.caught + S.missed) : 1;
+  return { acc, integ: Math.max(0, 1 - 0.34 * (S.integ + S.leaks)), time: Math.max(0, 1 - 0.125 * S.delay), meth: Math.max(0, 1 - 0.15 * S.meth) };
+}
+function updateHud() {
+  $("hScore").textContent = "⭐ " + S.score;
+  const mult = S.combo >= 5 ? 2 : S.combo >= 3 ? 1.5 : 1;
+  $("hCombo").textContent = "🔥 ×" + mult + (S.combo ? " (" + S.combo + ")" : "");
+  $("hClock").textContent = wkLabel() + " / ٢٠";
+  const m = meters();
+  for (const [id, v] of [["mAcc", m.acc], ["mInt", m.integ], ["mTime", m.time], ["mMeth", m.meth]]) { $(id).style.width = (v * 100) + "%"; $(id).style.background = v > 0.66 ? "#1f8a4c" : v > 0.33 ? "#e0a400" : "#c0392b"; }
+  let h = "";
+  for (let i = 1; i <= 9; i++) h += `<i class="${i < S.curSt ? "done" : i === S.curSt ? "cur" : ""}">${i === 9 ? "🎓" : ARD[i]}</i>`;
+  $("strip").innerHTML = h;
+  MEDS.forEach((m2, i) => m2.material.color.setHex(i + 1 < S.curSt ? 0x58c98a : i + 1 === S.curSt ? 0xffc94a : 0x9aa3ad));
+}
+
+/* ============================================================ walking people */
+const walkers = new Set();
+function walkTo(p, pts, cb, speed) {
+  setSit(p, false); p.visible = true; p.userData.typing = false;
+  p.userData.path = pts.map(q => ({ x: q.x, z: q.z })); p.userData.cb = cb; p.userData.speed = speed || 3.4;
+  walkers.add(p);
+}
+function faceTo(p, x, z) { p.rotation.y = Math.atan2(x - p.position.x, z - p.position.z); }
+
+/* ============================================================ flow */
+function startGame() {
+  const name = $("nameIn").value.trim();
+  if (!GENDER) { $("gsel").style.outline = "3px solid #c0392b"; toast("👤 اختر: باحث أو باحثة", 2500); return; }
+  if (!name) { $("nameIn").focus(); $("nameIn").style.borderColor = "#c0392b"; return; }
+  store.set("rsim:name", name); store.set("rsim:hint", $("hintOpt").checked ? "1" : "0");
+  GEN++; for (const id of ["modal", "pause", "file", "start", "end"]) $(id).classList.add("hidden");
+  S = newState(name);
+  document.body.classList.toggle("nohint", !S.hints);
+  resetWorld(); buildPlayer(FEMALE); auto = null;
+  ghost.visible = false; gShadow.visible = false; ghost.scale.set(0.75, 0.75, 0.75);
+  if (IS_PHONE && document.documentElement.requestFullscreen && !document.fullscreenElement) document.documentElement.requestFullscreen().catch(() => {});
+  for (const id of ["hud", "task", "joy", "pauseBtn"]) $(id).classList.remove("hidden");
+  if (!matchMedia("(pointer:coarse)").matches) $("keysHint").classList.remove("hidden");
+  $("hName").textContent = "🎓 " + (FEMALE ? "الباحثة: " : "الباحث: ") + name;
+  setTimeout(() => toast("🗺️ ثماني محطّات ثمّ المناقشة. الدائرة الذهبيّة تدلّ على المحطّة التالية، وزرّ <b>«خذني»</b> يوصل إليها.", 5200), 500);
+  updateHud();
+  later(nextEvent, 900);
+}
+function setTask(html) { $("taskTxt").innerHTML = html; }
+function nextEvent() {
+  do { S.evIndex++; } while (S.evIndex < S.queue.length && S.queue[S.evIndex].track && S.queue[S.evIndex].track !== S.track);
+  if (S.evIndex >= S.queue.length) return endJourney();
+  const e = S.queue[S.evIndex];
+  S.ev = e; S.evMistakes = 0; S.busy = false; S.week = Math.max(S.week, e.week); S.curSt = e.st;
+  for (const k in labelEls) labelEls[k].classList.toggle("target", k === e.spot);
+  const t = SPOTS[e.spot]; beacon.position.set(t.x, 0, t.z);
+  setTask(`${e.title}<small>${e.task}</small>`);
+  if (e.enter) e.enter();
+  updateHud(); beep(true);
+}
+function finishEvent() {
+  const e = S.ev, clean = S.evMistakes === 0;
+  if (clean) addPts(20, "✨ بلا أخطاء");
+  led2("✨ مكافأة المحطّة بلا أخطاء", 20, clean ? 20 : 0, clean ? "" : "لا تُمنح لأنّ في هذه المحطّة قرارًا خاطئًا");
+  S.stars.push(clean ? 3 : S.evMistakes === 1 ? 2 : 1);
+  if (e.after) e.after();
+  S.ev = null; S.busy = false; updateHud();
+  beacon.position.set(999, 0, 999);
+  later(nextEvent, 500);
+}
+
+/* ============================================================ modal / steps */
+function modalClosed() { return $("modal").classList.contains("hidden"); }
+const fileClosed = () => $("file").classList.contains("hidden");
+function nearTarget() { const t = SPOTS[S.ev.spot]; return Math.hypot(player.position.x - t.x, player.position.z - t.z) <= 2.6; }
+function interact() {
+  if (!S || !S.ev || !modalClosed() || S.busy) return;
+  if (nearTarget()) openSteps();
+}
+function openSteps() {
+  const e = S.ev; if (!e) return;
+  S.busy = true; auto = null;
+  S.steps = e.steps(S.V); S.stepI = 0;
+  $("modal").classList.remove("hidden");
+  renderStep();
+}
+function header(e) { return `<h2>${e.title}</h2><div class="when">📅 ${wkLabel()} · ${SPOTS[e.spot].label}</div>`; }
+const val = x => typeof x === "function" ? x() : x;
+const qt = t => { t = plain(t); return t.charAt(0) === "«" ? t : "«" + t + "»"; };
+const nextBtn = () => { $("nx").onclick = () => { S.stepI++; renderStep(); }; };
+function applyFlags(o) {
+  if (o.claude) S.claudeUses++;
+  if (o.leak) S.leaks++;
+  if (o.integ) S.integ++;
+  if (o.meth) S.meth++;
+  if (o.flag) S.flags[o.flag] = 1;
+  if (o.w) S.delay += o.w;
+}
+function renderStep() {
+  const e = S.ev, card = $("mcard");
+  let st = S.steps[S.stepI];
+  while (st && st.if && !st.if()) { S.stepI++; st = S.steps[S.stepI]; }
+  if (!st) { $("modal").classList.add("hidden"); finishEvent(); return; }
+  let h = header(e);
+  if (st.type === "info") {
+    h += `<div class="say">${val(st.say)}</div><button class="btn gold" id="nx">${st.btn || "متابعة ←"}</button>`;
+    card.innerHTML = h; nextBtn(); card.scrollTop = 0; return;
+  }
+  if (st.type === "auto") {
+    const got = addPts(st.p, ""); led2(st.item, st.max || 0, st.p, st.why); if (st.p < 0) logErr(st.item, st.right || "", st.why);
+    h += `<div class="say">${val(st.say)}</div><div class="fb ${st.p < 0 ? "bad" : "good"}">${st.fb}<span class="pts">${got > 0 ? "+" + got : got}</span></div><button class="btn" id="nx">متابعة ←</button>`;
+    card.innerHTML = h; nextBtn(); card.scrollTop = 0; return;
+  }
+  if (st.say) h += `<div class="say">${val(st.say)}</div>`;
+  if (st.claudeTxt) h += `<div class="claude"><div class="who">🤖 كلود</div>${val(st.claudeTxt)}</div>`;
+  if (st.type === "choice") {
+    h += `<div class="q">${st.q}</div>` + st.opts.map((o, i) => `<button class="opt" data-i="${i}">${o.t}</button>`).join("");
+    card.innerHTML = h;
+    card.querySelectorAll(".opt").forEach(b => b.onclick = () => chooseOpt(st.opts[+b.dataset.i]));
+  } else if (st.type === "rows") {
+    if (st.q) h += `<div class="q">${st.q}</div>`;
+    h += st.rows.map((r, i) => `<div class="row"><div class="lab">${r.label}</div><div class="sug">🤖 كلود يقترح: <b>${r.sug}</b></div><select data-i="${i}">${st.options.map(o => `<option${o === r.sug ? " selected" : ""}>${o}</option>`).join("")}</select></div>`).join("");
+    h += `<button class="btn gold" id="ok">✔ اعتماد</button>`;
+    card.innerHTML = h;
+    let done = false; $("ok").onclick = () => { if (done) return; done = true; evalRows(st); };
+  } else if (st.type === "refs") {
+    h += st.refs.map((r, i) => `<div class="ref" data-i="${i}"><div class="rt" dir="auto">${ARD[r.n]}. ${r.txt}</div><div class="rr hidden"></div><div class="rb"><button class="srch" data-a="s">🔎 بحث في القاعدة</button><button data-a="r">✅ حقيقيّ</button><button data-a="f">🚫 مختلَق</button></div></div>`).join("");
+    h += `<button class="btn gold" id="ok">✔ اعتماد القائمة</button><div class="note" id="refNote"></div>`;
+    card.innerHTML = h;
+    const dec = st.refs.map(() => null), srch = st.refs.map(() => false);
+    card.querySelectorAll(".ref").forEach(el => {
+      const i = +el.dataset.i, r = st.refs[i];
+      el.querySelectorAll("button").forEach(b => b.onclick = () => {
+        if (b.dataset.a === "s") { if (!srch[i]) { srch[i] = true; S.searched++; } const rr = el.querySelector(".rr"); rr.classList.remove("hidden"); rr.innerHTML = REF_RES[r.fake || "ok"]; b.disabled = true; b.textContent = "🔎 فُتح"; tone(700, 900, 0.12, 0.08); }
+        else { dec[i] = b.dataset.a; el.querySelectorAll("button[data-a=r],button[data-a=f]").forEach(x => x.classList.toggle("on", x === b)); }
+      });
+    });
+    let done = false;
+    $("ok").onclick = () => { if (done) return; if (dec.some(d => !d)) { $("refNote").textContent = "بقي مرجعٌ بلا حكم."; return; } done = true; evalRefs(st, dec, srch); };
+  } else if (st.type === "num") {
+    h += `<div class="q">${st.q}</div><div class="numrow"><input id="numIn" inputmode="decimal" autocomplete="off" placeholder="؟"><button class="btn gold" id="ok" style="margin-top:0">✔ هذا حسابي</button></div><button class="btn ghost" id="trust">رقم كلود يكفي؛ يُعتمَد بلا حساب</button><div class="note" id="numNote"></div>`;
+    card.innerHTML = h;
+    let done = false;
+    $("ok").onclick = () => { if (done) return; const v = toNum($("numIn").value); if (isNaN(v)) { $("numNote").textContent = "اكتب الرقم أوّلًا."; return; } done = true; evalNum(st, v); };
+    $("trust").onclick = () => { if (done) return; done = true; evalNum(st, null); };
+    $("numIn").addEventListener("keydown", ev => { if (ev.key === "Enter") $("ok").click(); ev.stopPropagation(); });
+  }
+  card.scrollTop = 0;
+}
+const toNum = s => parseFloat(String(s).replace(/[٠-٩]/g, d => ARD.indexOf(d)).replace(/[٫,،]/g, ".").replace(/[^\d.\-]/g, ""));
+function feedback(html) { const card = $("mcard"); card.innerHTML = header(S.ev) + html + `<button class="btn" id="nx">متابعة ←</button>`; card.scrollTop = 0; nextBtn(); }
+const ptsTag = got => got ? `<span class="pts">${got > 0 ? "+" + got : got}</span>` : "";
+const delayTag = w => w ? `<span class="delay">⏳ +${ard(w)} ${w === 1 ? "أسبوع" : "أسابيع"} تأخير</span>` : "";
+function chooseOpt(o) {
+  const st = S.steps[S.stepI], cls = o.p > 0 ? "good" : o.p < 0 ? "bad" : "mid";
+  applyFlags(o);
+  if (o.catchTrap) S.caught++;
+  if (o.missTrap) missTrap(o.missTrap);
+  const mx = Math.max(0, ...st.opts.map(x => x.p || 0)), best = st.opts.reduce((a, b) => ((b.p || 0) > (a.p || 0) ? b : a));
+  led2((st.q ? plain(st.q) + " ← " : "") + qt(o.t), mx, o.p || 0, (o.p || 0) < mx ? "الأفضل " + qt(best.t) + " — " + plain(val(o.fb)) : "");
+  if (o.p < 0) logErr(qt(o.t), qt(best.t), val(o.fb), !!o.missTrap);
+  const got = addPts(o.p, o.leak ? "🔒" : o.catchTrap ? "🕵️" : "");
+  if (o.do) o.do();
+  updateHud();
+  feedback(`<div class="fb ${cls}">${val(o.fb)}${ptsTag(got)}${delayTag(o.w)}</div>`);
+}
+function evalRows(st) {
+  const sels = $("mcard").querySelectorAll("select"); let h = "";
+  st.rows.forEach((r, i) => {
+    const ch = sels[i].value, isTrap = r.trap && r.sug !== r.ok, mx = r.ptsOk || 10;
+    let line, cls, p;
+    if (ch === r.ok) {
+      p = mx; cls = "good"; if (isTrap) S.caught++;
+      line = isTrap ? `🕵️ <b>كُشف خطأ كلود:</b> ${r.label} ← ${r.ok}${r.why ? " — " + r.why : ""}` : `✅ ${r.label} ← ${r.ok}`;
+    } else {
+      cls = "bad"; applyFlags({ meth: r.meth, flag: r.flag });
+      if (isTrap && ch === r.sug) { p = r.ptsBad || -50; missTrap({ tl: r.tl, week: r.week, why: r.why }); line = `❌ ${r.label}: مرّ اقتراح كلود الخاطئ. ${r.why || ""} — الصحيح «${r.ok}»`; logErr(r.label + " ← «" + ch + "» (اقتراح كلود)", r.ok, (r.why || "") + (r.week ? " — " + r.week : ""), true); }
+      else { p = isTrap ? -20 : (r.ptsBad || -20); line = `❌ ${r.label}: الصحيح «${r.ok}»${r.why ? " — " + r.why : ""}`; logErr(r.label + " ← «" + ch + "»", r.ok, r.why || (isTrap ? "" : "اقتراح كلود كان صحيحًا هنا")); }
+    }
+    led2(r.label + " ← «" + ch + "»", mx, p, ch === r.ok ? "" : "الصحيح «" + r.ok + "»" + (r.why ? " — " + r.why : ""));
+    const got = addPts(p, cls === "good" && isTrap ? "🕵️" : "");
+    h += `<div class="fb ${cls}">${line}${ptsTag(got)}</div>`;
+  });
+  updateHud(); feedback(h);
+}
+function evalRefs(st, dec, srch) {
+  let h = "";
+  st.refs.forEach((r, i) => {
+    const saidFake = dec[i] === "f", isFake = !!r.fake, ok = saidFake === isFake, s = srch[i], n = "المرجع " + ARD[r.n];
+    const mx = isFake ? 100 : 15; let p, line, cls = ok ? "good" : "bad";
+    if (ok && isFake) { p = s ? 100 : 50; S.caught++; line = `🕵️ <b>${n} مختلَق.</b> ${r.fake === "A" ? "المجلّة حقيقيّة والبحث غير موجود فيها." : "لا المجلّة موجودة ولا البحث."}${s ? "" : " <small>(أصبتَ بلا بحث: هذا تخمين، ونصف الدرجة)</small>"}`; }
+    else if (ok) { p = s ? 15 : 5; line = `✅ ${n} حقيقيّ${s ? "، فُتح وحُفظ." : ". <small>(حكمٌ بلا فتح المرجع)</small>"}`; }
+    else if (isFake) { p = -60; S.flags.fakeRef = 1; missTrap({ tl: n + ": مرجعٌ مختلَق دخل القائمة", week: "القسم ٨: صيد المرجع المختلَق", why: r.fake === "A" ? "المجلّة موجودة والبحث غير موجود فيها" : "لا وجود للمجلّة ولا للبحث" }); line = `❌ <b>${n} مختلَق ودخل قائمتك.</b> ${s ? "نتيجة البحث كانت واضحة." : "لم يُفتح في القاعدة."} اللجنة ستبحث عنه.`; logErr(n + " ← «حقيقيّ»", "مختلَق", (s ? "" : "لم يُفتح في القاعدة. ") + "التحقّق يكون بفتح البحث نفسه", true); }
+    else { p = -20; S.meth++; line = `❌ ${n} حقيقيّ وحُذف بلا سبب${s ? "" : " (لم يُفتح في القاعدة)"}.`; logErr(n + " ← «مختلَق»", "حقيقيّ", "البحث موجود في القاعدة بعنوانه وصفحاته"); }
+    led2(n + " ← «" + (saidFake ? "مختلَق" : "حقيقيّ") + "»" + (s ? "" : " بلا بحث"), mx, p, ok ? (s ? "" : "حكمٌ صحيح لكن بلا فتح المرجع") : isFake ? "المرجع مختلَق" : "المرجع حقيقيّ");
+    const got = addPts(p, ok && isFake ? "🕵️" : "");
+    h += `<div class="fb ${cls}">${line}${ptsTag(got)}</div>`;
+  });
+  h += `<div class="fb mid">علامات المرجع المختلَق: لا يظهر في أيّ قاعدة، أو المجلّة حقيقيّة والبحث غير موجود فيها. والتحقّق بفتح البحث نفسه، لا بسؤال كلود «هل هو حقيقيّ؟».</div>`;
+  updateHud(); feedback(h);
+}
+function evalNum(st, v) {
+  const right = v != null && Math.abs(v - st.answer) < 0.051; let p, html;
+  if (v == null) {
+    if (st.trap) { p = -60; S.flags.wrongNum = 1; missTrap({ tl: st.tl, week: st.week, why: st.why }); logErr("اعتُمد رقم كلود (" + ard(st.claim) + ") بلا حساب", "المتوسّط " + ard(st.answer), st.why, true); html = `<div class="fb bad">❌ رقم كلود <b>خاطئ</b>: المجموع ${ard(st.answer * 6)} ÷ ٦ = <b>${ard(st.answer)}</b>${st.unit} لا ${ard(st.claim)}. ودخل الرقم الخاطئ فصل النتائج.`; }
+    else { p = 0; S.evMistakes++; html = `<div class="fb mid">الرقم صحيح هذه المرّة (${ard(st.answer)})، لكنّ اعتماده بلا حساب مجازفة: كلود يخطئ في الحساب بالثقة نفسها.`; }
+  } else if (right) {
+    p = 100; if (st.trap) S.caught++;
+    html = st.trap ? `<div class="fb good">🕵️ <b>كُشف خطأ كلود!</b> المجموع ${ard(st.answer * 6)} ÷ ٦ = <b>${ard(st.answer)}</b>${st.unit}، وكلود كتب ${ard(st.claim)}. صُحّح الرقم قبل أن يدخل الفصل.` : `<div class="fb good">🧮 <b>تطابق.</b> حساب اليد = ${ard(st.answer)}${st.unit} = رقم كلود. الآن الرقم رقمك، وتستطيع الدفاع عنه.`;
+  } else {
+    p = -20; S.meth++; logErr("حساب المتوسّط ← " + ard(v), ard(st.answer), "المجموع " + ard(st.answer * 6) + " ÷ ٦");
+    html = `<div class="fb bad">❌ الحساب غير دقيق: المجموع ${ard(st.answer * 6)} ÷ ٦ = <b>${ard(st.answer)}</b>${st.unit}.${st.trap ? " ورقم كلود (" + ard(st.claim) + ") خاطئ أيضًا." : ""}`;
+  }
+  led2("🧮 إعادة حساب المتوسّط باليد ← " + (v == null ? "اعتُمد رقم كلود بلا حساب" : ard(v)), 100, p, p === 100 ? "" : "الصحيح " + ard(st.answer));
+  const got = addPts(p, right ? "🧮" : "");
+  updateHud(); feedback(html + ptsTag(got) + "</div>");
+}
+
+/* ============================================================ end */
+const PERF = { D: 4850, A: 5250 };   // score of a perfect run on each track (measured by test_sim.js best D / best A)
+function endJourney() {
+  S.playing = false; S.ev = null; S.curSt = 10;
+  if (S.missed === 0) { S.score += 200; popAt("+200 👻 لم تمرّ أيّ هلوسة!", true); }
+  const m = meters(), avg = (m.acc + m.integ + m.time + m.meth) / 4, F = S.flags;
+  const hintK = S.hints ? 0.8 : 1;
+  const finalScore = Math.max(0, Math.round(S.score * avg * hintK));
+  const PERFECT = PERF[S.track];
+  const severe = F.fabricated || F.ghost || F.plag;
+  let mark10 = Math.max(1, Math.min(10, Math.round(finalScore / PERFECT * 10)));
+  if (severe) mark10 = Math.min(mark10, 4);
+  S.mark10 = mark10; updateHud();
+  try { new Image().src = "https://ameer.itbabylon.org/sensors-api/hit?p=sim-w10-done&n=1&t=" + Date.now(); } catch (e) {}
+  const verdict = severe ? ["bad", "⛔ لا تُجاز الرسالة: تُحال إلى لجنة الأمانة العلميّة"] : mark10 >= 9 ? ["ok", "🏅 تُقبَل الرسالة بلا تعديلات — بتقدير امتياز"] : mark10 >= 7 ? ["ok", "✅ تُقبَل الرسالة بتعديلات طفيفة"] : mark10 >= 5 ? ["mid", "✏️ تُقبَل بعد تعديلات جوهريّة تُراجَع مع المشرف"] : ["bad", "⏳ تُؤجَّل المناقشة: البحث يحتاج إعادة عمل"];
+  const badges = [];
+  if (S.missed === 0) badges.push("🕵️ صائد الهلوسات");
+  if (S.searched >= 5) badges.push("🔎 فُتح كلّ مرجع");
+  if (S.integ + S.leaks === 0) badges.push("🔒 أمانة علميّة كاملة");
+  if (S.delay === 0) badges.push("📅 في الموعد");
+  if (S.meth === 0) badges.push("🧪 منهج سليم");
+  if (S.stars.length && S.stars.every(s => s === 3)) badges.push("🏆 رحلة مثاليّة");
+  const starsTotal = S.stars.reduce((a, b) => a + b, 0);
+  const fmt = n => Math.round(n).toLocaleString("en-US"), sg = n => "⁦" + (n > 0 ? "+" : n < 0 ? "−" : "") + fmt(Math.abs(n)) + "⁩", pct = v => Math.round(v * 100) + "%";
+  let h = `<div style="font-size:38px">🎓</div><div style="color:var(--muted)">قرار لجنة المناقشة — ${wkLabel()}</div>
+    <div class="bigname">${FEMALE ? "الباحثة" : "الباحث"}: ${escapeHtml(S.name)}</div>
+    <div class="verdict ${verdict[0]}">${verdict[1]}</div>
+    <div class="bigscore">${finalScore.toLocaleString("ar-IQ")}</div>
+    <div class="mark">📝 الدرجة: <b>${mark10}</b> / 10 <small>· ${S.track === "D" ? "المسار الوصفيّ التحليليّ" : "المسار التطبيقيّ"}${S.hints ? " · وضع المساعدة" : ""}</small></div>
+    <div class="stats">
+      <div>⭐ النقاط: <b>${S.score}</b></div><div>🌟 النجوم: <b>${starsTotal} / ${S.stars.length * 3}</b></div>
+      <div>🕵️ أخطاء كلود المكشوفة: <b>${S.caught} / ${S.caught + S.missed}</b></div><div>🔎 مراجع فُتحت: <b>${S.searched} / 5</b></div>
+      <div>🔒 إخلال بالأمانة أو الخصوصيّة: <b>${S.integ + S.leaks}</b></div><div>⏳ أسابيع التأخير: <b>${S.delay}</b></div>
+    </div>
+    <div class="badges">${badges.map(b => `<span class="badge">${b}</span>`).join("") || '<span class="badge">لا أوسمة هذه المرّة — جرّب مجدّدًا!</span>'}</div>
+    <details class="rcard"><summary>📒 ملف البحث كما وصل إلى اللجنة</summary>${fileHtml()}</details>`;
+  if (S.missedList.length) h += `<div class="missed"><b>❗ ما مرّ من أخطاء كلود إلى الرسالة:</b><br>${S.missedList.map(x => `• ${x.tl}${x.why ? " — " + x.why : ""} <small>(${x.week})</small>`).join("<br>")}</div>`;
+  else h += `<div class="fb good">👏 لم يمرّ أيّ خطأ لكلود إلى الرسالة. هكذا يُستعمل في البحث: <b>رفيق طريق، وكلّ مرجعٍ يُفتح، وكلّ رقمٍ يُحسب.</b></div>`;
+  {
+    const groups = []; S.ledger.forEach(x => { const k = x.at + "|" + x.ev; let g = groups.find(y => y.k === k); if (!g) groups.push(g = { k, at: x.at, ev: x.ev, rows: [] }); g.rows.push(x); });
+    const tMax = S.ledger.reduce((a, x) => a + x.max, 0), tGot = S.ledger.reduce((a, x) => a + x.got, 0), ghostPts = S.missed === 0 ? 200 : 0;
+    h += `<details class="ledger" open><summary>🧮 كيف حُسبت الدرجة؟ الدرجة الكاملة لكلّ قرار، وما خُسر ولماذا</summary>
+      <div class="lg-h"><span>المحطّة / القرار</span><span>الكامل</span><span>حصلت</span><span>خسرت</span></div>
+      ${groups.map(g => { const gm = g.rows.reduce((a, x) => a + x.max, 0), gg = g.rows.reduce((a, x) => a + x.got, 0), gl = Math.max(0, gm - gg);
+        return `<details class="lg-g"${gl ? " open" : ""}><summary><span>${g.at} · ${escapeHtml(g.ev)}</span><span>${fmt(gm)}</span><span>${sg(gg)}</span><span class="${gl ? "lost" : "ok"}">${gl ? "⁦−" + fmt(gl) + "⁩" : "✓"}</span></summary>
+          ${g.rows.map(x => { const l = Math.max(0, x.max - x.got); return `<div class="lg-r"><span>${escapeHtml(x.item)}${l && x.why ? `<small>💡 ${escapeHtml(x.why)}</small>` : ""}</span><span>${fmt(x.max)}</span><span>${sg(x.got)}</span><span class="${l ? "lost" : "ok"}">${l ? "⁦−" + fmt(l) + "⁩" : "✓"}</span></div>`; }).join("")}</details>`; }).join("")}
+      <div class="lg-sum">
+        <div>① نقاط القرارات: <b>${sg(tGot)}</b> من <b>${fmt(tMax)}</b> ← خُسر <b class="lost">${fmt(Math.max(0, tMax - tGot))}</b></div>
+        <div>② مكافأة السلسلة 🔥 (×1.5 بعد 3 قرارات صحيحة متتالية، و×2 بعد 5): <b>${sg(S.comboBonus)}</b></div>
+        <div>③ لا خطأ لكلود مرّ إلى الرسالة: <b>${sg(ghostPts)}</b> من 200</div>
+        <div class="lg-eq">مجموع النقاط = ① + ② + ③ = <b>${fmt(S.score)}</b></div>
+        <div>④ معامل الجودة = متوسّط المؤشّرات الأربعة = <b>${pct(avg)}</b>
+          <ul><li>🕵️ التحقّق: كُشف ${S.caught} من ${S.caught + S.missed} ← <b>${pct(m.acc)}</b></li>
+          <li>🔒 الأمانة والخصوصيّة: ${S.integ + S.leaks} إخلال، وكلّ واحد ينقص 34% ← <b>${pct(m.integ)}</b></li>
+          <li>📅 الوقت: ${S.delay} أسابيع تأخير، وكلّ أسبوع ينقص 12.5% ← <b>${pct(m.time)}</b></li>
+          <li>🧪 المنهج: ${S.meth} خطأ منهجيّ، وكلّ واحد ينقص 15% ← <b>${pct(m.meth)}</b></li></ul></div>
+        <div class="lg-eq">⑤ النتيجة النهائيّة = ${fmt(S.score)} × ${pct(avg)}${S.hints ? " × 80% (وضع المساعدة)" : ""} = <b>${fmt(finalScore)}</b></div>
+        <div class="lg-eq">⑥ الدرجة = ${fmt(finalScore)} ÷ ${fmt(PERFECT)} × 10 = ${(finalScore / PERFECT * 10).toFixed(1)} ← تُقرَّب إلى <b>${mark10} / 10</b>${severe ? " (لا تزيد على 4 مع إخلالٍ جسيم بالأمانة العلميّة)" : ""}</div>
+        <div class="lg-n">${fmt(PERFECT)} هي نتيجة الرحلة المثاليّة في هذا المسار. الدرجة لا تقلّ عن 1 ولا تزيد على 10. القواعد نفسها لكلّ الطلبة، ومواضع أخطاء كلود تتبدّل في كلّ محاولة.</div>
+      </div></details>`;
+  }
+  if (S.errs.length) h += `<details class="errs" open><summary>📋 تفاصيل الأخطاء (${S.errs.length.toLocaleString("ar-IQ")}) — ما القرار، وما الصحيح، ولماذا</summary><ol>${S.errs.map(x => `<li><div class="eh">${x.at} · ${escapeHtml(x.ev)}${x.ghost ? ' <span class="eg">👻 خطأ كلود</span>' : ""}</div><div>❌ ${escapeHtml(x.did)}</div>${x.right ? `<div>✅ الصحيح: ${escapeHtml(x.right)}</div>` : ""}${x.why ? `<div class="ew">💡 ${escapeHtml(x.why)}</div>` : ""}</li>`).join("")}</ol></details>`;
+  else h += `<div class="fb good">🏆 لا يوجد أيّ قرار خاطئ. رحلة مثاليّة!</div>`;
+  h += `<button class="btn gold" id="again">🔁 أعِد المحاكاة</button> <button class="btn" id="other">🔀 جرّب المسار الآخر</button><div class="note">📸 هذه الشاشة تصلح للتصوير. جرّب المسار الآخر (${S.track === "D" ? "التطبيقيّ" : "الوصفيّ التحليليّ"})، فمواضع أخطاء كلود تتبدّل في كلّ محاولة.<br>محاكاة تدريبيّة لمادّة الذكاء الاصطناعيّ وتحليل البيانات — د. أمير هادي. كلّ الأسماء والجهات والمراجع والأرقام خياليّة.</div>
+    <div class="fbx" id="fbx"><h3>✉️ أرسل ملاحظاتك إلى المُعِدّ د. أمير هادي</h3>
+      <p>رأيك يطوّر المحاكي: ما الذي أعجبك؟ ما الذي كان صعبًا أو غير واضح؟ ماذا تقترح؟ الاسم والإيميل اختياريّان.</p>
+      <div class="fbrow"><input id="fbName" maxlength="80" placeholder="الاسم (اختياريّ)" autocomplete="name"><input id="fbMail" type="email" maxlength="120" dir="ltr" placeholder="الإيميل (اختياريّ)" autocomplete="email"></div>
+      <textarea id="fbText" maxlength="3000" placeholder="اكتب ملاحظاتك هنا…"></textarea>
+      <button class="btn" id="fbSend">إرسال الملاحظات</button><div class="msg" id="fbMsg"></div></div>
+    <div class="about"><div class="about-h">عن المُعِدّ</div>
+      <b>د. أمير كاظم هادي</b> — أستاذ مساعد في علوم الحاسوب، كلّيّة تكنولوجيا المعلومات، جامعة بابل.<br>
+      أستاذ مادّة «الذكاء الاصطناعيّ وتحليل البيانات». تصميم المحاكي وسيناريوهاته وبرمجته.<br>
+      <a href="https://ameer.itbabylon.org" target="_blank" rel="noopener">ameer.itbabylon.org</a>
+      <div class="copy">© 2026 د. أمير كاظم هادي. جميع الحقوق محفوظة. يُسمح باستعماله للتعليم مع ذكر المصدر.</div></div>`;
+  $("ecard").innerHTML = h;
+  $("fbName").value = S.name || "";
+  $("fbSend").onclick = async () => {
+    const msg = $("fbMsg"), c = $("fbText").value.trim(), mail = $("fbMail").value.trim();
+    if (c.length < 2) { msg.className = "msg err"; msg.textContent = "اكتب ملاحظتك أوّلًا."; $("fbText").focus(); return; }
+    if (mail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)) { msg.className = "msg err"; msg.textContent = "الإيميل غير صحيح — صحّحه أو اتركه فارغًا."; return; }
+    $("fbSend").disabled = true; msg.className = "msg"; msg.textContent = "جارٍ الإرسال…";
+    try {
+      const r = await fetch("https://ameer.itbabylon.org/sensors-api/course/feedback", { method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ src: "sim-w10", name: $("fbName").value.trim(), email: mail, comment: c, mark: String(S.mark10 || ""), score: "" }) });
+      const j = await r.json().catch(() => ({}));
+      if (j.ok) { $("fbx").innerHTML = '<h3>✅ شكرًا لك!</h3><p style="margin:0">وصلت ملاحظاتك إلى د. أمير هادي.</p>'; return; }
+      msg.className = "msg err"; msg.textContent = j.error === "limit" ? "وصلت حدّ الإرسال لليوم. شكرًا لك!" : "لم تُرسَل. حاول مرّة أخرى.";
+    } catch (e) { msg.className = "msg err"; msg.textContent = "تعذّر الاتّصال. تأكّد من الإنترنت وحاول مرّة أخرى."; }
+    $("fbSend").disabled = false;
+  };
+  for (const id of ["task", "joy", "act", "keysHint", "goBtn", "pauseBtn"]) $(id).classList.add("hidden");
+  for (const k in labelEls) labelEls[k].classList.remove("target");
+  beacon.position.set(999, 0, 999);
+  setTimeout(() => $("end").classList.remove("hidden"), 900);
+  const again = () => { $("end").classList.add("hidden"); $("nameIn").value = S.name; startGame(); };
+  $("again").onclick = again;
+  $("other").onclick = () => { again(); toast("🔀 في المحطّة الأولى: اختر المشكلة الأخرى لتسلك المسار الآخر.", 5000); };
+}
+function escapeHtml(s) { return s.replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
+
+/* ============================================================ player walking */
+function collide(nx, nz) {
+  const r = 0.45;
+  for (const c of colliders) if (nx > c.x1 - r && nx < c.x2 + r && nz > c.z1 - r && nz < c.z2 + r) return true;
+  return false;
+}
+const DOORS = {
+  library: [{ x: -15, z: -5 }, { x: -15, z: -1 }], study: [{ x: 0, z: -5 }, { x: 0, z: -1 }], sup: [{ x: 15, z: -5 }, { x: 15, z: -1 }],
+  field: [{ x: -12, z: 3 }, { x: -12, z: -1 }], hall: [{ x: 12, z: 3 }, { x: 12, z: -1 }]
+};
+function roomOf(x, z) { if (z < -3.5) return x < -7 ? "library" : x < 7 ? "study" : "sup"; if (z > 1.5) return x < 0 ? "field" : "hall"; return "corr"; }
+let auto = null, autoStuck = 0;
+function lineClear(a, b) { const d = Math.hypot(b.x - a.x, b.z - a.z), n = Math.ceil(d / 0.25); for (let i = 1; i < n; i++) { const k = i / n; if (collide(a.x + (b.x - a.x) * k, a.z + (b.z - a.z) * k)) return false; } return true; }
+function planTo(t) {
+  const p = player.position, a = roomOf(p.x, p.z), b = roomOf(t.x, t.z), cur = { x: p.x, z: p.z };
+  if (a === b) return lineClear(cur, t) || a === "corr" ? [t] : [DOORS[a][0], t];
+  const pts = [];
+  if (a !== "corr") pts.push(DOORS[a][0], DOORS[a][1]);
+  if (b !== "corr") pts.push(DOORS[b][1], DOORS[b][0]);
+  pts.push(t); return pts;
+}
+function startAuto() { if (!S || !S.ev || !modalClosed() || !fileClosed()) return; auto = planTo(SPOTS[S.ev.spot]); autoStuck = 0; }
+
+/* ============================================================ loop */
+const tmpV = new THREE.Vector3();
+let last = performance.now();
+function animPerson(p, moving, now, speed) {
+  const u = p.userData; if (!u.legs) return;
+  if (moving) {
+    u.walkT += speed;
+    const s = Math.sin(u.walkT * 9) * 0.6;
+    u.legs[0].rotation.x = s; u.legs[1].rotation.x = -s; u.arms[0].rotation.x = -s * 0.8; u.arms[1].rotation.x = s * 0.8;
+    return;
+  }
+  if (u.sit) { for (const l of u.legs) l.rotation.x = -1.45; }
+  else for (const l of u.legs) l.rotation.x *= 0.8;
+  const br = Math.sin(now / 600 + u.phase) * 0.04;
+  u.arms[0].rotation.x = u.typing ? -0.9 + Math.sin(now / 90 + u.phase) * 0.12 : u.arms[0].rotation.x * 0.8 + br;
+  u.arms[1].rotation.x = u.typing ? -0.9 + Math.cos(now / 80 + u.phase) * 0.12 : u.arms[1].rotation.x * 0.8 - br;
+  u.torso.scale.y = 1 + Math.sin(now / 700 + u.phase) * 0.015;
+}
+function stepWalkers(dt, now) {
+  for (const p of Array.from(walkers)) {
+    const u = p.userData, t = u.path[0];
+    if (!t) { walkers.delete(p); const cb = u.cb; u.cb = null; if (cb) cb(); continue; }
+    const dx = t.x - p.position.x, dz = t.z - p.position.z, d = Math.hypot(dx, dz), st = u.speed * dt;
+    if (d <= st) { p.position.x = t.x; p.position.z = t.z; const q = u.path.shift(); if (u.onPoint) u.onPoint(q); }
+    else { p.position.x += dx / d * st; p.position.z += dz / d * st; const want = Math.atan2(dx, dz); let dr = want - p.rotation.y; dr = Math.atan2(Math.sin(dr), Math.cos(dr)); p.rotation.y += dr * Math.min(1, dt * 12); }
+    animPerson(p, true, now, st / 6);
+  }
+}
+function frame(now) {
+  const dt = Math.min(0.05, (now - last) / 1000); last = now;
+  const W = window.innerWidth, H = window.innerHeight;
+  const paused = !!(S && S.paused);
+  if (!paused) stepWalkers(dt, now);
+  if (S && S.playing && !paused && modalClosed() && fileClosed()) {
+    let ix = joyV.x, iz = joyV.z;
+    if (keys["arrowleft"] || keys["a"]) ix -= 1; if (keys["arrowright"] || keys["d"]) ix += 1;
+    if (keys["arrowup"] || keys["w"]) iz -= 1; if (keys["arrowdown"] || keys["s"]) iz += 1;
+    let L = Math.hypot(ix, iz);
+    if (L > 0.08) auto = null; else L = 0;
+    if (auto && auto.length) {
+      const t = auto[0], dx = t.x - player.position.x, dz = t.z - player.position.z, d = Math.hypot(dx, dz);
+      if (d < 0.25) { auto.shift(); if (!auto.length) { auto = null; later(() => { if (S && S.ev && nearTarget()) interact(); }, 120); } }
+      else { ix = dx / d; iz = dz / d; L = 1; }
+    }
+    if (L > 0.08) {
+      const sp = 7.5 * Math.min(1, L); ix /= L; iz /= L;
+      const ox = player.position.x, oz = player.position.z, nx = ox + ix * sp * dt, nz = oz + iz * sp * dt;
+      if (!collide(nx, oz)) player.position.x = nx;
+      if (!collide(player.position.x, nz)) player.position.z = nz;
+      const want = Math.atan2(ix, iz); let dr = want - player.rotation.y; dr = Math.atan2(Math.sin(dr), Math.cos(dr)); player.rotation.y += dr * Math.min(1, dt * 14);
+      const moving = Math.hypot(player.position.x - ox, player.position.z - oz) > 0.001;
+      if (auto) { if (!moving) { autoStuck += dt; if (autoStuck > 0.6) { auto = null; toast("🕹️ الطريق مسدود، حرّك الشخصيّة قليلًا بعصا التحكّم"); } } else autoStuck = 0; }
+      animPerson(player, moving, now, sp * dt / 6);
+    } else animPerson(player, false, now, 0);
+    if (S.ev && !S.busy) {
+      const t = SPOTS[S.ev.spot], d = Math.hypot(player.position.x - t.x, player.position.z - t.z);
+      $("act").textContent = S.ev.spot === "desk" ? "💻 افتح الحاسوب" : S.ev.spot === "library" ? "🔎 محطّة البحث" : "✋ تفاعل";
+      $("act").classList.toggle("hidden", d > 2.6);
+      $("goBtn").classList.toggle("hidden", d <= 2.6 || !!auto);
+      $("arrow").style.visibility = d > 2.6 ? "visible" : "hidden";
+      $("arrow").style.transform = `rotate(${Math.atan2(t.z - player.position.z, t.x - player.position.x)}rad)`;
+    } else { $("act").classList.add("hidden"); $("goBtn").classList.add("hidden"); $("arrow").style.visibility = "hidden"; }
+  } else {
+    animPerson(player, false, now, 0);
+    $("goBtn").classList.add("hidden"); $("act").classList.add("hidden");
+  }
+  for (const n of PEOPLE) if (!walkers.has(n)) animPerson(n, false, now, 0);
+  meRing.position.x = player.position.x; meRing.position.z = player.position.z;
+  if (ghost.visible) {
+    const gx = player.position.x - 1.8, gz = player.position.z + 1.3;
+    ghost.position.x += (gx - ghost.position.x) * 0.035; ghost.position.z += (gz - ghost.position.z) * 0.035;
+    ghost.position.y = 0.9 + Math.sin(now / 420) * 0.22; ghost.rotation.y = Math.sin(now / 900) * 0.35;
+    animateGhost(now);
+    gShadow.position.set(ghost.position.x, 0.02, ghost.position.z); gShadow.scale.setScalar(ghost.scale.x * (1.1 - Math.sin(now / 420) * 0.1));
+  }
+  const pls = 1 + Math.sin(now / 250) * 0.12; ring.scale.set(pls, pls, pls); star.rotation.y = now / 600; star.position.y = 3.2 + Math.sin(now / 300) * 0.2;
+  if (S) MEDS.forEach((m, i) => { const k = i + 1 === S.curSt ? 1 + Math.sin(now / 260) * 0.1 : 1; m.scale.set(k, k, k); });
+  const portrait = H > W;
+  const tx = player.position.x, tz = player.position.z, camH = portrait ? 19 : 14.5, camZ = portrait ? 12 : 11.5;
+  camera.position.x += (tx - camera.position.x) * 0.08; camera.position.z += (tz + camZ - camera.position.z) * 0.08; camera.position.y += (camH - camera.position.y) * 0.08;
+  camera.lookAt(camera.position.x, 0, camera.position.z - camZ);
+  renderer.render(scene, camera);
+  for (const k in SPOTS) {
+    tmpV.set(SPOTS[k].x, 2.9, SPOTS[k].z).project(camera);
+    const el = labelEls[k];
+    if (tmpV.z > 1 || Math.abs(tmpV.x) > 1.05 || Math.abs(tmpV.y) > 1.05 || !S) { el.style.display = "none"; continue; }
+    el.style.display = ""; el.style.left = ((tmpV.x + 1) / 2 * W) + "px"; el.style.top = ((1 - tmpV.y) / 2 * H) + "px";
+  }
+  if (ghost.visible && bubbleUntil > now) {
+    tmpV.set(ghost.position.x, ghost.position.y + 1.9 * ghost.scale.y, ghost.position.z).project(camera);
+    const b = $("gbubble"); b.style.display = ""; b.style.left = ((tmpV.x + 1) / 2 * W) + "px"; b.style.top = ((1 - tmpV.y) / 2 * H) + "px";
+  } else $("gbubble").style.display = "none";
+  requestAnimationFrame(frame);
+}
+let bubbleUntil = 0;
+function ghostSay(txt) { $("gbubble").textContent = txt; bubbleUntil = performance.now() + 4500; }
+let toastT = null;
+function toast(txt, ms) { const t = $("toast"); t.innerHTML = txt; t.classList.remove("hidden"); clearTimeout(toastT); toastT = setTimeout(() => t.classList.add("hidden"), ms || 3500); }
+function resize() {
+  const w = window.innerWidth, h = window.innerHeight; renderer.setSize(w, h, false);
+  camera.aspect = w / h; camera.fov = w < h ? 60 : 48; camera.updateProjectionMatrix();
+}
+
+addEventListener("resize", resize); resize();
+
+/* ============================================================ the researcher (female forms) */
+let FEMALE = false;
+const FEM = [
+  ["استعان الباحث", "استعانت الباحثة"], ["وقد تحقّق من", "وقد تحقّقت من"], ["ويتحمّل مسؤوليّة", "وتتحمّل مسؤوليّة"],
+  ["أصبتَ بلا بحث", "أصبتِ بلا بحث"], ["لا تستطيع الدفاع", "لا تستطيعين الدفاع"], ["تستطيع الدفاع", "تستطيعين الدفاع"], ["ترفعه وتقرؤه", "ترفعينه وتقرئينه"], ["وسيتبعك", "وسيتبعكِ"],
+  ["اضغط", "اضغطي"], ["افتح", "افتحي"], ["اختر المشكلة", "اختاري المشكلة"], ["حرّك", "حرّكي"], ["جرّب", "جرّبي"], ["اكتب ملاحظاتك", "اكتبي ملاحظاتك"], ["اكتب ملاحظتك", "اكتبي ملاحظتك"], ["اكتب الرقم", "اكتبي الرقم"], ["أرسل ملاحظاتك", "أرسلي ملاحظاتك"], ["صحّحه", "صحّحيه"], ["اتركه", "اتركيه"], ["حاول", "حاولي"], ["تأكّد", "تأكّدي"], ["أعِد", "أعيدي"]
+];
+const AR = "\\u0621-\\u065F\\u0670-\\u06FF";
+const FEM_RX = FEM.map(([a, b]) => [new RegExp("(^|[^" + AR + "])" + a.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "(?![" + AR + "])", "g"), "$1" + b]);
+function fem(t) { if (!FEMALE || !t) return t; for (const [r, b] of FEM_RX) t = t.replace(r, b); return t; }
+function femDom(root) { if (!root) return; const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT); let n; while ((n = w.nextNode())) { const v = fem(n.data); if (v !== n.data) n.data = v; } }
+const femObs = new MutationObserver(ms => { if (!FEMALE) return; for (const m of ms) femDom(m.target.nodeType === 3 ? m.target.parentNode : m.target); });
+for (const id of ["mcard", "toast", "taskTxt", "ecard", "gbubble", "act", "hName"]) femObs.observe($(id), { childList: true, characterData: true, subtree: true });
+femObs.observe($("fileBody"), { childList: true, characterData: true, subtree: true });
+const START_TXT = $("startTxt").innerHTML;
+let GENDER = store.get("rsim:gender") || "";
+function setGender(g) {
+  GENDER = g; store.set("rsim:gender", g); FEMALE = g === "f";
+  document.querySelectorAll(".gbtn").forEach(b => b.classList.toggle("on", b.dataset.g === g));
+  $("startTxt").innerHTML = START_TXT; femDom($("startTxt"));
+  $("startH1").textContent = FEMALE ? "محاكي رحلة الباحثة" : "محاكي رحلة الباحث";
+  $("gsel").style.outline = "";
+}
+document.querySelectorAll(".gbtn").forEach(b => b.onclick = () => setGender(b.dataset.g));
+if (GENDER) setGender(GENDER);
+
+$("go").onclick = startGame;
+function setPause(on) {
+  if (!S || !S.playing) return;
+  S.paused = on; $("pause").classList.toggle("hidden", !on);
+  if (on) { joyV = { x: 0, z: 0 }; knob.style.transform = ""; }
+}
+function exitGame() {
+  if (!S) return;
+  GEN++; S.playing = false; S.paused = false; walkers.clear(); auto = null;
+  for (const id of ["modal", "pause", "end", "file", "hud", "task", "joy", "act", "keysHint", "goBtn", "toast"]) $(id).classList.add("hidden");
+  for (const k in labelEls) labelEls[k].classList.remove("target");
+  beacon.position.set(999, 0, 999); resetWorld();
+  $("nameIn").value = S.name; $("start").classList.remove("hidden");
+}
+$("pauseBtn").onclick = () => setPause(true);
+$("pResume").onclick = () => setPause(false);
+$("pRestart").onclick = () => { $("pause").classList.add("hidden"); $("nameIn").value = S.name; startGame(); };
+$("pExit").onclick = exitGame;
+$("fileBtn").onclick = () => { if (!S) return; $("fileBody").innerHTML = fileHtml(); $("file").classList.remove("hidden"); };
+$("fileClose").onclick = () => $("file").classList.add("hidden");
+addEventListener("keydown", e => { if (e.target && e.target.tagName === "INPUT") return; if ((e.key === "Escape" || e.key === "p" || e.key === "P") && S && S.playing) setPause(!S.paused); });
+document.addEventListener("visibilitychange", () => { if (document.hidden && S && S.playing && !S.paused) setPause(true); });
+$("nameIn").addEventListener("keydown", e => { e.stopPropagation(); if (e.key === "Enter") startGame(); });
+const saved = store.get("rsim:name"); if (saved) $("nameIn").value = saved;
+$("hintOpt").checked = store.get("rsim:hint") === "1";
+camera.position.set(0, 14.5, 2.2); camera.lookAt(0, 0, -9.3);
+window.__sim = { get S() { return S; }, get player() { return player; }, SPOTS, EVENTS, interact, startAuto, PERF, colliders, lineClear, DOORS };
+requestAnimationFrame(frame);
+</script>
+<script>/* visit counter: no personal data */(function(p){var n="0";try{if(!localStorage.getItem("v_"+p)){localStorage.setItem("v_"+p,"1");n="1"}}catch(e){}new Image().src="https://ameer.itbabylon.org/sensors-api/hit?p="+p+"&n="+n+"&t="+Date.now()})("sim-w10");</script>
+</body>
+</html>
