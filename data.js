@@ -166,6 +166,25 @@ const academicData = {
             { code: "CS-UG", title: "Programming (Python, C++, R, JavaScript)", description: "Multi-language programming instruction covering Python, C++, R, JavaScript, and VB.net with emphasis on practical problem-solving.", level: "Undergraduate", semester: "Current" }
         ],
 
+        awsAcademy: {
+            stats: [
+                { num: "11", label: "AWS Academy classes delivered" },
+                { num: "595", label: "Students enrolled" },
+                { num: "4", label: "Curricula delivered" },
+                { num: "16", label: "Curricula authorized to teach" }
+            ],
+            classes: [
+                { course: "AWS Academy Cloud Foundations", group: "University of Al-Shaab — 3rd-year students", dates: "Feb – Aug 2026", students: 355 },
+                { course: "AWS Academy Machine Learning Foundations", group: "Undergraduate cohort", dates: "May – Jun 2026", students: 70 },
+                { course: "AWS Academy Cloud Foundations", group: "Al-Maaref University", dates: "Feb – Jun 2026", students: 36 },
+                { course: "AWS Academy Cloud Foundations + Learner Lab", group: "Master's students 2025–2026", dates: "Jan – Jul 2026", students: 17 },
+                { course: "AWS Academy Engineering Operations Technician", group: "Al-Mustaqbal — Data Center track", dates: "Jan – Mar 2026", students: 21 },
+                { course: "AWS Academy Cloud Foundations + Learner Lab", group: "Cloud Foundations cohort", dates: "Nov 2025 – Jan 2026", students: 81 },
+                { course: "AWS Academy Cloud Foundations + Learner Lab", group: "AWS Cloud Well-Architected Framework", dates: "Mar – Jun 2025", students: 14 }
+            ],
+            curricula: ["Cloud Foundations", "Cloud Architecting", "Cloud Operations", "Cloud Developing", "Cloud Security Foundations", "Machine Learning Foundations", "Machine Learning for NLP", "Generative AI Foundations", "Data Engineering", "Data Center Technician", "Engineering Operations Technician", "Learner Lab", "Lab Project: Cloud Data Pipeline Builder", "Lab Project: Cloud Web Application Builder", "Lab Project: Microservices & CI/CD Pipeline Builder", "Lab Project: Cloud Security Builder"]
+        },
+
         certifications: [
             { title: "AWS Academy Educator Certification", issuer: "Amazon Web Services", year: 2025 },
             { title: "AWS Academy Cloud Foundations", issuer: "Amazon Web Services", year: 2025 },
@@ -348,6 +367,25 @@ const academicData = {
             { code: "CS-UG", title: "مبادئ شبكات الحاسوب", description: "المفاهيم الأساسية للشبكات مثل TCP/IP، ونموذج OSI، وبروتوكولات التوجيه، وإدارة الشبكات.", level: "بكالوريوس", semester: "الحالي" },
             { code: "CS-UG", title: "البرمجة (Python, C++, R, JavaScript)", description: "تدريس متعدد اللغات يشمل Python وC++ وR وJavaScript وVB.net مع التركيز على حل المشكلات العملية.", level: "بكالوريوس", semester: "الحالي" }
         ],
+
+        awsAcademy: {
+            stats: [
+                { num: "11", label: "صفًّا دراسيًّا في أكاديمية AWS" },
+                { num: "595", label: "طالبًا مسجَّلًا" },
+                { num: "4", label: "مناهج درّستُها" },
+                { num: "16", label: "منهجًا معتمدًا لتدريسه" }
+            ],
+            classes: [
+                { course: "AWS Academy Cloud Foundations", group: "جامعة الشعب — طلبة المرحلة الثالثة", dates: "شباط – آب 2026", students: 355 },
+                { course: "AWS Academy Machine Learning Foundations", group: "دفعة بكالوريوس", dates: "أيار – حزيران 2026", students: 70 },
+                { course: "AWS Academy Cloud Foundations", group: "جامعة المعارف", dates: "شباط – حزيران 2026", students: 36 },
+                { course: "AWS Academy Cloud Foundations + Learner Lab", group: "طلبة الماجستير 2025–2026", dates: "كانون الثاني – تموز 2026", students: 17 },
+                { course: "AWS Academy Engineering Operations Technician", group: "المستقبل — مسار مراكز البيانات", dates: "كانون الثاني – آذار 2026", students: 21 },
+                { course: "AWS Academy Cloud Foundations + Learner Lab", group: "دفعة Cloud Foundations", dates: "تشرين الثاني 2025 – كانون الثاني 2026", students: 81 },
+                { course: "AWS Academy Cloud Foundations + Learner Lab", group: "إطار AWS للبنية المُحكمة (Well-Architected)", dates: "آذار – حزيران 2025", students: 14 }
+            ],
+            curricula: ["Cloud Foundations", "Cloud Architecting", "Cloud Operations", "Cloud Developing", "Cloud Security Foundations", "Machine Learning Foundations", "Machine Learning for NLP", "Generative AI Foundations", "Data Engineering", "Data Center Technician", "Engineering Operations Technician", "Learner Lab", "Lab Project: Cloud Data Pipeline Builder", "Lab Project: Cloud Web Application Builder", "Lab Project: Microservices & CI/CD Pipeline Builder", "Lab Project: Cloud Security Builder"]
+        },
 
         certifications: [
             { title: "شهادة معتمد مدرّس أكاديمية AWS", issuer: "أمازون لخدمات الويب (AWS)", year: 2025 },

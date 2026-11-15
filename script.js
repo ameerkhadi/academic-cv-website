@@ -65,6 +65,7 @@ const uiText = {
         secEyeProj: "Projects", secH2Proj: "Research Projects",
         secEyeCourses: "Teaching", secH2Courses: "Courses Taught",
         secEyeCerts: "Credentials", secH2Certs: "Certifications",
+        secEyeAws: "Cloud Teaching", secH2Aws: "AWS Academy Instructor",
         secEyeAwards: "Recognition", secH2Awards: "Awards & Honors",
         secEyeContact: "Contact", secH2Contact: "Get in Touch",
 
@@ -155,6 +156,7 @@ const uiText = {
         secEyeProj: "المشاريع", secH2Proj: "مشاريع بحثية",
         secEyeCourses: "التدريس", secH2Courses: "المقررات التي أُدرّسها",
         secEyeCerts: "الشهادات", secH2Certs: "الشهادات المهنية",
+        secEyeAws: "التدريس السحابي", secH2Aws: "مدرّس أكاديمية AWS",
         secEyeAwards: "التقدير", secH2Awards: "الجوائز والتكريمات",
         secEyeContact: "التواصل", secH2Contact: "تواصل معي",
 
@@ -270,6 +272,7 @@ function setLanguage(lang, isInitial) {
     loadProjects();
     loadCourses();
     loadCertifications();
+    loadAwsAcademy();
     loadAwards();
     loadContact();
     loadFooter();
@@ -475,6 +478,32 @@ function loadCertifications() {
                 <div class="cert-year">📅 ${c.year}</div>
             </div>
         </div>`).join('');
+}
+
+// ── AWS ACADEMY ──
+function loadAwsAcademy() {
+    const el = document.getElementById('aws-academy');
+    const d = data().awsAcademy;
+    if (!el || !d) return;
+    const ar = document.documentElement.lang === 'ar' || document.documentElement.dir === 'rtl';
+    const H1 = ar ? 'الصفوف التي درّستُها' : 'Classes delivered';
+    const H2 = ar ? 'المناهج المعتمد لتدريسها (جامعة بابل)' : 'Curricula authorized to teach (University of Babylon)';
+    el.innerHTML = `
+        <div class="awsa-stats">${d.stats.map(s => `<div class="awsa-stat"><span class="awsa-num">${s.num}</span><span class="awsa-lbl">${s.label}</span></div>`).join('')}</div>
+        <div class="panel-hdr awsa-hdr">🎓 &nbsp;${H1}</div>
+        <div class="courses-grid">${d.classes.map(c => `
+            <div class="course-card fade-in visible">
+                <div class="course-card-top">
+                    <span class="course-level-tag">${c.dates}</span>
+                    <span style="font-family:var(--mono);font-size:.62rem;color:var(--text-dim)">👥 ${c.students}</span>
+                </div>
+                <div class="course-body">
+                    <div class="course-title">${c.course}</div>
+                    <div class="course-desc">${c.group}</div>
+                </div>
+            </div>`).join('')}</div>
+        <div class="panel-hdr awsa-hdr">☁️ &nbsp;${H2}</div>
+        <div class="proj-tech-wrap awsa-curr">${d.curricula.map(x => `<span class="proj-tech">${x}</span>`).join('')}</div>`;
 }
 
 // ── AWARDS ──
