@@ -328,6 +328,16 @@ function loadHero() {
 }
 
 // ── ABOUT ──
+// ── MY COMPANIES (links only) ──
+function companyLinks() {
+    const ar = currentLang === 'ar';
+    return [
+        { icon: '💡', label: ar ? 'فِكرة Fikra AI — التدريب' : 'Fikra AI — training', href: 'https://ameer.itbabylon.org/fikra/' },
+        { icon: '🌊', label: ar ? 'رافد Rafid' : 'Rafid', href: 'https://ameer.itbabylon.org/rafid/' },
+        { icon: '🤖', label: ar ? 'دُبسار Dubsar' : 'Dubsar', href: 'https://ameer.itbabylon.org/dubsar/' },
+    ];
+}
+
 function loadAbout() {
     const p = data().personal;
     const t = uiText[currentLang];
@@ -340,7 +350,8 @@ function loadAbout() {
             { icon: '✉️', label: p.email, href: `mailto:${p.email}` },
             { icon: '📞', label: p.phone, href: `tel:${p.phone}` },
             { icon: '🔗', label: t.linkedinLabel, href: p.linkedin },
-        ].filter(l => l.label).map(l => `<a href="${l.href}" class="about-link" target="_blank">${l.icon} ${l.label}</a>`).join('');
+            ...companyLinks(),
+        ].filter(l => l.label).map(l => `<a href="${l.href}" class="about-link" target="_blank" rel="noopener">${l.icon} ${l.label}</a>`).join('');
     }
 
     renderChips('skills-technical', data().skills.technical);
@@ -544,6 +555,7 @@ function loadContact() {
             { icon: '🎓', label: t.scholarLabel, href: p.googleScholar },
             { icon: '🔬', label: t.researchGateLabel, href: p.researchGate },
             { icon: '🪪', label: t.orcidLabel, href: p.orcid },
+            ...companyLinks(),
         ].map(pr => `<a href="${pr.href}" target="_blank" class="profile-link">${pr.icon} ${pr.label} ↗</a>`).join('');
     }
 }
