@@ -332,7 +332,7 @@ function loadHero() {
 function companyLinks() {
     const ar = currentLang === 'ar';
     return [
-        { icon: '💡', label: ar ? 'فِكرة Fikra AI — التدريب' : 'Fikra AI — training', href: 'https://ameer.itbabylon.org/fikra/' },
+        { icon: '💡', label: ar ? 'فِكرة Fikra AI — التدريب' : 'Fikra AI — training', href: 'https://ameer.itbabylon.org/fikra/?from=cv' },
         { icon: '🌊', label: ar ? 'رافد Rafid' : 'Rafid', href: 'https://ameer.itbabylon.org/rafid/' },
         { icon: '🤖', label: ar ? 'دُبسار Dubsar' : 'Dubsar', href: 'https://ameer.itbabylon.org/dubsar/' },
     ];
