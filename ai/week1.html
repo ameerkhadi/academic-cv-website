@@ -2862,8 +2862,35 @@
     الامتحان إلكترونيّ داخل القاعة، وتدخلون إليه <b>برمز المنصّة نفسه</b>.<br>
     <span class="k">احفظوا رمز المنصّة الآن</span> — اكتبوه في ورقة أو صوّروه. <b>بدون الرمز لا يمكن الدخول إلى الامتحان.</b>
   </div>
+  <style>
+  #examArrow{position:relative;height:46px;width:100%;align-self:stretch;pointer-events:none}
+  #examArrow svg{position:absolute;top:0;width:34px;height:46px;transform:translateX(-50%);animation:exBounce .9s ease-in-out infinite;
+    filter:drop-shadow(0 0 4px rgba(255,255,255,.7))}
+  @keyframes exBounce{0%,100%{top:6px}50%{top:-4px}}
+  @media (prefers-reduced-motion:reduce){#examArrow svg{animation:none}}
+  @media print{#examArrow{display:none}}
+  </style>
+  <!-- سهم فوق تبويب «الحلول والتعليل» يشير إلى التنبيه -->
+  <div id="examArrow" aria-hidden="true"><svg viewBox="0 0 34 46"><path d="M17 2 L32 20 H22 V44 H12 V20 H2 Z" fill="#c0392b" stroke="#fff" stroke-width="2" stroke-linejoin="round"/></svg></div>
   <script>
-  (function(){ if(new Date() >= new Date('2026-11-19T00:00:00+03:00')){ var e=document.getElementById('examAlert'); if(e) e.remove(); } })();
+  (function(){
+    if(new Date() >= new Date('2026-11-19T00:00:00+03:00')){
+      ['examAlert','examArrow'].forEach(function(id){ var e=document.getElementById(id); if(e) e.remove(); }); return;
+    }
+    function place(){
+      var box=document.getElementById('examArrow'), tab=document.querySelector('.tab[data-target="slide-sol"]');
+      if(!box||!tab) return;
+      var svg=box.querySelector('svg'), b=box.getBoundingClientRect(), t=tab.getBoundingClientRect();
+      var x=t.left+t.width/2-b.left;
+      svg.style.display=(t.width && x>10 && x<b.width-10)?'block':'none';
+      svg.style.left=x+'px';
+    }
+    window.addEventListener('load',place); window.addEventListener('resize',place);
+    document.addEventListener('DOMContentLoaded',function(){
+      place(); var tabs=document.querySelector('.tabs'); if(tabs) tabs.addEventListener('scroll',place,{passive:true});
+    });
+    setTimeout(place,1500);
+  })();
   </script>
 
   <div class="tabs">
