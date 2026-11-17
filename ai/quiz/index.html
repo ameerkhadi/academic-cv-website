@@ -308,6 +308,7 @@ var BANK = [{"w": 1, "q": "النموذج اللغوي الكبير (LLM) يعم
         '<div class="ra v">✓ الصحيح: '+esc(b.o[0])+'</div><div class="rw">💡 '+esc(b.why)+'</div></div>'; }).join('');
     $('retryWrong').onclick=function(){ start(shuffle(wrong.map(function(n){return Q[n].b;}))); };
     show('sR'); showBest();
+    try{ new Image().src='https://ameer.itbabylon.org/sensors-api/hit?p=ai-quiz-done&n=1&t='+Date.now(); }catch(e){}
     if(pct>=80) confetti();
   }
   $('newQuiz').onclick=function(){ show('sStart'); upd(); };
@@ -320,5 +321,6 @@ var BANK = [{"w": 1, "q": "النموذج اللغوي الكبير (LLM) يعم
   }
 })();
 </script>
+<script>/* visit counter: no personal data */(function(p){var n="0";try{if(!localStorage.getItem("v_"+p)){localStorage.setItem("v_"+p,"1");n="1"}}catch(e){}new Image().src="https://ameer.itbabylon.org/sensors-api/hit?p="+p+"&n="+n+"&t="+Date.now()})("ai-quiz");</script>
 </body>
 </html>
