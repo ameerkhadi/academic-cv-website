@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#7c6cff">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}[hidden]{display:none!important}</style>
+<title>مسار الترقية العلمية</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;600;700&display=swap">
+<style>
+/* Layout: one tall animated flowchart; a glowing "file packet" travels node to node like a packet across a network, the page follows it */
+:root{
+  --bg:#fbfaff; --surface:#ffffff; --fg:#1d1a2e; --muted:#7a7694; --line:#dcd6f0; --band:#efeafc;
+  --a1:#ff6b8b; --a2:#ff9f5a; --a3:#7c6cff; --a4:#3fb6ff;
+  --ok:#14a36b; --no:#e2445c;
+  --font:"Readex Pro","Segoe UI",Tahoma,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f0d19; --surface:#1b1830; --fg:#f1eefc; --muted:#9a96b6; --line:#373154; --band:#211d36; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f0d19; --surface:#1b1830; --fg:#f1eefc; --muted:#9a96b6; --line:#373154; --band:#211d36; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--font);direction:rtl;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:640px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.mesh{position:fixed;inset:0;z-index:0;pointer-events:none;filter:blur(80px);opacity:.28}
+.mesh span{position:absolute;border-radius:50%;width:45vmax;height:45vmax}
+.mesh span:nth-child(1){background:var(--a1);top:-15vmax;right:-10vmax}
+.mesh span:nth-child(2){background:var(--a3);top:30vh;left:-20vmax}
+.mesh span:nth-child(3){background:var(--a4);bottom:-20vmax;right:-5vmax}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:6;background:color-mix(in srgb,var(--bg) 80%,transparent);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding-block:12px}
+h1{margin:0;font-size:20px;font-weight:700;flex:1 1 auto}
+h1 em{font-style:normal;background:linear-gradient(90deg,var(--a1),var(--a3));-webkit-background-clip:text;background-clip:text;color:transparent}
+.btns{display:flex;flex-wrap:wrap;gap:6px}
+.pill{font:inherit;font-size:13px;border:1px solid var(--line);background:var(--surface);color:var(--fg);padding:6px 12px;border-radius:999px;cursor:pointer}
+.pill:hover{border-color:var(--a3)}
+.pill:focus-visible{outline:2px solid var(--a3);outline-offset:2px}
+.pill.on{background:linear-gradient(135deg,var(--a3),var(--a1));color:#fff;border-color:transparent}
+main{position:relative;z-index:1;padding-block:16px 120px}
+svg{display:block;width:100%;height:auto;overflow:visible}
+svg text{font-family:var(--font);fill:var(--fg);font-size:15px;font-weight:600}
+.band{fill:var(--band);stroke:var(--line);stroke-width:1.5;stroke-dasharray:6 6;opacity:.7}
+.band-chip rect{fill:var(--surface);stroke:var(--line)}
+.band-chip text{font-size:12px;fill:var(--a3)}
+.edge{fill:none;stroke:var(--line);stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round}
+.edge.done{stroke:url(#gEdge);stroke-width:3.5;stroke-dasharray:8 8;animation:flow .8s linear infinite}
+.edge.done.bad{stroke:var(--no)}
+@keyframes flow{to{stroke-dashoffset:-16}}
+.yn{font-size:12px;font-weight:700}
+.yn.y{fill:var(--ok)} .yn.n{fill:var(--no)}
+.node rect,.node polygon{fill:var(--surface);stroke:var(--line);stroke-width:1.5;transition:fill .4s,stroke .4s}
+.node text{transition:fill .4s}
+.node.lit rect,.node.lit polygon{fill:url(#gNode);stroke:transparent}
+.node.dec.lit polygon{fill:url(#gDec)}
+.node.lit text{fill:#fff}
+.node.bad polygon,.node.bad rect{fill:var(--no)!important}
+.node.final rect{stroke:var(--a3);stroke-width:2}
+.node.ret rect{stroke:var(--no);stroke-dasharray:5 4}
+.node.ret text{fill:var(--no)}
+.node.ret.lit text{fill:#fff}
+.ring{fill:none;stroke:var(--a3);stroke-width:3}
+.stage rect{fill:url(#gNode)} .stage text{fill:#fff;font-size:13px}
+.hud{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:7;display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:8px 8px 8px 16px;box-shadow:0 10px 30px rgba(40,30,90,.18);max-width:calc(100% - 32px);white-space:nowrap}
+.hud .dot{width:12px;height:12px;border-radius:50%;background:linear-gradient(135deg,var(--a1),var(--a3));flex:none}
+.hud b{font-size:14px;overflow:hidden;text-overflow:ellipsis}
+.hud span{font-size:12px;color:var(--a3);background:var(--band);padding:3px 10px;border-radius:999px;flex:none}
+.hud.bad .dot{background:var(--no)} .hud.bad span{color:var(--no)}
+.hud.win .dot{background:var(--ok)}
+@media (max-width:520px){
+  main .wrap{padding-left:max(8px,env(safe-area-inset-left,0px));padding-right:max(8px,env(safe-area-inset-right,0px))}
+  svg text{font-size:18px;font-weight:700}
+  .band-chip text,.stage text{font-size:14px}
+  .yn{font-size:15px}
+  h1{font-size:18px;flex-basis:100%}
+  .pill{font-size:13px;padding:7px 11px}
+  .hud b{font-size:13px}
+}
+.src{font-size:11.5px;color:var(--muted);text-align:center;margin-top:18px}
+</style>
+
+<div class="mesh" aria-hidden="true"><span></span><span></span><span></span></div>
+
+<header>
+  <div class="wrap">
+    <h1>مسار <em>الترقية العلمية</em></h1>
+    <div class="btns">
+      <button class="pill" id="b-happy" data-sc="happy">▶ مكتملة</button>
+      <button class="pill" id="b-experts" data-sc="experts">▶ مع خبراء</button>
+      <button class="pill" id="b-missing" data-sc="missing">▶ طلب ناقص</button>
+      <button class="pill" id="b-reject" data-sc="reject">▶ تحكيم سلبي</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <svg id="chart" viewBox="0 0 600 1720" role="img" aria-label="مخطط متحرك لخطوات الترقية العلمية من تقديم الطلب حتى اللجنة المركزية">
+      <defs>
+        <linearGradient id="gNode" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7c6cff"/><stop offset="1" stop-color="#3fb6ff"/></linearGradient>
+        <linearGradient id="gDec" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff6b8b"/><stop offset="1" stop-color="#ff9f5a"/></linearGradient>
+        <linearGradient id="gEdge" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff6b8b"/><stop offset="1" stop-color="#7c6cff"/></linearGradient>
+        <radialGradient id="gGlow"><stop offset="0" stop-color="#ff6b8b" stop-opacity=".7"/><stop offset="1" stop-color="#ff6b8b" stop-opacity="0"/></radialGradient>
+        <radialGradient id="gGlowBad"><stop offset="0" stop-color="#e2445c" stop-opacity=".8"/><stop offset="1" stop-color="#e2445c" stop-opacity="0"/></radialGradient>
+      </defs>
+      <g id="L-bands"></g><g id="L-edges"></g><g id="L-labels"></g><g id="L-nodes"></g><g id="L-fx"></g><g id="L-packets"></g>
+    </svg>
+    <p class="src">مبسّط من كتاب رئاسة جامعة بابل «توحيد إجراءات الترقية العلمية» في 17 / 11 / 2026. المرجع الرسمي هو الكتاب الأصلي.</p>
+  </div>
+</main>
+
+<div class="hud" id="hud"><i class="dot"></i><b id="hud-t">اضغط ▶ لتتبّع المعاملة</b><span id="hud-d" hidden></span></div>
+
+<script>
+(function(){
+const NS='http://www.w3.org/2000/svg';
+const $=id=>document.getElementById(id);
+const mk=(tag,attrs,parent)=>{const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);parent&&parent.appendChild(e);return e;};
+
+const BANDS=[
+  {y1:88,y2:372,t:'≤ 5 أيام عمل'},{y1:395,y2:668,t:'≤ 8 أيام عمل'},{y1:700,y2:978,t:'≤ 7 أيام عمل'},
+  {y1:1025,y2:1200,t:'≤ 10 أيام عمل'},{y1:1222,y2:1500,t:'≤ 30 يوماً'},{y1:1525,y2:1598,t:'≤ 7 أيام عمل'},{y1:1622,y2:1700,t:'≤ 15 يوماً'}
+];
+const N={
+  start:{x:300,y:50,w:170,t:'📄 صاحب الترقية',k:'start'},
+  s1:{x:300,y:130,t:'1 · تقديم الطلب'},
+  d1:{x:300,y:230,t:'مستوفٍ؟',k:'dec'},
+  s2:{x:300,y:330,t:'2 · موافقة العميد'},
+  s3:{x:300,y:430,t:'3 · رئيس القسم'},
+  s3a:{x:120,y:530,w:150,t:'الاستلال'},
+  s3b:{x:300,y:530,w:150,t:'إلكتروني'},
+  s3c:{x:480,y:530,w:150,t:'الرصانة'},
+  s4:{x:210,y:630,w:170,t:'4 · محضر الاستلال'},
+  s5:{x:480,y:630,w:160,t:'5 · محضر الرصانة'},
+  s6:{x:300,y:740,t:'6 · اللجنة العلمية'},
+  d2:{x:300,y:840,t:'مستوفية؟',k:'dec'},
+  s7:{x:300,y:940,w:220,t:'7 · إلى اللجنة الفرعية'},
+  s8:{x:300,y:1060,t:'8 · تسجيل وتدقيق'},
+  d3:{x:300,y:1160,t:'مستوفية؟',k:'dec'},
+  ret:{x:490,y:1160,w:150,t:'↩ إعادة للقسم',k:'ret'},
+  dx:{x:300,y:1260,t:'خبراء؟',k:'dec'},
+  s9:{x:150,y:1360,w:170,t:'9 · ثلاثة خبراء'},
+  d4:{x:150,y:1460,t:'إيجابية؟',k:'dec'},
+  s10:{x:300,y:1560,t:'10 · مجلس الكلية'},
+  s11:{x:300,y:1660,w:230,t:'11 · اللجنة المركزية ✓',k:'final'}
+};
+const E={
+  E1:{p:[[300,50],[300,130]],to:'s1'},
+  E2:{p:[[300,130],[300,230]],to:'d1'},
+  E2n:{p:[[300,230],[540,230],[540,130],[300,130]],to:'s1',bad:1},
+  E3:{p:[[300,230],[300,330]],to:'s2'},
+  E4:{p:[[300,330],[300,430]],to:'s3'},
+  E5a:{p:[[300,430],[300,480],[120,480],[120,530]],to:'s3a'},
+  E5b:{p:[[300,430],[300,530]],to:'s3b'},
+  E5c:{p:[[300,430],[300,480],[480,480],[480,530]],to:'s3c'},
+  E6a:{p:[[120,530],[120,590],[210,590],[210,630]],to:'s4'},
+  E6b:{p:[[300,530],[300,590],[210,590],[210,630]],to:'s4'},
+  E6c:{p:[[480,530],[480,630]],to:'s5'},
+  E7a:{p:[[210,630],[210,690],[300,690],[300,740]],to:'s6'},
+  E7b:{p:[[480,630],[480,690],[300,690],[300,740]],to:'s6'},
+  E8:{p:[[300,740],[300,840]],to:'d2'},
+  E8n:{p:[[300,840],[25,840],[25,130],[300,130]],to:'s1',bad:1},
+  E9:{p:[[300,840],[300,940]],to:'s7'},
+  E10:{p:[[300,940],[300,1060]],to:'s8'},
+  E11:{p:[[300,1060],[300,1160]],to:'d3'},
+  E11n:{p:[[300,1160],[490,1160]],to:'ret',bad:1},
+  E12:{p:[[300,1160],[300,1260]],to:'dx'},
+  E13y:{p:[[300,1260],[150,1260],[150,1360]],to:'s9'},
+  E13n:{p:[[300,1260],[300,1560]],to:'s10'},
+  E14:{p:[[150,1360],[150,1460]],to:'d4'},
+  E14n:{p:[[150,1460],[490,1460],[490,1160]],to:'ret',bad:1},
+  E15:{p:[[150,1460],[150,1560],[300,1560]],to:'s10'},
+  E16:{p:[[300,1560],[300,1660]],to:'s11'}
+};
+const YN=[[420,220,'كلا','n'],[318,290,'نعم','y'],[205,830,'كلا','n'],[318,895,'نعم','y'],[395,1150,'كلا','n'],[318,1215,'نعم','y'],
+          [225,1250,'نعم','y'],[318,1320,'كلا','n'],[240,1450,'كلا','n'],[165,1520,'نعم','y']];
+
+/* draw */
+BANDS.forEach(b=>{
+  mk('rect',{class:'band',x:10,y:b.y1,width:580,height:b.y2-b.y1,rx:22},$('L-bands'));
+  const g=mk('g',{class:'band-chip'},$('L-bands'));
+  mk('rect',{x:478,y:b.y1-13,width:104,height:26,rx:13},g);
+  const t=mk('text',{x:530,y:b.y1+5,'text-anchor':'middle'},g);t.textContent=b.t;
+});
+const st=mk('g',{class:'stage'},$('L-bands'));
+mk('rect',{x:20,y:988,width:190,height:26,rx:13},st);
+mk('text',{x:115,y:1006,'text-anchor':'middle'},st).textContent='المرحلة ٢ · اللجنة الفرعية';
+const st1=mk('g',{class:'stage'},$('L-bands'));
+mk('rect',{x:20,y:37,width:150,height:26,rx:13},st1);
+mk('text',{x:95,y:55,'text-anchor':'middle'},st1).textContent='المرحلة ١ · القسم';
+
+const pathD=p=>'M'+p.map(q=>q.join(',')).join(' L');
+for(const k in E){E[k].el=mk('path',{class:'edge',d:pathD(E[k].p)},$('L-edges'));}
+YN.forEach(([x,y,t,c])=>{mk('text',{x,y,class:'yn '+c,'text-anchor':'middle'},$('L-labels')).textContent=t;});
+for(const k in N){
+  const n=N[k],g=mk('g',{class:'node '+(n.k||''),id:'n-'+k},$('L-nodes'));
+  if(n.k==='dec'){mk('polygon',{points:`${n.x},${n.y-36} ${n.x+72},${n.y} ${n.x},${n.y+36} ${n.x-72},${n.y}`},g);}
+  else{const w=n.w||200;mk('rect',{x:n.x-w/2,y:n.y-25,width:w,height:50,rx:n.k==='start'?25:16},g);}
+  mk('text',{x:n.x,y:n.y+5,'text-anchor':'middle'},g).textContent=n.t;
+  n.g=g;
+}
+
+/* scenarios */
+const BASE=['E1','E2','E3','E4',['E5a','E5b','E5c'],['E6a','E6b','E6c'],['E7a','E7b'],'E8','E9','E10','E11','E12'];
+const SC={
+  happy:[...BASE,'E13n','E16'],
+  experts:[...BASE,'E13y','E14','E15','E16'],
+  missing:['E1','E2','E2n'],
+  reject:[...BASE,'E13y','E14','E14n']
+};
+const LABEL={start:'صاحب الترقية',s1:'تقديم الطلب مع المتطلبات',d1:'هل الطلب مستوفٍ؟',s2:'العميد يوافق على الشروع',s3:'رئيس القسم يطلق 3 إجراءات معاً',
+  s3a:'تشكيل لجنة الاستلال',s3b:'الاستلال الإلكتروني',s3c:'فحص الاستشهاد والرصانة',s4:'محضر الاستلال العلمي',s5:'محضر الاستشهاد والرصانة',
+  s6:'اللجنة العلمية تدقق',d2:'هل المعاملة مستوفية؟',s7:'إلى اللجنة الفرعية للترقيات',s8:'تسجيل وتدقيق كامل',d3:'هل المعاملة مستوفية؟',
+  dx:'هل تحتاج خبراء؟',s9:'ثلاثة خبراء بمرتبة أعلى',d4:'هل التحكيم إيجابي؟',s10:'المحضر ← مجلس الكلية',s11:'وصلت إلى اللجنة المركزية للترقيات',
+  ret:'تُعاد للقسم مع أسباب عدم الاستيفاء'};
+const bandOf=y=>BANDS.find(b=>y>=b.y1&&y<=b.y2);
+
+/* HUD */
+function hud(text,dl,mode){
+  $('hud-t').textContent=text;const d=$('hud-d');
+  if(dl){d.hidden=false;d.textContent='⏱ '+dl;}else d.hidden=true;
+  $('hud').className='hud'+(mode?' '+mode:'');
+}
+
+/* follow-scroll */
+let follow=true;
+['wheel','touchstart','keydown'].forEach(ev=>addEventListener(ev,e=>{if(ev!=='keydown'||['ArrowUp','ArrowDown','PageUp','PageDown','Home','End',' '].includes(e.key))follow=false;},{passive:true}));
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function track(y){
+  if(!follow)return;const svg=$('chart'),r=svg.getBoundingClientRect(),s=r.height/1720;
+  const target=scrollY+r.top+y*s-innerHeight*0.5;
+  scrollTo(0,reduce?target:scrollY+(target-scrollY)*0.12);
+}
+
+/* packets */
+function makePacket(bad){
+  const g=mk('g',{},$('L-packets'));
+  const trail=[];for(let i=0;i<6;i++)trail.push(mk('circle',{r:7-i,fill:bad?'#e2445c':'#ff6b8b',opacity:(0.5-i*0.08).toFixed(2)},g));
+  mk('circle',{r:26,fill:bad?'url(#gGlowBad)':'url(#gGlow)'},g);
+  const body=mk('g',{},g);
+  mk('rect',{x:-10,y:-12,width:20,height:24,rx:4,fill:bad?'#e2445c':'#ff6b8b',stroke:'#fff','stroke-width':2},body);
+  mk('path',{d:'M-5,-5 H5 M-5,0 H5 M-5,5 H2',stroke:'#fff','stroke-width':1.6,'stroke-linecap':'round'},body);
+  return {g,body,trail,hist:[]};
+}
+function ripple(n,bad){
+  const c=mk('circle',{class:'ring',cx:n.x,cy:n.y,r:20,style:bad?'stroke:#e2445c':''},$('L-fx'));
+  if(reduce){setTimeout(()=>c.remove(),300);return;}
+  let t0=performance.now();(function f(t){const k=(t-t0)/900;if(k>=1){c.remove();return;}c.setAttribute('r',20+70*k);c.setAttribute('opacity',(0.9*(1-k)).toFixed(2));requestAnimationFrame(f);})(t0);
+}
+let run=0;
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+function leg(names,token){
+  return new Promise(res=>{
+    const items=names.map(k=>{const e=E[k];const L=e.el.getTotalLength();return {e,L,pk:makePacket(e.bad)};});
+    const speed=reduce?2:0.42;const maxL=Math.max(...items.map(i=>i.L));const t0=performance.now();
+    function frame(t){
+      if(token!==run){items.forEach(i=>i.pk.g.remove());return res(false);}
+      const dist=(t-t0)*speed;let ys=[];
+      items.forEach(i=>{
+        const d=Math.min(dist*(i.L/maxL),i.L);const pt=i.e.el.getPointAtLength(d);
+        i.pk.hist.unshift([pt.x,pt.y]);i.pk.hist.length=Math.min(i.pk.hist.length,24);
+        i.pk.g.children[6].setAttribute('cx',pt.x);i.pk.g.children[6].setAttribute('cy',pt.y);
+        i.pk.body.setAttribute('transform',`translate(${pt.x},${pt.y})`);
+        i.pk.trail.forEach((c,j)=>{const h=i.pk.hist[Math.min(j*4,i.pk.hist.length-1)];c.setAttribute('cx',h[0]);c.setAttribute('cy',h[1]);});
+        ys.push(pt.y);
+      });
+      track(ys.reduce((a,b)=>a+b,0)/ys.length);
+      if(dist<maxL)requestAnimationFrame(frame);
+      else{
+        items.forEach(i=>{i.e.el.classList.add('done');if(i.e.bad)i.e.el.classList.add('bad');i.pk.g.remove();
+          const n=N[i.e.to];n.g.classList.add('lit');if(i.e.bad)n.g.classList.add('bad');ripple(n,i.e.bad);});
+        res(true);
+      }
+    }
+    requestAnimationFrame(frame);
+  });
+}
+function resetChart(){
+  document.querySelectorAll('.edge').forEach(e=>e.classList.remove('done','bad'));
+  document.querySelectorAll('.node').forEach(n=>n.classList.remove('lit','bad'));
+  $('L-packets').innerHTML='';$('L-fx').innerHTML='';
+}
+async function play(key){
+  const token=++run;follow=true;resetChart();
+  document.querySelectorAll('.pill').forEach(b=>b.classList.toggle('on',b.dataset.sc===key));
+  N.start.g.classList.add('lit');hud(LABEL.start,null);ripple(N.start);
+  await sleep(500);
+  for(const step of SC[key]){
+    const names=Array.isArray(step)?step:[step];
+    const e0=E[names[0]];
+    const ok=await leg(names,token);if(!ok)return;
+    const dest=e0.to,n=N[dest],b=bandOf(n.y);
+    if(names.length>1&&names[0]==='E5a')hud('3 إجراءات متوازية',b&&b.t);
+    else hud(LABEL[dest],b&&b.t,e0.bad?'bad':'');
+    await sleep(reduce?150:(N[dest].k==='dec'?650:420));
+  }
+  const last=SC[key][SC[key].length-1];
+  if(key==='happy'||key==='experts')hud('✓ وصلت إلى اللجنة المركزية للترقيات',null,'win');
+  else if(key==='missing'){N.d1.g.classList.add('bad');hud('↩ الطلب ناقص: يُكمَل ويُقدَّم من جديد',null,'bad');}
+  else hud('↩ تُعاد للقسم مع الأسباب ويُبلَّغ صاحب الترقية',null,'bad');
+}
+document.querySelectorAll('.pill').forEach(b=>b.addEventListener('click',()=>play(b.dataset.sc)));
+setTimeout(()=>{if(run===0)play('happy');},900);
+})();
+</script>
+
+</html>
