@@ -2844,6 +2844,34 @@
     </div>
   </div>
 
+  <!-- تنبيه امتحان ١٨-١١-٢٠٢٦: يومض، ويختفي تلقائيًّا بعد نهاية يوم الامتحان -->
+  <style>
+  #examAlert{max-width:1100px;margin:14px auto 6px;padding:16px 20px;border:2px solid #c0392b;border-inline-start:8px solid #c0392b;
+    border-radius:14px;font-size:16px;line-height:1.9;color:#222;animation:exPulse 1.3s ease-in-out infinite}
+  #examAlert .t{display:block;font-weight:800;font-size:19px;color:#c0392b;animation:exBlink 1s steps(2,start) infinite}
+  #examAlert .k{display:inline-block;margin:4px 0;padding:2px 12px;border:2px dashed #c0392b;border-radius:10px;font-weight:800;background:#fff}
+  #examAlert a{color:#1d4ed8;font-weight:700}
+  #examAlert ul{margin:6px 0;padding-inline-start:22px}
+  @keyframes exPulse{0%,100%{background:#fff4f2;box-shadow:0 0 0 0 rgba(192,57,43,0)}50%{background:#ffd9d3;box-shadow:0 0 0 8px rgba(192,57,43,.22)}}
+  @keyframes exBlink{to{visibility:hidden}}
+  @media (prefers-reduced-motion:reduce){#examAlert,#examAlert .t{animation:none}}
+  @media print{#examAlert{display:none}}
+  </style>
+  <div id="examAlert" role="alert" dir="rtl">
+    <span class="t">⚠️ تنبيه مهم — امتحان الأربعاء ١٨-١١-٢٠٢٦</span>
+    الامتحان إلكترونيّ داخل القاعة، وتدخلون إليه <b>برمز المنصّة نفسه</b>.<br>
+    <span class="k">احفظوا رمز المنصّة الآن</span> — اكتبوه في ورقة أو صوّروه. <b>بدون الرمز لا يمكن الدخول إلى الامتحان.</b><br>
+    الرمز هو نفسه الذي تدخلون به إلى <a href="https://ameerkhadi.github.io/academic-cv-website/pt/index" target="_blank" rel="noopener">منصّة المادة</a>. ومن نسي رمزه يراسل الدكتور <b>قبل يوم الامتحان</b>.
+    <ul>
+      <li>٥٠ سؤالًا اختيار من متعدّد — الأسابيع ١ إلى ٥</li>
+      <li>المدّة ١٠٠ دقيقة — الدرجة من ١٠٠</li>
+      <li>احضروا بهاتفٍ مشحون</li>
+    </ul>
+  </div>
+  <script>
+  (function(){ if(new Date() >= new Date('2026-11-19T00:00:00+03:00')){ var e=document.getElementById('examAlert'); if(e) e.remove(); } })();
+  </script>
+
   <div class="tabs">
     <button class="tab active" data-target="slide-1">١<br>الأسبوع الأول</button>
     <button class="tab" data-target="slide-2">٢<br>الأسبوع الثاني</button>
