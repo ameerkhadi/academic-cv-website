@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>أسئلة امتحان 18-11-2026 وحلولها — الذكاء الاصطناعي وتحليل البيانات</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f3ec; --bg2:#efe8dc; --card:#fffdf9; --ink:#2f2a25; --muted:#7a7066; --line:#e6ddd0;
+  --accent:#7c6cd6; --accent-soft:#ece8fb; --ok:#2f9e6f; --ok-soft:#e3f5ec; --bad:#d4645c; --bad-soft:#fbe9e7;
+  --gold:#d9a441; --gold-soft:#fbf1dc; --shadow:0 10px 30px rgba(80,60,30,.08),0 2px 6px rgba(80,60,30,.05);
+  --w1:#8fb8e8; --w2:#9fd3b5; --w3:#f2c38b; --w4:#c7a8ea; --w5:#ef9fb0;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#1d1b22; --bg2:#25222b; --card:#2a2730; --ink:#efe9f3; --muted:#a59cb0; --line:#3a3542;
+  --accent:#a99bf0; --accent-soft:#363052; --ok:#5cc79a; --ok-soft:#1f3a2f; --bad:#ec8a82; --bad-soft:#43282a;
+  --gold:#e8bd64; --gold-soft:#3d3324; --shadow:0 10px 30px rgba(0,0,0,.35);
+}}
+:root[data-theme="dark"]{
+  --bg:#1d1b22; --bg2:#25222b; --card:#2a2730; --ink:#efe9f3; --muted:#a59cb0; --line:#3a3542;
+  --accent:#a99bf0; --accent-soft:#363052; --ok:#5cc79a; --ok-soft:#1f3a2f; --bad:#ec8a82; --bad-soft:#43282a;
+  --gold:#e8bd64; --gold-soft:#3d3324; --shadow:0 10px 30px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:Tajawal,"Segoe UI",Tahoma,sans-serif;background:radial-gradient(1200px 600px at 85% -10%,var(--accent-soft),transparent 60%),
+  radial-gradient(900px 500px at -10% 110%,var(--gold-soft),transparent 60%),var(--bg);color:var(--ink);min-height:100vh;line-height:1.7}
+.wrap{max-width:760px;margin:0 auto;padding:22px 16px 60px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:18px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:15px;color:var(--muted)}
+.brand i{width:34px;height:34px;border-radius:12px;background:var(--accent-soft);display:grid;place-items:center;font-style:normal;font-size:18px}
+.iconbtn{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:7px 12px;font:inherit;cursor:pointer}
+.card{background:var(--card);border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow);padding:26px}
+h1{font-size:30px;margin:4px 0 6px;line-height:1.35}
+.sub{color:var(--muted);margin:0 0 22px}
+.lbl{font-weight:700;margin:18px 0 10px;font-size:15px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1.5px solid var(--line);background:var(--bg);color:var(--ink);border-radius:999px;padding:8px 16px;font:500 15px Tajawal,sans-serif;cursor:pointer;transition:.18s}
+.chip:hover{transform:translateY(-1px)}
+.chip.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.chip .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-inline-end:6px;vertical-align:1px}
+.mode{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mode button{text-align:start;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);border-radius:18px;padding:14px;font:inherit;cursor:pointer;transition:.18s}
+.mode button b{display:block;font-size:16px}
+.mode button span{color:var(--muted);font-size:13.5px}
+.mode button.on{border-color:var(--accent);background:var(--accent-soft)}
+.go{margin-top:24px;width:100%;border:0;border-radius:18px;padding:15px;background:linear-gradient(135deg,var(--accent),#9a8be8);color:#fff;
+  font:800 18px Tajawal,sans-serif;cursor:pointer;box-shadow:0 10px 24px rgba(124,108,214,.35);transition:.2s}
+.go:hover{transform:translateY(-2px)}
+.go:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.best{margin-top:14px;text-align:center;color:var(--muted);font-size:14px}
+.stats{display:flex;gap:10px;margin-top:6px;flex-wrap:wrap}
+.stat{flex:1;min-width:120px;background:var(--bg);border-radius:16px;padding:10px 14px;text-align:center}
+.stat b{display:block;font-size:22px}
+.stat span{font-size:13px;color:var(--muted)}
+
+/* question */
+.bar{height:10px;background:var(--bg2);border-radius:99px;overflow:hidden;margin:4px 0 16px}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),#b7abf2);border-radius:99px;transition:width .35s ease}
+.meta{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;color:var(--muted);font-size:14px;margin-bottom:6px}
+.tags{display:flex;gap:6px}
+.tag{border-radius:999px;padding:3px 11px;font-size:12.5px;font-weight:700;color:#2f2a25}
+.q{font-size:20px;font-weight:700;margin:6px 0 18px;line-height:1.75}
+.opts{display:grid;gap:10px}
+.opt{display:flex;align-items:center;gap:12px;text-align:start;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);
+  border-radius:16px;padding:13px 14px;font:500 16px/1.6 Tajawal,sans-serif;cursor:pointer;transition:.18s}
+.opt:hover:not(:disabled){border-color:var(--accent);transform:translateX(-2px)}
+.opt .l{flex:0 0 32px;height:32px;border-radius:10px;background:var(--card);border:1.5px solid var(--line);display:grid;place-items:center;font-weight:800}
+.opt.sel{border-color:var(--accent);background:var(--accent-soft)}
+.opt.sel .l{background:var(--accent);border-color:var(--accent);color:#fff}
+.opt.ok{border-color:var(--ok);background:var(--ok-soft)}
+.opt.ok .l{background:var(--ok);border-color:var(--ok);color:#fff}
+.opt.bad{border-color:var(--bad);background:var(--bad-soft);animation:shake .35s}
+.opt.bad .l{background:var(--bad);border-color:var(--bad);color:#fff}
+.opt:disabled{cursor:default}
+@keyframes shake{25%{transform:translateX(5px)}75%{transform:translateX(-5px)}}
+.why{margin-top:14px;border-radius:16px;padding:12px 16px;font-size:15px;display:none;animation:fade .3s}
+.why.show{display:block}
+.why.ok{background:var(--ok-soft);border:1px solid var(--ok)}
+.why.bad{background:var(--bad-soft);border:1px solid var(--bad)}
+.why b{display:block;margin-bottom:2px}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.nav{display:flex;justify-content:space-between;gap:10px;margin-top:18px}
+.btn{border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:14px;padding:11px 20px;font:700 15px Tajawal,sans-serif;cursor:pointer}
+.btn.pri{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.hint{text-align:center;color:var(--muted);font-size:12.5px;margin-top:12px}
+.streak{color:var(--gold);font-weight:800}
+
+/* results */
+.ring{display:grid;place-items:center;margin:6px auto 4px}
+.ring svg{width:170px;height:170px}
+.ring text{font-family:Tajawal,sans-serif}
+.msg{text-align:center;font-size:20px;font-weight:800;margin:4px 0}
+.msg2{text-align:center;color:var(--muted);margin:0 0 16px}
+.wk{display:grid;grid-template-columns:110px 1fr 54px;align-items:center;gap:10px;margin:8px 0;font-size:14px}
+.wk .t{height:12px;background:var(--bg2);border-radius:99px;overflow:hidden}
+.wk .t i{display:block;height:100%;border-radius:99px;transition:width .8s ease}
+.rev{margin-top:12px;border:1px solid var(--line);border-radius:16px;padding:12px 14px;background:var(--bg)}
+.rev .rq{font-weight:700;margin-bottom:6px}
+.rev .ra{font-size:14.5px}
+.rev .ra.x{color:var(--bad)} .rev .ra.v{color:var(--ok)}
+.rev .rw{font-size:14px;color:var(--muted);margin-top:4px}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.row .btn{flex:1}
+.foot{text-align:center;color:var(--muted);font-size:12.5px;margin-top:22px}
+.hide{display:none}
+.confetti{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:5}
+.confetti i{position:absolute;top:-12px;width:9px;height:14px;border-radius:3px;opacity:.85;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(105vh) rotate(540deg)}}
+@media (max-width:520px){h1{font-size:24px}.card{padding:18px;border-radius:20px}.q{font-size:18px}.mode{grid-template-columns:1fr}.wk{grid-template-columns:96px 1fr 46px}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="brand"><i>🧠</i>الذكاء الاصطناعي وتحليل البيانات</div>
+    <button class="iconbtn" id="themeBtn" title="الوضع الليلي">☾</button>
+  </div>
+
+  <!-- START -->
+  <section class="card" id="sStart">
+    <h1>أسئلة امتحان ١٨-١١-٢٠٢٦ وحلولها</h1>
+    <p class="sub">الأسئلة الخمسون التي جاءت في امتحان الأربعاء ١٨-١١-٢٠٢٦ (الأسابيع ١–٥)، ومع كلّ سؤال الحلّ الصحيح وتعليله. حُلّها من جديد، أو اعرض الحلول كاملة.</p>
+    <div class="stats" id="bankStats"></div>
+
+    <div class="lbl">الأسابيع</div>
+    <div class="chips" id="weeks"></div>
+
+    <div class="lbl">عدد الأسئلة</div>
+    <div class="chips" id="counts"></div>
+
+    <div class="lbl">طريقة الحلّ</div>
+    <div class="mode" id="modes">
+      <button data-m="practice" class="on"><b>🌱 تدريب</b><span>ترى الجواب الصحيح وتعليله بعد كلّ سؤال</span></button>
+      <button data-m="test"><b>⏱️ اختبار</b><span>تجيب عن الكلّ، ثمّ ترى النتيجة والتصحيح</span></button>
+    </div>
+
+
+    <button class="go" id="goBtn">ابدأ</button>
+    <button class="btn" id="solBtn" style="width:100%;margin-top:10px">📖 اعرض الأسئلة الخمسين مع حلولها</button>
+    <div class="best" id="best"></div>
+  </section>
+
+  <!-- SOLUTIONS -->
+  <section class="card hide" id="sSol">
+    <h1 style="font-size:24px">حلول امتحان ١٨-١١-٢٠٢٦</h1>
+    <p class="sub">الجواب الصحيح لكلّ سؤال، وسبب صحّته.</p>
+    <div id="solList"></div>
+    <div class="row"><button class="btn pri" id="solBack">→ العودة</button></div>
+  </section>
+
+  <!-- QUESTION -->
+  <section class="card hide" id="sQ">
+    <div class="meta"><span id="qNum"></span><span class="tags" id="qTags"></span></div>
+    <div class="bar"><i id="qBar"></i></div>
+    <div class="q" id="qText"></div>
+    <div class="opts" id="qOpts"></div>
+    <div class="why" id="qWhy"></div>
+    <div class="nav">
+      <button class="btn" id="prevBtn">→ السابق</button>
+      <button class="btn pri" id="nextBtn">التالي ←</button>
+    </div>
+    <div class="hint">اختصارات: ١–٤ أو أ ب ج د للاختيار · Enter للتالي <span id="streak" class="streak"></span></div>
+  </section>
+
+  <!-- RESULT -->
+  <section class="card hide" id="sR">
+    <div class="ring" id="ring"></div>
+    <div class="msg" id="rMsg"></div>
+    <p class="msg2" id="rMsg2"></p>
+    <div id="rWeeks"></div>
+    <div class="row">
+      <button class="btn pri" id="retryWrong">أعد الأسئلة الخاطئة</button>
+      <button class="btn" id="newQuiz">جولة جديدة</button>
+    </div>
+    <div class="lbl" id="revTitle">مراجعة الأخطاء</div>
+    <div id="rList"></div>
+  </section>
+
+  <div class="foot">أسئلة امتحان الأربعاء ١٨-١١-٢٠٢٦ وحلولها، للمراجعة فقط · إعداد د. أمير هادي</div>
+</div>
+<div class="confetti" id="confetti"></div>
+
+<script>
+var BANK = [{"w": 1, "q": "النموذج اللغوي الكبير (LLM) يعمل بشكل أساسي عن طريق:", "o": ["توقّع الكلمة التالية بناءً على أنماط تعلّمها من نصوص سابقة", "فهم النص فهمًا بشريًا حقيقيًا", "البحث في الإنترنت لحظيًا عن كل إجابة", "حفظ كل إجابة سبق أن أعطاها لأي مستخدم"], "why": "النموذج يتوقّع الكلمة التالية من أنماط تعلّمها؛ لا يفهم كالإنسان، ولا يبحث في الإنترنت وحده، ولا يحفظ إجابات المستخدمين."}, {"w": 1, "q": "«الهلوسة» (Hallucination) في الذكاء الاصطناعي تعني:", "o": ["إعطاء إجابة خاطئة بثقة تامة وكأنها صحيحة", "توقّف البرنامج عن العمل فجأة", "طلب البرنامج توضيحًا إضافيًا من المستخدم", "رفض البرنامج الإجابة على سؤال معيّن"], "why": "الخطر في الثقة لا في الخطأ وحده — لو قال «لست متأكّدًا» لما سُمّيت هلوسة."}, {"w": 1, "q": "أي أداة من أدوات كلود الأنسب لتنظيم ملفاتك وجدولة مهام تتكرر يوميًا تلقائيًا؟", "o": ["كلود كوورك (Cowork)", "كلود شات (Chat)", "كلود كود (Claude Code)", "كلها بنفس القدرة"], "why": "كوورك يصل إلى ملفاتك ويعمل في الخلفية وتُبنى عليه الجدولة؛ الشات محادثة، والكود أداة برمجة."}, {"w": 1, "q": "حسب «القواعد الذهبية الأربع» لكتابة أمر ناجح، أول خطوة هي:", "o": ["تحديد الموقف والسياق", "تقديم مثال", "تحديد شكل الإجابة المطلوبة", "تحديد طول الإجابة فقط"], "why": "الترتيب مقصود: من أنت ولمن تكتب أوّلًا، ثمّ المهمة، ثمّ الشكل، ثمّ المثال."}, {"w": 1, "q": "أي نموذج من نماذج كلود هو «الافتراضي» المتوازن لمعظم المهام اليومية؟", "o": ["سونيت (Sonnet)", "هايكو (Haiku)", "أوبس (Opus)", "لا فرق بين النماذج"], "why": "هايكو للسرعة، وأوبس للدقّة العالية، وسونيت هو التوازن الافتراضي."}, {"w": 1, "q": "أيّ العبارات الآتية صحيحة؟", "o": ["الإرسال إلى وكلاء فرعيين يساعد على إبقاء المحادثة الأساسية مركّزة", "النموذج اللغوي الكبير «يفكّر» بنفس طريقة تفكير الإنسان", "نافذة السياق الكبيرة تعني أن كلود يتذكّر كل شيء حتى بعد إغلاق المحادثة", "التفكير الممتد يُفضَّل تفعيله بكل سؤال لأنه لا يكلّف شيئًا إضافيًا"], "why": "الوكلاء الفرعيّون يأخذون جزءًا من المهمة فتبقى المحادثة الأساسيّة مركّزة؛ والعبارات الثلاث الأخرى خاطئة."}, {"w": 1, "q": "متى يُفعَّل «التفكير الممتد» (Extended thinking)؟", "o": ["للمسائل المعقّدة، لأنه أبطأ ويستهلك رصيدًا أكثر", "مع كل سؤال، لأنه لا يكلّف شيئًا إضافيًا", "لا يُفعَّل أبدًا، لأنه يقلّل دقّة الجواب", "للأسئلة القصيرة فقط، لأنها تحتاج تفكيرًا أطول"], "why": "التفكير الممتدّ أبطأ ويستهلك أكثر، فيُفعَّل للمسائل المعقّدة لا لكلّ سؤال."}, {"w": 1, "q": "أعطاك كلود معلومة حسّاسة (رقمًا ماليًّا أو نصًّا قانونيًّا). ما التصرّف الصحيح؟", "o": ["تتحقّق منها من مصدرٍ موثوق قبل اعتمادها", "تعتمدها مباشرةً لأنّ كلود دقيق في الأرقام", "تطلب من كلود أن يؤكّدها فيكفي ذلك", "تعتمدها إذا جاء الجواب بثقةٍ وتفصيل"], "why": "المعلومة الحسّاسة تُتحقَّق من مصدرٍ موثوق؛ ثقة الجواب وتفصيله ليسا دليلًا."}, {"w": 1, "q": "موظف كتب لكلود: «اكتب لي كتاب رسمي» بدون أي تفاصيل، فجاءت النتيجة عامة لا تناسب عمله. ما الخطأ؟", "o": ["الأمر بلا دور ولا جمهور ولا مهمة محدّدة ولا حدود", "النموذج المستعمل ضعيف ويجب التحويل إلى أوبس", "كلود لا يكتب الكتب الرسمية العراقية أصلًا", "التفكير الممتد لم يكن مفعّلًا أثناء الطلب"], "why": "الأمر خالٍ من القواعد الأربع: لا دور ولا جمهور ولا مهمة محدّدة ولا حدود."}, {"w": 1, "q": "مدير يلخّص تقريرًا طويلًا مع كلود، وبعد ٤٠ دقيقة بدأت الإجابات تتجاهل تفاصيل ذُكرت في البداية. ما التفسير والإجراء؟", "o": ["امتلأت نافذة السياق؛ يبدأ محادثة جديدة ويلصق ملخّص النقاط", "عطلٌ في البرنامج؛ ينتظر ساعة ثم يكمل المحادثة نفسها", "النموذج تعب؛ يبدّله إلى هايكو ليصير أسرع وأدقّ", "التقرير سرّي؛ وكلود يرفض إكماله عمدًا بعد مدّة"], "why": "امتلأت نافذة السياق فبدأ يفقد أوّل الكلام؛ الحلّ محادثة جديدة مع ملخّص النقاط المهمّة."}, {"w": 1, "q": "موظف اعتمد على رقم مالي أعطاه كلود دون التحقق منه، وتبيّن أنه غير دقيق. أي مبدأ كان يجب اتّباعه؟", "o": ["الإشراف البشري والتحقّق من الرقم قبل اعتماده", "اختيار نموذج أوبس للأرقام المالية دائمًا", "تفعيل التفكير الممتد مع كل سؤال مالي", "طلب الجواب بالإنجليزية لأنه أدقّ دائمًا"], "why": "الإشراف البشري: الرقم يخرج بثقة، والتوقيع والمسؤوليّة على الموظّف، فيُعَدّ من المصدر قبل الاعتماد."}, {"w": 2, "q": "مهمة في كوورك حالتها «تحتاج ردّك» (Needs input) تعني:", "o": ["أنها متوقّفة بانتظار قرار منك لتكمل", "أنها فشلت ويجب حذفها", "أنها اكتملت واعتُمدت", "أنها مؤرشفة ولا تعمل"], "why": "«تحتاج ردّك» ليست فشلًا؛ المهمة واقفة تنتظر قرارك لتكمل."}, {"w": 2, "q": "إعداد «طلب أجهزة موثوقة» (Require trusted devices) وظيفته:", "o": ["التحقّق من كل جهاز جديد قبل أن يبدأ جلسة تصل لملفاتك", "تسريع فتح التطبيق على الأجهزة القديمة", "تغيير لون الواجهة حسب نوع الجهاز", "زيادة رصيد الاستخدام للأجهزة المسجّلة"], "why": "الجلسة الجديدة تصل إلى ملفاتك كلّها، فيُتحقَّق من كلّ جهاز قبل السماح له."}, {"w": 2, "q": "رابط تصدير البيانات (Export data) يصلك:", "o": ["على بريدك الإلكتروني، ويبطل بعد ٢٤ ساعة", "داخل المحادثة، ويبقى صالحًا دائمًا", "برسالة نصّية على هاتفك المسجّل", "لا يمكن تصدير البيانات إطلاقًا"], "why": "رابط التصدير يصل إلى البريد ويبطل بعد ٢٤ ساعة؛ نزّله فور وصوله."}, {"w": 2, "q": "أي خيار في «المهارات» هو الأنسب لموظف مبتدئ يريد بناء مهارة أول مرة؟", "o": ["Create with Claude", "Upload skill", "Create a skill", "Browse فقط"], "why": "Create with Claude: كلود يبنيها معك ويصحّحها خطوةً بخطوة، فتناسب المبتدئ."}, {"w": 2, "q": "«إعادة الشحن التلقائي» (Auto-reload) في الفوترة تعني:", "o": ["شراء أرصدة استخدام تلقائيًا عند اقتراب رصيدك من النفاد", "إعادة تحميل الصفحة تلقائيًا عند انقطاع الاتصال", "حفظ المحادثات تلقائيًا في ملف على جهازك", "تحديث التطبيق تلقائيًا إلى آخر إصدار"], "why": "إعادة الشحن التلقائي تشتري رصيدًا بصمت عند اقترابه من النفاد — انتبه لها في الفاتورة."}, {"w": 2, "q": "ماذا يحدث للمهمة المؤرشفة في كوورك؟", "o": ["تخرج من القائمة، ويمكن فتحها واسترجاعها", "تُحذف نهائيًا ولا يمكن استرجاعها", "تُرسَل إلى المدير لاعتمادها", "تعود إلى حالة «قيد العمل» تلقائيًا"], "why": "الأرشفة تُخرج المهمة من الطريق ولا تحذفها؛ يمكن فتحها من المؤرشفة."}, {"w": 2, "q": "تصنيف حالة الجلسة تلقائيًا (متوقّفة، جاهزة للمراجعة، منتهية):", "o": ["يُحتسب من رصيد استخدام خطّتك", "مجّانيّ دائمًا ولا يُحتسب من الرصيد", "متاحٌ للمدير فقط دون الموظّفين", "يعمل فقط بعد إغلاق الحاسوب"], "why": "تصنيف حالة الجلسة تلقائيًّا يُحتسب من رصيد استخدام الخطة."}, {"w": 2, "q": "أيّ العبارات الآتية صحيحة؟", "o": ["مراجعة الجلسات النشطة إجراء أمني يُكرَّر دوريًا", "تفعيل إعدادات الخصوصية يبيح رفع بيانات الدائرة السرّية", "«ديسباتش» و«كوورك» واجهة واحدة باسمين مختلفين", "مراجعة الجلسات النشطة تكفي مرّة واحدة عند فتح الحساب"], "why": "مراجعة الجلسات النشطة تُكرَّر دوريًّا؛ وإعدادات الخصوصية لا تبيح رفع بيانات الدائرة السرّية."}, {"w": 2, "q": "موظف يفتح ملف الردود كل صباح، يفحصه يدويًا ويكتب ملخّصًا — عشر دقائق يوميًا. ما الحلّ الأنسب؟", "o": ["مهمة مجدولة في كوورك تعمل كل يوم الساعة ٨", "محادثة جديدة كل صباح يلصق فيها الملف", "مشاركة المحادثة برابط مع زميل ليكملها", "تفعيل إعادة الشحن التلقائي للرصيد"], "why": "مهمة يكرّرها كلّ صباح ← مهمة مجدولة في كوورك بموعدٍ ثابت."}, {"w": 2, "q": "مديرة فتحت «الجلسات النشطة» فوجدت جهازًا وموقعًا لا تعرفهما. ما الإجراء الصحيح؟", "o": ["أوّلًا تنهي الجلسة، ثمّ تغيّر كلمة المرور، ثمّ تفعّل الأجهزة الموثوقة", "أوّلًا تغيّر كلمة المرور، ثمّ تنتظر يومًا لترى هل تختفي الجلسة وحدها", "أوّلًا تحذف كلّ محادثاتها، ثمّ تُبقي الجلسة مفتوحة لتعرف صاحبها", "لا شيء؛ فالجلسة الغريبة لا تصل إلّا إلى محادثةٍ واحدة فقط"], "why": "الجلسة الغريبة تصل لكلّ ملفاتك: أنهِها فورًا، ثمّ غيّر كلمة المرور، ثمّ فعّل الأجهزة الموثوقة."}, {"w": 2, "q": "موظف يريد أن تبقى مهامه على حاسوب الدائرة ولا تكمل في السحابة. أي إعداد يستخدم، وما أثره؟", "o": ["«على حاسوبك فقط»، فتتوقّف المهام عند إغلاق الجهاز", "«على حاسوبك فقط»، وتكمل المهام في السحابة بعد الإغلاق", "«ديسباتش»، فتبقى المهام على حاسوب الدائرة دائمًا", "«الأجهزة الموثوقة»، فتعمل المهام والجهاز مطفأ"], "why": "«على حاسوبك فقط» يبقي التنفيذ على جهازك؛ الثمن أنّ المهام تتوقّف عند إغلاقه."}, {"w": 3, "q": "جدول المطابقة (Key file) الذي يربط الرموز بأسماء أصحابها:", "o": ["يبقى عندك ولا يُرفع أبدًا", "يُرفع مع الملف ليفهم كلود البيانات", "يُرسَل إلى الزميل برابط مشاركة", "يُحذف قبل البدء بإخفاء الهوية"], "why": "جدول المطابقة يعيد الأسماء إلى الرموز، فهو أخطر ملفّ ولا يُرفع أبدًا."}, {"w": 3, "q": "«القالب» (Template) في المحاضرة الثالثة هو:", "o": ["أمرٌ مكتوب مرّة بفراغات تملؤها كل مرّة", "ملف وورد جاهز يُطبع ويُوقَّع مباشرة", "مهارة تُرفع ملفًّا مضغوطًا إلى الحساب", "محادثة مثبّتة لا يُكتب فيها شيء"], "why": "القالب أمرٌ مكتوب مرّةً بفراغات، تملؤها كلّ مرّة بدل الكتابة من الصفر."}, {"w": 3, "q": "استعملتَ القالب فجاء الجواب «عامًّا ولا يصلح». ما السبب الأرجح؟", "o": ["أُرسل القالب دون ملء الأجزاء المظلَّلة", "انتهى الرصيد المجاني في منتصف الطلب", "النموذج المختار هايكو لا سونيت", "الملف المرفوع فيه أسماء حقيقية"], "why": "أغلب الأجوبة العامّة سببها إرسال القالب دون ملء الأجزاء المظلَّلة."}, {"w": 3, "q": "انتبهتَ بعد الإرسال إلى أنّ الملف الذي رفعته فيه أسماء حقيقية. ما الصحيح؟", "o": ["تتوقّف، وتحذف المحادثة، وتخفي الهوية، وتبلغ مسؤولك", "تكمل العمل، فالمحادثة خاصّة ولا يراها أحد غيرك", "تطلب من كلود أن ينسى الأسماء ثمّ تكمل العمل", "تعيد رفع الملف نفسه بصيغة PDF بدل إكسل"], "why": "توقّف، احذف المحادثة، أخفِ الهويّة ثمّ أعد، وأخبر مسؤولك — هذا خرقٌ يجب أن يُعرف."}, {"w": 3, "q": "لماذا تعدّ صفوف الإكسل بنفسك بعد أن يعطيك كلود المؤشّرات الثلاثة؟", "o": ["لأنّ الهلوسة لا تعلن عن نفسها، والتحقّق من رقمٍ واحد يكشفها", "لأنّ كلود لا يستطيع قراءة ملفات الإكسل أصلًا", "لأنّ عدد الصفوف هو ما يحدّد رصيد الاستخدام", "لأنّ الرسم البياني لا يظهر قبل العدّ اليدوي"], "why": "الهلوسة لا تعلن عن نفسها؛ فحص رقمٍ واحد بنفسك يكشفها قبل أن تبني عليها قرارًا."}, {"w": 4, "q": "ما الذي يُحمَّل من المهارة منذ بداية الجلسة؟", "o": ["الاسم والوصف فقط", "متن التعليمات كاملًا", "الملفّات المرفقة كلّها", "لا يُحمَّل شيء حتّى تُستدعى"], "why": "من بداية الجلسة يُحمَّل الاسم والوصف فقط، ولا يُفتح المتن إلّا عند المطابقة."}, {"w": 4, "q": "مهارةٌ عملت حين ذُكِر اسمها صراحةً، ولم تعمل حين صيغ الطلب صياغةً طبيعيّة. أين الخلل؟", "o": ["في حقل الوصف", "في متن التعليمات", "في اسم المهارة", "في إعدادات الحساب"], "why": "نجاحها يدويًّا يعني أنّ المتن سليم؛ فشلها التلقائيّ يعني أنّ الوصف لا يطابق الطلب."}, {"w": 4, "q": "شعبةٌ فيها ستّة موظّفين، والمطلوب مهارةٌ واحدة تعمل عندهم جميعًا بنسخةٍ واحدة. أيُّ الطرق يحقّق ذلك؟", "o": ["وضعها في مستودع الدائرة", "مهارة التوليد skill-creator في حساب رئيس الشعبة", "التسجيل بالشاشة مرّةً واحدة", "رفعها ملفًّا مضغوطًا في حسابٍ واحد"], "why": "المستودع وحده يُنتج مهارةً للجهة كلّها بنسخةٍ واحدة؛ الطرق الأخرى مهارة في حسابٍ واحد."}, {"w": 4, "q": "أيُّ هذه المعلومات لا يصحّ إدراجها داخل متن المهارة؟", "o": ["أسماء المواطنين وأرقام هواتفهم كأمثلة", "فئات الشكاوى الخمس المعتمدة", "قاعدة احتساب التأخير بعشرة أيام", "ترتيب عرض الوحدات الأربع"], "why": "المهارة تحمل القاعدة لا الحالة: الفئات والقواعد نعم، وأسماء المواطنين وهواتفهم لا."}, {"w": 4, "q": "أيّ العبارات الآتية عن المهارات صحيحة؟", "o": ["حقل الوصف يُكتب بصيغة الغائب لأنّه يُحقَن في موجّه النظام", "كلّما ازدادت المهمّة صعوبةً ازدادت حاجتها إلى مهارة", "المهارة المبنيّة في حسابك تصل تلقائيًّا إلى زملائك في الجهة", "فحص ملفّ SKILL.md وحده كافٍ للحكم على سلامة المهارة"], "why": "الوصف يُحقَن في موجّه النظام فيُكتب بصيغة الغائب؛ والعبارات الثلاث الأخرى خاطئة."}, {"w": 4, "q": "ما فائدة بناء استمارة الشكاوى بمهارةٍ واحدة يستعملها الجميع؟", "o": ["تسمياتٌ موحّدة يمكن جمعها في تقريرٍ واحد", "استمارةٌ أجمل شكلًا من استمارة الوورد", "إلغاء الحاجة إلى مراجعة المدير نهائيًّا", "رصيدٌ أقلّ استهلاكًا عند كلّ موظّف"], "why": "مهارةٌ واحدة يستعملها الجميع تُنتج تسمياتٍ موحّدة يمكن جمعها في تقرير."}, {"w": 4, "q": "قبل تثبيت مهارة من مصدرٍ خارجي، ماذا تفحص؟", "o": ["ملفّ SKILL.md وكلّ الملفّات والسكربتات المرفقة به", "ملفّ SKILL.md وحده، فهو يكفي للحكم عليها", "اسم المهارة وعدد مرّات تنزيلها فقط", "لا شيء؛ المهارات المنشورة مفحوصة دائمًا"], "why": "الخطر قد يختبئ في الملفّات والسكربتات المرفقة، فلا يكفي فحص SKILL.md وحده."}, {"w": 4, "q": "وصف مهارة: «تُستعمل هذه المهارة لتصنيف الشكاوى. الخطوة الأولى: قراءة نصّ الشكوى. الخطوة الثانية: تحديد الفئة…». ما الخطأ فيه؟", "o": ["ملأ الوصف بخطوات التنفيذ وأسقط متى تُستعمل المهارة", "الوصف قصيرٌ جدًّا ويجب أن يتجاوز صفحةً كاملة", "الوصف مكتوبٌ بالعربية والصحيح أن يكون بالإنجليزية", "الوصف لا يذكر اسم الموظّف الذي كتب المهارة"], "why": "الوصف موضعه «ماذا تفعل ومتى تُستعمل»؛ الخطوات مكانها المتن."}, {"w": 4, "q": "مهمّةٌ تتكرّر كلّ أسبوع، لكنّ شكل مخرَجها يتغيّر بحسب طلب المدير كلّ مرّة. أتستحقّ مهارة؟", "o": ["لا؛ المهارة تُثبّت إجراءً، والإجراء هنا غير ثابت", "نعم؛ كلّ مهمّةٍ تتكرّر أسبوعيًّا تستحقّ مهارة", "نعم؛ بشرط أن تُبنى بأداة Create with Claude", "لا؛ لأنّ المهارات لا تعمل في المهامّ الأسبوعية"], "why": "المهارة تُثبّت إجراءً؛ ما لا إجراء ثابتًا له لا تجد المهارة ما تثبّته."}, {"w": 4, "q": "«خاطبني بصفتي مدير شعبة، وبالعربية الفصحى» — أين يوضع هذا؟", "o": ["في تعليمات البروفايل، لأنها تسري على كلّ المحادثات", "في متن مهارة، لأنها تُفتح عند الحاجة فقط", "في وصف مهارة، ليستدعيها كلود تلقائيًّا", "في ملفّ مرفق داخل مشروعٍ واحد فقط"], "why": "البروفايل لما يسري على كلّ المحادثات، والمهارة لما يخصّ مهمّةً بعينها."}, {"w": 5, "q": "أيُّ العبارات الآتية «معلومة» لا «بيانات» بحسب هرم المعرفة؟", "o": ["«نسبة الغياب في قسم المالية ١٨٪ أيّام الأحد»", "«أحمد دخل الساعة ٨:٤٠ يوم الأحد»", "قائمة بأسماء موظّفي الدائرة", "رقم هاتف أحد الموظّفين"], "why": "نسبة ١٨٪ ناتجُ تجميع سجلّاتٍ كثيرة فصار لها معنى — هذه معلومة."}, {"w": 5, "q": "عن أيّ سؤالٍ يجيب مستوى «الرؤية» في هرم المعرفة؟", "o": ["لماذا حدث؟", "ماذا حدث؟", "كم عدد السجلّات؟", "من أدخل البيانات؟"], "why": "«ماذا حدث؟» سؤال المعلومة، و«لماذا حدث؟» سؤال الرؤية."}, {"w": 5, "q": "عمود «الدرجة الوظيفيّة» (الأولى، الثانية، الثالثة…) من أيّ نوع؟", "o": ["فئويّة ترتيبيّة", "كمّيّة متّصلة", "فئويّة اسميّة", "كمّيّة منفصلة"], "why": "الدرجات أصنافٌ لها ترتيب طبيعيّ: الأولى أعلى من الثانية."}, {"w": 5, "q": "أيُّ الأعمدة الآتية لا يصحّ حساب متوسّطه، مع أنّ قيمه أرقام؟", "o": ["الرقم الوظيفيّ", "الراتب الشهريّ", "عدد أيّام الإجازة", "سنوات الخدمة"], "why": "الرقم الوظيفيّ معرِّف كالاسم؛ متوسّطه بلا معنى."}, {"w": 5, "q": "أيُّ محطّات دورة التحليل تستغرق في العادة أطول وقت؟", "o": ["التنظيف", "صياغة السؤال", "جمع البيانات", "العرض"], "why": "يُقدَّر أنّ نحو ٨٠٪ من وقت المحلّل يذهب إلى التنظيف."}, {"w": 5, "q": "في جدول رواتب تتقارب قيمه حول ٩٠٠ ألف دينار، ظهر راتبٌ قدره ٨٥ مليونًا. ما الإجراء الأصوب؟", "o": ["التحقّق منه من المصدر قبل أيّ قرار", "حذفه فورًا لأنّه خطأٌ واضح", "إبقاؤه كما هو لأنّ البيانات لا تُمَسّ", "استبداله بمتوسّط الرواتب تلقائيًّا"], "why": "القيمة الشاذّة قد تكون خطأ إدخال أو راتبًا حقيقيًّا؛ التحقّق من المصدر قبل أيّ قرار."}, {"w": 5, "q": "حُذفت أسماء المرضى من ملفٍّ صحّيّ، وبقيت أعمدة الجنس وتاريخ الميلاد والحيّ. ما الخطر الباقي؟", "o": ["إمكان التعرّف على المريض من اجتماع هذه الأعمدة", "لا خطر، فالأسماء حُذفت", "فقدان دقّة التحليل الإحصائيّ", "تضاعف حجم الملفّ"], "why": "اجتماع الجنس وتاريخ الميلاد والحيّ قد يدلّ على شخصٍ واحد بعينه."}, {"w": 5, "q": "أيّ العبارات الآتية صحيحة؟", "o": ["التحليل الجيّد يبدأ بسؤالٍ محدّد قابلٍ للقياس", "كلّما ازداد حجم البيانات ازدادت قيمتها في القرار", "يعدّ الحاسوب «بغداد» و«Baghdad» قيمةً واحدة تلقائيًّا", "ينتهي التحليل عند اتّخاذ القرار"], "why": "التحليل يبدأ بسؤال محدّد؛ الحجم وحده لا يصنع قيمة، والحاسوب يقارن الحروف لا المعاني."}, {"w": 5, "q": "عمود «عدد أيّام الغياب» من أيّ نوع؟", "o": ["كمّيّة منفصلة", "كمّيّة متّصلة", "فئويّة ترتيبيّة", "فئويّة اسميّة"], "why": "عدد الأيّام يُعَدّ ولا يتجزّأ — كمّيّة منفصلة."}, {"w": 5, "q": "في عمود الراتب خانةٌ فارغة. ما المعالجة المشروعة؟", "o": ["تُستكمل من المصدر، أو يُستبعد السطر، أو تُقدَّر مع الإفصاح", "تُترك دائمًا كما هي، لأنّ ملأها تزويرٌ للبيانات", "تُملأ بالصفر حتّى لا يتعطّل الحساب، دون ذكر ذلك", "يُحذف العمود كلّه لأنّ فيه خانةً ناقصة"], "why": "للخانة الفارغة معالجات مشروعة مع الإفصاح؛ التزوير هو الملء دون إفصاح."}, {"w": 5, "q": "موظّفة حذفت الأسماء من جدول غياب، وأبقت: الرقم الوظيفيّ، القسم، الجنس، سنة الميلاد، عدد الغيابات. ثمّ سألت كلود: «ما متوسّط الرقم الوظيفيّ للغائبين أكثر من ٥ أيّام؟» فأجاب بثقة. ما التقييم الأدقّ؟", "o": ["متوسّط الرقم الوظيفيّ بلا معنى، والجدول قد يكشف الهويّة رغم حذف الأسماء", "لا خطأ؛ الأسماء حُذفت، والسؤال كمّيّ صالح لأنّ الرقم الوظيفيّ أرقام", "الخطأ الوحيد أنّ الجواب جاء بثقة، فهو هلوسةٌ مؤكّدة يجب حذفها", "الخطأ الوحيد أنّ عدد الغيابات بياناتٌ فئويّة فلا يصحّ تصفيتها بالرقم"], "why": "سؤالٌ بلا معنى (متوسّط معرِّف) + أعمدةٌ تكشف الهويّة مجتمعة — خطآن في موقفٍ واحد."}, {"w": 4, "q": "مهارة «تصنيف الشكاوى» تعمل عندما تكتب اسمها، ولا تعمل عند طلب «صنّف هذه الشكاوى»، وزميلك في الشعبة نفسها لا يراها أصلًا. ما التشخيص الأدقّ؟", "o": ["الوصف لا يذكر متى تُستعمل، والمهارة في حسابك لا في مستودع الدائرة", "المتن معطوب، والحلّ أن ترسل لزميلك ملفّ SKILL.md بالواتساب", "اسم المهارة طويل، وزميلك يحتاج خطّةً مدفوعة أعلى ليراها", "الوصف بصيغة الغائب، والمهارات لا يمكن مشاركتها مع أحد أصلًا"], "why": "الوصف لا يطابق الطلب الطبيعيّ، والمهارة في حسابٍ شخصيّ لا تصل إلى الزملاء."}, {"w": 2, "q": "مديرٌ يريد ملخّصًا كل صباح لملفّ شكاوى المواطنين (فيه أسماء وهواتف)، يُنجَز حتّى وحاسوبه مطفأ. أيّ خطّة هي الأصحّ؟", "o": ["إخفاء الهويّة أوّلًا، ثمّ مهمّة مجدولة تعمل في السحابة، ثمّ مراجعة سجلّ التشغيلات", "مهمّة مجدولة بإعداد «على حاسوبك فقط» على الملف الأصلي كما هو بأسمائه", "محادثة مشاركة برابط يفتحها أيّ موظّف صباحًا ويلصق فيها الملف كاملًا", "مهارة في حسابه تضمّ أسماء المواطنين وهواتفهم أمثلةً لتصنيف الشكاوى"], "why": "أخفِ الهويّة أوّلًا، ثمّ مهمة مجدولة في السحابة تعمل والجهاز مطفأ، ثمّ راجع سجلّ التشغيلات."}];
+(function(){
+  var L = ['أ','ب','ج','د'], AR='٠١٢٣٤٥٦٧٨٩';
+  var WCOL = ['','var(--w1)','var(--w2)','var(--w3)','var(--w4)','var(--w5)'];
+  var WNAME = ['','الأوّل','الثاني','الثالث','الرابع','الخامس'];
+  function ar(n){ return String(n).replace(/\d/g,function(d){return AR[d];}); }
+  function $(id){ return document.getElementById(id); }
+  function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+  function store(k,v){ try{ if(v===undefined) return localStorage.getItem(k); localStorage.setItem(k,v); }catch(e){ return null; } }
+  function shuffle(a){ a=a.slice(); for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+
+  /* theme */
+  var th = store('aiexam:theme'); if(th) document.documentElement.setAttribute('data-theme',th);
+  $('themeBtn').onclick=function(){
+    var cur=document.documentElement.getAttribute('data-theme') || (matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
+    var n = cur==='dark'?'light':'dark'; document.documentElement.setAttribute('data-theme',n); store('aiexam:theme',n);
+  };
+
+  /* start screen */
+  var sel = {weeks:[1,2,3,4,5], count:0, mode:'practice'};
+  var byW=[0,0,0,0,0,0]; BANK.forEach(function(b){ byW[b.w]++; });
+  $('bankStats').innerHTML =
+    '<div class="stat"><b>'+ar(BANK.length)+'</b><span>سؤالًا</span></div>'+
+    '<div class="stat"><b>'+ar(5)+'</b><span>أسابيع</span></div>';
+  $('weeks').innerHTML = [1,2,3,4,5].map(function(w){
+    return '<button class="chip on" data-w="'+w+'"><span class="dot" style="background:'+WCOL[w]+'"></span>الأسبوع '+WNAME[w]+' <small style="opacity:.7">('+ar(byW[w])+')</small></button>';
+  }).join('');
+  $('counts').innerHTML = [10,20,0].map(function(c){
+    return '<button class="chip'+(c===20?' on':'')+'" data-c="'+c+'">'+(c?ar(c):'الكلّ')+'</button>';
+  }).join('');
+  $('weeks').onclick=function(e){ var b=e.target.closest('.chip'); if(!b) return; b.classList.toggle('on');
+    sel.weeks=[].slice.call(document.querySelectorAll('#weeks .chip.on')).map(function(x){return +x.dataset.w;}); upd(); };
+  $('counts').onclick=function(e){ var b=e.target.closest('.chip'); if(!b) return;
+    document.querySelectorAll('#counts .chip').forEach(function(x){x.classList.remove('on');}); b.classList.add('on'); sel.count=+b.dataset.c; upd(); };
+  $('modes').onclick=function(e){ var b=e.target.closest('button'); if(!b) return;
+    document.querySelectorAll('#modes button').forEach(function(x){x.classList.remove('on');}); b.classList.add('on'); sel.mode=b.dataset.m; };
+  function pool(){ return BANK.filter(function(b){ return sel.weeks.indexOf(b.w)>-1; }); }
+  function upd(){ var n=pool().length, k=sel.count?Math.min(sel.count,n):n;
+    $('goBtn').disabled=!n; $('goBtn').textContent = n ? 'ابدأ — '+ar(k)+' سؤالًا' : 'اختر أسبوعًا واحدًا على الأقلّ'; }
+  function showBest(){ var b=store('aiexam:best'); $('best').textContent = b ? 'أفضل نتيجة لك: '+ar(b)+'٪' : ''; }
+  upd(); showBest();
+
+  /* quiz */
+  var Q=[], i=0, ans=[], streak=0;
+  function start(list){
+    Q = list.map(function(b){ var o=shuffle([0,1,2,3]); return {b:b, order:o}; });
+    i=0; ans=new Array(Q.length).fill(null); streak=0;
+    show('sQ'); render();
+  }
+  $('goBtn').onclick=function(){ var p=shuffle(pool()); start(sel.count? p.slice(0,sel.count) : p); };
+
+  function show(id){ ['sStart','sQ','sR'].forEach(function(s){ $(s).classList.toggle('hide', s!==id); }); window.scrollTo({top:0,behavior:'smooth'}); }
+
+  function render(){
+    var it=Q[i], b=it.b, done=ans[i]!==null, practice=sel.mode==='practice';
+    $('qNum').textContent = 'السؤال '+ar(i+1)+' من '+ar(Q.length);
+    $('qTags').innerHTML = '<span class="tag" style="background:'+WCOL[b.w]+'">الأسبوع '+WNAME[b.w]+'</span>';
+    $('qBar').style.width = ((i+(done?1:0))/Q.length*100)+'%';
+    $('qText').textContent = b.q;
+    $('qOpts').innerHTML = it.order.map(function(k,j){
+      var cls='opt';
+      if(done){
+        if(practice){ if(k===0) cls+=' ok'; else if(ans[i]===j) cls+=' bad'; }
+        else if(ans[i]===j) cls+=' sel';
+      }
+      return '<button class="'+cls+'" data-j="'+j+'"'+(done&&practice?' disabled':'')+'><span class="l">'+L[j]+'</span><span>'+esc(b.o[k])+'</span></button>';
+    }).join('');
+    var w=$('qWhy');
+    if(done && practice){
+      var right = it.order[ans[i]]===0;
+      w.className='why show '+(right?'ok':'bad');
+      w.innerHTML='<b>'+(right?'✓ أحسنت':'✗ الجواب الصحيح: '+esc(b.o[0]))+'</b>'+esc(b.why);
+    } else { w.className='why'; w.innerHTML=''; }
+    $('prevBtn').disabled = i===0;
+    $('nextBtn').textContent = i===Q.length-1 ? (practice?'النتيجة ✓':'سلّم ✓') : 'التالي ←';
+    $('nextBtn').disabled = practice && !done;
+    $('streak').textContent = streak>=3 ? ' · 🔥 '+ar(streak)+' متتالية' : '';
+  }
+  $('qOpts').onclick=function(e){ var b=e.target.closest('.opt'); if(!b||b.disabled) return; pick(+b.dataset.j); };
+  function pick(j){
+    if(sel.mode==='practice'){ if(ans[i]!==null) return; ans[i]=j; streak = Q[i].order[j]===0 ? streak+1 : 0; }
+    else ans[i]=j;
+    render();
+  }
+  $('prevBtn').onclick=function(){ if(i>0){ i--; render(); } };
+  $('nextBtn').onclick=next;
+  function next(){
+    if(sel.mode==='practice' && ans[i]===null) return;
+    if(i<Q.length-1){ i++; render(); return; }
+    if(sel.mode==='test'){ var left=ans.filter(function(a){return a===null;}).length;
+      if(left && !confirmSoft(left)) return; }
+    finish();
+  }
+  function confirmSoft(left){
+    var n=$('nextBtn');
+    if(n.dataset.warn!=='1'){ n.dataset.warn='1'; n.textContent='بقي '+ar(left)+' بلا جواب — اضغط ثانيةً للتسليم'; return false; }
+    n.dataset.warn=''; return true;
+  }
+  document.addEventListener('keydown',function(e){
+    if($('sQ').classList.contains('hide')) return;
+    var k='1234'.indexOf(e.key); if(k<0) k='١٢٣٤'.indexOf(e.key); if(k<0) k=L.indexOf(e.key);
+    if(k>-1){ pick(k); e.preventDefault(); }
+    else if(e.key==='Enter'){ next(); e.preventDefault(); }
+  });
+
+  /* results */
+  function finish(){
+    var ok=0, wk={}, wrong=[];
+    Q.forEach(function(it,n){ var w=it.b.w; wk[w]=wk[w]||[0,0]; wk[w][1]++;
+      if(ans[n]!==null && it.order[ans[n]]===0){ ok++; wk[w][0]++; } else wrong.push(n); });
+    var pct=Math.round(ok/Q.length*100);
+    var bst=+(store('aiexam:best')||0); if(Q.length>=10 && pct>bst) store('aiexam:best',pct);
+    var R=70, C=2*Math.PI*R, col = pct>=80?'var(--ok)':pct>=50?'var(--gold)':'var(--bad)';
+    $('ring').innerHTML='<svg viewBox="0 0 170 170"><circle cx="85" cy="85" r="'+R+'" fill="none" stroke="var(--bg2)" stroke-width="14"/>'+
+      '<circle id="arc" cx="85" cy="85" r="'+R+'" fill="none" stroke="'+col+'" stroke-width="14" stroke-linecap="round" transform="rotate(-90 85 85)" stroke-dasharray="'+C+'" stroke-dashoffset="'+C+'" style="transition:stroke-dashoffset 1.1s ease"/>'+
+      '<text x="85" y="84" text-anchor="middle" font-size="34" font-weight="800" fill="var(--ink)">'+ar(pct)+'٪</text>'+
+      '<text x="85" y="110" text-anchor="middle" font-size="14" fill="var(--muted)">'+ar(ok)+' من '+ar(Q.length)+'</text></svg>';
+    setTimeout(function(){ var a=$('arc'); if(a) a.style.strokeDashoffset = C*(1-pct/100); },60);
+    $('rMsg').textContent = pct>=90?'ممتاز! أنت جاهز تمامًا 🌟': pct>=75?'أداءٌ جميل، بقي القليل 👏': pct>=50?'بداية طيّبة — راجع الأخطاء 🌱':'لا بأس، كلّ خطأ درس — حاول مجدّدًا 💪';
+    $('rMsg2').textContent = wrong.length ? 'راجع تعليل الأسئلة الخاطئة في الأسفل، ثمّ أعدها.' : 'لا أخطاء في هذه الجولة.';
+    $('rWeeks').innerHTML = Object.keys(wk).sort().map(function(w){ var v=wk[w], p=Math.round(v[0]/v[1]*100);
+      return '<div class="wk"><span>الأسبوع '+WNAME[w]+'</span><span class="t"><i style="width:0;background:'+WCOL[w]+'" data-p="'+p+'"></i></span><span>'+ar(v[0])+'/'+ar(v[1])+'</span></div>'; }).join('');
+    setTimeout(function(){ document.querySelectorAll('#rWeeks i').forEach(function(x){ x.style.width=x.dataset.p+'%'; }); },80);
+    $('revTitle').classList.toggle('hide', !wrong.length);
+    $('retryWrong').classList.toggle('hide', !wrong.length);
+    $('rList').innerHTML = wrong.map(function(n){ var it=Q[n], b=it.b, a=ans[n];
+      return '<div class="rev"><div class="rq">'+ar(n+1)+'. '+esc(b.q)+'</div>'+
+        (a===null?'<div class="ra x">لم تُجب</div>':'<div class="ra x">✗ جوابك: '+esc(b.o[it.order[a]])+'</div>')+
+        '<div class="ra v">✓ الصحيح: '+esc(b.o[0])+'</div><div class="rw">💡 '+esc(b.why)+'</div></div>'; }).join('');
+    $('retryWrong').onclick=function(){ start(shuffle(wrong.map(function(n){return Q[n].b;}))); };
+    show('sR'); showBest();
+    try{ new Image().src='https://ameer.itbabylon.org/sensors-api/hit?p=ai-exam-rev-done&n=1&t='+Date.now(); }catch(e){}
+    if(pct>=80) confetti();
+  }
+  $('newQuiz').onclick=function(){ show('sStart'); upd(); };
+  function confetti(){
+    if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var c=$('confetti'), cols=['#8fb8e8','#9fd3b5','#f2c38b','#c7a8ea','#ef9fb0','#7c6cd6'];
+    for(var k=0;k<70;k++){ var p=document.createElement('i'); p.style.left=Math.random()*100+'%';
+      p.style.background=cols[k%cols.length]; p.style.animationDuration=(2.2+Math.random()*1.8)+'s'; p.style.animationDelay=(Math.random()*.6)+'s'; c.appendChild(p); }
+    setTimeout(function(){ c.innerHTML=''; },4800);
+  }
+})();
+</script>
+<script>
+(function(){
+  var AR='٠١٢٣٤٥٦٧٨٩'; function ar(n){return String(n).replace(/\d/g,function(d){return AR[d];});}
+  function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+  var WN=['','الأوّل','الثاني','الثالث','الرابع','الخامس'];
+  function open(){
+    document.getElementById('solList').innerHTML = BANK.map(function(b,i){
+      return '<div class="rev"><div class="rq">'+ar(i+1)+'. '+esc(b.q)+' <small style="color:var(--muted)">(الأسبوع '+WN[b.w]+')</small></div>'+
+        '<div class="ra v">✓ '+esc(b.o[0])+'</div><div class="rw">💡 '+esc(b.why)+'</div></div>'; }).join('');
+    ['sStart','sQ','sR'].forEach(function(id){ document.getElementById(id).classList.add('hide'); });
+    document.getElementById('sSol').classList.remove('hide'); window.scrollTo(0,0);
+  }
+  document.getElementById('solBtn').onclick = open;
+  document.getElementById('solBack').onclick = function(){ document.getElementById('sSol').classList.add('hide'); document.getElementById('sStart').classList.remove('hide'); window.scrollTo(0,0); };
+})();
+</script>
+<script>/* visit counter: no personal data */(function(p){var n="0";try{if(!localStorage.getItem("v_"+p)){localStorage.setItem("v_"+p,"1");n="1"}}catch(e){}new Image().src="https://ameer.itbabylon.org/sensors-api/hit?p="+p+"&n="+n+"&t="+Date.now()})("ai-exam-rev");</script>
+</body>
+</html>
