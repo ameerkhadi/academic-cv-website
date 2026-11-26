@@ -12239,13 +12239,646 @@ else{var blob=new Blob([txt],{type:'text/plain;charset=utf-8'});var a=document.c
       <!-- ============ SLIDE 13 : الأسبوع الثالث عشر ============ -->
       <div id="slide-13" class="slide content-slide">
         <span class="chip chip-ch1">الأسبوع الثالث عشر</span>
-        <h2 class="page-title">الأسبوع الثالث عشر</h2>
+        <h2 class="page-title">ما بعد المادّة — مصادر التعلّم، والشهادات، ومستودعات GitHub</h2>
         <svg class="page-underline" viewBox="0 0 320 30" preserveAspectRatio="none"><path d="M5 8 Q80 0 160 8 T315 8" fill="none" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" filter="url(#sketchy)"/></svg>
-        <div class="coming-soon">
-          <svg class="big-icon" viewBox="0 0 40 40"><g filter="url(#sketchy)"><circle cx="20" cy="20" r="15" fill="#fde3c4" stroke="var(--orange)" stroke-width="2.5"/><path d="M20 12 v9 l6 4" fill="none" stroke="var(--orange)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></g></svg>
-          <p class="cs-title">تنزل لاحقاً</p>
-          <p class="cs-sub">محتوى هذا الأسبوع سيُضاف قريباً.</p>
-        </div>
+        <style>/* week 13 «ما بعد المادّة» — classes prefixed w13r */
+.w13r-draft{align-self:center;background:#fff4d6;border:2px dashed #b8892f;color:#7a5a1c;border-radius:999px;padding:3px 16px;margin:4px 0 12px;font-size:.92em}
+.w13r-obj{border:2px dashed var(--ink);border-radius:14px;padding:8px 16px;margin:12px 0;background:#fffdf7}
+.w13r-obj b{color:var(--brand)} .w13r-obj ul{margin:4px 0;padding-inline-start:20px}
+.w13r-ladder{display:flex;flex-direction:column-reverse;gap:8px;margin:12px 0}
+.w13r-step{display:flex;gap:12px;align-items:flex-start;border:2px solid var(--ink);border-radius:14px;padding:10px 12px;background:#fffdf7}
+.w13r-step .n{flex:0 0 42px;height:42px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:800;font-size:1.2em}
+.w13r-step h4{margin:0 0 2px;font-size:1.08em} .w13r-step p{margin:2px 0;line-height:1.7}
+.w13r-step .out{font-size:.92em;color:#3b4656}
+.w13r-step.s1 .n{background:var(--green)} .w13r-step.s2 .n{background:var(--blue)} .w13r-step.s3 .n{background:var(--orange)} .w13r-step.s4 .n{background:var(--brand)}
+.w13r-step.s2{margin-inline-start:4%} .w13r-step.s3{margin-inline-start:8%} .w13r-step.s4{margin-inline-start:12%}
+.w13r-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin:12px 0}
+.w13r-card{border:2px solid var(--ink);border-radius:14px;padding:10px 12px;background:#fffdf7}
+.w13r-card h4{margin:0 0 6px;font-size:1.02em;display:flex;justify-content:space-between;gap:8px;align-items:baseline;flex-wrap:wrap;word-break:break-word}
+.w13r-card h4[dir=ltr]{font-family:Consolas,'Courier New',monospace;font-size:.95em;color:var(--brand-dark);justify-content:flex-start}
+.w13r-card h4 small{font-weight:700;color:#5d6975;font-size:.78em}
+.w13r-card p{margin:4px 0 6px;line-height:1.75;font-size:.95em}
+.w13r-tag{display:inline-block;font-size:.78em;font-weight:800;border-radius:6px;padding:0 7px;margin-inline-end:4px;margin-top:2px}
+.w13r-tfree{background:#e4f3ea;color:#167a3e} .w13r-ttech{background:#e8eef6;color:#1f4e79} .w13r-toff{background:#ece6f7;color:#4a2f9e} .w13r-tcom{background:#fff4d6;color:#8a5a00}
+.w13r-steps{border-inline-start:6px solid var(--green);background:#f2faf5;border-radius:10px;padding:8px 14px;margin:12px 0}
+.w13r-steps ol{margin:6px 0;padding-inline-start:22px;line-height:1.9}
+.w13r-warn{border:2px solid #c0392b;border-inline-start:8px solid #c0392b;background:#fff4f2;border-radius:12px;padding:10px 14px;margin:12px 0;line-height:1.85}
+.w13r-anat{border:2px dashed var(--ink);border-radius:14px;padding:10px 14px;background:#fffdf7;margin:12px 0}
+.w13r-url{font-family:Consolas,'Courier New',monospace;font-size:1.25em;text-align:center;background:#24292f;color:#e6edf3;border-radius:10px;padding:8px;margin-bottom:6px;word-break:break-all}
+.w13r-url .o{color:#ffa657} .w13r-url .r{color:#7ee787}
+.w13r-anat-k{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;font-size:.9em;margin-bottom:6px}
+.w13r-anat-k i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-inline-end:5px;vertical-align:middle}
+.w13r-anat-k i.o{background:#ffa657} .w13r-anat-k i.r{background:#7ee787}
+.w13r-anat ol{margin:4px 0;padding-inline-start:22px;line-height:1.9}
+.w13r-h3{font-family:'Aref Ruqaa',serif;color:var(--brand);margin:18px 0 4px;font-size:1.2em}
+.w13r-lane{border:2px solid var(--blue);border-radius:14px;padding:10px 12px;margin:12px 0;background:#f3f7fc}
+.w13r-flow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:8px}
+.w13r-flow span{background:#fff;border:1.5px solid var(--blue);border-radius:10px;padding:5px 10px;font-size:.92em}
+.w13r-flow i{font-style:normal;color:var(--blue);font-weight:800}
+.w13r-plan{border:2px solid var(--ink);border-radius:14px;padding:10px 14px;background:#fffdf7;margin:12px 0}
+.w13r-plan .wk{margin-bottom:8px} .w13r-plan h4{margin:6px 0 4px;color:var(--brand)}
+.w13r-plan label{display:block;cursor:pointer;padding:3px 0;line-height:1.7}
+.w13r-plan input{width:18px;height:18px;vertical-align:middle;margin-inline-end:6px;accent-color:var(--green)}
+.w13r-plan label:has(input:checked){color:#167a3e;text-decoration:line-through}
+.w13r-bar{height:12px;border-radius:999px;background:#e5e9f0;overflow:hidden;margin-top:8px}
+.w13r-bar span{display:block;height:100%;width:0;background:var(--green);transition:width .3s}
+.w13r-pc{text-align:center;margin:4px 0 0;font-weight:700}
+.w13r-scen{border:2px dashed #b8892f;border-radius:14px;padding:10px 14px;background:#fffaf0}
+.w13r-scen ol{margin:4px 0;padding-inline-start:22px}
+.w13r-sol{margin:14px 0;border:2px solid var(--green);border-radius:12px;padding:8px 14px;background:#f2faf5}
+.w13r-sol summary{cursor:pointer;font-weight:800;color:var(--green)}
+.w13r-sol p{line-height:1.9}
+a.w13r-c{display:block;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s}
+a.w13r-c:hover{transform:translateY(-2px);box-shadow:0 6px 14px rgba(0,0,0,.12)}
+.w13r-c img{display:block;width:100%;height:120px;object-fit:contain;background:#f4efe6;border-radius:10px;margin-bottom:8px;padding:8px}
+.w13r-c img.badge{background:#fff}
+.w13r-noimg{height:120px;border-radius:10px;margin-bottom:8px;display:grid;place-items:center;text-align:center;background:repeating-linear-gradient(135deg,#eef2f8 0 10px,#e4eaf3 10px 20px);color:#1f4e79;font-family:Consolas,monospace;font-weight:800;font-size:1.15em;line-height:1.3}
+.w13r-certs p{font-size:.92em}
+.w13r-card h4 a{color:inherit;text-decoration:none;border-bottom:1.5px dashed currentColor}
+.w13r-withbadge{display:flex;gap:14px;align-items:flex-start}
+.w13r-withbadge img{flex:0 0 96px;width:96px;height:auto}
+.w13r-withbadge small{color:#7a3b33}
+.w13r-vids{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin:10px 0 6px}
+.w13r-vid{display:flex;flex-direction:column;gap:3px;text-decoration:none;color:inherit;border:2px solid var(--ink);border-radius:12px;overflow:hidden;background:#fffdf7;padding-bottom:8px;transition:transform .15s}
+.w13r-vid:hover{transform:translateY(-2px)}
+.w13r-vid .th{position:relative;display:block;aspect-ratio:16/9;background:#111}
+.w13r-vid .th img{width:100%;height:100%;object-fit:cover;display:block}
+.w13r-vid .th i{position:absolute;inset:0;margin:auto;width:44px;height:44px;border-radius:50%;background:rgba(204,0,0,.9);color:#fff;font-style:normal;display:grid;place-items:center;font-size:18px;padding-inline-start:3px}
+.w13r-vid .th em{position:absolute;bottom:5px;left:5px;background:rgba(0,0,0,.8);color:#fff;font-style:normal;font-size:.75em;border-radius:4px;padding:0 6px}
+.w13r-vid .tp{margin:4px 10px 0;font-size:.74em;font-weight:800;color:var(--brand)}
+.w13r-vid b{margin:0 10px;font-size:.9em;line-height:1.5}
+.w13r-vid small{margin:0 10px;color:#5d6975;font-size:.78em}
+.w13r-how{border:2px solid var(--blue);border-radius:14px;padding:10px 12px;margin:12px 0;background:#f3f7fc}
+.w13r-note{border-inline-start:6px solid #b8892f;background:#fffaf0;border-radius:10px;padding:8px 14px;margin:10px 0;font-size:.95em}
+.w13r-courses{display:flex;flex-direction:column;gap:10px;margin:12px 0}
+.w13r-course{border:2px solid var(--ink);border-radius:14px;background:#fffdf7;overflow:hidden}
+.w13r-course summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:10px 12px;flex-wrap:wrap}
+.w13r-course summary::-webkit-details-marker{display:none}
+.w13r-course summary::after{content:"▾";margin-inline-start:auto;font-size:1.3em;color:var(--brand);transition:transform .2s}
+.w13r-course[open] summary::after{transform:rotate(180deg)}
+.w13r-course[open] summary{border-bottom:2px dashed #d8ccaa;background:#f7f1e6}
+.w13r-course summary img{width:150px;aspect-ratio:1200/630;border-radius:8px;object-fit:cover;flex:0 0 auto}
+.w13r-course .ct{display:flex;flex-direction:column;min-width:180px;flex:1}
+.w13r-course .ct b{font-size:1.08em;direction:ltr;text-align:right} .w13r-course .ct small{color:#5d6975}
+.w13r-meta{display:flex;flex-wrap:wrap;gap:5px}
+.w13r-meta span{font-size:.78em;font-weight:700;background:#eef2f8;color:#1f4e79;border-radius:999px;padding:1px 9px}
+.w13r-meta span.ok{background:#e4f3ea;color:#167a3e}
+.w13r-cbody{padding:8px 16px 14px;line-height:1.85}
+.w13r-ex{background:#eef7f1;border-inline-start:5px solid var(--green);border-radius:8px;padding:8px 12px;margin:8px 0}
+.w13r-pq{background:#f6f2fb;border-inline-start:5px solid var(--brand);border-radius:8px;padding:8px 12px;margin:8px 0}
+.w13r-pq ol{margin:4px 0;padding-inline-start:22px} .w13r-pq li{margin:3px 0}
+.w13r-pq li b{background:#e4f3ea;color:#167a3e;border-radius:4px;padding:0 4px;font-weight:700}
+.w13r-gain{margin:8px 0 4px}
+.w13r-go{display:inline-block;background:var(--brand);color:#fff !important;text-decoration:none;font-weight:800;border-radius:999px;padding:4px 16px}
+.w13r-devic{font-size:2em;width:60px;text-align:center}
+.w13r-live{border:3px solid #c2410c;border-radius:16px;padding:12px 14px;margin:18px 0;background:#fff8f3}
+.w13r-live2{border-color:#0e7f78;background:#f2fbfa} .w13r-live2 .w13r-live-hd span{background:#0e7f78} .w13r-live2 .w13r-live-hd b{color:#0b5c57} .w13r-live2 .w13r-l{border-color:#a9dcd7} .w13r-live2 .w13r-l .k{background:#0e7f78}
+.w13r-rules{border:2px solid var(--green);border-radius:12px;background:#f2faf5;padding:8px 14px;margin:10px 0} .w13r-rules ol{margin:4px 0;padding-inline-start:22px;line-height:1.9}
+.w13r-live-hd{display:flex;flex-direction:column;align-items:center;text-align:center;margin-bottom:8px}
+.w13r-live-hd span{background:#c2410c;color:#fff;font-weight:800;border-radius:999px;padding:2px 14px;font-size:.9em}
+.w13r-live-hd b{font-family:'Aref Ruqaa',serif;font-size:1.35em;color:#7c2d12;margin-top:4px}
+.w13r-ls{display:flex;flex-direction:column;gap:8px;margin:10px 0}
+.w13r-l{display:flex;gap:10px;align-items:flex-start;background:#fff;border:1.5px solid #f0c9ad;border-radius:12px;padding:8px 10px}
+.w13r-l .k{flex:0 0 34px;height:34px;border-radius:50%;background:#c2410c;color:#fff;display:grid;place-items:center;font-weight:800}
+.w13r-l > div{flex:1;min-width:0} .w13r-l h4{margin:2px 0 4px} .w13r-l h4 small{color:#9a5a36;font-weight:600;font-size:.75em}
+.w13r-l ul,.w13r-l ol{margin:4px 0;padding-inline-start:22px}
+.w13r-tree{font-family:Consolas,'Courier New',monospace;background:#24292f;color:#e6edf3;border-radius:8px;padding:8px 12px;font-size:.88em;line-height:1.6;text-align:left}
+.w13r-tree b{color:#7ee787} .w13r-tree span{color:#ffa657;font-family:inherit}
+.w13r-q{margin:6px 0;border-inline-start:4px solid #8b949e;background:#f6f8fa;padding:6px 10px;border-radius:6px;font-size:.93em}
+.w13r-code{background:#24292f;color:#e6edf3;border-radius:8px;padding:8px 12px;font-size:.88em;white-space:pre-wrap;text-align:left}
+.w13r-prompt{position:relative;margin:6px 0}
+.w13r-prompt pre{background:#fbfaf5;border:1.5px dashed #8a6d3b;border-radius:8px;padding:10px 12px 10px 70px;white-space:pre-wrap;font-family:inherit;font-size:.92em;line-height:1.8;margin:0}
+.w13r-cp{position:absolute;top:6px;left:6px;border:0;background:var(--brand);color:#fff;font-weight:700;border-radius:8px;padding:3px 9px;cursor:pointer;font-family:inherit}
+.w13r-warn-s{background:#fff4f2;border-radius:8px;padding:6px 10px;margin:6px 0}
+.w13r-out{background:#fff;border:2px solid var(--green);border-radius:10px;padding:8px 12px;line-height:1.9}
+.w13r-planb{background:#eef2f8;border-radius:10px;padding:8px 12px;margin:8px 0}
+.w13r-try{background:#fffbe6;border:2px dashed #b8892f;border-radius:10px;padding:8px 12px;margin:8px 0}
+@media (max-width:560px){.w13r-course summary img{width:100%}}
+@media print{.w13r-course .w13r-cbody{display:block}.w13r-cp{display:none}
+.w13r-sol{display:block}.w13r-sol summary{display:none}.w13r-vid .th i{display:none}}
+</style>
+<p class="lead-paragraph">تعلّمتَ في الأسابيع الماضية أن تستعمل كلود في الكتابة والتحليل والأتمتة والبحث. لكنّ أدوات الذكاء الاصطناعيّ تتغيّر كلّ شهر، فالمادّة <b>بداية الطريق لا نهايته</b>. هذا الأسبوع نجيب عن ثلاثة أسئلة: <b>من أين أتعلّم بعد المادّة؟</b> و<b>ما الشهادة التي تستحقّ وقتي؟</b> و<b>كيف أستفيد من GitHub وأنا لا أبرمج؟</b></p>
+
+<div class="w13r-obj">
+<b>🎯 في نهاية المحاضرة ستستطيع أن:</b>
+<ul>
+<li>تحدّد مستواك في سُلَّم التعلّم ذي الدرجات الأربع، وتعرف خطوتك التالية.</li>
+<li>تميّز بين <b>شهادة إتمام</b> مجّانيّة و<b>شهادة احترافيّة</b> بامتحانٍ مراقَب.</li>
+<li>تسجّل في <b>Claude Academy</b>، وتنهي دورةً، وتضع شهادتها في LinkedIn.</li>
+<li>تفتح مستودعًا على <b>GitHub</b>، وتنزّل منه مهارةً، وتفحصها قبل رفعها إلى كلود.</li>
+<li>تكتب لنفسك <b>خطّة ٣٠ يومًا</b> واقعيّة.</li>
+</ul>
+</div>
+
+<!-- ══════════ المصطلحات ══════════ -->
+<div class="section-heading" style="margin-top:22px;">
+<svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+<span>📖 مصطلحات تحتاجها أوّلًا</span>
+</div>
+<div class="dt-wrap"><table class="dt">
+<thead><tr><th>المصطلح</th><th>المعنى</th><th>مثال</th></tr></thead>
+<tbody>
+<tr><td><b>شهادة إتمام</b> <span class="ltr-inline">(Certificate of completion)</span></td><td>تثبت أنّك أنهيتَ دورة. غالبًا مجّانيّة، وبلا امتحانٍ مراقَب.</td><td>شهادة دورة Claude 101</td></tr>
+<tr><td><b>شهادة احترافيّة</b> <span class="ltr-inline">(Certification)</span></td><td>تثبت أنّك اجتزتَ امتحانًا رسميًّا مراقَبًا. لها رسوم ومدّة صلاحيّة.</td><td>AWS Certified AI Practitioner</td></tr>
+<tr><td><b>الشارة الرقميّة</b> <span class="ltr-inline">(Digital badge)</span></td><td>نسخة إلكترونيّة من الشهادة لها رابط تحقّق، تُعرض في LinkedIn.</td><td>شارة على منصّة Credly</td></tr>
+<tr><td><b>GitHub</b></td><td>موقعٌ تُحفَظ فيه المشاريع والملفّات مع تاريخ تعديلها، ويُشارَك بها مع العالم.</td><td>github.com/anthropics</td></tr>
+<tr><td><b>المستودع</b> <span class="ltr-inline">(Repository)</span></td><td>مشروعٌ واحد على GitHub: مجلّد فيه ملفّات، مع سجلّ كلّ تغيير.</td><td>anthropics/skills</td></tr>
+<tr><td><b>README</b></td><td>صفحة التعريف بالمستودع. تظهر أسفل قائمة الملفّات، وتقرؤها أوّلًا.</td><td>«ما هذا المستودع؟ وكيف أستعمله؟»</td></tr>
+<tr><td><b>النجمة</b> <span class="ltr-inline">(Star ⭐)</span></td><td>علامة إعجاب وحفظ. عددها مؤشّرٌ تقريبيّ على شهرة المستودع، لا على جودته.</td><td>مستودعٌ عليه ٢٠ ألف نجمة</td></tr>
+<tr><td><b>المهارة</b> <span class="ltr-inline">(Skill)</span></td><td>مجلّدٌ فيه ملفّ <span class="ltr-inline">SKILL.md</span> يعلّم كلود طريقة عملٍ محدّدة (درسناها في الأسبوع الرابع).</td><td>مهارة إنشاء ملفّات Excel</td></tr>
+<tr><td><b>القائمة المنتقاة</b> <span class="ltr-inline">(Awesome list)</span></td><td>مستودعٌ يجمع روابط أفضل الموارد في موضوعٍ واحد.</td><td>awesome-claude-skills</td></tr>
+</tbody></table></div>
+
+<!-- ══════════ ١ ══════════ -->
+<div class="section-heading" style="margin-top:28px;">
+<svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+<span>١. سُلَّم التعلّم: أين أنت الآن؟</span>
+</div>
+<p>لا تبدأ بأصعب شهادة. اصعد درجةً درجة، ولكلّ درجةٍ <b>ناتج تراه بعينك</b>:</p>
+<div class="w13r-ladder">
+<div class="w13r-step s1"><span class="n">١</span><div><h4>المستخدم الواعي</h4><p>تكتب طلبًا واضحًا، وتتحقّق من الجواب، ولا تُدخل بيانات شخصيّة.</p><p class="out">الناتج: شهادة <b>AI Fluency</b> أو <b>Claude 101</b>.</p></div></div>
+<div class="w13r-step s2"><span class="n">٢</span><div><h4>المستخدم المحترف</h4><p>تستعمل المشاريع والمهارات والموصِّلات (MCP) في عملك اليوميّ.</p><p class="out">الناتج: مهارة واحدة على الأقلّ تعمل في دائرتك.</p></div></div>
+<div class="w13r-step s3"><span class="n">٣</span><div><h4>الصانع</h4><p>تبني أداةً لزملائك: تطبيقًا من وثيقة، أو أتمتة، أو لوحة متابعة.</p><p class="out">الناتج: رابط تطبيق يستعمله غيرك، ومستودعٌ على GitHub.</p></div></div>
+<div class="w13r-step s4"><span class="n">٤</span><div><h4>المعتمَد</h4><p>تجتاز امتحانًا احترافيًّا مراقَبًا يُعترف به في سوق العمل.</p><p class="out">الناتج: شهادة احترافيّة لها رابط تحقّق.</p></div></div>
+</div>
+<div class="takeaway"><b>القاعدة:</b> <span class="hl hl-yellow">الشهادة تفتح الباب، والمشروع الذي يعمل يُبقيه مفتوحًا.</span> مديرٌ عنده أداة واحدة يستعملها قسمه أقوى من مديرٍ عنده عشر شهادات بلا ناتج.</div>
+
+<!-- ══════════ ٢ ══════════ -->
+<div class="section-heading" style="margin-top:28px;">
+<svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+<span>٢. التقدّم في كلود: Claude Academy</span>
+</div>
+<p>الشركة المطوِّرة لكلود تجمع موادّها التعليميّة في موقع <b>Claude Academy</b> <span class="ltr-inline">(academy.claude.com)</span>، وكان اسمه سابقًا Claude Academy. في الموقع <b>٢٩ دورة</b> و<b>١٣٩ درسًا قصيرًا</b> <span class="ltr-inline">(tutorials)</span> و<b>١٥٦ حالة استعمال</b> <span class="ltr-inline">(use cases)</span>، كلّها <b>مجّانيّة</b> وبالإنجليزيّة. الأرقام من فهرس الموقع، بتاريخ ٢٣/١١/٢٠٢٦.</p>
+
+<div class="w13r-how">
+<b>🧩 كيف تجري الدورة؟ (الشكل نفسه في كلّ الدورات)</b>
+<div class="w13r-flow">
+<span>دروس قصيرة: نصّ + فيديو</span><i>←</i>
+<span>تمرين «جرّبه بنفسك» في كلود</span><i>←</i>
+<span>اختبار نهائيّ واحد: أسئلة اختيار</span><i>←</i>
+<span>شارة إتمام <span class="ltr-inline">(Completion badge)</span></span>
+</div>
+<p class="dt-cap">التسجيل بالبريد، ويُحفَظ تقدّمك فتكمل متى شئت. وتُرجِم الصفحة بالمتصفّح إن احتجت إلى ذلك.</p>
+</div>
+
+<div class="w13r-note"><b>عن الأسئلة في البطاقات أدناه:</b> أسئلة الاختبار الحقيقيّة لا تظهر إلّا بعد التسجيل، فالأسئلة هنا <b>من إعدادنا للتدريب</b>، كتبناها على أهداف كلّ دورة المعلَنة في صفحتها، لتعرف نوع ما ستُسأل عنه.</div>
+
+<p>اضغط على أيّ دورة لتفتح تفاصيلها. هذه <b>المسار الموصى به لكم</b> بالترتيب:</p>
+
+<div class="w13r-courses">
+
+<details class="w13r-course" open>
+<summary><img src="files/w13r/og-claude-101.png" alt="غلاف دورة Claude 101" loading="lazy"><span class="ct"><b>١. Claude 101</b><small>ابدأ هنا · مبتدئ</small></span><span class="w13r-meta"><span>١٣ درسًا</span><span>٢٫٥ ساعة</span><span>اختبار واحد</span><span class="ok">شارة ✓</span></span></summary>
+<div class="w13r-cbody">
+<p><b>طبيعتها:</b> جولة منظّمة من أوّل رسالة إلى الاستعمال اليوميّ الواثق. تكفيك الخطّة المجّانيّة لأغلبها، وبعض الميزات (Cowork والبحث المعمّق) يحتاج اشتراكًا مدفوعًا، وكلّ درسٍ ينبّه على ذلك.</p>
+<p><b>ما في داخلها:</b> ما هو كلود · أوّل محادثة · تحسين النتائج · طرق العمل الثلاث في تطبيق الحاسوب · المشاريع · الملفّات التفاعليّة <span class="ltr-inline">(artifacts)</span> · المهارات · الموصِّلات · البحث المعمّق · حالات استعمال حسب الوظيفة.</p>
+<div class="w13r-ex"><b>💼 مثال من عملك:</b> بعد الدورة تنشئ «مشروعًا» اسمه <i>تقارير الشعبة</i>، وترفع فيه قالب التقرير الشهريّ ودليل الكتب الرسميّة. فيكتب كلود كلّ تقرير على قالبكم، من غير أن تعيد الشرح في كلّ محادثة.</div>
+<div class="w13r-pq"><b>❓ أسئلة تدريب على نمط الدورة:</b>
+<ol>
+<li>تكرّر الشرح نفسه لكلود في كلّ محادثة جديدة. الحلّ الأنسب: (أ) محادثة أطول (ب) <b>مشروع فيه تعليمات وملفّات ثابتة</b> (ج) نسخ الردّ القديم</li>
+<li>جاء الجواب عامًّا لا يناسب دائرتك. أوّل خطوة: (أ) <b>إعادة الطلب مع سياق وأمثلة وشكل الناتج المطلوب</b> (ب) تغيير الحساب (ج) ترك كلود</li>
+</ol></div>
+<p class="w13r-gain">🎯 <b>تستفيد:</b> تنتقل من «أسأل وأنتظر» إلى «أنظّم عملي مع كلود»، وتعرف أيّ ميزة تناسب أيّ مهمّة.</p>
+<a class="w13r-go" href="https://academy.claude.com/courses/claude-101" target="_blank" rel="noopener">افتح الدورة ↗</a>
+</div>
+</details>
+
+<details class="w13r-course">
+<summary><img src="files/w13r/og-ai-fluency-framework-foundations.png" alt="غلاف دورة AI Fluency" loading="lazy"><span class="ct"><b>٢. AI Fluency: Framework &amp; Foundations</b><small>الأهمّ للقائد · مبتدئ</small></span><span class="w13r-meta"><span>١٤ درسًا</span><span>٤ ساعات</span><span>اختبار واحد</span><span class="ok">شارة ✓</span></span></summary>
+<div class="w13r-cbody">
+<p><b>طبيعتها:</b> ليست دورة عن زرٍّ أو ميزة، بل عن <b>طريقة التفكير</b> في العمل مع أيّ ذكاء اصطناعيّ. أعدّها أستاذان جامعيّان (Rick Dakan وJoseph Feller) مع Anthropic، وتقوم على <b>إطار الأبعاد الأربعة <span class="ltr-inline">(4D)</span></b>:</p>
+<div class="dt-wrap"><table class="dt">
+<thead><tr><th>البُعد</th><th>السؤال الذي يجيب عنه</th><th>في دائرتك</th></tr></thead>
+<tbody>
+<tr><td><b>التفويض</b> <span class="ltr-inline">Delegation</span></td><td>ماذا أعطي للذكاء الاصطناعيّ، وماذا أبقي عندي؟</td><td>المسودّة لكلود، والقرار والتوقيع لك</td></tr>
+<tr><td><b>الوصف</b> <span class="ltr-inline">Description</span></td><td>كيف أصف المطلوب بوضوح؟</td><td>الجمهور، والطول، والشكل، ومثال</td></tr>
+<tr><td><b>التمييز</b> <span class="ltr-inline">Discernment</span></td><td>هل الناتج صحيح ومناسب؟</td><td>تتحقّق من الأرقام والأسماء والمراجع</td></tr>
+<tr><td><b>العناية</b> <span class="ltr-inline">Diligence</span></td><td>هل استعمالي مسؤول وشفّاف؟</td><td>لا بيانات مواطنين، وإفصاح عن الاستعمال</td></tr>
+</tbody></table></div>
+<p><b>ما في داخلها:</b> لماذا نحتاج الطلاقة · ما الذكاء التوليديّ وحدوده · كلّ بُعدٍ بالتفصيل · تقنيّات كتابة الطلب · «حلقة الوصف والتمييز» · الخاتمة والاختبار.</p>
+<div class="w13r-ex"><b>💼 مثال من عملك:</b> طلبتَ من كلود خطّة تدريب لموظّفي الشعبة، فجاءت عامّة (<b>تمييز</b>)، فأضفتَ عدد الموظّفين والميزانيّة والمدّة (<b>وصف</b>)، فتحسّنت. هذه «حلقة الوصف والتمييز» التي تدرّسها الدورة.</div>
+<div class="w13r-pq"><b>❓ أسئلة تدريب على نمط الدورة:</b>
+<ol>
+<li>مديرٌ يقرّر أنّ كلود يكتب مسودّة الكتاب وهو يوقّعه. هذا بُعد: (أ) الوصف (ب) <b>التفويض</b> (ج) التمييز</li>
+<li>مراجعة أرقام تقرير كتبه كلود قبل إرساله تمثّل بُعد: (أ) <b>التمييز</b> (ب) التفويض (ج) الوصف</li>
+<li>كتابة «استعنتُ بكلود في صياغة هذا التقرير» في الهامش تمثّل: (أ) الوصف (ب) <b>العناية</b> (ج) التفويض</li>
+</ol></div>
+<p class="w13r-gain">🎯 <b>تستفيد:</b> لغة مشتركة مع فريقك لتقييم أيّ استعمال للذكاء الاصطناعيّ، تصلح لكلّ أداة جديدة، لا لكلود وحده.</p>
+<a class="w13r-go" href="https://academy.claude.com/courses/ai-fluency-framework-foundations" target="_blank" rel="noopener">افتح الدورة ↗</a>
+</div>
+</details>
+
+<details class="w13r-course">
+<summary><img src="files/w13r/og-ai-capabilities-and-limitations.png" alt="غلاف دورة AI Capabilities and Limitations" loading="lazy"><span class="ct"><b>٣. AI Capabilities and Limitations</b><small>متى تثق ومتى تتحقّق · مبتدئ</small></span><span class="w13r-meta"><span>١٣ درسًا</span><span>٣٫٥ ساعة</span><span>اختبار واحد</span><span class="ok">شارة ✓</span></span></summary>
+<div class="w13r-cbody">
+<p><b>طبيعتها:</b> تشرح <b>لماذا</b> يتصرّف الذكاء الاصطناعيّ كما يتصرّف، بلا رياضيّات ولا خبرة تقنيّة. وهي الدورة المكمّلة لـAI Fluency: تلك تعلّمك مهارات الإنسان، وهذه تعلّمك خصائص الآلة. وفي كلّ قسمٍ تمرين «جرّبه بنفسك».</p>
+<p><b>الخصائص الأربع التي تدور عليها:</b> <b>توقّع الكلمة التالية</b> (من أين يأتي الجواب، ولماذا يختلق أحيانًا) · <b>المعرفة</b> (تاريخ انقطاع المعرفة، وضعفها في المواضيع النادرة والمحلّيّة) · <b>الذاكرة العاملة</b> (حدود نافذة السياق في الوثائق الطويلة) · <b>قابليّة التوجيه</b> (أيّ التعليمات تُتَّبع بدقّة، وأيّها تنزلق).</p>
+<div class="w13r-ex"><b>💼 مثال من عملك:</b> سألتَ كلود عن تعليمات وزاريّة عراقيّة صدرت الشهر الماضي، فأجاب بثقة وأخطأ. الدورة تسمّي هذا: <b>حدود المعرفة</b>، فالموضوع حديث ومحلّيّ. والعلاج المحدّد: ترفع نصّ التعليمات نفسه وتطلب الجواب منه.</div>
+<div class="w13r-pq"><b>❓ أسئلة تدريب على نمط الدورة:</b>
+<ol>
+<li>أين يكثر الاختلاق؟ (أ) تلخيص نصٍّ أعطيتَه له (ب) <b>طلب مراجع أو أرقام دقيقة من ذاكرته</b> (ج) إعادة صياغة فقرة</li>
+<li>رفعتَ وثيقة من ٣٠٠ صفحة، فأغفل كلود بنودًا من وسطها. الخاصيّة المعنيّة: (أ) <b>الذاكرة العاملة</b> (ب) المعرفة (ج) التوجيه</li>
+<li>أيّ تعليمة يُرجَّح أن تُتَّبع بدقّة؟ (أ) «اجعله رائعًا» (ب) <b>«في جدول من ثلاثة أعمدة، وأقلّ من ١٠٠ كلمة»</b> (ج) «فكّر كخبير عالميّ»</li>
+</ol></div>
+<p class="w13r-gain">🎯 <b>تستفيد:</b> تعرف متى تثق بالناتج ومتى تتحقّق منه، وتصلح الخطأ بعلاج محدّد بدل أن تعيد المحاولة عشوائيًّا.</p>
+<a class="w13r-go" href="https://academy.claude.com/courses/ai-capabilities-and-limitations" target="_blank" rel="noopener">افتح الدورة ↗</a>
+</div>
+</details>
+
+<details class="w13r-course">
+<summary><img src="files/w13r/og-building-effective-human-agent-teams.png" alt="غلاف دورة Building effective human-agent teams" loading="lazy"><span class="ct"><b>٤. Building Effective Human-Agent Teams</b><small>للقادة ورؤساء الفرق · تجريبيّة (beta)</small></span><span class="w13r-meta"><span>٥ دروس</span><span>٤٥ دقيقة</span><span>اختبار واحد</span><span class="ok">شارة ✓</span></span></summary>
+<div class="w13r-cbody">
+<p><b>طبيعتها:</b> أقصر دورة في القائمة، ومكتوبة <b>لقادة الفرق</b> بلا أيّ خلفيّة تقنيّة. فكرتها الانتقال من «كلود مساعدي الشخصيّ» <span class="ltr-inline">(single-player)</span> إلى «كلود عضوٌ في فريقنا» <span class="ltr-inline">(multiplayer)</span>، وتتابع فريقًا وهو يمرّ بهذا التحوّل.</p>
+<p><b>المبادئ الأربعة للفريق السليم:</b> أدوار واضحة · «نجم شماليّ» مكتوب، أي هدف معلَن · تسليم تدريجيّ للمهامّ · وصولٌ صحيح إلى المعلومات، لا أكثر ولا أقلّ. وفي آخرها قائمة تحقّق لجاهزيّة المؤسّسة.</p>
+<div class="w13r-ex"><b>💼 مثال من عملك:</b> قبل أن تُدخِل وكيلًا ذكيًّا يفرز بريد الشعبة، تكتب له: <b>دوره</b> (يفرز ويقترح ولا يردّ)، و<b>الهدف</b> (ألّا يتأخّر كتابٌ عاجل)، و<b>التسليم التدريجيّ</b> (أسبوعان تحت المراجعة)، و<b>ما يصل إليه</b> (البريد الوارد فقط، لا ملفّات الأفراد).</div>
+<div class="w13r-pq"><b>❓ أسئلة تدريب على نمط الدورة:</b>
+<ol>
+<li>أفضل بداية لإدخال وكيل إلى الفريق: (أ) صلاحيّات كاملة من اليوم الأوّل (ب) <b>مهامّ محدودة تتّسع تدريجيًّا مع المراجعة</b> (ج) تشغيله بلا إعلام الفريق</li>
+<li>ما الذي يميّز الوكيل «العضو في الفريق» عن روبوت المحادثة؟ (أ) لونه (ب) <b>يعمل في مساحة الفريق المشتركة ويخدم أكثر من شخص</b> (ج) أنّه أسرع فقط</li>
+</ol></div>
+<p class="w13r-gain">🎯 <b>تستفيد:</b> خطّة قائدٍ لإدخال الذكاء الاصطناعيّ إلى قسمه بأمان، لا تجربة فرديّة متفرّقة.</p>
+<a class="w13r-go" href="https://academy.claude.com/courses/building-effective-human-agent-teams" target="_blank" rel="noopener">افتح الدورة ↗</a>
+</div>
+</details>
+
+<details class="w13r-course">
+<summary><img src="files/w13r/og-introduction-to-claude-cowork.png" alt="غلاف دورة Introduction to Claude Cowork" loading="lazy"><span class="ct"><b>٥. Introduction to Claude Cowork</b><small>كلود ينجز المهامّ على ملفّاتك · مبتدئ</small></span><span class="w13r-meta"><span>١٤ درسًا</span><span>٢٫٥ ساعة</span><span>اختبار واحد</span><span class="ok">شارة ✓</span></span></summary>
+<div class="w13r-cbody">
+<p><b>طبيعتها:</b> عمليّة بالكامل ولا تحتاج برمجة، لكنّها تحتاج <b>اشتراكًا مدفوعًا</b> وتطبيق كلود على الحاسوب. في Cowork لا يكتفي كلود بالحوار، بل يقرأ ملفّات مجلّدٍ تحدّده ويعدّلها ويُخرج نواتج حقيقيّة، وأنت توجّهه أثناء العمل.</p>
+<p><b>ما في داخلها:</b> إعداد مجلّد العمل والصلاحيّات · أوّل مهمّة كاملة · المهامّ المجدولة · التعليمات الثابتة والمشاريع · المهارات والإضافات <span class="ltr-inline">(plugins)</span> · كلود داخل Chrome وWord وExcel وPowerPoint وOutlook · عادات العمل الآمن ومشاركة ما تبنيه مع الفريق.</p>
+<div class="w13r-ex"><b>💼 مثال من عملك:</b> مجلّد فيه ٤٠ ملفّ Excel لدوام الموظّفين. تكتب: «اجمعها في جدول واحد، واستخرج المتأخّرين أكثر من ٣ مرّات، واكتب مذكّرة بهم». فيخطّط كلود وينفّذ، وتراجع أنت الناتج. وتجدولها لتتكرّر كلّ شهر.</div>
+<div class="w13r-pq"><b>❓ أسئلة تدريب على نمط الدورة:</b>
+<ol>
+<li>قبل تشغيل مهمّة على ملفّات حقيقيّة، العادة الآمنة: (أ) منح كلود الوصول إلى القرص كلّه (ب) <b>مجلّد محدّد، ومراجعة الخطّة قبل التنفيذ</b> (ج) عدم قراءة الناتج</li>
+<li>عملٌ يتكرّر كلّ شهر بالخطوات نفسها، تحوّله إلى: (أ) محادثة جديدة كلّ مرّة (ب) <b>مهارة ومهمّة مجدولة</b> (ج) بريد إلى الزملاء</li>
+</ol></div>
+<p class="w13r-gain">🎯 <b>تستفيد:</b> تفوّض أعمالًا متعدّدة الخطوات كانت تأخذ يومًا، وتبقى أنت المراجِع وصاحب القرار.</p>
+<a class="w13r-go" href="https://academy.claude.com/courses/introduction-to-claude-cowork" target="_blank" rel="noopener">افتح الدورة ↗</a>
+</div>
+</details>
+
+<details class="w13r-course">
+<summary><img src="files/w13r/og-ai-fluency-for-educators.png" alt="غلاف دورة AI Fluency for Educators" loading="lazy"><span class="ct"><b>٦. AI Fluency for Educators</b><small>لمن يدرّب ويعلّم · متوسّط</small></span><span class="w13r-meta"><span>٤ دروس</span><span>١٫٥ ساعة</span><span>اختبار واحد</span><span class="ok">شارة ✓</span></span></summary>
+<div class="w13r-cbody">
+<p><b>طبيعتها:</b> تطبّق الأبعاد الأربعة على <b>التدريس والتدريب</b>. يُستحسن أن تسبقها دورة AI Fluency الأساسيّة. وتصلح لمن يدرّب موظّفيه أو يدرّس، وتعمل مع أيّ أداة ذكاء اصطناعيّ.</p>
+<p><b>ما في داخلها:</b> بناء «وثيقة سياق» تصف فلسفتك التدريبيّة وجمهورك · تحديد أهداف قابلة للقياس · إعداد الشرائح والأدلّة والتمارين والاختبارات مع الذكاء الاصطناعيّ · التحقّق من الدقّة · توثيق دور الذكاء الاصطناعيّ والحفاظ على النزاهة.</p>
+<div class="w13r-ex"><b>💼 مثال من عملك:</b> عليك تدريب موظّفي الشعبة على نظام الأرشفة الجديد. تكتب وثيقة سياق (مستواهم، ووقتهم، وأخطاؤهم الشائعة)، ثمّ تبني مع كلود دليلًا وتمرينًا واختبارًا قصيرًا، وتراجع كلّ سؤالٍ بنفسك.</div>
+<div class="w13r-pq"><b>❓ أسئلة تدريب على نمط الدورة:</b>
+<ol>
+<li>لماذا تُكتب «وثيقة سياق» قبل البدء؟ (أ) لإطالة العمل (ب) <b>لتُبنى كلّ المواد على جمهورك وقيودك الحقيقيّة</b> (ج) لأنّ كلود يشترطها</li>
+<li>اختبارٌ أعدّه كلود، فيه سؤالٌ إجابته ملتبسة. ماذا تفعل؟ (أ) تتركه (ب) <b>تصحّحه أو تحذفه قبل استعماله</b> (ج) تعطيه للمتدرّبين ليحلّوا اللبس</li>
+</ol></div>
+<p class="w13r-gain">🎯 <b>تستفيد:</b> تبني موادّ تدريب لفريقك في ساعات بدل أيّام، بجودة تراجعها أنت.</p>
+<a class="w13r-go" href="https://academy.claude.com/courses/ai-fluency-for-educators" target="_blank" rel="noopener">افتح الدورة ↗</a>
+</div>
+</details>
+
+<details class="w13r-course">
+<summary><img src="files/w13r/og-deploying-claude-enterprise-with-confidence.png" alt="غلاف دورة Deploying Claude Enterprise with confidence" loading="lazy"><span class="ct"><b>٧. Deploying Claude Enterprise with Confidence</b><small>لمن يقرّر اعتماد كلود في مؤسّسة · مبتدئ</small></span><span class="w13r-meta"><span>١٤ درسًا</span><span>٢٫٥ ساعة</span><span>اختبار واحد</span><span class="ok">شارة ✓</span></span></summary>
+<div class="w13r-cbody">
+<p><b>طبيعتها:</b> دورة إداريّة لا تقنيّة، لمن يقود اعتماد كلود في جهة كاملة. تعرض <b>القرارات الخمسة</b> بالترتيب الذي يعتمد فيه بعضها على بعض: <b>الهيكل والهويّة</b> · <b>الوصول</b> (مَن يحصل على ماذا) · <b>الحوكمة</b> · <b>الإنفاق</b> · <b>الرؤية</b> (ماذا نقيس). وتُطبَّق كلّها على شركة خياليّة اسمها Pluto، وتملأ أثناء الدورة نموذجًا يصير في آخرها <b>خطّة الاعتماد</b> لجهتك.</p>
+<div class="w13r-ex"><b>💼 مثال من عملك:</b> مديريّة تريد كلود لـ٢٠٠ موظّف. الدورة تجعلك تقرّر قبل الشراء: هل الأقسام مجموعات منفصلة؟ مَن يستعمل الموصِّلات؟ مَن يوافق على المهارات المشتركة؟ ما سقف الإنفاق الشهريّ؟ وكيف نعرف أنّ الموظّفين يستعملونه فعلًا؟</div>
+<div class="w13r-pq"><b>❓ أسئلة تدريب على نمط الدورة:</b>
+<ol>
+<li>أيّ قرار يأتي أوّلًا لأنّ الباقي يعتمد عليه؟ (أ) سقف الإنفاق (ب) <b>الهيكل والهويّة: من هم المستخدمون، وكيف يُقسَّمون</b> (ج) مؤشّرات الاستعمال</li>
+<li>كيف تعرف أنّ الاعتماد نجح؟ (أ) عدد التراخيص المشتراة (ب) <b>مؤشّرات استعمال فعليّة تقيسها لوحة المتابعة</b> (ج) رأي المورّد</li>
+</ol></div>
+<p class="w13r-gain">🎯 <b>تستفيد:</b> تدخل اجتماع «نعتمد الذكاء الاصطناعيّ أم لا؟» ومعك خطّة مكتوبة، لا انطباعات.</p>
+<a class="w13r-go" href="https://academy.claude.com/courses/deploying-claude-enterprise-with-confidence" target="_blank" rel="noopener">افتح الدورة ↗</a>
+</div>
+</details>
+
+<details class="w13r-course w13r-dev">
+<summary><span class="w13r-devic">💻</span><span class="ct"><b>٨. للمتقدّمين والمبرمجين</b><small>ثلاث دورات تقنيّة، لمن يصل إلى درجة «الصانع»</small></span></summary>
+<div class="w13r-cbody">
+<div class="dt-wrap"><table class="dt">
+<thead><tr><th>الدورة</th><th>الحجم</th><th>طبيعتها</th><th>تحتاج</th></tr></thead>
+<tbody>
+<tr><td><a href="https://academy.claude.com/courses/introduction-to-agent-skills" target="_blank" rel="noopener"><b>Introduction to Agent Skills</b></a></td><td>٦ دروس · ساعة<br><b>بلا شارة إتمام</b></td><td>بناء المهارات داخل Claude Code، وتنظيمها، ومشاركتها، وحلّ مشكلاتها. امتدادٌ تقنيّ لأسبوعنا الرابع.</td><td>Claude Code</td></tr>
+<tr><td><a href="https://academy.claude.com/courses/introduction-to-model-context-protocol" target="_blank" rel="noopener"><b>Introduction to MCP</b></a></td><td>١٠ دروس · ساعة<br>اختبار + شارة</td><td>بناء خادم MCP وعميله بلغة Python: الأدوات، والموارد، والطلبات الجاهزة.</td><td>Python ومفتاح API</td></tr>
+<tr><td><a href="https://academy.claude.com/courses/claude-code-in-action" target="_blank" rel="noopener"><b>Claude Code in Action</b></a></td><td>٩ دروس · ساعة<br>اختبار + شارة</td><td>جلسات Claude Code طويلة يُوثَق بنتائجها: التخطيط، وملفّ CLAUDE.md، والصلاحيّات، والجدولة، والتحقّق.</td><td>Git وسطر الأوامر</td></tr>
+</tbody></table></div>
+<p class="dt-cap">تنبيه: دورة المهارات هذه للمبرمجين، ولا تمنح شارة إتمام. ولمستخدم كلود العاديّ يكفي درس المهارات في Claude 101 وفي دورة Cowork.</p>
+</div>
+</details>
+</div>
+
+<div class="w13r-steps">
+<b>🧭 خطوات التسجيل (عشر دقائق):</b>
+<ol>
+<li>افتح <span class="ltr-inline">academy.claude.com</span>، واختر <b>Claude 101</b>، واضغط <b>Start course</b>.</li>
+<li>سجّل الدخول ببريدك ليُحفَظ تقدّمك.</li>
+<li>تابع الدروس بالترتيب، وجرّب كلّ تمرين في كلود نفسه.</li>
+<li>أجب عن الاختبار النهائيّ، فتظهر <b>شارة الإتمام</b>.</li>
+<li>أضِف الشارة إلى ملفّك في LinkedIn، في قسم «التراخيص والشهادات».</li>
+</ol>
+</div>
+<p class="dt-cap">💡 غير الدورات: في الموقع <b>دروس قصيرة</b> (مثل <a href="https://academy.claude.com/tutorials/what-are-skills" target="_blank" rel="noopener">What are skills?</a>) و<b>حالات استعمال</b> جاهزة بطلبٍ تجرّبه، مثل <a href="https://academy.claude.com/use-cases/generate-project-status-reports" target="_blank" rel="noopener">تقارير حالة المشاريع</a> و<a href="https://academy.claude.com/use-cases/meeting-notes-and-filed-tasks-from-a-call-transcript" target="_blank" rel="noopener">محضر اجتماع ومهامّ من تسجيله</a> و<a href="https://academy.claude.com/use-cases/generate-an-ai-policy" target="_blank" rel="noopener">صياغة سياسة لاستعمال الذكاء الاصطناعيّ</a>.</p>
+
+<div class="w13r-warn w13r-withbadge"><img src="files/w13r/b-cca-f.png" alt="الشارة الرسميّة لشهادة Claude Certified Architect – Foundations" loading="lazy"><div><b>⚠️ انتبه إلى الفرق:</b> شهادات الأكاديميّة <b>شهادات إتمام</b>، وليست امتحاناتٍ مراقَبة. وتوجد أيضًا شهادة احترافيّة اسمها <b>Claude Certified Architect</b>، لكنّها امتحانٌ مدفوع ومراقَب، وهي حاليًّا لموظّفي الشركات الشريكة لـAnthropic فقط، وصُمِّمت لمن يبني أنظمة. فلا تنخدع بإعلانٍ يبيعك «دورة تمنحك شهادة كلود الرسميّة».<br><small>الصورة: الشارة الرسميّة لـ Claude Certified Architect – Foundations من منصّة Credly.</small></div></div>
+
+<!-- ══════════ ٣ ══════════ -->
+<div class="section-heading" style="margin-top:28px;">
+<svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+<span>٣. شهادات أخرى تستحقّ وقتك</span>
+</div>
+<p>هذه شهادات معروفة في سوق العمل، مرتّبة من الأسهل إلى الأصعب، وكلّ بطاقة تفتح صفحتها الرسميّة. الأسعار تتغيّر، فتحقّق منها في الموقع الرسميّ قبل التسجيل.</p>
+<div class="w13r-cards w13r-certs">
+<a class="w13r-card w13r-c" href="https://www.elementsofai.com/" target="_blank" rel="noopener"><div class="w13r-noimg">Elements<br>of AI</div><h4>Elements of AI</h4><p><b>الجهة:</b> جامعة هلسنكي.<br><b>تناسب:</b> من يريد فهم الذكاء الاصطناعيّ بلا رياضيّات.</p><span class="w13r-tag w13r-tfree">شهادة إتمام مجّانيّة</span></a>
+<a class="w13r-card w13r-c" href="https://www.kaggle.com/learn" target="_blank" rel="noopener"><div class="w13r-noimg">Kaggle<br>Learn</div><h4>Kaggle Learn <small>Pandas، Data Visualization …</small></h4><p><b>الجهة:</b> Kaggle (Google).<br><b>تناسب:</b> من يريد أن يحلّل البيانات بنفسه، امتدادًا للأسبوع الخامس.</p><span class="w13r-tag w13r-tfree">شهادة إتمام مجّانيّة</span></a>
+<a class="w13r-card w13r-c" href="https://www.coursera.org/learn/ai-for-everyone" target="_blank" rel="noopener"><img src="files/w13r/c-ai4e.jpg" alt="صورة دورة AI For Everyone من Coursera" loading="lazy"><h4>AI for Everyone</h4><p><b>الجهة:</b> DeepLearning.AI على Coursera.<br><b>تناسب:</b> القادة والمدراء: ماذا يستطيع الذكاء الاصطناعيّ، وماذا لا يستطيع.</p><span class="w13r-tag w13r-tcom">المشاهدة مجّانيّة، والشهادة مدفوعة أو بمنحة</span></a>
+<a class="w13r-card w13r-c" href="https://www.coursera.org/specializations/ai-essentials-google" target="_blank" rel="noopener"><img src="files/w13r/c-gaie.jpg" alt="صورة Google AI Essentials من Coursera" loading="lazy"><h4>Google AI Essentials</h4><p><b>الجهة:</b> Google على Coursera.<br><b>تناسب:</b> الموظّف الذي يريد إنتاجيّة يوميّة أعلى.</p><span class="w13r-tag w13r-tcom">مدفوعة أو بمنحة مساعدة ماليّة</span></a>
+<a class="w13r-card w13r-c" href="https://learn.microsoft.com/en-us/credentials/certifications/azure-ai-fundamentals/" target="_blank" rel="noopener"><img class="badge" src="files/w13r/b-ms-fund.svg" alt="الشارة الرسميّة لشهادات Microsoft Certified Fundamentals" loading="lazy"><h4>Azure AI Fundamentals <small>الامتحان الحاليّ AI-901</small></h4><p><b>الجهة:</b> Microsoft.<br><b>تناسب:</b> الدوائر التي تعمل على Microsoft 365 وAzure.</p><span class="w13r-tag w13r-ttech">امتحان احترافيّ برسوم</span></a>
+<a class="w13r-card w13r-c" href="https://aws.amazon.com/certification/certified-ai-practitioner/" target="_blank" rel="noopener"><img class="badge" src="files/w13r/b-aws-aip.png" alt="الشارة الرسميّة لشهادة AWS Certified AI Practitioner" loading="lazy"><h4>AWS Certified AI Practitioner</h4><p><b>الجهة:</b> Amazon Web Services.<br><b>تناسب:</b> من يريد شهادة سحابيّة في الذكاء الاصطناعيّ معروفة دوليًّا.</p><span class="w13r-tag w13r-ttech">امتحان احترافيّ برسوم</span></a>
+</div>
+<p class="dt-cap">🖼 الشارات الدائريّة هي الشارات الرسميّة التي تصل الناجح (من Credly وMicrosoft Learn)، والصور المستطيلة صور الدورات من مواقعها. وElements of AI وKaggle لا تنشران صورة عامّة للشهادة.</p>
+<p class="dt-cap">💡 <b>منحة المساعدة الماليّة (Financial Aid)</b> في Coursera: تطلبها من صفحة الدورة وتكتب سبب حاجتك، فتحصل على الشهادة مجّانًا إن قُبل طلبك.</p>
+<div class="takeaway"><b>كيف تختار؟</b> اسأل نفسك: <span class="hl hl-green">هل ستطلبها جهة عمل؟</span> إن كان الجواب نعم فاختر الامتحان الاحترافيّ. وإن كان هدفك أن تتعلّم وتطبّق، فالشهادات المجّانيّة تكفي، والمشروع أهمّ منها.</div>
+
+<!-- ══════════ ٤ ══════════ -->
+<div class="section-heading" style="margin-top:28px;">
+<svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+<span>٤. GitHub لمن لا يبرمج</span>
+</div>
+<p>GitHub يشبه <b>مكتبةً عالميّة مفتوحة</b>، وكلّ رفٍّ فيها مستودع. لا تحتاج أن تبرمج لتستفيد منه، بل تحتاج أن تعرف <b>أين تنظر</b>:</p>
+<div class="w13r-anat">
+<div class="w13r-url" dir="ltr">github.com/<b class="o">anthropics</b>/<b class="r">skills</b></div>
+<div class="w13r-anat-k"><span><i class="o"></i>المالك: الشركة أو الشخص</span><span><i class="r"></i>اسم المستودع</span></div>
+<ol>
+<li><b>من المالك؟</b> مالك المستودعات الرسميّة لكلود هو <span class="ltr-inline">anthropics</span>. واحذر النسخ المنسوخة <span class="ltr-inline">(forks)</span> والأسماء المشابهة.</li>
+<li><b>اقرأ README</b> أسفل الصفحة: ما هذا المستودع؟ وكيف أستعمله؟</li>
+<li><b>انظر إلى تاريخ آخر تحديث</b> بجانب الملفّات: المستودع الذي لم يُحدَّث منذ سنتين قد يكون قديمًا.</li>
+<li><b>التنزيل:</b> الزرّ الأخضر <b>Code</b> ثمّ <b>Download ZIP</b>.</li>
+</ol>
+</div>
+
+<h3 class="w13r-h3">⭐ مستودعات تستحقّ أن تحفظها</h3>
+<div class="w13r-cards">
+<div class="w13r-card"><h4 dir="ltr"><a href="https://github.com/anthropics/skills" target="_blank" rel="noopener">anthropics/skills</a> <small>⭐ ٢٠٠ ألف</small></h4><p>المهارات الرسميّة: إنشاء ملفّات Word وExcel وPowerPoint وPDF، وأمثلة تتعلّم منها كتابة مهارتك.</p><span class="w13r-tag w13r-toff">رسميّ</span></div>
+<div class="w13r-card"><h4 dir="ltr"><a href="https://github.com/anthropics/prompt-eng-interactive-tutorial" target="_blank" rel="noopener">anthropics/prompt-eng-interactive-tutorial</a> <small>⭐ ٣٩ ألف</small></h4><p>درسٌ تفاعليّ في كتابة الطلبات <span class="ltr-inline">(prompts)</span> خطوةً خطوة، مع تمارين.</p><span class="w13r-tag w13r-toff">رسميّ</span></div>
+<div class="w13r-card"><h4 dir="ltr"><a href="https://github.com/anthropics/courses" target="_blank" rel="noopener">anthropics/courses</a> <small>⭐ ٢٣ ألف</small></h4><p>مواد دورات Anthropic التعليميّة. أغلبها للمطوّرين، لكنّ دروس كتابة الطلبات تفيد الجميع.</p><span class="w13r-tag w13r-toff">رسميّ</span><span class="w13r-tag w13r-ttech">تقنيّ</span></div>
+<div class="w13r-card"><h4 dir="ltr"><a href="https://github.com/anthropics/claude-cookbooks" target="_blank" rel="noopener">anthropics/claude-cookbooks</a> <small>⭐ ٥٥ ألف</small></h4><p>«كتاب وصفات» فيه أمثلة عمليّة: التلخيص، واستخراج البيانات من الوثائق، والوكلاء.</p><span class="w13r-tag w13r-toff">رسميّ</span><span class="w13r-tag w13r-ttech">للصانع</span></div>
+<div class="w13r-card"><h4 dir="ltr"><a href="https://github.com/modelcontextprotocol/servers" target="_blank" rel="noopener">modelcontextprotocol/servers</a> <small>⭐ ٩٢ ألف</small></h4><p>الموصِّلات <span class="ltr-inline">(MCP)</span> المرجعيّة التي تربط كلود بالملفّات والأنظمة. امتدادٌ لأسبوعَي الأتمتة.</p><span class="w13r-tag w13r-toff">رسميّ</span><span class="w13r-tag w13r-ttech">للصانع</span></div>
+<div class="w13r-card"><h4 dir="ltr"><a href="https://github.com/travisvn/awesome-claude-skills" target="_blank" rel="noopener">travisvn/awesome-claude-skills</a> <small>⭐ ١٥ ألف</small></h4><p>قائمة منتقاة فيها روابط مهارات وأدوات من المجتمع. مفيدة للاكتشاف، لكن افحص كلّ مهارة قبل استعمالها.</p><span class="w13r-tag w13r-tcom">مجتمع: افحص قبل الاستعمال</span></div>
+<div class="w13r-card"><h4 dir="ltr"><a href="https://github.com/AmjadShakhshir/awesome-claude-arabic" target="_blank" rel="noopener">AmjadShakhshir/awesome-claude-arabic</a> <small>⭐ ١٠</small></h4><p>مورد عربيّ: طلبات وأدلّة ومهارات لكلود بالعربيّة. مستودعٌ صغير وجديد، فهو مثالٌ على أنّ قلّة النجوم لا تعني قلّة الفائدة، وكثرتها لا تعني الأمان.</p><span class="w13r-tag w13r-tcom">مجتمع · بالعربيّة</span></div>
+</div>
+<p class="dt-cap">عدد النجوم كما كان في ٢٦/١١/٢٠٢٦.</p>
+
+<div class="w13r-lane">
+<b>🔁 من GitHub إلى كلود: رفع مهارة جاهزة</b>
+<div class="w13r-flow">
+<span>١. نزّل ملفّ ZIP من المستودع</span><i>←</i>
+<span>٢. افتح مجلّد المهارة واقرأ <span class="ltr-inline">SKILL.md</span></span><i>←</i>
+<span>٣. اضغط مجلّد المهارة وحده في ملفّ ZIP</span><i>←</i>
+<span>٤. كلود ← الإعدادات ← المهارات ← رفع</span><i>←</i>
+<span>٥. جرّبها على ملفٍّ تجريبيّ</span>
+</div>
+</div>
+<div class="w13r-warn"><b>⚠️ الأمان أوّلًا:</b> المهارة تعليمات، <b>وقد تحتوي على برامج</b> يشغّلها كلود. فلا ترفع إلّا ما جاء من مصدرٍ موثوق، واقرأ <span class="ltr-inline">SKILL.md</span> قبل الرفع، أو اطلب من كلود: «اشرح لي ماذا تفعل هذه المهارة، وهل فيها ما يرسل بياناتي إلى الخارج؟». ولا تجرّب مهارةً جديدة على وثائق رسميّة أو بيانات مواطنين.</div>
+
+<!-- ══════════ ٤-ب تطبيق حيّ ══════════ -->
+<div class="w13r-live" id="w13r-live">
+<div class="w13r-live-hd"><span>🛠 تطبيق عمليّ: جرّبه بنفسك</span><b>مهارة «سؤال التحقّق»: كلود ينبّهك قبل أن تعتمد على جوابه</b></div>
+<p>أخطر ما في الذكاء الاصطناعيّ أنّ الجواب الخاطئ يأتي <b>بالثقة نفسها</b> التي يأتي بها الصحيح. وفي مستودع <span class="ltr-inline">anthropics/skills</span> مهارة <b>رسميّة</b> صُنعت لهذا بالذات، اسمها <b><span class="ltr-inline">discernment-nudge</span></b>، أي «تنبيه التمييز». بعد كلّ جوابٍ ستبني عليه قرارًا (أرقام، أو نصيحة، أو مقترح، أو تحليل) تضيف هذه المهارة <b>سؤالين أو ثلاثة</b> تدلّك على <b>الرقم الذي يجب أن تتحقّق منه ومن أيّ مصدر</b>، و<b>الافتراض الذي تراجعه</b>، و<b>المعلومة الناقصة عن وضعك</b>. وهي تطبيقٌ مباشر لبُعد <b>التمييز</b> <span class="ltr-inline">(Discernment)</span> في دورة AI Fluency.</p>
+
+<div class="w13r-ls">
+<div class="w13r-l"><span class="k">١</span><div><h4>افتح المستودع واقرأ هويّته <small>دقيقتان</small></h4>
+<p>افتح <a class="ltr-inline" href="https://github.com/anthropics/skills" target="_blank" rel="noopener">github.com/anthropics/skills</a> وانظر إلى ثلاثة أشياء:</p>
+<ul><li><b>المالك</b> <span class="ltr-inline">anthropics</span>: الحساب الرسميّ للشركة.</li><li><b>النجوم</b>: نحو ٢٠٠ ألف، وهذا يدلّ على الشهرة لا على الأمان.</li><li><b>آخر تحديث</b>: قبل أيّام، فالمستودع حيّ.</li></ul></div></div>
+
+<div class="w13r-l"><span class="k">٢</span><div><h4>ادخل إلى المهارة <small>دقيقة</small></h4>
+<p>المجلّد <span class="ltr-inline">skills</span> ← المجلّد <span class="ltr-inline">discernment-nudge</span>. ستجد فيه ملفّين فقط:</p>
+<div class="w13r-tree" dir="ltr">discernment-nudge/<br>├── <b>SKILL.md</b> <span>← التعليمات + الاسم والوصف</span><br>└── LICENSE.txt</div>
+<p class="dt-cap">مهارة نصّيّة خالصة: تعليمات مكتوبة فقط، بلا برامج تُشغَّل. وهذا من علامات الأمان التي درسناها في الأسبوع الرابع.</p></div></div>
+
+<div class="w13r-l"><span class="k">٣</span><div><h4>اقرأ <span class="ltr-inline">SKILL.md</span> <small>٣ دقائق</small></h4>
+<p>في أعلى الملفّ يأتي الوصف، ومنه يعرف كلود متى يستعمل المهارة. ومعناه:</p>
+<blockquote class="w13r-q">بعد أن تعطي جوابًا قد يعمل به المستخدم (نصيحة، أو مسودّة خطّة أو مقترح أو رسالة، أو تقديرات وأرقام، أو تحليل بيانات، أو معلومات قد يعتمد عليها) أضِف <b>٢–٣ أسئلة قصيرة</b>، كلّ سؤالٍ مربوط بشيءٍ محدّد في جوابك، تساعده على <b>التحقّق من الحقائق</b> و<b>مراجعة الاستدلال والافتراضات</b> و<b>ملاحظة السياق الناقص</b>. ومرّةً واحدة فقط في كلّ محادثة.</blockquote>
+<p>واقرأ أيضًا <b>متى تسكت</b> المهارة، فهو جزءٌ ذكيّ منها:</p>
+<ul>
+<li>الشرح التعليميّ الخالص («ما هو…؟»، «اشرح…»)، فأنت هنا تفهم ولا تقرّر.</li>
+<li>الكتابة الإبداعيّة والدردشة والأسئلة البسيطة.</li>
+<li>إذا طلبتَ أنت أصلًا «تحقّق» أو «اذكر المصادر»، فتأتي المصادر داخل الجواب بدل الأسئلة.</li>
+<li>إذا أعطيتَه نصّك ليلخّصه أو يرتّبه، فأنت صاحب المصدر.</li>
+</ul>
+<p>وشكل التنبيه في نهاية الجواب:</p>
+<pre class="w13r-code" dir="ltr">A few things worth a second look:
+- [a question you could send back, about a specific number]
+- [a question about an assumption or a reasoning step]
+- [a question about missing context]</pre></div></div>
+
+<div class="w13r-l"><span class="k">٤</span><div><h4>افحصها بكلود قبل الرفع <small>دقيقتان</small></h4>
+<p>هذه عادة <b>العناية</b> <span class="ltr-inline">(Diligence)</span>، ولا تتركها حتّى مع مهارةٍ رسميّة. انسخ محتوى <span class="ltr-inline">SKILL.md</span> والصقه في محادثة جديدة مع هذا الطلب:</p>
+<div class="w13r-prompt"><pre id="w13r-p1">هذا ملفّ مهارة لكلود وجدته على GitHub. اشرح لي بالعربيّة وباختصار:
+١. ماذا تفعل هذه المهارة؟ ومتى تعمل، ومتى لا تعمل؟
+٢. هل فيها أيّ تعليمات ترسل بياناتي إلى جهة خارجيّة، أو تشغّل برامج؟
+٣. هل يصحّ أن أستعملها في دائرة حكوميّة؟ وما الذي يجب أن أنتبه إليه؟
+
+[الصق محتوى SKILL.md هنا]</pre><button type="button" class="w13r-cp" data-for="w13r-p1">📋 نسخ</button></div>
+<p class="dt-cap">المتوقّع: مهارة سلوكيّة نصّيّة تضيف أسئلة تحقّق بعد الأجوبة المهمّة، بلا برامج وبلا إرسال إلى الخارج. فهي آمنة للاستعمال في العمل.</p></div></div>
+
+<div class="w13r-l"><span class="k">٥</span><div><h4>نزّل المهارة واضغطها <small>٣ دقائق</small></h4>
+<ol>
+<li>في صفحة المستودع الرئيسيّة: الزرّ الأخضر <b>Code</b> ← <b>Download ZIP</b>.</li>
+<li>فُكّ الملفّ، وادخل إلى <span class="ltr-inline">skills/discernment-nudge</span>.</li>
+<li>اضغط <b>المجلّد <span class="ltr-inline">discernment-nudge</span> نفسه</b> في ملفّ ZIP، بالزرّ الأيمن ← «إرسال إلى» ← «مجلّد مضغوط».</li>
+</ol>
+<p class="w13r-warn-s">⚠️ الخطأ الشائع، كما في الأسبوع الرابع: جذر الملفّ المضغوط يجب أن يكون <b>مجلّد المهارة نفسه</b>، لا المستودع كلّه ولا مجلّدًا يحويه.</p></div></div>
+
+<div class="w13r-l"><span class="k">٦</span><div><h4>ارفعها إلى كلود <small>دقيقة</small></h4>
+<p>في كلود: <b>التخصيص <span class="ltr-inline">(Customize)</span> ← المهارات <span class="ltr-inline">(Skills)</span> ← رفع مهارة <span class="ltr-inline">(Upload a skill)</span></b>، واختر الملفّ المضغوط ثمّ فعّلها.</p></div></div>
+
+<div class="w13r-l"><span class="k">٧</span><div><h4>جرّبها بطلبٍ ستعمل به فعلًا <small>٣ دقائق</small></h4>
+<p>افتح محادثة جديدة، والصق هذا الطلب. فيه مقترحٌ وأرقام، وهذا بالضبط ما تنتبه له المهارة:</p>
+<div class="w13r-prompt"><pre id="w13r-p2">أنا رئيس شعبة في مديريّة خدميّة فيها ٢٠٠ موظّف. أريد أن أقترح على المدير العامّ
+تحويل طلبات الإجازات من الورق إلى نظامٍ إلكترونيّ.
+اكتب لي مقترحًا من نصف صفحة، فيه: الكلفة التقديريّة، والوقت الذي سيوفّره،
+وعدد الموظّفين اللازمين للتشغيل، ومدّة التنفيذ.</pre><button type="button" class="w13r-cp" data-for="w13r-p2">📋 نسخ</button></div>
+<p>سيكتب كلود المقترح كاملًا، ثمّ يضيف في آخره أسئلةً مثل هذه. <b>مثال توضيحيّ</b>، والصياغة تختلف في كلّ مرّة:</p>
+<div class="w13r-out"><b>أشياء تستحقّ نظرة ثانية:</b><br>
+• من أين جاء رقم «توفير ٦٠٪ من الوقت»؟ وكيف أقيس الوقت الحاليّ في شعبتي لأقارن به؟<br>
+• افترضتَ أنّ الموظّفين يملكون حواسيب وبريدًا رسميًّا. ماذا لو لم يكن ذلك متوفّرًا للجميع؟<br>
+• هل توجد تعليمات رسميّة في العراق تشترط التوقيع الورقيّ على الإجازة؟</div>
+<p class="dt-cap">🔎 قارِن بنفسك: أرسل الطلب نفسه في محادثةٍ والمهارة معطّلة. سيأتي المقترح بالثقة نفسها، لكن بلا أيّ تنبيه إلى أنّ أرقامه <b>تقديرات</b> لا حقائق.</p></div></div>
+
+<div class="w13r-l"><span class="k">٨</span><div><h4>اتبع أحد الأسئلة حتّى المصدر <small>٤ دقائق</small></h4>
+<p>هنا تصير المهارة <b>أداة بحث عن المصدر</b>. انسخ أحد الأسئلة التي أعطاك إيّاها كلود وأرسله كما هو، ثمّ أكمل بهذا الطلب، بعد أن تفعّل <b>البحث في الويب</b>:</p>
+<div class="w13r-prompt"><pre id="w13r-p3">ابحث في الويب عن مصدرٍ موثوق لهذا الرقم أو لهذه المعلومة.
+أعطني رابط المصدر، واسم الجهة التي نشرته، وسنة النشر،
+والجملة التي فيه بالنصّ. وإن لم تجد مصدرًا فقل: «لم أجد»، ولا تقدّر.</pre><button type="button" class="w13r-cp" data-for="w13r-p3">📋 نسخ</button></div>
+<p>ثمّ <b>افتح الرابط بنفسك</b>، وتأكّد أنّ الجملة موجودة فيه فعلًا. فإن لم يوجد مصدر، اكتب في مقترحك أنّ الرقم «تقديريّ»، أو استبدله بقياسٍ حقيقيّ من شعبتك.</p></div></div>
+</div>
+
+<div class="w13r-planb"><b>🅱 إن لم تظهر لك إعدادات المهارات:</b> انسخ محتوى <span class="ltr-inline">SKILL.md</span> كلّه والصقه في أوّل المحادثة مع عبارة «اتّبع هذه التعليمات في هذه المحادثة»، ثمّ الصق طلب الخطوة ٧. فيكون السلوك قريبًا جدًّا من سلوك المهارة.</div>
+
+<div class="w13r-try"><b>✋ دورك الآن (٥ دقائق):</b> اسأل كلود سؤالًا حقيقيًّا من عملك فيه أرقام أو قرار (ميزانيّة، أو جدول زمنيّ، أو مقترح)، بلا بيانات سرّيّة. اقرأ أسئلة التحقّق التي يضيفها، واختر واحدًا منها، واتبعه حتّى تصل إلى مصدرٍ حقيقيّ أو إلى رقمٍ من سجلّاتك. وإن أردت أن تتقدّم أكثر: أنشئ حسابًا على GitHub، وضع ⭐ على <span class="ltr-inline">anthropics/skills</span>، وتصفّح فيه مهارة <span class="ltr-inline">doc-coauthoring</span> (الكتابة المشتركة للوثائق) في البيت.</div>
+</div>
+
+<!-- ══════════ ٤-ج مهارة تبحث عن مهارة ══════════ -->
+<div class="w13r-live w13r-live2" id="w13r-find">
+<div class="w13r-live-hd"><span>🧭 مهارة تبحث لك عن مهارة</span><b><span class="ltr-inline">find-skills</span>، ثمّ مهارة تحوّل أيّ فكرة إلى رسمٍ توضيحيّ</b></div>
+
+<p>في العالم اليوم مئات الآلاف من المهارات. فكيف تجد المفيد منها وتتجنّب الرديء أو الخطِر؟ لهذا صُنعت مهارة <b><span class="ltr-inline">find-skills</span></b> من شركة Vercel، في مستودع <a class="ltr-inline" href="https://github.com/vercel-labs/skills" target="_blank" rel="noopener">vercel-labs/skills</a> (⭐ نحو ٤١ ألفًا). وهي <b>المهارة الأولى</b> في دليل المهارات العالميّ <a class="ltr-inline" href="https://skills.sh" target="_blank" rel="noopener">skills.sh</a>، بأكثر من <b>٤٫٥ مليون</b> تثبيت.</p>
+
+<div class="w13r-cards">
+<div class="w13r-card"><h4>🔍 ماذا تفعل؟</h4><p>حين تسأل «هل توجد مهارة لـ…؟» أو «كيف أفعل كذا؟»، تبحث في دليل skills.sh عن مهارة جاهزة، ثمّ تعرض لك أفضلها مع اسمها ومصدرها وعدد مثبّتيها وطريقة تثبيتها.</p></div>
+<div class="w13r-card"><h4>⚙️ أين تعمل؟</h4><p>في <b>Claude Code</b> و<b>Cowork</b>، لأنّها تشغّل أمر بحث <span class="ltr-inline">(npx skills find)</span> على حاسوبك. أمّا في محادثة كلود العاديّة فتطبّق <b>قواعدها بنفسك</b> وأنت تتصفّح skills.sh، وهذا ما نفعله أدناه.</p></div>
+<div class="w13r-card"><h4>⚠️ انتبه</h4><p>المهارة تستطيع أن <b>تثبّت</b> ما تجده من غير أن تسألك (الخيار <span class="ltr-inline">-y</span>). فلا تسمح بالتثبيت قبل أن تقرأ <span class="ltr-inline">SKILL.md</span> بنفسك، فالبحث شيء والثقة شيء آخر.</p></div>
+</div>
+
+<div class="w13r-rules"><b>🛡 قواعد الجودة الثلاث، مكتوبة في المهارة نفسها:</b>
+<ol>
+<li><b>عدد التثبيتات:</b> فضّل ما تجاوز <b>١٠٠٠</b> تثبيت، واحذر ممّا دون <b>١٠٠</b>.</li>
+<li><b>سمعة المصدر:</b> المصادر الرسميّة (Anthropic، وGitHub، وMicrosoft، وVercel) أوثق من مؤلّفٍ مجهول.</li>
+<li><b>نجوم المستودع:</b> مستودعٌ دون <b>١٠٠</b> نجمة يُعامَل بحذر.</li>
+</ol>
+<p class="dt-cap">ونضيف من الأسبوع الرابع قاعدة رابعة: <b>اقرأ SKILL.md</b>، فالأرقام تدلّ على الشهرة، ولا تشهد على الأمان.</p></div>
+
+<h3 class="w13r-h3">🧪 مثال حقيقيّ: «أريد مهارة تحوّل أيّ فكرة إلى رسمٍ توضيحيّ»</h3>
+<p>بحثنا في skills.sh عن كلمة <span class="ltr-inline">diagram</span> بتاريخ ٢٦/١١/٢٠٢٦، فكانت هذه أبرز النتائج، ثمّ طبّقنا عليها القواعد:</p>
+<div class="dt-wrap"><table class="dt">
+<thead><tr><th>المهارة</th><th>المصدر</th><th>التثبيتات</th><th>الحكم بالقواعد</th></tr></thead>
+<tbody>
+<tr><td dir="ltr"><b>excalidraw-diagram-generator</b></td><td>GitHub (الحساب الرسميّ، ⭐ ٤١ ألف)</td><td>٣٤٫٩ ألف</td><td>✅ <b>اخترناها</b>: مصدر رسميّ، وصغيرة (١٦ ملفًّا)، ويُفتح ناتجها في موقع مجّانيّ</td></tr>
+<tr><td dir="ltr"><b>diagram-design</b></td><td>cathrynlavery (⭐ ٧٣ ألف)</td><td>٣٣٫٦ ألف</td><td>🟡 ممتازة، لكنّها ٣٢٦ ملفًّا، وكلود لا يقبل رفع مهارة من أكثر من ٢٠٠ ملفّ. فهي لمستخدمي Claude Code</td></tr>
+<tr><td dir="ltr"><b>archify</b></td><td>tt-a1i (⭐ ١٠٠ ألف)</td><td>١٩٦ ألف</td><td>🟡 قويّة جدًّا، لكنّها تحتاج أداة برمجيّة (Node.js) لتعمل. فهي للمبرمجين</td></tr>
+<tr><td dir="ltr">excalidraw (مهارات متفرّقة)</td><td>مؤلّفون أفراد</td><td>من ٢٨٤ إلى ٩ آلاف</td><td>⚪ لا حاجة إليها ما دام البديل الرسميّ موجودًا</td></tr>
+</tbody></table></div>
+<p class="dt-cap">لاحِظ: أكثر المهارات تثبيتًا ليست بالضرورة الأنسب لك. الأنسب ما يعمل في <b>أداتك</b> ويأتي من <b>مصدرٍ موثوق</b>.</p>
+
+<div class="w13r-ls">
+<div class="w13r-l"><span class="k">١</span><div><h4>افتح المهارة واقرأ وصفها <small>دقيقتان</small></h4>
+<p>افتح <a class="ltr-inline" href="https://github.com/github/awesome-copilot/tree/main/skills/excalidraw-diagram-generator" target="_blank" rel="noopener">github/awesome-copilot ← skills ← excalidraw-diagram-generator</a>. المالك <span class="ltr-inline">github</span> هو الحساب الرسميّ لموقع GitHub نفسه. ومعنى الوصف:</p>
+<blockquote class="w13r-q">تولّد رسومًا توضيحيّة بصيغة Excalidraw من وصفٍ بالكلام. استعملها حين يُطلب «ارسم مخطّطًا» أو «مخطّط سير» أو «وضّح العمليّة» أو «خريطة ذهنيّة». تدعم: مخطّطات السير، والعلاقات، والخرائط الذهنيّة، ومخطّطات المسارات بين الجهات <span class="ltr-inline">(swimlane)</span>، وتدفّق البيانات، وغيرها. والناتج ملفّ <span class="ltr-inline">.excalidraw</span> يُفتح مباشرةً في موقع Excalidraw.</blockquote></div></div>
+
+<div class="w13r-l"><span class="k">٢</span><div><h4>خذ ملفّ التعليمات وحده <small>٣ دقائق</small></h4>
+<p>في المجلّد ملفّ <span class="ltr-inline">SKILL.md</span>، ومعه مجلّدات مساعدة فيها ثلاثة برامج Python صغيرة اختياريّة. <b>نكتفي بملفّ التعليمات وحده</b>، فهو كافٍ وأأمن:</p>
+<ol>
+<li>افتح <span class="ltr-inline">SKILL.md</span>، واضغط زرّ التنزيل <b>Download raw file</b> أعلى الملفّ.</li>
+<li>أنشئ مجلّدًا اسمه <span class="ltr-inline">excalidraw-diagram-generator</span> وضع الملفّ فيه.</li>
+<li>اضغط المجلّد نفسه في ملفّ ZIP، ثمّ ارفعه من <b>التخصيص ← المهارات ← رفع مهارة</b>، كما في التطبيق السابق.</li>
+</ol></div></div>
+
+<div class="w13r-l"><span class="k">٣</span><div><h4>حوّل فكرتك إلى رسم <small>٣ دقائق</small></h4>
+<p>محادثة جديدة، والصق هذا الطلب:</p>
+<div class="w13r-prompt"><pre id="w13r-p4">ارسم لي مخطّط مسارات (swimlane) بصيغة Excalidraw لمعاملة طلب إجازة إلكترونيّة.
+الجهات (المسارات): الموظّف · رئيس الشعبة · الموارد البشريّة · النظام الإلكترونيّ.
+الخطوات: الموظّف يقدّم الطلب ← النظام يتحقّق من رصيد الإجازات ← رئيس الشعبة يوافق أو يرفض
+← الموارد البشريّة تسجّل الإجازة ← النظام يرسل إشعارًا للموظّف.
+أضف نقطة قرار عند «يوافق أو يرفض». اجعل النصوص قصيرة، واحفظ الملفّ باسم leave-flow.excalidraw</pre><button type="button" class="w13r-cp" data-for="w13r-p4">📋 نسخ</button></div></div></div>
+
+<div class="w13r-l"><span class="k">٤</span><div><h4>افتح الرسم وعدّله بيدك <small>دقيقتان</small></h4>
+<ol>
+<li>نزّل الملفّ <span class="ltr-inline">leave-flow.excalidraw</span> من المحادثة.</li>
+<li>افتح <a class="ltr-inline" href="https://excalidraw.com" target="_blank" rel="noopener">excalidraw.com</a>، وهو مجّانيّ وبلا تسجيل، ثمّ اسحب الملفّ إلى الصفحة.</li>
+<li>الرسم <b>قابل للتعديل</b>: حرّك الصناديق، وغيّر الألوان والنصوص.</li>
+<li>صدّره صورةً من القائمة: <b>Export image ← PNG</b>، لتضعه في تقرير أو عرض تقديميّ.</li>
+</ol>
+<p class="dt-cap">💡 الرسم بخطٍّ يدويّ يشبه رسوم هذا الدفتر. وإن ظهرت الحروف العربيّة بخطٍّ مختلف، فاختصر النصوص أو عدّلها في الموقع.</p></div></div>
+</div>
+
+<div class="w13r-try"><b>✋ دورك الآن (٥ دقائق):</b> اختر فكرةً من عملك، مثل مسار معاملة، أو هيكل شعبتك، أو خطوات مشروعك، أو خريطة ذهنيّة لموضوع بحثك، واطلب من كلود رسمها. ثمّ افتح الرسم في Excalidraw وعدّل فيه خطأً واحدًا على الأقلّ بيدك. فالرسم مسودّة، وأنت من يعتمدها.</div>
+</div>
+
+<!-- ══════════ ٥ ══════════ -->
+<div class="section-heading" style="margin-top:28px;">
+<svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+<span>٥. مصادر تتابعها لتبقى على اطّلاع</span>
+</div>
+<div class="dt-wrap"><table class="dt">
+<thead><tr><th>المصدر</th><th>ماذا تجد فيه</th><th>متى تراجعه</th></tr></thead>
+<tbody>
+<tr><td><b>مركز مساعدة كلود</b> <span class="ltr-inline">support.claude.com</span></td><td>شرح كلّ ميزة بالخطوات، مع صور.</td><td>عند الحاجة</td></tr>
+<tr><td><b>وثائق كلود</b> <span class="ltr-inline">docs.claude.com</span></td><td>دليل كتابة الطلبات، والمهارات، وMCP.</td><td>عند الحاجة</td></tr>
+<tr><td><b>دليل المهارات</b> <span class="ltr-inline">skills.sh</span></td><td>بحثٌ في مئات الآلاف من المهارات، مع عدد التثبيتات وفحوص أمان.</td><td>عند الحاجة إلى مهارة</td></tr>
+<tr><td><b>أخبار Anthropic</b> <span class="ltr-inline">anthropic.com/news</span></td><td>الإصدارات والميزات الجديدة.</td><td>مرّة في الشهر</td></tr>
+<tr><td><b>قناة Anthropic على YouTube</b></td><td>عروض للميزات الجديدة، ولقاءات.</td><td>مرّة في الشهر</td></tr>
+<tr><td><b>دفتر المادّة</b> ومساعده «لبيب AI»</td><td>كلّ ما درسناه، بالعربيّة، مع الأمثلة والحلول.</td><td>للمراجعة</td></tr>
+</tbody></table></div>
+<p class="dt-cap">💡 أسهل طريقة لتتعلّم ميزةً جديدة أن تسأل كلود نفسه. مثلًا: «اشرح لي ميزة المشاريع في كلود بالخطوات، كأنّي أستعملها أوّل مرّة».</p>
+
+<!-- ══════════ ٦ فيديوهات ══════════ -->
+<div class="section-heading" style="margin-top:28px;">
+<svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+<span>٦. فيديوهات مختارة</span>
+</div>
+<p>كلّ بطاقة تفتح الفيديو على YouTube. ابدأ بفيديو قصير من قسم «البداية»، ثمّ انتقل إلى ما يناسب درجتك في السُّلَّم.</p>
+<h3 class="w13r-h3">🇬🇧 بالإنجليزيّة — من القنوات الرسميّة</h3>
+<p class="dt-cap">💡 لا تقلق من اللغة: من زرّ الإعدادات ⚙ في الفيديو اختر <b>الترجمة ← ترجمة تلقائيّة ← العربيّة</b>.</p>
+<div class="w13r-vids"><a class="w13r-vid" href="https://www.youtube.com/watch?v=0vZ_UVLhSQQ" target="_blank" rel="noopener"><span class="th"><img src="files/w13r/v-0vZ_UVLhSQQ.jpg" alt="" loading="lazy"><i>▶</i><em>٥ د</em></span><span class="tp">البداية</span><b dir="ltr">Getting started with Claude.ai</b><small dir="ltr">Anthropic</small></a><a class="w13r-vid" href="https://www.youtube.com/watch?v=GJ5jTgcbRHA" target="_blank" rel="noopener"><span class="th"><img src="files/w13r/v-GJ5jTgcbRHA.jpg" alt="" loading="lazy"><i>▶</i><em>٧ د</em></span><span class="tp">المشاريع</span><b dir="ltr">Getting started with projects in Claude.ai</b><small dir="ltr">Anthropic</small></a><a class="w13r-vid" href="https://www.youtube.com/watch?v=JpGtOfSgR-c" target="_blank" rel="noopener"><span class="th"><img src="files/w13r/v-JpGtOfSgR-c.jpg" alt="" loading="lazy"><i>▶</i><em>٤ د</em></span><span class="tp">AI Fluency</span><b dir="ltr">Lesson 1: Introduction to AI Fluency</b><small dir="ltr">Anthropic</small></a><a class="w13r-vid" href="https://www.youtube.com/watch?v=W4Ua6XFfX9w" target="_blank" rel="noopener"><span class="th"><img src="files/w13r/v-W4Ua6XFfX9w.jpg" alt="" loading="lazy"><i>▶</i><em>٥ د</em></span><span class="tp">AI Fluency</span><b dir="ltr">Lesson 2B: The 4D Framework</b><small dir="ltr">Anthropic</small></a><a class="w13r-vid" href="https://www.youtube.com/watch?v=bjdBVZa66oU" target="_blank" rel="noopener"><span class="th"><img src="files/w13r/v-bjdBVZa66oU.jpg" alt="" loading="lazy"><i>▶</i><em>٣ د</em></span><span class="tp">المهارات</span><b dir="ltr">What are skills?</b><small dir="ltr">Claude</small></a><a class="w13r-vid" href="https://www.youtube.com/watch?v=fOxC44g8vig" target="_blank" rel="noopener"><span class="th"><img src="files/w13r/v-fOxC44g8vig.jpg" alt="" loading="lazy"><i>▶</i><em>٣ د</em></span><span class="tp">المهارات</span><b dir="ltr">Claude Agent Skills Explained</b><small dir="ltr">Anthropic</small></a><a class="w13r-vid" href="https://www.youtube.com/watch?v=Hz0GtSycbLE" target="_blank" rel="noopener"><span class="th"><img src="files/w13r/v-Hz0GtSycbLE.jpg" alt="" loading="lazy"><i>▶</i><em>١٫٦ س</em></span><span class="tp">شهادة Google</span><b dir="ltr">Every Google AI Essentials Course Lesson</b><small dir="ltr">Grow with Google</small></a><a class="w13r-vid" href="https://www.youtube.com/watch?v=rCx4SCd4N-s" target="_blank" rel="noopener"><span class="th"><img src="files/w13r/v-rCx4SCd4N-s.jpg" alt="" loading="lazy"><i>▶</i><em>٤٫٧ س</em></span><span class="tp">شهادة Microsoft</span><b dir="ltr">Microsoft Azure AI Fundamentals (AI-901) Certification Course</b><small dir="ltr">freeCodeCamp.org</small></a><a class="w13r-vid" href="https://www.youtube.com/watch?v=WZeZZ8_W-M4" target="_blank" rel="noopener"><span class="th"><img src="files/w13r/v-WZeZZ8_W-M4.jpg" alt="" loading="lazy"><i>▶</i><em>١٥ س</em></span><span class="tp">شهادة AWS</span><b dir="ltr">AWS Certified AI Practitioner (AIF-C01) – Full Course</b><small dir="ltr">freeCodeCamp.org</small></a></div>
+<h3 class="w13r-h3">🇮🇶 بالعربيّة — شروحات من صنّاع محتوى عرب</h3>
+<div class="w13r-vids"><a class="w13r-vid" href="https://www.youtube.com/watch?v=UJzvqBjsKnM" target="_blank" rel="noopener"><span class="th"><img src="files/w13r/v-UJzvqBjsKnM.jpg" alt="" loading="lazy"><i>▶</i><em>٨ د</em></span><span class="tp">البداية</span><b>ما هو Claude AI؟ كل اللي محتاج تعرفه في أقل من 10 دقايق</b><small>Khalilation - خليليشن</small></a><a class="w13r-vid" href="https://www.youtube.com/watch?v=liynDR5QVRk" target="_blank" rel="noopener"><span class="th"><img src="files/w13r/v-liynDR5QVRk.jpg" alt="" loading="lazy"><i>▶</i><em>٢٠ د</em></span><span class="tp">البداية</span><b>دليلك الشامل لـ Claude: كل ما تحتاج معرفته عن كلود (للمبتدئين)</b><small>Rawaa | رواء</small></a><a class="w13r-vid" href="https://www.youtube.com/watch?v=oz44Wp22iCU" target="_blank" rel="noopener"><span class="th"><img src="files/w13r/v-oz44Wp22iCU.jpg" alt="" loading="lazy"><i>▶</i><em>١٫٢ س</em></span><span class="tp">دورة كاملة</span><b>كورس تعلم كلود من الصفر (Claude 101 in Arabic)</b><small>غريب الشيخ</small></a><a class="w13r-vid" href="https://www.youtube.com/watch?v=aaxsQiOwGRg" target="_blank" rel="noopener"><span class="th"><img src="files/w13r/v-aaxsQiOwGRg.jpg" alt="" loading="lazy"><i>▶</i><em>١٦ د</em></span><span class="tp">AI Fluency</span><b>شرح كورس AI Fluency في 15 دقيقة</b><small>هبة أحمد</small></a><a class="w13r-vid" href="https://www.youtube.com/watch?v=QigfmTFouEA" target="_blank" rel="noopener"><span class="th"><img src="files/w13r/v-QigfmTFouEA.jpg" alt="" loading="lazy"><i>▶</i><em>١٧ د</em></span><span class="tp">المهارات</span><b>مهارات كلود: شرح كامل للمبتدئين بالعربي</b><small>أسامة الكلثمي</small></a><a class="w13r-vid" href="https://www.youtube.com/watch?v=e_bS2UtpjaY" target="_blank" rel="noopener"><span class="th"><img src="files/w13r/v-e_bS2UtpjaY.jpg" alt="" loading="lazy"><i>▶</i><em>١٣ د</em></span><span class="tp">المهارات</span><b>Claude Skills: تعلّم مهارات كلود في 12 دقيقة</b><small>Infotech4you - مروي سليمان</small></a><a class="w13r-vid" href="https://www.youtube.com/watch?v=PsXDzwBW2Ls" target="_blank" rel="noopener"><span class="th"><img src="files/w13r/v-PsXDzwBW2Ls.jpg" alt="" loading="lazy"><i>▶</i><em>٩ د</em></span><span class="tp">GitHub</span><b>ما هو GitHub؟ وما أهميته؟</b><small>غريب الشيخ</small></a><a class="w13r-vid" href="https://www.youtube.com/watch?v=N7qWNQxFq90" target="_blank" rel="noopener"><span class="th"><img src="files/w13r/v-N7qWNQxFq90.jpg" alt="" loading="lazy"><i>▶</i><em>٤٧ د</em></span><span class="tp">GitHub</span><b>كورس أساسيات Git وGitHub في 45 دقيقة للمبتدئين</b><small>Yehia Tech يحيى تك</small></a><a class="w13r-vid" href="https://www.youtube.com/watch?v=5Sbw-Lff_ps" target="_blank" rel="noopener"><span class="th"><img src="files/w13r/v-5Sbw-Lff_ps.jpg" alt="" loading="lazy"><i>▶</i><em>١٠ د</em></span><span class="tp">شهادة AWS</span><b>شهادة AWS AI Practitioner ببساطة! هل تستحق؟</b><small>Crafting the Cloud - بالعربي</small></a><a class="w13r-vid" href="https://www.youtube.com/watch?v=zE8LpR8S2rg" target="_blank" rel="noopener"><span class="th"><img src="files/w13r/v-zE8LpR8S2rg.jpg" alt="" loading="lazy"><i>▶</i><em>٩ د</em></span><span class="tp">شهادة AWS</span><b>كيف تدرس وتنجح من أوّل مرّة بامتحان AWS Certified AI Practitioner</b><small>Tiger4Code (Noor Sabahi)</small></a></div>
+<p class="dt-cap">القنوات العربيّة ليست رسميّة. وإذا تعارض شرحٌ فيها مع موقع الشركة، فالموقع الرسميّ هو المرجع، لأنّ الميزات تتغيّر بسرعة.</p>
+
+<!-- ══════════ ٧ ══════════ -->
+<div class="section-heading" style="margin-top:28px;">
+<svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+<span>٧. خطّتك لثلاثين يومًا</span>
+</div>
+<p>ضع علامة على كلّ ما تنجزه. تُحفظ علاماتك في متصفّحك فقط.</p>
+<div class="w13r-plan" id="w13r-plan">
+<div class="wk"><h4>الأسبوع ١ — الأساس</h4>
+<label><input type="checkbox" data-k="1"> سجّلتُ في Claude Academy</label>
+<label><input type="checkbox" data-k="2"> أنهيتُ Claude 101 وأخذتُ الشهادة</label>
+<label><input type="checkbox" data-k="3"> أضفتُ الشهادة إلى LinkedIn</label></div>
+<div class="wk"><h4>الأسبوع ٢ — الوعي</h4>
+<label><input type="checkbox" data-k="4"> أنهيتُ AI Fluency: Framework &amp; Foundations</label>
+<label><input type="checkbox" data-k="5"> كتبتُ ثلاثة طلبات لعملي وحسّنتُها</label></div>
+<div class="wk"><h4>الأسبوع ٣ — GitHub</h4>
+<label><input type="checkbox" data-k="6"> فتحتُ anthropics/skills وقرأتُ README</label>
+<label><input type="checkbox" data-k="7"> رفعتُ مهارة رسميّة إلى كلود وجرّبتُها</label>
+<label><input type="checkbox" data-k="8"> أنشأتُ حسابًا على GitHub، وحفظتُ ثلاثة مستودعات بنجمة ⭐</label></div>
+<div class="wk"><h4>الأسبوع ٤ — الناتج</h4>
+<label><input type="checkbox" data-k="9"> بنيتُ مهارة أو أداة واحدة لعملي</label>
+<label><input type="checkbox" data-k="10"> اخترتُ شهادتي التالية وحدّدتُ موعدها</label></div>
+<div class="w13r-bar"><span id="w13r-fill"></span></div>
+<p class="w13r-pc" id="w13r-pc">٠ من ١٠</p>
+</div>
+
+<!-- ══════════ أسئلة المراجعة ══════════ -->
+<div class="section-heading" style="margin-top:28px;">
+<svg class="arrow-icon" viewBox="0 0 30 30"><path d="M25 5 Q10 8 8 22" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#sketchy)"/><path d="M8 22 L4 16 M8 22 L14 20" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+<span>📝 أسئلة المراجعة</span>
+</div>
+<p class="quiz-note"><b>أوّلًا: صح أم خطأ</b></p>
+<div class="tf-item"><span>١. شهادات Claude Academy امتحاناتٌ احترافيّة مراقَبة.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+<div class="tf-item"><span>٢. كثرة النجوم على مستودعٍ تعني بالضرورة أنّه آمن.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+<div class="tf-item"><span>٣. ملفّ README أوّل ما يُقرأ في أيّ مستودع.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+<div class="tf-item"><span>٤. يمكن الحصول على شهادة Coursera مجّانًا بطلب منحة المساعدة الماليّة.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+<div class="tf-item"><span>٥. يجوز رفع أيّ مهارة من GitHub إلى كلود وتجربتها مباشرةً على ملفّات الدائرة.</span><span class="tf-boxes"><span><span class="box"></span> صح</span><span><span class="box"></span> خطأ</span></span></div>
+
+<p class="quiz-note"><b>ثانيًا: اختر الإجابة الصحيحة</b></p>
+<div class="mcq-item"><span class="q-num">١.</span> مستودع المهارات الرسميّ لكلود هو:<ul class="mcq-options"><li><span class="opt-letter">أ)</span> <span class="ltr-inline">anthropics/skills</span></li><li><span class="opt-letter">ب)</span> <span class="ltr-inline">claude-skills-free/skills</span></li><li><span class="opt-letter">ج)</span> <span class="ltr-inline">travisvn/awesome-claude-skills</span></li><li><span class="opt-letter">د)</span> <span class="ltr-inline">anthropic-official/skills-pro</span></li></ul></div>
+<div class="mcq-item"><span class="q-num">٢.</span> الفرق الأساسيّ بين «شهادة الإتمام» و«الشهادة الاحترافيّة» هو:<ul class="mcq-options"><li><span class="opt-letter">أ)</span> لغة الدورة</li><li><span class="opt-letter">ب)</span> الامتحان الرسميّ المراقَب</li><li><span class="opt-letter">ج)</span> عدد الدروس</li><li><span class="opt-letter">د)</span> لون الشهادة</li></ul></div>
+<div class="mcq-item"><span class="q-num">٣.</span> مديرة دائرة تريد شهادة سحابيّة في الذكاء الاصطناعيّ تطلبها جهات العمل دوليًّا. الأنسب لها:<ul class="mcq-options"><li><span class="opt-letter">أ)</span> Claude 101</li><li><span class="opt-letter">ب)</span> Elements of AI</li><li><span class="opt-letter">ج)</span> AWS Certified AI Practitioner</li><li><span class="opt-letter">د)</span> Kaggle Learn: Pandas</li></ul></div>
+<div class="mcq-item"><span class="q-num">٤.</span> أوّل خطوة قبل رفع مهارة من مستودعٍ مجتمعيّ:<ul class="mcq-options"><li><span class="opt-letter">أ)</span> رفعها وتجربتها على بريد الدائرة</li><li><span class="opt-letter">ب)</span> عدّ النجوم</li><li><span class="opt-letter">ج)</span> حذف ملفّ README</li><li><span class="opt-letter">د)</span> قراءة <span class="ltr-inline">SKILL.md</span> وسؤال كلود عمّا تفعله</li></ul></div>
+<div class="mcq-item"><span class="q-num">٥.</span> رأيتَ إعلانًا: «ادفع ٥٠ دولارًا واحصل على شهادة كلود الرسميّة خلال يوم». الموقف الصحيح:<ul class="mcq-options"><li><span class="opt-letter">أ)</span> الدفع فورًا قبل انتهاء العرض</li><li><span class="opt-letter">ب)</span> التحقّق من موقع Anthropic الرسميّ، فدورات الأكاديميّة مجّانيّة، والشهادة الاحترافيّة امتحانٌ مراقَب</li><li><span class="opt-letter">ج)</span> مشاركته مع الزملاء</li><li><span class="opt-letter">د)</span> سؤال صاحب الإعلان: هل هي رسميّة؟</li></ul></div>
+
+<div class="mcq-item"><span class="q-num">٦.</span> بحثتَ عن مهارة رسم، فوجدت ثلاثًا. أيّها تختار بقواعد <span class="ltr-inline">find-skills</span>؟<ul class="mcq-options"><li><span class="opt-letter">أ)</span> مهارة من مؤلّفٍ مجهول، عليها ٤٠ تثبيتًا</li><li><span class="opt-letter">ب)</span> مهارة من حسابٍ رسميّ، عليها ٣٥ ألف تثبيت، وتعمل في أداتك</li><li><span class="opt-letter">ج)</span> الأكثر تثبيتًا، وإن كانت تحتاج أداة برمجيّة لا تملكها</li><li><span class="opt-letter">د)</span> أيّ واحدة، فكلّها متشابهة</li></ul></div>
+
+<p class="quiz-note"><b>ثالثًا: سيناريو</b></p>
+<div class="w13r-scen"><p>أحمد (اسم خياليّ) مدير قسم الموارد البشريّة. أنهى المادّة ويريد أن يستمرّ، ولديه ساعتان في الأسبوع. وجد على GitHub مستودعًا اسمه <span class="ltr-inline">hr-super-skills</span> عليه ٤٠٠ نجمة، وفيه مهارة تقول إنّها «تقيّم السِّيَر الذاتيّة تلقائيًّا».</p>
+<ol><li>ما الخطّة المناسبة له في الشهر الأوّل؟</li><li>ماذا يفعل قبل رفع المهارة؟</li><li>هل يجرّبها على سِيَر المتقدّمين الحقيقيّة؟ ولماذا؟</li></ol></div>
+
+<details class="w13r-sol"><summary>🔑 الحلول والتعليل</summary>
+<p><b>صح أم خطأ:</b> ١) <b>خطأ</b>: هي شهادات إتمام مجّانيّة. ٢) <b>خطأ</b>: النجوم تقيس الشهرة لا الأمان. ٣) <b>صح</b>. ٤) <b>صح</b>، إذا قُبل الطلب. ٥) <b>خطأ</b>: تُفحص المهارة أوّلًا، وتُجرَّب على ملفّات تجريبيّة.</p>
+<p><b>الاختيار:</b> ١) <b>أ</b>: مالكه <span class="ltr-inline">anthropics</span>. و«ج» قائمة مجتمعيّة، و«ب» و«د» أسماء تقلّد الرسميّ. ٢) <b>ب</b>. ٣) <b>ج</b>: امتحانٌ احترافيّ سحابيّ معروف، أمّا «أ» و«ب» و«د» فشهادات إتمام. ٤) <b>د</b>. ٥) <b>ب</b>: الإعلان مضلِّل. ٦) <b>ب</b>: تحقّق فيها المصدر الموثوق والتثبيتات الكثيرة، وتعمل في أداتك. «أ» دون حدّ المئة، و«ج» لا تعمل عندك.</p>
+<p><b>السيناريو:</b> ١) تكفيه ساعتان في الأسبوع لإنهاء دورتَي Claude 101 وAI Fluency في أسبوعين، ثمّ تجربة مهارة رسميّة واحدة، ثمّ بناء أداة صغيرة لقسمه. ٢) يتحقّق من المالك ومن تاريخ آخر تحديث، ويقرأ <span class="ltr-inline">SKILL.md</span>، ويسأل كلود عمّا تفعله المهارة، وهل ترسل بيانات إلى الخارج. ٣) <b>لا</b>: السِّيَر الذاتيّة بيانات شخصيّة، والتقييم الآليّ قد يكون متحيّزًا. يجرّبها على سِيَرٍ خياليّة، ويبقى القرار للإنسان.</p>
+</details>
+
+<div class="mini-note">نهاية المحاضرة الثالثة عشرة — إعداد: د. أمير هادي ★</div>
+<script>/* week 13: 30-day plan, copy buttons, print opens cards */(function(){var K='w13r-plan-v1',box=document.getElementById('w13r-plan');if(!box)return;
+var AR=function(n){return String(n).replace(/[0-9]/g,function(d){return '٠١٢٣٤٥٦٧٨٩'[d]})};
+var st={};try{st=JSON.parse(localStorage.getItem(K)||'{}')}catch(_){}
+var cb=box.querySelectorAll('input[type=checkbox]');
+function upd(){var n=0;cb.forEach(function(c){if(c.checked)n++});document.getElementById('w13r-fill').style.width=(n*100/cb.length)+'%';
+document.getElementById('w13r-pc').textContent=AR(n)+' من '+AR(cb.length)+(n===cb.length?' — أحسنت! 🎉':'')}
+cb.forEach(function(c){c.checked=!!st[c.dataset.k];c.addEventListener('change',function(){st[c.dataset.k]=c.checked;try{localStorage.setItem(K,JSON.stringify(st))}catch(_){}upd()})});upd()})();
+document.addEventListener('click',function(e){var b=e.target.closest('.w13r-cp');if(!b)return;var t=document.getElementById(b.dataset.for).textContent;
+var done=function(){var o=b.textContent;b.textContent='✓ نُسخ';setTimeout(function(){b.textContent=o},1400)};
+function fb(){var a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy');done()}catch(_){}a.remove()}
+if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(done,fb);else fb()});
+window.addEventListener('beforeprint',function(){document.querySelectorAll('.w13r-course,.w13r-sol').forEach(function(d){d.open=true})});</script>
         <div class="page-nav">
           <button class="nav-btn nav-prev" onclick="navigateSlide(-1)">→ السابق</button>
           <button class="nav-btn nav-next" onclick="navigateSlide(1)">التالي ←</button>
